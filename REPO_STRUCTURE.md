@@ -4,7 +4,7 @@
 
 Note: line ranges in this document use the format `file:start-end`.
 
-The project purpose in `AGENTS.md:5-16` and `REQUIREMENTS.md:3-14` describes this repository's goals: (1) documenting a framework specification derived from OpenUI5, and (2) building an Angular TypeScript generator based on that specification. The table below maps the upstream OpenUI5 folders and files that are most relevant to those goals.
+The project purpose in `AGENTS.md:5-17` and `REQUIREMENTS.md:3-14` describes this repository's goals: (1) documenting a framework specification derived from OpenUI5, and (2) building an Angular TypeScript generator based on that specification. The table below maps the folders and files in the upstream OpenUI5 repository (`UI5/openui5`) that are most relevant to those goals.
 
 | Folder / file reference | Description of the content and relation to the project purpose |
 | --- | --- |
@@ -22,4 +22,4 @@ The project purpose in `AGENTS.md:5-16` and `REQUIREMENTS.md:3-14` describes thi
 
 ## Angular generator implication
 
-No Angular-specific generator or `@angular/core` usage was found in `UI5/openui5`. The closest TypeScript-related assets are the `api.json`/JSDoc pipeline and the `.dtsgenrc` declaration-generation configuration. The Angular generator in this repository will therefore need to be designed from those API and typing inputs rather than adapted from an upstream Angular implementation.
+No Angular-specific generator or `@angular/core` usage was found in the upstream OpenUI5 repository (`UI5/openui5`). The closest TypeScript-related assets are the `api.json`/JSDoc pipeline and the `.dtsgenrc` declaration-generation configuration. The Angular generator in this repository will therefore need to be designed from those API and typing inputs rather than adapted from an upstream Angular implementation.
