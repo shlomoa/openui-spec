@@ -2,7 +2,7 @@
 
 ## Goal
 
-Find a practical starting point for code generation based on the table entries already documented in `/home/runner/work/openui5-spec/openui5-spec/REPO_STRUCTURE.md`.
+Find a practical starting point for code generation based on the table entries already documented in `REPO_STRUCTURE.md`.
 
 The issue specifically asks for:
 
@@ -11,14 +11,14 @@ The issue specifically asks for:
 
 ## Relevant table entries reviewed
 
-The most generator-relevant entries in `/home/runner/work/openui5-spec/openui5-spec/REPO_STRUCTURE.md` are:
+The most generator-relevant entries in `REPO_STRUCTURE.md` are:
 
 1. `lib/jsdoc/schemas/sap-ui-library-api.json`
 2. `lib/jsdoc/schemas/sap-ui-library-api-index.json`
 3. `lib/jsdoc/jsdoc-config-template.json`
 4. `lib/jsdoc/transformApiJson.js`
 5. `src/sap.ui.core/.dtsgenrc`
-6. `/home/runner/work/openui5-spec/openui5-spec/generators/angular/GENERATOR_STRUCTURE.md`
+6. `generators/angular/GENERATOR_STRUCTURE.md`
 
 ## Research outcome
 
@@ -67,7 +67,7 @@ src/validation/validate-spec.ts
 src/ir/build-ir.ts
 ```
 
-In the terminology of `/home/runner/work/openui5-spec/openui5-spec/generators/angular/GENERATOR_STRUCTURE.md`, this aligns with:
+In the terminology of `generators/angular/GENERATOR_STRUCTURE.md`, this aligns with:
 
 - `spec-loader`
 - `validator`
@@ -78,7 +78,7 @@ In the terminology of `/home/runner/work/openui5-spec/openui5-spec/generators/an
 
 The best **generator starting point** is not OpenUI5 runtime code generation, because no upstream generator was found that converts UI5 metadata directly into Angular or generic web UI files.
 
-Instead, the strongest starting point in the current repo is the pipeline already documented in `/home/runner/work/openui5-spec/openui5-spec/generators/angular/GENERATOR_STRUCTURE.md`:
+Instead, the strongest starting point in the current repo is the pipeline already documented in `generators/angular/GENERATOR_STRUCTURE.md`:
 
 ```text
 Framework Spec
