@@ -4,24 +4,20 @@
 
 Note: line ranges in this document use the format `file:start-end`.
 
-The project purpose in `AGENTS.md:5-9` describes OpenUI5 as an enterprise-grade JavaScript UI framework and a monorepo of library packages under `src/`. The table below maps the folders and files that are most relevant to that purpose.
+The project purpose in `AGENTS.md:5-16` and `REQUIREMENTS.md:3-14` describes this repository as documenting a framework specification and an Angular TypeScript generator derived from OpenUI5. The table below maps the upstream OpenUI5 folders and files that are most relevant to those goals.
 
 | Folder / file reference | Description of the content and relation to the project purpose |
 | --- | --- |
-| `AGENTS.md:5-13` | Establishes the repository-level working model for contributors by calling out the package layout under `src/` and the matching QUnit test layout used across libraries. |
-| `README.md:9-16` | Summarizes what OpenUI5 delivers: enterprise-ready web applications, UI controls, and data binding. This explains why the repository is centered on reusable framework libraries instead of a single application. |
-| `README.md:41-43` | Points contributors to the development setup and control-library documentation, making it the entry point for understanding how to work inside the monorepo. |
-| `package.json:6-17` | Defines the root npm scripts used to start the testsuite, build the SDK, and lint the monorepo. These scripts show that the repository is managed from the root as one workspace-based project. |
-| `package.json:115-117` | Declares the workspace pattern `src/*`, which is the key structural rule that turns the repository into a multi-package monorepo. |
-| `src/` | Contains the framework packages themselves: library packages such as `sap.ui.core`, `sap.m`, `sap.f`, `sap.ui.documentation`, the theme libraries, and the `testsuite` application. This is the main implementation area for the framework. |
-| `src/sap.ui.core/` | Representative library-package root. It shows the standard package layout used across the monorepo: package metadata at the package root plus separate `src` and `test` trees for implementation and verification. |
-| `src/sap.ui.core/package.json:1-17` | Shows how an individual framework library is published as its own npm package (`@openui5/sap.ui.core`) while still living inside the shared monorepo. |
-| `docs/developing.md:8-31` | Documents the standard contributor workflow: install dependencies, run `npm start`, and open the testsuite. This explains how the repository is meant to be developed locally. |
-| `docs/developing.md:64-99` | Documents the SDK build and serve flow, showing how the monorepo is used to produce the OpenUI5 Demo Kit and documentation artifacts. |
-| `docs/controllibraries.md:23-75` | Gives the canonical library file structure, including sources, themes, manual test pages, and QUnit tests. This is the clearest specification of how each library package inside `src/` is organized. |
-| `src/testsuite/package.json:17-23` | Defines the scripts for the dedicated testsuite application that serves and builds the combined framework for local testing and SDK generation. |
-| `src/testsuite/package.json:24-49` | Lists the library and theme package dependencies consumed by the testsuite application, showing how the separate monorepo packages are assembled into one runnable test environment. |
-| `lib/` | Contains shared tooling used by the monorepo, including builder, server, theming, and test support code. This is the implementation area for repository-level infrastructure rather than framework APIs. |
-| `lib/test/karma.conf.js:7-25` | Maps library names to their QUnit testsuite pages, showing how automated tests are organized per library package. |
-| `lib/test/karma.conf.js:93-161` | Configures Karma to serve the testsuite workspace and run library-specific tests, which ties the repository structure directly to automated verification. |
-| `docs/guidelines.md:1-30` | Captures the main development conventions and tools used across all packages, which is important context for anyone navigating or extending the repository structure. |
+| `docs/controllibraries.md:23-74` | Best single overview of a UI5 library package. It documents the canonical `src/` + `test/` layout, `.library`, `library.js`, theme assets, manual test pages, and QUnit tests, which makes it the main upstream source for the specification's repository and component structure. |
+| `lib/jsdoc/schemas/sap-ui-library-api.json:1-80` | JSON Schema for the generated `api.json` files. This is the strongest machine-readable input for the local framework specification because it defines the structure of library APIs, symbols, types, methods, and metadata. |
+| `lib/jsdoc/schemas/sap-ui-library-api-index.json:1-74` | Companion JSON Schema for the aggregated API index. It is useful when documenting how libraries, classes, interfaces, enums, and namespaces are organized across the whole framework instead of one package at a time. |
+| `lib/jsdoc/jsdoc-config-template.json:1-24` | Shows that OpenUI5 configures JSDoc to emit the `apijson` variant. This is important because it demonstrates the upstream documentation-to-JSON pipeline that the local spec can mirror at a higher abstraction level. |
+| `lib/jsdoc/transformApiJson.js:1-52` | Core transformation step in the upstream documentation generator. It is a useful reference for the local generator architecture because it converts source documentation into structured JSON rather than generating framework code directly. |
+| `src/sap.ui.core/src/sap/ui/base/ManagedObject.js:271-288` | Declares the central UI5 metadata contract with `properties`, `aggregations`, `associations`, and `events`. These concepts map directly to the local specification's component, interaction, and data-binding sections. |
+| `src/sap.ui.core/.dtsgenrc:1-52` | The closest upstream artifact to TypeScript generation. It maps OpenUI5 API metadata to TypeScript-friendly types and overrides, which is directly relevant to a future Angular TypeScript generator. |
+| `src/sap.m/src/sap/m/.library:1-74` | Representative library manifest. It records library identity, dependencies, documentation index files, release-note sources, and build-time metadata, so it is a strong reference for documenting package-level structure and relationships. |
+| `src/sap.ui.core/src/sap/ui/core/` | Contains the core runtime implementation for components, controls, MVC, and routing. This folder is the main upstream reference for application structure, page composition, and navigation concepts that the local spec needs to describe abstractly. |
+| `src/sap.ui.core/src/sap/ui/model/` | Contains the binding and model implementations (`Model`, `Binding`, `JSONModel`, OData models, list/property bindings). This area is directly relevant to the local data-binding, state, and form sections. |
+| `docs/guidelines.md:1-49` | Captures cross-cutting coding and API design conventions. It is useful background when documenting compliance rules and naming/behavior expectations in the local specification. |
+
+No Angular-specific generator or `@angular/core` usage was found in `UI5/openui5`; the closest TypeScript-related assets are the `api.json`/JSDoc pipeline and the `.dtsgenrc` declaration-generation configuration.
