@@ -645,9 +645,87 @@
           "api-json-projection"
         ],
         "requirements": [
-          "Prefer public metadata over private implementation details.",
-          "Separate scope discovery (`library.js`) from semantic interpretation (metadata grammar).",
-          "Define what implementations must provide without prescribing a specific rendering technology."
+          "Prefer public library catalogs and runtime metadata over private implementation details, renderer internals, or undocumented helper code.",
+          "Separate scope discovery (`library.js`) from semantic interpretation (metadata grammar) and from secondary API projections such as `api.json`.",
+          "Normalize OpenUI5 concepts into canonical JSON without losing public names, types, multiplicity, defaults, visibility, or declared relationships.",
+          "Specify observable framework capabilities and constraints rather than prescribing a specific renderer, widget lifecycle, build pipeline, or source layout.",
+          "Treat design-time metadata, generated API projections, and automated tests as supporting evidence that can refine validation and documentation but cannot override the public runtime contract.",
+          "Require opt-in semantics for specialized behavior: renderer linkage, drag-and-drop support, accessibility relationships, and similar features belong in the specification only when they are publicly declared."
+        ],
+        "nonGoals": [
+          "The design principles do not require consumers to parse private source files, infer behavior from renderer code, or reverse-engineer undocumented conventions.",
+          "The design principles do not standardize framework-internal class hierarchies, optimization strategies, or build-time packaging details unless those details are surfaced through the public contract.",
+          "The design principles do not treat convenience projections such as `api.json` as a replacement for `library.js` discovery or managed object metadata."
+        ],
+        "tags": [
+          {
+            "name": "public-contract-first",
+            "meaning": "Normative specification entries come from publicly declared libraries and metadata before any private implementation details or generated projections are considered."
+          },
+          {
+            "name": "layered-evidence-model",
+            "meaning": "Library catalogs, metadata grammar, API projections, design-time metadata, and tests each have distinct roles and must not be conflated."
+          },
+          {
+            "name": "lossless-normalization",
+            "meaning": "Extraction must preserve the meaning of public metadata when converting framework concepts into canonical JSON."
+          },
+          {
+            "name": "implementation-agnostic-semantics",
+            "meaning": "The specification defines observable framework behavior without binding compliant implementations to a specific rendering or build strategy."
+          },
+          {
+            "name": "declared-capabilities-only",
+            "meaning": "Specialized behavior enters the specification only when it is explicitly declared in public metadata or equally authoritative public artifacts."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Public contract precedence",
+            "definition": "The rule that publicly declared library and metadata artifacts outrank private code paths, renderer internals, and generated documentation when determining normative specification content."
+          },
+          {
+            "term": "Layered evidence model",
+            "definition": "A source hierarchy in which `library.js` discovers scope, metadata grammar defines semantics, and projections such as `api.json`, design-time metadata, and tests provide corroborating evidence."
+          },
+          {
+            "term": "Lossless normalization",
+            "definition": "The transformation of framework metadata into canonical JSON while preserving public names, typing, multiplicity, defaults, visibility, and declared relationships."
+          },
+          {
+            "term": "Implementation-agnostic semantics",
+            "definition": "Externally observable framework requirements expressed independently of any concrete rendering technology, lifecycle implementation, or source-code organization."
+          },
+          {
+            "term": "Declared capability",
+            "definition": "A framework feature or behavior that is eligible for specification only because it is explicitly exposed through public metadata or another authoritative public contract artifact."
+          }
+        ],
+        "usage": [
+          "Use these principles whenever extracting a new section from OpenUI5: determine scope from `library.js`, interpret meaning from metadata grammar, then use `api.json`, design-time metadata, or tests only to confirm or operationalize the extracted contract.",
+          "When normalizing metadata into `/openui.json`, preserve authored identifiers, public types, multiplicity flags, defaults, visibility, associations, and events rather than replacing them with generator-specific abstractions.",
+          "If a behavior appears only in renderer code, helper utilities, or undocumented conventions, treat it as non-normative unless an authoritative public artifact also declares it.",
+          "Record specialized capabilities only when the public contract explicitly exposes them, so downstream generators and validators can rely on deterministic, opt-in semantics.",
+          "Use the layered evidence model to resolve disagreements: public runtime metadata remains authoritative, while projections and tests help validate completeness, examples, or compliance rules."
+        ],
+        "implementationNotes": [
+          "Specification maintainers should keep discovery, semantic interpretation, and validation as separate steps so the canonical JSON can be regenerated deterministically from authoritative sources.",
+          "Normalization pipelines should preserve authored metadata vocabulary and cardinality instead of collapsing public concepts into renderer-specific or generator-specific internal models.",
+          "Supporting artifacts such as `api.json`, design-time metadata, and tests should be linked back to the same public contract entry they corroborate, making disagreements visible without changing the normative source."
+        ],
+        "examples": [
+          {
+            "title": "Layered evidence and precedence example",
+            "description": "A `library.js` declaration and component metadata define the normative contract for a form component; a matching `api.json` entry confirms that contract, while a private helper or renderer detail does not expand it."
+          },
+          {
+            "title": "Lossless normalization example",
+            "description": "A normalized metadata record preserves a component's public property names, association types, aggregation multiplicity, and default values instead of replacing them with generator-specific shortcuts."
+          },
+          {
+            "title": "Declared capabilities only example",
+            "description": "Drag-and-drop, accessibility relationships, or renderer linkage become specification content only when public metadata explicitly declares them."
+          }
         ]
       },
       {
