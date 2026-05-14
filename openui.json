@@ -475,9 +475,79 @@
           "metadata-grammar-root"
         ],
         "requirements": [
-          "The master specification is `/openui.json` and is the single source of truth for generators and documentation.",
-          "The scope is the public UI framework contract: libraries, public symbols, component metadata, interaction semantics, and supporting compliance evidence.",
-          "Build-time-only artifacts such as `.library` files may inform documentation but do not define the runtime contract by themselves."
+          "The master specification is `/openui.json`; the markdown files under `spec/` are synchronized prose views of the same contract.",
+          "The normative scope is the public runtime UI framework contract: libraries, public symbols, component metadata, interaction semantics, and compliance evidence tied to that contract.",
+          "Scope discovery starts from `library.js` catalogs, while normative interpretation of component shape comes from metadata grammar such as properties, aggregations, associations, events, defaults, visibility, renderer linkage, and drag-and-drop declarations.",
+          "Machine-readable API projections such as `api.json`, design-time metadata, and automated tests are supporting evidence that refine, validate, or operationalize the contract without replacing the runtime metadata model.",
+          "Build-time-only artifacts such as `.library` files may help locate dependencies, documentation resources, and packaging context, but they do not define the runtime contract by themselves."
+        ],
+        "tags": [
+          {
+            "name": "single-source-of-truth",
+            "meaning": "The canonical specification record lives in `/openui.json`, and derived markdown or generator outputs must stay consistent with it."
+          },
+          {
+            "name": "public-runtime-contract",
+            "meaning": "Only publicly declared libraries, symbols, metadata members, and documented interaction semantics belong to the normative framework surface."
+          },
+          {
+            "name": "scope-discovery",
+            "meaning": "Library-level declarations such as `library.js` define what components, types, interfaces, and dependencies enter the specification scope."
+          },
+          {
+            "name": "metadata-grammar",
+            "meaning": "Managed object metadata provides the formal grammar used to interpret properties, aggregations, associations, events, defaults, visibility, renderer linkage, and drag-and-drop semantics."
+          },
+          {
+            "name": "supporting-evidence",
+            "meaning": "Artifacts like `api.json`, design-time metadata, and compliance tests support extraction and validation, but remain secondary to the runtime metadata contract."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "OpenUI Specification",
+            "definition": "An implementation-independent specification derived from OpenUI5 public library catalogs and metadata grammar, expressed canonically in `/openui.json` and rendered into prose under `spec/`."
+          },
+          {
+            "term": "Public runtime contract",
+            "definition": "The externally visible framework surface formed by public libraries, symbols, component metadata, interaction semantics, and compliance-relevant behavior that implementations must preserve."
+          },
+          {
+            "term": "Scope discovery",
+            "definition": "The process of enumerating which libraries, dependencies, controls, elements, interfaces, and types belong to the specification, primarily by reading `library.js` declarations."
+          },
+          {
+            "term": "Metadata grammar",
+            "definition": "The normative rule set that explains how component metadata is interpreted, including properties, aggregations, associations, events, default values, visibility, renderer linkage, and drag-and-drop declarations."
+          },
+          {
+            "term": "Supporting evidence",
+            "definition": "Secondary sources such as `api.json`, design-time metadata, and automated tests that corroborate, project, or validate the public contract without becoming the contract themselves."
+          }
+        ],
+        "usage": [
+          "Use the introduction to determine whether an upstream artifact contributes to normative scope, supporting evidence, or build-time context before extracting details into later sections.",
+          "Use the distinction between scope discovery and metadata grammar when normalizing OpenUI5 concepts into implementation-independent specification entries or generator inputs.",
+          "Use the introduction as the baseline rule for rejecting private implementation details, undocumented runtime behavior, or build-only metadata as normative framework requirements."
+        ],
+        "implementationNotes": [
+          "Implementations should load `/openui.json` first and treat the markdown documents as derived explanatory material, not a competing source of truth.",
+          "Extraction or generator pipelines should enumerate libraries and symbols from `library.js`, then interpret component structure through metadata grammar before consulting supporting evidence.",
+          "If supporting evidence conflicts with runtime metadata, prefer the public runtime metadata model and record the secondary artifact as validation or documentation context."
+        ],
+        "examples": [
+          {
+            "title": "Scope discovery example",
+            "description": "A library declaration that lists dependencies, controls, elements, interfaces, and types establishes which public symbols must be considered by the specification."
+          },
+          {
+            "title": "Metadata grammar example",
+            "description": "A component metadata block that declares properties, aggregations, associations, and events defines the formal contract that later sections normalize into component, interaction, and state requirements."
+          },
+          {
+            "title": "Supporting evidence example",
+            "description": "An `api.json` export or QUnit test may confirm how a public event or property is surfaced, but it cannot widen scope beyond what the public runtime metadata already declares."
+          }
         ]
       },
       {
