@@ -4,7 +4,7 @@
 
 Note: line ranges in this document use the format `file:start-end`.
 
-The project purpose in `AGENTS.md:5-17` and `REQUIREMENTS.md:3-14` describes this repository's goals: (1) documenting a framework specification derived from OpenUI5, and (2) building an Angular TypeScript generator based on that specification. The table below maps the folders and files in the upstream OpenUI5 repository (`UI5/openui5`) that are most relevant to those goals.
+This repository has two goals: (1) documenting a framework specification derived from OpenUI5, and (2) building an Angular TypeScript generator based on that specification. The table below maps the folders and files in the upstream OpenUI5 repository (`UI5/openui5`) that are most relevant to those goals.
 
 | Folder / file reference | Description of the content and relation to the project purpose |
 | --- | --- |
