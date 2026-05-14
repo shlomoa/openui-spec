@@ -4,7 +4,7 @@
 
 Note: line ranges in this document use the format `file:start-end`.
 
-The project purpose in `AGENTS.md:5-16` and `REQUIREMENTS.md:3-14` describes this repository as documenting a framework specification and an Angular TypeScript generator derived from OpenUI5. The table below maps the upstream OpenUI5 folders and files that are most relevant to those goals.
+The project purpose in `AGENTS.md:5-16` and `REQUIREMENTS.md:3-14` describes this repository's goals: (1) documenting a framework specification derived from OpenUI5, and (2) building an Angular TypeScript generator based on that specification. The table below maps the upstream OpenUI5 folders and files that are most relevant to those goals.
 
 | Folder / file reference | Description of the content and relation to the project purpose |
 | --- | --- |
@@ -20,4 +20,4 @@ The project purpose in `AGENTS.md:5-16` and `REQUIREMENTS.md:3-14` describes thi
 | `src/sap.ui.core/src/sap/ui/model/` | Contains the binding and model implementations (`Model`, `Binding`, `JSONModel`, OData models, list/property bindings). This area is directly relevant to the local data-binding, state, and form sections. |
 | `docs/guidelines.md:1-49` | Captures cross-cutting coding and API design conventions. It is useful background when documenting compliance rules and naming/behavior expectations in the local specification. |
 
-No Angular-specific generator or `@angular/core` usage was found in `UI5/openui5`; the closest TypeScript-related assets are the `api.json`/JSDoc pipeline and the `.dtsgenrc` declaration-generation configuration. That means the Angular generator in this repository will need to be designed from those API and typing inputs rather than adapted from an upstream Angular implementation.
+No Angular-specific generator or `@angular/core` usage was found in `UI5/openui5`. The closest TypeScript-related assets are the `api.json`/JSDoc pipeline and the `.dtsgenrc` declaration-generation configuration. The Angular generator in this repository will therefore need to be designed from those API and typing inputs rather than adapted from an upstream Angular implementation.
