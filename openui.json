@@ -562,7 +562,77 @@
         "requirements": [
           "Enable library-based discovery of the public UI surface through a stable catalog of controls, elements, interfaces, and types.",
           "Define components with declarative metadata instead of framework-specific implementation details.",
-          "Support generator use cases by keeping the contract machine-readable, hierarchical, and normalization-friendly."
+          "Preserve a portable public contract that different implementations, tooling pipelines, and generators can consume without depending on a specific renderer or runtime internals.",
+          "Support generator and automation use cases by keeping the contract machine-readable, hierarchical, and normalization-friendly.",
+          "Make component capabilities, composition rules, types, and interaction hooks explicit enough to support validation, documentation, and interoperability across libraries."
+        ],
+        "tags": [
+          {
+            "name": "discoverable-public-surface",
+            "meaning": "The framework must expose its public libraries, controls, elements, interfaces, and types through stable catalog metadata that tools can enumerate."
+          },
+          {
+            "name": "declarative-component-contract",
+            "meaning": "Component shape and capabilities must be expressed as metadata, not inferred from private implementation code."
+          },
+          {
+            "name": "implementation-independent-contract",
+            "meaning": "The specification must capture what compliant implementations provide without coupling that contract to a renderer, build stack, or framework-internal class design."
+          },
+          {
+            "name": "generator-ready-structure",
+            "meaning": "The contract must stay structured enough for validation, normalization, transformation, and code generation workflows."
+          },
+          {
+            "name": "interoperable-library-ecosystem",
+            "meaning": "Libraries and components must publish enough typed information to support composition, documentation, and tooling across package boundaries."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Public surface discovery",
+            "definition": "The ability to enumerate the framework's public libraries, controls, elements, interfaces, dependencies, and types from stable library-level declarations."
+          },
+          {
+            "term": "Declarative component contract",
+            "definition": "A public metadata description of a component's properties, composition, relationships, events, defaults, and capabilities, independent of private implementation details."
+          },
+          {
+            "term": "Implementation-independent contract",
+            "definition": "A specification record that defines externally observable framework semantics without requiring a specific renderer, runtime architecture, or build pipeline."
+          },
+          {
+            "term": "Generator-ready structure",
+            "definition": "A machine-readable, hierarchical, and normalization-friendly representation of the framework contract that can be consumed by tooling, validators, or code generators."
+          },
+          {
+            "term": "Interoperability evidence",
+            "definition": "Typed component and library metadata that allows other libraries, applications, and tools to compose against the public contract without inspecting internals."
+          }
+        ],
+        "usage": [
+          "Use the design goals to decide whether a proposed specification entry improves discoverability, declarative clarity, portability, or tooling readiness before treating it as normative.",
+          "Use the separation between library catalogs and metadata grammar to keep scope discovery independent from component interpretation during extraction or normalization.",
+          "Use the design goals as a filter for excluding renderer-specific internals, build-only structure, or undocumented implementation details from the canonical contract."
+        ],
+        "implementationNotes": [
+          "Implementations should expose their public surface through stable library declarations so tooling can enumerate components, interfaces, types, and dependencies without source inspection.",
+          "Extraction and generator pipelines should preserve typed names, multiplicity, defaults, and public relationships in normalized JSON so downstream tooling does not need to infer them from runtime code.",
+          "Secondary artifacts such as `api.json`, design-time metadata, and tests should be used to validate or operationalize the contract, while public runtime metadata remains the authoritative source."
+        ],
+        "examples": [
+          {
+            "title": "Discoverable public surface example",
+            "description": "A library declaration listing dependencies, types, interfaces, controls, and elements makes the public framework surface enumerable without reading private files."
+          },
+          {
+            "title": "Declarative component contract example",
+            "description": "A component metadata block that declares typed properties, aggregations, associations, and events makes composition and interaction semantics explicit without exposing implementation internals."
+          },
+          {
+            "title": "Generator-ready structure example",
+            "description": "A normalized JSON contract can drive validation, documentation generation, and framework-specific scaffolding without requiring parser logic for renderer internals."
+          }
         ]
       },
       {
