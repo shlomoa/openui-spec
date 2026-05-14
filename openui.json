@@ -1,0 +1,894 @@
+{
+  "specification": {
+    "id": "openui",
+    "name": "OpenUI Specification",
+    "version": "0.1.0",
+    "sourceOfTruth": "openui.json",
+    "description": "Implementation-independent Web UI framework specification derived from OpenUI5 public library catalogs and component metadata grammar.",
+    "roots": [
+      {
+        "id": "library-catalog-root",
+        "title": "Library Catalog Root",
+        "basis": [
+          "docs/controllibraries.md",
+          "src/*/src/<library>/library.js"
+        ],
+        "responsibility": "Discover the public scope of libraries, dependencies, types, interfaces, controls, and elements."
+      },
+      {
+        "id": "metadata-grammar-root",
+        "title": "Metadata Grammar Root",
+        "basis": [
+          "src/sap.ui.core/src/sap/ui/base/ManagedObjectMetadata.js",
+          "src/sap.ui.core/src/sap/ui/core/ElementMetadata.js"
+        ],
+        "responsibility": "Define the normative grammar for properties, aggregations, associations, events, visibility, renderer linkage, and drag-and-drop semantics."
+      }
+    ],
+    "secondaryEvidence": [
+      {
+        "id": "api-json-projection",
+        "basis": [
+          "lib/jsdoc/schemas/sap-ui-library-api.json",
+          "lib/jsdoc/transformApiJson.js"
+        ],
+        "responsibility": "Project the same public contract into machine-readable API metadata for tooling and consistency checks."
+      },
+      {
+        "id": "design-time-evidence",
+        "basis": [
+          "src/*/src/<library>/designtime/*.designtime.js"
+        ],
+        "responsibility": "Add authoring-time semantics without replacing the runtime contract."
+      },
+      {
+        "id": "compliance-tests",
+        "basis": [
+          "src/*/test/<library>/qunit/*.qunit.js",
+          "src/*/test/<library>/visual/*.spec.js"
+        ],
+        "responsibility": "Verify the documented component contract with executable evidence."
+      }
+    ],
+    "hierarchy": {
+      "id": "openui-root",
+      "title": "OpenUI Specification Root",
+      "level": 0,
+      "document": "spec/README.md",
+      "children": [
+        {
+          "id": "library-catalog-root",
+          "title": "Library Catalog Root",
+          "level": 1,
+          "children": [
+            {
+              "id": "library-identity",
+              "title": "Library Identity and Dependencies",
+              "level": 2
+            },
+            {
+              "id": "library-type-system",
+              "title": "Type and Enum Catalog",
+              "level": 2
+            },
+            {
+              "id": "library-interface-catalog",
+              "title": "Interface Catalog",
+              "level": 2
+            },
+            {
+              "id": "library-component-catalog",
+              "title": "Component Catalog",
+              "level": 2,
+              "children": [
+                {
+                  "id": "reference-component-button",
+                  "title": "Reference Component: sap.m.Button",
+                  "level": 3
+                },
+                {
+                  "id": "api-json-projection",
+                  "title": "Machine-readable API Projection",
+                  "level": 3
+                },
+                {
+                  "id": "design-time-evidence",
+                  "title": "Design-time Evidence",
+                  "level": 3
+                },
+                {
+                  "id": "compliance-tests",
+                  "title": "Compliance Test Evidence",
+                  "level": 3
+                }
+              ]
+            },
+            {
+              "id": "library-element-catalog",
+              "title": "Element Catalog",
+              "level": 2
+            }
+          ]
+        },
+        {
+          "id": "metadata-grammar-root",
+          "title": "Metadata Grammar Root",
+          "level": 1,
+          "children": [
+            {
+              "id": "property-model",
+              "title": "Property Model",
+              "level": 2
+            },
+            {
+              "id": "aggregation-model",
+              "title": "Aggregation Model",
+              "level": 2
+            },
+            {
+              "id": "association-model",
+              "title": "Association Model",
+              "level": 2
+            },
+            {
+              "id": "event-model",
+              "title": "Event Model",
+              "level": 2
+            },
+            {
+              "id": "visibility-default-model",
+              "title": "Visibility and Default Value Model",
+              "level": 2
+            },
+            {
+              "id": "renderer-dnd-model",
+              "title": "Renderer and Drag-and-Drop Model",
+              "level": 2
+            }
+          ]
+        }
+      ]
+    },
+    "traversal": {
+      "strategy": "breadth-first-search",
+      "nodes": [
+        {
+          "step": 1,
+          "level": 0,
+          "id": "openui-root",
+          "title": "OpenUI Specification Root",
+          "parent": null,
+          "children": [
+            "library-catalog-root",
+            "metadata-grammar-root"
+          ],
+          "evidence": [
+            "REPO_STRUCTURE.md",
+            "REQUIREMENTS.md",
+            "spec/SPECIFICATION_STRUCTURE.md"
+          ],
+          "mappedSections": [
+            "01-introduction",
+            "02-design-goals",
+            "21-compliance-rules"
+          ]
+        },
+        {
+          "step": 2,
+          "level": 1,
+          "id": "library-catalog-root",
+          "title": "Library Catalog Root",
+          "parent": "openui-root",
+          "children": [
+            "library-identity",
+            "library-type-system",
+            "library-interface-catalog",
+            "library-component-catalog",
+            "library-element-catalog"
+          ],
+          "evidence": [
+            "docs/controllibraries.md",
+            "src/*/src/<library>/library.js"
+          ],
+          "mappedSections": [
+            "05-ui-concept-model",
+            "06-application-structure",
+            "08-component-model"
+          ]
+        },
+        {
+          "step": 3,
+          "level": 1,
+          "id": "metadata-grammar-root",
+          "title": "Metadata Grammar Root",
+          "parent": "openui-root",
+          "children": [
+            "property-model",
+            "aggregation-model",
+            "association-model",
+            "event-model",
+            "visibility-default-model",
+            "renderer-dnd-model"
+          ],
+          "evidence": [
+            "src/sap.ui.core/src/sap/ui/base/ManagedObjectMetadata.js",
+            "src/sap.ui.core/src/sap/ui/core/ElementMetadata.js"
+          ],
+          "mappedSections": [
+            "07-layout-system",
+            "08-component-model",
+            "09-interaction-model"
+          ]
+        },
+        {
+          "step": 4,
+          "level": 2,
+          "id": "library-identity",
+          "title": "Library Identity and Dependencies",
+          "parent": "library-catalog-root",
+          "children": [],
+          "evidence": [
+            "library.js -> name, version, dependencies"
+          ],
+          "mappedSections": [
+            "06-application-structure",
+            "21-compliance-rules"
+          ]
+        },
+        {
+          "step": 5,
+          "level": 2,
+          "id": "library-type-system",
+          "title": "Type and Enum Catalog",
+          "parent": "library-catalog-root",
+          "children": [],
+          "evidence": [
+            "library.js -> types"
+          ],
+          "mappedSections": [
+            "08-component-model",
+            "10-state-model"
+          ]
+        },
+        {
+          "step": 6,
+          "level": 2,
+          "id": "library-interface-catalog",
+          "title": "Interface Catalog",
+          "parent": "library-catalog-root",
+          "children": [],
+          "evidence": [
+            "library.js -> interfaces"
+          ],
+          "mappedSections": [
+            "08-component-model",
+            "12-form-model",
+            "20-extension-model"
+          ]
+        },
+        {
+          "step": 7,
+          "level": 2,
+          "id": "library-component-catalog",
+          "title": "Component Catalog",
+          "parent": "library-catalog-root",
+          "children": [
+            "reference-component-button",
+            "api-json-projection",
+            "design-time-evidence",
+            "compliance-tests"
+          ],
+          "evidence": [
+            "library.js -> controls"
+          ],
+          "mappedSections": [
+            "05-ui-concept-model",
+            "08-component-model",
+            "14-feedback-model"
+          ]
+        },
+        {
+          "step": 8,
+          "level": 2,
+          "id": "library-element-catalog",
+          "title": "Element Catalog",
+          "parent": "library-catalog-root",
+          "children": [],
+          "evidence": [
+            "library.js -> elements"
+          ],
+          "mappedSections": [
+            "05-ui-concept-model",
+            "07-layout-system"
+          ]
+        },
+        {
+          "step": 9,
+          "level": 2,
+          "id": "property-model",
+          "title": "Property Model",
+          "parent": "metadata-grammar-root",
+          "children": [],
+          "evidence": [
+            "ManagedObjectMetadata.js -> Property"
+          ],
+          "mappedSections": [
+            "08-component-model",
+            "10-state-model",
+            "11-data-binding-model"
+          ]
+        },
+        {
+          "step": 10,
+          "level": 2,
+          "id": "aggregation-model",
+          "title": "Aggregation Model",
+          "parent": "metadata-grammar-root",
+          "children": [],
+          "evidence": [
+            "ManagedObjectMetadata.js -> Aggregation"
+          ],
+          "mappedSections": [
+            "05-ui-concept-model",
+            "07-layout-system",
+            "08-component-model"
+          ]
+        },
+        {
+          "step": 11,
+          "level": 2,
+          "id": "association-model",
+          "title": "Association Model",
+          "parent": "metadata-grammar-root",
+          "children": [],
+          "evidence": [
+            "ManagedObjectMetadata.js -> Association"
+          ],
+          "mappedSections": [
+            "08-component-model",
+            "12-form-model",
+            "15-accessibility-model"
+          ]
+        },
+        {
+          "step": 12,
+          "level": 2,
+          "id": "event-model",
+          "title": "Event Model",
+          "parent": "metadata-grammar-root",
+          "children": [],
+          "evidence": [
+            "ManagedObjectMetadata.js -> Event"
+          ],
+          "mappedSections": [
+            "08-component-model",
+            "09-interaction-model",
+            "14-feedback-model"
+          ]
+        },
+        {
+          "step": 13,
+          "level": 2,
+          "id": "visibility-default-model",
+          "title": "Visibility and Default Value Model",
+          "parent": "metadata-grammar-root",
+          "children": [],
+          "evidence": [
+            "ManagedObjectMetadata.js -> visibility/defaultValue"
+          ],
+          "mappedSections": [
+            "10-state-model",
+            "21-compliance-rules"
+          ]
+        },
+        {
+          "step": 14,
+          "level": 2,
+          "id": "renderer-dnd-model",
+          "title": "Renderer and Drag-and-Drop Model",
+          "parent": "metadata-grammar-root",
+          "children": [],
+          "evidence": [
+            "ElementMetadata.js -> renderer, dnd"
+          ],
+          "mappedSections": [
+            "07-layout-system",
+            "15-accessibility-model",
+            "18-security-privacy-ui-rules"
+          ]
+        },
+        {
+          "step": 15,
+          "level": 3,
+          "id": "reference-component-button",
+          "title": "Reference Component: sap.m.Button",
+          "parent": "library-component-catalog",
+          "children": [],
+          "evidence": [
+            "src/sap.m/src/sap/m/Button.js",
+            "src/sap.m/test/sap/m/qunit/Button.qunit.js"
+          ],
+          "mappedSections": [
+            "09-interaction-model",
+            "15-accessibility-model",
+            "23-reference-examples"
+          ]
+        },
+        {
+          "step": 16,
+          "level": 3,
+          "id": "api-json-projection",
+          "title": "Machine-readable API Projection",
+          "parent": "library-component-catalog",
+          "children": [],
+          "evidence": [
+            "lib/jsdoc/schemas/sap-ui-library-api.json",
+            "lib/jsdoc/transformApiJson.js"
+          ],
+          "mappedSections": [
+            "02-design-goals",
+            "19-performance-requirements",
+            "22-test-acceptance-criteria"
+          ]
+        },
+        {
+          "step": 17,
+          "level": 3,
+          "id": "design-time-evidence",
+          "title": "Design-time Evidence",
+          "parent": "library-component-catalog",
+          "children": [],
+          "evidence": [
+            "src/*/src/<library>/designtime/*.designtime.js"
+          ],
+          "mappedSections": [
+            "20-extension-model"
+          ]
+        },
+        {
+          "step": 18,
+          "level": 3,
+          "id": "compliance-tests",
+          "title": "Compliance Test Evidence",
+          "parent": "library-component-catalog",
+          "children": [],
+          "evidence": [
+            "src/*/test/<library>/qunit/*.qunit.js",
+            "src/*/test/<library>/visual/*.spec.js"
+          ],
+          "mappedSections": [
+            "21-compliance-rules",
+            "22-test-acceptance-criteria"
+          ]
+        }
+      ]
+    },
+    "sections": [
+      {
+        "id": "01-introduction",
+        "title": "Introduction",
+        "purpose": "Define the scope of the OpenUI specification as an implementation-independent contract derived from OpenUI5 public metadata and library declarations.",
+        "document": "spec/01-introduction.md",
+        "derivedFrom": [
+          "openui-root",
+          "library-catalog-root",
+          "metadata-grammar-root"
+        ],
+        "requirements": [
+          "The master specification is `/openui.json` and is the single source of truth for generators and documentation.",
+          "The scope is the public UI framework contract: libraries, public symbols, component metadata, interaction semantics, and supporting compliance evidence.",
+          "Build-time-only artifacts such as `.library` files may inform documentation but do not define the runtime contract by themselves."
+        ]
+      },
+      {
+        "id": "02-design-goals",
+        "title": "Design Goals",
+        "purpose": "Describe the outcomes a compliant web UI framework must enable.",
+        "document": "spec/02-design-goals.md",
+        "derivedFrom": [
+          "library-catalog-root",
+          "metadata-grammar-root"
+        ],
+        "requirements": [
+          "Enable library-based discovery of the public UI surface through a stable catalog of controls, elements, interfaces, and types.",
+          "Define components with declarative metadata instead of framework-specific implementation details.",
+          "Support generator use cases by keeping the contract machine-readable, hierarchical, and normalization-friendly."
+        ]
+      },
+      {
+        "id": "03-design-principles",
+        "title": "Design Principles",
+        "purpose": "Capture the principles used to normalize OpenUI5 concepts into a reusable framework specification.",
+        "document": "spec/03-design-principles.md",
+        "derivedFrom": [
+          "metadata-grammar-root",
+          "api-json-projection"
+        ],
+        "requirements": [
+          "Prefer public metadata over private implementation details.",
+          "Separate scope discovery (`library.js`) from semantic interpretation (metadata grammar).",
+          "Define what implementations must provide without prescribing a specific rendering technology."
+        ]
+      },
+      {
+        "id": "04-target-users",
+        "title": "Target Users",
+        "purpose": "Identify the intended consumers of the specification.",
+        "document": "spec/04-target-users.md",
+        "derivedFrom": [
+          "openui-root"
+        ],
+        "requirements": [
+          "Application developers use the specification to understand the available component contract.",
+          "Designers and UX owners use it to align component behavior, feedback, accessibility, and theming requirements.",
+          "Framework and generator maintainers use it as the stable input for tooling and code generation."
+        ]
+      },
+      {
+        "id": "05-ui-concept-model",
+        "title": "UI Concept Model",
+        "purpose": "Define the abstract building blocks of the framework UI.",
+        "document": "spec/05-ui-concept-model.md",
+        "derivedFrom": [
+          "library-component-catalog",
+          "library-element-catalog",
+          "aggregation-model"
+        ],
+        "requirements": [
+          "A UI is composed from libraries that publish controls and elements.",
+          "Controls are interactive or presentational components; elements are reusable structural or supporting composition units.",
+          "Composition is expressed declaratively through metadata-defined relationships such as child content, labels, descriptions, and actions."
+        ]
+      },
+      {
+        "id": "06-application-structure",
+        "title": "Application Structure",
+        "purpose": "Describe the required structure of applications built on the framework.",
+        "document": "spec/06-application-structure.md",
+        "derivedFrom": [
+          "library-catalog-root",
+          "library-component-catalog"
+        ],
+        "requirements": [
+          "Applications compose pages, dialogs, forms, lists, and navigation containers from library-published components.",
+          "The framework must support a navigable shell-level structure and page hierarchy built from public components.",
+          "Library dependencies must be explicit so application structure can be resolved without reading component internals."
+        ]
+      },
+      {
+        "id": "07-layout-system",
+        "title": "Layout System",
+        "purpose": "Describe the abstract layout and composition requirements.",
+        "document": "spec/07-layout-system.md",
+        "derivedFrom": [
+          "aggregation-model",
+          "renderer-dnd-model"
+        ],
+        "requirements": [
+          "Layout is expressed as ordered or named composition regions exposed through aggregations.",
+          "Responsive behavior must preserve component composition semantics when layout density, theme, or viewport changes.",
+          "Container components may expose drag-and-drop semantics only when declared in metadata."
+        ]
+      },
+      {
+        "id": "08-component-model",
+        "title": "Component Model",
+        "purpose": "Define the normative component contract.",
+        "document": "spec/08-component-model.md",
+        "derivedFrom": [
+          "library-component-catalog",
+          "property-model",
+          "aggregation-model",
+          "association-model",
+          "event-model"
+        ],
+        "requirements": [
+          "Each component must expose a stable identity, owning library, supported interfaces, and public metadata.",
+          "Component metadata consists of properties, aggregations, associations, and events with defaults, visibility, multiplicity, and types.",
+          "Components may additionally expose renderer linkage, design-time hooks, and drag-and-drop capabilities."
+        ]
+      },
+      {
+        "id": "09-interaction-model",
+        "title": "Interaction Model",
+        "purpose": "Describe how user interaction is represented in the specification.",
+        "document": "spec/09-interaction-model.md",
+        "derivedFrom": [
+          "event-model",
+          "reference-component-button"
+        ],
+        "requirements": [
+          "User-triggered behavior is modeled as named events with stable semantics, such as `press` for activation.",
+          "Interaction rules must account for enabled and disabled states, pointer activation, and keyboard activation.",
+          "Deprecated interaction aliases may be documented for compatibility but must not replace the current public event contract."
+        ]
+      },
+      {
+        "id": "10-state-model",
+        "title": "State Model",
+        "purpose": "Describe state held or exposed by components.",
+        "document": "spec/10-state-model.md",
+        "derivedFrom": [
+          "property-model",
+          "visibility-default-model"
+        ],
+        "requirements": [
+          "Component state is represented by typed properties with explicit default values.",
+          "State may be public or hidden, but only public state participates in the external component contract.",
+          "Defaulted state and derived state must remain compatible with the declared metadata type system."
+        ]
+      },
+      {
+        "id": "11-data-binding-model",
+        "title": "Data Binding Model",
+        "purpose": "Describe how component state binds to external models.",
+        "document": "spec/11-data-binding-model.md",
+        "derivedFrom": [
+          "property-model",
+          "aggregation-model"
+        ],
+        "requirements": [
+          "Bindable properties and aggregations are part of the component contract and must be explicitly declared.",
+          "Bindings may target scalar properties or compositional collections depending on the metadata kind.",
+          "Async model updates must preserve declared property and aggregation types."
+        ]
+      },
+      {
+        "id": "12-form-model",
+        "title": "Form Model",
+        "purpose": "Describe form-oriented components and semantics.",
+        "document": "spec/12-form-model.md",
+        "derivedFrom": [
+          "library-interface-catalog",
+          "association-model",
+          "reference-component-button"
+        ],
+        "requirements": [
+          "Form-compatible components may advertise dedicated interfaces such as form-content contracts.",
+          "Form semantics require explicit label and description relationships through associations or equivalent metadata.",
+          "Validation and submission behavior must be representable through public properties, events, and feedback components."
+        ]
+      },
+      {
+        "id": "13-navigation-model",
+        "title": "Navigation Model",
+        "purpose": "Describe the navigation structures the framework must support.",
+        "document": "spec/13-navigation-model.md",
+        "derivedFrom": [
+          "library-component-catalog"
+        ],
+        "requirements": [
+          "The framework must support navigable page containers, dialogs, and shell-level composition primitives.",
+          "Navigation state must be expressible as public component state and events rather than hidden renderer behavior.",
+          "Route-aware or deep-linkable components should be discoverable from the public component catalog."
+        ]
+      },
+      {
+        "id": "14-feedback-model",
+        "title": "Feedback Model",
+        "purpose": "Define how user-visible feedback is modeled.",
+        "document": "spec/14-feedback-model.md",
+        "derivedFrom": [
+          "library-component-catalog",
+          "event-model"
+        ],
+        "requirements": [
+          "The framework must expose components for busy, message, dialog, and empty-state feedback patterns.",
+          "Feedback components must be addressable through the same public metadata contract as all other components.",
+          "Action completion, failure, and warning scenarios must be representable through public events and state."
+        ]
+      },
+      {
+        "id": "15-accessibility-model",
+        "title": "Accessibility Model",
+        "purpose": "Capture accessibility requirements visible in the public contract.",
+        "document": "spec/15-accessibility-model.md",
+        "derivedFrom": [
+          "association-model",
+          "reference-component-button",
+          "renderer-dnd-model"
+        ],
+        "requirements": [
+          "Components must support accessible naming and description relationships through public associations or equivalent metadata.",
+          "Accessibility roles, popup semantics, and text direction must be declarable as typed public state when applicable.",
+          "Keyboard activation and focus behavior are compliance-relevant parts of the interaction contract."
+        ]
+      },
+      {
+        "id": "16-theming-design-tokens",
+        "title": "Theming / Design Tokens",
+        "purpose": "Describe visual customization requirements.",
+        "document": "spec/16-theming-design-tokens.md",
+        "derivedFrom": [
+          "library-catalog-root"
+        ],
+        "requirements": [
+          "Libraries must support theme-specific assets and shared theme-level styling resources.",
+          "Theme composition must allow base styles plus theme overrides without changing the public component contract.",
+          "Density-aware and theme-aware assets are part of the visual system and must remain externally configurable."
+        ]
+      },
+      {
+        "id": "17-internationalization",
+        "title": "Internationalization",
+        "purpose": "Describe locale and translation requirements.",
+        "document": "spec/17-internationalization.md",
+        "derivedFrom": [
+          "library-catalog-root",
+          "reference-component-button"
+        ],
+        "requirements": [
+          "Libraries must provide translatable message resources for public UI text.",
+          "Locale-aware rendering must support right-to-left and left-to-right presentation where applicable.",
+          "Public text-bearing components must expose text direction and translatable labels through explicit metadata."
+        ]
+      },
+      {
+        "id": "18-security-privacy-ui-rules",
+        "title": "Security / Privacy UI Rules",
+        "purpose": "State UI-facing security and privacy constraints.",
+        "document": "spec/18-security-privacy-ui-rules.md",
+        "derivedFrom": [
+          "renderer-dnd-model",
+          "reference-component-button"
+        ],
+        "requirements": [
+          "Public component contracts must not rely on unsafe renderer side effects for user-visible semantics.",
+          "Components that open or reference popups must declare that relationship explicitly through public metadata.",
+          "Implementations should encode or sanitize user-provided visual values before they affect rendering or styling."
+        ]
+      },
+      {
+        "id": "19-performance-requirements",
+        "title": "Performance Requirements",
+        "purpose": "Describe performance-oriented expectations that follow from the public model.",
+        "document": "spec/19-performance-requirements.md",
+        "derivedFrom": [
+          "library-catalog-root",
+          "api-json-projection"
+        ],
+        "requirements": [
+          "Public library catalogs should allow eager discovery of available components without eager loading every implementation detail.",
+          "Machine-readable API projections should be derivable from the same public contract used by runtime metadata.",
+          "Visual assets and behavior should support lazy or conditional loading when the public contract permits it."
+        ]
+      },
+      {
+        "id": "20-extension-model",
+        "title": "Extension Model",
+        "purpose": "Describe supported extension points.",
+        "document": "spec/20-extension-model.md",
+        "derivedFrom": [
+          "library-interface-catalog",
+          "design-time-evidence",
+          "library-component-catalog"
+        ],
+        "requirements": [
+          "The framework must allow new controls, elements, types, and interfaces to be introduced through the same catalog and metadata model.",
+          "Design-time metadata may extend authoring semantics without redefining the runtime component contract.",
+          "Extension points must preserve compatibility with theming, accessibility, and interaction rules."
+        ]
+      },
+      {
+        "id": "21-compliance-rules",
+        "title": "Compliance Rules",
+        "purpose": "Summarize what every implementation must satisfy.",
+        "document": "spec/21-compliance-rules.md",
+        "derivedFrom": [
+          "openui-root",
+          "library-catalog-root",
+          "metadata-grammar-root",
+          "compliance-tests"
+        ],
+        "requirements": [
+          "A compliant implementation must publish its public surface through a discoverable library catalog.",
+          "A compliant implementation must describe every public component with typed metadata for properties, composition, relationships, and events.",
+          "A compliant implementation must preserve accessibility, theming, internationalization, and testing evidence as part of the public contract lifecycle."
+        ]
+      },
+      {
+        "id": "22-test-acceptance-criteria",
+        "title": "Test & Acceptance Criteria",
+        "purpose": "Describe how the specification should be verified.",
+        "document": "spec/22-test-acceptance-criteria.md",
+        "derivedFrom": [
+          "compliance-tests",
+          "api-json-projection",
+          "reference-component-button"
+        ],
+        "requirements": [
+          "Every public metadata contract should be verifiable by automated tests that exercise properties, events, and rendering-facing semantics.",
+          "Acceptance criteria should cover unit behavior, visual states, accessibility semantics, and responsive or theme-sensitive presentation.",
+          "Machine-readable projections such as `api.json` should remain consistent with runtime metadata and documented behavior."
+        ]
+      },
+      {
+        "id": "23-reference-examples",
+        "title": "Reference Examples",
+        "purpose": "Provide a concrete reference component abstracted from upstream OpenUI5 evidence.",
+        "document": "spec/23-reference-examples.md",
+        "derivedFrom": [
+          "reference-component-button"
+        ],
+        "requirements": [
+          "A reference action component exposes text, style, width, enabled state, icon configuration, accessibility state, and a primary activation event.",
+          "The same component may expose label/description associations, drag capability, and theme-aware visuals.",
+          "Its expected behavior is validated by tests for state accessors, text direction, activation events, and visibility."
+        ]
+      }
+    ],
+    "referenceModels": {
+      "libraryCatalog": {
+        "fields": [
+          "name",
+          "version",
+          "dependencies",
+          "types",
+          "interfaces",
+          "controls",
+          "elements"
+        ],
+        "origin": "library.js"
+      },
+      "componentMetadata": {
+        "fields": [
+          "properties",
+          "aggregations",
+          "associations",
+          "events",
+          "visibility",
+          "defaultValue",
+          "renderer",
+          "dnd"
+        ],
+        "origin": [
+          "ManagedObjectMetadata.js",
+          "ElementMetadata.js"
+        ]
+      },
+      "referenceComponent": {
+        "name": "sap.m.Button",
+        "library": "sap.m",
+        "interfaces": [
+          "sap.ui.core.IFormContent",
+          "sap.ui.core.IAccessKeySupport",
+          "sap.m.IToolbarInteractiveControl"
+        ],
+        "publicProperties": [
+          "text",
+          "type",
+          "width",
+          "enabled",
+          "icon",
+          "iconFirst",
+          "activeIcon",
+          "iconDensityAware",
+          "textDirection",
+          "ariaHasPopup",
+          "accessibleRole",
+          "badgeStyle"
+        ],
+        "publicAssociations": [
+          "ariaDescribedBy",
+          "ariaLabelledBy"
+        ],
+        "publicEvents": [
+          "press"
+        ],
+        "deprecatedEvents": [
+          "tap"
+        ],
+        "behaviorEvidence": [
+          "text/type/enabled/width/icon accessors",
+          "text direction semantics",
+          "press activation",
+          "visibility behavior"
+        ],
+        "evidenceSources": [
+          "src/sap.m/src/sap/m/Button.js",
+          "src/sap.m/test/sap/m/qunit/Button.qunit.js"
+        ]
+      }
+    }
+  }
+}
