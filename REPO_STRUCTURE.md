@@ -28,16 +28,16 @@ The project purpose in `AGENTS.md:5-9` describes OpenUI5 as an enterprise-grade 
 
 ## Specification starting points
 
-Surveying the OpenUI5 leads above shows that the best true starting point for a standard specification is the **public control metadata model**:
+Surveying the OpenUI5 repository structure documented above shows that the best true starting point for a standard specification is the **public control metadata model**:
 
 1. discover the public surface from each library's `library.js`
 2. read each public control's `metadata` declaration
 3. interpret that metadata through `sap.ui.base.ManagedObjectMetadata` / `sap.ui.core.ElementMetadata`
-4. use designtime files and tests only as supporting evidence
+4. use designtime files (authoring-time semantics) and tests only as supporting evidence
 
 The table below summarizes which files should seed the specification effort, why they matter, and how to use them.
 
-| File or file set | Why it is required | How it should be used in the specification effort |
+| File or file set | Why it matters | How it should be used in the specification effort |
 | --- | --- | --- |
 | `docs/controllibraries.md` | This document is the discovery guide for the whole control-library layout. It explicitly identifies `.library`, `library.js`, control implementation files, designtime files, and test folders, so it is the best entry point for locating the real specification sources. | Use it first to map where specification-relevant artifacts live in the OpenUI5 monorepo and to keep the extraction process aligned with the official library structure. |
 | `src/*/src/<library>/library.js` (for example `src/sap.m/src/sap/m/library.js`) | This is the primary inventory of each library's public API surface: dependencies, types, interfaces, controls, elements, and library-level designtime hooks. It is the cleanest place to enumerate what belongs in the standard before drilling into individual components. | Use it to build the catalog of libraries, component names, enums, and interfaces that the standard must cover, and to define the top-level scope of the specification. |
