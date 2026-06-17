@@ -7,6 +7,7 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 OPENUI_JSON = REPO_ROOT / "openui.json"
 UI_CONCEPT_MODEL_MD = REPO_ROOT / "spec" / "05-ui-concept-model.md"
 TEST_ACCEPTANCE_MD = REPO_ROOT / "spec" / "22-test-acceptance-criteria.md"
+EXPECTED_MIN_UI_CONCEPT_MODEL_EXAMPLES = 4
 
 
 def load_section(section_id: str) -> dict:
@@ -24,7 +25,9 @@ class UiConceptModelSpecTest(unittest.TestCase):
         example_titles = [example["title"] for example in section["examples"]]
 
         self.assertIn("Dialog composition and semantic references example", example_titles)
-        self.assertGreaterEqual(len(section["examples"]), 4)
+        self.assertGreaterEqual(
+            len(section["examples"]), EXPECTED_MIN_UI_CONCEPT_MODEL_EXAMPLES
+        )
         self.assertIn("tags", section)
         self.assertIn("formalDefinitions", section)
         self.assertIn("implementationNotes", section)

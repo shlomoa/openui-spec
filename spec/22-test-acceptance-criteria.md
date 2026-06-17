@@ -12,6 +12,8 @@
 
 ## Examples
 
+The following example shows how acceptance criteria can exercise the UI concept model additions in a concrete, implementation-independent way.
+
 ### Example 1 — UI concept model acceptance test
 
 Given a normalized specification entry for a library that publishes `Page`, `Dialog`, and `Form` controls together with `FormContainer` and `FormElement` elements:
