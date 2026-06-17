@@ -85,6 +85,23 @@ A designer or UX owner uses this contract to align validation feedback and label
 - A generator maintainer maps the same metadata into framework-specific inputs, outputs, and validation helpers.
 - A documentation pipeline renders the same canonical section into audience-specific prose without changing the underlying contract.
 
+### Example 4 — documentation and compliance author usage
+
+```json
+{
+  "section": "04-target-users",
+  "audience": "documentation-and-compliance",
+  "sourceOfTruth": "/openui.json",
+  "artifacts": [
+    "authoring-guidance",
+    "acceptance-criteria",
+    "compliance-evidence"
+  ]
+}
+```
+
+Documentation and compliance authors use the canonical section to derive consistent guidance and trace review or acceptance evidence back to the same normative contract used by other audiences.
+
 ## JSON Mapping
 
 - `specification.sections[3]` in `/openui.json`

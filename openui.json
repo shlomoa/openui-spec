@@ -731,6 +731,10 @@
           {
             "title": "Framework and tooling maintainer usage example",
             "description": "The same canonical JSON contract lets framework maintainers preserve compatibility while generator and documentation pipelines derive implementation-specific outputs from the identical source."
+          },
+          {
+            "title": "Documentation and compliance author usage example",
+            "description": "The canonical section lets documentation and compliance authors derive audience guidance, acceptance criteria, and evidence trails from the same shared contract."
           }
         ]
       },
