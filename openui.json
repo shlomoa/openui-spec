@@ -753,6 +753,10 @@
           {
             "title": "Form hierarchy example",
             "description": "A form control that owns container and form-element children, while individual fields and label associations remain explicit, demonstrates how controls and elements combine into higher-level UI concepts."
+          },
+          {
+            "title": "Dialog composition and semantic references example",
+            "description": "A dialog control that declares owned `content`, `beginButton`, and `endButton` aggregations while keeping `ariaLabelledBy` and `ariaDescribedBy` as associations demonstrates the difference between composition ownership and semantic cross-reference."
           }
         ]
       },
@@ -1016,6 +1020,12 @@
           "Every public metadata contract should be verifiable by automated tests that exercise properties, events, and rendering-facing semantics.",
           "Acceptance criteria should cover unit behavior, visual states, accessibility semantics, and responsive or theme-sensitive presentation.",
           "Machine-readable projections such as `api.json` should remain consistent with runtime metadata and documented behavior."
+        ],
+        "examples": [
+          {
+            "title": "UI concept model acceptance test",
+            "description": "A compliant test should verify that published controls and elements are classified correctly, owned UI regions remain aggregations, semantic references remain associations, and higher-level concepts such as dialogs and forms are represented through metadata-defined composition."
+          }
         ]
       },
       {

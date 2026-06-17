@@ -117,6 +117,27 @@ The `Page` control models its UI structure through named aggregations, making re
 
 This hierarchy shows how a form can be modeled as a control that owns element-based structure, while field controls and label associations remain explicit parts of the public composition contract.
 
+### Example 4 — dialog composition and semantic references
+
+```json
+{
+  "component": "sample.library.Dialog",
+  "metadata": {
+    "aggregations": {
+      "content": {"type": "sap.ui.core.Control", "multiple": true},
+      "beginButton": {"type": "sap.ui.core.Control", "multiple": false},
+      "endButton": {"type": "sap.ui.core.Control", "multiple": false}
+    },
+    "associations": {
+      "ariaLabelledBy": {"type": "sap.ui.core.Control", "multiple": true},
+      "ariaDescribedBy": {"type": "sap.ui.core.Control", "multiple": true}
+    }
+  }
+}
+```
+
+This dialog example shows that owned composition stays in aggregations, while semantic references such as accessible labels and descriptions remain non-owning associations.
+
 ## JSON Mapping
 
 - `specification.sections[4]` in `/openui.json`
