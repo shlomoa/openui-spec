@@ -659,9 +659,83 @@
           "openui-root"
         ],
         "requirements": [
-          "Application developers use the specification to understand the available component contract.",
-          "Designers and UX owners use it to align component behavior, feedback, accessibility, and theming requirements.",
-          "Framework and generator maintainers use it as the stable input for tooling and code generation."
+          "Application developers use the specification to discover stable component contracts, supported composition patterns, interaction semantics, and state behavior before building application features.",
+          "Designers and UX owners use the specification to align component behavior, layout, feedback, accessibility, and theming expectations across libraries and applications.",
+          "Framework maintainers use the specification as the compatibility baseline that implementation changes must preserve at the public contract level.",
+          "Generator and tooling maintainers use the canonical JSON contract to validate metadata, generate framework-specific scaffolding, and keep derived artifacts synchronized.",
+          "Documentation and compliance authors use the specification to produce consistent guidance, acceptance criteria, and evidence tied to the same public contract."
+        ],
+        "tags": [
+          {
+            "name": "application-consumer",
+            "meaning": "Application developers consume the specification to understand which public components, states, events, and composition rules they can rely on."
+          },
+          {
+            "name": "design-consumer",
+            "meaning": "Designers and UX owners consume the specification to align interaction, feedback, accessibility, and theming behavior with the documented contract."
+          },
+          {
+            "name": "implementation-consumer",
+            "meaning": "Framework maintainers consume the specification as a compatibility boundary for public runtime behavior."
+          },
+          {
+            "name": "tooling-consumer",
+            "meaning": "Generator, validation, and documentation tooling consume the canonical JSON contract as structured input."
+          },
+          {
+            "name": "shared-contract",
+            "meaning": "All target users depend on the same normative contract even when they view it through different audience-specific workflows."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Application developer",
+            "definition": "A consumer who builds end-user features by composing public components, states, events, and layout patterns exposed by the specification."
+          },
+          {
+            "term": "Designer / UX owner",
+            "definition": "A consumer who uses the specification to align user experience semantics such as labels, feedback, responsiveness, accessibility, and theming expectations."
+          },
+          {
+            "term": "Framework maintainer",
+            "definition": "A consumer who evolves an implementation while preserving the externally visible contract defined by the specification."
+          },
+          {
+            "term": "Generator / tooling maintainer",
+            "definition": "A consumer who transforms the canonical JSON contract into validation rules, documentation, code generation, or other derived artifacts."
+          },
+          {
+            "term": "Shared contract",
+            "definition": "The single normative framework description that all target users reference, regardless of whether they consume it through prose, validation, or tooling workflows."
+          }
+        ],
+        "usage": [
+          "Use the target users section to identify the primary audience for each later specification rule so the level of abstraction stays focused on public behavior rather than internal implementation details.",
+          "Use the section when adding or changing entries in `/openui.json` so the canonical JSON remains structured enough for tooling consumers while the markdown prose remains understandable for application and design consumers.",
+          "Use the section as a reminder that audience-specific documents, generated APIs, and design references are derived materials that must stay consistent with the shared contract instead of redefining it."
+        ],
+        "implementationNotes": [
+          "Implementations should keep `/openui.json` authoritative so every audience consumes the same normalized framework contract even when different renderings or tools present it differently.",
+          "Documentation, validation, and generator pipelines should derive audience-specific outputs from the canonical JSON without changing the meaning of public components, metadata, or interaction semantics.",
+          "When a section is expanded for a specific audience, the added prose should clarify the existing contract rather than introduce renderer-specific, application-specific, or private implementation rules."
+        ],
+        "examples": [
+          {
+            "title": "Application developer usage example",
+            "description": "A public metadata block for a button gives application developers stable text, enabled state, and activation semantics to build against without reading private runtime code."
+          },
+          {
+            "title": "Designer and UX owner usage example",
+            "description": "A component contract that declares validation state and labeling associations gives designers and UX owners a stable source for aligning feedback and accessibility expectations."
+          },
+          {
+            "title": "Framework and tooling maintainer usage example",
+            "description": "The same canonical JSON contract lets framework maintainers preserve compatibility while generator and documentation pipelines derive implementation-specific outputs from the identical source."
+          },
+          {
+            "title": "Documentation and compliance author usage example",
+            "description": "The canonical section lets documentation and compliance authors derive audience guidance, acceptance criteria, and evidence trails from the same shared contract."
+          }
         ]
       },
       {
