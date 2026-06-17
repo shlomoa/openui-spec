@@ -725,6 +725,10 @@
           {
             "title": "Declared capabilities only example",
             "description": "Drag-and-drop, accessibility relationships, or renderer linkage become specification content only when public metadata explicitly declares them."
+          },
+          {
+            "title": "Conflicting evidence resolution example",
+            "description": "If a generated API projection exposes an undocumented member that does not appear in authoritative runtime metadata, the specification keeps only the publicly declared metadata members."
           }
         ]
       },

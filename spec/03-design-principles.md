@@ -93,6 +93,26 @@ This normalized shape follows the principles because it preserves the public nam
 - A renderer implementation detail such as a private DOM wrapper class is excluded because it is not part of the public contract.
 - A design-time annotation may add authoring guidance, but it becomes normative only if it matches or supplements an authoritative public declaration instead of contradicting it.
 
+### Example 4 — conflicting evidence resolution
+
+```json
+{
+  "metadata": {
+    "properties": {
+      "text": {"type": "string", "defaultValue": ""}
+    }
+  },
+  "apiProjection": {
+    "properties": {
+      "text": {"type": "string"},
+      "internalState": {"type": "string"}
+    }
+  }
+}
+```
+
+In this case the specification keeps the public `text` property and ignores `internalState` because it is not declared by the authoritative runtime metadata.
+
 ## JSON Mapping
 
 - `specification.sections[2]` in `/openui.json`
