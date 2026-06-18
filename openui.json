@@ -645,9 +645,91 @@
           "api-json-projection"
         ],
         "requirements": [
-          "Prefer public metadata over private implementation details.",
-          "Separate scope discovery (`library.js`) from semantic interpretation (metadata grammar).",
-          "Define what implementations must provide without prescribing a specific rendering technology."
+          "Prefer public library catalogs and runtime metadata over private implementation details, renderer internals, or undocumented helper code.",
+          "Separate scope discovery (`library.js`) from semantic interpretation (metadata grammar) and from secondary API projections such as `api.json`.",
+          "Normalize OpenUI5 concepts into canonical JSON without losing public names, types, multiplicity, defaults, visibility, or declared relationships.",
+          "Specify observable framework capabilities and constraints rather than prescribing a specific renderer, widget lifecycle, build pipeline, or source layout.",
+          "Treat design-time metadata, generated API projections, and automated tests as supporting evidence that can refine validation and documentation but cannot override the public runtime contract.",
+          "Require opt-in semantics for specialized behavior: renderer linkage, drag-and-drop support, accessibility relationships, and similar features belong in the specification only when they are publicly declared."
+        ],
+        "nonGoals": [
+          "The design principles do not require consumers to parse private source files, infer behavior from renderer code, or reverse-engineer undocumented conventions.",
+          "The design principles do not standardize framework-internal class hierarchies, optimization strategies, or build-time packaging details unless those details are surfaced through the public contract.",
+          "The design principles do not treat convenience projections such as `api.json` as a replacement for `library.js` discovery or managed object metadata."
+        ],
+        "tags": [
+          {
+            "name": "public-contract-first",
+            "meaning": "Normative specification entries come from publicly declared libraries and metadata before any private implementation details or generated projections are considered."
+          },
+          {
+            "name": "layered-evidence-model",
+            "meaning": "Library catalogs, metadata grammar, API projections, design-time metadata, and tests each have distinct roles and must not be conflated."
+          },
+          {
+            "name": "lossless-normalization",
+            "meaning": "Extraction must preserve the meaning of public metadata when converting framework concepts into canonical JSON."
+          },
+          {
+            "name": "implementation-agnostic-semantics",
+            "meaning": "The specification defines observable framework behavior without binding compliant implementations to a specific rendering or build strategy."
+          },
+          {
+            "name": "declared-capabilities-only",
+            "meaning": "Specialized behavior enters the specification only when it is explicitly declared in public metadata or equally authoritative public artifacts."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Public contract precedence",
+            "definition": "The rule that publicly declared library and metadata artifacts outrank private code paths, renderer internals, and generated documentation when determining normative specification content."
+          },
+          {
+            "term": "Layered evidence model",
+            "definition": "A source hierarchy in which `library.js` discovers scope, metadata grammar defines semantics, and projections such as `api.json`, design-time metadata, and tests provide corroborating evidence."
+          },
+          {
+            "term": "Lossless normalization",
+            "definition": "The transformation of framework metadata into canonical JSON while preserving public names, typing, multiplicity, defaults, visibility, and declared relationships."
+          },
+          {
+            "term": "Implementation-agnostic semantics",
+            "definition": "Externally observable framework requirements expressed independently of any concrete rendering technology, lifecycle implementation, or source-code organization."
+          },
+          {
+            "term": "Declared capability",
+            "definition": "A framework feature or behavior that is eligible for specification only because it is explicitly exposed through public metadata or another authoritative public contract artifact."
+          }
+        ],
+        "usage": [
+          "Use these principles whenever extracting a new section from OpenUI5: determine scope from `library.js`, interpret meaning from metadata grammar, then use `api.json`, design-time metadata, or tests only to confirm or operationalize the extracted contract.",
+          "When normalizing metadata into `/openui.json`, preserve authored identifiers, public types, multiplicity flags, defaults, visibility, associations, and events rather than replacing them with generator-specific abstractions.",
+          "If a behavior appears only in renderer code, helper utilities, or undocumented conventions, treat it as non-normative unless an authoritative public artifact also declares it.",
+          "Record specialized capabilities only when the public contract explicitly exposes them, so downstream generators and validators can rely on deterministic, opt-in semantics.",
+          "Use the layered evidence model to resolve disagreements: public runtime metadata remains authoritative, while projections and tests help validate completeness, examples, or compliance rules."
+        ],
+        "implementationNotes": [
+          "Specification maintainers should keep discovery, semantic interpretation, and validation as separate steps so the canonical JSON can be regenerated deterministically from authoritative sources.",
+          "Normalization pipelines should preserve authored metadata vocabulary and cardinality instead of collapsing public concepts into renderer-specific or generator-specific internal models.",
+          "Supporting artifacts such as `api.json`, design-time metadata, and tests should be linked back to the same public contract entry they corroborate, making disagreements visible without changing the normative source."
+        ],
+        "examples": [
+          {
+            "title": "Layered evidence and precedence example",
+            "description": "A `library.js` declaration and component metadata define the normative contract for a form component; a matching `api.json` entry confirms that contract, while a private helper or renderer detail does not expand it."
+          },
+          {
+            "title": "Lossless normalization example",
+            "description": "A normalized metadata record preserves a component's public property names, association types, aggregation multiplicity, and default values instead of replacing them with generator-specific shortcuts."
+          },
+          {
+            "title": "Declared capabilities only example",
+            "description": "Drag-and-drop, accessibility relationships, or renderer linkage become specification content only when public metadata explicitly declares them."
+          },
+          {
+            "title": "Conflicting evidence resolution example",
+            "description": "If a generated API projection exposes an undocumented member that does not appear in authoritative runtime metadata, the specification keeps only the publicly declared metadata members."
+          }
         ]
       },
       {
@@ -749,9 +831,89 @@
           "aggregation-model"
         ],
         "requirements": [
-          "A UI is composed from libraries that publish controls and elements.",
-          "Controls are interactive or presentational components; elements are reusable structural or supporting composition units.",
-          "Composition is expressed declaratively through metadata-defined relationships such as child content, labels, descriptions, and actions."
+          "The public UI surface is composed from libraries that publish named controls and elements as reusable building blocks.",
+          "Controls are standalone renderable components that provide presentation and interaction behavior; elements are reusable supporting units that contribute structure or semantics through a parent component.",
+          "Composition is expressed declaratively through public metadata, primarily aggregations that define owned child content, named regions, and allowed child types.",
+          "Associations complement aggregations by expressing non-owning references such as labels, descriptions, and other semantic relationships between UI objects.",
+          "Higher-level concepts such as pages, dialogs, forms, lists, toolbars, and actions are modeled as specialized controls and elements rather than as framework primitives outside the metadata contract."
+        ],
+        "nonGoals": [
+          "The UI concept model does not prescribe a specific visual design, renderer implementation, DOM structure, or styling strategy.",
+          "The UI concept model does not require every public symbol to be independently renderable; supporting elements may exist only as composition units within parent controls.",
+          "The UI concept model does not infer normative composition rules from private implementation code when those rules are not declared in public metadata."
+        ],
+        "tags": [
+          {
+            "name": "library-published-building-blocks",
+            "meaning": "Libraries publish the controls and elements that define the reusable public UI surface."
+          },
+          {
+            "name": "control-element-distinction",
+            "meaning": "Controls are standalone renderable units, while elements are subordinate reusable units composed through parents."
+          },
+          {
+            "name": "metadata-declared-composition",
+            "meaning": "Parent-child UI structure is normative only when declared in public metadata, especially through aggregations."
+          },
+          {
+            "name": "owned-ui-content",
+            "meaning": "Aggregated children belong to the parent component's public composition contract and lifecycle."
+          },
+          {
+            "name": "named-ui-regions",
+            "meaning": "Aggregations may define semantic regions such as header, content, footer, items, or actions without prescribing renderer internals."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "UI building block",
+            "definition": "A public control or element that participates in the framework's reusable UI surface and can be discovered from library metadata."
+          },
+          {
+            "term": "Control",
+            "definition": "A public component type intended to represent a standalone renderable UI unit with presentation and, where applicable, interaction behavior."
+          },
+          {
+            "term": "Element",
+            "definition": "A public reusable UI unit that contributes structure, semantics, or configuration to a parent component without needing to stand alone as a renderable surface."
+          },
+          {
+            "term": "Aggregation-based composition",
+            "definition": "A parent-owned composition relationship declared in metadata that specifies child types, multiplicity, and semantic role within the UI."
+          },
+          {
+            "term": "UI region",
+            "definition": "A semantically named composition area, such as `header`, `content`, `footer`, or `items`, represented through an aggregation in public metadata."
+          }
+        ],
+        "usage": [
+          "Use this model to classify public symbols as controls or elements before applying more specific rules from component, layout, form, interaction, or accessibility sections.",
+          "Model owned UI structure through aggregations and reserve associations for cross-references that do not transfer ownership, such as labels, descriptions, or semantic links.",
+          "Describe higher-level constructs such as pages, dialogs, forms, and list rows as compositions of controls and elements connected through named regions rather than through renderer-specific DOM assumptions.",
+          "When normalizing metadata into `/openui.json`, preserve aggregation names, child types, multiplicity, and semantic roles so tooling can reconstruct the UI concept hierarchy without reverse-engineering runtime code."
+        ],
+        "implementationNotes": [
+          "Implementations should publish controls and elements through stable library catalogs so applications, validators, and generators can enumerate the available UI building blocks without source inspection.",
+          "Public metadata should declare aggregations with typed child contracts, multiplicity, and semantic naming so parent-owned composition can be interpreted without relying on renderer internals.",
+          "Extraction and generator pipelines should reconstruct high-level UI concepts from library catalogs plus composition metadata, while treating associations as semantic links rather than ownership boundaries."
+        ],
+        "examples": [
+          {
+            "title": "Library-published building blocks example",
+            "description": "A library declaration that lists page, button, and form controls together with form container elements makes the public UI surface discoverable as reusable building blocks."
+          },
+          {
+            "title": "Named composition regions example",
+            "description": "A page control that declares `header`, `content`, `footer`, and `actions` aggregations exposes its semantic UI regions directly in public metadata."
+          },
+          {
+            "title": "Form hierarchy example",
+            "description": "A form control that owns container and form-element children, while individual fields and label associations remain explicit, demonstrates how controls and elements combine into higher-level UI concepts."
+          },
+          {
+            "title": "Dialog composition and semantic references example",
+            "description": "A dialog control that declares owned `content`, `beginButton`, and `endButton` aggregations while keeping `ariaLabelledBy` and `ariaDescribedBy` as associations demonstrates the difference between composition ownership and semantic cross-reference."
+          }
         ]
       },
       {
@@ -1014,6 +1176,12 @@
           "Every public metadata contract should be verifiable by automated tests that exercise properties, events, and rendering-facing semantics.",
           "Acceptance criteria should cover unit behavior, visual states, accessibility semantics, and responsive or theme-sensitive presentation.",
           "Machine-readable projections such as `api.json` should remain consistent with runtime metadata and documented behavior."
+        ],
+        "examples": [
+          {
+            "title": "UI concept model acceptance test",
+            "description": "A compliant test should verify that published controls and elements are classified correctly, owned UI regions remain aggregations, semantic references remain associations, and higher-level concepts such as dialogs and forms are represented through metadata-defined composition."
+          }
         ]
       },
       {
