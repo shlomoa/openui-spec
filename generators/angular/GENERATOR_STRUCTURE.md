@@ -128,7 +128,7 @@ same spec
 
 ```ts
 export function loadFrameworkSpec(path: string): FrameworkSpec {
-  const raw = readFileSync(path, 'utf-8');
+  const raw = readFileSync(path, "utf-8");
   return parseYamlOrJson(raw);
 }
 ```

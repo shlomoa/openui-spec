@@ -49,8 +49,8 @@
   "component": "sample.library.Button",
   "metadata": {
     "properties": {
-      "text": {"type": "string"},
-      "enabled": {"type": "boolean", "defaultValue": true}
+      "text": { "type": "string" },
+      "enabled": { "type": "boolean", "defaultValue": true }
     },
     "events": {
       "press": {}
@@ -68,10 +68,13 @@ An application developer uses this contract to know that a button exposes stable
   "component": "sample.library.Input",
   "metadata": {
     "properties": {
-      "valueState": {"type": "sample.library.ValueState", "defaultValue": "None"}
+      "valueState": {
+        "type": "sample.library.ValueState",
+        "defaultValue": "None"
+      }
     },
     "associations": {
-      "ariaLabelledBy": {"type": "sap.ui.core.Control", "multiple": true}
+      "ariaLabelledBy": { "type": "sap.ui.core.Control", "multiple": true }
     }
   }
 }

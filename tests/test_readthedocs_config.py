@@ -2,7 +2,6 @@ import pathlib
 import re
 import unittest
 
-
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 READTHEDOCS_CONFIG = REPO_ROOT / ".readthedocs.yaml"
 MKDOCS_CONFIG = REPO_ROOT / "mkdocs.yml"

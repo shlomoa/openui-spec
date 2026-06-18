@@ -66,11 +66,11 @@ This kind of library declaration determines which public symbols belong in the s
   "component": "sample.library.Button",
   "metadata": {
     "properties": {
-      "text": {"type": "string"},
-      "enabled": {"type": "boolean", "defaultValue": true}
+      "text": { "type": "string" },
+      "enabled": { "type": "boolean", "defaultValue": true }
     },
     "associations": {
-      "ariaLabelledBy": {"type": "sap.ui.core.Control", "multiple": true}
+      "ariaLabelledBy": { "type": "sap.ui.core.Control", "multiple": true }
     },
     "events": {
       "press": {}

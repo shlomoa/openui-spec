@@ -4,7 +4,6 @@ This specification defines the required behavior, structure, terminology, and co
 
 ## Sections
 
-
 | Item | Section                     | Purpose                                                      |
 | ---: | --------------------------- | ------------------------------------------------------------ |
 |    1 | Introduction                | Purpose, scope, non-goals, terminology                       |

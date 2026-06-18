@@ -2,7 +2,6 @@ import json
 import pathlib
 import unittest
 
-
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 OPENUI_JSON = REPO_ROOT / "openui.json"
 UI_CONCEPT_MODEL_MD = REPO_ROOT / "spec" / "05-ui-concept-model.md"
@@ -25,9 +24,7 @@ class UiConceptModelSpecTest(unittest.TestCase):
         example_titles = [example["title"] for example in section["examples"]]
 
         self.assertIn("Dialog composition and semantic references example", example_titles)
-        self.assertGreaterEqual(
-            len(section["examples"]), EXPECTED_MIN_UI_CONCEPT_MODEL_EXAMPLES
-        )
+        self.assertGreaterEqual(len(section["examples"]), EXPECTED_MIN_UI_CONCEPT_MODEL_EXAMPLES)
         self.assertIn("tags", section)
         self.assertIn("formalDefinitions", section)
         self.assertIn("implementationNotes", section)
@@ -36,7 +33,9 @@ class UiConceptModelSpecTest(unittest.TestCase):
         content = UI_CONCEPT_MODEL_MD.read_text(encoding="utf-8")
 
         self.assertIn("### Example 4 — dialog composition and semantic references", content)
-        self.assertIn('"beginButton": {"type": "sap.ui.core.Control", "multiple": false}', content)
+        self.assertIn(
+            '"beginButton": { "type": "sap.ui.core.Control", "multiple": false }', content
+        )
         self.assertIn("ariaDescribedBy", content)
 
     def test_acceptance_criteria_covers_ui_concept_model_enhancement(self) -> None:
@@ -46,7 +45,9 @@ class UiConceptModelSpecTest(unittest.TestCase):
         example_titles = [example["title"] for example in section["examples"]]
 
         self.assertIn("UI concept model acceptance test", example_titles)
-        self.assertIn("verify that the published symbols are classified as controls or elements", content)
+        self.assertIn(
+            "verify that the published symbols are classified as controls or elements", content
+        )
         self.assertIn("verify that `content`, `header`, `footer`, `beginButton`", content)
         self.assertIn("verify that semantic references such as `ariaLabelledBy`", content)
 

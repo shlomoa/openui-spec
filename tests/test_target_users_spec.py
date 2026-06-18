@@ -3,7 +3,6 @@ import re
 import unittest
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parents[1]
 OPENUI_JSON = REPO_ROOT / "openui.json"
 TARGET_USERS_MD = REPO_ROOT / "spec" / "04-target-users.md"

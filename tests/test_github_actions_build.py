@@ -2,7 +2,6 @@ import re
 import unittest
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parents[1]
 BUILD_WORKFLOW = REPO_ROOT / ".github" / "workflows" / "build.yml"
 
@@ -22,6 +21,10 @@ class GitHubActionsBuildWorkflowTest(unittest.TestCase):
             "python -m unittest discover -s tests -p 'test_*.py'",
             self.workflow,
         )
+
+    def test_build_workflow_runs_lint_checks(self):
+        self.assertIn("python -m pip install pre-commit==4.6.0", self.workflow)
+        self.assertIn("pre-commit run --all-files", self.workflow)
 
     def test_build_workflow_uses_pinned_actions(self):
         actions = re.findall(r"uses:\s+(actions/[^\s@]+)@(v[0-9]+(?:\.[0-9]+)+)", self.workflow)

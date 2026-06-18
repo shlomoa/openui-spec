@@ -54,10 +54,7 @@
       "sample.library.Button",
       "sample.library.Form"
     ],
-    "elements": [
-      "sample.library.FormContainer",
-      "sample.library.FormElement"
-    ]
+    "elements": ["sample.library.FormContainer", "sample.library.FormElement"]
   }
 }
 ```
@@ -71,10 +68,10 @@ This declaration shows the public UI surface as a set of reusable controls and e
   "component": "sample.library.Page",
   "metadata": {
     "aggregations": {
-      "header": {"type": "sap.ui.core.Control", "multiple": false},
-      "content": {"type": "sap.ui.core.Control", "multiple": true},
-      "footer": {"type": "sap.ui.core.Control", "multiple": false},
-      "actions": {"type": "sap.ui.core.Control", "multiple": true}
+      "header": { "type": "sap.ui.core.Control", "multiple": false },
+      "content": { "type": "sap.ui.core.Control", "multiple": true },
+      "footer": { "type": "sap.ui.core.Control", "multiple": false },
+      "actions": { "type": "sap.ui.core.Control", "multiple": true }
     }
   }
 }
@@ -91,24 +88,27 @@ The `Page` control models its UI structure through named aggregations, making re
       "name": "sample.library.Form",
       "kind": "control",
       "aggregations": {
-        "containers": {"type": "sample.library.FormContainer", "multiple": true}
+        "containers": {
+          "type": "sample.library.FormContainer",
+          "multiple": true
+        }
       }
     },
     {
       "name": "sample.library.FormContainer",
       "kind": "element",
       "aggregations": {
-        "elements": {"type": "sample.library.FormElement", "multiple": true}
+        "elements": { "type": "sample.library.FormElement", "multiple": true }
       }
     },
     {
       "name": "sample.library.FormElement",
       "kind": "element",
       "aggregations": {
-        "fields": {"type": "sap.ui.core.Control", "multiple": true}
+        "fields": { "type": "sap.ui.core.Control", "multiple": true }
       },
       "associations": {
-        "label": {"type": "sap.ui.core.Label", "multiple": false}
+        "label": { "type": "sap.ui.core.Label", "multiple": false }
       }
     }
   ]
@@ -124,13 +124,13 @@ This hierarchy shows how a form can be modeled as a control that owns element-ba
   "component": "sample.library.Dialog",
   "metadata": {
     "aggregations": {
-      "content": {"type": "sap.ui.core.Control", "multiple": true},
-      "beginButton": {"type": "sap.ui.core.Control", "multiple": false},
-      "endButton": {"type": "sap.ui.core.Control", "multiple": false}
+      "content": { "type": "sap.ui.core.Control", "multiple": true },
+      "beginButton": { "type": "sap.ui.core.Control", "multiple": false },
+      "endButton": { "type": "sap.ui.core.Control", "multiple": false }
     },
     "associations": {
-      "ariaLabelledBy": {"type": "sap.ui.core.Control", "multiple": true},
-      "ariaDescribedBy": {"type": "sap.ui.core.Control", "multiple": true}
+      "ariaLabelledBy": { "type": "sap.ui.core.Control", "multiple": true },
+      "ariaDescribedBy": { "type": "sap.ui.core.Control", "multiple": true }
     }
   }
 }

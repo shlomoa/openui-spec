@@ -67,13 +67,13 @@ This kind of declaration satisfies the discovery goal because applications and t
   "component": "sample.library.Form",
   "metadata": {
     "properties": {
-      "editable": {"type": "boolean", "defaultValue": false}
+      "editable": { "type": "boolean", "defaultValue": false }
     },
     "aggregations": {
-      "content": {"type": "sample.library.FormElement", "multiple": true}
+      "content": { "type": "sample.library.FormElement", "multiple": true }
     },
     "associations": {
-      "ariaLabelledBy": {"type": "sap.ui.core.Control", "multiple": true}
+      "ariaLabelledBy": { "type": "sap.ui.core.Control", "multiple": true }
     },
     "events": {
       "submit": {}

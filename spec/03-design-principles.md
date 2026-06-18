@@ -57,7 +57,7 @@
     "name": "sample.library.Form",
     "metadata": {
       "properties": {
-        "editable": {"type": "boolean", "defaultValue": false}
+        "editable": { "type": "boolean", "defaultValue": false }
       }
     }
   }
@@ -73,13 +73,13 @@ If `api.json` also lists `editable`, the projection confirms the same public con
   "component": "sample.library.Form",
   "normalizedMetadata": {
     "properties": {
-      "editable": {"type": "boolean", "defaultValue": false}
+      "editable": { "type": "boolean", "defaultValue": false }
     },
     "aggregations": {
-      "content": {"type": "sample.library.FormElement", "multiple": true}
+      "content": { "type": "sample.library.FormElement", "multiple": true }
     },
     "associations": {
-      "ariaLabelledBy": {"type": "sap.ui.core.Control", "multiple": true}
+      "ariaLabelledBy": { "type": "sap.ui.core.Control", "multiple": true }
     }
   }
 }
@@ -99,13 +99,13 @@ This normalized shape follows the principles because it preserves the public nam
 {
   "metadata": {
     "properties": {
-      "text": {"type": "string", "defaultValue": ""}
+      "text": { "type": "string", "defaultValue": "" }
     }
   },
   "apiProjection": {
     "properties": {
-      "text": {"type": "string"},
-      "internalState": {"type": "string"}
+      "text": { "type": "string" },
+      "internalState": { "type": "string" }
     }
   }
 }

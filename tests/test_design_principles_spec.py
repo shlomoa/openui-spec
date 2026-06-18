@@ -2,7 +2,6 @@ import json
 import unittest
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parents[1]
 OPENUI_JSON = REPO_ROOT / "openui.json"
 DESIGN_PRINCIPLES_MD = REPO_ROOT / "spec" / "03-design-principles.md"
@@ -11,8 +10,8 @@ DESIGN_PRINCIPLES_MD = REPO_ROOT / "spec" / "03-design-principles.md"
 class DesignPrinciplesSpecTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.spec = json.loads(OPENUI_JSON.read_text())
-        cls.markdown = DESIGN_PRINCIPLES_MD.read_text()
+        cls.spec = json.loads(OPENUI_JSON.read_text(encoding="utf-8"))
+        cls.markdown = DESIGN_PRINCIPLES_MD.read_text(encoding="utf-8")
         cls.section = next(
             section
             for section in cls.spec["specification"]["sections"]
