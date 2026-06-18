@@ -1,0 +1,17 @@
+{
+  "name": "@openui5-spec/angular-generator",
+  "version": "0.1.0",
+  "description": "Initial Angular Material generator for the OpenUI framework specification.",
+  "type": "module",
+  "bin": {
+    "openui-angular-gen": "dist/src/cli/main.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test dist/tests/*.test.js"
+  },
+  "devDependencies": {
+    "@types/node": "25.9.3",
+    "typescript": "6.0.3"
+  }
+}
