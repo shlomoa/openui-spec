@@ -32,7 +32,7 @@ npm run build
 
 ## Validate a specification
 
-Run `validate` to check that a specification can be loaded and satisfies the generator's required section structure:
+After `npm run build` creates the `dist` directory, run `validate` to check that a specification can be loaded and satisfies the generator's required section structure:
 
 ```bash
 node dist/src/cli/main.js validate --spec ../../openui.json

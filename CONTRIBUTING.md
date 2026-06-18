@@ -9,6 +9,7 @@ Use it locally from the package directory:
 ```bash
 cd generators/angular
 npm ci
+npm run build
 npm test
 node dist/src/cli/main.js validate --spec ../../openui.json
 node dist/src/cli/main.js generate --spec ../../openui.json --out /tmp/openui-angular-app
