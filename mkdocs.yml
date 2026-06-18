@@ -1,0 +1,33 @@
+site_name: OpenUI Specification
+site_description: Documentation for the OpenUI specification derived from OpenUI5.
+repo_url: https://github.com/shlomoa/openui5-spec
+theme:
+  name: readthedocs
+docs_dir: spec
+nav:
+  - Overview: README.md
+  - Specification Structure: SPECIFICATION_STRUCTURE.md
+  - Introduction: 01-introduction.md
+  - Design Goals: 02-design-goals.md
+  - Design Principles: 03-design-principles.md
+  - Target Users: 04-target-users.md
+  - UI Concept Model: 05-ui-concept-model.md
+  - Application Structure: 06-application-structure.md
+  - Layout System: 07-layout-system.md
+  - Component Model: 08-component-model.md
+  - Interaction Model: 09-interaction-model.md
+  - State Model: 10-state-model.md
+  - Data Binding Model: 11-data-binding-model.md
+  - Form Model: 12-form-model.md
+  - Navigation Model: 13-navigation-model.md
+  - Feedback Model: 14-feedback-model.md
+  - Accessibility Model: 15-accessibility-model.md
+  - Theming / Design Tokens: 16-theming-design-tokens.md
+  - Internationalization: 17-internationalization.md
+  - Security / Privacy UI Rules: 18-security-privacy-ui-rules.md
+  - Performance Requirements: 19-performance-requirements.md
+  - Extension Model: 20-extension-model.md
+  - Compliance Rules: 21-compliance-rules.md
+  - Test & Acceptance Criteria: 22-test-acceptance-criteria.md
+  - Reference Examples: 23-reference-examples.md
+  - Traversal Report: TRAVERSAL_REPORT.md
