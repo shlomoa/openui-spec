@@ -2,7 +2,13 @@
 
 This file provides guidance for AI coding assistants (Claude, Copilot, Cursor, etc.) when working with this repository.
 
-## Project Overview
+## General rules
+
+- Read .github/copilot-instructions.md for general rules and definitions that apply to all interactions with the codebase and the user.
+
+## Repository specifics
+
+### Project Overview
 
 This project goals is to create a standard specification for Web UI framework specification.
 
@@ -16,6 +22,4 @@ This project goals is to create a standard specification for Web UI framework sp
   - location of the Angular TypeScript generator implementation.
   - GENERATOR_STRUCTURE.md - The structure and implementation details of the Angular TypeScript generator.
 
-## General rules
-
-- Read .github/copilot-instructions.md for general rules and definitions that apply to all interactions with the codebase and the user.
+---
