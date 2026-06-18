@@ -1,4 +1,5 @@
 import pathlib
+import re
 import unittest
 
 
@@ -6,6 +7,7 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 READTHEDOCS_CONFIG = REPO_ROOT / ".readthedocs.yaml"
 MKDOCS_CONFIG = REPO_ROOT / "mkdocs.yml"
 DOCS_ROOT = REPO_ROOT / "spec"
+NAV_ENTRY_PATTERN = re.compile(r"^\s*-\s+.*?:\s+(.+\.md)$")
 
 
 class ReadTheDocsConfigTest(unittest.TestCase):
@@ -21,11 +23,11 @@ class ReadTheDocsConfigTest(unittest.TestCase):
 
         self.assertIn("docs_dir: spec", config)
         referenced_docs = [
-            line.rsplit(": ", 1)[1]
+            match.group(1)
             for line in config.splitlines()
-            if line.lstrip().startswith("- ") and line.rstrip().endswith(".md")
+            for match in [NAV_ENTRY_PATTERN.match(line)]
+            if match is not None
         ]
-
         expected_docs = sorted(path.name for path in DOCS_ROOT.glob("*.md"))
 
         self.assertCountEqual(referenced_docs, expected_docs)
