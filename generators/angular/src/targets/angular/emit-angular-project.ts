@@ -18,6 +18,15 @@ export function emitAngularProject(project: AngularProjectModel): GeneratedFile[
   ];
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function emitIndexHtml(project: AngularProjectModel): GeneratedFile {
   return {
     path: "src/index.html",
@@ -195,13 +204,4 @@ ${navItems}
 export class AppComponent {}
 `,
   };
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
 }
