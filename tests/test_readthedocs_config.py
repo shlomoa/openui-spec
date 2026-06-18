@@ -26,7 +26,9 @@ class ReadTheDocsConfigTest(unittest.TestCase):
             if line.lstrip().startswith("- ") and line.rstrip().endswith(".md")
         ]
 
-        self.assertGreaterEqual(len(referenced_docs), 25)
+        expected_docs = sorted(path.name for path in DOCS_ROOT.glob("*.md"))
+
+        self.assertCountEqual(referenced_docs, expected_docs)
         for relative_path in referenced_docs:
             with self.subTest(relative_path=relative_path):
                 self.assertTrue((DOCS_ROOT / relative_path).is_file())
