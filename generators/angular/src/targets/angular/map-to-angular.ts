@@ -1,5 +1,5 @@
-import type { UiApplication, UiPage } from "../../ir/ui-model.js";
-import type { AngularPageModel, AngularProjectModel } from "./angular-model.js";
+import type { UiApplication, UiPage } from "../../ir/ui-model";
+import type { AngularPageModel, AngularProjectModel } from "./angular-model";
 
 export function mapToAngularProject(uiModel: UiApplication): AngularProjectModel {
   return {

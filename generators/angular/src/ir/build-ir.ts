@@ -1,6 +1,6 @@
-import type { FrameworkSpecDocument } from "../spec/framework-spec.types.js";
-import { normalizeFeatures, normalizeRoute, normalizeSummary } from "./normalize-spec.js";
-import type { UiApplication } from "./ui-model.js";
+import type { FrameworkSpecDocument } from "../spec/framework-spec.types";
+import { normalizeFeatures, normalizeRoute, normalizeSummary } from "./normalize-spec";
+import type { UiApplication } from "./ui-model";
 
 export function buildUiModel(document: FrameworkSpecDocument): UiApplication {
   const specification = document.specification;

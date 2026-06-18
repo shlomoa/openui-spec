@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 
-import { run } from "../src/cli/main.js";
+import { run } from "../src/cli/main";
 
 const FIXTURE = path.resolve("tests/fixtures/minimal-openui.json");
 
@@ -15,9 +15,17 @@ test("generates an Angular Material standalone app from the specification", asyn
 
     const packageJson = JSON.parse(await readFile(path.join(outDir, "package.json"), "utf8")) as {
       dependencies: Record<string, string>;
+      devDependencies: Record<string, string>;
+      overrides: Record<string, string>;
     };
     assert.equal(packageJson.dependencies["@angular/material"], "22.0.2");
     assert.equal(packageJson.dependencies["@angular/core"], "22.0.2");
+    assert.equal(packageJson.devDependencies["@angular/build"], "22.0.2");
+    assert.equal(packageJson.overrides.esbuild, "0.28.1");
+    assert.equal(packageJson.overrides.vite, "7.3.5");
+
+    const indexHtml = await readFile(path.join(outDir, "src/index.html"), "utf8");
+    assert.match(indexHtml, /<openui-root><\/openui-root>/);
 
     const routes = await readFile(path.join(outDir, "src/app/app.routes.ts"), "utf8");
     assert.match(routes, /path: 'form-model'/);

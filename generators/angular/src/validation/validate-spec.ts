@@ -1,5 +1,5 @@
-import type { FrameworkSpecDocument } from "../spec/framework-spec.types.js";
-import { type Diagnostic, SpecValidationError } from "./diagnostics.js";
+import type { FrameworkSpecDocument } from "../spec/framework-spec.types";
+import { type Diagnostic, SpecValidationError } from "./diagnostics";
 
 export function validateFrameworkSpec(document: FrameworkSpecDocument): void {
   const diagnostics: Diagnostic[] = [];

@@ -1,20 +1,40 @@
-import type { GeneratedFile } from "../../writers/file-writer.js";
-import type { AngularProjectModel } from "./angular-model.js";
-import { emitPageComponent } from "./emit-component.js";
-import { emitRoutes } from "./emit-routes.js";
-import { emitTheme } from "./emit-theme.js";
+import type { GeneratedFile } from "../../writers/file-writer";
+import type { AngularProjectModel } from "./angular-model";
+import { emitPageComponent } from "./emit-component";
+import { emitRoutes } from "./emit-routes";
+import { emitTheme } from "./emit-theme";
 
 export function emitAngularProject(project: AngularProjectModel): GeneratedFile[] {
   return [
     emitPackageJson(project),
     emitAngularJson(project),
     emitTsConfig(),
+    emitIndexHtml(project),
     emitMain(),
     emitAppComponent(project),
     emitRoutes(project),
     emitTheme(project),
     ...project.pages.flatMap(emitPageComponent),
   ];
+}
+
+function emitIndexHtml(project: AngularProjectModel): GeneratedFile {
+  return {
+    path: "src/index.html",
+    content: `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>${escapeHtml(project.appName)}</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <openui-root></openui-root>
+  </body>
+</html>
+`,
+  };
 }
 
 function emitPackageJson(project: AngularProjectModel): GeneratedFile {
@@ -44,8 +64,14 @@ function emitPackageJson(project: AngularProjectModel): GeneratedFile {
           "zone.js": "0.16.2",
         },
         devDependencies: {
+          "@angular/build": "22.0.2",
           "@angular/cli": "22.0.2",
           typescript: "6.0.3",
+        },
+        overrides: {
+          "@babel/core": "7.29.7",
+          esbuild: "0.28.1",
+          vite: "7.3.5",
         },
       },
       null,

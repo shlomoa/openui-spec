@@ -1,5 +1,5 @@
-import type { FrameworkSpecSection } from "../spec/framework-spec.types.js";
-import type { UiFeature } from "./ui-model.js";
+import type { FrameworkSpecSection } from "../spec/framework-spec.types";
+import type { UiFeature } from "./ui-model";
 
 const SECTION_FEATURES: Record<string, UiFeature> = {
   "05-ui-concept-model": "ui-concept",

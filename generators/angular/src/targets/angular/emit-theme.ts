@@ -1,5 +1,5 @@
-import type { GeneratedFile } from "../../writers/file-writer.js";
-import type { AngularProjectModel } from "./angular-model.js";
+import type { GeneratedFile } from "../../writers/file-writer";
+import type { AngularProjectModel } from "./angular-model";
 
 export function emitTheme(project: AngularProjectModel): GeneratedFile {
   const tokens = project.themeTokens.map((token) => `  ${token.name}: ${token.value};`).join("\n");

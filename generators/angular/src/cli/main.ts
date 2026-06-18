@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-import { loadFrameworkSpec } from "../spec/load-spec.js";
-import { buildUiModel } from "../ir/build-ir.js";
-import { mapToAngularProject } from "../targets/angular/map-to-angular.js";
-import { emitAngularProject } from "../targets/angular/emit-angular-project.js";
-import { validateFrameworkSpec } from "../validation/validate-spec.js";
-import { writeGeneratedFiles } from "../writers/file-writer.js";
+import { loadFrameworkSpec } from "../spec/load-spec";
+import { buildUiModel } from "../ir/build-ir";
+import { mapToAngularProject } from "../targets/angular/map-to-angular";
+import { emitAngularProject } from "../targets/angular/emit-angular-project";
+import { validateFrameworkSpec } from "../validation/validate-spec";
+import { writeGeneratedFiles } from "../writers/file-writer";
 
 interface CliOptions {
   command: "generate" | "validate";
@@ -65,7 +65,7 @@ function parseArgs(argv: string[]): CliOptions {
   };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (require.main === module) {
   run().catch((error: unknown) => {
     console.error(error instanceof Error ? error.message : String(error));
     process.exitCode = 1;

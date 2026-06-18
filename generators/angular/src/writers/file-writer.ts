@@ -1,4 +1,4 @@
-import { safeWrite } from "./safe-write.js";
+import { safeWrite } from "./safe-write";
 
 export interface GeneratedFile {
   path: string;

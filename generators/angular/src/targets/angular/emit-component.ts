@@ -1,5 +1,5 @@
-import type { GeneratedFile } from "../../writers/file-writer.js";
-import type { AngularPageModel } from "./angular-model.js";
+import type { GeneratedFile } from "../../writers/file-writer";
+import type { AngularPageModel } from "./angular-model";
 
 export function emitPageComponent(page: AngularPageModel): GeneratedFile[] {
   const pageDirectory = `src/app/pages/${page.route}`;

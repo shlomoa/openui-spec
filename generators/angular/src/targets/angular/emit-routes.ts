@@ -1,5 +1,5 @@
-import type { GeneratedFile } from "../../writers/file-writer.js";
-import type { AngularProjectModel } from "./angular-model.js";
+import type { GeneratedFile } from "../../writers/file-writer";
+import type { AngularProjectModel } from "./angular-model";
 
 export function emitRoutes(project: AngularProjectModel): GeneratedFile {
   const routes = project.pages
