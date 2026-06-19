@@ -12,3 +12,5 @@ ignores:
   - "**/dist/**"
   - "**/node_modules/**"
   - "LICENSES/**"
+  - "**/dist/**"
+  - "**/node_modules/**"
