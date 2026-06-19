@@ -15,10 +15,15 @@ class StateModelSpecTest(unittest.TestCase):
         except json.JSONDecodeError as error:
             raise AssertionError(f"Invalid openui.json: {error}") from error
         cls.section = next(
-            section
-            for section in spec["specification"]["sections"]
-            if section["id"] == "10-state-model"
+            (
+                section
+                for section in spec["specification"]["sections"]
+                if section["id"] == "10-state-model"
+            ),
+            None,
         )
+        if cls.section is None:
+            raise AssertionError("Missing section: 10-state-model")
         cls.markdown = STATE_MODEL_MD.read_text(encoding="utf-8")
 
     def test_state_model_json_has_structured_details(self) -> None:

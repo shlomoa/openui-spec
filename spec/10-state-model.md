@@ -63,7 +63,7 @@
 }
 ```
 
-This component exposes public state through typed properties. The empty `text`, enabled and visible booleans, and default button type all define stable initial behavior for applications and generators.
+This component exposes public state through typed properties. The empty `text`, enabled and visible boolean values, and default button type all define stable initial behavior for applications and generators.
 
 ### Example 2 — hidden state excluded from the public contract
 
