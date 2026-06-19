@@ -21,12 +21,12 @@ const GENERATED_EXAMPLES: readonly GeneratedExample[] = [
     title: 'Application shell',
     sourceConcept: 'Application Structure + Navigation Model',
     summary:
-      'The generator creates a standalone Angular shell with Material navigation for top-level OpenUI5 application areas.',
+      'The generator creates a standalone Angular shell with Material navigation that frames a nested page hierarchy (top-level pages and their sub-pages) for top-level OpenUI5 application areas.',
     files: ['src/app/app.ts', 'src/app/app.html', 'src/app/app.routes.ts'],
     previewType: 'shell',
     output: `@Component({
   selector: 'app-root',
-  imports: [MatToolbarModule, MatButtonModule, RouterOutlet],
+  imports: [MatToolbarModule, MatButtonModule, MatListModule, RouterOutlet],
   template: \`
     <mat-toolbar color="primary">Sales Workspace</mat-toolbar>
     <nav aria-label="Primary">
@@ -36,7 +36,12 @@ const GENERATED_EXAMPLES: readonly GeneratedExample[] = [
     <router-outlet />
   \`
 })
-export class AppComponent {}`,
+export class AppComponent {}
+
+// Page hierarchy resolved from public components and explicit deps:
+// Shell
+//   Orders (page) -> Order detail (sub-page)
+//   Customers (split container) -> Customer list / Customer detail`,
   },
   {
     title: 'Generated page',

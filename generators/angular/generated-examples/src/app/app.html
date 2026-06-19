@@ -97,7 +97,24 @@
                     <button type="button">Orders</button>
                     <button type="button">Customers</button>
                   </nav>
-                  <div class="router-outlet-preview">Routed page content</div>
+                  <div class="router-outlet-preview">
+                    <p>Routed page content</p>
+                    <ul class="page-hierarchy-preview" aria-label="Generated page hierarchy">
+                      <li>
+                        Orders
+                        <ul>
+                          <li>Order detail</li>
+                        </ul>
+                      </li>
+                      <li>
+                        Customers
+                        <ul>
+                          <li>Customer list</li>
+                          <li>Customer detail</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               }
               @case ('page') {

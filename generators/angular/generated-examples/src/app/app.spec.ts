@@ -61,4 +61,17 @@ describe('App', () => {
     );
     expect(compiled.textContent).toContain('Contoso Retail');
   });
+
+  it('should render the application shell page hierarchy preview by default', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    const hierarchy = compiled.querySelector('.page-hierarchy-preview');
+    expect(hierarchy).toBeTruthy();
+    expect(hierarchy?.textContent).toContain('Orders');
+    expect(hierarchy?.textContent).toContain('Order detail');
+    expect(hierarchy?.textContent).toContain('Customers');
+    expect(hierarchy?.textContent).toContain('Customer detail');
+  });
 });
