@@ -10,3 +10,5 @@ ignores:
   - ".git/**"
   - ".vs/**"
   - "LICENSES/**"
+  - "**/dist/**"
+  - "**/node_modules/**"

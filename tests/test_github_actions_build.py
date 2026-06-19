@@ -26,6 +26,14 @@ class GitHubActionsBuildWorkflowTest(unittest.TestCase):
         self.assertIn("python -m pip install pre-commit==4.6.0", self.workflow)
         self.assertIn("pre-commit run --all-files", self.workflow)
 
+    def test_build_workflow_runs_angular_examples_checks(self):
+        self.assertIn("working-directory: generators/angular/generated-examples", self.workflow)
+        self.assertIn("npm ci", self.workflow)
+        self.assertIn("npm run format:check", self.workflow)
+        self.assertIn("npm run lint", self.workflow)
+        self.assertIn("npm test", self.workflow)
+        self.assertIn("npm run build", self.workflow)
+
     def test_build_workflow_uses_pinned_actions(self):
         actions = re.findall(r"uses:\s+(actions/[^\s@]+)@(v[0-9]+(?:\.[0-9]+)+)", self.workflow)
         self.assertEqual(
@@ -33,6 +41,7 @@ class GitHubActionsBuildWorkflowTest(unittest.TestCase):
             [
                 ("actions/checkout", "v6.0.3"),
                 ("actions/setup-python", "v6.2.0"),
+                ("actions/setup-node", "v6.1.0"),
             ],
         )
 
