@@ -4,66 +4,147 @@
   <span>Angular generator examples</span>
 </mat-toolbar>
 
-<main class="page-shell">
-  <section class="hero" aria-labelledby="app-title">
-    <p class="eyebrow">Angular generator</p>
-    <h1 id="app-title">Generated Angular Material examples</h1>
-    <p>
-      Browse representative outputs that the Angular code generator is expected to emit from the
-      OpenUI5 Web UI framework specification.
-    </p>
+<main class="dashboard" aria-labelledby="app-title">
+  <section class="dashboard-upper">
+    <div class="dashboard-description">
+      <p class="eyebrow">Angular generator dashboard</p>
+      <h1 id="app-title">Generated Angular Material examples</h1>
+      <p>
+        Inspect representative generated output from the OpenUI5 Web UI framework specification.
+        Choose an example on the left, then review the generated Material experience and source on
+        the right.
+      </p>
+    </div>
+
+    <mat-card class="controls-card">
+      <mat-card-header>
+        <mat-card-title>Example controls</mat-card-title>
+        <mat-card-subtitle>Current context: {{ selectedExample().title }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="dashboard-actions" aria-label="Generated example controls">
+          <button mat-flat-button type="button" (click)="selectPreviousExample()">
+            Previous example
+          </button>
+          <button mat-flat-button type="button" (click)="selectNextExample()">Next example</button>
+          <button mat-stroked-button type="button" (click)="resetSplit()">Reset split</button>
+        </div>
+        <mat-chip-set aria-label="Angular generator capabilities">
+          <mat-chip>Standalone components</mat-chip>
+          <mat-chip>Angular Material UI</mat-chip>
+          <mat-chip>Routed pages</mat-chip>
+          <mat-chip>Reactive forms</mat-chip>
+        </mat-chip-set>
+      </mat-card-content>
+    </mat-card>
   </section>
 
-  <mat-card class="overview-card">
-    <mat-card-header>
-      <mat-card-title>Generator section</mat-card-title>
-      <mat-card-subtitle>Visible examples for debugging the specification</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-chip-set aria-label="Angular generator capabilities">
-        <mat-chip>Standalone components</mat-chip>
-        <mat-chip>Angular Material UI</mat-chip>
-        <mat-chip>Routed pages</mat-chip>
-        <mat-chip>Reactive forms</mat-chip>
-      </mat-chip-set>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-tab-group animationDuration="0ms" aria-label="Generated example output categories">
-    <mat-tab label="Examples">
-      <div class="examples-grid">
-        @for (example of examples; track example.title) {
-          <mat-card class="example-card">
-            <mat-card-header>
-              <mat-card-title>{{ example.title }}</mat-card-title>
-              <mat-card-subtitle>{{ example.sourceConcept }}</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-              <p>{{ example.summary }}</p>
-              <mat-divider></mat-divider>
-              <h2>Generated files</h2>
-              <mat-list>
-                @for (file of example.files; track file) {
-                  <mat-list-item>{{ file }}</mat-list-item>
-                }
-              </mat-list>
-            </mat-card-content>
-          </mat-card>
-        }
-      </div>
-    </mat-tab>
-    <mat-tab label="Generated output">
+  <section class="dashboard-frame" [style.grid-template-columns]="frameColumns()">
+    <aside class="examples-pane" aria-label="Available generated examples">
+      <h2>Available examples</h2>
       <mat-accordion>
-        @for (example of examples; track example.title) {
-          <mat-expansion-panel>
+        @for (example of examples; track example.title; let index = $index) {
+          <mat-expansion-panel
+            [expanded]="selectedExampleIndex() === index"
+            (opened)="selectExample(index)"
+          >
             <mat-expansion-panel-header>
               <mat-panel-title>{{ example.title }}</mat-panel-title>
               <mat-panel-description>{{ example.sourceConcept }}</mat-panel-description>
             </mat-expansion-panel-header>
-            <pre><code>{{ example.output }}</code></pre>
+
+            <p>{{ example.summary }}</p>
+            <h3>Generated files</h3>
+            <mat-list>
+              @for (file of example.files; track file) {
+                <mat-list-item>{{ file }}</mat-list-item>
+              }
+            </mat-list>
+            <button
+              class="example-select-button"
+              mat-button
+              type="button"
+              [attr.aria-pressed]="selectedExampleIndex() === index"
+              (click)="selectExample(index)"
+            >
+              Show in preview
+            </button>
           </mat-expansion-panel>
         }
       </mat-accordion>
-    </mat-tab>
-  </mat-tab-group>
+    </aside>
+
+    <button
+      class="split-separator"
+      type="button"
+      aria-label="Resize examples and preview panes"
+      (pointerdown)="startResize($event)"
+    ></button>
+
+    <section class="preview-pane" aria-live="polite" aria-label="Generated output preview">
+      <mat-card class="preview-card">
+        <mat-card-header>
+          <mat-card-title>{{ selectedExample().title }}</mat-card-title>
+          <mat-card-subtitle>{{ selectedExample().sourceConcept }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="generated-preview">
+            @switch (selectedExample().previewType) {
+              @case ('shell') {
+                <div class="shell-preview">
+                  <div class="preview-toolbar">Sales Workspace</div>
+                  <nav aria-label="Generated shell navigation">
+                    <button type="button">Orders</button>
+                    <button type="button">Customers</button>
+                  </nav>
+                  <div class="router-outlet-preview">Routed page content</div>
+                </div>
+              }
+              @case ('page') {
+                <div class="page-preview">
+                  <h3>Orders</h3>
+                  <div class="table-preview" role="table" aria-label="Generated orders table">
+                    <div role="row">
+                      <span role="columnheader">Order</span>
+                      <span role="columnheader">Customer</span>
+                      <span role="columnheader">Status</span>
+                    </div>
+                    <div role="row">
+                      <span role="cell">1000123</span>
+                      <span role="cell">Contoso Retail</span>
+                      <span role="cell">Open</span>
+                    </div>
+                  </div>
+                </div>
+              }
+              @case ('form') {
+                <form class="form-preview" aria-label="Generated order form preview">
+                  <label>
+                    Customer name
+                    <input type="text" value="Contoso Retail" readonly />
+                  </label>
+                  <label>
+                    Requested date
+                    <input type="text" value="2026-06-19" readonly />
+                  </label>
+                  <label>
+                    Priority
+                    <select>
+                      <option>Standard</option>
+                    </select>
+                  </label>
+                  <button type="button">Save</button>
+                </form>
+              }
+            }
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <h3>Generated output</h3>
+          <pre><code>{{ selectedExample().output }}</code></pre>
+        </mat-card-content>
+      </mat-card>
+    </section>
+  </section>
 </main>
