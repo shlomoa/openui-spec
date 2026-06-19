@@ -30,3 +30,30 @@ jobs:
 
       - name: Run repository checks
         run: python -m unittest discover -s tests -p 'test_*.py'
+
+      - name: Set up Node
+        uses: actions/setup-node@v6.1.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: generators/angular/generated-examples/package-lock.json
+
+      - name: Install Angular examples app dependencies
+        working-directory: generators/angular/generated-examples
+        run: npm ci
+
+      - name: Check Angular examples app formatting
+        working-directory: generators/angular/generated-examples
+        run: npm run format:check
+
+      - name: Lint Angular examples app
+        working-directory: generators/angular/generated-examples
+        run: npm run lint
+
+      - name: Test Angular examples app
+        working-directory: generators/angular/generated-examples
+        run: npm test
+
+      - name: Build Angular examples app
+        working-directory: generators/angular/generated-examples
+        run: npm run build
