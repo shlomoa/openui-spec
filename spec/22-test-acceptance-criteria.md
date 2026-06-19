@@ -23,6 +23,17 @@ Given a normalized specification entry for a library that publishes `Page`, `Dia
 - verify that semantic references such as `ariaLabelledBy`, `ariaDescribedBy`, and form labels are represented as associations instead of owned aggregations;
 - verify that higher-level concepts such as dialogs and forms are described as specialized controls and elements composed through metadata, not as renderer-specific primitives.
 
+### Example 2 — component model acceptance test
+
+Given a normalized specification entry for a `Button`, `Panel`, `Input`, and `Card` component contract:
+
+- verify that each component exposes a stable identity through a `component`/`name` and owning `library`;
+- verify that properties declare a `type` and, where applicable, a `defaultValue` and `bindable` flag;
+- verify that aggregations declare a child `type` and a multiplicity through `multiple: true` (`0..n`) or `multiple: false` (`0..1`);
+- verify that associations such as `ariaLabelledBy` and `ariaDescribedBy` remain non-owning references instead of aggregations;
+- verify that events such as `change` and `liveChange` declare typed `parameters`;
+- verify that `renderer`, `designtime`, and `dnd` metadata remain optional capability hints and do not replace the property, aggregation, association, and event contract.
+
 ## JSON Mapping
 
 - `specification.sections[21]` in `/openui.json`

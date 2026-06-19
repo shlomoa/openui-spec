@@ -41,10 +41,11 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const panels = compiled.querySelectorAll('mat-expansion-panel');
 
-    expect(panels.length).toBe(3);
+    expect(panels.length).toBe(4);
     expect(compiled.textContent).toContain('Application shell');
     expect(compiled.textContent).toContain('Generated page');
     expect(compiled.textContent).toContain('Generated form');
+    expect(compiled.textContent).toContain('Generated component');
   });
 
   it('should update the preview from lower-pane controls', () => {
@@ -60,5 +61,22 @@ describe('App', () => {
       'Generated page',
     );
     expect(compiled.textContent).toContain('Contoso Retail');
+  });
+
+  it('should preview the generated component example contract', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const buttons = compiled.querySelectorAll<HTMLButtonElement>('.example-select-button');
+
+    buttons[3].click();
+    fixture.detectChanges();
+
+    expect(compiled.querySelector('.preview-card mat-card-title')?.textContent).toContain(
+      'Generated component',
+    );
+    expect(compiled.querySelector('.component-preview')).toBeTruthy();
+    expect(compiled.textContent).toContain('heading: string = "Status"');
+    expect(compiled.textContent).toContain('confirm: void');
   });
 });

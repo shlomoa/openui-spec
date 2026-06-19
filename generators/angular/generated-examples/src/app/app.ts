@@ -13,7 +13,7 @@ interface GeneratedExample {
   readonly summary: string;
   readonly files: readonly string[];
   readonly output: string;
-  readonly previewType: 'shell' | 'page' | 'form';
+  readonly previewType: 'shell' | 'page' | 'form' | 'component';
 }
 
 const GENERATED_EXAMPLES: readonly GeneratedExample[] = [
@@ -77,6 +77,32 @@ save(): void {
     this.form.markAllAsTouched();
     return;
   }
+}`,
+  },
+  {
+    title: 'Generated component',
+    sourceConcept: 'Component Model',
+    summary:
+      'Component metadata becomes a standalone Material component: properties map to typed inputs with defaults, events map to outputs, and aggregations map to projected content.',
+    files: ['src/app/components/status-card/status-card.component.ts'],
+    previewType: 'component',
+    output: `@Component({
+  selector: 'app-status-card',
+  imports: [MatCardModule, MatButtonModule],
+  template: \`
+    <mat-card>
+      <mat-card-title>{{ heading() }}</mat-card-title>
+      <ng-content />
+      <button mat-button [disabled]="!enabled()" (click)="confirm.emit()">
+        Confirm
+      </button>
+    </mat-card>
+  \`
+})
+export class StatusCardComponent {
+  readonly heading = input('Status');
+  readonly enabled = input(true);
+  readonly confirm = output<void>();
 }`,
   },
 ];

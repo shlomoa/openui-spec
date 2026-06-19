@@ -136,6 +136,29 @@
                   <button type="button">Save</button>
                 </form>
               }
+              @case ('component') {
+                <div class="component-preview" aria-label="Generated component preview">
+                  <div class="component-card">
+                    <h3>Status</h3>
+                    <p>Projected content from a parent aggregation.</p>
+                    <button type="button">Confirm</button>
+                  </div>
+                  <dl class="component-contract">
+                    <div>
+                      <dt>Input</dt>
+                      <dd>heading: string = "Status"</dd>
+                    </div>
+                    <div>
+                      <dt>Input</dt>
+                      <dd>enabled: boolean = true</dd>
+                    </div>
+                    <div>
+                      <dt>Output</dt>
+                      <dd>confirm: void</dd>
+                    </div>
+                  </dl>
+                </div>
+              }
             }
           </div>
 
