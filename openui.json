@@ -990,8 +990,8 @@
             "description": "A disabled button suppresses public activation events even when a pointer or keyboard source attempts to activate the control."
           },
           {
-            "title": "Generated handler binding example",
-            "description": "A generator maps the activation event to the target framework handler binding while preserving the enabled gate so disabled controls do not invoke application logic."
+            "title": "Generator output handler binding example",
+            "description": "A generator output maps the activation event to the target framework handler binding while preserving the enabled gate so disabled controls do not invoke application logic."
           }
         ]
       },

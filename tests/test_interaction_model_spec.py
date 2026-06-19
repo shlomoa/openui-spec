@@ -47,7 +47,7 @@ class InteractionModelSpecTest(unittest.TestCase):
             [
                 "Button activation event contract example",
                 "Enabled-state gating example",
-                "Generated handler binding example",
+                "Generator output handler binding example",
             ],
         )
         self.assertIn("### Example 1 — button activation event contract", self.markdown)

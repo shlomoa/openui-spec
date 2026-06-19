@@ -84,7 +84,7 @@ The `press` event is the public interaction contract. Applications handle `press
 
 This example shows that the disabled state blocks public event dispatch regardless of the input source.
 
-### Example 3 — generated handler binding
+### Example 3 — generator output handler binding
 
 ```typescript
 @Component({
@@ -94,14 +94,14 @@ This example shows that the disabled state blocks public event dispatch regardle
   `,
 })
 export class SaveActionComponent {
-  protected isSaving = false;
+  protected readonly isSaving = signal(false);
 
   protected save(): void {
-    if (this.isSaving) {
+    if (this.isSaving()) {
       return;
     }
 
-    this.isSaving = true;
+    this.isSaving.set(true);
   }
 }
 ```
