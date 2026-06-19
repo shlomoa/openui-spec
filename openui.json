@@ -9,7 +9,10 @@
       {
         "id": "library-catalog-root",
         "title": "Library Catalog Root",
-        "basis": ["docs/controllibraries.md", "src/*/src/<library>/library.js"],
+        "basis": [
+          "docs/controllibraries.md",
+          "src/*/src/<library>/library.js"
+        ],
         "responsibility": "Discover the public scope of libraries, dependencies, types, interfaces, controls, and elements."
       },
       {
@@ -33,7 +36,9 @@
       },
       {
         "id": "design-time-evidence",
-        "basis": ["src/*/src/<library>/designtime/*.designtime.js"],
+        "basis": [
+          "src/*/src/<library>/designtime/*.designtime.js"
+        ],
         "responsibility": "Add authoring-time semantics without replacing the runtime contract."
       },
       {
@@ -153,7 +158,10 @@
           "id": "openui-root",
           "title": "OpenUI Specification Root",
           "parent": null,
-          "children": ["library-catalog-root", "metadata-grammar-root"],
+          "children": [
+            "library-catalog-root",
+            "metadata-grammar-root"
+          ],
           "evidence": [
             "REPO_STRUCTURE.md",
             "REQUIREMENTS.md",
@@ -219,8 +227,13 @@
           "title": "Library Identity and Dependencies",
           "parent": "library-catalog-root",
           "children": [],
-          "evidence": ["library.js -> name, version, dependencies"],
-          "mappedSections": ["06-application-structure", "21-compliance-rules"]
+          "evidence": [
+            "library.js -> name, version, dependencies"
+          ],
+          "mappedSections": [
+            "06-application-structure",
+            "21-compliance-rules"
+          ]
         },
         {
           "step": 5,
@@ -229,8 +242,13 @@
           "title": "Type and Enum Catalog",
           "parent": "library-catalog-root",
           "children": [],
-          "evidence": ["library.js -> types"],
-          "mappedSections": ["08-component-model", "10-state-model"]
+          "evidence": [
+            "library.js -> types"
+          ],
+          "mappedSections": [
+            "08-component-model",
+            "10-state-model"
+          ]
         },
         {
           "step": 6,
@@ -239,7 +257,9 @@
           "title": "Interface Catalog",
           "parent": "library-catalog-root",
           "children": [],
-          "evidence": ["library.js -> interfaces"],
+          "evidence": [
+            "library.js -> interfaces"
+          ],
           "mappedSections": [
             "08-component-model",
             "12-form-model",
@@ -258,7 +278,9 @@
             "design-time-evidence",
             "compliance-tests"
           ],
-          "evidence": ["library.js -> controls"],
+          "evidence": [
+            "library.js -> controls"
+          ],
           "mappedSections": [
             "05-ui-concept-model",
             "08-component-model",
@@ -272,8 +294,13 @@
           "title": "Element Catalog",
           "parent": "library-catalog-root",
           "children": [],
-          "evidence": ["library.js -> elements"],
-          "mappedSections": ["05-ui-concept-model", "07-layout-system"]
+          "evidence": [
+            "library.js -> elements"
+          ],
+          "mappedSections": [
+            "05-ui-concept-model",
+            "07-layout-system"
+          ]
         },
         {
           "step": 9,
@@ -282,7 +309,9 @@
           "title": "Property Model",
           "parent": "metadata-grammar-root",
           "children": [],
-          "evidence": ["ManagedObjectMetadata.js -> Property"],
+          "evidence": [
+            "ManagedObjectMetadata.js -> Property"
+          ],
           "mappedSections": [
             "08-component-model",
             "10-state-model",
@@ -296,7 +325,9 @@
           "title": "Aggregation Model",
           "parent": "metadata-grammar-root",
           "children": [],
-          "evidence": ["ManagedObjectMetadata.js -> Aggregation"],
+          "evidence": [
+            "ManagedObjectMetadata.js -> Aggregation"
+          ],
           "mappedSections": [
             "05-ui-concept-model",
             "07-layout-system",
@@ -310,7 +341,9 @@
           "title": "Association Model",
           "parent": "metadata-grammar-root",
           "children": [],
-          "evidence": ["ManagedObjectMetadata.js -> Association"],
+          "evidence": [
+            "ManagedObjectMetadata.js -> Association"
+          ],
           "mappedSections": [
             "08-component-model",
             "12-form-model",
@@ -324,7 +357,9 @@
           "title": "Event Model",
           "parent": "metadata-grammar-root",
           "children": [],
-          "evidence": ["ManagedObjectMetadata.js -> Event"],
+          "evidence": [
+            "ManagedObjectMetadata.js -> Event"
+          ],
           "mappedSections": [
             "08-component-model",
             "09-interaction-model",
@@ -338,8 +373,13 @@
           "title": "Visibility and Default Value Model",
           "parent": "metadata-grammar-root",
           "children": [],
-          "evidence": ["ManagedObjectMetadata.js -> visibility/defaultValue"],
-          "mappedSections": ["10-state-model", "21-compliance-rules"]
+          "evidence": [
+            "ManagedObjectMetadata.js -> visibility/defaultValue"
+          ],
+          "mappedSections": [
+            "10-state-model",
+            "21-compliance-rules"
+          ]
         },
         {
           "step": 14,
@@ -348,7 +388,9 @@
           "title": "Renderer and Drag-and-Drop Model",
           "parent": "metadata-grammar-root",
           "children": [],
-          "evidence": ["ElementMetadata.js -> renderer, dnd"],
+          "evidence": [
+            "ElementMetadata.js -> renderer, dnd"
+          ],
           "mappedSections": [
             "07-layout-system",
             "15-accessibility-model",
@@ -396,8 +438,12 @@
           "title": "Design-time Evidence",
           "parent": "library-component-catalog",
           "children": [],
-          "evidence": ["src/*/src/<library>/designtime/*.designtime.js"],
-          "mappedSections": ["20-extension-model"]
+          "evidence": [
+            "src/*/src/<library>/designtime/*.designtime.js"
+          ],
+          "mappedSections": [
+            "20-extension-model"
+          ]
         },
         {
           "step": 18,
@@ -509,7 +555,10 @@
         "title": "Design Goals",
         "purpose": "Describe the outcomes a compliant web UI framework must enable.",
         "document": "spec/02-design-goals.md",
-        "derivedFrom": ["library-catalog-root", "metadata-grammar-root"],
+        "derivedFrom": [
+          "library-catalog-root",
+          "metadata-grammar-root"
+        ],
         "requirements": [
           "Enable library-based discovery of the public UI surface through a stable catalog of controls, elements, interfaces, and types.",
           "Define components with declarative metadata instead of framework-specific implementation details.",
@@ -591,7 +640,10 @@
         "title": "Design Principles",
         "purpose": "Capture the principles used to normalize OpenUI5 concepts into a reusable framework specification.",
         "document": "spec/03-design-principles.md",
-        "derivedFrom": ["metadata-grammar-root", "api-json-projection"],
+        "derivedFrom": [
+          "metadata-grammar-root",
+          "api-json-projection"
+        ],
         "requirements": [
           "Prefer public library catalogs and runtime metadata over private implementation details, renderer internals, or undocumented helper code.",
           "Separate scope discovery (`library.js`) from semantic interpretation (metadata grammar) and from secondary API projections such as `api.json`.",
@@ -685,7 +737,9 @@
         "title": "Target Users",
         "purpose": "Identify the intended consumers of the specification.",
         "document": "spec/04-target-users.md",
-        "derivedFrom": ["openui-root"],
+        "derivedFrom": [
+          "openui-root"
+        ],
         "requirements": [
           "Application developers use the specification to discover stable component contracts, supported composition patterns, interaction semantics, and state behavior before building application features.",
           "Designers and UX owners use the specification to align component behavior, layout, feedback, accessibility, and theming expectations across libraries and applications.",
@@ -867,7 +921,10 @@
         "title": "Application Structure",
         "purpose": "Describe the required structure of applications built on the framework.",
         "document": "spec/06-application-structure.md",
-        "derivedFrom": ["library-catalog-root", "library-component-catalog"],
+        "derivedFrom": [
+          "library-catalog-root",
+          "library-component-catalog"
+        ],
         "requirements": [
           "Applications compose pages, dialogs, forms, lists, and navigation containers from library-published components.",
           "The framework must support a navigable shell-level structure and page hierarchy built from public components.",
@@ -879,7 +936,10 @@
         "title": "Layout System",
         "purpose": "Describe the abstract layout and composition requirements.",
         "document": "spec/07-layout-system.md",
-        "derivedFrom": ["aggregation-model", "renderer-dnd-model"],
+        "derivedFrom": [
+          "aggregation-model",
+          "renderer-dnd-model"
+        ],
         "requirements": [
           "Layout is expressed as ordered or named composition regions exposed through aggregations.",
           "Responsive behavior must preserve component composition semantics when layout density, theme, or viewport changes.",
@@ -909,11 +969,93 @@
         "title": "Interaction Model",
         "purpose": "Describe how user interaction is represented in the specification.",
         "document": "spec/09-interaction-model.md",
-        "derivedFrom": ["event-model", "reference-component-button"],
+        "derivedFrom": [
+          "event-model",
+          "reference-component-button"
+        ],
         "requirements": [
           "User-triggered behavior is modeled as named events with stable semantics, such as `press` for activation.",
           "Interaction rules must account for enabled and disabled states, pointer activation, and keyboard activation.",
-          "Deprecated interaction aliases may be documented for compatibility but must not replace the current public event contract."
+          "Deprecated interaction aliases may be documented for compatibility but must not replace the current public event contract.",
+          "Interaction events describe component-level intent rather than raw browser gestures, so a single event can normalize pointer, touch, keyboard, and assistive-technology activation.",
+          "Event metadata must declare the event name, owning component, optional parameters, cancellation semantics, and the state preconditions that allow the event to fire.",
+          "Controls that expose action semantics must document how default activation keys and pointer gestures map to the public event while preserving accessibility expectations.",
+          "Application handlers attach to the public event contract and must not depend on private DOM events, renderer internals, or browser-specific event ordering."
+        ],
+        "nonGoals": [
+          "The interaction model does not standardize private browser event listeners, renderer implementation details, or DOM event propagation order.",
+          "The interaction model does not require every component to expose an activation event; passive display controls may have no user-triggered behavior.",
+          "The interaction model does not replace accessibility, form validation, navigation, or feedback rules, but it supplies the event contract those sections can reference."
+        ],
+        "tags": [
+          {
+            "name": "semantic-interaction-event",
+            "meaning": "Public events describe framework-level user intent rather than raw DOM gestures."
+          },
+          {
+            "name": "activation-event-contract",
+            "meaning": "Action controls expose a stable activation event such as `press` for application handlers."
+          },
+          {
+            "name": "enabled-state-gating",
+            "meaning": "Disabled controls suppress public interaction events for pointer, touch, keyboard, and assistive activation paths."
+          },
+          {
+            "name": "pointer-keyboard-equivalence",
+            "meaning": "Equivalent pointer and keyboard activation paths produce the same public event when the control is enabled."
+          },
+          {
+            "name": "compatibility-alias",
+            "meaning": "Legacy or deprecated event names may be documented as aliases, but the current public event remains normative."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Interaction event",
+            "definition": "A public component event that represents user-triggered intent in framework terms rather than a raw browser event."
+          },
+          {
+            "term": "Activation event",
+            "definition": "An interaction event that represents intentional activation of an action control, commonly named `press` for button-like controls."
+          },
+          {
+            "term": "Interaction source",
+            "definition": "The input path that caused an interaction event, such as pointer click, touch tap, keyboard activation, or assistive technology action."
+          },
+          {
+            "term": "Enabled gate",
+            "definition": "The state precondition that allows a control to translate an interaction source into a public interaction event."
+          },
+          {
+            "term": "Compatibility alias",
+            "definition": "A legacy event name or interaction term retained for documentation or migration while delegating normative behavior to the current event contract."
+          }
+        ],
+        "usage": [
+          "Use interaction events when documenting application-observable behavior, and reserve raw DOM event names for implementation notes or test fixtures.",
+          "Define action controls around a single public activation event so applications can handle pointer, touch, keyboard, and assistive activation consistently.",
+          "Check enabled and disabled state before dispatching public interaction events; disabled controls must not call application handlers through alternate activation paths.",
+          "Preserve event parameter names, types, optionality, and cancellation semantics in `/openui.json` so generators and tests can create stable handler signatures.",
+          "Document compatibility aliases only when they are part of the supported public surface, and point consumers to the current event name for new implementations."
+        ],
+        "implementationNotes": [
+          "Extractors should normalize public interaction metadata from control event declarations and avoid treating private renderer listeners as normative events.",
+          "Generators should bind application handlers through the target framework activation mechanism while preserving the specification enabled gate and handler signature.",
+          "Conformance tests should cover pointer activation, keyboard activation, disabled-state suppression, and any documented compatibility aliases for action controls."
+        ],
+        "examples": [
+          {
+            "title": "Button activation event contract example",
+            "description": "A button declares `press` as the public activation event, normalizing pointer, touch, keyboard, and assistive activation sources behind one handler contract."
+          },
+          {
+            "title": "Enabled-state gating example",
+            "description": "A disabled button suppresses public activation events even when a pointer or keyboard source attempts to activate the control."
+          },
+          {
+            "title": "Generated handler binding example",
+            "description": "A generator maps the activation event to the target framework handler binding while preserving the enabled gate so disabled controls do not invoke application logic."
+          }
         ]
       },
       {
@@ -921,7 +1063,10 @@
         "title": "State Model",
         "purpose": "Describe state held or exposed by components.",
         "document": "spec/10-state-model.md",
-        "derivedFrom": ["property-model", "visibility-default-model"],
+        "derivedFrom": [
+          "property-model",
+          "visibility-default-model"
+        ],
         "requirements": [
           "Component state is represented by typed properties with explicit default values.",
           "State may be public or hidden, but only public state participates in the external component contract.",
@@ -933,7 +1078,10 @@
         "title": "Data Binding Model",
         "purpose": "Describe how component state binds to external models.",
         "document": "spec/11-data-binding-model.md",
-        "derivedFrom": ["property-model", "aggregation-model"],
+        "derivedFrom": [
+          "property-model",
+          "aggregation-model"
+        ],
         "requirements": [
           "Bindable properties and aggregations are part of the component contract and must be explicitly declared.",
           "Bindings may target scalar properties or compositional collections depending on the metadata kind.",
@@ -961,7 +1109,9 @@
         "title": "Navigation Model",
         "purpose": "Describe the navigation structures the framework must support.",
         "document": "spec/13-navigation-model.md",
-        "derivedFrom": ["library-component-catalog"],
+        "derivedFrom": [
+          "library-component-catalog"
+        ],
         "requirements": [
           "The framework must support navigable page containers, dialogs, and shell-level composition primitives.",
           "Navigation state must be expressible as public component state and events rather than hidden renderer behavior.",
@@ -973,7 +1123,10 @@
         "title": "Feedback Model",
         "purpose": "Define how user-visible feedback is modeled.",
         "document": "spec/14-feedback-model.md",
-        "derivedFrom": ["library-component-catalog", "event-model"],
+        "derivedFrom": [
+          "library-component-catalog",
+          "event-model"
+        ],
         "requirements": [
           "The framework must expose components for busy, message, dialog, and empty-state feedback patterns.",
           "Feedback components must be addressable through the same public metadata contract as all other components.",
@@ -1001,7 +1154,9 @@
         "title": "Theming / Design Tokens",
         "purpose": "Describe visual customization requirements.",
         "document": "spec/16-theming-design-tokens.md",
-        "derivedFrom": ["library-catalog-root"],
+        "derivedFrom": [
+          "library-catalog-root"
+        ],
         "requirements": [
           "Libraries must support theme-specific assets and shared theme-level styling resources.",
           "Theme composition must allow base styles plus theme overrides without changing the public component contract.",
@@ -1013,7 +1168,10 @@
         "title": "Internationalization",
         "purpose": "Describe locale and translation requirements.",
         "document": "spec/17-internationalization.md",
-        "derivedFrom": ["library-catalog-root", "reference-component-button"],
+        "derivedFrom": [
+          "library-catalog-root",
+          "reference-component-button"
+        ],
         "requirements": [
           "Libraries must provide translatable message resources for public UI text.",
           "Locale-aware rendering must support right-to-left and left-to-right presentation where applicable.",
@@ -1025,7 +1183,10 @@
         "title": "Security / Privacy UI Rules",
         "purpose": "State UI-facing security and privacy constraints.",
         "document": "spec/18-security-privacy-ui-rules.md",
-        "derivedFrom": ["renderer-dnd-model", "reference-component-button"],
+        "derivedFrom": [
+          "renderer-dnd-model",
+          "reference-component-button"
+        ],
         "requirements": [
           "Public component contracts must not rely on unsafe renderer side effects for user-visible semantics.",
           "Components that open or reference popups must declare that relationship explicitly through public metadata.",
@@ -1037,7 +1198,10 @@
         "title": "Performance Requirements",
         "purpose": "Describe performance-oriented expectations that follow from the public model.",
         "document": "spec/19-performance-requirements.md",
-        "derivedFrom": ["library-catalog-root", "api-json-projection"],
+        "derivedFrom": [
+          "library-catalog-root",
+          "api-json-projection"
+        ],
         "requirements": [
           "Public library catalogs should allow eager discovery of available components without eager loading every implementation detail.",
           "Machine-readable API projections should be derivable from the same public contract used by runtime metadata.",
@@ -1104,7 +1268,9 @@
         "title": "Reference Examples",
         "purpose": "Provide a concrete reference component abstracted from upstream OpenUI5 evidence.",
         "document": "spec/23-reference-examples.md",
-        "derivedFrom": ["reference-component-button"],
+        "derivedFrom": [
+          "reference-component-button"
+        ],
         "requirements": [
           "A reference action component exposes text, style, width, enabled state, icon configuration, accessibility state, and a primary activation event.",
           "The same component may expose label/description associations, drag capability, and theme-aware visuals.",
@@ -1136,7 +1302,10 @@
           "renderer",
           "dnd"
         ],
-        "origin": ["ManagedObjectMetadata.js", "ElementMetadata.js"]
+        "origin": [
+          "ManagedObjectMetadata.js",
+          "ElementMetadata.js"
+        ]
       },
       "referenceComponent": {
         "name": "sap.m.Button",
@@ -1160,9 +1329,16 @@
           "accessibleRole",
           "badgeStyle"
         ],
-        "publicAssociations": ["ariaDescribedBy", "ariaLabelledBy"],
-        "publicEvents": ["press"],
-        "deprecatedEvents": ["tap"],
+        "publicAssociations": [
+          "ariaDescribedBy",
+          "ariaLabelledBy"
+        ],
+        "publicEvents": [
+          "press"
+        ],
+        "deprecatedEvents": [
+          "tap"
+        ],
         "behaviorEvidence": [
           "text/type/enabled/width/icon accessors",
           "text direction semantics",

@@ -13,7 +13,7 @@ interface GeneratedExample {
   readonly summary: string;
   readonly files: readonly string[];
   readonly output: string;
-  readonly previewType: 'shell' | 'page' | 'form';
+  readonly previewType: 'shell' | 'page' | 'form' | 'interaction';
 }
 
 const GENERATED_EXAMPLES: readonly GeneratedExample[] = [
@@ -76,6 +76,33 @@ save(): void {
   if (this.form.invalid) {
     this.form.markAllAsTouched();
     return;
+  }
+}`,
+  },
+  {
+    title: 'Generated interaction',
+    sourceConcept: 'Interaction Model + Button press',
+    summary:
+      'Activation metadata becomes one handler path that preserves pointer and keyboard equivalence plus disabled-state gating.',
+    files: ['src/app/actions/save-action.component.ts'],
+    previewType: 'interaction',
+    output: `@Component({
+  selector: 'app-save-action',
+  template: \`
+    <button type="button" [disabled]="isSaving()" (click)="save()">
+      Save order
+    </button>
+  \`
+})
+export class SaveActionComponent {
+  protected readonly isSaving = signal(false);
+
+  protected save(): void {
+    if (this.isSaving()) {
+      return;
+    }
+
+    this.isSaving.set(true);
   }
 }`,
   },

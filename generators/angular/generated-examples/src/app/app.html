@@ -34,6 +34,7 @@
           <mat-chip>Angular Material UI</mat-chip>
           <mat-chip>Routed pages</mat-chip>
           <mat-chip>Reactive forms</mat-chip>
+          <mat-chip>Activation events</mat-chip>
         </mat-chip-set>
       </mat-card-content>
     </mat-card>
@@ -135,6 +136,14 @@
                   </label>
                   <button type="button">Save</button>
                 </form>
+              }
+              @case ('interaction') {
+                <div class="interaction-preview" aria-label="Generated interaction preview">
+                  <p class="interaction-status">Enabled button dispatches one activation event</p>
+                  <button type="button">Save order</button>
+                  <button type="button" disabled>Save while disabled</button>
+                  <p>Pointer, touch, keyboard, and assistive activation map to the same handler.</p>
+                </div>
               }
             }
           </div>

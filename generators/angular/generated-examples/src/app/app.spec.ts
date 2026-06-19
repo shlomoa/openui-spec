@@ -41,10 +41,11 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const panels = compiled.querySelectorAll('mat-expansion-panel');
 
-    expect(panels.length).toBe(3);
+    expect(panels.length).toBe(4);
     expect(compiled.textContent).toContain('Application shell');
     expect(compiled.textContent).toContain('Generated page');
     expect(compiled.textContent).toContain('Generated form');
+    expect(compiled.textContent).toContain('Generated interaction');
   });
 
   it('should update the preview from lower-pane controls', () => {
