@@ -136,6 +136,25 @@
                   <button type="button">Save</button>
                 </form>
               }
+              @case ('state') {
+                <div class="state-preview" aria-label="Generated stateful button preview">
+                  <button type="button">Submit order</button>
+                  <dl>
+                    <div>
+                      <dt>enabled</dt>
+                      <dd>true</dd>
+                    </div>
+                    <div>
+                      <dt>visible</dt>
+                      <dd>true</dd>
+                    </div>
+                    <div>
+                      <dt>type</dt>
+                      <dd>Default</dd>
+                    </div>
+                  </dl>
+                </div>
+              }
             }
           </div>
 

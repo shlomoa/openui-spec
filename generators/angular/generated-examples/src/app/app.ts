@@ -13,7 +13,7 @@ interface GeneratedExample {
   readonly summary: string;
   readonly files: readonly string[];
   readonly output: string;
-  readonly previewType: 'shell' | 'page' | 'form';
+  readonly previewType: 'shell' | 'page' | 'form' | 'state';
 }
 
 const GENERATED_EXAMPLES: readonly GeneratedExample[] = [
@@ -78,6 +78,24 @@ save(): void {
     return;
   }
 }`,
+  },
+  {
+    title: 'State-driven component',
+    sourceConcept: 'State Model',
+    summary:
+      'Public state properties become typed Angular signals with defaults while hidden state stays out of the generated API surface.',
+    files: ['src/app/components/stateful-button/stateful-button.component.ts'],
+    previewType: 'state',
+    output: `readonly text = input('');
+readonly enabled = input(true);
+readonly visible = input(true);
+readonly type = input<ButtonType>('Default');
+
+protected readonly effectiveState = computed(() => ({
+  disabled: !this.enabled(),
+  hidden: !this.visible(),
+  type: this.type(),
+}));`,
   },
 ];
 
