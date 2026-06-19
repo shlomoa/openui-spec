@@ -1,0 +1,45 @@
+{
+  "specification": {
+    "id": "openui-test",
+    "name": "OpenUI Test",
+    "version": "0.1.0",
+    "sections": [
+      {
+        "id": "05-ui-concept-model",
+        "title": "UI Concept Model",
+        "purpose": "Classify controls, elements, aggregations, associations, and events.",
+        "requirements": ["Controls and elements have stable semantic names."]
+      },
+      {
+        "id": "12-form-model",
+        "title": "Form Model",
+        "purpose": "Describe fields, labels, validation, and submission semantics.",
+        "requirements": ["Fields expose validation state."]
+      },
+      {
+        "id": "13-navigation-model",
+        "title": "Navigation Model",
+        "purpose": "Describe route and navigation item semantics.",
+        "requirements": ["Navigation items reference valid pages."]
+      },
+      {
+        "id": "14-feedback-model",
+        "title": "Feedback Model",
+        "purpose": "Describe transient and persistent feedback.",
+        "requirements": ["Feedback messages have severity and lifecycle."]
+      },
+      {
+        "id": "15-accessibility-model",
+        "title": "Accessibility Model",
+        "purpose": "Describe labels, descriptions, focus, and keyboard support.",
+        "requirements": ["Interactive elements expose accessible names."]
+      },
+      {
+        "id": "16-theming-design-tokens",
+        "title": "Theming / Design Tokens",
+        "purpose": "Describe reusable color, spacing, and typography tokens.",
+        "requirements": ["Theme tokens map to runtime CSS custom properties."]
+      }
+    ]
+  }
+}

@@ -9,4 +9,6 @@ globs:
 ignores:
   - ".git/**"
   - ".vs/**"
+  - "**/dist/**"
+  - "**/node_modules/**"
   - "LICENSES/**"
