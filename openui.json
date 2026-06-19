@@ -883,7 +883,109 @@
         "requirements": [
           "Layout is expressed as ordered or named composition regions exposed through aggregations.",
           "Responsive behavior must preserve component composition semantics when layout density, theme, or viewport changes.",
-          "Container components may expose drag-and-drop semantics only when declared in metadata."
+          "Container components may expose drag-and-drop semantics only when declared in metadata.",
+          "Layout containers define how child components are spatially arranged; the arrangement strategy is conveyed through typed properties, not through renderer internals.",
+          "Spacing, sizing, and alignment behavior is part of the layout contract when it is declared as public properties on container components.",
+          "Breakpoint-sensitive behavior is expressed through public properties or layout-mode indicators that allow implementations to adapt arrangement without changing the composition tree.",
+          "A layout container's aggregations define which children participate in the arrangement; children not placed into the container's aggregation are not part of the layout flow."
+        ],
+        "nonGoals": [
+          "The layout system does not prescribe specific CSS, flexbox, grid, or other rendering technology for spatial arrangement.",
+          "The layout system does not define pixel-level breakpoint values; it defines the abstraction through which implementations expose breakpoint awareness.",
+          "The layout system does not require every control to have layout-aware behavior; only container components that declare spatial arrangement properties participate in the layout contract.",
+          "The layout system does not mandate a single global grid; different containers may employ different arrangement strategies simultaneously."
+        ],
+        "tags": [
+          {
+            "name": "aggregation-based-layout",
+            "meaning": "Layout structure is modeled through aggregations that define composition regions and child ordering."
+          },
+          {
+            "name": "responsive-layout-contract",
+            "meaning": "Responsive behavior is part of the public component contract when declared through properties or layout-mode indicators."
+          },
+          {
+            "name": "container-arrangement-strategy",
+            "meaning": "Layout containers specify an arrangement strategy (grid, flow, split, fixed) as a typed public property."
+          },
+          {
+            "name": "spacing-and-sizing-properties",
+            "meaning": "Spacing, gap, column count, and sizing constraints are declared as typed public properties on layout containers."
+          },
+          {
+            "name": "breakpoint-awareness",
+            "meaning": "Breakpoint-sensitive layout changes are expressed through public properties that allow implementations to adapt without altering composition."
+          },
+          {
+            "name": "drag-and-drop-layout",
+            "meaning": "Drag-and-drop behavior in layout containers is declared in metadata and is only normative when explicitly exposed."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Layout container",
+            "definition": "A control that arranges its aggregated children according to a spatial strategy declared in public metadata, such as grid, flow, split, or fixed positioning."
+          },
+          {
+            "term": "Composition region",
+            "definition": "A named aggregation on a layout container that defines a spatial slot where child components are placed and arranged."
+          },
+          {
+            "term": "Arrangement strategy",
+            "definition": "A typed property on a layout container that specifies how children within an aggregation are positioned relative to each other (e.g., columns, rows, wrapping flow)."
+          },
+          {
+            "term": "Spacing property",
+            "definition": "A public property on a layout container that specifies gaps, margins, or padding between arranged children, independent of a specific rendering technology."
+          },
+          {
+            "term": "Breakpoint",
+            "definition": "A declared threshold (e.g., viewport width category) at which a layout container changes its arrangement strategy or the distribution of children across composition regions."
+          },
+          {
+            "term": "Layout density",
+            "definition": "A property or mode indicator that adjusts the compactness of spacing and sizing within a layout container without changing the component composition tree."
+          },
+          {
+            "term": "Drag-and-drop layout declaration",
+            "definition": "An explicit metadata entry on a container component that enables reordering or repositioning of aggregated children through user interaction."
+          }
+        ],
+        "usage": [
+          "Define layout containers as controls with aggregations that represent spatial regions and typed properties that express the arrangement strategy.",
+          "Expose spacing, sizing, and column/row configuration as public properties so application code and generators can configure layout without overriding styles.",
+          "Use breakpoint-aware properties (such as columnsS, columnsM, columnsL, columnsXL or a single breakpoints property) to let containers adapt their arrangement based on the presentation context.",
+          "Reserve drag-and-drop declarations for containers that explicitly support reordering; never infer drag behavior from composition metadata alone.",
+          "When normalizing layout components into /openui.json, preserve aggregation multiplicity, arrangement strategy property names, and spacing property types so generators can reconstruct the layout contract without inspecting renderer code.",
+          "Implementations should ensure that responsive adaptations preserve the logical reading order and accessibility semantics of the composition tree."
+        ],
+        "implementationNotes": [
+          "Implementations should model layout containers as controls with typed arrangement properties and aggregations that represent spatial slots, so generators and validators can discover layout behavior from metadata alone.",
+          "Responsive layout should be expressed through breakpoint-aware properties on containers rather than external media query logic, keeping the layout contract self-contained and portable.",
+          "Drag-and-drop semantics should be restricted to containers that explicitly declare droppable or draggable in their metadata, ensuring that layout reordering behavior is opt-in and discoverable.",
+          "When generating framework-specific code, map arrangement strategy properties to the corresponding layout primitives (e.g., CSS Grid columns, flexbox direction) while keeping the specification-level property names as the authoritative source."
+        ],
+        "examples": [
+          {
+            "title": "Grid layout container example",
+            "description": "A grid container declares columns, gap, and breakpoint-aware column counts as typed properties, with an items aggregation for children participating in the grid arrangement."
+          },
+          {
+            "title": "Responsive split layout example",
+            "description": "A split container uses named aggregations for primary and secondary regions, with orientation, size ratio, and collapse-below-breakpoint properties controlling responsive behavior."
+          },
+          {
+            "title": "Flow layout with spacing example",
+            "description": "A flow container exposes wrap, gap, alignment, and justification as typed properties, allowing generators to emit responsive layouts from public metadata alone."
+          },
+          {
+            "title": "Drag-and-drop layout declaration example",
+            "description": "A container declares itself as a drop target through explicit dnd metadata, making reordering behavior normative because it is publicly declared rather than inferred."
+          },
+          {
+            "title": "Page-level layout composition example",
+            "description": "A dynamic page uses named aggregations (header, content, footer) to define spatial regions, with properties like headerExpanded controlling layout behavior declaratively."
+          }
         ]
       },
       {
@@ -1096,6 +1198,10 @@
           {
             "title": "UI concept model acceptance test",
             "description": "A compliant test should verify that published controls and elements are classified correctly, owned UI regions remain aggregations, semantic references remain associations, and higher-level concepts such as dialogs and forms are represented through metadata-defined composition."
+          },
+          {
+            "title": "Layout system acceptance test",
+            "description": "A compliant test should verify that layout containers declare aggregations for spatial regions, expose arrangement and spacing as typed properties, use breakpoint-aware properties for responsive behavior, and restrict drag-and-drop to explicitly declared metadata."
           }
         ]
       },

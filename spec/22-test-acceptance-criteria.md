@@ -12,7 +12,7 @@
 
 ## Examples
 
-The following example shows how acceptance criteria can exercise the UI concept model additions in a concrete, implementation-independent way.
+The following examples show how acceptance criteria can exercise specification additions in a concrete, implementation-independent way.
 
 ### Example 1 — UI concept model acceptance test
 
@@ -22,6 +22,17 @@ Given a normalized specification entry for a library that publishes `Page`, `Dia
 - verify that `content`, `header`, `footer`, `beginButton`, and similar owned child regions are represented as aggregations with declared multiplicity and child types;
 - verify that semantic references such as `ariaLabelledBy`, `ariaDescribedBy`, and form labels are represented as associations instead of owned aggregations;
 - verify that higher-level concepts such as dialogs and forms are described as specialized controls and elements composed through metadata, not as renderer-specific primitives.
+
+### Example 2 — layout system acceptance test
+
+Given a normalized specification entry for layout container components such as `Grid`, `SplitContainer`, and `FlowContainer`:
+
+- verify that layout containers declare aggregations for spatial regions that children are placed into;
+- verify that arrangement strategy properties (columns, orientation, wrap) are typed public properties, not renderer-internal configuration;
+- verify that spacing properties (gap, margin) are declared as typed public properties on containers;
+- verify that breakpoint-aware behavior is expressed through public properties (such as `columnsS`, `columnsM`, `columnsL`, `columnsXL`) rather than hidden media query logic;
+- verify that drag-and-drop layout behavior is only present when explicitly declared in `dnd` metadata;
+- verify that responsive adaptations do not alter the composition tree or the logical reading order of aggregated children.
 
 ## JSON Mapping
 

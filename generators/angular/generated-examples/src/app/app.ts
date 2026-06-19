@@ -13,7 +13,7 @@ interface GeneratedExample {
   readonly summary: string;
   readonly files: readonly string[];
   readonly output: string;
-  readonly previewType: 'shell' | 'page' | 'form';
+  readonly previewType: 'shell' | 'page' | 'form' | 'layout';
 }
 
 const GENERATED_EXAMPLES: readonly GeneratedExample[] = [
@@ -77,6 +77,38 @@ save(): void {
     this.form.markAllAsTouched();
     return;
   }
+}`,
+  },
+  {
+    title: 'Responsive grid layout',
+    sourceConcept: 'Layout System',
+    summary:
+      'Layout containers are generated as Angular components with responsive grid properties mapped to CSS Grid, adapting column counts at breakpoints.',
+    files: [
+      'src/app/shared/layout/grid-layout.component.ts',
+      'src/app/shared/layout/grid-layout.component.html',
+    ],
+    previewType: 'layout',
+    output: `@Component({
+  selector: 'app-grid-layout',
+  imports: [NgStyle],
+  template: \`
+    <div class="grid-container" [ngStyle]="{
+      'display': 'grid',
+      'grid-template-columns': 'repeat(' + columns() + ', 1fr)',
+      'gap': gap()
+    }">
+      <ng-content />
+    </div>
+  \`
+})
+export class GridLayoutComponent {
+  readonly columns = input(3);
+  readonly columnsS = input(1);
+  readonly columnsM = input(2);
+  readonly columnsL = input(3);
+  readonly columnsXL = input(4);
+  readonly gap = input('1rem');
 }`,
   },
 ];

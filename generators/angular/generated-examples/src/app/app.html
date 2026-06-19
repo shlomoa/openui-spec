@@ -136,6 +136,19 @@
                   <button type="button">Save</button>
                 </form>
               }
+              @case ('layout') {
+                <div class="layout-preview" aria-label="Generated responsive grid layout preview">
+                  <div class="grid-preview">
+                    <div class="grid-cell">Card 1</div>
+                    <div class="grid-cell">Card 2</div>
+                    <div class="grid-cell">Card 3</div>
+                    <div class="grid-cell">Card 4</div>
+                    <div class="grid-cell">Card 5</div>
+                    <div class="grid-cell">Card 6</div>
+                  </div>
+                  <p class="layout-caption">3-column grid (adapts to 1–4 columns at breakpoints)</p>
+                </div>
+              }
             }
           </div>
 
