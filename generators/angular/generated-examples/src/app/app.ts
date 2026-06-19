@@ -83,7 +83,7 @@ save(): void {
     title: 'State-driven component',
     sourceConcept: 'State Model',
     summary:
-      'Public state properties become typed Angular signals with defaults while hidden state stays out of the generated API surface.',
+      'Public state properties become typed Angular signals with defaults; hidden state stays out of generated APIs.',
     files: ['src/app/components/stateful-button/stateful-button.component.ts'],
     previewType: 'state',
     output: `readonly text = input('');

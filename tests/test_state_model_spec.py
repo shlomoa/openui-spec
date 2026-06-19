@@ -10,7 +10,10 @@ STATE_MODEL_MD = REPO_ROOT / "spec" / "10-state-model.md"
 class StateModelSpecTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        spec = json.loads(OPENUI_JSON.read_text(encoding="utf-8"))
+        try:
+            spec = json.loads(OPENUI_JSON.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as error:
+            raise AssertionError(f"Invalid openui.json: {error}") from error
         cls.section = next(
             section
             for section in spec["specification"]["sections"]
