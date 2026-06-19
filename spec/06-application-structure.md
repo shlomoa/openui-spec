@@ -67,7 +67,7 @@ The application declares its library dependencies explicitly and names a single 
   "metadata": {
     "aggregations": {
       "navigation": { "type": "sample.library.NavList", "multiple": false },
-      "header": { "type": "sap.ui.core.Control", "multiple": false },
+      "header": { "type": "sample.library.Control", "multiple": false },
       "pages": { "type": "sample.library.Page", "multiple": true }
     },
     "associations": {
@@ -88,7 +88,7 @@ The shell models global navigation, an optional header, and a set of owned pages
       "name": "sample.library.Page",
       "kind": "control",
       "aggregations": {
-        "content": { "type": "sap.ui.core.Control", "multiple": true },
+        "content": { "type": "sample.library.Control", "multiple": true },
         "subPages": { "type": "sample.library.Page", "multiple": true }
       }
     },
