@@ -31,9 +31,7 @@ class LayoutSystemSpecTest(unittest.TestCase):
     def test_layout_system_json_has_minimum_examples(self) -> None:
         section = load_section("07-layout-system")
 
-        self.assertGreaterEqual(
-            len(section["examples"]), EXPECTED_MIN_LAYOUT_SYSTEM_EXAMPLES
-        )
+        self.assertGreaterEqual(len(section["examples"]), EXPECTED_MIN_LAYOUT_SYSTEM_EXAMPLES)
 
     def test_layout_system_json_has_expected_tags(self) -> None:
         section = load_section("07-layout-system")

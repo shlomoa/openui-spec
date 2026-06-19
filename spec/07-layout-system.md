@@ -83,7 +83,10 @@ This grid layout container declares a column-based arrangement strategy through 
   "kind": "control",
   "metadata": {
     "properties": {
-      "orientation": { "type": "sample.layout.Orientation", "defaultValue": "Horizontal" },
+      "orientation": {
+        "type": "sample.layout.Orientation",
+        "defaultValue": "Horizontal"
+      },
       "primarySize": { "type": "sap.ui.core.CSSSize", "defaultValue": "50%" },
       "breakpoint": { "type": "int", "defaultValue": 768 },
       "collapseBelow": { "type": "boolean", "defaultValue": true }
@@ -108,8 +111,14 @@ The split container uses named aggregations for its two regions and declares res
     "properties": {
       "wrap": { "type": "boolean", "defaultValue": true },
       "gap": { "type": "sap.ui.core.CSSSize", "defaultValue": "0.5rem" },
-      "alignItems": { "type": "sample.layout.Alignment", "defaultValue": "Start" },
-      "justifyContent": { "type": "sample.layout.Justification", "defaultValue": "Start" }
+      "alignItems": {
+        "type": "sample.layout.Alignment",
+        "defaultValue": "Start"
+      },
+      "justifyContent": {
+        "type": "sample.layout.Justification",
+        "defaultValue": "Start"
+      }
     },
     "aggregations": {
       "items": { "type": "sap.ui.core.Control", "multiple": true }
