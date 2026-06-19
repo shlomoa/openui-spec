@@ -97,12 +97,21 @@ save(): void {
 export class SaveActionComponent {
   protected readonly isSaving = signal(false);
 
-  protected save(): void {
+  protected async save(): Promise<void> {
     if (this.isSaving()) {
       return;
     }
 
     this.isSaving.set(true);
+    try {
+      await this.submitOrder();
+    } finally {
+      this.isSaving.set(false);
+    }
+  }
+
+  private async submitOrder(): Promise<void> {
+    return Promise.resolve();
   }
 }`,
   },
