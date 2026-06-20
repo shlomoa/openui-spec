@@ -33,6 +33,11 @@ const PREVIEW_ORDERS: readonly PreviewOrder[] = [
     customer: 'Contoso Retail',
     status: 'Open',
   },
+  {
+    order: '1000124',
+    customer: 'Northwind Traders',
+    status: 'In review',
+  },
 ];
 
 const GENERATED_EXAMPLES: readonly GeneratedExample[] = [
