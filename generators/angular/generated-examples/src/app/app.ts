@@ -89,7 +89,11 @@ save(): void {
       'src/app/shared/layout/grid-layout.component.html',
     ],
     previewType: 'layout',
-    output: `@Component({
+    output: `const BREAKPOINT_M = 600;
+const BREAKPOINT_L = 960;
+const BREAKPOINT_XL = 1280;
+
+@Component({
   selector: 'app-grid-layout',
   imports: [NgStyle],
   template: \`
@@ -113,22 +117,22 @@ export class GridLayoutComponent {
   private destroyRef = inject(DestroyRef);
 
   constructor() {
-    this.updateColumns = this.updateColumns.bind(this);
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', this.updateColumns);
-      this.updateColumns();
+    const queries: [MediaQueryList, () => number][] = [
+      [matchMedia('(min-width: ' + BREAKPOINT_XL + 'px)'), this.columnsXL],
+      [matchMedia('(min-width: ' + BREAKPOINT_L + 'px)'), this.columnsL],
+      [matchMedia('(min-width: ' + BREAKPOINT_M + 'px)'), this.columnsM],
+    ];
+    const update = () => {
+      const match = queries.find(([mql]) => mql.matches);
+      this.activeColumns.set(match ? match[1]() : this.columnsS());
+    };
+    update();
+    for (const [mql] of queries) {
+      mql.addEventListener('change', update);
       this.destroyRef.onDestroy(() =>
-        window.removeEventListener('resize', this.updateColumns)
+        mql.removeEventListener('change', update)
       );
     }
-  }
-
-  private updateColumns(): void {
-    const w = window.innerWidth;
-    if (w >= 1280) this.activeColumns.set(this.columnsXL());
-    else if (w >= 960) this.activeColumns.set(this.columnsL());
-    else if (w >= 600) this.activeColumns.set(this.columnsM());
-    else this.activeColumns.set(this.columnsS());
   }
 }`,
   },
