@@ -17,7 +17,10 @@ export type ExamplePreview =
   | 'action-disabled'
   | 'component-properties'
   | 'component-aggregation'
-  | 'component-events';
+  | 'component-events'
+  | 'a11y-labelled'
+  | 'a11y-popup'
+  | 'a11y-direction';
 
 /** A single runnable example shown on a component's "Examples" tab. */
 export interface DocExample {
@@ -657,6 +660,116 @@ export class SearchInput {
 .component-contract dt {
   color: var(--mat-sys-primary);
   font-weight: 600;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'accessibility',
+    name: 'Accessibility',
+    summary:
+      'Accessible naming, role and popup semantics, and text direction the generator emits as part of the public contract.',
+    items: [
+      {
+        id: 'accessible-field',
+        name: 'Accessible field',
+        summary:
+          'A control computes its accessible name and description from non-owning associations, declares role and popup semantics as typed state, and exposes a typed text direction.',
+        api: {
+          specSection: '15. Accessibility Model',
+          specPath: 'spec/15-accessibility-model.md',
+          purpose: 'Capture accessibility requirements visible in the public contract.',
+          derivedFrom: ['association-model', 'reference-component-button', 'renderer-dnd-model'],
+          points: [
+            'ariaLabelledBy and ariaDescribedBy are non-owning associations that supply the accessible name and description from other controls.',
+            'Roles and popup semantics such as ariaHasPopup are declared as typed public state rather than inferred from renderer markup.',
+            'Text direction is a declarable public property with LTR, RTL, and Inherit values for bidirectional content.',
+            'Keyboard activation and focus order are part of the public, compliance-relevant interaction contract.',
+          ],
+          jsonMapping: 'specification.sections[14] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'a11y-labelled',
+            title: 'Accessible name and description associations',
+            description:
+              'The labelling and describing associations map to aria-labelledby and aria-describedby so the accessible name and description come from other controls.',
+            preview: 'a11y-labelled',
+            code: `@Component({
+  selector: 'app-customer-name',
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  template: \`
+    <mat-form-field appearance="outline">
+      <mat-label id="customer-name-label">Customer name</mat-label>
+      <input
+        matInput
+        [formControl]="customerName"
+        [attr.aria-labelledby]="'customer-name-label'"
+        [attr.aria-describedby]="'customer-name-hint'"
+      />
+      <mat-hint id="customer-name-hint">Use the registered legal name.</mat-hint>
+    </mat-form-field>
+  \`
+})
+export class CustomerNameComponent {
+  protected readonly customerName = new FormControl('', { nonNullable: true });
+}`,
+          },
+          {
+            id: 'a11y-popup',
+            title: 'Role and popup semantics',
+            description:
+              'A button declares its role and ariaHasPopup semantics as typed state so assistive technology announces that activation opens a menu.',
+            preview: 'a11y-popup',
+            code: `@Component({
+  selector: 'app-order-actions',
+  imports: [MatButtonModule, MatMenuModule],
+  template: \`
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      [matMenuTriggerFor]="menu"
+      aria-haspopup="menu"
+    >
+      Order actions
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item type="button">Duplicate</button>
+      <button mat-menu-item type="button">Cancel order</button>
+    </mat-menu>
+  \`
+})
+export class OrderActionsComponent {}`,
+          },
+          {
+            id: 'a11y-direction',
+            title: 'Typed text direction',
+            description:
+              'The textDirection property maps to the dir attribute so bidirectional content renders deterministically, while Inherit follows the surrounding context.',
+            preview: 'a11y-direction',
+            code: `@Component({
+  selector: 'app-order-reference',
+  template: \`
+    <p [attr.dir]="textDirection()">{{ text() }}</p>
+  \`
+})
+export class OrderReferenceComponent {
+  // property text: string
+  readonly text = input<string>('מספר הזמנה 1000123');
+  // property textDirection: 'ltr' | 'rtl' | 'auto' (Inherit)
+  readonly textDirection = input<'ltr' | 'rtl' | 'auto'>('rtl');
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Material form fields expose mat-label and mat-hint so the accessible name and description stay visible and linked.',
+            'The dir attribute drives bidirectional layout so right-to-left content mirrors without custom CSS.',
+          ],
+          code: `.a11y-preview [dir='rtl'] {
+  text-align: right;
 }`,
         },
       },

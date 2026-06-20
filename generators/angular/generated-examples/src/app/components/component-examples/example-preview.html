@@ -191,5 +191,74 @@
         </dl>
       </div>
     }
+    @case ('a11y-labelled') {
+      <div class="a11y-preview">
+        <form class="form-preview" aria-label="Generated accessible name preview">
+          <mat-form-field appearance="outline">
+            <mat-label id="customer-name-label">Customer name</mat-label>
+            <input
+              matInput
+              value="Contoso Retail"
+              readonly
+              aria-labelledby="customer-name-label"
+              aria-describedby="customer-name-hint"
+            />
+            <mat-hint id="customer-name-hint">Use the registered legal name.</mat-hint>
+          </mat-form-field>
+        </form>
+        <dl class="component-contract">
+          <div>
+            <dt>Association</dt>
+            <dd>ariaLabelledBy: customerNameLabel</dd>
+          </div>
+          <div>
+            <dt>Association</dt>
+            <dd>ariaDescribedBy: customerNameHint</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('a11y-popup') {
+      <div class="a11y-preview">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          [matMenuTriggerFor]="orderActionsMenu"
+          aria-haspopup="menu"
+        >
+          Order actions
+        </button>
+        <mat-menu #orderActionsMenu="matMenu">
+          <button mat-menu-item type="button">Duplicate</button>
+          <button mat-menu-item type="button">Cancel order</button>
+        </mat-menu>
+        <dl class="component-contract">
+          <div>
+            <dt>State</dt>
+            <dd>role: button</dd>
+          </div>
+          <div>
+            <dt>State</dt>
+            <dd>ariaHasPopup: menu</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('a11y-direction') {
+      <div class="a11y-preview">
+        <p class="a11y-direction-sample" dir="rtl">מספר הזמנה 1000123</p>
+        <dl class="component-contract">
+          <div>
+            <dt>Property</dt>
+            <dd>textDirection: RTL</dd>
+          </div>
+          <div>
+            <dt>Default</dt>
+            <dd>textDirection: Inherit</dd>
+          </div>
+        </dl>
+      </div>
+    }
   }
 </div>
