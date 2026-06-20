@@ -1,0 +1,36 @@
+.api-source {
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0 0 1.5rem;
+}
+
+.api h3 {
+  margin: 0 0 0.5rem;
+}
+
+.api h4 {
+  margin: 1.5rem 0 0.5rem;
+}
+
+.api-purpose {
+  margin: 0 0 1rem;
+}
+
+.api-derived {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.api-points li {
+  margin-bottom: 0.5rem;
+}
+
+code {
+  background: var(--mat-sys-surface-container-highest);
+  border-radius: 0.25rem;
+  font-family: 'Cascadia Code', 'SFMono-Regular', Consolas, monospace;
+  padding: 0.1rem 0.35rem;
+}

@@ -1,8 +1,19 @@
 # Generated Angular Material examples
 
-Angular Material app that exposes representative generated outputs for the OpenUI5 spec Angular generator.
+Angular Material app that documents the representative components the OpenUI5 spec
+Angular generator emits. The app is structured like the
+[Angular Material Components documentation](https://material.angular.dev/components):
 
-The previews intentionally use Angular Material components for generated shell,
+- A toolbar plus a side navigation list every documented component, grouped by category.
+- `/components` shows the component catalog as cards.
+- `/components/:id` opens a component with **API**, **Examples**, and **Styling** tabs.
+  - **API** content is derived from the specification documents published to Read the Docs
+    (the `spec/*.md` sources).
+  - **Examples** includes more than one runnable Angular Material preview per component,
+    each shown alongside its generated source.
+  - **Styling** lists relevant styling guidance and the generated styles.
+
+The previews intentionally use Angular Material components for the generated shell,
 page, table, form, navigation, and action controls so the sample app reflects the
 generator's expected output style.
 
@@ -12,7 +23,7 @@ generator's expected output style.
 npm start
 ```
 
-Open `http://localhost:4200/` to inspect the Angular generator section and generated example outputs.
+Open `http://localhost:4200/` to browse the generated component catalog.
 
 ## Validation
 
