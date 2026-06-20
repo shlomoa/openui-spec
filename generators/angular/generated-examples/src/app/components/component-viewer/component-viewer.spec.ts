@@ -51,4 +51,19 @@ describe('Component documentation routing', () => {
     expect(root.querySelector('.styling-notes')?.children.length).toBeGreaterThan(0);
     expect(root.querySelector('pre code')?.textContent).toContain('mat-form-field');
   });
+
+  it('sources the component-model API tab from the component model spec', async () => {
+    const harness = await RouterTestingHarness.create('/components/component-contract');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('h1')?.textContent).toContain('Component contract');
+    expect(root.querySelector('.api-source')?.textContent).toContain('spec/08-component-model.md');
+  });
+
+  it('renders the typed component contract on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/component-contract/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('.component-preview')).toBeTruthy();
+    expect(root.textContent).toContain('heading: string = "Status"');
+    expect(root.textContent).toContain('liveChange: string');
+  });
 });
