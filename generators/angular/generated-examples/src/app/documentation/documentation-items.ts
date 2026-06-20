@@ -20,7 +20,10 @@ export type ExamplePreview =
   | 'action-disabled'
   | 'component-properties'
   | 'component-aggregation'
-  | 'component-events';
+  | 'component-events'
+  | 'navigation-stack'
+  | 'navigation-overlay'
+  | 'navigation-routing';
 
 /** A single runnable example shown on a component's "Examples" tab. */
 export interface DocExample {
@@ -788,6 +791,124 @@ export class SearchInput {
 .component-contract dt {
   color: var(--mat-sys-primary);
   font-weight: 600;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'navigation',
+    name: 'Navigation',
+    summary:
+      'Navigable containers, overlays, and route-aware targets the generator emits for navigation flows.',
+    items: [
+      {
+        id: 'navigation-container',
+        name: 'Navigation container',
+        summary:
+          'A navigable page container exposes its pages and active page as public state, reports transitions through events, and maps deep-linkable routes to targets.',
+        api: {
+          specSection: '13. Navigation Model',
+          specPath: 'spec/13-navigation-model.md',
+          purpose: 'Describe the navigation structures the framework must support.',
+          derivedFrom: ['library-component-catalog'],
+          points: [
+            'Navigable page containers own an ordered set of pages and expose the active page as public state.',
+            'Navigation transitions are reported through public events such as navigate and afterNavigate.',
+            'Dialogs and popovers are overlays whose open and close state is part of the public contract.',
+            'Route-aware components map URL patterns to targets so application state is deep-linkable.',
+          ],
+          jsonMapping: 'specification.sections[12] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'navigation-stack',
+            title: 'Navigable page stack',
+            description:
+              'A navigable container owns its pages and exposes the active page as public state; navigation and back map to Angular Router navigation.',
+            preview: 'navigation-stack',
+            code: `@Component({
+  selector: 'app-orders-nav',
+  imports: [MatButtonModule, RouterOutlet],
+  template: \`
+    <nav aria-label="Order navigation">
+      <button mat-button type="button" [disabled]="!canGoBack()" (click)="back()">
+        Back
+      </button>
+      <span>{{ currentPage() }}</span>
+    </nav>
+    <router-outlet />
+  \`
+})
+export class OrdersNavComponent {
+  // aggregation pages: 0..n owned navigable pages
+  readonly pages = input<readonly string[]>(['orders', 'order-detail']);
+  // currentPage association: active page as public state
+  readonly currentPage = input('orders');
+
+  protected canGoBack(): boolean {
+    return this.pages().indexOf(this.currentPage()) > 0;
+  }
+
+  back(): void {
+    // emits the navigate event toward the previous page
+  }
+}`,
+          },
+          {
+            id: 'navigation-overlay',
+            title: 'Dialog overlay',
+            description:
+              'A dialog is a transient overlay whose visibility is public open state; opening and dismissal surface as afterOpen and afterClose events.',
+            preview: 'navigation-overlay',
+            code: `@Component({
+  selector: 'app-confirm-dialog',
+  imports: [MatButtonModule, MatDialogModule],
+  template: \`
+    <h2 mat-dialog-title>Confirm order</h2>
+    <mat-dialog-content>Submit this order for processing?</mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button type="button" (click)="close('cancel')">Cancel</button>
+      <button mat-flat-button color="primary" (click)="close('confirm')">Confirm</button>
+    </mat-dialog-actions>
+  \`
+})
+export class ConfirmDialogComponent {
+  private readonly ref = inject(MatDialogRef<ConfirmDialogComponent>);
+
+  // afterClose event reports the dismissal origin as a typed parameter
+  close(origin: 'cancel' | 'confirm'): void {
+    this.ref.close(origin);
+  }
+}`,
+          },
+          {
+            id: 'navigation-routing',
+            title: 'Route-aware deep-linking',
+            description:
+              'Route-aware containers map URL patterns to targets so a navigation state such as an order id stays deep-linkable and catalog-discoverable.',
+            preview: 'navigation-routing',
+            code: `export const routes: Routes = [
+  // route orders -> target ordersPage
+  { path: 'orders', component: OrdersPage },
+  // route orders/{orderId} -> target orderPage (deep-linkable)
+  { path: 'orders/:orderId', component: OrderPage },
+];`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Navigation chrome reuses Material buttons and toolbar roles so the active page and back affordance stay perceivable.',
+            'Overlays rely on Material dialog surfaces, and route patterns are rendered as plain monospace text rather than bespoke styling.',
+          ],
+          code: `.navigation-preview nav {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.navigation-routing-preview code {
+  font-family: var(--mat-sys-body-large-font, monospace);
 }`,
         },
       },
