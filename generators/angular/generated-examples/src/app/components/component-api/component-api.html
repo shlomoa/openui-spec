@@ -1,0 +1,34 @@
+@if (component(); as component) {
+  <section class="api" aria-label="API reference">
+    <p class="api-source">
+      Sourced from the specification published to Read the Docs:
+      <code>{{ component.api.specPath }}</code>
+    </p>
+
+    <h3>{{ component.api.specSection }}</h3>
+    <p class="api-purpose">{{ component.api.purpose }}</p>
+
+    <h4>Derived from traversal nodes</h4>
+    <ul class="api-derived">
+      @for (node of component.api.derivedFrom; track node) {
+        <li>
+          <code>{{ node }}</code>
+        </li>
+      }
+    </ul>
+
+    <mat-divider></mat-divider>
+
+    <h4>Specification</h4>
+    <ul class="api-points">
+      @for (point of component.api.points; track point) {
+        <li>{{ point }}</li>
+      }
+    </ul>
+
+    <h4>JSON mapping</h4>
+    <p>
+      <code>{{ component.api.jsonMapping }}</code>
+    </p>
+  </section>
+}

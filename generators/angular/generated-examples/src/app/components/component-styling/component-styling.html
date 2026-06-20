@@ -1,0 +1,13 @@
+@if (component(); as component) {
+  <section class="styling" aria-label="Styling guidance">
+    <h3>Styling</h3>
+    <ul class="styling-notes">
+      @for (note of component.styling.notes; track note) {
+        <li>{{ note }}</li>
+      }
+    </ul>
+
+    <h4>Relevant styles</h4>
+    <pre><code>{{ component.styling.code }}</code></pre>
+  </section>
+}
