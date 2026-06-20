@@ -72,6 +72,7 @@ describe('App', () => {
       panel.textContent?.includes('Generated component'),
     );
     const button = componentPanel?.querySelector<HTMLButtonElement>('.example-select-button');
+    expect(button).toBeTruthy();
 
     button!.click();
     fixture.detectChanges();
