@@ -59,6 +59,58 @@
         </mat-card>
       </div>
     }
+    @case ('layout-grid') {
+      <div class="page-preview layout-grid">
+        @for (region of layoutRegions; track region) {
+          <mat-card>
+            <mat-card-title>{{ region }}</mat-card-title>
+          </mat-card>
+        }
+      </div>
+    }
+    @case ('layout-split') {
+      <div class="page-preview layout-split">
+        <mat-card class="layout-split-primary">
+          <mat-card-title>Primary content</mat-card-title>
+          <mat-card-content>primaryContent aggregation</mat-card-content>
+        </mat-card>
+        <mat-card class="layout-split-secondary">
+          <mat-card-title>Secondary content</mat-card-title>
+          <mat-card-content>secondaryContent aggregation</mat-card-content>
+        </mat-card>
+      </div>
+    }
+    @case ('layout-flow') {
+      <div class="page-preview layout-flow">
+        @for (chip of layoutFlowItems; track chip) {
+          <mat-chip>{{ chip }}</mat-chip>
+        }
+      </div>
+    }
+    @case ('layout-dnd') {
+      <div class="page-preview layout-dnd" aria-label="Drag-and-drop layout preview">
+        @for (region of layoutRegions; track region) {
+          <mat-card class="layout-dnd-item">
+            <mat-card-title>
+              <mat-icon aria-hidden="true">drag_indicator</mat-icon>
+              {{ region }}
+            </mat-card-title>
+          </mat-card>
+        }
+      </div>
+    }
+    @case ('layout-page') {
+      <div class="page-preview layout-page">
+        <mat-toolbar class="preview-toolbar" color="primary">Header region</mat-toolbar>
+        <div class="layout-page-content">
+          <mat-card>
+            <mat-card-title>Content</mat-card-title>
+            <mat-card-content>content aggregation</mat-card-content>
+          </mat-card>
+        </div>
+        <mat-toolbar class="layout-page-footer">Footer region</mat-toolbar>
+      </div>
+    }
     @case ('table-basic') {
       <div class="page-preview">
         <table

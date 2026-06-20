@@ -54,6 +54,69 @@
   padding: 0;
 }
 
+.page-preview.layout-grid {
+  background: transparent;
+  box-shadow: none;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  padding: 0;
+}
+
+.page-preview.layout-split {
+  background: transparent;
+  box-shadow: none;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  padding: 0;
+}
+
+.page-preview.layout-flow {
+  align-items: center;
+  background: transparent;
+  box-shadow: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+}
+
+.page-preview.layout-dnd {
+  background: transparent;
+  box-shadow: none;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 0;
+}
+
+.layout-dnd-item mat-card-title {
+  align-items: center;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.layout-dnd-item mat-icon {
+  color: var(--mat-sys-on-surface-variant);
+  cursor: grab;
+}
+
+.page-preview.layout-page {
+  display: grid;
+  gap: 0;
+  padding: 0;
+}
+
+.layout-page-content {
+  padding: 1rem;
+}
+
+.layout-page-footer {
+  font-size: 0.875rem;
+  min-height: 2.5rem;
+}
+
 .page-preview mat-card-title {
   display: block;
   margin: 0 0 0.5rem;
@@ -99,11 +162,23 @@
   .page-preview.card-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .page-preview.layout-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-preview.layout-split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
 }
 
 @media (min-width: 960px) {
   .page-preview.card-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .page-preview.layout-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 

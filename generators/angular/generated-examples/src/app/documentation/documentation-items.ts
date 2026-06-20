@@ -10,6 +10,11 @@ export type ExamplePreview =
   | 'page-card'
   | 'page-split'
   | 'page-grid'
+  | 'layout-grid'
+  | 'layout-split'
+  | 'layout-flow'
+  | 'layout-dnd'
+  | 'layout-page'
   | 'table-basic'
   | 'table-status'
   | 'form-order'
@@ -311,6 +316,179 @@ export class OrdersGrid {
   .page-grid {
     grid-template-columns: 1fr;
   }
+}`,
+        },
+      },
+      {
+        id: 'layout',
+        name: 'Layout system',
+        summary:
+          'Layout containers that arrange aggregated children through typed properties: grid, split, flow, drag-and-drop, and page-level composition.',
+        api: {
+          specSection: '07. Layout System',
+          specPath: 'spec/07-layout-system.md',
+          purpose: 'Describe the abstract layout and composition requirements.',
+          derivedFrom: ['aggregation-model', 'renderer-dnd-model'],
+          points: [
+            'Layout containers arrange their aggregated children through a spatial strategy declared in public metadata (grid, split, flow, fixed).',
+            'The arrangement strategy is conveyed through typed public properties (columns, orientation, wrap), not renderer internals.',
+            'Spacing and sizing (gap, margin, primarySize) are declared as typed public properties on the container.',
+            'Breakpoint-aware behavior is expressed through public properties such as columnsS/columnsM/columnsL/columnsXL so arrangement adapts without changing the composition tree.',
+            'Drag-and-drop layout behavior is only normative when explicitly declared in dnd metadata.',
+          ],
+          jsonMapping: 'specification.sections[6] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'layout-grid',
+            title: 'Grid layout container',
+            description:
+              'A grid container declares a column-based arrangement strategy and exposes breakpoint-aware column counts (columnsS through columnsXL) as typed public properties.',
+            preview: 'layout-grid',
+            code: `{
+  "component": "sample.layout.Grid",
+  "kind": "control",
+  "metadata": {
+    "properties": {
+      "columns": { "type": "int", "defaultValue": 12 },
+      "gap": { "type": "sap.ui.core.CSSSize", "defaultValue": "1rem" },
+      "columnsS": { "type": "int", "defaultValue": 1 },
+      "columnsM": { "type": "int", "defaultValue": 2 },
+      "columnsL": { "type": "int", "defaultValue": 3 },
+      "columnsXL": { "type": "int", "defaultValue": 4 }
+    },
+    "aggregations": {
+      "items": { "type": "sap.ui.core.Control", "multiple": true }
+    }
+  }
+}`,
+          },
+          {
+            id: 'layout-split',
+            title: 'Responsive split layout',
+            description:
+              'A split container uses named aggregations for its two regions and declares responsive collapse behavior through breakpoint and collapseBelow properties.',
+            preview: 'layout-split',
+            code: `{
+  "component": "sample.layout.SplitContainer",
+  "kind": "control",
+  "metadata": {
+    "properties": {
+      "orientation": { "type": "sample.layout.Orientation", "defaultValue": "Horizontal" },
+      "primarySize": { "type": "sap.ui.core.CSSSize", "defaultValue": "50%" },
+      "breakpoint": { "type": "int", "defaultValue": 768 },
+      "collapseBelow": { "type": "boolean", "defaultValue": true }
+    },
+    "aggregations": {
+      "primaryContent": { "type": "sap.ui.core.Control", "multiple": false },
+      "secondaryContent": { "type": "sap.ui.core.Control", "multiple": false }
+    }
+  }
+}`,
+          },
+          {
+            id: 'layout-flow',
+            title: 'Flow layout with spacing',
+            description:
+              'A flow container specifies wrapping, spacing, and alignment as typed public properties so generators can emit responsive layouts without renderer-specific code.',
+            preview: 'layout-flow',
+            code: `{
+  "component": "sample.layout.FlowContainer",
+  "kind": "control",
+  "metadata": {
+    "properties": {
+      "wrap": { "type": "boolean", "defaultValue": true },
+      "gap": { "type": "sap.ui.core.CSSSize", "defaultValue": "0.5rem" },
+      "alignItems": { "type": "sample.layout.Alignment", "defaultValue": "Start" },
+      "justifyContent": { "type": "sample.layout.Justification", "defaultValue": "Start" }
+    },
+    "aggregations": {
+      "items": { "type": "sap.ui.core.Control", "multiple": true }
+    }
+  }
+}`,
+          },
+          {
+            id: 'layout-dnd',
+            title: 'Drag-and-drop layout declaration',
+            description:
+              'A container declares itself a drop target through dnd metadata. Drag-and-drop layout behavior is only normative because it is explicitly declared in public metadata.',
+            preview: 'layout-dnd',
+            code: `{
+  "component": "sample.layout.DragGrid",
+  "kind": "control",
+  "metadata": {
+    "properties": {
+      "columns": { "type": "int", "defaultValue": 3 },
+      "gap": { "type": "sap.ui.core.CSSSize", "defaultValue": "1rem" }
+    },
+    "aggregations": {
+      "items": { "type": "sap.ui.core.Control", "multiple": true }
+    },
+    "dnd": {
+      "draggable": false,
+      "droppable": true
+    }
+  }
+}`,
+          },
+          {
+            id: 'layout-page',
+            title: 'Page-level layout composition',
+            description:
+              'A page-level layout uses named aggregations (header, content, footer) for its spatial regions; headerExpanded and fitContent control layout behavior declaratively.',
+            preview: 'layout-page',
+            code: `{
+  "component": "sample.layout.DynamicPage",
+  "kind": "control",
+  "metadata": {
+    "properties": {
+      "headerExpanded": { "type": "boolean", "defaultValue": true },
+      "fitContent": { "type": "boolean", "defaultValue": false }
+    },
+    "aggregations": {
+      "header": { "type": "sap.ui.core.Control", "multiple": false },
+      "content": { "type": "sap.ui.core.Control", "multiple": true },
+      "footer": { "type": "sap.ui.core.Control", "multiple": false }
+    }
+  }
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Layout containers map their arrangement strategy onto CSS grid or flex so the composition order survives responsive reflow.',
+            'Breakpoint-aware containers adapt their column count from typed inputs rather than renderer internals.',
+            'Drag-and-drop affordances are only rendered when a container declares dnd metadata.',
+          ],
+          code: `.layout-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 600px) {
+  .layout-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 960px) {
+  .layout-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.layout-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.layout-dnd {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }`,
         },
       },

@@ -13,7 +13,7 @@ describe('Component documentation routing', () => {
   it('lists components on the /components landing page', async () => {
     const harness = await RouterTestingHarness.create('/components');
     const root = harness.routeNativeElement as HTMLElement;
-    expect(root.querySelectorAll('.component-card').length).toBe(4);
+    expect(root.querySelectorAll('.component-card').length).toBe(5);
     expect(root.textContent).toContain('Application shell');
   });
 

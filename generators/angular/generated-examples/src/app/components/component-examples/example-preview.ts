@@ -50,4 +50,6 @@ export class ExamplePreviewComponent {
   protected readonly orders = PREVIEW_ORDERS;
   protected readonly basicColumns = ['order', 'customer'];
   protected readonly statusColumns = ['order', 'status'];
+  protected readonly layoutRegions = ['Orders', 'Customers', 'Invoices', 'Reports'];
+  protected readonly layoutFlowItems = ['Open', 'In review', 'Shipped', 'Closed', 'On hold'];
 }
