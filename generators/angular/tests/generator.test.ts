@@ -51,6 +51,15 @@ test("generates section-specific Angular Material details for implemented specs"
     );
     assert.match(formPage, /ReactiveFormsModule/);
     assert.match(formPage, /MatFormFieldModule/);
+    assert.match(formPage, /MatListModule/);
+
+    const formTemplate = await readFile(
+      path.join(outDir, "src/app/pages/form-model/form-model.page.html"),
+      "utf8",
+    );
+    assert.match(formTemplate, /<mat-list aria-label="Key requirements">/);
+    assert.match(formTemplate, /<mat-list-item>/);
+    assert.doesNotMatch(formTemplate, /<ul>|<li>/);
 
     const feedbackPage = await readFile(
       path.join(outDir, "src/app/pages/feedback-model/feedback-model.page.ts"),

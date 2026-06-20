@@ -1,0 +1,87 @@
+.example-preview {
+  background: var(--mat-sys-surface-container-low);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.shell-preview,
+.page-preview,
+.form-preview {
+  background: var(--mat-sys-surface);
+  border-radius: 0.5rem;
+  box-shadow: var(--mat-sys-level1);
+  overflow: hidden;
+}
+
+.preview-toolbar {
+  font-weight: 600;
+}
+
+.preview-toolbar .spacer {
+  flex: 1 1 auto;
+}
+
+.shell-preview mat-nav-list {
+  padding: 0.75rem 0;
+}
+
+.router-outlet-preview {
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  color: var(--mat-sys-on-surface-variant);
+  padding: 2rem 1rem;
+}
+
+.page-preview {
+  padding: 1rem;
+}
+
+.page-preview.page-grid {
+  background: transparent;
+  box-shadow: none;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  padding: 0;
+}
+
+.page-preview mat-card-title {
+  display: block;
+  margin: 0 0 0.5rem;
+}
+
+.table-preview {
+  width: 100%;
+}
+
+.table-preview th,
+.table-preview td {
+  padding: 0.75rem;
+}
+
+.form-preview {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.form-preview.filter-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-preview mat-form-field {
+  width: 100%;
+}
+
+.form-preview.filter-row mat-form-field {
+  flex: 1 1 12rem;
+  width: auto;
+}
+
+@media (max-width: 700px) {
+  .page-preview.page-grid {
+    grid-template-columns: 1fr;
+  }
+}

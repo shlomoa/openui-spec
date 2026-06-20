@@ -1,10 +1,13 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { App } from './app';
+import { routes } from './app.routes';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [provideRouter(routes)],
     }).compileComponents();
   });
 
@@ -14,52 +17,25 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('should render the toolbar title', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
-    await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Generated Angular Material examples',
-    );
+    expect(compiled.querySelector('.app-title')?.textContent).toContain('OpenUI5 Spec');
   });
 
-  it('should render the dashboard panes', () => {
+  it('should render a sidenav navigation listing components by category', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
 
-    expect(compiled.querySelector('.dashboard-upper')).toBeTruthy();
-    expect(compiled.querySelector('.examples-pane')).toBeTruthy();
-    expect(compiled.querySelector('.split-separator')).toBeTruthy();
-    expect(compiled.querySelector('.preview-pane')).toBeTruthy();
-  });
+    expect(compiled.querySelector('.app-sidenav')).toBeTruthy();
+    expect(compiled.textContent).toContain('Application structure');
+    expect(compiled.textContent).toContain('Data & forms');
 
-  it('should list generated examples in the accordion', () => {
-    const fixture = TestBed.createComponent(App);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    const panels = compiled.querySelectorAll('mat-expansion-panel');
-
-    expect(panels.length).toBe(4);
+    const links = compiled.querySelectorAll('.app-sidenav a[mat-list-item]');
+    expect(links.length).toBe(4);
     expect(compiled.textContent).toContain('Application shell');
-    expect(compiled.textContent).toContain('Generated page');
-    expect(compiled.textContent).toContain('Generated form');
-    expect(compiled.textContent).toContain('Generated interaction');
-  });
-
-  it('should update the preview from lower-pane controls', () => {
-    const fixture = TestBed.createComponent(App);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    const buttons = compiled.querySelectorAll<HTMLButtonElement>('.example-select-button');
-
-    buttons[1].click();
-    fixture.detectChanges();
-
-    expect(compiled.querySelector('.preview-card mat-card-title')?.textContent).toContain(
-      'Generated page',
-    );
-    expect(compiled.textContent).toContain('Contoso Retail');
+    expect(compiled.textContent).toContain('Form');
   });
 });
