@@ -1,6 +1,10 @@
-# Generated Angular examples
+# Generated Angular Material examples
 
 Angular Material app that exposes representative generated outputs for the OpenUI5 spec Angular generator.
+
+The previews intentionally use Angular Material components for generated shell,
+page, table, form, navigation, and action controls so the sample app reflects the
+generator's expected output style.
 
 ## Development server
 
