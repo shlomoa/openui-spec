@@ -90,7 +90,7 @@ This example shows that the disabled state blocks public event dispatch regardle
 @Component({
   selector: "sample-save-action",
   template: `
-    <button type="button" [disabled]="isSaving" (click)="save()">Save</button>
+    <button type="button" [disabled]="isSaving()" (click)="save()">Save</button>
   `,
 })
 export class SaveActionComponent {
