@@ -32,6 +32,17 @@ Given a normalized application entry that declares its library dependencies and 
 - verify that non-owning references such as `currentPage` are represented as associations instead of owned aggregations;
 - verify that the page hierarchy, including nested `subPages` and split-container master and detail pages, is resolvable from public metadata without reading component internals.
 
+### Example 3 — component model acceptance test
+
+Given a normalized specification entry for a `Button`, `Panel`, `Input`, and `Card` component contract:
+
+- verify that each component exposes a stable identity through a `component` identifier and owning `library`;
+- verify that properties declare a `type` and, where applicable, a `defaultValue` and `bindable` flag;
+- verify that aggregations declare a child `type` and a multiplicity through `multiple: true` (`0..n`) or `multiple: false` (`0..1`);
+- verify that associations such as `ariaLabelledBy` and `ariaDescribedBy` remain non-owning references instead of aggregations;
+- verify that events such as `change` and `liveChange` declare typed `parameters`;
+- verify that `renderer`, `designtime`, and `dnd` metadata remain optional capability hints and do not replace the property, aggregation, association, and event contract.
+
 ## JSON Mapping
 
 - `specification.sections[21]` in `/openui.json`

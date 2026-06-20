@@ -12,7 +12,10 @@ export type ExamplePreview =
   | 'table-basic'
   | 'table-status'
   | 'form-order'
-  | 'form-filter';
+  | 'form-filter'
+  | 'component-properties'
+  | 'component-aggregation'
+  | 'component-events';
 
 /** A single runnable example shown on a component's "Examples" tab. */
 export interface DocExample {
@@ -424,6 +427,139 @@ export class OrderFilterComponent {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'component-model',
+    name: 'Component model',
+    summary:
+      'The normative component contract: typed properties, owned aggregations, non-owning associations, and events.',
+    items: [
+      {
+        id: 'component-contract',
+        name: 'Component contract',
+        summary:
+          'A reusable component whose public metadata declares typed property inputs, an owned content aggregation, semantic associations, and event outputs.',
+        api: {
+          specSection: '08. Component Model',
+          specPath: 'spec/08-component-model.md',
+          purpose: 'Define the normative component contract.',
+          derivedFrom: [
+            'library-component-catalog',
+            'property-model',
+            'aggregation-model',
+            'association-model',
+            'event-model',
+          ],
+          points: [
+            'Each component exposes a stable identity, owning library, supported interfaces, and public metadata.',
+            'Properties are typed configuration inputs with an optional default value, visibility, and bindable flag.',
+            'Aggregations declare parent-owned child content with a child type and a multiplicity of 0..1 or 0..n.',
+            'Associations are non-owning references such as ariaLabelledBy used for semantic links rather than ownership.',
+            'Events are named notifications that deliver typed parameters to listeners as the component reports state changes.',
+          ],
+          jsonMapping: 'specification.sections[7] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'component-properties',
+            title: 'Typed property inputs',
+            description:
+              'A component declares typed property inputs with default values; Angular surfaces them as required and optional @Input signals.',
+            preview: 'component-properties',
+            code: `@Component({
+  selector: 'app-status-card',
+  imports: [MatButtonModule, MatCardModule],
+  template: \`
+    <mat-card>
+      <mat-card-title>{{ heading() }}</mat-card-title>
+      <mat-card-content>
+        <button mat-flat-button color="primary" [disabled]="!enabled()">Confirm</button>
+      </mat-card-content>
+    </mat-card>
+  \`
+})
+export class StatusCard {
+  // property text: string = "Status"
+  readonly heading = input<string>('Status');
+  // property enabled: boolean = true
+  readonly enabled = input<boolean>(true);
+}`,
+          },
+          {
+            id: 'component-aggregation',
+            title: 'Owned content aggregation',
+            description:
+              'A parent component owns its child content through a 0..n aggregation, projected with Angular content children.',
+            preview: 'component-aggregation',
+            code: `@Component({
+  selector: 'app-panel',
+  imports: [MatCardModule],
+  template: \`
+    <mat-card>
+      <mat-card-title><ng-content select="[panelHeader]" /></mat-card-title>
+      <mat-card-content>
+        <!-- aggregation content: 0..n owned children -->
+        <ng-content />
+      </mat-card-content>
+    </mat-card>
+  \`
+})
+export class Panel {}`,
+          },
+          {
+            id: 'component-events',
+            title: 'Event outputs and associations',
+            description:
+              'A component emits typed events as outputs and references labelling controls through non-owning associations.',
+            preview: 'component-events',
+            code: `@Component({
+  selector: 'app-search-input',
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  template: \`
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput [attr.aria-describedby]="describedBy()"
+             [formControl]="value" (input)="liveChange.emit(value.value)" />
+    </mat-form-field>
+  \`
+})
+export class SearchInput {
+  // property value: string (bindable)
+  readonly value = new FormControl('', { nonNullable: true });
+  // association ariaDescribedBy: non-owning reference
+  readonly describedBy = input<string>();
+  // event liveChange: emits typed parameter
+  readonly liveChange = output<string>();
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Component previews reuse Angular Material surfaces (mat-card) so generated components inherit the configured theme.',
+            'The metadata contract list uses Material system roles so typed inputs, outputs, and associations stay legible.',
+          ],
+          code: `.component-preview mat-card {
+  margin-bottom: 1rem;
+}
+
+.component-contract {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.component-contract div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.component-contract dt {
+  color: var(--mat-sys-primary);
+  font-weight: 600;
 }`,
         },
       },
