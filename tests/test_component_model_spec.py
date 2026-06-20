@@ -62,7 +62,7 @@ class ComponentModelSpecTest(unittest.TestCase):
         example_titles = [example["title"] for example in section["examples"]]
 
         self.assertIn("Component model acceptance test", example_titles)
-        self.assertIn("### Example 3 — component model acceptance test", content)
+        self.assertIn("### Example 4 — component model acceptance test", content)
         self.assertIn("verify that each component exposes a stable identity", content)
 
 
