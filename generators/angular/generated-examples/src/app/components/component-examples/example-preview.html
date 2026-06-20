@@ -231,5 +231,31 @@
         </dl>
       </div>
     }
+    @case ('feedback-busy') {
+      <div class="feedback-preview">
+        <mat-progress-bar mode="indeterminate" aria-label="Loading orders" />
+        <p class="feedback-note">
+          The public busy state drives the loading affordance while work is in flight.
+        </p>
+      </div>
+    }
+    @case ('feedback-message') {
+      <div class="feedback-preview">
+        <div class="feedback-message feedback-success" role="status" aria-live="polite">
+          <mat-icon aria-hidden="true">check_circle</mat-icon>
+          <span>Order saved</span>
+        </div>
+        <p class="feedback-note">Severity success maps to a polite live-region announcement.</p>
+      </div>
+    }
+    @case ('feedback-empty') {
+      <div class="feedback-preview">
+        <div class="empty-state" role="status">
+          <mat-icon aria-hidden="true">inbox</mat-icon>
+          <p>No orders found.</p>
+          <button mat-stroked-button type="button">Create order</button>
+        </div>
+      </div>
+    }
   }
 </div>

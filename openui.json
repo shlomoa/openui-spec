@@ -1427,7 +1427,104 @@
         "requirements": [
           "The framework must expose components for busy, message, dialog, and empty-state feedback patterns.",
           "Feedback components must be addressable through the same public metadata contract as all other components.",
-          "Action completion, failure, and warning scenarios must be representable through public events and state."
+          "Action completion, failure, and warning scenarios must be representable through public events and state.",
+          "Busy and loading feedback must be modeled as public component state, such as a busy property and an optional busy-indicator delay, rather than hidden renderer behavior.",
+          "Message feedback must declare a semantic severity (information, success, warning, or error) so applications and assistive technology can convey outcome meaning.",
+          "Dialog-based feedback must expose owned content aggregations and public confirm and cancel action events so the resolution of a blocking decision is observable.",
+          "Empty-state feedback must be a public, addressable component that communicates the absence of data and any optional recovery actions.",
+          "Feedback components must declare accessibility live-region semantics so outcomes are announced to assistive technology without custom DOM scripting."
+        ],
+        "nonGoals": [
+          "The feedback model does not prescribe a specific renderer, animation, timing curve, or visual styling for feedback surfaces.",
+          "The feedback model does not define application-specific message text, severity thresholds, or business rules for when feedback is triggered.",
+          "The feedback model does not replace the interaction, state, accessibility, or component-model sections; it reuses their contracts for events, state, live regions, and public metadata."
+        ],
+        "tags": [
+          {
+            "name": "busy-state-feedback",
+            "meaning": "Busy and loading feedback is modeled as public component state, such as a busy property and busy-indicator delay, instead of hidden renderer behavior."
+          },
+          {
+            "name": "message-severity",
+            "meaning": "Message feedback declares a semantic severity (information, success, warning, or error) that conveys the outcome meaning of an action."
+          },
+          {
+            "name": "dialog-feedback-contract",
+            "meaning": "Dialog feedback exposes owned content aggregations and public confirm and cancel events for resolving blocking decisions."
+          },
+          {
+            "name": "empty-state-feedback",
+            "meaning": "Empty-state feedback is a public, addressable component that communicates the absence of data and optional recovery actions."
+          },
+          {
+            "name": "feedback-live-region",
+            "meaning": "Feedback components declare accessibility live-region semantics so outcomes are announced to assistive technology."
+          },
+          {
+            "name": "outcome-event-state",
+            "meaning": "Action completion, failure, and warning outcomes are representable through public events and public state."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Feedback component",
+            "definition": "A public, catalog-addressable component whose purpose is to communicate the status or outcome of an operation to the user."
+          },
+          {
+            "term": "Busy state",
+            "definition": "A public boolean component state indicating that an operation is in progress and that interaction with the affected region is suspended."
+          },
+          {
+            "term": "Message",
+            "definition": "A feedback notification carrying a severity and text that reports the outcome of an action to the user."
+          },
+          {
+            "term": "Severity",
+            "definition": "The semantic level of a message, one of information, success, warning, or error."
+          },
+          {
+            "term": "Dialog feedback",
+            "definition": "A modal feedback component that owns its content through aggregations and resolves a blocking decision through public confirm and cancel events."
+          },
+          {
+            "term": "Empty state",
+            "definition": "A feedback component that communicates the absence of data and may offer recovery actions."
+          },
+          {
+            "term": "Live region",
+            "definition": "An accessibility contract describing how a feedback component's updates are announced, such as polite or assertive politeness."
+          }
+        ],
+        "usage": [
+          "Model loading and in-flight operations through a public busy state instead of hidden spinners, and pair long operations with a busy-indicator delay to avoid flicker.",
+          "Choose message severity from the outcome of an action: success for completion, warning for recoverable issues, error for failure, and information for neutral status.",
+          "Use dialog feedback for blocking decisions that must be resolved before continuing, and expose the resolution through public confirm and cancel events.",
+          "Use empty-state feedback when a data region has no content, and offer a recovery action so the user can proceed.",
+          "Declare live-region politeness and roles in metadata so transient messages are announced by assistive technology without custom DOM scripting.",
+          "Reuse existing contracts: feedback events follow the interaction model, busy follows the state model, and announcements follow the accessibility model."
+        ],
+        "implementationNotes": [
+          "Implementations should publish feedback components such as busy indicators, message or snackbar surfaces, dialogs, and empty states through the same public catalog as other components so generators and validators can enumerate them.",
+          "Busy, severity, and live-region semantics should be declared as public metadata so the feedback contract can be interpreted without inspecting renderer internals.",
+          "Generator pipelines should map busy state to a loading affordance, message severity to host notification roles, dialog confirm and cancel to output handlers, and empty state to a no-data view."
+        ],
+        "examples": [
+          {
+            "title": "Busy-state feedback example",
+            "description": "A container that exposes a public busy boolean and a busyIndicatorDelay property models in-flight work as state, so applications toggle busy rather than depending on hidden renderer spinners."
+          },
+          {
+            "title": "Message severity example",
+            "description": "A message that declares a severity of success, warning, error, or information together with text and a live-region politeness conveys an action outcome with semantics that assistive technology can announce."
+          },
+          {
+            "title": "Dialog confirmation feedback example",
+            "description": "A confirmation dialog that owns its content through aggregations and exposes confirm and cancel events resolves a blocking decision through public outputs rather than renderer-specific callbacks."
+          },
+          {
+            "title": "Generator empty-state and notification example",
+            "description": "A generated empty-state view and a severity-mapped notification show how the busy, message, and empty-state feedback contracts map to a host framework while preserving live-region semantics and the enabled action gate."
+          }
         ]
       },
       {
