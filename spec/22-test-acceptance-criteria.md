@@ -12,7 +12,7 @@
 
 ## Examples
 
-The following example shows how acceptance criteria can exercise the UI concept model additions in a concrete, implementation-independent way.
+The following examples show how acceptance criteria can exercise specification additions in a concrete, implementation-independent way.
 
 ### Example 1 — UI concept model acceptance test
 
