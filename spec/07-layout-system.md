@@ -36,7 +36,7 @@
 - **Layout** — the arrangement of a container's composition regions and their content across the available space, including its responsive, density, and spacing behavior.
 - **Composition region** — a named or ordered placement target within a container, backed by an aggregation, into which owned child content is placed.
 - **Ordered region** — a region whose backing aggregation is a `0..n` collection in which document order is the normative visual order before responsive adaptation.
-- **Named region** — a region addressed by a stable name (such as `header`, `content`, or `footer`), typically backed by a `0..1` or `0..n` aggregation, into which content is placed by name.
+- **Named region** — a region addressed by a stable name (such as `header`, `content`, or `footer`), typically backed by a `0..1` or `0..n` aggregation, into which content is placed by referencing that name.
 - **Breakpoint** — a named viewport range that bounds a responsive adaptation; crossing a breakpoint may change arrangement but not owned content.
 - **Density** — a layout-wide modifier that scales spacing and control sizing uniformly without changing the set of regions or their children.
 - **Spacing scale** — the consistent, theme-driven set of spacing steps used between and within regions instead of ad-hoc values.

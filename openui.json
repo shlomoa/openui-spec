@@ -1018,7 +1018,7 @@
           },
           {
             "term": "Named region",
-            "definition": "A region addressed by a stable name (such as header, content, or footer), typically backed by a 0..1 or 0..n aggregation, into which content is placed by name."
+            "definition": "A region addressed by a stable name (such as header, content, or footer), typically backed by a 0..1 or 0..n aggregation, into which content is placed by referencing that name."
           },
           {
             "term": "Breakpoint",
