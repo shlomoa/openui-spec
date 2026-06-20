@@ -45,6 +45,15 @@
   padding: 0;
 }
 
+.page-preview.card-grid {
+  background: transparent;
+  box-shadow: none;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  padding: 0;
+}
+
 .page-preview mat-card-title {
   display: block;
   margin: 0 0 0.5rem;
@@ -83,5 +92,23 @@
 @media (max-width: 700px) {
   .page-preview.page-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 600px) {
+  .page-preview.card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 960px) {
+  .page-preview.card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-preview.card-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

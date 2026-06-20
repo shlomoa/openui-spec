@@ -9,6 +9,7 @@ export type ExamplePreview =
   | 'shell-toolbar'
   | 'page-card'
   | 'page-split'
+  | 'page-grid'
   | 'table-basic'
   | 'table-status'
   | 'form-order'
@@ -163,6 +164,8 @@ mat-sidenav {
             'Layout is expressed as ordered or named composition regions exposed through aggregations.',
             'Responsive behavior must preserve component composition semantics when layout density, theme, or viewport changes.',
             'Container components may expose drag-and-drop semantics only when declared in metadata.',
+            'The arrangement strategy is conveyed through typed properties on container components, not through renderer internals.',
+            'Breakpoint-sensitive behavior is expressed through public properties or layout-mode indicators so implementations adapt arrangement without changing the composition tree.',
           ],
           jsonMapping: 'specification.sections[6] in /openui.json',
         },
@@ -213,16 +216,95 @@ export class OrdersPage {}`,
 })
 export class OrdersPage {}`,
           },
+          {
+            id: 'page-grid',
+            title: 'Responsive grid layout',
+            description:
+              'A grid container exposes breakpoint-aware column counts as typed inputs so the arrangement adapts from one to four columns without changing the composition tree.',
+            preview: 'page-grid',
+            code: `const BREAKPOINT_M = 600;
+const BREAKPOINT_L = 960;
+const BREAKPOINT_XL = 1280;
+
+@Component({
+  selector: 'app-orders-grid',
+  imports: [MatCardModule],
+  template: \`
+    <div class="card-grid" [style.grid-template-columns]="'repeat(' + columns() + ', minmax(0, 1fr))'">
+      @for (region of regions; track region) {
+        <mat-card>
+          <mat-card-title>{{ region }}</mat-card-title>
+        </mat-card>
+      }
+    </div>
+  \`,
+  styles: \`
+    .card-grid { display: grid; gap: 1rem; }
+  \`
+})
+export class OrdersGrid {
+  readonly columnsS = input(1);
+  readonly columnsM = input(2);
+  readonly columnsL = input(3);
+  readonly columnsXL = input(4);
+  protected readonly regions = ['Orders', 'Customers', 'Invoices', 'Reports'];
+
+  protected columns = signal(this.columnsL());
+  private destroyRef = inject(DestroyRef);
+
+  constructor() {
+    const queries: [MediaQueryList, () => number][] = [
+      [matchMedia('(min-width: ' + BREAKPOINT_XL + 'px)'), this.columnsXL],
+      [matchMedia('(min-width: ' + BREAKPOINT_L + 'px)'), this.columnsL],
+      [matchMedia('(min-width: ' + BREAKPOINT_M + 'px)'), this.columnsM],
+    ];
+    const update = () => {
+      const match = queries.find(([mql]) => mql.matches);
+      this.columns.set(match ? match[1]() : this.columnsS());
+    };
+    update();
+    for (const [mql] of queries) {
+      mql.addEventListener('change', update);
+      this.destroyRef.onDestroy(() => mql.removeEventListener('change', update));
+    }
+  }
+}`,
+          },
         ],
         styling: {
           notes: [
             'Layout regions use CSS grid so composition order survives responsive reflow.',
             'A single-column fallback preserves composition semantics on narrow viewports.',
+            'Grid containers adapt their column count at breakpoints from typed inputs rather than from renderer internals.',
           ],
           code: `.page-grid {
   display: grid;
   gap: 1rem;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.card-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 600px) {
+  .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 960px) {
+  .card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .card-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 700px) {
