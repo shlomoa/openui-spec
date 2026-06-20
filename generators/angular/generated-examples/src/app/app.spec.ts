@@ -34,8 +34,9 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Data & forms');
 
     const links = compiled.querySelectorAll('.app-sidenav a[mat-list-item]');
-    expect(links.length).toBe(4);
+    expect(links.length).toBe(5);
     expect(compiled.textContent).toContain('Application shell');
     expect(compiled.textContent).toContain('Form');
+    expect(compiled.textContent).toContain('Component state');
   });
 });
