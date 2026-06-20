@@ -83,7 +83,7 @@ save(): void {
     title: 'Responsive grid layout',
     sourceConcept: 'Layout System',
     summary:
-      'Layout containers are generated as Angular components with responsive grid properties mapped to CSS Grid, adapting column counts at breakpoints.',
+      'Layout containers are generated as Angular components with responsive grid properties mapped to CSS Grid. The preview demonstrates 1–4 column breakpoints matching columnsS/M/L/XL inputs.',
     files: [
       'src/app/shared/layout/grid-layout.component.ts',
       'src/app/shared/layout/grid-layout.component.html',
