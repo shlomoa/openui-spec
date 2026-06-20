@@ -4,7 +4,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 interface GeneratedExample {
@@ -16,6 +20,26 @@ interface GeneratedExample {
   readonly previewType: 'shell' | 'page' | 'form';
 }
 
+interface PreviewOrder {
+  readonly order: string;
+  readonly customer: string;
+  readonly status: string;
+}
+
+const PREVIEW_ORDER_COLUMNS: readonly (keyof PreviewOrder)[] = ['order', 'customer', 'status'];
+const PREVIEW_ORDERS: readonly PreviewOrder[] = [
+  {
+    order: '1000123',
+    customer: 'Contoso Retail',
+    status: 'Open',
+  },
+  {
+    order: '1000124',
+    customer: 'Northwind Traders',
+    status: 'In review',
+  },
+];
+
 const GENERATED_EXAMPLES: readonly GeneratedExample[] = [
   {
     title: 'Application shell',
@@ -26,14 +50,18 @@ const GENERATED_EXAMPLES: readonly GeneratedExample[] = [
     previewType: 'shell',
     output: `@Component({
   selector: 'app-root',
-  imports: [MatToolbarModule, MatButtonModule, RouterOutlet],
+  imports: [MatListModule, MatSidenavModule, MatToolbarModule, RouterLink, RouterOutlet],
   template: \`
     <mat-toolbar color="primary">Sales Workspace</mat-toolbar>
-    <nav aria-label="Primary">
-      <a mat-button routerLink="/orders">Orders</a>
-      <a mat-button routerLink="/customers">Customers</a>
-    </nav>
-    <router-outlet />
+    <mat-sidenav-container>
+      <mat-sidenav mode="side" opened>
+        <a mat-list-item routerLink="/orders">Orders</a>
+        <a mat-list-item routerLink="/customers">Customers</a>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <router-outlet />
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   \`
 })
 export class AppComponent {}`,
@@ -66,7 +94,29 @@ export class OrdersPage {
       'Form fields and validation rules are emitted as typed reactive forms with Material controls and actions.',
     files: ['src/app/pages/orders/order-form.component.ts'],
     previewType: 'form',
-    output: `readonly form = this.formBuilder.nonNullable.group({
+    output: `@Component({
+  selector: 'app-order-form',
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule],
+  template: \`
+    <form [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <mat-label>Customer name</mat-label>
+        <input matInput formControlName="customerName" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option value="standard">Standard</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="button" (click)="save()">Save</button>
+    </form>
+  \`
+})
+export class OrderFormComponent {
+  readonly form = this.formBuilder.nonNullable.group({
   customerName: ['', [Validators.required]],
   requestedDate: ['', [Validators.required]],
   priority: ['standard']
@@ -77,6 +127,7 @@ save(): void {
     this.form.markAllAsTouched();
     return;
   }
+}
 }`,
   },
 ];
@@ -89,7 +140,11 @@ save(): void {
     MatChipsModule,
     MatDividerModule,
     MatExpansionModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatListModule,
+    MatSelectModule,
+    MatTableModule,
     MatToolbarModule,
   ],
   templateUrl: './app.html',
@@ -97,6 +152,8 @@ save(): void {
 })
 export class App {
   protected readonly examples = GENERATED_EXAMPLES;
+  protected readonly previewOrderColumns = PREVIEW_ORDER_COLUMNS;
+  protected readonly previewOrders = PREVIEW_ORDERS;
   protected readonly selectedExampleIndex = signal(0);
   protected readonly selectedExample = computed(() => this.examples[this.selectedExampleIndex()]);
   protected readonly splitPercent = signal(36);

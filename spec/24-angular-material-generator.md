@@ -20,6 +20,20 @@ The generated application includes:
 - global theme styles; and
 - generated page components for specification sections, including section-specific form, navigation, feedback, accessibility, theming, and UI concept details where mappings exist.
 
+## Expected Angular Material output
+
+Generated Angular applications must target the latest Angular Material package set supported by this repository. The current generator emits Angular and Angular Material `22.0.2` dependencies and should keep those pins current when the repository upgrades its Angular toolchain.
+
+The generated UI should prefer Angular Material components and directives wherever Angular Material provides an equivalent:
+
+- application shells use `MatToolbarModule`, `MatSidenavModule`, and `MatListModule`;
+- generated pages use `MatCardModule` for page surfaces and `MatListModule` for requirement summaries;
+- generated forms use reactive forms with `MatFormFieldModule`, `MatInputModule`, `MatSelectModule`, and Material buttons;
+- generated navigation uses Material list or button navigation patterns; and
+- generated feedback uses `MatSnackBarModule`.
+
+Semantic HTML remains appropriate for document structure and accessibility landmarks, such as `main`, `section`, `form`, headings, and the native `table` element when it is enhanced with `mat-table`.
+
 ## Install and build the generator
 
 From the repository root:

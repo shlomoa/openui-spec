@@ -139,25 +139,11 @@ mat-chip-set {
 }
 
 .preview-toolbar {
-  background: #233876;
-  color: white;
   font-weight: 600;
-  padding: 0.85rem 1rem;
 }
 
-.shell-preview nav {
-  display: flex;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-}
-
-.shell-preview button,
-.form-preview button {
-  background: #5c6bc0;
-  border: 0;
-  border-radius: 999px;
-  color: white;
-  padding: 0.5rem 1rem;
+.shell-preview mat-nav-list {
+  padding: 0.75rem 0;
 }
 
 .router-outlet-preview {
@@ -170,27 +156,17 @@ mat-chip-set {
   padding: 1rem;
 }
 
-.page-preview h3 {
+.page-preview mat-card-title {
+  display: block;
   margin: 0 0 1rem;
 }
 
 .table-preview {
-  border: 1px solid #d8ddeb;
-  border-radius: 0.5rem;
-  overflow: hidden;
+  width: 100%;
 }
 
-.table-preview [role='row'] {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.table-preview [role='row']:first-child {
-  background: #f1f5f9;
-  font-weight: 700;
-}
-
-.table-preview span {
+.table-preview th,
+.table-preview td {
   padding: 0.75rem;
 }
 
@@ -200,17 +176,8 @@ mat-chip-set {
   padding: 1rem;
 }
 
-.form-preview label {
-  display: grid;
-  gap: 0.35rem;
-  font-weight: 600;
-}
-
-.form-preview input,
-.form-preview select {
-  border: 1px solid #cbd5e1;
-  border-radius: 0.5rem;
-  padding: 0.75rem;
+.form-preview mat-form-field {
+  width: 100%;
 }
 
 pre {
