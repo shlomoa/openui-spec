@@ -42,6 +42,7 @@ describe('App', () => {
     expect(links.length).toBe(expectedLinks);
     expect(compiled.textContent).toContain('Application shell');
     expect(compiled.textContent).toContain('Form');
+    expect(compiled.textContent).toContain('Component state');
     expect(compiled.textContent).toContain('Component contract');
     expect(compiled.textContent).toContain('Action button');
     expect(compiled.textContent).toContain('Status feedback');

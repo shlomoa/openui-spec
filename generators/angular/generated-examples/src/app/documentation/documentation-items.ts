@@ -9,10 +9,13 @@ export type ExamplePreview =
   | 'shell-toolbar'
   | 'page-card'
   | 'page-split'
+  | 'page-responsive'
   | 'table-basic'
   | 'table-status'
   | 'form-order'
   | 'form-filter'
+  | 'state-public'
+  | 'state-derived'
   | 'action-enabled'
   | 'action-disabled'
   | 'component-properties'
@@ -220,6 +223,48 @@ export class OrdersPage {}`,
   \`
 })
 export class OrdersPage {}`,
+          },
+          {
+            id: 'page-responsive',
+            title: 'Responsive grid page',
+            description:
+              'An ordered region keeps the same children while the column count adapts across breakpoints, so reflow preserves composition order.',
+            preview: 'page-responsive',
+            code: `@Component({
+  selector: 'app-catalog-page',
+  imports: [MatCardModule],
+  template: \`
+    <div class="catalog-grid">
+      @for (item of items(); track item.id) {
+        <mat-card>
+          <mat-card-title>{{ item.name }}</mat-card-title>
+        </mat-card>
+      }
+    </div>
+  \`,
+  styles: \`
+    .catalog-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: 1023px) {
+      .catalog-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 599px) {
+      .catalog-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  \`
+})
+export class CatalogPage {
+  readonly items = input<CatalogItem[]>([]);
+}`,
           },
         ],
         styling: {
@@ -432,6 +477,92 @@ export class OrderFilterComponent {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+}`,
+        },
+      },
+      {
+        id: 'state',
+        name: 'Component state',
+        summary:
+          'Public typed state becomes Angular Material signal inputs with defaults, while hidden and derived state stay compatible with the declared contract.',
+        api: {
+          specSection: '10. State Model',
+          specPath: 'spec/10-state-model.md',
+          purpose: 'Describe state held or exposed by components.',
+          derivedFrom: ['property-model', 'visibility-default-model'],
+          points: [
+            'Component state is represented by typed properties with explicit default values.',
+            'Only public state participates in the external component contract; hidden state stays out of generated APIs.',
+            'Derived state must remain type-compatible with the declared property it reflects.',
+          ],
+          jsonMapping: 'specification.sections[9] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'state-public-defaults',
+            title: 'Public state with defaults',
+            description:
+              'Public typed properties are emitted as Angular signal inputs with their declared defaults and drive a Material button.',
+            preview: 'state-public',
+            code: `@Component({
+  selector: 'app-submit-button',
+  imports: [MatButtonModule],
+  template: \`
+    @if (visible()) {
+      <button mat-raised-button color="primary" [disabled]="!enabled()">
+        {{ text() }}
+      </button>
+    }
+  \`
+})
+export class SubmitButtonComponent {
+  readonly text = input('Submit order');
+  readonly enabled = input(true);
+  readonly visible = input(true);
+  readonly type = input<ButtonType>('Default');
+}`,
+          },
+          {
+            id: 'state-derived-validation',
+            title: 'Derived validation state',
+            description:
+              'Derived state is computed from public inputs and still returns the declared value-state enum, surfaced through a Material form field.',
+            preview: 'state-derived',
+            code: `@Component({
+  selector: 'app-amount-input',
+  imports: [MatFormFieldModule, MatInputModule],
+  template: \`
+    <mat-form-field appearance="outline">
+      <mat-label>Amount</mat-label>
+      <input matInput [value]="value()" readonly />
+      @if (effectiveValueState() === 'Error') {
+        <mat-error>Value is required</mat-error>
+      }
+    </mat-form-field>
+  \`
+})
+export class AmountInputComponent {
+  readonly value = input('');
+  readonly required = input(true);
+  readonly valueState = input<ValueState>('None');
+
+  protected readonly effectiveValueState = computed<ValueState>(() =>
+    this.required() && this.value() === '' ? 'Error' : this.valueState(),
+  );
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Public state maps to Material control inputs such as disabled so visual state stays in sync with the contract.',
+            'Hidden state never reaches the template, and derived state reuses Material feedback (mat-error) instead of bespoke styling.',
+          ],
+          code: `button[mat-raised-button][disabled] {
+  opacity: 0.6;
+}
+
+mat-form-field {
+  width: 100%;
 }`,
         },
       },
