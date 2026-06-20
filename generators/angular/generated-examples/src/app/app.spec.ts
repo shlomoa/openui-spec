@@ -32,10 +32,12 @@ describe('App', () => {
     expect(compiled.querySelector('.app-sidenav')).toBeTruthy();
     expect(compiled.textContent).toContain('Application structure');
     expect(compiled.textContent).toContain('Data & forms');
+    expect(compiled.textContent).toContain('Interaction');
 
     const links = compiled.querySelectorAll('.app-sidenav a[mat-list-item]');
-    expect(links.length).toBe(4);
+    expect(links.length).toBe(5);
     expect(compiled.textContent).toContain('Application shell');
     expect(compiled.textContent).toContain('Form');
+    expect(compiled.textContent).toContain('Action button');
   });
 });

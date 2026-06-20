@@ -6,8 +6,15 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 OPENUI_JSON = REPO_ROOT / "openui.json"
 INTERACTION_MODEL_MD = REPO_ROOT / "spec" / "09-interaction-model.md"
-GENERATED_EXAMPLES_APP = (
-    REPO_ROOT / "generators" / "angular" / "generated-examples" / "src" / "app" / "app.ts"
+GENERATED_EXAMPLES_DOCS = (
+    REPO_ROOT
+    / "generators"
+    / "angular"
+    / "generated-examples"
+    / "src"
+    / "app"
+    / "documentation"
+    / "documentation-items.ts"
 )
 
 
@@ -73,11 +80,14 @@ class InteractionModelSpecTest(unittest.TestCase):
         self.assertTrue(press_event["enabledRequired"])
 
     def test_generated_examples_app_lists_interaction_example(self):
-        app_source = GENERATED_EXAMPLES_APP.read_text(encoding="utf-8")
+        docs_source = GENERATED_EXAMPLES_DOCS.read_text(encoding="utf-8")
 
-        self.assertIn("Generated interaction", app_source)
-        self.assertIn("Interaction Model + Button press", app_source)
-        self.assertIn("previewType: 'interaction'", app_source)
+        self.assertIn("id: 'interaction'", docs_source)
+        self.assertIn("id: 'action'", docs_source)
+        self.assertIn("specPath: 'spec/09-interaction-model.md'", docs_source)
+        self.assertIn("preview: 'action-enabled'", docs_source)
+        self.assertIn("preview: 'action-disabled'", docs_source)
+        self.assertIn("[disabled]=\"isSaving()\"", docs_source)
 
 
 if __name__ == "__main__":
