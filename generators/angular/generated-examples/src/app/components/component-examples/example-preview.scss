@@ -8,7 +8,8 @@
 .shell-preview,
 .page-preview,
 .form-preview,
-.state-preview {
+.state-preview,
+.binding-preview {
   background: var(--mat-sys-surface);
   border-radius: 0.5rem;
   box-shadow: var(--mat-sys-level1);
@@ -90,14 +91,20 @@
   width: auto;
 }
 
-.state-preview {
+.state-preview,
+.binding-preview {
   display: grid;
   gap: 1rem;
   justify-items: start;
   padding: 1rem;
 }
 
-.state-preview mat-form-field {
+.state-preview mat-form-field,
+.binding-preview mat-form-field {
+  width: 100%;
+}
+
+.binding-preview mat-list {
   width: 100%;
 }
 

@@ -42,6 +42,7 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Application shell');
     expect(compiled.textContent).toContain('Form');
     expect(compiled.textContent).toContain('Component state');
+    expect(compiled.textContent).toContain('Data binding');
     expect(compiled.textContent).toContain('Component contract');
     expect(compiled.textContent).toContain('Action button');
   });
