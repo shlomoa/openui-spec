@@ -17,7 +17,10 @@ export type ExamplePreview =
   | 'action-disabled'
   | 'component-properties'
   | 'component-aggregation'
-  | 'component-events';
+  | 'component-events'
+  | 'feedback-busy'
+  | 'feedback-message'
+  | 'feedback-empty';
 
 /** A single runnable example shown on a component's "Examples" tab. */
 export interface DocExample {
@@ -657,6 +660,124 @@ export class SearchInput {
 .component-contract dt {
   color: var(--mat-sys-primary);
   font-weight: 600;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'feedback',
+    name: 'Feedback',
+    summary:
+      'User-visible feedback patterns the generator emits: busy state, severity messages, and empty states.',
+    items: [
+      {
+        id: 'feedback',
+        name: 'Status feedback',
+        summary:
+          'Busy state, severity-typed messages, and empty states map to public component state and live-region semantics instead of hidden renderer behavior.',
+        api: {
+          specSection: '14. Feedback Model',
+          specPath: 'spec/14-feedback-model.md',
+          purpose: 'Define how user-visible feedback is modeled.',
+          derivedFrom: ['library-component-catalog', 'event-model'],
+          points: [
+            'Busy and loading feedback is modeled as public component state, such as a busy property and a busy-indicator delay.',
+            'Message feedback declares a semantic severity (information, success, warning, or error) with live-region politeness.',
+            'Empty-state feedback is a public, addressable view that communicates absent data and offers a recovery action.',
+          ],
+          jsonMapping: 'specification.sections[13] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'feedback-busy',
+            title: 'Busy-state feedback',
+            description:
+              'The public busy state drives a loading affordance while work is in flight, so applications toggle state instead of injecting renderer spinners.',
+            preview: 'feedback-busy',
+            code: `@Component({
+  selector: 'app-orders-view',
+  imports: [MatProgressBarModule],
+  template: \`
+    @if (busy()) {
+      <mat-progress-bar mode="indeterminate" aria-label="Loading orders" />
+    }
+  \`
+})
+export class OrdersViewComponent {
+  // property busy: boolean = false (bindable)
+  protected readonly busy = signal(false);
+}`,
+          },
+          {
+            id: 'feedback-message',
+            title: 'Severity message and live region',
+            description:
+              'A severity-typed message announces an action outcome through a polite live region so assistive technology conveys the result.',
+            preview: 'feedback-message',
+            code: `@Component({
+  selector: 'app-save-status',
+  imports: [MatButtonModule, MatSnackBarModule],
+  template: \`
+    <button mat-raised-button color="primary" type="button" (click)="save()">
+      Save order
+    </button>
+  \`
+})
+export class SaveStatusComponent {
+  constructor(private readonly snackBar: MatSnackBar) {}
+
+  save(): void {
+    // severity: success -> polite live-region announcement
+    this.snackBar.open('Order saved', undefined, { politeness: 'polite' });
+  }
+}`,
+          },
+          {
+            id: 'feedback-empty',
+            title: 'Empty state with recovery action',
+            description:
+              'When a data region has no content, the public empty-state view communicates the absence of data and offers a recovery action.',
+            preview: 'feedback-empty',
+            code: `@Component({
+  selector: 'app-orders-view',
+  imports: [MatButtonModule],
+  template: \`
+    @if (orders().length === 0) {
+      <div class="empty-state" role="status">
+        <p>No orders found.</p>
+        <button mat-stroked-button type="button" (click)="createOrder()">
+          Create order
+        </button>
+      </div>
+    }
+  \`
+})
+export class OrdersEmptyComponent {
+  protected readonly orders = signal<readonly Order[]>([]);
+
+  createOrder(): void {
+    // Recovery action that lets the user proceed from the empty state.
+  }
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'The busy indicator reuses the Material progress bar so loading feedback inherits the configured theme.',
+            'Severity messages and the empty state use Material system color roles so outcome meaning stays perceivable.',
+          ],
+          code: `.feedback-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.empty-state {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  padding: 2rem 1rem;
 }`,
         },
       },
