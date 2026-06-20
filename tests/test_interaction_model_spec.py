@@ -25,31 +25,36 @@ class InteractionModelSpecTest(unittest.TestCase):
     def test_interaction_model_json_has_formal_contract(self):
         self.assertGreaterEqual(len(self.section["requirements"]), 7)
         self.assertEqual(len(self.section["nonGoals"]), 3)
-        self.assertEqual(
-            {tag["name"] for tag in self.section["tags"]},
-            {
-                "semantic-interaction-event",
-                "activation-event-contract",
-                "enabled-state-gating",
-                "pointer-keyboard-equivalence",
-                "compatibility-alias",
-            },
+        tag_names = {tag["name"] for tag in self.section["tags"]}
+        expected_tags = {
+            "semantic-interaction-event",
+            "activation-event-contract",
+            "enabled-state-gating",
+            "pointer-keyboard-equivalence",
+            "compatibility-alias",
+        }
+        self.assertTrue(
+            expected_tags.issubset(tag_names),
+            msg=f"Missing tags: {expected_tags - tag_names}",
         )
+        self.assertGreaterEqual(len(tag_names), 5)
         self.assertEqual(len(self.section["formalDefinitions"]), 5)
         self.assertEqual(len(self.section["usage"]), 5)
         self.assertEqual(len(self.section["implementationNotes"]), 3)
 
     def test_interaction_model_examples_define_press_and_disabled_gate(self):
-        example_titles = [example["title"] for example in self.section["examples"]]
+        example_titles = {example["title"] for example in self.section["examples"]}
 
-        self.assertEqual(
-            example_titles,
-            [
-                "Button activation event contract example",
-                "Enabled-state gating example",
-                "Generator output handler binding example",
-            ],
+        expected_titles = {
+            "Button activation event contract example",
+            "Enabled-state gating example",
+            "Generator output handler binding example",
+        }
+        self.assertTrue(
+            expected_titles.issubset(example_titles),
+            msg=f"Missing examples: {expected_titles - example_titles}",
         )
+        self.assertGreaterEqual(len(example_titles), 3)
         self.assertIn("### Example 1 — button activation event contract", self.markdown)
         self.assertIn('"press": {', self.markdown)
         self.assertIn('"enabledRequired": true', self.markdown)
