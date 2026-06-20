@@ -46,7 +46,15 @@ class FeedbackModelSpecTest(unittest.TestCase):
             msg=f"Missing tags: {expected_tags - tag_names}",
         )
         definition_terms = {item["term"] for item in self.section["formalDefinitions"]}
-        expected_terms = {"Busy state", "Message", "Severity", "Dialog feedback", "Empty state"}
+        expected_terms = {
+            "Feedback component",
+            "Busy state",
+            "Message",
+            "Severity",
+            "Dialog feedback",
+            "Empty state",
+            "Live region",
+        }
         self.assertTrue(
             expected_terms.issubset(definition_terms),
             msg=f"Missing definitions: {expected_terms - definition_terms}",
