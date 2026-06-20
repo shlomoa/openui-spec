@@ -1,0 +1,38 @@
+@if (component(); as component) {
+  <article class="component-viewer">
+    <a class="back-link" routerLink="/components" mat-button>
+      <mat-icon>arrow_back</mat-icon>
+      All components
+    </a>
+
+    <header class="component-header">
+      <h1>{{ component.name }}</h1>
+      <p>{{ component.summary }}</p>
+    </header>
+
+    <nav mat-tab-nav-bar [tabPanel]="tabPanel" aria-label="Component documentation tabs">
+      @for (tab of tabs; track tab.path) {
+        <a
+          mat-tab-link
+          [routerLink]="tab.path"
+          routerLinkActive
+          #linkActive="routerLinkActive"
+          [active]="linkActive.isActive"
+        >
+          {{ tab.label }}
+        </a>
+      }
+    </nav>
+
+    <mat-tab-nav-panel #tabPanel>
+      <div class="tab-content">
+        <router-outlet />
+      </div>
+    </mat-tab-nav-panel>
+  </article>
+} @else {
+  <div class="not-found">
+    <h1>Component not found</h1>
+    <a routerLink="/components" mat-flat-button color="primary">Back to components</a>
+  </div>
+}
