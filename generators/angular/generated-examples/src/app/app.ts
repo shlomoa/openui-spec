@@ -83,7 +83,7 @@ save(): void {
     title: 'Responsive grid layout',
     sourceConcept: 'Layout System',
     summary:
-      'Layout containers are generated as Angular components with responsive grid properties mapped to CSS Grid. The preview demonstrates 1–4 column breakpoints matching columnsS/M/L/XL inputs.',
+      'Layout containers are generated as Angular components with responsive grid properties mapped to CSS Grid. Breakpoint-aware column counts (columnsS/M/L/XL) are resolved at runtime via a media-query helper.',
     files: [
       'src/app/shared/layout/grid-layout.component.ts',
       'src/app/shared/layout/grid-layout.component.html',
@@ -95,7 +95,7 @@ save(): void {
   template: \`
     <div class="grid-container" [ngStyle]="{
       'display': 'grid',
-      'grid-template-columns': 'repeat(' + columns() + ', 1fr)',
+      'grid-template-columns': 'repeat(' + activeColumns() + ', 1fr)',
       'gap': gap()
     }">
       <ng-content />
@@ -103,12 +103,29 @@ save(): void {
   \`
 })
 export class GridLayoutComponent {
-  readonly columns = input(3);
   readonly columnsS = input(1);
   readonly columnsM = input(2);
   readonly columnsL = input(3);
   readonly columnsXL = input(4);
   readonly gap = input('1rem');
+
+  protected activeColumns = signal(this.columnsL());
+
+  constructor() {
+    this.updateColumns = this.updateColumns.bind(this);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', this.updateColumns);
+      this.updateColumns();
+    }
+  }
+
+  private updateColumns(): void {
+    const w = window.innerWidth;
+    if (w >= 1280) this.activeColumns.set(this.columnsXL());
+    else if (w >= 960) this.activeColumns.set(this.columnsL());
+    else if (w >= 600) this.activeColumns.set(this.columnsM());
+    else this.activeColumns.set(this.columnsS());
+  }
 }`,
   },
 ];

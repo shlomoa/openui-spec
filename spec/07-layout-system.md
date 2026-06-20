@@ -9,7 +9,7 @@
 - Layout is expressed as ordered or named composition regions exposed through aggregations.
 - Responsive behavior must preserve component composition semantics when layout density, theme, or viewport changes.
 - Container components may expose drag-and-drop semantics only when declared in metadata.
-- Layout containers define how child components are spatially arranged; the arrangement strategy (e.g., grid, flow, split, fixed) is conveyed through typed properties, not through renderer internals.
+- Layout containers define how child components are spatially arranged; the arrangement strategy is conveyed through typed properties, not through renderer internals.
 - Spacing, sizing, and alignment behavior is part of the layout contract when it is declared as public properties on container components.
 - Breakpoint-sensitive behavior is expressed through public properties or layout-mode indicators that allow implementations to adapt arrangement without changing the composition tree.
 - A layout container's aggregations define which children participate in the arrangement; children not placed into the container's aggregation are not part of the layout flow.

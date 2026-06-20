@@ -954,9 +954,9 @@
         "usage": [
           "Define layout containers as controls with aggregations that represent spatial regions and typed properties that express the arrangement strategy.",
           "Expose spacing, sizing, and column/row configuration as public properties so application code and generators can configure layout without overriding styles.",
-          "Use breakpoint-aware properties (such as columnsS, columnsM, columnsL, columnsXL or a single breakpoints property) to let containers adapt their arrangement based on the presentation context.",
+          "Use breakpoint-aware properties (such as `columnsS`, `columnsM`, `columnsL`, `columnsXL` or a single `breakpoints` property) to let containers adapt their arrangement based on the presentation context.",
           "Reserve drag-and-drop declarations for containers that explicitly support reordering; never infer drag behavior from composition metadata alone.",
-          "When normalizing layout components into /openui.json, preserve aggregation multiplicity, arrangement strategy property names, and spacing property types so generators can reconstruct the layout contract without inspecting renderer code.",
+          "When normalizing layout components into `/openui.json`, preserve aggregation multiplicity, arrangement strategy property names, and spacing property types so generators can reconstruct the layout contract without inspecting renderer code.",
           "Implementations should ensure that responsive adaptations preserve the logical reading order and accessibility semantics of the composition tree."
         ],
         "implementationNotes": [
