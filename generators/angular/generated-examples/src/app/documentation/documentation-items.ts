@@ -14,6 +14,10 @@ export type ExamplePreview =
   | 'table-status'
   | 'form-order'
   | 'form-filter'
+  | 'state-public'
+  | 'state-derived'
+  | 'action-enabled'
+  | 'action-disabled'
   | 'component-properties'
   | 'component-aggregation'
   | 'component-events';
@@ -470,6 +474,187 @@ export class OrderFilterComponent {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+}`,
+        },
+      },
+      {
+        id: 'state',
+        name: 'Component state',
+        summary:
+          'Public typed state becomes Angular Material signal inputs with defaults, while hidden and derived state stay compatible with the declared contract.',
+        api: {
+          specSection: '10. State Model',
+          specPath: 'spec/10-state-model.md',
+          purpose: 'Describe state held or exposed by components.',
+          derivedFrom: ['property-model', 'visibility-default-model'],
+          points: [
+            'Component state is represented by typed properties with explicit default values.',
+            'Only public state participates in the external component contract; hidden state stays out of generated APIs.',
+            'Derived state must remain type-compatible with the declared property it reflects.',
+          ],
+          jsonMapping: 'specification.sections[9] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'state-public-defaults',
+            title: 'Public state with defaults',
+            description:
+              'Public typed properties are emitted as Angular signal inputs with their declared defaults and drive a Material button.',
+            preview: 'state-public',
+            code: `@Component({
+  selector: 'app-submit-button',
+  imports: [MatButtonModule],
+  template: \`
+    @if (visible()) {
+      <button mat-raised-button color="primary" [disabled]="!enabled()">
+        {{ text() }}
+      </button>
+    }
+  \`
+})
+export class SubmitButtonComponent {
+  readonly text = input('Submit order');
+  readonly enabled = input(true);
+  readonly visible = input(true);
+  readonly type = input<ButtonType>('Default');
+}`,
+          },
+          {
+            id: 'state-derived-validation',
+            title: 'Derived validation state',
+            description:
+              'Derived state is computed from public inputs and still returns the declared value-state enum, surfaced through a Material form field.',
+            preview: 'state-derived',
+            code: `@Component({
+  selector: 'app-amount-input',
+  imports: [MatFormFieldModule, MatInputModule],
+  template: \`
+    <mat-form-field appearance="outline">
+      <mat-label>Amount</mat-label>
+      <input matInput [value]="value()" readonly />
+      @if (effectiveValueState() === 'Error') {
+        <mat-error>Value is required</mat-error>
+      }
+    </mat-form-field>
+  \`
+})
+export class AmountInputComponent {
+  readonly value = input('');
+  readonly required = input(true);
+  readonly valueState = input<ValueState>('None');
+
+  protected readonly effectiveValueState = computed<ValueState>(() =>
+    this.required() && this.value() === '' ? 'Error' : this.valueState(),
+  );
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Public state maps to Material control inputs such as disabled so visual state stays in sync with the contract.',
+            'Hidden state never reaches the template, and derived state reuses Material feedback (mat-error) instead of bespoke styling.',
+          ],
+          code: `button[mat-raised-button][disabled] {
+  opacity: 0.6;
+}
+
+mat-form-field {
+  width: 100%;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'interaction',
+    name: 'Interaction',
+    summary: 'Activation semantics the generator emits for user-triggered action controls.',
+    items: [
+      {
+        id: 'action',
+        name: 'Action button',
+        summary:
+          'A semantic activation event becomes one Material button handler that keeps pointer and keyboard paths equivalent and honors the enabled gate.',
+        api: {
+          specSection: '09. Interaction Model',
+          specPath: 'spec/09-interaction-model.md',
+          purpose: 'Describe how user interaction is represented in the specification.',
+          derivedFrom: ['event-model', 'reference-component-button'],
+          points: [
+            'User-triggered behavior is modeled as named events with stable semantics, such as press for activation.',
+            'A single activation event normalizes pointer, touch, keyboard, and assistive-technology activation.',
+            'Disabled controls suppress public interaction events, so the handler is gated by enabled state.',
+          ],
+          jsonMapping: 'specification.sections[8] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'action-enabled',
+            title: 'Enabled activation handler',
+            description:
+              'The public activation event maps to one click handler so pointer, touch, and keyboard activation reach the same code path.',
+            preview: 'action-enabled',
+            code: `@Component({
+  selector: 'app-save-action',
+  imports: [MatButtonModule],
+  template: \`
+    <button mat-raised-button color="primary" type="button" (click)="save()">
+      Save order
+    </button>
+  \`
+})
+export class SaveActionComponent {
+  save(): void {
+    // Handles the public activation event regardless of input source.
+  }
+}`,
+          },
+          {
+            id: 'action-disabled',
+            title: 'Enabled-state gating',
+            description:
+              'Binding the disabled input to an enabled-state signal suppresses activation while work is in flight, matching the spec enabled gate.',
+            preview: 'action-disabled',
+            code: `@Component({
+  selector: 'app-save-action',
+  imports: [MatButtonModule],
+  template: \`
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      [disabled]="isSaving()"
+      (click)="save()"
+    >
+      Save order
+    </button>
+  \`
+})
+export class SaveActionComponent {
+  protected readonly isSaving = signal(false);
+
+  async save(): Promise<void> {
+    if (this.isSaving()) {
+      return;
+    }
+
+    this.isSaving.set(true);
+    try {
+      await this.submitOrder();
+    } finally {
+      this.isSaving.set(false);
+    }
+  }
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Raised Material buttons reuse the primary color role so activation controls stay visually prominent.',
+            'Disabled buttons rely on Material state styling so the gated state is perceivable without custom CSS.',
+          ],
+          code: `button[mat-raised-button] {
+  min-width: 8rem;
 }`,
         },
       },

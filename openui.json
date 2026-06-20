@@ -1207,7 +1207,86 @@
         "requirements": [
           "User-triggered behavior is modeled as named events with stable semantics, such as `press` for activation.",
           "Interaction rules must account for enabled and disabled states, pointer activation, and keyboard activation.",
-          "Deprecated interaction aliases may be documented for compatibility but must not replace the current public event contract."
+          "Deprecated interaction aliases may be documented for compatibility but must not replace the current public event contract.",
+          "Interaction events describe component-level intent rather than raw browser gestures, so a single event can normalize pointer, touch, keyboard, and assistive-technology activation.",
+          "Event metadata must declare the event name, owning component, optional parameters, cancellation semantics, and the state preconditions that allow the event to fire.",
+          "Controls that expose action semantics must document how default activation keys and pointer gestures map to the public event while preserving accessibility expectations.",
+          "Application handlers attach to the public event contract and must not depend on private DOM events, renderer internals, or browser-specific event ordering."
+        ],
+        "nonGoals": [
+          "The interaction model does not standardize private browser event listeners, renderer implementation details, or DOM event propagation order.",
+          "The interaction model does not require every component to expose an activation event; passive display controls may have no user-triggered behavior.",
+          "The interaction model does not replace accessibility, form validation, navigation, or feedback rules, but it supplies the event contract those sections can reference."
+        ],
+        "tags": [
+          {
+            "name": "semantic-interaction-event",
+            "meaning": "Public events describe framework-level user intent rather than raw DOM gestures."
+          },
+          {
+            "name": "activation-event-contract",
+            "meaning": "Action controls expose a stable activation event such as `press` for application handlers."
+          },
+          {
+            "name": "enabled-state-gating",
+            "meaning": "Disabled controls suppress public interaction events for pointer, touch, keyboard, and assistive activation paths."
+          },
+          {
+            "name": "pointer-keyboard-equivalence",
+            "meaning": "Equivalent pointer and keyboard activation paths produce the same public event when the control is enabled."
+          },
+          {
+            "name": "compatibility-alias",
+            "meaning": "Legacy or deprecated event names may be documented as aliases, but the current public event remains normative."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Interaction event",
+            "definition": "A public component event that represents user-triggered intent in framework terms rather than a raw browser event."
+          },
+          {
+            "term": "Activation event",
+            "definition": "An interaction event that represents intentional activation of an action control, commonly named `press` for button-like controls."
+          },
+          {
+            "term": "Interaction source",
+            "definition": "The input path that caused an interaction event, such as pointer click, touch tap, keyboard activation, or assistive technology action."
+          },
+          {
+            "term": "Enabled gate",
+            "definition": "The state precondition that allows a control to translate an interaction source into a public interaction event."
+          },
+          {
+            "term": "Compatibility alias",
+            "definition": "A legacy event name or interaction term retained for documentation or migration while delegating normative behavior to the current event contract."
+          }
+        ],
+        "usage": [
+          "Use interaction events when documenting application-observable behavior, and reserve raw DOM event names for implementation notes or test fixtures.",
+          "Define action controls around a single public activation event so applications can handle pointer, touch, keyboard, and assistive activation consistently.",
+          "Check enabled and disabled state before dispatching public interaction events; disabled controls must not call application handlers through alternate activation paths.",
+          "Preserve event parameter names, types, optionality, and cancellation semantics in `/openui.json` so generators and tests can create stable handler signatures.",
+          "Document compatibility aliases only when they are part of the supported public surface, and point consumers to the current event name for new implementations."
+        ],
+        "implementationNotes": [
+          "Extractors should normalize public interaction metadata from control event declarations and avoid treating private renderer listeners as normative events.",
+          "Generators should bind application handlers through the target framework activation mechanism while preserving the specification enabled gate and handler signature.",
+          "Conformance tests should cover pointer activation, keyboard activation, disabled-state suppression, and any documented compatibility aliases for action controls."
+        ],
+        "examples": [
+          {
+            "title": "Button activation event contract example",
+            "description": "A button declares `press` as the public activation event, normalizing pointer, touch, keyboard, and assistive activation sources behind one handler contract."
+          },
+          {
+            "title": "Enabled-state gating example",
+            "description": "A disabled button suppresses public activation events even when a pointer or keyboard source attempts to activate the control."
+          },
+          {
+            "title": "Generator output handler binding example",
+            "description": "A generator output maps the activation event to the target framework handler binding while preserving the enabled gate so disabled controls do not invoke application logic."
+          }
         ]
       },
       {
@@ -1219,7 +1298,84 @@
         "requirements": [
           "Component state is represented by typed properties with explicit default values.",
           "State may be public or hidden, but only public state participates in the external component contract.",
-          "Defaulted state and derived state must remain compatible with the declared metadata type system."
+          "Defaulted state and derived state must remain compatible with the declared metadata type system.",
+          "State-related metadata must preserve property type, default value, visibility, and deprecation information so generators can produce safe accessors and validators.",
+          "Hidden or derived implementation state must not be used as the only source for application-visible behavior when an equivalent public property is declared."
+        ],
+        "nonGoals": [
+          "The state model does not define data-binding syntax, binding lifecycle, or model update timing; those rules belong to the data binding model.",
+          "The state model does not prescribe renderer internals, DOM attributes, or CSS classes used to realize a public state.",
+          "The state model does not require hidden state to be documented as part of the public API."
+        ],
+        "tags": [
+          {
+            "name": "metadata-property-state",
+            "meaning": "Component state is declared through metadata properties rather than inferred from private fields."
+          },
+          {
+            "name": "explicit-default-state",
+            "meaning": "Every normalized state property records the value used before applications set a different value."
+          },
+          {
+            "name": "public-state-contract",
+            "meaning": "Public state defines the accessor, binding, documentation, and compatibility surface exposed to applications."
+          },
+          {
+            "name": "hidden-internal-state",
+            "meaning": "Hidden state may support implementation details but does not become part of the external component contract."
+          },
+          {
+            "name": "derived-state-compatibility",
+            "meaning": "Computed or normalized state remains valid only when it is compatible with the declared property type and default."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Component state",
+            "definition": "The observable configuration or condition of a component represented by metadata-declared properties and their current values."
+          },
+          {
+            "term": "Public state",
+            "definition": "Component state with public visibility, including properties that omit an explicit visibility value when the metadata grammar treats public as the default."
+          },
+          {
+            "term": "Hidden state",
+            "definition": "Metadata-declared state marked as hidden or otherwise internal so it can be used by implementations without becoming application-facing API."
+          },
+          {
+            "term": "Default value",
+            "definition": "The initial value for a state property before application code, binding, or framework logic assigns another compatible value."
+          },
+          {
+            "term": "Derived state",
+            "definition": "State computed from one or more declared values, such as normalized enabled, visible, or validation state, that must remain type-compatible with the public contract it reflects."
+          }
+        ],
+        "usage": [
+          "Use typed properties for component states such as `text`, `enabled`, `visible`, `selected`, `value`, `valueState`, `busy`, or `width` whenever those states are part of the public contract.",
+          "Preserve explicit defaults when normalizing metadata into `/openui.json`; if source metadata relies on a framework default, record the resolved value used by conforming implementations.",
+          "Treat `visibility: \"hidden\"` state as implementation detail: generators may keep it out of public APIs, documentation, and examples unless a compliance rule explicitly requires otherwise.",
+          "Validate default values, assigned values, and derived values against the declared metadata type so boolean, string, enum, numeric, object, and array states remain predictable.",
+          "Keep state semantics separate from events: a state property describes the current condition, while events describe the interaction or lifecycle transitions that may change it."
+        ],
+        "implementationNotes": [
+          "Extraction pipelines should preserve property names, declared types, default values, visibility, and deprecation metadata when creating the canonical state model.",
+          "Generator pipelines should expose public state through typed inputs, accessors, bindings, or equivalent framework constructs while omitting hidden state from generated public APIs.",
+          "Validation tooling should verify that defaults and derived state values conform to the declared metadata type and that hidden state is not the only documented source for externally visible behavior."
+        ],
+        "examples": [
+          {
+            "title": "Public typed state with defaults example",
+            "description": "A button declares public text, enabled, visible, and type properties with explicit defaults so applications and generators share the same initial state contract."
+          },
+          {
+            "title": "Hidden internal state example",
+            "description": "A tokenizer keeps selected as public state while marking an internal measurement property hidden so tooling does not expose rendering support data as API."
+          },
+          {
+            "title": "Derived validation state example",
+            "description": "An input derives effective validation state from required, value, and valueState properties while preserving the declared ValueState enum type."
+          }
         ]
       },
       {

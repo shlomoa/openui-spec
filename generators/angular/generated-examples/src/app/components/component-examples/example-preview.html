@@ -137,6 +137,42 @@
         <button mat-stroked-button type="button">Apply</button>
       </form>
     }
+    @case ('state-public') {
+      <div class="state-preview" aria-label="Generated public state preview">
+        <button mat-raised-button color="primary" type="button">Submit order</button>
+        <mat-chip-set aria-label="Public state values">
+          <mat-chip>text: "Submit order"</mat-chip>
+          <mat-chip>enabled: true</mat-chip>
+          <mat-chip>visible: true</mat-chip>
+          <mat-chip>type: Default</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
+    @case ('state-derived') {
+      <div class="state-preview" aria-label="Generated derived state preview">
+        <mat-form-field appearance="outline">
+          <mat-label>Amount</mat-label>
+          <input matInput value="" readonly />
+          <mat-hint>required: true</mat-hint>
+        </mat-form-field>
+        <mat-chip-set aria-label="Derived state values">
+          <mat-chip>valueState: None</mat-chip>
+          <mat-chip highlighted>effectiveValueState: Error</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
+    @case ('action-enabled') {
+      <div class="action-preview">
+        <button mat-raised-button color="primary" type="button">Save order</button>
+        <p class="action-note">Pointer, touch, and keyboard activation reach the same handler.</p>
+      </div>
+    }
+    @case ('action-disabled') {
+      <div class="action-preview">
+        <button mat-raised-button color="primary" type="button" disabled>Save order</button>
+        <p class="action-note">The enabled gate suppresses activation while work is in flight.</p>
+      </div>
+    }
     @case ('component-properties') {
       <div class="component-preview">
         <mat-card>
