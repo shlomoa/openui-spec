@@ -9,6 +9,7 @@ export type ExamplePreview =
   | 'shell-toolbar'
   | 'page-card'
   | 'page-split'
+  | 'page-responsive'
   | 'table-basic'
   | 'table-status'
   | 'form-order'
@@ -215,6 +216,48 @@ export class OrdersPage {}`,
   \`
 })
 export class OrdersPage {}`,
+          },
+          {
+            id: 'page-responsive',
+            title: 'Responsive grid page',
+            description:
+              'An ordered region keeps the same children while the column count adapts across breakpoints, so reflow preserves composition order.',
+            preview: 'page-responsive',
+            code: `@Component({
+  selector: 'app-catalog-page',
+  imports: [MatCardModule],
+  template: \`
+    <div class="catalog-grid">
+      @for (item of items(); track item.id) {
+        <mat-card>
+          <mat-card-title>{{ item.name }}</mat-card-title>
+        </mat-card>
+      }
+    </div>
+  \`,
+  styles: \`
+    .catalog-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: 1023px) {
+      .catalog-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 599px) {
+      .catalog-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  \`
+})
+export class CatalogPage {
+  readonly items = input<CatalogItem[]>([]);
+}`,
           },
         ],
         styling: {

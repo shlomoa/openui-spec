@@ -32,7 +32,17 @@ Given a normalized application entry that declares its library dependencies and 
 - verify that non-owning references such as `currentPage` are represented as associations instead of owned aggregations;
 - verify that the page hierarchy, including nested `subPages` and split-container master and detail pages, is resolvable from public metadata without reading component internals.
 
-### Example 3 — component model acceptance test
+### Example 3 — layout system acceptance test
+
+Given a normalized specification entry for a `Page`, `Grid`, `Form`, and `Board` layout contract:
+
+- verify that named regions such as `header`, `content`, and `footer` are represented as aggregations with declared multiplicity and child types;
+- verify that ordered `0..n` regions preserve their declared document order as the normative visual order before responsive adaptation;
+- verify that responsive breakpoints change region arrangement without adding, removing, or reparenting owned content;
+- verify that density and spacing values are drawn from a shared, theme-driven scale instead of ad-hoc per-component measurements;
+- verify that drag-and-drop is present only where a container declares `dnd` metadata and stays within the target aggregation's child type and multiplicity.
+
+### Example 4 — component model acceptance test
 
 Given a normalized specification entry for a `Button`, `Panel`, `Input`, and `Card` component contract:
 

@@ -22,6 +22,9 @@ __pycache__/
 # Python virtual environments
 /.venv/
 
+# MkDocs build output
+/site/
+
 # Angular CLI and build artefacts
 /.angular-cli.json
 /.ng/
