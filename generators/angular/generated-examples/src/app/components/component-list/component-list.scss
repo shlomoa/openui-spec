@@ -1,0 +1,56 @@
+.intro {
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  color: var(--mat-sys-primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+}
+
+.intro h1 {
+  margin: 0 0 0.5rem;
+}
+
+.intro p {
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0;
+  max-width: 70ch;
+}
+
+.category {
+  margin-bottom: 2.5rem;
+}
+
+.category h2 {
+  margin: 0 0 0.25rem;
+}
+
+.category-summary {
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0 0 1rem;
+}
+
+.cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+}
+
+.component-card {
+  cursor: pointer;
+  height: 100%;
+  transition:
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.component-card:hover,
+.component-card:focus-visible {
+  box-shadow: var(--mat-sys-level3);
+  outline: none;
+  transform: translateY(-2px);
+}

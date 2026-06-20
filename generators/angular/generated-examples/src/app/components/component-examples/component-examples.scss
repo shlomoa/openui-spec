@@ -1,0 +1,29 @@
+.examples {
+  display: grid;
+  gap: 2rem;
+}
+
+.example-header h3 {
+  margin: 0 0 0.25rem;
+}
+
+.example-header p {
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0 0 1rem;
+}
+
+h4 {
+  margin: 1.25rem 0 0.5rem;
+}
+
+pre {
+  background: var(--mat-sys-surface-container-highest);
+  border-radius: 0.75rem;
+  margin: 0;
+  overflow: auto;
+  padding: 1rem;
+}
+
+code {
+  font-family: 'Cascadia Code', 'SFMono-Regular', Consolas, monospace;
+}

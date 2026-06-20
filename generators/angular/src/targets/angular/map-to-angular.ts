@@ -13,12 +13,13 @@ export function mapToAngularProject(uiModel: UiApplication): AngularProjectModel
 
 function mapPage(page: UiPage): AngularPageModel {
   const className = `${toPascalCase(page.route)}Page`;
-  const imports = new Set(["CommonModule", "MatCardModule", "MatButtonModule"]);
+  const imports = new Set(["CommonModule", "MatCardModule", "MatButtonModule", "MatListModule"]);
   const componentImports = new Set([
     "import { CommonModule } from '@angular/common';",
     "import { Component } from '@angular/core';",
     "import { MatButtonModule } from '@angular/material/button';",
     "import { MatCardModule } from '@angular/material/card';",
+    "import { MatListModule } from '@angular/material/list';",
   ]);
   const constructorParameters: string[] = [];
   const members: string[] = [];
@@ -69,9 +70,11 @@ function buildTemplate(page: UiPage): string {
   const titleId = `${page.route}-title`;
   const requirementItems = page.requirements
     .slice(0, 4)
-    .map((requirement) => `      <li>${escapeHtml(requirement)}</li>`)
+    .map((requirement) => `      <mat-list-item>${escapeHtml(requirement)}</mat-list-item>`)
     .join("\n");
-  const requirements = requirementItems ? `\n    <ul>\n${requirementItems}\n    </ul>` : "";
+  const requirements = requirementItems
+    ? `\n    <mat-list aria-label="Key requirements">\n${requirementItems}\n    </mat-list>`
+    : "";
   const accessibility = page.features.includes("accessibility")
     ? '\n    <p class="accessibility-note">Generated regions include semantic labels and keyboard-visible focus states.</p>'
     : "";

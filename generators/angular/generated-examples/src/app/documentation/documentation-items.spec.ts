@@ -1,0 +1,38 @@
+import { DocumentationItems } from './documentation-items';
+
+describe('DocumentationItems', () => {
+  const docs = new DocumentationItems();
+
+  it('groups components into categories', () => {
+    const categories = docs.getCategories();
+    expect(categories.length).toBeGreaterThan(0);
+    expect(categories.map((category) => category.id)).toContain('application-structure');
+  });
+
+  it('exposes every documented component by id', () => {
+    const all = docs.getAllComponents();
+    expect(all.length).toBeGreaterThan(0);
+    for (const component of all) {
+      expect(docs.getComponentById(component.id)).toBe(component);
+    }
+  });
+
+  it('provides more than one example per component', () => {
+    for (const component of docs.getAllComponents()) {
+      expect(component.examples.length).toBeGreaterThan(1);
+    }
+  });
+
+  it('derives API content from a spec document and provides styling', () => {
+    for (const component of docs.getAllComponents()) {
+      expect(component.api.specPath).toMatch(/^spec\/\d{2}-.*\.md$/);
+      expect(component.api.points.length).toBeGreaterThan(0);
+      expect(component.styling.notes.length).toBeGreaterThan(0);
+      expect(component.styling.code.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('returns undefined for an unknown component id', () => {
+    expect(docs.getComponentById('does-not-exist')).toBeUndefined();
+  });
+});
