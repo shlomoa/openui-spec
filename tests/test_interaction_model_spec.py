@@ -87,7 +87,7 @@ class InteractionModelSpecTest(unittest.TestCase):
         self.assertIn("specPath: 'spec/09-interaction-model.md'", docs_source)
         self.assertIn("preview: 'action-enabled'", docs_source)
         self.assertIn("preview: 'action-disabled'", docs_source)
-        self.assertIn("[disabled]=\"isSaving()\"", docs_source)
+        self.assertIn('[disabled]="isSaving()"', docs_source)
 
 
 if __name__ == "__main__":

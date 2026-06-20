@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from '../../app.routes';
+import { DocumentationItems } from '../../documentation/documentation-items';
 
 describe('Component documentation routing', () => {
   beforeEach(async () => {
@@ -11,9 +12,10 @@ describe('Component documentation routing', () => {
   });
 
   it('lists components on the /components landing page', async () => {
+    const expectedCount = TestBed.inject(DocumentationItems).getAllComponents().length;
     const harness = await RouterTestingHarness.create('/components');
     const root = harness.routeNativeElement as HTMLElement;
-    expect(root.querySelectorAll('.component-card').length).toBe(4);
+    expect(root.querySelectorAll('.component-card').length).toBe(expectedCount);
     expect(root.textContent).toContain('Application shell');
   });
 

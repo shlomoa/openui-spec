@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { App } from './app';
 import { routes } from './app.routes';
+import { DocumentationItems } from './documentation/documentation-items';
 
 describe('App', () => {
   beforeEach(async () => {
@@ -35,7 +36,7 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Interaction');
 
     const links = compiled.querySelectorAll('.app-sidenav a[mat-list-item]');
-    expect(links.length).toBe(5);
+    expect(links.length).toBe(TestBed.inject(DocumentationItems).getAllComponents().length);
     expect(compiled.textContent).toContain('Application shell');
     expect(compiled.textContent).toContain('Form');
     expect(compiled.textContent).toContain('Action button');
