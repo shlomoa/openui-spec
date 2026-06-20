@@ -168,6 +168,10 @@ Submission and reset are public events. The `submit` event requires the editable
         <input matInput formControlName="customerName" />
       </mat-form-field>
       <mat-form-field appearance="outline">
+        <mat-label>Requested date</mat-label>
+        <input matInput type="date" formControlName="requestedDate" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Priority</mat-label>
         <mat-select formControlName="priority">
           <mat-option value="standard">Standard</mat-option>
@@ -193,7 +197,16 @@ export class OrderFormComponent {
       this.form.markAllAsTouched();
       return;
     }
+
+    // The form is valid: submit the typed value to the application handler.
+    this.submitOrder(this.form.getRawValue());
   }
+
+  private submitOrder(_order: {
+    customerName: string;
+    requestedDate: string;
+    priority: string;
+  }): void {}
 }
 ```
 
