@@ -869,9 +869,91 @@
         "document": "spec/06-application-structure.md",
         "derivedFrom": ["library-catalog-root", "library-component-catalog"],
         "requirements": [
-          "Applications compose pages, dialogs, forms, lists, and navigation containers from library-published components.",
-          "The framework must support a navigable shell-level structure and page hierarchy built from public components.",
-          "Library dependencies must be explicit so application structure can be resolved without reading component internals."
+          "Applications compose pages, dialogs, forms, lists, and navigation containers from library-published components rather than from framework-private primitives.",
+          "The framework must support a navigable shell-level structure and a page hierarchy built entirely from public components discoverable through the library catalog.",
+          "A shell is the top-level application container that hosts global navigation and a content area into which pages and nested containers are placed.",
+          "Page hierarchy is expressed through public composition metadata so that parent pages, nested pages, and embedded containers can be resolved without reading component internals.",
+          "Library dependencies must be explicit so that the application structure can be resolved by reading the dependency declaration and the public component catalog alone.",
+          "Every component referenced by the application structure must resolve to a public control or element published by a declared library dependency."
+        ],
+        "nonGoals": [
+          "The application structure does not prescribe a specific routing engine, URL scheme, history strategy, or renderer for the shell and its pages.",
+          "The application structure does not require a fixed number of regions, navigation levels, or page depth; those are determined by the composed components and their public metadata.",
+          "The application structure does not infer the application graph from private wiring, build configuration, or runtime-only behavior that is absent from the public component catalog and explicit dependency declaration."
+        ],
+        "tags": [
+          {
+            "name": "library-composed-application",
+            "meaning": "Applications are assembled from controls and elements published by declared library dependencies, not from framework-private primitives."
+          },
+          {
+            "name": "shell-level-structure",
+            "meaning": "A top-level shell container hosts global navigation and a content area that frames the application's page hierarchy."
+          },
+          {
+            "name": "page-hierarchy",
+            "meaning": "Pages and nested containers form a parent-child hierarchy expressed through public composition metadata."
+          },
+          {
+            "name": "explicit-library-dependencies",
+            "meaning": "Every library that contributes components to the application structure is declared explicitly so the structure resolves without source inspection."
+          },
+          {
+            "name": "public-component-resolution",
+            "meaning": "Every structural node references a public control or element resolvable from a declared dependency's catalog."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Application",
+            "definition": "A composition of library-published controls and elements arranged into a navigable shell and page hierarchy that resolves entirely from public metadata and explicit library dependencies."
+          },
+          {
+            "term": "Shell",
+            "definition": "The top-level application container responsible for hosting global navigation and a content area into which pages and nested containers are placed."
+          },
+          {
+            "term": "Page",
+            "definition": "A navigable structural unit, modeled as a public control, that frames primary content and may contain nested pages, regions, and containers."
+          },
+          {
+            "term": "Navigation container",
+            "definition": "A public component, such as a shell, split container, or tabbed container, whose aggregations hold the pages or views between which the application navigates."
+          },
+          {
+            "term": "Library dependency",
+            "definition": "An explicit declaration that an application or library relies on another library, making that library's public component catalog available for structural composition."
+          }
+        ],
+        "usage": [
+          "Resolve the application structure by reading the explicit library dependency declaration first, then enumerating the public controls and elements those libraries publish, and only then composing the shell and pages from that catalog.",
+          "Model the shell as a navigation container whose aggregations hold pages and nested containers, and express each region (such as navigation, header, and content) through named aggregations rather than renderer-specific DOM assumptions.",
+          "Build the page hierarchy from controls and elements connected through aggregations, reserving associations for non-owning references such as the currently selected page or an initial page.",
+          "Keep library dependencies explicit and minimal so that tooling, validators, and generators can reconstruct the full application graph from the dependency declaration plus the public component catalog without reverse-engineering runtime code.",
+          "When normalizing the structure into `/openui.json`, preserve dependency names, container aggregations, child types, multiplicity, and the semantic role of each region so the navigable hierarchy can be rebuilt deterministically."
+        ],
+        "implementationNotes": [
+          "Implementations should publish navigation containers, shells, and pages through stable library catalogs so applications, validators, and generators can resolve the structure without source inspection.",
+          "Applications should declare their library dependencies explicitly and reference a single root component so the full application graph can be reconstructed from the dependency declaration plus public metadata.",
+          "Extraction and generator pipelines should rebuild the shell and page hierarchy from container aggregations while treating references such as the current or initial page as non-owning associations."
+        ],
+        "examples": [
+          {
+            "title": "Explicit library dependencies example",
+            "description": "An application declaration that lists its library dependencies and names a single root component makes the structure resolvable from the dependency catalog without inspecting component internals."
+          },
+          {
+            "title": "Shell-level structure example",
+            "description": "A shell control that declares `navigation`, `header`, and `pages` aggregations while keeping `currentPage` as an association exposes global navigation and owned pages directly in public metadata."
+          },
+          {
+            "title": "Page hierarchy example",
+            "description": "A page control that owns content and nested `subPages`, together with a split container that holds master and detail pages, demonstrates how the navigable page hierarchy is expressed entirely through public aggregations."
+          },
+          {
+            "title": "Resolved application structure tree example",
+            "description": "A resolved structure tree that combines the shell, navigation, pages, and nested containers shows how every structural node references a public component from a declared library dependency."
+          }
         ]
       },
       {
@@ -900,8 +982,114 @@
         ],
         "requirements": [
           "Each component must expose a stable identity, owning library, supported interfaces, and public metadata.",
-          "Component metadata consists of properties, aggregations, associations, and events with defaults, visibility, multiplicity, and types.",
-          "Components may additionally expose renderer linkage, design-time hooks, and drag-and-drop capabilities."
+          "Component metadata consists of properties, aggregations, associations, and events, each declared with a name, a type, and the modifiers that describe its public contract.",
+          "Properties declare typed configuration values with a data type, an optional default value, visibility, and an optional bindable flag; properties are the primary inputs that configure a component instance.",
+          "Aggregations declare owned child content with a child type, a multiplicity (0..1 or 0..n), visibility, and optional cardinality and binding semantics; aggregations express the parent-owned composition tree and lifecycle.",
+          "Associations declare non-owning references to other components by a target type and multiplicity; associations express semantic links such as labels, ARIA references, and related controls without transferring ownership.",
+          "Events declare named notifications that a component emits, together with the typed parameters delivered to listeners; events are the primary outputs through which a component reports interaction and state changes.",
+          "Visibility (public or hidden) and default values are part of the contract: only public metadata is normative, and declared defaults define the initial state when no value is supplied.",
+          "Components may additionally expose renderer linkage, design-time hooks, and drag-and-drop capabilities as optional, non-behavioral extensions of the contract."
+        ],
+        "nonGoals": [
+          "The component model does not prescribe a specific renderer implementation, DOM structure, CSS strategy, or runtime framework.",
+          "The component model does not treat private or internal members as part of the contract; only public metadata is normative.",
+          "The component model does not require every component to declare every metadata category; a component may expose only the properties, aggregations, associations, or events that its contract needs.",
+          "The component model does not define the higher-level composition of pages, forms, or dialogs; those are described in the UI concept, layout, and form sections as specialized components built from this contract."
+        ],
+        "tags": [
+          {
+            "name": "component-identity",
+            "meaning": "Every component exposes a stable name and owning library that uniquely identify it within the public catalog."
+          },
+          {
+            "name": "property-contract",
+            "meaning": "Properties are typed, optionally default-valued, visibility-scoped configuration inputs declared in metadata."
+          },
+          {
+            "name": "aggregation-contract",
+            "meaning": "Aggregations are typed, multiplicity-constrained, parent-owned composition relationships declared in metadata."
+          },
+          {
+            "name": "association-contract",
+            "meaning": "Associations are typed, multiplicity-constrained, non-owning references between components declared in metadata."
+          },
+          {
+            "name": "event-contract",
+            "meaning": "Events are named, typed-parameter notifications a component emits to its listeners."
+          },
+          {
+            "name": "visibility-and-defaults",
+            "meaning": "Visibility (public/hidden) and declared default values define which members are normative and what the initial state is."
+          },
+          {
+            "name": "renderer-designtime-dnd",
+            "meaning": "Renderer linkage, design-time hooks, and drag-and-drop flags are optional capabilities layered onto the core metadata contract."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Component",
+            "definition": "A public, named unit published by a library that exposes a metadata contract of properties, aggregations, associations, and events."
+          },
+          {
+            "term": "Property",
+            "definition": "A metadata member declaring a typed configuration value with a data type, optional default value, visibility, and optional bindable flag."
+          },
+          {
+            "term": "Aggregation",
+            "definition": "A metadata member declaring owned child content with a child type, multiplicity (0..1 or 0..n), and visibility, forming part of the parent's composition tree and lifecycle."
+          },
+          {
+            "term": "Association",
+            "definition": "A metadata member declaring a non-owning reference to one or more components of a target type, used for semantic links rather than ownership."
+          },
+          {
+            "term": "Event",
+            "definition": "A metadata member declaring a named notification, together with the typed parameters delivered to listeners when the component emits it."
+          },
+          {
+            "term": "Multiplicity",
+            "definition": "The cardinality of an aggregation or association, expressed as 0..1 (single, multiple: false) or 0..n (collection, multiple: true)."
+          },
+          {
+            "term": "Visibility",
+            "definition": "The contract scope of a metadata member, public when it is part of the normative contract or hidden when it is excluded from it."
+          },
+          {
+            "term": "Default value",
+            "definition": "The value a property assumes when no explicit value is supplied, defining the initial state of a component instance."
+          }
+        ],
+        "usage": [
+          "Use this model as the normative contract for every public component before applying domain-specific rules from the interaction, state, data-binding, form, or accessibility sections.",
+          "Declare configuration inputs as properties with explicit types and defaults; reserve aggregations for owned child content and associations for non-owning semantic references.",
+          "Express outputs as events with named, typed parameters so consumers can react to interaction and state changes without inspecting internal implementation.",
+          "Mark members that are not part of the public contract as hidden, and treat only public metadata as normative for validation, documentation, and generation.",
+          "When normalizing metadata into /openui.json, preserve each member's name, type, multiplicity, visibility, default value, and bindable flag so tooling can reconstruct the full component contract without reverse-engineering runtime code.",
+          "Treat renderer linkage, design-time hooks, and drag-and-drop flags as optional capability metadata that augments, but never replaces, the core property, aggregation, association, and event contract."
+        ],
+        "implementationNotes": [
+          "Implementations should publish each component's metadata contract through a stable catalog so applications, validators, and generators can enumerate properties, aggregations, associations, and events without source inspection.",
+          "Public metadata should declare types, multiplicity, visibility, default values, and bindable flags explicitly so the component contract can be interpreted without relying on renderer or runtime internals.",
+          "Generator pipelines should map properties to inputs, aggregations to owned child slots, associations to non-owning references, and events to outputs, while treating renderer, design-time, and drag-and-drop metadata as optional capability hints."
+        ],
+        "examples": [
+          {
+            "title": "Component identity and properties example",
+            "description": "A button that declares its name, owning library, and supported interfaces together with typed text, enabled, and type properties (each with a default value and visibility) demonstrates stable identity and the property input contract."
+          },
+          {
+            "title": "Aggregations and multiplicity example",
+            "description": "A panel that declares a 0..n content aggregation and a 0..1 header aggregation, with content as the default aggregation, demonstrates parent-owned composition with explicit multiplicity."
+          },
+          {
+            "title": "Associations and events example",
+            "description": "An input that exposes a bindable value property, ariaLabelledBy and ariaDescribedBy associations, and change and liveChange events with typed parameters demonstrates non-owning references and typed outputs alongside property inputs."
+          },
+          {
+            "title": "Renderer, design-time, and drag-and-drop example",
+            "description": "A card that augments its content aggregation with a renderer linkage, draggable and droppable flags, and a design-time reference demonstrates optional capability metadata that does not change the core property, aggregation, association, and event contract."
+          }
         ]
       },
       {
@@ -1173,6 +1361,14 @@
           {
             "title": "UI concept model acceptance test",
             "description": "A compliant test should verify that published controls and elements are classified correctly, owned UI regions remain aggregations, semantic references remain associations, and higher-level concepts such as dialogs and forms are represented through metadata-defined composition."
+          },
+          {
+            "title": "Application structure acceptance test",
+            "description": "A compliant test should verify that every component referenced by the application structure resolves to a declared library dependency, the shell exposes navigation and owned pages through aggregations, non-owning references such as the current page remain associations, and the nested page hierarchy is resolvable from public metadata."
+          },
+          {
+            "title": "Component model acceptance test",
+            "description": "A compliant test should verify that each component exposes a stable identity, that properties declare types and default values, that aggregations declare child types and multiplicity, that associations remain non-owning references, that events declare typed parameters, and that renderer, design-time, and drag-and-drop metadata stay optional capability hints rather than part of the core contract."
           }
         ]
       },

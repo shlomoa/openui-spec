@@ -145,5 +145,63 @@
         </mat-chip-set>
       </div>
     }
+    @case ('component-properties') {
+      <div class="component-preview">
+        <mat-card>
+          <mat-card-title>Status</mat-card-title>
+          <mat-card-content>
+            <button mat-flat-button color="primary" type="button">Confirm</button>
+          </mat-card-content>
+        </mat-card>
+        <dl class="component-contract">
+          <div>
+            <dt>Input</dt>
+            <dd>heading: string = "Status"</dd>
+          </div>
+          <div>
+            <dt>Input</dt>
+            <dd>enabled: boolean = true</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('component-aggregation') {
+      <div class="component-preview">
+        <mat-card>
+          <mat-card-title>Order details</mat-card-title>
+          <mat-card-content>Projected content from a parent aggregation.</mat-card-content>
+        </mat-card>
+        <dl class="component-contract">
+          <div>
+            <dt>Aggregation</dt>
+            <dd>content: Control [0..n]</dd>
+          </div>
+          <div>
+            <dt>Aggregation</dt>
+            <dd>header: Control [0..1]</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('component-events') {
+      <div class="component-preview">
+        <form class="form-preview" aria-label="Generated component event preview">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput value="Contoso" readonly aria-describedby="search-hint" />
+          </mat-form-field>
+        </form>
+        <dl class="component-contract">
+          <div>
+            <dt>Output</dt>
+            <dd>liveChange: string</dd>
+          </div>
+          <div>
+            <dt>Association</dt>
+            <dd>ariaDescribedBy: Control</dd>
+          </div>
+        </dl>
+      </div>
+    }
   }
 </div>
