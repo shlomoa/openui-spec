@@ -869,9 +869,91 @@
         "document": "spec/06-application-structure.md",
         "derivedFrom": ["library-catalog-root", "library-component-catalog"],
         "requirements": [
-          "Applications compose pages, dialogs, forms, lists, and navigation containers from library-published components.",
-          "The framework must support a navigable shell-level structure and page hierarchy built from public components.",
-          "Library dependencies must be explicit so application structure can be resolved without reading component internals."
+          "Applications compose pages, dialogs, forms, lists, and navigation containers from library-published components rather than from framework-private primitives.",
+          "The framework must support a navigable shell-level structure and a page hierarchy built entirely from public components discoverable through the library catalog.",
+          "A shell is the top-level application container that hosts global navigation and a content area into which pages and nested containers are placed.",
+          "Page hierarchy is expressed through public composition metadata so that parent pages, nested pages, and embedded containers can be resolved without reading component internals.",
+          "Library dependencies must be explicit so that the application structure can be resolved by reading the dependency declaration and the public component catalog alone.",
+          "Every component referenced by the application structure must resolve to a public control or element published by a declared library dependency."
+        ],
+        "nonGoals": [
+          "The application structure does not prescribe a specific routing engine, URL scheme, history strategy, or renderer for the shell and its pages.",
+          "The application structure does not require a fixed number of regions, navigation levels, or page depth; those are determined by the composed components and their public metadata.",
+          "The application structure does not infer the application graph from private wiring, build configuration, or runtime-only behavior that is absent from the public component catalog and explicit dependency declaration."
+        ],
+        "tags": [
+          {
+            "name": "library-composed-application",
+            "meaning": "Applications are assembled from controls and elements published by declared library dependencies, not from framework-private primitives."
+          },
+          {
+            "name": "shell-level-structure",
+            "meaning": "A top-level shell container hosts global navigation and a content area that frames the application's page hierarchy."
+          },
+          {
+            "name": "page-hierarchy",
+            "meaning": "Pages and nested containers form a parent-child hierarchy expressed through public composition metadata."
+          },
+          {
+            "name": "explicit-library-dependencies",
+            "meaning": "Every library that contributes components to the application structure is declared explicitly so the structure resolves without source inspection."
+          },
+          {
+            "name": "public-component-resolution",
+            "meaning": "Every structural node references a public control or element resolvable from a declared dependency's catalog."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Application",
+            "definition": "A composition of library-published controls and elements arranged into a navigable shell and page hierarchy that resolves entirely from public metadata and explicit library dependencies."
+          },
+          {
+            "term": "Shell",
+            "definition": "The top-level application container responsible for hosting global navigation and a content area into which pages and nested containers are placed."
+          },
+          {
+            "term": "Page",
+            "definition": "A navigable structural unit, modeled as a public control, that frames primary content and may contain nested pages, regions, and containers."
+          },
+          {
+            "term": "Navigation container",
+            "definition": "A public component, such as a shell, split container, or tabbed container, whose aggregations hold the pages or views between which the application navigates."
+          },
+          {
+            "term": "Library dependency",
+            "definition": "An explicit declaration that an application or library relies on another library, making that library's public component catalog available for structural composition."
+          }
+        ],
+        "usage": [
+          "Resolve the application structure by reading the explicit library dependency declaration first, then enumerating the public controls and elements those libraries publish, and only then composing the shell and pages from that catalog.",
+          "Model the shell as a navigation container whose aggregations hold pages and nested containers, and express each region (such as navigation, header, and content) through named aggregations rather than renderer-specific DOM assumptions.",
+          "Build the page hierarchy from controls and elements connected through aggregations, reserving associations for non-owning references such as the currently selected page or an initial page.",
+          "Keep library dependencies explicit and minimal so that tooling, validators, and generators can reconstruct the full application graph from the dependency declaration plus the public component catalog without reverse-engineering runtime code.",
+          "When normalizing the structure into `/openui.json`, preserve dependency names, container aggregations, child types, multiplicity, and the semantic role of each region so the navigable hierarchy can be rebuilt deterministically."
+        ],
+        "implementationNotes": [
+          "Implementations should publish navigation containers, shells, and pages through stable library catalogs so applications, validators, and generators can resolve the structure without source inspection.",
+          "Applications should declare their library dependencies explicitly and reference a single root component so the full application graph can be reconstructed from the dependency declaration plus public metadata.",
+          "Extraction and generator pipelines should rebuild the shell and page hierarchy from container aggregations while treating references such as the current or initial page as non-owning associations."
+        ],
+        "examples": [
+          {
+            "title": "Explicit library dependencies example",
+            "description": "An application declaration that lists its library dependencies and names a single root component makes the structure resolvable from the dependency catalog without inspecting component internals."
+          },
+          {
+            "title": "Shell-level structure example",
+            "description": "A shell control that declares `navigation`, `header`, and `pages` aggregations while keeping `currentPage` as an association exposes global navigation and owned pages directly in public metadata."
+          },
+          {
+            "title": "Page hierarchy example",
+            "description": "A page control that owns content and nested `subPages`, together with a split container that holds master and detail pages, demonstrates how the navigable page hierarchy is expressed entirely through public aggregations."
+          },
+          {
+            "title": "Resolved application structure tree example",
+            "description": "A resolved structure tree that combines the shell, navigation, pages, and nested containers shows how every structural node references a public component from a declared library dependency."
+          }
         ]
       },
       {
@@ -1202,6 +1284,10 @@
           {
             "title": "UI concept model acceptance test",
             "description": "A compliant test should verify that published controls and elements are classified correctly, owned UI regions remain aggregations, semantic references remain associations, and higher-level concepts such as dialogs and forms are represented through metadata-defined composition."
+          },
+          {
+            "title": "Application structure acceptance test",
+            "description": "A compliant test should verify that every component referenced by the application structure resolves to a declared library dependency, the shell exposes navigation and owned pages through aggregations, non-owning references such as the current page remain associations, and the nested page hierarchy is resolvable from public metadata."
           },
           {
             "title": "Component model acceptance test",
