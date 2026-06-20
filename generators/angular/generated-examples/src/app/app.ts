@@ -110,12 +110,16 @@ export class GridLayoutComponent {
   readonly gap = input('1rem');
 
   protected activeColumns = signal(this.columnsL());
+  private destroyRef = inject(DestroyRef);
 
   constructor() {
     this.updateColumns = this.updateColumns.bind(this);
     if (typeof window !== 'undefined') {
       window.addEventListener('resize', this.updateColumns);
       this.updateColumns();
+      this.destroyRef.onDestroy(() =>
+        window.removeEventListener('resize', this.updateColumns)
+      );
     }
   }
 
