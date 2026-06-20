@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from '../../app.routes';
+import { DocumentationItems } from '../../documentation/documentation-items';
 
 describe('Component documentation routing', () => {
   beforeEach(async () => {
@@ -13,7 +14,8 @@ describe('Component documentation routing', () => {
   it('lists components on the /components landing page', async () => {
     const harness = await RouterTestingHarness.create('/components');
     const root = harness.routeNativeElement as HTMLElement;
-    expect(root.querySelectorAll('.component-card').length).toBe(4);
+    const expectedCards = TestBed.inject(DocumentationItems).getAllComponents().length;
+    expect(root.querySelectorAll('.component-card').length).toBe(expectedCards);
     expect(root.textContent).toContain('Application shell');
   });
 
@@ -48,5 +50,20 @@ describe('Component documentation routing', () => {
     const root = harness.routeNativeElement as HTMLElement;
     expect(root.querySelector('.styling-notes')?.children.length).toBeGreaterThan(0);
     expect(root.querySelector('pre code')?.textContent).toContain('mat-form-field');
+  });
+
+  it('sources the component-model API tab from the component model spec', async () => {
+    const harness = await RouterTestingHarness.create('/components/component-contract');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('h1')?.textContent).toContain('Component contract');
+    expect(root.querySelector('.api-source')?.textContent).toContain('spec/08-component-model.md');
+  });
+
+  it('renders the typed component contract on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/component-contract/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('.component-preview')).toBeTruthy();
+    expect(root.textContent).toContain('heading: string = "Status"');
+    expect(root.textContent).toContain('liveChange: string');
   });
 });

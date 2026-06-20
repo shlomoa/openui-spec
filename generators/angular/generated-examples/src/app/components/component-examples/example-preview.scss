@@ -85,3 +85,35 @@
     grid-template-columns: 1fr;
   }
 }
+
+.component-preview {
+  display: grid;
+  gap: 1rem;
+}
+
+.component-preview mat-card {
+  background: var(--mat-sys-surface);
+}
+
+.component-contract {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.component-contract div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.component-contract dt {
+  color: var(--mat-sys-primary);
+  font-weight: 600;
+  min-width: 6rem;
+}
+
+.component-contract dd {
+  color: var(--mat-sys-on-surface-variant);
+  font-family: var(--mat-sys-body-large-font, monospace);
+  margin: 0;
+}
