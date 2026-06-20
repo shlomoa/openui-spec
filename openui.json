@@ -1403,7 +1403,103 @@
         "requirements": [
           "Form-compatible components may advertise dedicated interfaces such as form-content contracts.",
           "Form semantics require explicit label and description relationships through associations or equivalent metadata.",
-          "Validation and submission behavior must be representable through public properties, events, and feedback components."
+          "Validation and submission behavior must be representable through public properties, events, and feedback components.",
+          "Forms group related fields into containers and label-and-field elements so that structure, not visual position, defines which label describes which field.",
+          "A field's validity is expressed through a public value state such as `None`, `Error`, `Warning`, `Success`, or `Information`, together with an optional value-state text.",
+          "Editability and enablement are public properties that gate user input and submission; read-only or disabled forms must not invoke submission handlers.",
+          "Submission and reset are modeled as public events and action controls rather than implicit page reloads or renderer-specific form posts."
+        ],
+        "nonGoals": [
+          "The form model does not define a specific layout grid, column count, or responsive breakpoint strategy; field arrangement is governed by the layout system.",
+          "The form model does not standardize validation rule engines, error message wording, or server-side validation protocols.",
+          "The form model does not replace the accessibility model; it relies on label associations and value states that the accessibility section maps to ARIA semantics.",
+          "The form model does not require every input component to be form-aware; only components that advertise the form-content interface participate as fields."
+        ],
+        "tags": [
+          {
+            "name": "form-content-interface",
+            "meaning": "Components opt into form placement by advertising a form-content interface contract rather than being forced into forms by type."
+          },
+          {
+            "name": "label-association",
+            "meaning": "Form fields reference their labels through non-owning associations instead of owning the label text."
+          },
+          {
+            "name": "form-grouping",
+            "meaning": "Forms organize fields into containers and label-and-field elements that define which label describes which field."
+          },
+          {
+            "name": "validation-value-state",
+            "meaning": "Field validity is published through a value state and optional value-state text rather than renderer-specific styling."
+          },
+          {
+            "name": "submission-contract",
+            "meaning": "Submission and reset are exposed as public events and action controls that applications handle explicitly."
+          },
+          {
+            "name": "editable-enabled-gating",
+            "meaning": "Editable and enabled properties gate user input and submission so read-only or disabled forms do not run submission handlers."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Form",
+            "definition": "A composite component that groups related input fields into labeled containers for coordinated data entry and submission."
+          },
+          {
+            "term": "Form container",
+            "definition": "An owned grouping inside a form that collects related form elements under an optional group title."
+          },
+          {
+            "term": "Form element",
+            "definition": "A label-and-field pairing inside a form container that associates one label with one or more form-content fields."
+          },
+          {
+            "term": "Form-content interface",
+            "definition": "A published interface contract a component advertises to declare that it can be placed as a field inside a form."
+          },
+          {
+            "term": "Label association",
+            "definition": "A non-owning association between a label and the form-content field it describes, expressing the describing relationship without ownership."
+          },
+          {
+            "term": "Value state",
+            "definition": "The public validation status of a field, such as `None`, `Error`, `Warning`, `Success`, or `Information`, with an optional value-state text."
+          },
+          {
+            "term": "Submission event",
+            "definition": "A public event a form or action control emits to request validation and submission of the current field values."
+          }
+        ],
+        "usage": [
+          "Place only components that advertise the form-content interface as form fields, and treat the interface as the opt-in contract for form participation.",
+          "Associate each field with a label through associations so the describing relationship is resolvable from public metadata rather than visual proximity.",
+          "Express validation results through the field's value state and value-state text instead of renderer-specific styling, and feed those states to the feedback and accessibility layers.",
+          "Model submission and reset as public events and action controls, and gate them on the editable and enabled state so read-only or disabled forms never invoke handlers.",
+          "Preserve form structure, form-content interfaces, label associations, value-state metadata, and submission events in `/openui.json` so generators and tests can reconstruct the full form contract."
+        ],
+        "implementationNotes": [
+          "Extractors should record the form-content interface, label associations, value-state property, and submission events as public metadata and avoid treating renderer markup as normative form structure.",
+          "Generators should map form structure to the target framework's form primitives, such as typed reactive forms, while preserving label associations, validators, and the submission gate.",
+          "Conformance tests should cover label-field association, value-state propagation, required-field validation, and read-only or disabled submission gating."
+        ],
+        "examples": [
+          {
+            "title": "Form structure and form-content interface example",
+            "description": "A form groups fields into form containers and form elements, where each field advertises the form-content interface and each element pairs a label with its fields."
+          },
+          {
+            "title": "Label association and value-state example",
+            "description": "An input declares non-owning label associations and publishes a value state with value-state text to report validation results without renderer-specific styling."
+          },
+          {
+            "title": "Submission and reset event contract example",
+            "description": "A form exposes submit and reset as public events gated by the editable state so read-only forms do not invoke submission handlers."
+          },
+          {
+            "title": "Generator output typed reactive form example",
+            "description": "A generator maps required fields and a select to a typed non-nullable reactive form with a save action that validates before submitting."
+          }
         ]
       },
       {
