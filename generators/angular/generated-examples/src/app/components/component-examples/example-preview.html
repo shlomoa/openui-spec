@@ -145,6 +145,18 @@
         </mat-chip-set>
       </div>
     }
+    @case ('action-enabled') {
+      <div class="action-preview">
+        <button mat-raised-button color="primary" type="button">Save order</button>
+        <p class="action-note">Pointer, touch, and keyboard activation reach the same handler.</p>
+      </div>
+    }
+    @case ('action-disabled') {
+      <div class="action-preview">
+        <button mat-raised-button color="primary" type="button" disabled>Save order</button>
+        <p class="action-note">The enabled gate suppresses activation while work is in flight.</p>
+      </div>
+    }
     @case ('component-properties') {
       <div class="component-preview">
         <mat-card>

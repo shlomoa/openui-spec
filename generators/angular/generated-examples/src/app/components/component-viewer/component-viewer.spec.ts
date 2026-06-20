@@ -12,10 +12,10 @@ describe('Component documentation routing', () => {
   });
 
   it('lists components on the /components landing page', async () => {
+    const expectedCount = TestBed.inject(DocumentationItems).getAllComponents().length;
     const harness = await RouterTestingHarness.create('/components');
     const root = harness.routeNativeElement as HTMLElement;
-    const expectedCards = TestBed.inject(DocumentationItems).getAllComponents().length;
-    expect(root.querySelectorAll('.component-card').length).toBe(expectedCards);
+    expect(root.querySelectorAll('.component-card').length).toBe(expectedCount);
     expect(root.textContent).toContain('Application shell');
   });
 
