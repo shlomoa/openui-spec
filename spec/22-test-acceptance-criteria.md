@@ -27,7 +27,7 @@ Given a normalized specification entry for a library that publishes `Page`, `Dia
 
 Given a normalized specification entry for a `Button`, `Panel`, `Input`, and `Card` component contract:
 
-- verify that each component exposes a stable identity through a `component`/`name` and owning `library`;
+- verify that each component exposes a stable identity through a `component` identifier and owning `library`;
 - verify that properties declare a `type` and, where applicable, a `defaultValue` and `bindable` flag;
 - verify that aggregations declare a child `type` and a multiplicity through `multiple: true` (`0..n`) or `multiple: false` (`0..1`);
 - verify that associations such as `ariaLabelledBy` and `ariaDescribedBy` remain non-owning references instead of aggregations;

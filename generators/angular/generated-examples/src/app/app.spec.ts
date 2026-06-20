@@ -67,9 +67,13 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    const buttons = compiled.querySelectorAll<HTMLButtonElement>('.example-select-button');
+    const panels = compiled.querySelectorAll<HTMLElement>('mat-expansion-panel');
+    const componentPanel = Array.from(panels).find((panel) =>
+      panel.textContent?.includes('Generated component'),
+    );
+    const button = componentPanel?.querySelector<HTMLButtonElement>('.example-select-button');
 
-    buttons[3].click();
+    button!.click();
     fixture.detectChanges();
 
     expect(compiled.querySelector('.preview-card mat-card-title')?.textContent).toContain(
