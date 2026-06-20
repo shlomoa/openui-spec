@@ -1,0 +1,34 @@
+<div class="component-list">
+  <header class="intro">
+    <p class="eyebrow">Angular generator</p>
+    <h1>Generated component catalog</h1>
+    <p>
+      Browse the representative components the OpenUI5 spec Angular generator emits. Open a
+      component to review its API, runnable examples, and styling.
+    </p>
+  </header>
+
+  @for (category of categories; track category.id) {
+    <section class="category" [attr.data-category]="category.id">
+      <h2>{{ category.name }}</h2>
+      <p class="category-summary">{{ category.summary }}</p>
+
+      <div class="cards">
+        @for (component of category.items; track component.id) {
+          <mat-card
+            class="component-card"
+            [routerLink]="['/components', component.id]"
+            tabindex="0"
+          >
+            <mat-card-header>
+              <mat-card-title>{{ component.name }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ component.summary }}</p>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    </section>
+  }
+</div>
