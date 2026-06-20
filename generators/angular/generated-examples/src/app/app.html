@@ -92,48 +92,67 @@
             @switch (selectedExample().previewType) {
               @case ('shell') {
                 <div class="shell-preview">
-                  <div class="preview-toolbar">Sales Workspace</div>
-                  <nav aria-label="Generated shell navigation">
-                    <button type="button">Orders</button>
-                    <button type="button">Customers</button>
-                  </nav>
+                  <mat-toolbar class="preview-toolbar" color="primary">Sales Workspace</mat-toolbar>
+                  <mat-nav-list aria-label="Generated shell navigation">
+                    <a mat-list-item href="/orders" (click)="$event.preventDefault()">Orders</a>
+                    <a mat-list-item href="/customers" (click)="$event.preventDefault()"
+                      >Customers</a
+                    >
+                  </mat-nav-list>
                   <div class="router-outlet-preview">Routed page content</div>
                 </div>
               }
               @case ('page') {
                 <div class="page-preview">
-                  <h3>Orders</h3>
-                  <div class="table-preview" role="table" aria-label="Generated orders table">
-                    <div role="row">
-                      <span role="columnheader">Order</span>
-                      <span role="columnheader">Customer</span>
-                      <span role="columnheader">Status</span>
-                    </div>
-                    <div role="row">
-                      <span role="cell">1000123</span>
-                      <span role="cell">Contoso Retail</span>
-                      <span role="cell">Open</span>
-                    </div>
-                  </div>
+                  <mat-card>
+                    <mat-card-title>Orders</mat-card-title>
+                    <table
+                      mat-table
+                      [dataSource]="previewOrders"
+                      class="table-preview"
+                      aria-label="Generated orders table"
+                    >
+                      <ng-container matColumnDef="order">
+                        <th mat-header-cell *matHeaderCellDef>Order</th>
+                        <td mat-cell *matCellDef="let order">{{ order.order }}</td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="customer">
+                        <th mat-header-cell *matHeaderCellDef>Customer</th>
+                        <td mat-cell *matCellDef="let order">{{ order.customer }}</td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>Status</th>
+                        <td mat-cell *matCellDef="let order">{{ order.status }}</td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="previewOrderColumns"></tr>
+                      <tr mat-row *matRowDef="let order; columns: previewOrderColumns"></tr>
+                    </table>
+                  </mat-card>
                 </div>
               }
               @case ('form') {
                 <form class="form-preview" aria-label="Generated order form preview">
-                  <label>
-                    Customer name
-                    <input type="text" value="Contoso Retail" readonly />
-                  </label>
-                  <label>
-                    Requested date
-                    <input type="text" value="2026-06-19" readonly />
-                  </label>
-                  <label>
-                    Priority
-                    <select>
-                      <option>Standard</option>
-                    </select>
-                  </label>
-                  <button type="button">Save</button>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Customer name</mat-label>
+                    <input matInput value="Contoso Retail" readonly />
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Requested date</mat-label>
+                    <input matInput value="2026-06-19" readonly />
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Priority</mat-label>
+                    <mat-select value="standard" disabled>
+                      <mat-option value="standard">Standard</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <button mat-raised-button color="primary" type="button">Save</button>
                 </form>
               }
             }

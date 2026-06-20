@@ -61,4 +61,24 @@ describe('App', () => {
     );
     expect(compiled.textContent).toContain('Contoso Retail');
   });
+
+  it('should render generated previews with Angular Material components', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const buttons = compiled.querySelectorAll<HTMLButtonElement>('.example-select-button');
+
+    expect(compiled.querySelector('mat-toolbar.preview-toolbar')).toBeTruthy();
+    expect(compiled.querySelector('.shell-preview mat-nav-list')).toBeTruthy();
+
+    buttons[1].click();
+    fixture.detectChanges();
+    expect(compiled.querySelector('.page-preview table[mat-table]')).toBeTruthy();
+
+    buttons[2].click();
+    fixture.detectChanges();
+    expect(compiled.querySelectorAll('.form-preview mat-form-field').length).toBe(3);
+    expect(compiled.querySelector('.form-preview mat-select')).toBeTruthy();
+    expect(compiled.querySelector('.form-preview button[mat-raised-button]')).toBeTruthy();
+  });
 });
