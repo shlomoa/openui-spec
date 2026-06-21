@@ -1899,7 +1899,91 @@
         "requirements": [
           "Libraries must support theme-specific assets and shared theme-level styling resources.",
           "Theme composition must allow base styles plus theme overrides without changing the public component contract.",
-          "Density-aware and theme-aware assets are part of the visual system and must remain externally configurable."
+          "Density-aware and theme-aware assets are part of the visual system and must remain externally configurable.",
+          "Visual values must be expressed as named design tokens so themes can re-skin components without editing component markup or logic.",
+          "Themes must be swappable at the application or root scope at runtime, and switching a theme must not require recompiling or changing any component's public contract.",
+          "Density must be selected externally through a root-level mode such as cozy or compact rather than encoded as a per-component property.",
+          "Design tokens must resolve to a defined fallback when a theme does not provide a value, so components render predictably under any theme.",
+          "Theme-specific assets such as images and fonts must be referenced through theme-resolved paths rather than hard-coded URLs so the correct asset loads per theme."
+        ],
+        "nonGoals": [
+          "The theming model does not define a specific color palette, typography scale, or the visual design of any individual theme; it standardizes how tokens and overrides are structured, not their values.",
+          "The theming model does not standardize private CSS class names, generated stylesheet ordering, or renderer-internal markup used to apply a theme.",
+          "The theming model does not replace the layout, component, or accessibility rules; it constrains how visual values are tokenized and themed without changing those public contracts."
+        ],
+        "tags": [
+          {
+            "name": "theme-asset-set",
+            "meaning": "Libraries ship theme-specific assets and shared theme-level styling resources that vary by theme without touching the component contract."
+          },
+          {
+            "name": "theme-composition",
+            "meaning": "A theme is composed of base styles plus theme overrides, so switching themes never changes a component's public API."
+          },
+          {
+            "name": "design-token",
+            "meaning": "Visual values are expressed as named design tokens, such as theming parameters or CSS custom properties, rather than hard-coded literals."
+          },
+          {
+            "name": "density-aware-styling",
+            "meaning": "Density such as cozy or compact is an externally configurable visual mode applied at a root scope, not a per-component property."
+          },
+          {
+            "name": "external-theme-configuration",
+            "meaning": "Theme and density selection are configured externally at the application or root level and remain swappable at runtime."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Theme",
+            "definition": "A named collection of design-token values and assets that determines the visual appearance of all components without altering their public contract."
+          },
+          {
+            "term": "Design token",
+            "definition": "A named, themeable styling value such as a color, spacing, typography, or elevation that is resolved at runtime so components reference the token instead of a literal value."
+          },
+          {
+            "term": "Base styles",
+            "definition": "The theme-independent structural styles a component always carries, over which theme overrides are layered."
+          },
+          {
+            "term": "Theme override",
+            "definition": "Theme-specific token values or assets layered on top of base styles to produce a particular theme's appearance."
+          },
+          {
+            "term": "Density mode",
+            "definition": "An externally configurable visual mode such as cozy or compact applied at a root scope to adjust spacing and sizing across components."
+          }
+        ],
+        "usage": [
+          "Reference colors, spacing, typography, and elevation through design tokens, such as the Material system CSS custom properties `--mat-sys-primary` and `--mat-sys-on-primary`, instead of literal values so a new theme re-skins the component automatically.",
+          "Keep theme-independent structure in base styles and layer only token values and assets as theme overrides, so the public component contract never changes between themes.",
+          "Apply density at a root scope, for example a `cozy` or `compact` body class, rather than adding density properties to individual components.",
+          "Provide a defined fallback for every design token so components stay legible when a theme omits a value.",
+          "Resolve theme-specific assets through theme-aware paths or tokens so switching themes loads the matching image and font set without code changes."
+        ],
+        "implementationNotes": [
+          "Extractors should record design-token references, theme override layers, and density modes from library styling metadata instead of capturing computed pixel values from a single rendered theme.",
+          "Generators should emit token references such as CSS custom properties and density-scoped classes so the output re-skins with the active theme and density without per-component edits.",
+          "Conformance tests should cover token-driven styling, base-plus-override composition, runtime theme swapping, and density mode application."
+        ],
+        "examples": [
+          {
+            "title": "Design tokens instead of literal values example",
+            "description": "A button references named design tokens for background, color, and border radius so switching the theme re-skins it without changing the component contract."
+          },
+          {
+            "title": "Base styles plus theme override example",
+            "description": "A panel keeps theme-independent base styles while each theme layers its own token values, leaving the public contract unchanged across light and dark themes."
+          },
+          {
+            "title": "Density mode example",
+            "description": "Density is selected once at the root scope, such as `sapUiSizeCompact`, so descendant components adapt spacing through density-aware tokens instead of per-component properties."
+          },
+          {
+            "title": "Generator design-token binding example",
+            "description": "A generator emits Material system CSS custom properties and a density-scoped class so the active theme and density re-skin the button without editing the component."
+          }
         ]
       },
       {
