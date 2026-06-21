@@ -32,7 +32,10 @@ export type ExamplePreview =
   | 'feedback-empty'
   | 'a11y-labelled'
   | 'a11y-popup'
-  | 'a11y-direction';
+  | 'a11y-direction'
+  | 'compliance-catalog'
+  | 'compliance-metadata'
+  | 'compliance-evidence';
 
 /** A single runnable example shown on a component's "Examples" tab. */
 export interface DocExample {
@@ -1269,6 +1272,108 @@ export class OrderReferenceComponent {
           ],
           code: `.a11y-preview [dir='rtl'] {
   text-align: right;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'compliance',
+    name: 'Compliance',
+    summary:
+      'Conformance checks that keep catalogs, metadata, generated projections, and evidence synchronized.',
+    items: [
+      {
+        id: 'compliance-rules',
+        name: 'Compliance rules',
+        summary:
+          'A repeatable compliance view that starts from catalog discovery, verifies metadata completeness, and records cross-cutting evidence.',
+        api: {
+          specSection: '21. Compliance Rules',
+          specPath: 'spec/21-compliance-rules.md',
+          purpose: 'Summarize what every implementation must satisfy.',
+          derivedFrom: [
+            'openui-root',
+            'library-catalog-root',
+            'metadata-grammar-root',
+            'compliance-tests',
+          ],
+          points: [
+            'Every public library member must be reachable from a stable, machine-readable catalog entry.',
+            'Every public component must declare typed properties, aggregations, associations, events, and relevant capability metadata.',
+            'Compliance is evaluated from public metadata, documentation, generated projections, and observable behavior rather than private implementation details.',
+            'Accessibility, theming, internationalization, security, privacy, performance, and extension requirements need public evidence or documentation.',
+          ],
+          jsonMapping: 'specification.sections[20] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'compliance-catalog',
+            title: 'Catalog discoverability checklist',
+            description:
+              'A compliance run starts at the catalog root and verifies that libraries, public components, types, and interfaces resolve by stable identifier.',
+            preview: 'compliance-catalog',
+            code: `const profile = {
+  conformanceProfile: 'core-ui',
+  catalog: {
+    libraries: [
+      {
+        name: 'sample.library',
+        components: ['sample.library.Button', 'sample.library.Form'],
+        types: ['sample.library.ButtonType'],
+        interfaces: ['sample.library.IFormContent'],
+      },
+    ],
+  },
+};
+
+assertCatalogDiscoverable(profile.catalog);`,
+          },
+          {
+            id: 'compliance-metadata',
+            title: 'Metadata completeness gate',
+            description:
+              'Validators fail a component before behavioral checks when required public properties, associations, events, defaults, or visibility are missing.',
+            preview: 'compliance-metadata',
+            code: `assertMetadataComplete({
+  component: 'sample.library.Button',
+  properties: ['text', 'enabled'],
+  associations: ['ariaLabelledBy'],
+  events: ['press'],
+  usesPrivateRendererContract: false,
+});`,
+          },
+          {
+            id: 'compliance-evidence',
+            title: 'Cross-cutting evidence record',
+            description:
+              'A component-level evidence record keeps accessibility, theming, internationalization, and tests traceable to the same public contract.',
+            preview: 'compliance-evidence',
+            code: `const evidence = {
+  component: 'sample.library.Input',
+  accessibility: ['ariaLabelledBy association', 'ariaDescribedBy association'],
+  theming: ['uses theme token: field.border.color'],
+  internationalization: ['textDirection: Inherit', 'localized placeholder'],
+  tests: ['metadata contract test', 'keyboard activation test'],
+};`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Compliance previews use compact contract cards so catalog, metadata, and evidence checks remain comparable at a glance.',
+            'Status chips use Material system colors to distinguish pass/fail state without introducing custom semantic color tokens.',
+          ],
+          code: `.compliance-preview {
+  display: grid;
+  gap: 1rem;
+}
+
+.compliance-card {
+  background: var(--mat-sys-surface);
+}
+
+.compliance-status {
+  color: var(--mat-sys-primary);
 }`,
         },
       },

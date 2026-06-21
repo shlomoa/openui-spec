@@ -248,3 +248,18 @@
   color: var(--mat-sys-on-surface-variant);
   padding: 2rem 1rem;
 }
+
+.compliance-preview {
+  display: grid;
+  gap: 1rem;
+}
+
+.compliance-card {
+  background: var(--mat-sys-surface);
+  box-shadow: var(--mat-sys-level1);
+}
+
+.compliance-card mat-card-title {
+  display: block;
+  margin: 0 0 0.5rem;
+}
