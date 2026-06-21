@@ -92,9 +92,7 @@ function buildTemplate(page: UiPage): string {
   const feedback = page.features.includes("feedback")
     ? '\n    <button mat-raised-button color="primary" type="button" (click)="showFeedback()">Show feedback</button>'
     : "";
-  const acceptance = page.features.includes("acceptance")
-    ? '\n    <section class="acceptance-criteria" aria-label="Acceptance criteria workflow">\n      <h2>Acceptance coverage</h2>\n      <mat-chip-set aria-label="Criteria evidence types">\n        <mat-chip>Traceability matrix</mat-chip>\n        <mat-chip>Metadata projection</mat-chip>\n        <mat-chip>Runtime behavior</mat-chip>\n        <mat-chip>Visual evidence</mat-chip>\n      </mat-chip-set>\n      <mat-list aria-label="Generated acceptance checks">\n        <mat-list-item>Link each criterion to the source specification section, tag, fixture, and evidence artifact.</mat-list-item>\n        <mat-list-item>Compare runtime metadata, /openui.json, and generated API projections before emitting examples.</mat-list-item>\n        <mat-list-item>Record deterministic DOM, accessibility, or screenshot evidence for visual-facing behavior.</mat-list-item>\n      </mat-list>\n    </section>'
-    : "";
+  const acceptance = page.features.includes("acceptance") ? buildAcceptanceTemplate() : "";
 
   return `<section class="spec-page" aria-labelledby="${titleId}">
   <mat-card>
@@ -114,9 +112,7 @@ function buildStyles(page: UiPage): string {
   const themeStyles = page.features.includes("theme")
     ? "\n:host {\n  --openui-section-accent: var(--openui-theme-primary);\n}\n"
     : "";
-  const acceptanceStyles = page.features.includes("acceptance")
-    ? "\n.acceptance-criteria {\n  border: 1px solid var(--openui-theme-primary);\n  border-radius: 0.75rem;\n  margin-top: 1rem;\n  padding: 1rem;\n}\n\n.acceptance-criteria h2 {\n  margin-top: 0;\n}\n"
-    : "";
+  const acceptanceStyles = page.features.includes("acceptance") ? buildAcceptanceStyles() : "";
   return `.spec-page {
   display: block;
   padding: 1rem;
@@ -127,6 +123,39 @@ mat-card {
   color: var(--openui-theme-on-surface);
 }
 ${themeStyles}${acceptanceStyles}`;
+}
+
+function buildAcceptanceTemplate(): string {
+  return `
+    <section class="acceptance-criteria" aria-label="Acceptance criteria workflow">
+      <h2>Acceptance coverage</h2>
+      <mat-chip-set aria-label="Criteria evidence types">
+        <mat-chip>Traceability matrix</mat-chip>
+        <mat-chip>Metadata projection</mat-chip>
+        <mat-chip>Runtime behavior</mat-chip>
+        <mat-chip>Visual evidence</mat-chip>
+      </mat-chip-set>
+      <mat-list aria-label="Generated acceptance checks">
+        <mat-list-item>Link each criterion to the source specification section, tag, fixture, and evidence artifact.</mat-list-item>
+        <mat-list-item>Compare runtime metadata, /openui.json, and generated API projections before emitting examples.</mat-list-item>
+        <mat-list-item>Record deterministic DOM, accessibility, or screenshot evidence for visual-facing behavior.</mat-list-item>
+      </mat-list>
+    </section>`;
+}
+
+function buildAcceptanceStyles(): string {
+  return `
+.acceptance-criteria {
+  border: 1px solid var(--openui-theme-primary);
+  border-radius: 0.75rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.acceptance-criteria h2 {
+  margin-top: 0;
+}
+`;
 }
 
 function toPascalCase(value: string): string {
