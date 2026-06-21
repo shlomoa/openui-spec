@@ -396,3 +396,28 @@
   color: var(--mat-sys-on-surface-variant);
   margin: 0.75rem 0 0;
 }
+
+.security-preview {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.security-preview mat-form-field {
+  width: 100%;
+}
+
+.security-preview .encoded-text {
+  background: var(--mat-sys-surface);
+  border-radius: 0.5rem;
+  box-shadow: var(--mat-sys-level1);
+  font-family: var(--mat-sys-body-large-font, monospace);
+  margin: 0;
+  padding: 1rem;
+  width: 100%;
+  word-break: break-all;
+}
+
+.security-preview button[color='warn'] {
+  font-weight: 600;
+}

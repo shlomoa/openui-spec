@@ -186,6 +186,7 @@ describe('Component documentation routing', () => {
     );
     const root = harness.routeNativeElement as HTMLElement;
     expect(root.querySelector('.reference-preview')).toBeTruthy();
+    expect(root.querySelector('[aria-labelledby="reference-actions-label"]')).toBeTruthy();
     expect(root.querySelector('[aria-haspopup="menu"]')).toBeTruthy();
     expect(root.querySelector('[dir="rtl"]')).toBeTruthy();
     expect(root.textContent).toContain('Hidden upstream metadata stays evidence-only.');
