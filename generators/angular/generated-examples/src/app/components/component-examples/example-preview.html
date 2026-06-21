@@ -431,7 +431,7 @@
             <mat-chip-set aria-label="Acceptance criterion coverage">
               <mat-chip>08-component-model#property-contract</mat-chip>
               <mat-chip>08-component-model#aggregation-contract</mat-chip>
-              <mat-chip highlighted>tests/component-metadata.spec.ts</mat-chip>
+              <mat-chip [highlighted]="true">tests/component-metadata.spec.ts</mat-chip>
             </mat-chip-set>
           </mat-card-content>
         </mat-card>
@@ -469,7 +469,7 @@
               <mat-chip>viewport: 600x800</mat-chip>
               <mat-chip>theme: default-light</mat-chip>
               <mat-chip>locale: en</mat-chip>
-              <mat-chip highlighted>screenshot: generated-order-form.png</mat-chip>
+              <mat-chip [highlighted]="true">screenshot: generated-order-form.png</mat-chip>
             </mat-chip-set>
             <p class="feedback-note">
               DOM and accessibility assertions prove the required input and disabled submit action.
