@@ -1923,7 +1923,103 @@
         "requirements": [
           "Public component contracts must not rely on unsafe renderer side effects for user-visible semantics.",
           "Components that open or reference popups must declare that relationship explicitly through public metadata.",
-          "Implementations should encode or sanitize user-provided visual values before they affect rendering or styling."
+          "Implementations should encode or sanitize user-provided visual values before they affect rendering or styling.",
+          "User-provided text, URLs, and style values are untrusted input: text is encoded, URLs are validated against an allow list, and style or class values are constrained to a known vocabulary before they affect rendering.",
+          "Components that reveal sensitive values must expose a public masking contract, such as a masked display mode, so the rendered output does not disclose the underlying value by default.",
+          "Actions that delete data, send data to a third party, or are otherwise irreversible must request explicit confirmation through a public confirmation contract rather than acting on first activation.",
+          "Visibility and enablement driven by permissions are part of the public contract: a component hidden or disabled for authorization reasons must not expose its restricted value, action, or popup target to the user."
+        ],
+        "nonGoals": [
+          "The security model does not define an authentication, authorization, session, or transport-security protocol; it constrains only how the resulting decisions are reflected in the UI contract.",
+          "The security model does not standardize a specific sanitizer, content-security-policy header, or cryptographic algorithm; it requires that untrusted values are encoded or validated, not which library performs it.",
+          "The security model does not replace server-side authorization checks; client-side visibility, masking, and confirmation are UI safeguards layered on top of enforced server rules, never a substitute for them.",
+          "The security model does not redefine the accessibility, feedback, or navigation contracts; it adds security and privacy constraints to the names, states, popups, and overlays those sections already describe."
+        ],
+        "tags": [
+          {
+            "name": "safe-rendering",
+            "meaning": "User-visible semantics come from the public contract and encoded values, never from unsafe renderer side effects such as injecting unescaped HTML."
+          },
+          {
+            "name": "untrusted-input-encoding",
+            "meaning": "User-provided text, URLs, and style values are encoded, validated against an allow list, or constrained to a known vocabulary before they affect rendering or styling."
+          },
+          {
+            "name": "popup-disclosure",
+            "meaning": "Components that open or reference popups, menus, or external targets declare that relationship through public metadata so navigation away from or over the current context is never hidden."
+          },
+          {
+            "name": "sensitive-value-masking",
+            "meaning": "Components that present sensitive values expose a public masking mode so the rendered output does not disclose the underlying value by default."
+          },
+          {
+            "name": "confirmation-contract",
+            "meaning": "Irreversible or sensitive actions request explicit confirmation through a public contract instead of acting on first activation."
+          },
+          {
+            "name": "permission-gating",
+            "meaning": "Permission-driven visibility and enablement are part of the public contract, and a restricted component must not leak its value, action, or popup target."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Unsafe renderer side effect",
+            "definition": "Any renderer behavior that produces user-visible semantics outside the public contract, such as writing unescaped user input as markup, that the specification forbids for contractually meaningful output."
+          },
+          {
+            "term": "Untrusted value",
+            "definition": "A text, URL, style, or class value that originates from user input or an external model and must be encoded, validated, or constrained before it affects rendering."
+          },
+          {
+            "term": "Popup disclosure",
+            "definition": "Public metadata, such as a popup semantics property or an opens reference, that declares a component opens or references a popup, menu, or external target."
+          },
+          {
+            "term": "Masking mode",
+            "definition": "A public property that controls whether a sensitive value is rendered in cleartext or in a masked representation that does not disclose the underlying value."
+          },
+          {
+            "term": "Confirmation contract",
+            "definition": "The public properties and events through which a component requests and receives explicit confirmation before performing an irreversible or sensitive action."
+          },
+          {
+            "term": "Permission gate",
+            "definition": "The public visibility and enablement state derived from an authorization decision, which removes a restricted value, action, or popup target from the user-facing contract."
+          }
+        ],
+        "usage": [
+          "Render user-provided text through encoded output and never as raw markup; reserve any raw-HTML rendering for values the application has already sanitized and treat that path as opt-in, not the default.",
+          "Validate user-provided or model-provided URLs against an allow list of permitted schemes before binding them to navigation, image, or link targets, and constrain user-provided style or class values to a fixed vocabulary instead of interpolating arbitrary strings.",
+          "Declare popup, menu, and external-target relationships through public metadata such as ariaHasPopup and an opens reference so the disclosure is part of the contract and assistive technology and tests can detect it.",
+          "Expose a masking mode for components that present passwords, tokens, or other sensitive values, default it to masked, and require explicit user action to reveal the value.",
+          "Gate irreversible or sensitive actions behind a confirmation contract, and gate restricted values, actions, and popup targets on the permission-driven visibility and enablement state so a hidden or disabled control never exposes what it protects."
+        ],
+        "implementationNotes": [
+          "Extractors should record encoding mode, URL allow lists, popup disclosure metadata, masking properties, confirmation events, and permission-driven visibility as public metadata rather than treating renderer markup as the source of truth.",
+          "Generators should map the security contract to host-framework primitives: encoded text bindings, validated URL bindings, aria-haspopup attributes, masked input modes, confirmation dialogs, and conditional rendering for permission gates.",
+          "Conformance tests should cover text and URL encoding, popup disclosure, masked rendering of sensitive values, confirmation before irreversible actions, and the omission of restricted controls when permission is denied."
+        ],
+        "examples": [
+          {
+            "title": "Safe rendering of untrusted text and URLs example",
+            "description": "User-provided text is rendered through encoded output and a user-provided URL is checked against an allow list so script markup and javascript: URLs cannot affect rendering."
+          },
+          {
+            "title": "Popup disclosure through public metadata example",
+            "description": "A component declares ariaHasPopup and an opens reference so the popup relationship is part of the public contract instead of a hidden side effect."
+          },
+          {
+            "title": "Sensitive-value masking contract example",
+            "description": "A field exposes a public masked property that defaults to true so the rendered output does not disclose the underlying sensitive value without an explicit reveal."
+          },
+          {
+            "title": "Confirmation and permission gating example",
+            "description": "An irreversible action requires confirmation through a public event, and a denied permission drives visibility to false so the restricted action and target are removed from the contract."
+          },
+          {
+            "title": "Generator output enforcing the security contract example",
+            "description": "A generator omits the restricted control with conditional rendering, maps the popup disclosure to aria-haspopup, and routes the irreversible action through an explicit confirmation dialog."
+          }
         ]
       },
       {
