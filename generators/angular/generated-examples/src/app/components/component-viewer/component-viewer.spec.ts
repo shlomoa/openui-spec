@@ -60,9 +60,7 @@ describe('Component documentation routing', () => {
   });
 
   it('renders the navigable container preview on the Examples tab', async () => {
-    const harness = await RouterTestingHarness.create(
-      '/components/navigation-container/examples',
-    );
+    const harness = await RouterTestingHarness.create('/components/navigation-container/examples');
     const root = harness.routeNativeElement as HTMLElement;
     expect(root.querySelector('h1')?.textContent).toContain('Navigation container');
     expect(root.querySelector('.navigation-preview')).toBeTruthy();
