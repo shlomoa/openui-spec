@@ -33,6 +33,9 @@ export type ExamplePreview =
   | 'a11y-labelled'
   | 'a11y-popup'
   | 'a11y-direction'
+  | 'theme-tokens'
+  | 'theme-override'
+  | 'theme-density'
   | 'compliance-catalog'
   | 'compliance-metadata'
   | 'compliance-evidence';
@@ -1272,6 +1275,112 @@ export class OrderReferenceComponent {
           ],
           code: `.a11y-preview [dir='rtl'] {
   text-align: right;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'theming',
+    name: 'Theming',
+    summary:
+      'Design tokens, base styles plus theme overrides, and density modes the generator emits so themes re-skin components without changing the public contract.',
+    items: [
+      {
+        id: 'themed-button',
+        name: 'Themed button',
+        summary:
+          'A button styles itself from named design tokens, layers theme overrides over base styles, and adapts to an externally configured density mode.',
+        api: {
+          specSection: '16. Theming / Design Tokens',
+          specPath: 'spec/16-theming-design-tokens.md',
+          purpose: 'Describe visual customization requirements.',
+          derivedFrom: ['library-catalog-root'],
+          points: [
+            'Visual values are expressed as named design tokens (theming parameters or CSS custom properties) rather than hard-coded literals.',
+            'A theme is composed of base styles plus theme overrides, so switching themes never changes a component public API.',
+            'Density such as cozy or compact is an externally configurable mode applied at a root scope, not a per-component property.',
+            'Theme and density selection stay externally configurable and swappable at runtime.',
+          ],
+          jsonMapping: 'specification.sections[15] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'theme-tokens',
+            title: 'Design tokens instead of literal values',
+            description:
+              'The button references Material system CSS custom properties so a new theme re-skins it without editing the component.',
+            preview: 'theme-tokens',
+            code: `@Component({
+  selector: 'app-primary-button',
+  imports: [MatButtonModule],
+  template: \`
+    <button mat-raised-button color="primary" type="button" class="app-primary-button">
+      Save order
+    </button>
+  \`,
+  styles: [\`
+    .app-primary-button {
+      background: var(--mat-sys-primary);
+      color: var(--mat-sys-on-primary);
+      border-radius: var(--mat-sys-corner-full);
+    }
+  \`]
+})
+export class PrimaryButtonComponent {}`,
+          },
+          {
+            id: 'theme-override',
+            title: 'Base styles plus theme override',
+            description:
+              'Theme-independent base styles stay constant while light and dark themes layer their own token values, leaving the public contract unchanged.',
+            preview: 'theme-override',
+            code: `// base styles are theme-independent; tokens resolve per theme
+.app-panel {
+  padding: var(--mat-sys-corner-small);
+  border: 1px solid var(--app-panel-border);
+}
+
+// sap_horizon (light) theme override
+:root {
+  --app-panel-border: #d9d9d9;
+}
+
+// sap_horizon_dark theme override
+.dark-theme {
+  --app-panel-border: #3a3a3a;
+}`,
+          },
+          {
+            id: 'theme-density',
+            title: 'Density mode applied at the root scope',
+            description:
+              'Density is selected once at the root scope so descendant components adapt their spacing through density-aware tokens, not per-component properties.',
+            preview: 'theme-density',
+            code: `<!-- density is configured externally at the root scope -->
+<body class="compact">
+  <app-primary-button />
+</body>
+
+<!-- styles -->
+.compact .app-primary-button {
+  padding-block: 0.25rem;
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Design tokens resolve to Material system CSS custom properties, so a new theme re-skins the button without code changes.',
+            'A root-scope density class adjusts spacing across descendants instead of adding per-component density properties.',
+          ],
+          code: `.app-primary-button {
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  border-radius: var(--mat-sys-corner-full);
+}
+
+.compact .app-primary-button {
+  padding-block: 0.25rem;
 }`,
         },
       },

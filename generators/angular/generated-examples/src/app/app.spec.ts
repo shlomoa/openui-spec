@@ -39,6 +39,7 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Navigation');
     expect(compiled.textContent).toContain('Feedback');
     expect(compiled.textContent).toContain('Accessibility');
+    expect(compiled.textContent).toContain('Theming');
     expect(compiled.textContent).toContain('Compliance');
 
     const links = compiled.querySelectorAll('.app-sidenav a[mat-list-item]');
@@ -52,6 +53,7 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Navigation container');
     expect(compiled.textContent).toContain('Status feedback');
     expect(compiled.textContent).toContain('Accessible field');
+    expect(compiled.textContent).toContain('Themed button');
     expect(compiled.textContent).toContain('Compliance rules');
   });
 });
