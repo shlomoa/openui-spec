@@ -20,7 +20,7 @@ class AcceptanceCriteriaSpecTest(unittest.TestCase):
         )
 
     def test_acceptance_criteria_json_has_formal_contract(self):
-        self.assertGreaterEqual(len(self.section["requirements"]), 7)
+        self.assertEqual(len(self.section["requirements"]), 7)
         self.assertEqual(len(self.section["nonGoals"]), 4)
 
         tag_names = {tag["name"] for tag in self.section["tags"]}
@@ -50,7 +50,7 @@ class AcceptanceCriteriaSpecTest(unittest.TestCase):
             expected_terms.issubset(definition_terms),
             msg=f"Missing definitions: {expected_terms - definition_terms}",
         )
-        self.assertGreaterEqual(len(self.section["usage"]), 8)
+        self.assertEqual(len(self.section["usage"]), 8)
         self.assertEqual(len(self.section["implementationNotes"]), 4)
 
     def test_acceptance_criteria_markdown_documents_verification_contract(self):
@@ -67,15 +67,15 @@ class AcceptanceCriteriaSpecTest(unittest.TestCase):
     def test_acceptance_examples_cover_traceability_projection_and_evidence(self):
         example_titles = {example["title"] for example in self.section["examples"]}
         expected_titles = {
+            "UI concept model acceptance test",
+            "Application structure acceptance test",
+            "Layout system acceptance test",
+            "Component model acceptance test",
             "Traceability matrix for acceptance coverage",
             "Metadata projection consistency criterion",
             "Visual and accessibility evidence criterion",
         }
-        self.assertTrue(
-            expected_titles.issubset(example_titles),
-            msg=f"Missing examples: {expected_titles - example_titles}",
-        )
-        self.assertGreaterEqual(len(example_titles), 7)
+        self.assertEqual(example_titles, expected_titles)
 
         example_blocks = re.findall(r"```json\s*\n(.*?)\n```", self.markdown, re.DOTALL)
         parsed_examples = [json.loads(block) for block in example_blocks]
