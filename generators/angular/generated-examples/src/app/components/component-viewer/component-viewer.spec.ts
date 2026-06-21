@@ -102,6 +102,20 @@ describe('Component documentation routing', () => {
     expect(root.querySelector('[dir="rtl"]')).toBeTruthy();
   });
 
+  it('sources the compliance API tab from the compliance rules spec', async () => {
+    const harness = await RouterTestingHarness.create('/components/compliance-rules');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('h1')?.textContent).toContain('Compliance rules');
+    expect(root.querySelector('.api-source')?.textContent).toContain('spec/21-compliance-rules.md');
+  });
+
+  it('renders compliance previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/compliance-rules/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('.compliance-preview')).toBeTruthy();
+    expect(root.textContent).toContain('catalog-discoverability: pass');
+  });
+
   it('sources the internationalization API tab from the internationalization spec', async () => {
     const harness = await RouterTestingHarness.create('/components/localized-field');
     const root = harness.routeNativeElement as HTMLElement;

@@ -596,5 +596,77 @@
         </dl>
       </div>
     }
+    @case ('compliance-catalog') {
+      <div class="compliance-preview">
+        <mat-card class="compliance-card">
+          <mat-card-title>core-ui catalog</mat-card-title>
+          <mat-card-content>
+            <ul class="compliance-checklist" aria-label="Catalog compliance checks">
+              <li>sample.library.Button resolves from the catalog root</li>
+              <li>sample.library.Form resolves from the catalog root</li>
+              <li>sample.library.IFormContent resolves as a public interface</li>
+            </ul>
+          </mat-card-content>
+        </mat-card>
+        <mat-chip-set aria-label="Catalog compliance status">
+          <mat-chip highlighted>
+            <span class="visually-hidden">Catalog discoverability validation passed: </span>
+            catalog-discoverability: pass
+          </mat-chip>
+          <mat-chip>
+            <span class="visually-hidden">Contract-based validation passed: </span>
+            contract-based-validation: pass
+          </mat-chip>
+        </mat-chip-set>
+      </div>
+    }
+    @case ('compliance-metadata') {
+      <div class="compliance-preview">
+        <dl class="component-contract">
+          <div>
+            <dt>Properties</dt>
+            <dd>text: string, enabled: boolean</dd>
+          </div>
+          <div>
+            <dt>Association</dt>
+            <dd>ariaLabelledBy: Control [0..n]</dd>
+          </div>
+          <div>
+            <dt>Event</dt>
+            <dd>press()</dd>
+          </div>
+        </dl>
+        <mat-chip-set aria-label="Metadata compliance status">
+          <mat-chip highlighted>
+            <span class="visually-hidden">Metadata completeness validation passed: </span>
+            metadata-completeness: pass
+          </mat-chip>
+          <mat-chip>private renderer contract: false</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
+    @case ('compliance-evidence') {
+      <div class="compliance-preview">
+        <mat-card class="compliance-card">
+          <mat-card-title>Input evidence</mat-card-title>
+          <mat-card-content>
+            <dl class="component-contract">
+              <div>
+                <dt>A11y</dt>
+                <dd>ariaLabelledBy, ariaDescribedBy</dd>
+              </div>
+              <div>
+                <dt>Theming</dt>
+                <dd>field.border.color token</dd>
+              </div>
+              <div>
+                <dt>Tests</dt>
+                <dd>metadata, keyboard, rtl rendering</dd>
+              </div>
+            </dl>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
   }
 </div>

@@ -2144,7 +2144,103 @@
         "requirements": [
           "A compliant implementation must publish its public surface through a discoverable library catalog.",
           "A compliant implementation must describe every public component with typed metadata for properties, composition, relationships, and events.",
-          "A compliant implementation must preserve accessibility, theming, internationalization, and testing evidence as part of the public contract lifecycle."
+          "A compliant implementation must preserve accessibility, theming, internationalization, and testing evidence as part of the public contract lifecycle.",
+          "Compliance is evaluated against the normalized public contract, not against private source files, renderer internals, generated DOM structure, or framework-specific implementation details.",
+          "Every public library, component, element, type, and interface must be reachable from the catalog with a stable identifier, ownership information, version scope, and documented visibility.",
+          "Component metadata must include enough typed information for validators and generators to reconstruct properties, aggregations, associations, events, extension hooks, and design-time hints without reverse-engineering runtime behavior.",
+          "Cross-cutting rules for accessibility, theming, internationalization, security, performance, and extension compatibility must be traceable to public metadata or documented evidence.",
+          "Automated compliance tests must verify that `/openui.json`, generated API projections, documentation, examples, and implementation behavior remain synchronized for every normative public contract.",
+          "When an implementation intentionally omits an optional capability, the omission must be explicit and must not weaken required baseline metadata, interaction, accessibility, or evidence rules."
+        ],
+        "nonGoals": [
+          "Compliance rules do not prescribe a specific renderer, build system, test runner, package format, or host framework.",
+          "Compliance rules do not require implementations to expose private members, internal DOM nodes, renderer helper APIs, or source-code-only conventions.",
+          "Compliance rules do not redefine section-specific requirements; they aggregate the mandatory checks from the catalog, component, interaction, state, accessibility, theming, internationalization, and testing sections.",
+          "Compliance rules do not certify application-specific business logic, visual design choices, or data schemas beyond their use of the public UI contract."
+        ],
+        "tags": [
+          {
+            "name": "catalog-discoverability",
+            "meaning": "Every public library member is reachable from a stable, machine-readable catalog entry."
+          },
+          {
+            "name": "metadata-completeness",
+            "meaning": "Every public component declares typed properties, aggregations, associations, events, and relevant capability metadata."
+          },
+          {
+            "name": "contract-based-validation",
+            "meaning": "Compliance is evaluated from public metadata, documentation, generated projections, and observable behavior rather than private implementation details."
+          },
+          {
+            "name": "cross-cutting-evidence",
+            "meaning": "Accessibility, theming, internationalization, security, privacy, performance, and extension requirements are backed by public metadata or documented evidence."
+          },
+          {
+            "name": "testable-conformance",
+            "meaning": "Every normative rule has an automated or reviewable acceptance check that can be repeated by implementers and validators."
+          },
+          {
+            "name": "explicit-capability-scope",
+            "meaning": "Optional capabilities are declared as supported or intentionally absent without weakening required baseline conformance."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Compliant implementation",
+            "definition": "A framework, library, generator, or projection that satisfies the required public contract rules for the specification sections it claims to implement."
+          },
+          {
+            "term": "Public surface",
+            "definition": "The catalog-addressable libraries, controls, elements, types, interfaces, metadata members, events, examples, and generated projections exposed to consumers."
+          },
+          {
+            "term": "Compliance evidence",
+            "definition": "Machine-readable metadata, API projections, documentation, examples, test results, or reviewable records that demonstrate a rule is satisfied."
+          },
+          {
+            "term": "Conformance profile",
+            "definition": "The declared scope of sections, libraries, components, and optional capabilities that an implementation claims to support."
+          },
+          {
+            "term": "Compliance gap",
+            "definition": "Any missing, inconsistent, private-only, or untested part of a claimed public contract."
+          },
+          {
+            "term": "Validation artifact",
+            "definition": "A repeatable test, generated file, documentation page, screenshot, or report used to verify conformance."
+          }
+        ],
+        "usage": [
+          "Start compliance validation from the catalog root and walk only public entries; any component that cannot be discovered from the catalog is outside the compliant public surface.",
+          "Validate metadata completeness before validating behavior so downstream checks can rely on declared property types, aggregation multiplicity, association targets, event parameters, defaults, visibility, and capability flags.",
+          "Treat documentation, `/openui.json`, generated `api.json`-style projections, generated examples, and runtime metadata as synchronized views of the same public contract.",
+          "Record cross-cutting evidence next to the public contract it supports, such as accessibility associations, theme token usage, localized text handling, popup relationships, or lazy-loading declarations.",
+          "Make optional capability support explicit: a component may omit drag-and-drop, design-time metadata, or a generator mapping only when the conformance profile says the capability is not claimed.",
+          "Fail compliance when an implementation relies on private renderer details for behavior that the specification requires to be public, even if the visible UI appears correct.",
+          "Keep validation artifacts deterministic and versioned so maintainers can compare compliance before and after library, metadata, or generator changes."
+        ],
+        "implementationNotes": [
+          "Validators should report compliance gaps with the section, catalog entry, metadata member, evidence artifact, and expected rule so maintainers can correct the public contract without guessing.",
+          "Generators should fail fast when required metadata is missing and should preserve optional capability declarations as explicit supported or unsupported features in generated output.",
+          "Documentation builds should treat missing examples, stale JSON mappings, or generated projections that disagree with `/openui.json` as compliance failures rather than editorial warnings."
+        ],
+        "examples": [
+          {
+            "title": "Catalog discoverability checklist example",
+            "description": "A conformance profile lists a catalog with libraries, components, types, and interfaces, then verifies that every claimed public member resolves from the catalog root with a stable identifier and owning library."
+          },
+          {
+            "title": "Metadata completeness gate example",
+            "description": "A Button contract is compliant when typed text and enabled properties, an ariaLabelledBy association, and the press event are public metadata and the implementation does not require private renderer inspection."
+          },
+          {
+            "title": "Cross-cutting evidence record example",
+            "description": "An Input contract carries accessibility associations, theme token usage, internationalized text handling, and repeatable tests as evidence tied to the same public component contract."
+          },
+          {
+            "title": "Generator compliance guard example",
+            "description": "A generator guard verifies that generated inputs mirror properties, outputs mirror events, catalog entries resolve, metadata projections stay synchronized, and accessibility bindings come from public associations."
+          }
         ]
       },
       {
