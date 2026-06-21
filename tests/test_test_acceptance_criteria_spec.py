@@ -77,17 +77,25 @@ class AcceptanceCriteriaSpecTest(unittest.TestCase):
         )
         self.assertGreaterEqual(len(example_titles), 7)
 
-        example_match = re.search(
-            r"### Example 5 — traceability matrix for acceptance coverage\s+```json\s*\n(.*?)\n```",
-            self.markdown,
-            re.DOTALL,
+        example_blocks = re.findall(r"```json\s*\n(.*?)\n```", self.markdown, re.DOTALL)
+        parsed_examples = [json.loads(block) for block in example_blocks]
+        traceability_example = next(
+            example
+            for example in parsed_examples
+            if example.get("specSection") == "22-test-acceptance-criteria"
         )
-        self.assertIsNotNone(example_match)
-        example_json = json.loads(example_match.group(1))
-        criteria = example_json["criteria"]
-        self.assertEqual(criteria[0]["id"], "AC-METADATA-PROJECTION")
-        self.assertIn("08-component-model#property-contract", criteria[0]["covers"])
-        self.assertIn("screenshots/accessible-field.png", criteria[1]["evidence"])
+
+        criteria_by_id = {
+            criterion["id"]: criterion for criterion in traceability_example["criteria"]
+        }
+        self.assertIn(
+            "08-component-model#property-contract",
+            criteria_by_id["AC-METADATA-PROJECTION"]["covers"],
+        )
+        self.assertIn(
+            "screenshots/accessible-field.png",
+            criteria_by_id["AC-ACCESSIBLE-VISUAL-STATE"]["evidence"],
+        )
 
 
 if __name__ == "__main__":
