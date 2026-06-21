@@ -1299,7 +1299,8 @@ export class OrderReferenceComponent {
             'Metadata projection tests compare source runtime metadata, normalized /openui.json, and generated API output.',
             'Evidence artifacts include automated results plus DOM, accessibility-tree, screenshot, or generated-source evidence when behavior is visual-facing.',
           ],
-          jsonMapping: 'specification.sections[21] in /openui.json',
+          jsonMapping:
+            'specification.sections entry with id "22-test-acceptance-criteria" in /openui.json',
         },
         examples: [
           {
