@@ -503,9 +503,9 @@
         >
           Order actions
         </button>
-        <div id="order-actions-description" class="visually-hidden">
-          Choose duplicate or other order-specific actions.
-        </div>
+        <p id="order-actions-description" class="reference-note">
+          Choose duplicate or other order-specific actions from the menu.
+        </p>
         <mat-menu #referenceActionsMenu="matMenu">
           <button mat-menu-item type="button">Duplicate</button>
         </mat-menu>
@@ -525,6 +525,7 @@
       <div class="reference-preview">
         <button mat-raised-button color="primary" type="button" disabled>Save order</button>
         <p class="reference-note">Disabled reference buttons do not emit press.</p>
+        <!-- Hebrew: Order number 1000123. -->
         <p class="reference-direction-sample" dir="rtl" lang="he">מספר הזמנה 1000123</p>
         <mat-chip-set aria-label="Reference validation expectations">
           <mat-chip highlighted>enabled gates activation</mat-chip>
