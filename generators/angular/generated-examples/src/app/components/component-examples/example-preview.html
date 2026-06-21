@@ -396,6 +396,62 @@
         </dl>
       </div>
     }
+    @case ('i18n-translatable') {
+      <div class="i18n-preview">
+        <button mat-raised-button color="primary" type="button">Submit order</button>
+        <dl class="component-contract">
+          <div>
+            <dt>Property</dt>
+            <dd>text: order.submit (translatable)</dd>
+          </div>
+          <div>
+            <dt>en</dt>
+            <dd>Submit order</dd>
+          </div>
+          <div>
+            <dt>de</dt>
+            <dd>Bestellung absenden</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('i18n-fallback') {
+      <div class="i18n-preview">
+        <mat-chip-set aria-label="Active locale and fallback chain">
+          <mat-chip highlighted>locale: de-AT</mat-chip>
+          <mat-chip>fallback: de-AT &rarr; de &rarr; en</mat-chip>
+        </mat-chip-set>
+        <dl class="component-contract">
+          <div>
+            <dt>order.submit</dt>
+            <dd>Bestellung absenden (de)</dd>
+          </div>
+          <div>
+            <dt>order.cancel</dt>
+            <dd>Cancel (en default)</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('i18n-direction') {
+      <div class="i18n-preview">
+        <p class="i18n-direction-sample" dir="rtl">رقم الطلب ١٠٠٠١٢٣</p>
+        <dl class="component-contract">
+          <div>
+            <dt>locale</dt>
+            <dd>ar-EG</dd>
+          </div>
+          <div>
+            <dt>Property</dt>
+            <dd>textDirection: RTL</dd>
+          </div>
+          <div>
+            <dt>Default</dt>
+            <dd>textDirection: Inherit</dd>
+          </div>
+        </dl>
+      </div>
+    }
     @case ('feedback-busy') {
       <div class="feedback-preview">
         <mat-progress-bar mode="indeterminate" aria-label="Loading orders" />
@@ -420,6 +476,68 @@
           <p>No orders found.</p>
           <button mat-stroked-button type="button">Create order</button>
         </div>
+      </div>
+    }
+    @case ('theme-tokens') {
+      <div class="theme-preview">
+        <button mat-raised-button color="primary" type="button" class="app-primary-button">
+          Save order
+        </button>
+        <dl class="component-contract">
+          <div>
+            <dt>Token</dt>
+            <dd>background: --mat-sys-primary</dd>
+          </div>
+          <div>
+            <dt>Token</dt>
+            <dd>color: --mat-sys-on-primary</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('theme-override') {
+      <div class="theme-preview">
+        <div class="theme-override-row">
+          <div class="app-panel theme-light">Light theme override</div>
+          <div class="app-panel theme-dark">Dark theme override</div>
+        </div>
+        <dl class="component-contract">
+          <div>
+            <dt>Base</dt>
+            <dd>border: var(--app-panel-border)</dd>
+          </div>
+          <div>
+            <dt>Override</dt>
+            <dd>sap_horizon vs sap_horizon_dark</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('theme-density') {
+      <div class="theme-preview">
+        <div class="theme-density-row">
+          <button mat-raised-button color="primary" type="button" class="app-primary-button">
+            Cozy
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            class="app-primary-button compact"
+          >
+            Compact
+          </button>
+        </div>
+        <dl class="component-contract">
+          <div>
+            <dt>Root mode</dt>
+            <dd>sapUiSizeCompact</dd>
+          </div>
+          <div>
+            <dt>Supported</dt>
+            <dd>cozy, compact</dd>
+          </div>
+        </dl>
       </div>
     }
   }

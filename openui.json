@@ -1899,7 +1899,91 @@
         "requirements": [
           "Libraries must support theme-specific assets and shared theme-level styling resources.",
           "Theme composition must allow base styles plus theme overrides without changing the public component contract.",
-          "Density-aware and theme-aware assets are part of the visual system and must remain externally configurable."
+          "Density-aware and theme-aware assets are part of the visual system and must remain externally configurable.",
+          "Visual values must be expressed as named design tokens so themes can re-skin components without editing component markup or logic.",
+          "Themes must be swappable at the application or root scope at runtime, and switching a theme must not require recompiling or changing any component's public contract.",
+          "Density must be selected externally through a root-level mode such as cozy or compact rather than encoded as a per-component property.",
+          "Design tokens must resolve to a defined fallback when a theme does not provide a value, so components render predictably under any theme.",
+          "Theme-specific assets such as images and fonts must be referenced through theme-resolved paths rather than hard-coded URLs so the correct asset loads per theme."
+        ],
+        "nonGoals": [
+          "The theming model does not define a specific color palette, typography scale, or the visual design of any individual theme; it standardizes how tokens and overrides are structured, not their values.",
+          "The theming model does not standardize private CSS class names, generated stylesheet ordering, or renderer-internal markup used to apply a theme.",
+          "The theming model does not replace the layout, component, or accessibility rules; it constrains how visual values are tokenized and themed without changing those public contracts."
+        ],
+        "tags": [
+          {
+            "name": "theme-asset-set",
+            "meaning": "Libraries ship theme-specific assets and shared theme-level styling resources that vary by theme without touching the component contract."
+          },
+          {
+            "name": "theme-composition",
+            "meaning": "A theme is composed of base styles plus theme overrides, so switching themes never changes a component's public API."
+          },
+          {
+            "name": "design-token",
+            "meaning": "Visual values are expressed as named design tokens, such as theming parameters or CSS custom properties, rather than hard-coded literals."
+          },
+          {
+            "name": "density-aware-styling",
+            "meaning": "Density such as cozy or compact is an externally configurable visual mode applied at a root scope, not a per-component property."
+          },
+          {
+            "name": "external-theme-configuration",
+            "meaning": "Theme and density selection are configured externally at the application or root level and remain swappable at runtime."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Theme",
+            "definition": "A named collection of design-token values and assets that determines the visual appearance of all components without altering their public contract."
+          },
+          {
+            "term": "Design token",
+            "definition": "A named, themeable styling value such as a color, spacing, typography, or elevation that is resolved at runtime so components reference the token instead of a literal value."
+          },
+          {
+            "term": "Base styles",
+            "definition": "The theme-independent structural styles a component always carries, over which theme overrides are layered."
+          },
+          {
+            "term": "Theme override",
+            "definition": "Theme-specific token values or assets layered on top of base styles to produce a particular theme's appearance."
+          },
+          {
+            "term": "Density mode",
+            "definition": "An externally configurable visual mode such as cozy or compact applied at a root scope to adjust spacing and sizing across components."
+          }
+        ],
+        "usage": [
+          "Reference colors, spacing, typography, and elevation through design tokens, such as the Material system CSS custom properties `--mat-sys-primary` and `--mat-sys-on-primary`, instead of literal values so a new theme re-skins the component automatically.",
+          "Keep theme-independent structure in base styles and layer only token values and assets as theme overrides, so the public component contract never changes between themes.",
+          "Apply density at a root scope, for example a `cozy` or `compact` body class, rather than adding density properties to individual components.",
+          "Provide a defined fallback for every design token so components stay legible when a theme omits a value.",
+          "Resolve theme-specific assets through theme-aware paths or tokens so switching themes loads the matching image and font set without code changes."
+        ],
+        "implementationNotes": [
+          "Extractors should record design-token references, theme override layers, and density modes from library styling metadata instead of capturing computed pixel values from a single rendered theme.",
+          "Generators should emit token references such as CSS custom properties and density-scoped classes so the output re-skins with the active theme and density without per-component edits.",
+          "Conformance tests should cover token-driven styling, base-plus-override composition, runtime theme swapping, and density mode application."
+        ],
+        "examples": [
+          {
+            "title": "Design tokens instead of literal values example",
+            "description": "A button references named design tokens for background, color, and border radius so switching the theme re-skins it without changing the component contract."
+          },
+          {
+            "title": "Base styles plus theme override example",
+            "description": "A panel keeps theme-independent base styles while each theme layers its own token values, leaving the public contract unchanged across light and dark themes."
+          },
+          {
+            "title": "Density mode example",
+            "description": "Density is selected once at the root scope, such as `sapUiSizeCompact`, so descendant components adapt spacing through density-aware tokens instead of per-component properties."
+          },
+          {
+            "title": "Generator design-token binding example",
+            "description": "A generator emits Material system CSS custom properties and a density-scoped class so the active theme and density re-skin the button without editing the component."
+          }
         ]
       },
       {
@@ -1911,7 +1995,99 @@
         "requirements": [
           "Libraries must provide translatable message resources for public UI text.",
           "Locale-aware rendering must support right-to-left and left-to-right presentation where applicable.",
-          "Public text-bearing components must expose text direction and translatable labels through explicit metadata."
+          "Public text-bearing components must expose text direction and translatable labels through explicit metadata.",
+          "Translatable public text must be referenced through stable message keys resolved from locale-specific message resource bundles rather than hard-coded literals.",
+          "Message resource bundles must resolve through a deterministic locale fallback chain from the most specific locale to a default bundle.",
+          "Locale-sensitive values such as dates, numbers, and currencies must render through typed, locale-aware formatting rather than fixed presentation.",
+          "The active locale and text direction must be externally configurable application-level settings that components inherit rather than hard-code.",
+          "Translatable properties must be marked in public metadata so tooling can extract message keys and reconstruct localized output without reading renderer internals."
+        ],
+        "nonGoals": [
+          "The internationalization model does not mandate a specific message-bundle file format, translation workflow, or translation management system.",
+          "The internationalization model does not define how translated strings are authored, reviewed, or stored; it only constrains how they are referenced and resolved through the public contract.",
+          "The internationalization model does not replace the accessibility, theming, or layout rules, but it constrains how those contracts expose translatable text, locale, and direction."
+        ],
+        "tags": [
+          {
+            "name": "translatable-text",
+            "meaning": "Public text-bearing properties reference translatable message keys instead of hard-coded literals."
+          },
+          {
+            "name": "message-resource-bundle",
+            "meaning": "Locale-specific message bundles supply translated text resolved by message key."
+          },
+          {
+            "name": "locale-fallback",
+            "meaning": "Message resolution follows a deterministic fallback chain from the most specific locale to a default bundle."
+          },
+          {
+            "name": "locale-aware-formatting",
+            "meaning": "Typed values such as dates, numbers, and currencies render according to the active locale."
+          },
+          {
+            "name": "text-direction",
+            "meaning": "Text direction is a declarable public property with `LTR`, `RTL`, and `Inherit` values for bidirectional content."
+          },
+          {
+            "name": "locale-configuration",
+            "meaning": "The active locale and direction are externally configurable application settings that components inherit."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Message resource bundle",
+            "definition": "A locale-specific set of key-to-text entries that supplies translated public text resolved by message key."
+          },
+          {
+            "term": "Message key",
+            "definition": "A stable identifier that references a translatable string in a message resource bundle, decoupling the public text from any single literal."
+          },
+          {
+            "term": "Locale",
+            "definition": "The language and regional identifier (such as `en`, `de`, or `ar-EG`) that selects message bundles and locale-aware formatting."
+          },
+          {
+            "term": "Locale fallback",
+            "definition": "The deterministic resolution order from the most specific locale to a default bundle, used when a key is missing for the active locale."
+          },
+          {
+            "term": "Translatable property",
+            "definition": "A property marked in public metadata as carrying user-facing text, signalling that its value is a message key resolved from a bundle."
+          },
+          {
+            "term": "Text direction",
+            "definition": "A public property declaring `LTR`, `RTL`, or `Inherit` so bidirectional text renders deterministically from the public contract."
+          }
+        ],
+        "usage": [
+          "Reference user-facing text through message keys resolved from message resource bundles, and reserve literal text for non-translatable technical identifiers.",
+          "Mark text-bearing properties as translatable in public metadata so extractors can collect message keys without scraping rendered output.",
+          "Ship one message bundle per supported locale and rely on the locale fallback chain so a missing translation degrades to a less specific bundle rather than failing.",
+          "Render dates, numbers, and currencies through typed locale-aware formatting bound to the active locale instead of formatting values with fixed patterns.",
+          "Inherit the active locale and `textDirection` from application-level configuration, overriding direction only for content whose direction differs from its surrounding context."
+        ],
+        "implementationNotes": [
+          "Extractors should normalize translatable property flags, message keys, and typed locale-aware value types from component metadata instead of reading literal rendered text.",
+          "Generators should map message keys to the target framework's i18n mechanism and typed locale-aware values to locale-bound formatting, while binding text direction to the active locale.",
+          "Conformance tests should cover message-key resolution, locale fallback, locale-aware formatting, and text-direction inheritance for text-bearing components."
+        ],
+        "examples": [
+          {
+            "title": "Translatable property and message bundle example",
+            "description": "A button's `text` property is marked translatable and carries a message key that each locale bundle resolves to localized text instead of a hard-coded literal."
+          },
+          {
+            "title": "Locale fallback resolution example",
+            "description": "With active locale `de-AT`, resolution walks the fallback chain so a key resolves from the `de` bundle while a missing key degrades to the `en` default rather than failing."
+          },
+          {
+            "title": "Locale-aware value formatting example",
+            "description": "A numeric value renders through typed locale-aware formatting so the same `1234.5` becomes `1.234,5` under `de-DE`, following the active locale instead of a fixed pattern."
+          },
+          {
+            "title": "Generator internationalization binding example",
+            "description": "A generator maps the translatable `text` property to a resolved message accessor and binds text direction to the active locale, preserving the localized text and direction from the public contract."
+          }
         ]
       },
       {
