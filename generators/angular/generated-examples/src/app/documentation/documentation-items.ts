@@ -32,7 +32,10 @@ export type ExamplePreview =
   | 'feedback-empty'
   | 'a11y-labelled'
   | 'a11y-popup'
-  | 'a11y-direction';
+  | 'a11y-direction'
+  | 'performance-lazy'
+  | 'performance-virtualization'
+  | 'performance-projection';
 
 /** A single runnable example shown on a component's "Examples" tab. */
 export interface DocExample {
@@ -1269,6 +1272,100 @@ export class OrderReferenceComponent {
           ],
           code: `.a11y-preview [dir='rtl'] {
   text-align: right;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'performance',
+    name: 'Performance',
+    summary:
+      'Eager discovery with lazy detail, virtualized aggregations, and cacheable API projections the generator emits for performance-conscious output.',
+    items: [
+      {
+        id: 'performance-budgets',
+        name: 'Performance budgets',
+        summary:
+          'Catalogs support eager discovery while loading detail lazily, large aggregations virtualize against a public budget, and the API projection is cached by a stable identity.',
+        api: {
+          specSection: '19. Performance Requirements',
+          specPath: 'spec/19-performance-requirements.md',
+          purpose: 'Describe performance-oriented expectations that follow from the public model.',
+          derivedFrom: ['library-catalog-root', 'api-json-projection'],
+          points: [
+            'Public catalogs allow eager discovery of available components without eagerly loading every implementation detail.',
+            'Components that own large or unbounded aggregations virtualize so only the items needed for the current viewport are materialized.',
+            'Immutable public projections such as the API projection are cacheable by a stable identity to avoid recomputation and refetching.',
+            'Performance-relevant behavior is expressed through the public contract as observable, measurable budgets rather than hidden renderer timing.',
+          ],
+          jsonMapping: 'specification.sections[18] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'performance-lazy-detail',
+            title: 'Eager discovery with lazy detail',
+            description:
+              'The catalog lists component identity for eager discovery while each component is lazily loaded only when its route activates.',
+            preview: 'performance-lazy',
+            code: `// Lazy route: the orders feature loads only when its route activates.
+export const routes: Routes = [
+  {
+    path: 'orders',
+    loadComponent: () => import('./orders/orders-page').then((m) => m.OrdersPage),
+  },
+];`,
+          },
+          {
+            id: 'performance-virtualization-budget',
+            title: 'Virtualized aggregation budget',
+            description:
+              'A large bound aggregation renders through a virtual-scroll viewport that materializes only the rows visible in the viewport.',
+            preview: 'performance-virtualization',
+            code: `@Component({
+  selector: 'app-orders-viewport',
+  imports: [ScrollingModule, MatListModule],
+  template: \`
+    <cdk-virtual-scroll-viewport itemSize="48" class="orders-viewport">
+      <mat-list>
+        <mat-list-item *cdkVirtualFor="let order of orders()">
+          {{ order.id }} — {{ order.customer }}
+        </mat-list-item>
+      </mat-list>
+    </cdk-virtual-scroll-viewport>
+  \`
+})
+export class OrdersViewport {
+  // growingThreshold: 20 -> the public materialization budget for the viewport.
+  readonly orders = input<readonly OrderRow[]>([]);
+}`,
+          },
+          {
+            id: 'performance-projection-cache',
+            title: 'Cacheable API projection',
+            description:
+              'The API projection is derived from the public contract and cached by a stable version identity so repeated reads are reused instead of recomputed.',
+            preview: 'performance-projection',
+            code: `// The immutable projection is cached by a stable "library@version" key.
+const projection = await loadApiProjection('sample.library', '1.4.0');
+const cacheKey = \`\${projection.catalog}@\${projection.version}\`;
+projectionCache.set(cacheKey, projection);`,
+          },
+        ],
+        styling: {
+          notes: [
+            'The virtual-scroll viewport reuses Material list rows so only the visible window is rendered while the budget stays observable.',
+            'Catalog and projection metadata render as Material chips so the lazy-loading and caching contract stays legible without bespoke styling.',
+          ],
+          code: `.performance-preview {
+  display: grid;
+  gap: 1rem;
+}
+
+.orders-viewport {
+  block-size: 12rem;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 0.5rem;
 }`,
         },
       },

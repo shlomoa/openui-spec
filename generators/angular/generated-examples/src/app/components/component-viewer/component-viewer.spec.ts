@@ -101,4 +101,23 @@ describe('Component documentation routing', () => {
     expect(root.querySelector('[aria-haspopup="menu"]')).toBeTruthy();
     expect(root.querySelector('[dir="rtl"]')).toBeTruthy();
   });
+
+  it('sources the performance API tab from the performance requirements spec', async () => {
+    const harness = await RouterTestingHarness.create('/components/performance-budgets');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('h1')?.textContent).toContain('Performance budgets');
+    expect(root.querySelector('.api-source')?.textContent).toContain(
+      'spec/19-performance-requirements.md',
+    );
+  });
+
+  it('renders the eager-discovery, virtualization, and projection previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/performance-budgets/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelectorAll('.performance-preview').length).toBeGreaterThan(0);
+    expect(root.querySelector('cdk-virtual-scroll-viewport')).toBeTruthy();
+    expect(root.textContent).toContain('detail: lazy');
+    expect(root.textContent).toContain('growingThreshold: 20');
+    expect(root.textContent).toContain('cacheKey: sample.library@1.4.0');
+  });
 });

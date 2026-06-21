@@ -1,3 +1,4 @@
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -24,6 +25,20 @@ const PREVIEW_ORDERS: readonly PreviewOrder[] = [
   { order: '1000124', customer: 'Northwind Traders', status: 'In review' },
 ];
 
+const PREVIEW_CUSTOMERS: readonly string[] = [
+  'Contoso Retail',
+  'Northwind Traders',
+  'Fabrikam Logistics',
+  'Adventure Works',
+  'Wide World Importers',
+];
+
+const VIRTUAL_ORDERS: readonly PreviewOrder[] = Array.from({ length: 200 }, (_, index) => ({
+  order: `100${(1000 + index).toString()}`,
+  customer: PREVIEW_CUSTOMERS[index % PREVIEW_CUSTOMERS.length],
+  status: index % 2 === 0 ? 'Open' : 'In review',
+}));
+
 /**
  * Renders a live Angular Material preview for a documented example. The preview
  * intentionally uses Material components so the sample reflects the generator's
@@ -44,6 +59,7 @@ const PREVIEW_ORDERS: readonly PreviewOrder[] = [
     MatSelectModule,
     MatTableModule,
     MatToolbarModule,
+    ScrollingModule,
   ],
   templateUrl: './example-preview.html',
   styleUrl: './example-preview.scss',
@@ -53,6 +69,7 @@ export class ExamplePreviewComponent {
 
   protected readonly orders = PREVIEW_ORDERS;
   protected readonly boundOrders = PREVIEW_ORDERS;
+  protected readonly virtualOrders = VIRTUAL_ORDERS;
   protected readonly basicColumns = ['order', 'customer'];
   protected readonly statusColumns = ['order', 'status'];
 }
