@@ -1911,7 +1911,99 @@
         "requirements": [
           "Libraries must provide translatable message resources for public UI text.",
           "Locale-aware rendering must support right-to-left and left-to-right presentation where applicable.",
-          "Public text-bearing components must expose text direction and translatable labels through explicit metadata."
+          "Public text-bearing components must expose text direction and translatable labels through explicit metadata.",
+          "Translatable public text must be referenced through stable message keys resolved from locale-specific message resource bundles rather than hard-coded literals.",
+          "Message resource bundles must resolve through a deterministic locale fallback chain from the most specific locale to a default bundle.",
+          "Locale-sensitive values such as dates, numbers, and currencies must render through typed, locale-aware formatting rather than fixed presentation.",
+          "The active locale and text direction must be externally configurable application-level settings that components inherit rather than hard-code.",
+          "Translatable properties must be marked in public metadata so tooling can extract message keys and reconstruct localized output without reading renderer internals."
+        ],
+        "nonGoals": [
+          "The internationalization model does not mandate a specific message-bundle file format, translation workflow, or translation management system.",
+          "The internationalization model does not define how translated strings are authored, reviewed, or stored; it only constrains how they are referenced and resolved through the public contract.",
+          "The internationalization model does not replace the accessibility, theming, or layout rules, but it constrains how those contracts expose translatable text, locale, and direction."
+        ],
+        "tags": [
+          {
+            "name": "translatable-text",
+            "meaning": "Public text-bearing properties reference translatable message keys instead of hard-coded literals."
+          },
+          {
+            "name": "message-resource-bundle",
+            "meaning": "Locale-specific message bundles supply translated text resolved by message key."
+          },
+          {
+            "name": "locale-fallback",
+            "meaning": "Message resolution follows a deterministic fallback chain from the most specific locale to a default bundle."
+          },
+          {
+            "name": "locale-aware-formatting",
+            "meaning": "Typed values such as dates, numbers, and currencies render according to the active locale."
+          },
+          {
+            "name": "text-direction",
+            "meaning": "Text direction is a declarable public property with `LTR`, `RTL`, and `Inherit` values for bidirectional content."
+          },
+          {
+            "name": "locale-configuration",
+            "meaning": "The active locale and direction are externally configurable application settings that components inherit."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Message resource bundle",
+            "definition": "A locale-specific set of key-to-text entries that supplies translated public text resolved by message key."
+          },
+          {
+            "term": "Message key",
+            "definition": "A stable identifier that references a translatable string in a message resource bundle, decoupling the public text from any single literal."
+          },
+          {
+            "term": "Locale",
+            "definition": "The language and regional identifier (such as `en`, `de`, or `ar-EG`) that selects message bundles and locale-aware formatting."
+          },
+          {
+            "term": "Locale fallback",
+            "definition": "The deterministic resolution order from the most specific locale to a default bundle, used when a key is missing for the active locale."
+          },
+          {
+            "term": "Translatable property",
+            "definition": "A property marked in public metadata as carrying user-facing text, signalling that its value is a message key resolved from a bundle."
+          },
+          {
+            "term": "Text direction",
+            "definition": "A public property declaring `LTR`, `RTL`, or `Inherit` so bidirectional text renders deterministically from the public contract."
+          }
+        ],
+        "usage": [
+          "Reference user-facing text through message keys resolved from message resource bundles, and reserve literal text for non-translatable technical identifiers.",
+          "Mark text-bearing properties as translatable in public metadata so extractors can collect message keys without scraping rendered output.",
+          "Ship one message bundle per supported locale and rely on the locale fallback chain so a missing translation degrades to a less specific bundle rather than failing.",
+          "Render dates, numbers, and currencies through typed locale-aware formatting bound to the active locale instead of formatting values with fixed patterns.",
+          "Inherit the active locale and `textDirection` from application-level configuration, overriding direction only for content whose direction differs from its surrounding context."
+        ],
+        "implementationNotes": [
+          "Extractors should normalize translatable property flags, message keys, and typed locale-aware value types from component metadata instead of reading literal rendered text.",
+          "Generators should map message keys to the target framework's i18n mechanism and typed locale-aware values to locale-bound formatting, while binding text direction to the active locale.",
+          "Conformance tests should cover message-key resolution, locale fallback, locale-aware formatting, and text-direction inheritance for text-bearing components."
+        ],
+        "examples": [
+          {
+            "title": "Translatable property and message bundle example",
+            "description": "A button's `text` property is marked translatable and carries a message key that each locale bundle resolves to localized text instead of a hard-coded literal."
+          },
+          {
+            "title": "Locale fallback resolution example",
+            "description": "With active locale `de-AT`, resolution walks the fallback chain so a key resolves from the `de` bundle while a missing key degrades to the `en` default rather than failing."
+          },
+          {
+            "title": "Locale-aware value formatting example",
+            "description": "A numeric value renders through typed locale-aware formatting so the same `1234.5` becomes `1.234,5` under `de-DE`, following the active locale instead of a fixed pattern."
+          },
+          {
+            "title": "Generator internationalization binding example",
+            "description": "A generator maps the translatable `text` property to a resolved message accessor and binds text direction to the active locale, preserving the localized text and direction from the public contract."
+          }
         ]
       },
       {
