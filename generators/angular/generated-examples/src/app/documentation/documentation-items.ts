@@ -9,15 +9,21 @@ export type ExamplePreview =
   | 'shell-toolbar'
   | 'page-card'
   | 'page-split'
+  | 'page-responsive'
   | 'table-basic'
   | 'table-status'
   | 'form-order'
   | 'form-filter'
+  | 'state-public'
+  | 'state-derived'
   | 'action-enabled'
   | 'action-disabled'
   | 'component-properties'
   | 'component-aggregation'
   | 'component-events'
+  | 'feedback-busy'
+  | 'feedback-message'
+  | 'feedback-empty'
   | 'a11y-labelled'
   | 'a11y-popup'
   | 'a11y-direction';
@@ -220,6 +226,48 @@ export class OrdersPage {}`,
   \`
 })
 export class OrdersPage {}`,
+          },
+          {
+            id: 'page-responsive',
+            title: 'Responsive grid page',
+            description:
+              'An ordered region keeps the same children while the column count adapts across breakpoints, so reflow preserves composition order.',
+            preview: 'page-responsive',
+            code: `@Component({
+  selector: 'app-catalog-page',
+  imports: [MatCardModule],
+  template: \`
+    <div class="catalog-grid">
+      @for (item of items(); track item.id) {
+        <mat-card>
+          <mat-card-title>{{ item.name }}</mat-card-title>
+        </mat-card>
+      }
+    </div>
+  \`,
+  styles: \`
+    .catalog-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: 1023px) {
+      .catalog-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 599px) {
+      .catalog-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  \`
+})
+export class CatalogPage {
+  readonly items = input<CatalogItem[]>([]);
+}`,
           },
         ],
         styling: {
@@ -432,6 +480,92 @@ export class OrderFilterComponent {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+}`,
+        },
+      },
+      {
+        id: 'state',
+        name: 'Component state',
+        summary:
+          'Public typed state becomes Angular Material signal inputs with defaults, while hidden and derived state stay compatible with the declared contract.',
+        api: {
+          specSection: '10. State Model',
+          specPath: 'spec/10-state-model.md',
+          purpose: 'Describe state held or exposed by components.',
+          derivedFrom: ['property-model', 'visibility-default-model'],
+          points: [
+            'Component state is represented by typed properties with explicit default values.',
+            'Only public state participates in the external component contract; hidden state stays out of generated APIs.',
+            'Derived state must remain type-compatible with the declared property it reflects.',
+          ],
+          jsonMapping: 'specification.sections[9] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'state-public-defaults',
+            title: 'Public state with defaults',
+            description:
+              'Public typed properties are emitted as Angular signal inputs with their declared defaults and drive a Material button.',
+            preview: 'state-public',
+            code: `@Component({
+  selector: 'app-submit-button',
+  imports: [MatButtonModule],
+  template: \`
+    @if (visible()) {
+      <button mat-raised-button color="primary" [disabled]="!enabled()">
+        {{ text() }}
+      </button>
+    }
+  \`
+})
+export class SubmitButtonComponent {
+  readonly text = input('Submit order');
+  readonly enabled = input(true);
+  readonly visible = input(true);
+  readonly type = input<ButtonType>('Default');
+}`,
+          },
+          {
+            id: 'state-derived-validation',
+            title: 'Derived validation state',
+            description:
+              'Derived state is computed from public inputs and still returns the declared value-state enum, surfaced through a Material form field.',
+            preview: 'state-derived',
+            code: `@Component({
+  selector: 'app-amount-input',
+  imports: [MatFormFieldModule, MatInputModule],
+  template: \`
+    <mat-form-field appearance="outline">
+      <mat-label>Amount</mat-label>
+      <input matInput [value]="value()" readonly />
+      @if (effectiveValueState() === 'Error') {
+        <mat-error>Value is required</mat-error>
+      }
+    </mat-form-field>
+  \`
+})
+export class AmountInputComponent {
+  readonly value = input('');
+  readonly required = input(true);
+  readonly valueState = input<ValueState>('None');
+
+  protected readonly effectiveValueState = computed<ValueState>(() =>
+    this.required() && this.value() === '' ? 'Error' : this.valueState(),
+  );
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Public state maps to Material control inputs such as disabled so visual state stays in sync with the contract.',
+            'Hidden state never reaches the template, and derived state reuses Material feedback (mat-error) instead of bespoke styling.',
+          ],
+          code: `button[mat-raised-button][disabled] {
+  opacity: 0.6;
+}
+
+mat-form-field {
+  width: 100%;
 }`,
         },
       },
@@ -660,6 +794,124 @@ export class SearchInput {
 .component-contract dt {
   color: var(--mat-sys-primary);
   font-weight: 600;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'feedback',
+    name: 'Feedback',
+    summary:
+      'User-visible feedback patterns the generator emits: busy state, severity messages, and empty states.',
+    items: [
+      {
+        id: 'feedback',
+        name: 'Status feedback',
+        summary:
+          'Busy state, severity-typed messages, and empty states map to public component state and live-region semantics instead of hidden renderer behavior.',
+        api: {
+          specSection: '14. Feedback Model',
+          specPath: 'spec/14-feedback-model.md',
+          purpose: 'Define how user-visible feedback is modeled.',
+          derivedFrom: ['library-component-catalog', 'event-model'],
+          points: [
+            'Busy and loading feedback is modeled as public component state, such as a busy property and a busy-indicator delay.',
+            'Message feedback declares a semantic severity (information, success, warning, or error) with live-region politeness.',
+            'Empty-state feedback is a public, addressable view that communicates absent data and offers a recovery action.',
+          ],
+          jsonMapping: 'specification.sections[13] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'feedback-busy',
+            title: 'Busy-state feedback',
+            description:
+              'The public busy state drives a loading affordance while work is in flight, so applications toggle state instead of injecting renderer spinners.',
+            preview: 'feedback-busy',
+            code: `@Component({
+  selector: 'app-orders-view',
+  imports: [MatProgressBarModule],
+  template: \`
+    @if (busy()) {
+      <mat-progress-bar mode="indeterminate" aria-label="Loading orders" />
+    }
+  \`
+})
+export class OrdersViewComponent {
+  // property busy: boolean = false (bindable)
+  protected readonly busy = signal(false);
+}`,
+          },
+          {
+            id: 'feedback-message',
+            title: 'Severity message and live region',
+            description:
+              'A severity-typed message announces an action outcome through a polite live region so assistive technology conveys the result.',
+            preview: 'feedback-message',
+            code: `@Component({
+  selector: 'app-save-status',
+  imports: [MatButtonModule, MatSnackBarModule],
+  template: \`
+    <button mat-raised-button color="primary" type="button" (click)="save()">
+      Save order
+    </button>
+  \`
+})
+export class SaveStatusComponent {
+  constructor(private readonly snackBar: MatSnackBar) {}
+
+  save(): void {
+    // severity: success -> polite live-region announcement
+    this.snackBar.open('Order saved', undefined, { politeness: 'polite' });
+  }
+}`,
+          },
+          {
+            id: 'feedback-empty',
+            title: 'Empty state with recovery action',
+            description:
+              'When a data region has no content, the public empty-state view communicates the absence of data and offers a recovery action.',
+            preview: 'feedback-empty',
+            code: `@Component({
+  selector: 'app-orders-view',
+  imports: [MatButtonModule],
+  template: \`
+    @if (orders().length === 0) {
+      <div class="empty-state" role="status">
+        <p>No orders found.</p>
+        <button mat-stroked-button type="button" (click)="createOrder()">
+          Create order
+        </button>
+      </div>
+    }
+  \`
+})
+export class OrdersEmptyComponent {
+  protected readonly orders = signal<readonly Order[]>([]);
+
+  createOrder(): void {
+    // Recovery action that lets the user proceed from the empty state.
+  }
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'The busy indicator reuses the Material progress bar so loading feedback inherits the configured theme.',
+            'Severity messages and the empty state use Material system color roles so outcome meaning stays perceivable.',
+          ],
+          code: `.feedback-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.empty-state {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  padding: 2rem 1rem;
 }`,
         },
       },

@@ -966,6 +966,112 @@
           "Layout is expressed as ordered or named composition regions exposed through aggregations.",
           "Responsive behavior must preserve component composition semantics when layout density, theme, or viewport changes.",
           "Container components may expose drag-and-drop semantics only when declared in metadata."
+        ],
+        "nonGoals": [
+          "The layout system does not prescribe a specific CSS technique, grid engine, DOM structure, or runtime framework; grid, flexbox, and absolute strategies are all permissible implementations of the same abstract regions.",
+          "The layout system does not define a fixed set of breakpoints, density levels, or spacing values; it requires that they exist as a consistent, theme-driven scale, not that they take specific pixel measurements.",
+          "The layout system does not introduce a new composition mechanism: regions are aggregations from the component model, and the layout section only constrains how those aggregations are arranged and adapted.",
+          "The layout system does not make drag-and-drop a default capability; reordering and cross-region moves are available only where a container explicitly declares them in metadata."
+        ],
+        "tags": [
+          {
+            "name": "composition-region",
+            "meaning": "Layout is expressed as ordered or named regions, each backed by an aggregation whose name and multiplicity define placement and capacity."
+          },
+          {
+            "name": "ordered-content",
+            "meaning": "Children of an ordered region have a normative document order that defines their visual order before responsive adaptation."
+          },
+          {
+            "name": "responsive-behavior",
+            "meaning": "Region arrangement may reflow, stack, wrap, or hide across breakpoints, density, and theme changes while preserving composition semantics."
+          },
+          {
+            "name": "breakpoint-model",
+            "meaning": "Named viewport ranges at which a layout may adapt its arrangement without changing owned content."
+          },
+          {
+            "name": "layout-density",
+            "meaning": "A layout-wide modifier that scales spacing and sizing without changing which regions or children apply."
+          },
+          {
+            "name": "spacing-scale",
+            "meaning": "Spacing between and within regions is drawn from a consistent, theme-driven scale rather than ad-hoc values."
+          },
+          {
+            "name": "container-dnd",
+            "meaning": "Drag-and-drop reordering or cross-region moves are available only when a container declares them in metadata and stay within the aggregation contract."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Layout",
+            "definition": "The arrangement of a container's composition regions and their content across the available space, including its responsive, density, and spacing behavior."
+          },
+          {
+            "term": "Composition region",
+            "definition": "A named or ordered placement target within a container, backed by an aggregation, into which owned child content is placed."
+          },
+          {
+            "term": "Ordered region",
+            "definition": "A region whose backing aggregation is a 0..n collection in which document order is the normative visual order before responsive adaptation."
+          },
+          {
+            "term": "Named region",
+            "definition": "A region addressed by a stable name (such as header, content, or footer), typically backed by a 0..1 or 0..n aggregation, into which content is placed by referencing that name."
+          },
+          {
+            "term": "Breakpoint",
+            "definition": "A named viewport range that bounds a responsive adaptation; crossing a breakpoint may change arrangement but not owned content."
+          },
+          {
+            "term": "Density",
+            "definition": "A layout-wide modifier that scales spacing and control sizing uniformly without changing the set of regions or their children."
+          },
+          {
+            "term": "Spacing scale",
+            "definition": "The consistent, theme-driven set of spacing steps used between and within regions instead of ad-hoc values."
+          },
+          {
+            "term": "Responsive behavior",
+            "definition": "The rules by which regions reflow, stack, wrap, or hide as viewport, density, or theme change while preserving composition semantics."
+          },
+          {
+            "term": "Drag-and-drop region",
+            "definition": "A region whose container declares drag-and-drop in metadata, allowing children to be reordered or moved within the declared aggregation contract."
+          }
+        ],
+        "usage": [
+          "Model every layout as a set of aggregation-backed regions before choosing a rendering technique; name the regions that carry meaning (such as header, content, aside, footer) and reserve ordered 0..n aggregations for collections whose sequence matters.",
+          "Treat document order within an ordered region as the source of truth: derive the visual order from the aggregation, and let responsive rules change arrangement without re-sorting or reparenting the underlying children.",
+          "Express responsive adaptation as breakpoint-driven arrangement changes (reflow, stacking, wrapping, or hiding) that leave the region set and its owned content intact, so the composition tree stays resolvable from metadata at every viewport.",
+          "Apply density and theming as layout-wide modifiers sourced from the spacing scale and design tokens, rather than hard-coding per-component spacing, so density and theme changes preserve alignment and composition.",
+          "Declare drag-and-drop only where reordering or cross-region moves are part of the contract, and constrain it to the target aggregation's child type and multiplicity so a drop can never violate the component model.",
+          "When normalizing a layout into /openui.json, preserve each region's aggregation name, child type, multiplicity, and any drag-and-drop declaration so tooling can reconstruct the layout contract without inspecting renderer code."
+        ],
+        "implementationNotes": [
+          "Regions are the same aggregations defined by the component model; the layout system constrains their arrangement and adaptation rather than introducing a separate composition mechanism.",
+          "Responsive arrangement changes must be reversible and content-preserving: the same children resolve at every breakpoint, density, and theme, only their placement changes.",
+          "Density and spacing are sourced from a shared, theme-driven scale so that changing density or theme never alters which regions or children are present.",
+          "Drag-and-drop is constrained by the target aggregation's child type and multiplicity, so a reorder or cross-region move can never produce a composition that violates the component contract."
+        ],
+        "examples": [
+          {
+            "title": "Ordered and named composition regions example",
+            "description": "A page that declares 0..1 header and footer regions together with an ordered 0..n content region demonstrates named placement and a normative document order for owned children."
+          },
+          {
+            "title": "Responsive grid across breakpoints example",
+            "description": "A grid that keeps the same ordered items aggregation while changing column count at compact, medium, and expanded breakpoints demonstrates responsive reflow that preserves the identity and order of owned items."
+          },
+          {
+            "title": "Density and spacing scale example",
+            "description": "A form that exposes a density property selecting row gap and control height from a shared spacing scale demonstrates a layout-wide modifier that changes spacing without changing regions or children."
+          },
+          {
+            "title": "Container drag-and-drop region example",
+            "description": "A board that declares drag-and-drop on its ordered columns aggregation demonstrates reordering constrained to the declared 0..n child type and multiplicity, keeping drag-and-drop within the component contract."
+          }
         ]
       },
       {
@@ -1192,7 +1298,84 @@
         "requirements": [
           "Component state is represented by typed properties with explicit default values.",
           "State may be public or hidden, but only public state participates in the external component contract.",
-          "Defaulted state and derived state must remain compatible with the declared metadata type system."
+          "Defaulted state and derived state must remain compatible with the declared metadata type system.",
+          "State-related metadata must preserve property type, default value, visibility, and deprecation information so generators can produce safe accessors and validators.",
+          "Hidden or derived implementation state must not be used as the only source for application-visible behavior when an equivalent public property is declared."
+        ],
+        "nonGoals": [
+          "The state model does not define data-binding syntax, binding lifecycle, or model update timing; those rules belong to the data binding model.",
+          "The state model does not prescribe renderer internals, DOM attributes, or CSS classes used to realize a public state.",
+          "The state model does not require hidden state to be documented as part of the public API."
+        ],
+        "tags": [
+          {
+            "name": "metadata-property-state",
+            "meaning": "Component state is declared through metadata properties rather than inferred from private fields."
+          },
+          {
+            "name": "explicit-default-state",
+            "meaning": "Every normalized state property records the value used before applications set a different value."
+          },
+          {
+            "name": "public-state-contract",
+            "meaning": "Public state defines the accessor, binding, documentation, and compatibility surface exposed to applications."
+          },
+          {
+            "name": "hidden-internal-state",
+            "meaning": "Hidden state may support implementation details but does not become part of the external component contract."
+          },
+          {
+            "name": "derived-state-compatibility",
+            "meaning": "Computed or normalized state remains valid only when it is compatible with the declared property type and default."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Component state",
+            "definition": "The observable configuration or condition of a component represented by metadata-declared properties and their current values."
+          },
+          {
+            "term": "Public state",
+            "definition": "Component state with public visibility, including properties that omit an explicit visibility value when the metadata grammar treats public as the default."
+          },
+          {
+            "term": "Hidden state",
+            "definition": "Metadata-declared state marked as hidden or otherwise internal so it can be used by implementations without becoming application-facing API."
+          },
+          {
+            "term": "Default value",
+            "definition": "The initial value for a state property before application code, binding, or framework logic assigns another compatible value."
+          },
+          {
+            "term": "Derived state",
+            "definition": "State computed from one or more declared values, such as normalized enabled, visible, or validation state, that must remain type-compatible with the public contract it reflects."
+          }
+        ],
+        "usage": [
+          "Use typed properties for component states such as `text`, `enabled`, `visible`, `selected`, `value`, `valueState`, `busy`, or `width` whenever those states are part of the public contract.",
+          "Preserve explicit defaults when normalizing metadata into `/openui.json`; if source metadata relies on a framework default, record the resolved value used by conforming implementations.",
+          "Treat `visibility: \"hidden\"` state as implementation detail: generators may keep it out of public APIs, documentation, and examples unless a compliance rule explicitly requires otherwise.",
+          "Validate default values, assigned values, and derived values against the declared metadata type so boolean, string, enum, numeric, object, and array states remain predictable.",
+          "Keep state semantics separate from events: a state property describes the current condition, while events describe the interaction or lifecycle transitions that may change it."
+        ],
+        "implementationNotes": [
+          "Extraction pipelines should preserve property names, declared types, default values, visibility, and deprecation metadata when creating the canonical state model.",
+          "Generator pipelines should expose public state through typed inputs, accessors, bindings, or equivalent framework constructs while omitting hidden state from generated public APIs.",
+          "Validation tooling should verify that defaults and derived state values conform to the declared metadata type and that hidden state is not the only documented source for externally visible behavior."
+        ],
+        "examples": [
+          {
+            "title": "Public typed state with defaults example",
+            "description": "A button declares public text, enabled, visible, and type properties with explicit defaults so applications and generators share the same initial state contract."
+          },
+          {
+            "title": "Hidden internal state example",
+            "description": "A tokenizer keeps selected as public state while marking an internal measurement property hidden so tooling does not expose rendering support data as API."
+          },
+          {
+            "title": "Derived validation state example",
+            "description": "An input derives effective validation state from required, value, and valueState properties while preserving the declared ValueState enum type."
+          }
         ]
       },
       {
@@ -1244,7 +1427,104 @@
         "requirements": [
           "The framework must expose components for busy, message, dialog, and empty-state feedback patterns.",
           "Feedback components must be addressable through the same public metadata contract as all other components.",
-          "Action completion, failure, and warning scenarios must be representable through public events and state."
+          "Action completion, failure, and warning scenarios must be representable through public events and state.",
+          "Busy and loading feedback must be modeled as public component state, such as a busy property and an optional busy-indicator delay, rather than hidden renderer behavior.",
+          "Message feedback must declare a semantic severity (information, success, warning, or error) so applications and assistive technology can convey outcome meaning.",
+          "Dialog-based feedback must expose owned content aggregations and public confirm and cancel action events so the resolution of a blocking decision is observable.",
+          "Empty-state feedback must be a public, addressable component that communicates the absence of data and any optional recovery actions.",
+          "Feedback components must declare accessibility live-region semantics so outcomes are announced to assistive technology without custom DOM scripting."
+        ],
+        "nonGoals": [
+          "The feedback model does not prescribe a specific renderer, animation, timing curve, or visual styling for feedback surfaces.",
+          "The feedback model does not define application-specific message text, severity thresholds, or business rules for when feedback is triggered.",
+          "The feedback model does not replace the interaction, state, accessibility, or component-model sections; it reuses their contracts for events, state, live regions, and public metadata."
+        ],
+        "tags": [
+          {
+            "name": "busy-state-feedback",
+            "meaning": "Busy and loading feedback is modeled as public component state, such as a busy property and busy-indicator delay, instead of hidden renderer behavior."
+          },
+          {
+            "name": "message-severity",
+            "meaning": "Message feedback declares a semantic severity (information, success, warning, or error) that conveys the outcome meaning of an action."
+          },
+          {
+            "name": "dialog-feedback-contract",
+            "meaning": "Dialog feedback exposes owned content aggregations and public confirm and cancel events for resolving blocking decisions."
+          },
+          {
+            "name": "empty-state-feedback",
+            "meaning": "Empty-state feedback is a public, addressable component that communicates the absence of data and optional recovery actions."
+          },
+          {
+            "name": "feedback-live-region",
+            "meaning": "Feedback components declare accessibility live-region semantics so outcomes are announced to assistive technology."
+          },
+          {
+            "name": "outcome-event-state",
+            "meaning": "Action completion, failure, and warning outcomes are representable through public events and public state."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Feedback component",
+            "definition": "A public, catalog-addressable component whose purpose is to communicate the status or outcome of an operation to the user."
+          },
+          {
+            "term": "Busy state",
+            "definition": "A public boolean component state indicating that an operation is in progress and that interaction with the affected region is suspended."
+          },
+          {
+            "term": "Message",
+            "definition": "A feedback notification carrying a severity and text that reports the outcome of an action to the user."
+          },
+          {
+            "term": "Severity",
+            "definition": "The semantic level of a message, one of information, success, warning, or error."
+          },
+          {
+            "term": "Dialog feedback",
+            "definition": "A modal feedback component that owns its content through aggregations and resolves a blocking decision through public confirm and cancel events."
+          },
+          {
+            "term": "Empty state",
+            "definition": "A feedback component that communicates the absence of data and may offer recovery actions."
+          },
+          {
+            "term": "Live region",
+            "definition": "An accessibility contract describing how a feedback component's updates are announced, such as polite or assertive politeness."
+          }
+        ],
+        "usage": [
+          "Model loading and in-flight operations through a public busy state instead of hidden spinners, and pair long operations with a busy-indicator delay to avoid flicker.",
+          "Choose message severity from the outcome of an action: success for completion, warning for recoverable issues, error for failure, and information for neutral status.",
+          "Use dialog feedback for blocking decisions that must be resolved before continuing, and expose the resolution through public confirm and cancel events.",
+          "Use empty-state feedback when a data region has no content, and offer a recovery action so the user can proceed.",
+          "Declare live-region politeness and roles in metadata so transient messages are announced by assistive technology without custom DOM scripting.",
+          "Reuse existing contracts: feedback events follow the interaction model, busy follows the state model, and announcements follow the accessibility model."
+        ],
+        "implementationNotes": [
+          "Implementations should publish feedback components such as busy indicators, message or snackbar surfaces, dialogs, and empty states through the same public catalog as other components so generators and validators can enumerate them.",
+          "Busy, severity, and live-region semantics should be declared as public metadata so the feedback contract can be interpreted without inspecting renderer internals.",
+          "Generator pipelines should map busy state to a loading affordance, message severity to host notification roles, dialog confirm and cancel to output handlers, and empty state to a no-data view."
+        ],
+        "examples": [
+          {
+            "title": "Busy-state feedback example",
+            "description": "A container that exposes a public busy boolean and a busyIndicatorDelay property models in-flight work as state, so applications toggle busy rather than depending on hidden renderer spinners."
+          },
+          {
+            "title": "Message severity example",
+            "description": "A message that declares a severity of success, warning, error, or information together with text and a live-region politeness conveys an action outcome with semantics that assistive technology can announce."
+          },
+          {
+            "title": "Dialog confirmation feedback example",
+            "description": "A confirmation dialog that owns its content through aggregations and exposes confirm and cancel events resolves a blocking decision through public outputs rather than renderer-specific callbacks."
+          },
+          {
+            "title": "Generator empty-state and notification example",
+            "description": "A generated empty-state view and a severity-mapped notification show how the busy, message, and empty-state feedback contracts map to a host framework while preserving live-region semantics and the enabled action gate."
+          }
         ]
       },
       {
@@ -1451,6 +1731,10 @@
           {
             "title": "Application structure acceptance test",
             "description": "A compliant test should verify that every component referenced by the application structure resolves to a declared library dependency, the shell exposes navigation and owned pages through aggregations, non-owning references such as the current page remain associations, and the nested page hierarchy is resolvable from public metadata."
+          },
+          {
+            "title": "Layout system acceptance test",
+            "description": "Given a normalized specification entry for a Page, Grid, Form, and Board layout contract: verify that named regions such as header, content, and footer are aggregations with declared multiplicity and child types; verify that ordered 0..n regions preserve their declared document order as the normative visual order before responsive adaptation; verify that responsive breakpoints change region arrangement without adding, removing, or reparenting owned content; verify that density and spacing are drawn from a shared, theme-driven scale instead of ad-hoc measurements; and verify that drag-and-drop is present only where a container declares dnd metadata and stays within the target aggregation's child type and multiplicity."
           },
           {
             "title": "Component model acceptance test",

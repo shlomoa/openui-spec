@@ -43,6 +43,22 @@
         </mat-card>
       </div>
     }
+    @case ('page-responsive') {
+      <div class="page-preview catalog-grid">
+        <mat-card>
+          <mat-card-title>Item A</mat-card-title>
+          <mat-card-content>Catalog region</mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-title>Item B</mat-card-title>
+          <mat-card-content>Catalog region</mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-title>Item C</mat-card-title>
+          <mat-card-content>Catalog region</mat-card-content>
+        </mat-card>
+      </div>
+    }
     @case ('table-basic') {
       <div class="page-preview">
         <table
@@ -120,6 +136,30 @@
         </mat-form-field>
         <button mat-stroked-button type="button">Apply</button>
       </form>
+    }
+    @case ('state-public') {
+      <div class="state-preview" aria-label="Generated public state preview">
+        <button mat-raised-button color="primary" type="button">Submit order</button>
+        <mat-chip-set aria-label="Public state values">
+          <mat-chip>text: "Submit order"</mat-chip>
+          <mat-chip>enabled: true</mat-chip>
+          <mat-chip>visible: true</mat-chip>
+          <mat-chip>type: Default</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
+    @case ('state-derived') {
+      <div class="state-preview" aria-label="Generated derived state preview">
+        <mat-form-field appearance="outline">
+          <mat-label>Amount</mat-label>
+          <input matInput value="" readonly />
+          <mat-hint>required: true</mat-hint>
+        </mat-form-field>
+        <mat-chip-set aria-label="Derived state values">
+          <mat-chip>valueState: None</mat-chip>
+          <mat-chip highlighted>effectiveValueState: Error</mat-chip>
+        </mat-chip-set>
+      </div>
     }
     @case ('action-enabled') {
       <div class="action-preview">
@@ -258,6 +298,32 @@
             <dd>textDirection: Inherit</dd>
           </div>
         </dl>
+      </div>
+    }
+    @case ('feedback-busy') {
+      <div class="feedback-preview">
+        <mat-progress-bar mode="indeterminate" aria-label="Loading orders" />
+        <p class="feedback-note">
+          The public busy state drives the loading affordance while work is in flight.
+        </p>
+      </div>
+    }
+    @case ('feedback-message') {
+      <div class="feedback-preview">
+        <div class="feedback-message feedback-success" role="status" aria-live="polite">
+          <mat-icon aria-hidden="true">check_circle</mat-icon>
+          <span>Order saved</span>
+        </div>
+        <p class="feedback-note">Severity success maps to a polite live-region announcement.</p>
+      </div>
+    }
+    @case ('feedback-empty') {
+      <div class="feedback-preview">
+        <div class="empty-state" role="status">
+          <mat-icon aria-hidden="true">inbox</mat-icon>
+          <p>No orders found.</p>
+          <button mat-stroked-button type="button">Create order</button>
+        </div>
       </div>
     }
   }
