@@ -48,6 +48,17 @@ function mapPage(page: UiPage): AngularPageModel {
     members.push("showFeedback(): void { this.snackBar.open('OpenUI feedback action', 'Dismiss', { duration: 3000 }); }");
   }
 
+  if (page.features.includes("acceptance")) {
+    imports.add("MatChipsModule");
+    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+  }
+
+  if (page.features.includes("reference")) {
+    imports.add("MatChipsModule");
+    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    members.push("protected readonly referenceProperties = ['text', 'type', 'enabled', 'icon', 'ariaHasPopup'];");
+  }
+
   return {
     id: page.id,
     route: page.route,
@@ -87,6 +98,22 @@ function buildTemplate(page: UiPage): string {
   const feedback = page.features.includes("feedback")
     ? '\n    <button mat-raised-button color="primary" type="button" (click)="showFeedback()">Show feedback</button>'
     : "";
+  const acceptance = page.features.includes("acceptance") ? buildAcceptanceTemplate() : "";
+  const reference = page.features.includes("reference")
+    ? `\n    <div class="reference-example" aria-label="Reference action component example">
+      <button mat-raised-button color="primary" type="button" aria-describedby="${page.route}-description">
+        Save order
+      </button>
+      <p id="${page.route}-description">
+        The reference action component preserves public properties, accessibility associations, and the press activation event.
+      </p>
+      <mat-chip-set aria-label="Reference public properties">
+        @for (property of referenceProperties; track property) {
+          <mat-chip>{{ property }}</mat-chip>
+        }
+      </mat-chip-set>
+    </div>`
+    : "";
 
   return `<section class="spec-page" aria-labelledby="${titleId}">
   <mat-card>
@@ -95,7 +122,7 @@ function buildTemplate(page: UiPage): string {
       <mat-card-subtitle>${escapeHtml(page.id)}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>${escapeHtml(page.summary)}</p>${requirements}${form}${navigation}${feedback}${accessibility}
+      <p>${escapeHtml(page.summary)}</p>${requirements}${form}${navigation}${feedback}${acceptance}${reference}${accessibility}
     </mat-card-content>
   </mat-card>
 </section>
@@ -106,6 +133,7 @@ function buildStyles(page: UiPage): string {
   const themeStyles = page.features.includes("theme")
     ? "\n:host {\n  --openui-section-accent: var(--openui-theme-primary);\n}\n"
     : "";
+  const acceptanceStyles = page.features.includes("acceptance") ? buildAcceptanceStyles() : "";
   return `.spec-page {
   display: block;
   padding: 1rem;
@@ -115,7 +143,47 @@ mat-card {
   background: var(--openui-theme-surface);
   color: var(--openui-theme-on-surface);
 }
-${themeStyles}`;
+
+.reference-example {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+  margin-top: 1rem;
+}
+${themeStyles}${acceptanceStyles}`;
+}
+
+function buildAcceptanceTemplate(): string {
+  return `
+    <section class="acceptance-criteria" aria-label="Acceptance criteria workflow">
+      <h2>Acceptance coverage</h2>
+      <mat-chip-set aria-label="Criteria evidence types">
+        <mat-chip>Traceability matrix</mat-chip>
+        <mat-chip>Metadata projection</mat-chip>
+        <mat-chip>Runtime behavior</mat-chip>
+        <mat-chip>Visual evidence</mat-chip>
+      </mat-chip-set>
+      <mat-list aria-label="Generated acceptance checks">
+        <mat-list-item>Link each criterion to the source specification section, tag, fixture, and evidence artifact.</mat-list-item>
+        <mat-list-item>Compare runtime metadata, /openui.json, and generated API projections before emitting examples.</mat-list-item>
+        <mat-list-item>Record deterministic DOM, accessibility, or screenshot evidence for visual-facing behavior.</mat-list-item>
+      </mat-list>
+    </section>`;
+}
+
+function buildAcceptanceStyles(): string {
+  return `
+.acceptance-criteria {
+  border: 1px solid var(--openui-theme-primary);
+  border-radius: 0.75rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.acceptance-criteria h2 {
+  margin-top: 0;
+}
+`;
 }
 
 function toPascalCase(value: string): string {
