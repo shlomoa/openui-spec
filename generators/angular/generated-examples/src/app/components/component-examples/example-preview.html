@@ -493,13 +493,11 @@
     }
     @case ('reference-associations') {
       <div class="reference-preview">
-        <div id="order-actions-label" class="visually-hidden">Order actions menu</div>
         <button
           mat-raised-button
           color="primary"
           type="button"
           [matMenuTriggerFor]="referenceActionsMenu"
-          aria-labelledby="order-actions-label"
           aria-describedby="order-actions-description"
           aria-haspopup="menu"
         >
@@ -514,7 +512,7 @@
         <dl class="component-contract">
           <div>
             <dt>Association</dt>
-            <dd>ariaLabelledBy: order-actions-label</dd>
+            <dd>ariaDescribedBy: order-actions-description</dd>
           </div>
           <div>
             <dt>Event</dt>
