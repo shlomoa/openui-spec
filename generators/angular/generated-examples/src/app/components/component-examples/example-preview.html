@@ -668,5 +668,61 @@
         </mat-card>
       </div>
     }
+    @case ('acceptance-traceability') {
+      <div class="acceptance-preview">
+        <mat-card>
+          <mat-card-title>AC-METADATA-PROJECTION</mat-card-title>
+          <mat-card-content>
+            <p>Fixture: reference-component-button</p>
+            <mat-chip-set aria-label="Acceptance criterion coverage">
+              <mat-chip>08-component-model#property-contract</mat-chip>
+              <mat-chip>08-component-model#aggregation-contract</mat-chip>
+              <mat-chip [highlighted]="true">tests/component-metadata.spec.ts</mat-chip>
+            </mat-chip-set>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+    @case ('acceptance-projection') {
+      <div class="acceptance-preview">
+        <mat-card>
+          <mat-card-title>Projection consistency</mat-card-title>
+          <mat-card-content>
+            <dl class="component-contract">
+              <div>
+                <dt>Runtime</dt>
+                <dd>Button.enabled default true</dd>
+              </div>
+              <div>
+                <dt>/openui.json</dt>
+                <dd>properties.enabled.defaultValue true</dd>
+              </div>
+              <div>
+                <dt>Generated API</dt>
+                <dd>enabled: boolean</dd>
+              </div>
+            </dl>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+    @case ('acceptance-evidence') {
+      <div class="acceptance-preview">
+        <mat-card>
+          <mat-card-title>Generated order form evidence</mat-card-title>
+          <mat-card-content>
+            <mat-chip-set aria-label="Visual and accessibility evidence">
+              <mat-chip>viewport: 600x800</mat-chip>
+              <mat-chip>theme: default-light</mat-chip>
+              <mat-chip>locale: en</mat-chip>
+              <mat-chip [highlighted]="true">screenshot: generated-order-form.png</mat-chip>
+            </mat-chip-set>
+            <p class="acceptance-note">
+              DOM and accessibility assertions prove the required input and disabled submit action.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
   }
 </div>

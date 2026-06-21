@@ -32,6 +32,17 @@ describe('DocumentationItems', () => {
     }
   });
 
+  it('documents Section 22 acceptance criteria with runnable examples', () => {
+    const component = docs.getComponentById('acceptance-criteria');
+
+    expect(component?.api.specPath).toBe('spec/22-test-acceptance-criteria.md');
+    expect(component?.examples.map((example) => example.preview)).toEqual([
+      'acceptance-traceability',
+      'acceptance-projection',
+      'acceptance-evidence',
+    ]);
+  });
+
   it('returns undefined for an unknown component id', () => {
     expect(docs.getComponentById('does-not-exist')).toBeUndefined();
   });

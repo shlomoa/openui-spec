@@ -41,6 +41,14 @@
         "requirements": ["Theme tokens map to runtime CSS custom properties."]
       },
       {
+        "id": "22-test-acceptance-criteria",
+        "title": "Test & Acceptance Criteria",
+        "purpose": "Describe how the specification should be verified.",
+        "requirements": [
+          "Acceptance criteria remain traceable to specification sections and evidence artifacts."
+        ]
+      },
+      {
         "id": "23-reference-examples",
         "title": "Reference Examples",
         "purpose": "Provide concrete reference components abstracted from upstream OpenUI5 evidence.",
