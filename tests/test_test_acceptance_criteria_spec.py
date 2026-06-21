@@ -8,7 +8,7 @@ OPENUI_JSON = REPO_ROOT / "openui.json"
 TEST_ACCEPTANCE_MD = REPO_ROOT / "spec" / "22-test-acceptance-criteria.md"
 
 
-class TestAcceptanceCriteriaSpecTest(unittest.TestCase):
+class AcceptanceCriteriaSpecTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.spec = json.loads(OPENUI_JSON.read_text(encoding="utf-8"))
