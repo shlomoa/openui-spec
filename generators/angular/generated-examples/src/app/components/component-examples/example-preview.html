@@ -544,11 +544,13 @@
     }
     @case ('reference-associations') {
       <div class="reference-preview">
+        <span id="reference-actions-label">Reference order actions</span>
         <button
           mat-raised-button
           color="primary"
           type="button"
           [matMenuTriggerFor]="referenceActionsMenu"
+          aria-labelledby="reference-actions-label"
           aria-describedby="order-actions-description"
           aria-haspopup="menu"
         >
