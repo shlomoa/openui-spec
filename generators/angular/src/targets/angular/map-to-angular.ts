@@ -53,6 +53,12 @@ function mapPage(page: UiPage): AngularPageModel {
     componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
   }
 
+  if (page.features.includes("reference")) {
+    imports.add("MatChipsModule");
+    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    members.push("protected readonly referenceProperties = ['text', 'type', 'enabled', 'icon', 'ariaHasPopup'];");
+  }
+
   return {
     id: page.id,
     route: page.route,
@@ -93,6 +99,21 @@ function buildTemplate(page: UiPage): string {
     ? '\n    <button mat-raised-button color="primary" type="button" (click)="showFeedback()">Show feedback</button>'
     : "";
   const acceptance = page.features.includes("acceptance") ? buildAcceptanceTemplate() : "";
+  const reference = page.features.includes("reference")
+    ? `\n    <div class="reference-example" aria-label="Reference action component example">
+      <button mat-raised-button color="primary" type="button" aria-describedby="${page.route}-description">
+        Save order
+      </button>
+      <p id="${page.route}-description">
+        The reference action component preserves public properties, accessibility associations, and the press activation event.
+      </p>
+      <mat-chip-set aria-label="Reference public properties">
+        @for (property of referenceProperties; track property) {
+          <mat-chip>{{ property }}</mat-chip>
+        }
+      </mat-chip-set>
+    </div>`
+    : "";
 
   return `<section class="spec-page" aria-labelledby="${titleId}">
   <mat-card>
@@ -101,7 +122,7 @@ function buildTemplate(page: UiPage): string {
       <mat-card-subtitle>${escapeHtml(page.id)}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>${escapeHtml(page.summary)}</p>${requirements}${form}${navigation}${feedback}${acceptance}${accessibility}
+      <p>${escapeHtml(page.summary)}</p>${requirements}${form}${navigation}${feedback}${acceptance}${reference}${accessibility}
     </mat-card-content>
   </mat-card>
 </section>
@@ -121,6 +142,13 @@ function buildStyles(page: UiPage): string {
 mat-card {
   background: var(--openui-theme-surface);
   color: var(--openui-theme-on-surface);
+}
+
+.reference-example {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+  margin-top: 1rem;
 }
 ${themeStyles}${acceptanceStyles}`;
 }

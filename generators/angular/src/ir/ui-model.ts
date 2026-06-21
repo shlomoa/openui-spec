@@ -4,6 +4,7 @@ export type UiFeature =
   | "feedback"
   | "form"
   | "navigation"
+  | "reference"
   | "theme"
   | "ui-concept";
 

@@ -32,6 +32,7 @@ test("generates an Angular Material standalone app from the specification", asyn
     assert.match(routes, /path: 'navigation-model'/);
     assert.match(routes, /path: 'feedback-model'/);
     assert.match(routes, /path: 'test-acceptance-criteria'/);
+    assert.match(routes, /path: 'reference-examples'/);
 
     const appComponent = await readFile(path.join(outDir, "src/app/app.component.ts"), "utf8");
     assert.match(appComponent, /MatSidenavModule/);
@@ -95,6 +96,21 @@ test("generates section-specific Angular Material details for implemented specs"
     assert.match(acceptanceTemplate, /aria-label="Acceptance criteria workflow"/);
     assert.match(acceptanceTemplate, /Traceability matrix/);
     assert.match(acceptanceTemplate, /Generated acceptance checks/);
+
+    const referencePage = await readFile(
+      path.join(outDir, "src/app/pages/reference-examples/reference-examples.page.ts"),
+      "utf8",
+    );
+    assert.match(referencePage, /MatChipsModule/);
+    assert.match(referencePage, /referenceProperties/);
+
+    const referenceTemplate = await readFile(
+      path.join(outDir, "src/app/pages/reference-examples/reference-examples.page.html"),
+      "utf8",
+    );
+    assert.match(referenceTemplate, /Reference action component example/);
+    assert.match(referenceTemplate, /press activation event/);
+    assert.match(referenceTemplate, /aria-describedby="reference-examples-description"/);
   } finally {
     await rm(outDir, { recursive: true, force: true });
   }

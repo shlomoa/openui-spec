@@ -396,6 +396,62 @@
         </dl>
       </div>
     }
+    @case ('i18n-translatable') {
+      <div class="i18n-preview">
+        <button mat-raised-button color="primary" type="button">Submit order</button>
+        <dl class="component-contract">
+          <div>
+            <dt>Property</dt>
+            <dd>text: order.submit (translatable)</dd>
+          </div>
+          <div>
+            <dt>en</dt>
+            <dd>Submit order</dd>
+          </div>
+          <div>
+            <dt>de</dt>
+            <dd>Bestellung absenden</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('i18n-fallback') {
+      <div class="i18n-preview">
+        <mat-chip-set aria-label="Active locale and fallback chain">
+          <mat-chip highlighted>locale: de-AT</mat-chip>
+          <mat-chip>fallback: de-AT &rarr; de &rarr; en</mat-chip>
+        </mat-chip-set>
+        <dl class="component-contract">
+          <div>
+            <dt>order.submit</dt>
+            <dd>Bestellung absenden (de)</dd>
+          </div>
+          <div>
+            <dt>order.cancel</dt>
+            <dd>Cancel (en default)</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('i18n-direction') {
+      <div class="i18n-preview">
+        <p class="i18n-direction-sample" dir="rtl">رقم الطلب ١٠٠٠١٢٣</p>
+        <dl class="component-contract">
+          <div>
+            <dt>locale</dt>
+            <dd>ar-EG</dd>
+          </div>
+          <div>
+            <dt>Property</dt>
+            <dd>textDirection: RTL</dd>
+          </div>
+          <div>
+            <dt>Default</dt>
+            <dd>textDirection: Inherit</dd>
+          </div>
+        </dl>
+      </div>
+    }
     @case ('feedback-busy') {
       <div class="feedback-preview">
         <mat-progress-bar mode="indeterminate" aria-label="Loading orders" />
@@ -420,6 +476,196 @@
           <p>No orders found.</p>
           <button mat-stroked-button type="button">Create order</button>
         </div>
+      </div>
+    }
+    @case ('reference-public') {
+      <div class="reference-preview">
+        <button mat-raised-button color="primary" type="button">Save order</button>
+        <mat-chip-set aria-label="Reference public properties">
+          <mat-chip>text: Save order</mat-chip>
+          <mat-chip>type: Emphasized</mat-chip>
+          <mat-chip>enabled: true</mat-chip>
+          <mat-chip>icon: accept</mat-chip>
+          <mat-chip>badgeStyle: Attention</mat-chip>
+        </mat-chip-set>
+        <p class="reference-note">Hidden upstream metadata stays evidence-only.</p>
+      </div>
+    }
+    @case ('reference-associations') {
+      <div class="reference-preview">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          [matMenuTriggerFor]="referenceActionsMenu"
+          aria-describedby="order-actions-description"
+          aria-haspopup="menu"
+        >
+          Order actions
+        </button>
+        <p id="order-actions-description" class="reference-note">
+          Choose duplicate or other order-specific actions from the menu.
+        </p>
+        <mat-menu #referenceActionsMenu="matMenu">
+          <button mat-menu-item type="button">Duplicate</button>
+        </mat-menu>
+        <dl class="component-contract">
+          <div>
+            <dt>Association</dt>
+            <dd>ariaDescribedBy: order-actions-description</dd>
+          </div>
+          <div>
+            <dt>Event</dt>
+            <dd>press: activation output</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('reference-validation') {
+      <div class="reference-preview">
+        <button mat-raised-button color="primary" type="button" disabled>Save order</button>
+        <p class="reference-note">Disabled reference buttons do not emit press.</p>
+        <!-- Hebrew: Order number 1000123. -->
+        <p class="reference-direction-sample" dir="rtl" lang="he">מספר הזמנה 1000123</p>
+        <mat-chip-set aria-label="Reference validation expectations">
+          <mat-chip highlighted>enabled gates activation</mat-chip>
+          <mat-chip>ariaHasPopup: menu</mat-chip>
+          <mat-chip>textDirection: RTL</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
+    @case ('theme-tokens') {
+      <div class="theme-preview">
+        <button mat-raised-button color="primary" type="button" class="app-primary-button">
+          Save order
+        </button>
+        <dl class="component-contract">
+          <div>
+            <dt>Token</dt>
+            <dd>background: --mat-sys-primary</dd>
+          </div>
+          <div>
+            <dt>Token</dt>
+            <dd>color: --mat-sys-on-primary</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('theme-override') {
+      <div class="theme-preview">
+        <div class="theme-override-row">
+          <div class="app-panel theme-light">Light theme override</div>
+          <div class="app-panel theme-dark">Dark theme override</div>
+        </div>
+        <dl class="component-contract">
+          <div>
+            <dt>Base</dt>
+            <dd>border: var(--app-panel-border)</dd>
+          </div>
+          <div>
+            <dt>Override</dt>
+            <dd>sap_horizon vs sap_horizon_dark</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('theme-density') {
+      <div class="theme-preview">
+        <div class="theme-density-row">
+          <button mat-raised-button color="primary" type="button" class="app-primary-button">
+            Cozy
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            class="app-primary-button compact"
+          >
+            Compact
+          </button>
+        </div>
+        <dl class="component-contract">
+          <div>
+            <dt>Root mode</dt>
+            <dd>sapUiSizeCompact</dd>
+          </div>
+          <div>
+            <dt>Supported</dt>
+            <dd>cozy, compact</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('compliance-catalog') {
+      <div class="compliance-preview">
+        <mat-card class="compliance-card">
+          <mat-card-title>core-ui catalog</mat-card-title>
+          <mat-card-content>
+            <ul class="compliance-checklist" aria-label="Catalog compliance checks">
+              <li>sample.library.Button resolves from the catalog root</li>
+              <li>sample.library.Form resolves from the catalog root</li>
+              <li>sample.library.IFormContent resolves as a public interface</li>
+            </ul>
+          </mat-card-content>
+        </mat-card>
+        <mat-chip-set aria-label="Catalog compliance status">
+          <mat-chip highlighted>
+            <span class="visually-hidden">Catalog discoverability validation passed: </span>
+            catalog-discoverability: pass
+          </mat-chip>
+          <mat-chip>
+            <span class="visually-hidden">Contract-based validation passed: </span>
+            contract-based-validation: pass
+          </mat-chip>
+        </mat-chip-set>
+      </div>
+    }
+    @case ('compliance-metadata') {
+      <div class="compliance-preview">
+        <dl class="component-contract">
+          <div>
+            <dt>Properties</dt>
+            <dd>text: string, enabled: boolean</dd>
+          </div>
+          <div>
+            <dt>Association</dt>
+            <dd>ariaLabelledBy: Control [0..n]</dd>
+          </div>
+          <div>
+            <dt>Event</dt>
+            <dd>press()</dd>
+          </div>
+        </dl>
+        <mat-chip-set aria-label="Metadata compliance status">
+          <mat-chip highlighted>
+            <span class="visually-hidden">Metadata completeness validation passed: </span>
+            metadata-completeness: pass
+          </mat-chip>
+          <mat-chip>private renderer contract: false</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
+    @case ('compliance-evidence') {
+      <div class="compliance-preview">
+        <mat-card class="compliance-card">
+          <mat-card-title>Input evidence</mat-card-title>
+          <mat-card-content>
+            <dl class="component-contract">
+              <div>
+                <dt>A11y</dt>
+                <dd>ariaLabelledBy, ariaDescribedBy</dd>
+              </div>
+              <div>
+                <dt>Theming</dt>
+                <dd>field.border.color token</dd>
+              </div>
+              <div>
+                <dt>Tests</dt>
+                <dd>metadata, keyboard, rtl rendering</dd>
+              </div>
+            </dl>
+          </mat-card-content>
+        </mat-card>
       </div>
     }
     @case ('acceptance-traceability') {

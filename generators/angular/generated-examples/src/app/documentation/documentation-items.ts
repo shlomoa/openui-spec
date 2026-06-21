@@ -33,6 +33,18 @@ export type ExamplePreview =
   | 'a11y-labelled'
   | 'a11y-popup'
   | 'a11y-direction'
+  | 'i18n-translatable'
+  | 'i18n-fallback'
+  | 'i18n-direction'
+  | 'reference-public'
+  | 'reference-associations'
+  | 'reference-validation'
+  | 'theme-tokens'
+  | 'theme-override'
+  | 'theme-density'
+  | 'compliance-catalog'
+  | 'compliance-metadata'
+  | 'compliance-evidence'
   | 'acceptance-traceability'
   | 'acceptance-projection'
   | 'acceptance-evidence';
@@ -1272,6 +1284,435 @@ export class OrderReferenceComponent {
           ],
           code: `.a11y-preview [dir='rtl'] {
   text-align: right;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'internationalization',
+    name: 'Internationalization',
+    summary:
+      'Translatable message keys, locale fallback, and locale-driven text direction the generator emits as part of the public contract.',
+    items: [
+      {
+        id: 'localized-field',
+        name: 'Localized field',
+        summary:
+          'A control references user-facing text through translatable message keys resolved from locale bundles, degrades missing keys through a locale fallback chain, and inherits text direction from the active locale.',
+        api: {
+          specSection: '17. Internationalization',
+          specPath: 'spec/17-internationalization.md',
+          purpose: 'Describe locale and translation requirements.',
+          derivedFrom: ['library-catalog-root', 'reference-component-button'],
+          points: [
+            'Public text-bearing properties reference translatable message keys instead of hard-coded literals.',
+            'Locale-specific message bundles supply translated text resolved by message key.',
+            'Message resolution follows a deterministic fallback chain from the most specific locale to a default bundle.',
+            'Text direction is a declarable public property with LTR, RTL, and Inherit values that components inherit from the active locale.',
+          ],
+          jsonMapping: 'specification.sections[16] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'i18n-translatable',
+            title: 'Translatable property and message bundle',
+            description:
+              'The translatable text property carries a message key that each locale bundle resolves to localized text instead of a hard-coded literal.',
+            preview: 'i18n-translatable',
+            code: `@Component({
+  selector: 'app-order-actions',
+  imports: [MatButtonModule],
+  template: \`
+    <button mat-raised-button color="primary" type="button">
+      {{ messages.submit() }}
+    </button>
+  \`
+})
+export class OrderActionsComponent {
+  // property text: string (translatable: message key 'order.submit')
+  // en -> 'Submit order', de -> 'Bestellung absenden'
+  protected readonly messages = inject(OrderMessages);
+}`,
+          },
+          {
+            id: 'i18n-fallback',
+            title: 'Locale fallback resolution',
+            description:
+              'With active locale de-AT a key resolves from the de bundle while a missing key degrades to the en default rather than failing.',
+            preview: 'i18n-fallback',
+            code: `// locale: 'de-AT'
+// fallback chain: ['de-AT', 'de', 'en']
+const messages = {
+  de: { 'order.submit': 'Bestellung absenden' },
+  en: { 'order.submit': 'Submit order', 'order.cancel': 'Cancel' }
+};
+// resolved:
+//   order.submit -> 'Bestellung absenden' (from 'de')
+//   order.cancel -> 'Cancel'              (from 'en' default)`,
+          },
+          {
+            id: 'i18n-direction',
+            title: 'Locale-driven text direction',
+            description:
+              'Text direction is inherited from the active locale so right-to-left content renders deterministically, while Inherit follows the surrounding context.',
+            preview: 'i18n-direction',
+            code: `@Component({
+  selector: 'app-order-reference',
+  template: \`
+    <p [attr.dir]="direction()">{{ messages.reference() }}</p>
+  \`
+})
+export class OrderReferenceComponent {
+  protected readonly messages = inject(OrderMessages);
+  // textDirection inherited from the active locale (RTL for ar, LTR otherwise)
+  readonly direction = input<'ltr' | 'rtl'>('rtl');
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Translated text is resolved from locale bundles so the same component renders different localized strings without markup changes.',
+            'The dir attribute is driven by the active locale so right-to-left content mirrors without custom CSS.',
+          ],
+          code: `.i18n-preview [dir='rtl'] {
+  text-align: right;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'reference-examples',
+    name: 'Reference examples',
+    summary:
+      'Evidence-backed component examples that show how concrete OpenUI5 metadata maps into generated Angular Material components.',
+    items: [
+      {
+        id: 'reference-action-button',
+        name: 'Reference action button',
+        summary:
+          'A button-like action component derived from sap.m.Button evidence, preserving public properties, accessibility associations, activation events, and validation expectations.',
+        api: {
+          specSection: '23. Reference Examples',
+          specPath: 'spec/23-reference-examples.md',
+          purpose:
+            'Provide concrete reference components abstracted from upstream OpenUI5 evidence.',
+          derivedFrom: ['reference-component-button'],
+          points: [
+            'Reference examples translate concrete upstream component evidence into implementation-neutral examples.',
+            'Public properties such as text, type, enabled, icon, textDirection, ariaHasPopup, accessibleRole, and badgeStyle form the supported configuration surface.',
+            'ariaLabelledBy and ariaDescribedBy remain non-owning accessibility associations, while press is the normative activation event.',
+            'Hidden properties and deprecated compatibility aliases can be retained as evidence without becoming generated public API.',
+            'Validation expectations connect the component contract to observable behavior such as enabled-state gating, text direction, visibility, and accessibility metadata.',
+          ],
+          jsonMapping: 'specification.sections[22] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'reference-public',
+            title: 'Public property surface',
+            description:
+              'The reference button maps the upstream public property surface to generated Angular inputs and a Material button without exposing hidden evidence.',
+            preview: 'reference-public',
+            code: `@Component({
+  selector: 'app-reference-button',
+  imports: [MatButtonModule, MatChipsModule],
+  template: \`
+    <button mat-raised-button color="primary" type="button" [disabled]="!enabled()">
+      {{ text() }}
+    </button>
+    <mat-chip-set aria-label="Public properties">
+      <mat-chip>type: {{ type() }}</mat-chip>
+      <mat-chip>icon: {{ icon() }}</mat-chip>
+      <mat-chip>badgeStyle: {{ badgeStyle() }}</mat-chip>
+    </mat-chip-set>
+  \`
+})
+export class ReferenceButtonComponent {
+  readonly text = input('Save order');
+  readonly type = input<'Default' | 'Emphasized'>('Default');
+  readonly enabled = input(true);
+  readonly icon = input('');
+  readonly badgeStyle = input<'Default' | 'Attention'>('Default');
+}`,
+          },
+          {
+            id: 'reference-associations',
+            title: 'Associations and activation event',
+            description:
+              'Non-owning accessibility associations become ARIA relationships, and the press event becomes the single public activation handler.',
+            preview: 'reference-associations',
+            code: `@Component({
+  selector: 'app-reference-menu-button',
+  imports: [MatButtonModule, MatMenuModule],
+  template: \`
+    <span id="order-actions-label">Order actions</span>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      [matMenuTriggerFor]="menu"
+      aria-labelledby="order-actions-label"
+      aria-describedby="order-actions-description"
+      aria-haspopup="menu"
+      (click)="press.emit()"
+    >
+      More
+    </button>
+    <span id="order-actions-description">Opens available order actions.</span>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item type="button">Duplicate</button>
+    </mat-menu>
+  \`
+})
+export class ReferenceMenuButtonComponent {
+  readonly press = output<void>();
+}`,
+          },
+          {
+            id: 'reference-validation',
+            title: 'Behavioral validation expectations',
+            description:
+              'Generated tests assert public behavior such as disabled activation gating, text direction preservation, and ariaHasPopup mapping.',
+            preview: 'reference-validation',
+            code: `it('keeps disabled reference buttons from emitting press', () => {
+  const press = vi.fn();
+  render('<app-reference-button [enabled]="false" (press)="press()" />');
+
+  screen.getByRole('button', { name: 'Save order' }).click();
+
+  expect(press).not.toHaveBeenCalled();
+});
+
+it('maps popup and direction metadata to observable attributes', () => {
+  const button = screen.getByRole('button', { name: 'More' });
+  expect(button).toHaveAttribute('aria-haspopup', 'menu');
+  expect(screen.getByText('מספר הזמנה 1000123')).toHaveAttribute('dir', 'rtl');
+});`,
+          },
+        ],
+        styling: {
+          notes: [
+            'The reference preview intentionally reuses Material buttons, chips, and menus so generated examples stay aligned with the Angular target.',
+            'Hidden upstream properties are documented as evidence only; styling and API examples focus on the public, implementation-neutral contract.',
+          ],
+          code: `.reference-preview {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.reference-preview [dir='rtl'] {
+  text-align: right;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'theming',
+    name: 'Theming',
+    summary:
+      'Design tokens, base styles plus theme overrides, and density modes the generator emits so themes re-skin components without changing the public contract.',
+    items: [
+      {
+        id: 'themed-button',
+        name: 'Themed button',
+        summary:
+          'A button styles itself from named design tokens, layers theme overrides over base styles, and adapts to an externally configured density mode.',
+        api: {
+          specSection: '16. Theming / Design Tokens',
+          specPath: 'spec/16-theming-design-tokens.md',
+          purpose: 'Describe visual customization requirements.',
+          derivedFrom: ['library-catalog-root'],
+          points: [
+            'Visual values are expressed as named design tokens (theming parameters or CSS custom properties) rather than hard-coded literals.',
+            'A theme is composed of base styles plus theme overrides, so switching themes never changes a component public API.',
+            'Density such as cozy or compact is an externally configurable mode applied at a root scope, not a per-component property.',
+            'Theme and density selection stay externally configurable and swappable at runtime.',
+          ],
+          jsonMapping: 'specification.sections[15] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'theme-tokens',
+            title: 'Design tokens instead of literal values',
+            description:
+              'The button references Material system CSS custom properties so a new theme re-skins it without editing the component.',
+            preview: 'theme-tokens',
+            code: `@Component({
+  selector: 'app-primary-button',
+  imports: [MatButtonModule],
+  template: \`
+    <button mat-raised-button color="primary" type="button" class="app-primary-button">
+      Save order
+    </button>
+  \`,
+  styles: [\`
+    .app-primary-button {
+      background: var(--mat-sys-primary);
+      color: var(--mat-sys-on-primary);
+      border-radius: var(--mat-sys-corner-full);
+    }
+  \`]
+})
+export class PrimaryButtonComponent {}`,
+          },
+          {
+            id: 'theme-override',
+            title: 'Base styles plus theme override',
+            description:
+              'Theme-independent base styles stay constant while light and dark themes layer their own token values, leaving the public contract unchanged.',
+            preview: 'theme-override',
+            code: `// base styles are theme-independent; tokens resolve per theme
+.app-panel {
+  padding: var(--mat-sys-corner-small);
+  border: 1px solid var(--app-panel-border);
+}
+
+// sap_horizon (light) theme override
+:root {
+  --app-panel-border: #d9d9d9;
+}
+
+// sap_horizon_dark theme override
+.dark-theme {
+  --app-panel-border: #3a3a3a;
+}`,
+          },
+          {
+            id: 'theme-density',
+            title: 'Density mode applied at the root scope',
+            description:
+              'Density is selected once at the root scope so descendant components adapt their spacing through density-aware tokens, not per-component properties.',
+            preview: 'theme-density',
+            code: `<!-- density is configured externally at the root scope -->
+<body class="compact">
+  <app-primary-button />
+</body>
+
+<!-- styles -->
+.compact .app-primary-button {
+  padding-block: 0.25rem;
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Design tokens resolve to Material system CSS custom properties, so a new theme re-skins the button without code changes.',
+            'A root-scope density class adjusts spacing across descendants instead of adding per-component density properties.',
+          ],
+          code: `.app-primary-button {
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  border-radius: var(--mat-sys-corner-full);
+}
+
+.compact .app-primary-button {
+  padding-block: 0.25rem;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'compliance',
+    name: 'Compliance',
+    summary:
+      'Conformance checks that keep catalogs, metadata, generated projections, and evidence synchronized.',
+    items: [
+      {
+        id: 'compliance-rules',
+        name: 'Compliance rules',
+        summary:
+          'A repeatable compliance view that starts from catalog discovery, verifies metadata completeness, and records cross-cutting evidence.',
+        api: {
+          specSection: '21. Compliance Rules',
+          specPath: 'spec/21-compliance-rules.md',
+          purpose: 'Summarize what every implementation must satisfy.',
+          derivedFrom: [
+            'openui-root',
+            'library-catalog-root',
+            'metadata-grammar-root',
+            'compliance-tests',
+          ],
+          points: [
+            'Every public library member must be reachable from a stable, machine-readable catalog entry.',
+            'Every public component must declare typed properties, aggregations, associations, events, and relevant capability metadata.',
+            'Compliance is evaluated from public metadata, documentation, generated projections, and observable behavior rather than private implementation details.',
+            'Accessibility, theming, internationalization, security, privacy, performance, and extension requirements need public evidence or documentation.',
+          ],
+          jsonMapping: 'specification.sections[20] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'compliance-catalog',
+            title: 'Catalog discoverability checklist',
+            description:
+              'A compliance run starts at the catalog root and verifies that libraries, public components, types, and interfaces resolve by stable identifier.',
+            preview: 'compliance-catalog',
+            code: `const profile = {
+  conformanceProfile: 'core-ui',
+  catalog: {
+    libraries: [
+      {
+        name: 'sample.library',
+        components: ['sample.library.Button', 'sample.library.Form'],
+        types: ['sample.library.ButtonType'],
+        interfaces: ['sample.library.IFormContent'],
+      },
+    ],
+  },
+};
+
+assertCatalogDiscoverable(profile.catalog);`,
+          },
+          {
+            id: 'compliance-metadata',
+            title: 'Metadata completeness gate',
+            description:
+              'Validators fail a component before behavioral checks when required public properties, associations, events, defaults, or visibility are missing.',
+            preview: 'compliance-metadata',
+            code: `assertMetadataComplete({
+  component: 'sample.library.Button',
+  properties: ['text', 'enabled'],
+  associations: ['ariaLabelledBy'],
+  events: ['press'],
+  usesPrivateRendererContract: false,
+});`,
+          },
+          {
+            id: 'compliance-evidence',
+            title: 'Cross-cutting evidence record',
+            description:
+              'A component-level evidence record keeps accessibility, theming, internationalization, and tests traceable to the same public contract.',
+            preview: 'compliance-evidence',
+            code: `const evidence = {
+  component: 'sample.library.Input',
+  accessibility: ['ariaLabelledBy association', 'ariaDescribedBy association'],
+  theming: ['uses theme token: field.border.color'],
+  internationalization: ['textDirection: Inherit', 'localized placeholder'],
+  tests: ['metadata contract test', 'keyboard activation test'],
+};`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Compliance previews use compact contract cards so catalog, metadata, and evidence checks remain comparable at a glance.',
+            'Status chips use Material system colors to distinguish pass/fail state without introducing custom semantic color tokens.',
+          ],
+          code: `.compliance-preview {
+  display: grid;
+  gap: 1rem;
+}
+
+.compliance-card {
+  background: var(--mat-sys-surface);
+}
+
+.compliance-status {
+  color: var(--mat-sys-primary);
 }`,
         },
       },
