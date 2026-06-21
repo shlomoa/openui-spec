@@ -1982,9 +1982,13 @@
           "reference-component-button"
         ],
         "requirements": [
-          "Every public metadata contract should be verifiable by automated tests that exercise properties, events, and rendering-facing semantics.",
-          "Acceptance criteria should cover unit behavior, visual states, accessibility semantics, and responsive or theme-sensitive presentation.",
-          "Machine-readable projections such as `api.json` should remain consistent with runtime metadata and documented behavior."
+          "Every public metadata contract must be verifiable by automated tests that exercise properties, aggregations, associations, events, default values, visibility, and rendering-facing semantics.",
+          "Acceptance criteria must be traceable to the specification section, tag, formal definition, example, or reference model that introduced the behavior.",
+          "Acceptance criteria must define observable pass/fail conditions for unit behavior, generated API shape, visual states, accessibility semantics, keyboard and pointer interaction, data binding, navigation, internationalization, security, performance, and responsive or theme-sensitive presentation.",
+          "Machine-readable projections such as `api.json` must remain consistent with runtime metadata, documentation, generated examples, and recorded evidence artifacts.",
+          "Conformance suites must separate normative failures from implementation notes, optional capabilities, and documented non-goals so optional features do not become accidental requirements.",
+          "Test fixtures must be deterministic, minimal, and reusable across generators so the same contract can validate source metadata, normalized `/openui.json`, generated code, and runtime output.",
+          "Evidence for a passing implementation must include automated test results and, where behavior is visual or assistive-technology-facing, a stable artifact such as a screenshot, accessibility-tree assertion, or rendered DOM snapshot."
         ],
         "examples": [
           {
@@ -2002,7 +2006,93 @@
           {
             "title": "Component model acceptance test",
             "description": "A compliant test should verify that each component exposes a stable identity, that properties declare types and default values, that aggregations declare child types and multiplicity, that associations remain non-owning references, that events declare typed parameters, and that renderer, design-time, and drag-and-drop metadata stay optional capability hints rather than part of the core contract."
+          },
+          {
+            "title": "Traceability matrix for acceptance coverage",
+            "description": "A traceability matrix records the specification section, tags, fixtures, tests, and evidence artifacts that cover each criterion so reviewers can identify covered and unverified requirements."
+          },
+          {
+            "title": "Metadata projection consistency criterion",
+            "description": "A projection criterion compares runtime metadata, normalized `/openui.json`, generated `api.json`, and generated API signatures so names, types, defaults, visibility, multiplicity, association ownership, and event payloads stay consistent."
+          },
+          {
+            "title": "Visual and accessibility evidence criterion",
+            "description": "A visual and accessibility criterion records deterministic viewport, theme, density, data, and locale inputs before asserting accessible names, descriptions, keyboard order, disabled states, and screenshot evidence."
           }
+        ],
+        "nonGoals": [
+          "The test and acceptance criteria do not prescribe a specific test runner, browser automation framework, visual-diff service, or continuous-integration provider.",
+          "The section does not require implementations to expose private renderer internals or non-public metadata solely to make tests easier to write.",
+          "The section does not turn examples, implementation notes, or optional capabilities into mandatory conformance points unless another section marks them normative.",
+          "The section does not replace accessibility, security, internationalization, performance, or compliance rules; it defines how their observable requirements are verified."
+        ],
+        "tags": [
+          {
+            "name": "acceptance-criterion",
+            "meaning": "A testable rule with explicit setup, action, expected result, and traceability to a normative specification source."
+          },
+          {
+            "name": "conformance-suite",
+            "meaning": "The collection of automated checks that decides whether an implementation satisfies the specification contract."
+          },
+          {
+            "name": "metadata-projection-test",
+            "meaning": "A check that compares source runtime metadata with normalized `/openui.json` and generated API projections."
+          },
+          {
+            "name": "runtime-behavior-test",
+            "meaning": "A check that exercises observable behavior such as events, state transitions, validation, navigation, or data binding."
+          },
+          {
+            "name": "visual-accessibility-evidence",
+            "meaning": "A stable artifact or assertion that proves visual, responsive, theme, keyboard, and assistive-technology-facing behavior."
+          },
+          {
+            "name": "traceability-matrix",
+            "meaning": "A mapping from specification requirements and tags to tests and evidence artifacts that cover them."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Acceptance criterion",
+            "definition": "A verifiable statement that names a normative requirement, defines the setup and action, and states the observable condition for passing."
+          },
+          {
+            "term": "Conformance suite",
+            "definition": "The implementation-independent group of tests and evidence checks used to decide whether a library, generator, or application output complies with the specification."
+          },
+          {
+            "term": "Test fixture",
+            "definition": "A minimal representative metadata entry, application structure, generated component, or rendered page used as the input to one or more acceptance criteria."
+          },
+          {
+            "term": "Metadata projection",
+            "definition": "The normalized machine-readable representation, such as `/openui.json` or `api.json`, produced from runtime metadata and used by generators and documentation."
+          },
+          {
+            "term": "Evidence artifact",
+            "definition": "Durable output from a validation run, such as a test report, screenshot, DOM snapshot, accessibility assertion, or generated source excerpt."
+          },
+          {
+            "term": "Traceability matrix",
+            "definition": "A table or structured object that links each requirement, tag, formal definition, and example to the tests and evidence that verify it."
+          }
+        ],
+        "usage": [
+          "Write acceptance criteria in implementation-independent language: identify the contract under test, the observable action or projection, and the pass/fail assertion without depending on private renderer state.",
+          "Maintain a traceability matrix from `/openui.json` section IDs and tag names to test IDs so reviewers can identify which requirements are covered and which remain unverified.",
+          "Validate metadata projections before generated output: schema and projection tests should fail fast when properties, aggregations, associations, events, default values, or visibility are missing or renamed.",
+          "Cover runtime behavior with focused fixtures that exercise enabled and disabled states, value changes, validation feedback, navigation transitions, binding updates, keyboard activation, pointer activation, and responsive reflow.",
+          "Record visual and accessibility evidence only for observable outcomes whose correctness cannot be fully represented by metadata, such as focus order, accessible naming, density, theme tokens, and breakpoint-specific layout.",
+          "Treat optional capabilities as conditional criteria: if a component declares `dnd`, `renderer`, `designtime`, overlay, or routing metadata, test the declared behavior; if it does not, assert that consumers do not depend on it.",
+          "Keep generated examples and documentation synchronized with the same fixtures that drive tests so examples demonstrate behavior that the conformance suite can verify.",
+          "Store enough evidence with each run to reproduce a failure, including the fixture identifier, spec section, generated artifact path, assertion name, and expected versus actual result."
+        ],
+        "implementationNotes": [
+          "Extractors should emit stable identifiers for requirements, tags, fixtures, and evidence artifacts so downstream generators can keep their tests linked to the source specification.",
+          "Generators should create host-framework tests from metadata projections instead of hand-coding assumptions about component names, event payloads, or default values.",
+          "Visual and accessibility checks should run against deterministic fixtures with controlled data, viewport, density, locale, and theme settings.",
+          "Compliance reports should distinguish failed normative criteria from skipped optional criteria and should include links to generated examples or screenshots when applicable."
         ]
       },
       {
