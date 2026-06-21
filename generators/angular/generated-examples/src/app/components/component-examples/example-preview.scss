@@ -154,6 +154,25 @@
   margin: 0;
 }
 
+.a11y-preview {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.a11y-direction-sample {
+  background: var(--mat-sys-surface);
+  border-radius: 0.5rem;
+  box-shadow: var(--mat-sys-level1);
+  margin: 0;
+  padding: 1rem;
+  width: 100%;
+}
+
+.a11y-preview [dir='rtl'] {
+  text-align: right;
+}
+
 .feedback-preview {
   display: grid;
   gap: 0.75rem;

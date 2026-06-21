@@ -66,4 +66,22 @@ describe('Component documentation routing', () => {
     expect(root.textContent).toContain('heading: string = "Status"');
     expect(root.textContent).toContain('liveChange: string');
   });
+
+  it('sources the accessibility API tab from the accessibility model spec', async () => {
+    const harness = await RouterTestingHarness.create('/components/accessible-field');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('h1')?.textContent).toContain('Accessible field');
+    expect(root.querySelector('.api-source')?.textContent).toContain(
+      'spec/15-accessibility-model.md',
+    );
+  });
+
+  it('renders the accessible naming associations on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/accessible-field/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('.a11y-preview')).toBeTruthy();
+    expect(root.querySelector('[aria-labelledby="customer-name-label"]')).toBeTruthy();
+    expect(root.querySelector('[aria-haspopup="menu"]')).toBeTruthy();
+    expect(root.querySelector('[dir="rtl"]')).toBeTruthy();
+  });
 });

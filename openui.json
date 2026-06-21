@@ -1540,7 +1540,91 @@
         "requirements": [
           "Components must support accessible naming and description relationships through public associations or equivalent metadata.",
           "Accessibility roles, popup semantics, and text direction must be declarable as typed public state when applicable.",
-          "Keyboard activation and focus behavior are compliance-relevant parts of the interaction contract."
+          "Keyboard activation and focus behavior are compliance-relevant parts of the interaction contract.",
+          "Accessible naming relationships use non-owning associations such as `ariaLabelledBy` and `ariaDescribedBy`, so a control can reference labelling or describing controls without owning them.",
+          "The accessible name and accessible description are computed from public metadata first, falling back to associated controls, owned text, and finally a literal `tooltip` or label property when no association is present.",
+          "Roles, landmark semantics, and popup semantics such as `ariaHasPopup` must be exposed as typed public state so assistive technology receives the same intent the application declared.",
+          "Text direction must be a declarable public property with `LTR`, `RTL`, and `Inherit` values so bidirectional content renders predictably without reading renderer internals.",
+          "Action controls must remain operable through keyboard activation and expose a visible, ordered focus target so pointer and keyboard users reach the same public interaction contract."
+        ],
+        "nonGoals": [
+          "The accessibility model does not redefine ARIA roles, states, or properties; it maps the public contract onto the established accessibility semantics rather than inventing new ones.",
+          "The accessibility model does not standardize private renderer markup, generated DOM attribute order, or platform screen-reader announcement wording.",
+          "The accessibility model does not replace the interaction, form, navigation, or feedback rules, but it constrains how those contracts expose names, roles, focus, and direction to assistive technology."
+        ],
+        "tags": [
+          {
+            "name": "accessible-name-association",
+            "meaning": "`ariaLabelledBy` and `ariaDescribedBy` are non-owning associations that supply the accessible name and description from other controls."
+          },
+          {
+            "name": "semantic-role-state",
+            "meaning": "Roles and landmark semantics are declared as typed public state rather than inferred from renderer markup."
+          },
+          {
+            "name": "popup-semantics",
+            "meaning": "Controls that open overlays declare popup semantics such as `ariaHasPopup` so assistive technology can announce the expandable relationship."
+          },
+          {
+            "name": "text-direction",
+            "meaning": "Text direction is a declarable public property with `LTR`, `RTL`, and `Inherit` values for bidirectional content."
+          },
+          {
+            "name": "keyboard-focus-contract",
+            "meaning": "Keyboard activation and focus order are part of the public, compliance-relevant interaction contract."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Accessible name",
+            "definition": "The short label exposed to assistive technology, computed from `ariaLabelledBy` associations, owned text, or a literal label property when no association is present."
+          },
+          {
+            "term": "Accessible description",
+            "definition": "Supplementary text exposed to assistive technology through `ariaDescribedBy` associations or an equivalent description property."
+          },
+          {
+            "term": "Labelling association",
+            "definition": "A non-owning association such as `ariaLabelledBy` that references other controls supplying the accessible name without taking ownership of them."
+          },
+          {
+            "term": "Semantic role",
+            "definition": "Typed public state declaring the role, landmark, or popup semantics that assistive technology should report for the control."
+          },
+          {
+            "term": "Text direction",
+            "definition": "A public property declaring `LTR`, `RTL`, or `Inherit` so bidirectional text renders deterministically from the public contract."
+          }
+        ],
+        "usage": [
+          "Provide an accessible name through an `ariaLabelledBy` association when a visible label control exists, and reserve literal label or `tooltip` properties for controls that have no on-screen labelling control.",
+          "Attach supplementary help, hint, or error text through `ariaDescribedBy` associations so the description stays linked to the control even when the text moves in the layout.",
+          "Declare roles, landmark semantics, and popup semantics such as `ariaHasPopup` as typed public state so generators emit the correct ARIA attributes without inspecting renderer internals.",
+          "Set `textDirection` to `Inherit` by default and only override it to `RTL` or `LTR` for content whose direction differs from the surrounding context.",
+          "Keep keyboard activation equivalent to pointer activation for action controls, preserve a logical focus order, and ensure disabled controls drop out of the focus order in line with the interaction model enabled gate."
+        ],
+        "implementationNotes": [
+          "Extractors should normalize accessibility associations and typed role, popup, and direction state from control metadata instead of scraping rendered ARIA attributes.",
+          "Generators should map labelling and describing associations to `aria-labelledby` and `aria-describedby`, and typed role, popup, and direction state to their corresponding ARIA attributes while preserving the enabled focus gate.",
+          "Conformance tests should cover accessible name and description computation, role and popup semantics, text-direction handling, and keyboard activation equivalence for action controls."
+        ],
+        "examples": [
+          {
+            "title": "Accessible name and description associations example",
+            "description": "An input references a label control through `ariaLabelledBy` and a hint control through `ariaDescribedBy`, computing its accessible name and description from non-owning associations."
+          },
+          {
+            "title": "Role and popup semantics example",
+            "description": "A button declares its role and `ariaHasPopup` semantics as typed public state so assistive technology announces that activation opens a menu."
+          },
+          {
+            "title": "Text direction property example",
+            "description": "A text control declares `textDirection` of `RTL` so bidirectional content renders deterministically, while the default `Inherit` follows the surrounding context."
+          },
+          {
+            "title": "Generator accessibility binding example",
+            "description": "A generator maps labelling and describing associations to `aria-labelledby` and `aria-describedby`, preserving the accessible name and description from the public contract."
+          }
         ]
       },
       {
