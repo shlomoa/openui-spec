@@ -52,6 +52,7 @@ export class ExamplePreviewComponent {
   @Input({ required: true }) preview!: ExamplePreview;
 
   protected readonly orders = PREVIEW_ORDERS;
+  protected readonly boundOrders = PREVIEW_ORDERS;
   protected readonly basicColumns = ['order', 'customer'];
   protected readonly statusColumns = ['order', 'status'];
 }

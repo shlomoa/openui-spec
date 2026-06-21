@@ -16,6 +16,8 @@ export type ExamplePreview =
   | 'form-filter'
   | 'state-public'
   | 'state-derived'
+  | 'binding-property'
+  | 'binding-aggregation'
   | 'action-enabled'
   | 'action-disabled'
   | 'component-properties'
@@ -306,8 +308,8 @@ export class CatalogPage {
           derivedFrom: ['property-model', 'aggregation-model'],
           points: [
             'Bindable properties and aggregations are part of the component contract and must be explicitly declared.',
-            'Bindings may target scalar properties or compositional collections depending on the metadata kind.',
-            'Async model updates must preserve declared property and aggregation types.',
+            'Aggregation bindings connect a model collection to an owned aggregation by repeating a template for each entry.',
+            'Async model updates must preserve the declared property and aggregation types.',
           ],
           jsonMapping: 'specification.sections[10] in /openui.json',
         },
@@ -566,6 +568,82 @@ export class AmountInputComponent {
 
 mat-form-field {
   width: 100%;
+}`,
+        },
+      },
+      {
+        id: 'binding',
+        name: 'Data binding',
+        summary:
+          'Bindable properties become single-value bindings and bindable aggregations become template-driven list bindings, while async updates preserve the declared types.',
+        api: {
+          specSection: '11. Data Binding Model',
+          specPath: 'spec/11-data-binding-model.md',
+          purpose: 'Describe how component state binds to external models.',
+          derivedFrom: ['property-model', 'aggregation-model'],
+          points: [
+            'Only metadata members explicitly declared bindable participate in the public data binding contract.',
+            'Property bindings connect one model value to a typed scalar property; aggregation bindings expand a model collection through a template.',
+            'Every binding resolves a path against a default or named model, and async updates must keep bound values type-compatible.',
+          ],
+          jsonMapping: 'specification.sections[10] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'binding-property',
+            title: 'Scalar property binding',
+            description:
+              'A bindable scalar property is connected to a single model path, so the bound value stays compatible with the declared string type.',
+            preview: 'binding-property',
+            code: `@Component({
+  selector: 'app-customer-name',
+  imports: [MatFormFieldModule, MatInputModule],
+  template: \`
+    <mat-form-field appearance="outline">
+      <mat-label>Customer name</mat-label>
+      <input matInput [value]="value()" readonly />
+    </mat-form-field>
+  \`
+})
+export class CustomerNameComponent {
+  // Bound to the "/customer/name" path of the orders model.
+  readonly value = input('');
+}`,
+          },
+          {
+            id: 'binding-aggregation',
+            title: 'Aggregation list binding',
+            description:
+              'A bindable aggregation is bound to a model collection and a template is repeated per entry, preserving the child type and 0..n multiplicity.',
+            preview: 'binding-aggregation',
+            code: `@Component({
+  selector: 'app-orders-list',
+  imports: [MatListModule],
+  template: \`
+    <mat-list aria-label="Bound orders">
+      @for (order of items(); track order.id) {
+        <mat-list-item>{{ order.title }}</mat-list-item>
+      }
+    </mat-list>
+  \`
+})
+export class OrdersListComponent {
+  // Bound to the "/orders" collection of the orders model.
+  readonly items = input<readonly OrderItem[]>([]);
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Property bindings reuse Material form fields so the bound scalar value is presented with the standard input styling.',
+            'List bindings render through mat-list so each templated entry keeps consistent Material spacing and dividers.',
+          ],
+          code: `mat-form-field {
+  width: 100%;
+}
+
+mat-list[aria-label='Bound orders'] mat-list-item {
+  font-variant-numeric: tabular-nums;
 }`,
         },
       },

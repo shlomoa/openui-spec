@@ -1385,9 +1385,86 @@
         "document": "spec/11-data-binding-model.md",
         "derivedFrom": ["property-model", "aggregation-model"],
         "requirements": [
-          "Bindable properties and aggregations are part of the component contract and must be explicitly declared.",
-          "Bindings may target scalar properties or compositional collections depending on the metadata kind.",
-          "Async model updates must preserve declared property and aggregation types."
+          "Bindable properties and aggregations are part of the component contract and must be explicitly declared with a bindable flag.",
+          "Bindings may target scalar properties or compositional collections depending on the metadata kind: property bindings connect a single typed value, while aggregation bindings connect a model collection to an owned aggregation through a template.",
+          "Every binding resolves against a model and an addressable path within that model; a binding may use the default model or a named model.",
+          "Async or reactive model updates must preserve the declared property and aggregation types so bound values stay compatible with the component contract.",
+          "Members that are not declared bindable, or that are hidden, are not part of the public binding contract and must not be relied on as binding targets."
+        ],
+        "nonGoals": [
+          "The data binding model does not standardize a single model implementation, query language, or transport protocol such as JSON, OData, or REST.",
+          "The data binding model does not define expression-language grammar, formatter syntax, or two-way change-detection internals; it only requires that updates preserve declared types.",
+          "The data binding model does not describe form-level validation or submission semantics, which belong to the form model, nor renderer or DOM details used to display bound values."
+        ],
+        "tags": [
+          {
+            "name": "bindable-contract",
+            "meaning": "Only metadata members explicitly declared bindable participate in the public data binding contract."
+          },
+          {
+            "name": "property-binding",
+            "meaning": "A property binding connects a single addressable model value to one typed, scalar property."
+          },
+          {
+            "name": "aggregation-binding",
+            "meaning": "An aggregation binding connects a model collection to an owned aggregation by repeating a template for each entry."
+          },
+          {
+            "name": "binding-path-context",
+            "meaning": "Every binding resolves a path against a default or named model, optionally relative to a binding context."
+          },
+          {
+            "name": "type-preserving-updates",
+            "meaning": "Async or reactive model updates must keep bound values compatible with the declared property and aggregation types."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Binding",
+            "definition": "A declared connection between a bindable component member and a value or collection addressed in a model."
+          },
+          {
+            "term": "Model",
+            "definition": "An external, addressable source of state that a binding reads from and, for two-way bindings, writes back to."
+          },
+          {
+            "term": "Binding path",
+            "definition": "The address, optionally qualified by a model name and relative to a binding context, that selects the value or collection a binding targets."
+          },
+          {
+            "term": "Property binding",
+            "definition": "A binding whose target is a single scalar property and whose value must remain compatible with the declared property type."
+          },
+          {
+            "term": "Aggregation binding",
+            "definition": "A binding whose target is an owned aggregation, expanding a model collection into child instances through a declared template while preserving the aggregation's child type and multiplicity."
+          }
+        ],
+        "usage": [
+          "Declare a property or aggregation as bindable in metadata before treating it as a binding target; non-bindable and hidden members are not part of the binding contract.",
+          "Bind scalar configuration values, such as `text`, `value`, or `selected`, with property bindings, and bind owned collections, such as `items` or `content`, with aggregation bindings driven by a template.",
+          "Qualify each binding path with the default model or an explicit named model, and resolve relative paths against the active binding context so list templates address per-entry values.",
+          "Preserve the declared metadata type when normalizing bindings into `/openui.json`: record the bound member, its kind (property or aggregation), the bindable flag, the model, and the path so generators can reconstruct the binding.",
+          "Keep binding semantics separate from interaction and state: a binding describes where a value comes from, while events describe transitions and state describes the current condition, and async updates must not change the declared type."
+        ],
+        "implementationNotes": [
+          "Extraction pipelines should record the bindable flag on properties and aggregations, the model name (default or named), the binding path, and the binding kind so the canonical model captures the full binding contract.",
+          "Generator pipelines should map property bindings to typed framework inputs or bindings and aggregation bindings to template-driven repetition over a typed collection, omitting non-bindable and hidden members from generated binding APIs.",
+          "Validation tooling should verify that bound scalar values stay compatible with the declared property type, that aggregation bindings preserve the child type and multiplicity, and that async updates never violate the declared types."
+        ],
+        "examples": [
+          {
+            "title": "Scalar property binding example",
+            "description": "An input binds its scalar text value to a single model path so the bound value stays compatible with the declared string property type."
+          },
+          {
+            "title": "Aggregation list binding example",
+            "description": "A list binds an owned items aggregation to a model collection, expanding a template for each entry while preserving the child type and multiplicity."
+          },
+          {
+            "title": "Type-preserving async update example",
+            "description": "A named model delivers an asynchronous update that keeps the bound property compatible with its declared type so the component contract is never violated."
+          }
         ]
       },
       {

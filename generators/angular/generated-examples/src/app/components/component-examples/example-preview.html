@@ -161,6 +161,33 @@
         </mat-chip-set>
       </div>
     }
+    @case ('binding-property') {
+      <div class="binding-preview" aria-label="Generated property binding preview">
+        <mat-form-field appearance="outline">
+          <mat-label>Customer name</mat-label>
+          <input matInput value="Contoso Retail" readonly />
+        </mat-form-field>
+        <mat-chip-set aria-label="Property binding details">
+          <mat-chip>kind: property</mat-chip>
+          <mat-chip>model: orders</mat-chip>
+          <mat-chip>path: /customer/name</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
+    @case ('binding-aggregation') {
+      <div class="binding-preview" aria-label="Generated aggregation binding preview">
+        <mat-list aria-label="Bound orders">
+          @for (order of boundOrders; track order.order) {
+            <mat-list-item>{{ order.order }} — {{ order.customer }}</mat-list-item>
+          }
+        </mat-list>
+        <mat-chip-set aria-label="Aggregation binding details">
+          <mat-chip>kind: aggregation</mat-chip>
+          <mat-chip>path: /orders</mat-chip>
+          <mat-chip>template: ListItem</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
     @case ('action-enabled') {
       <div class="action-preview">
         <button mat-raised-button color="primary" type="button">Save order</button>

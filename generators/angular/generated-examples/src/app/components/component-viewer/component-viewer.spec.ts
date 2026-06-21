@@ -67,6 +67,23 @@ describe('Component documentation routing', () => {
     expect(root.textContent).toContain('liveChange: string');
   });
 
+  it('sources the data-binding API tab from the data binding model spec', async () => {
+    const harness = await RouterTestingHarness.create('/components/binding');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('h1')?.textContent).toContain('Data binding');
+    expect(root.querySelector('.api-source')?.textContent).toContain(
+      'spec/11-data-binding-model.md',
+    );
+  });
+
+  it('renders property and aggregation binding previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/binding/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('.binding-preview')).toBeTruthy();
+    expect(root.textContent).toContain('path: /customer/name');
+    expect(root.textContent).toContain('kind: aggregation');
+  });
+
   it('sources the accessibility API tab from the accessibility model spec', async () => {
     const harness = await RouterTestingHarness.create('/components/accessible-field');
     const root = harness.routeNativeElement as HTMLElement;
