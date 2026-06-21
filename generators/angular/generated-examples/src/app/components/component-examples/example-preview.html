@@ -505,7 +505,9 @@
         >
           More
         </button>
-        <span id="order-actions-description">Opens available order actions.</span>
+        <span id="order-actions-description" class="visually-hidden">
+          Opens available order actions.
+        </span>
         <mat-menu #referenceActionsMenu="matMenu">
           <button mat-menu-item type="button">Duplicate</button>
         </mat-menu>
@@ -525,7 +527,13 @@
       <div class="reference-preview">
         <button mat-raised-button color="primary" type="button" disabled>Save order</button>
         <p class="reference-note">Disabled reference buttons do not emit press.</p>
-        <p class="reference-direction-sample" dir="rtl">מספר הזמנה 1000123</p>
+        <p
+          class="reference-direction-sample"
+          dir="rtl"
+          aria-label="Right-to-left order number sample"
+        >
+          מספר הזמנה 1000123
+        </p>
         <mat-chip-set aria-label="Reference validation expectations">
           <mat-chip highlighted>enabled gates activation</mat-chip>
           <mat-chip>ariaHasPopup: menu</mat-chip>
