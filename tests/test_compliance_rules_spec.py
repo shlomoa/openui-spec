@@ -36,7 +36,7 @@ class ComplianceRulesSpecTest(unittest.TestCase):
         expected_tags = {
             "catalog-discoverability",
             "metadata-completeness",
-            "public-contract-only",
+            "public-contract-compliance",
             "cross-cutting-evidence",
             "testable-conformance",
             "explicit-capability-scope",

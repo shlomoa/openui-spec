@@ -27,7 +27,7 @@
 
 - `catalog-discoverability` — every public library member is reachable from a stable, machine-readable catalog entry.
 - `metadata-completeness` — every public component declares typed properties, aggregations, associations, events, and relevant capability metadata.
-- `public-contract-only` — compliance is evaluated from public metadata, documentation, generated projections, and observable behavior rather than private implementation details.
+- `public-contract-compliance` — compliance is evaluated from public metadata, documentation, generated projections, and observable behavior rather than private implementation details.
 - `cross-cutting-evidence` — accessibility, theming, internationalization, security, privacy, performance, and extension requirements are backed by public metadata or documented evidence.
 - `testable-conformance` — every normative rule has an automated or reviewable acceptance check that can be repeated by implementers and validators.
 - `explicit-capability-scope` — optional capabilities are declared as supported or intentionally absent without weakening required baseline conformance.
