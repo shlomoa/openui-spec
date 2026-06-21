@@ -14,6 +14,7 @@ export type ExamplePreview =
   | 'table-status'
   | 'form-order'
   | 'form-filter'
+  | 'form-validation'
   | 'state-public'
   | 'state-derived'
   | 'action-enabled'
@@ -380,6 +381,8 @@ td.mat-mdc-cell mat-chip {
             'Form-compatible components may advertise dedicated interfaces such as form-content contracts.',
             'Form semantics require explicit label and description relationships through associations or equivalent metadata.',
             'Validation and submission behavior must be representable through public properties, events, and feedback components.',
+            'Field validity is published through a value state (None, Error, Warning, Success, Information) and optional value-state text.',
+            'Editable and enabled properties gate user input and submission so read-only or disabled forms do not run submission handlers.',
           ],
           jsonMapping: 'specification.sections[11] in /openui.json',
         },
@@ -459,11 +462,56 @@ export class OrderFilterComponent {
   apply(): void {}
 }`,
           },
+          {
+            id: 'form-validation',
+            title: 'Validation and submission',
+            description:
+              'A field publishes its validity as a value state with value-state text, and the submit action is gated on the editable form state.',
+            preview: 'form-validation',
+            code: `@Component({
+  selector: 'app-order-validation',
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  template: \`
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Customer name</mat-label>
+        <input matInput formControlName="customerName" required />
+        @if (customerName.touched && customerName.hasError('required')) {
+          <mat-error>Customer name is required.</mat-error>
+        }
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!editable()">
+        Submit
+      </button>
+    </form>
+  \`
+})
+export class OrderValidationComponent {
+  // 'editable' maps the form-model editable/enabled gate onto the submit action.
+  readonly editable = signal(true);
+
+  readonly form = this.formBuilder.nonNullable.group({
+    customerName: ['', [Validators.required]]
+  });
+
+  get customerName(): AbstractControl {
+    return this.form.controls.customerName;
+  }
+
+  submit(): void {
+    if (!this.editable() || this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+  }
+}`,
+          },
         ],
         styling: {
           notes: [
             'Outlined form fields stretch to fill their column for consistent label alignment.',
             'Filter forms use a wrapping flex row so controls reflow gracefully on small screens.',
+            'Invalid fields surface their value state through Material error text rather than ad-hoc styling.',
           ],
           code: `mat-form-field {
   width: 100%;

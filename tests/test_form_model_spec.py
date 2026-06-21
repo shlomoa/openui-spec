@@ -101,6 +101,8 @@ class FormModelSpecTest(unittest.TestCase):
         self.assertIn("specPath: 'spec/12-form-model.md'", docs_source)
         self.assertIn("preview: 'form-order'", docs_source)
         self.assertIn("preview: 'form-filter'", docs_source)
+        self.assertIn("preview: 'form-validation'", docs_source)
+        self.assertIn("id: 'form-validation'", docs_source)
 
 
 if __name__ == "__main__":
