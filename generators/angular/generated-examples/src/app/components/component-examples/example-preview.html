@@ -137,6 +137,29 @@
         <button mat-stroked-button type="button">Apply</button>
       </form>
     }
+    @case ('form-validation') {
+      <form class="form-preview" aria-label="Generated validation form preview">
+        <mat-form-field appearance="outline">
+          <mat-label>Customer name</mat-label>
+          <input matInput value="" required aria-invalid="true" />
+          <mat-hint>valueStateText: "Customer name is required."</mat-hint>
+        </mat-form-field>
+        <mat-chip-set aria-label="Field validation state">
+          <mat-chip highlighted>valueState: Error</mat-chip>
+          <mat-chip>editable: true</mat-chip>
+        </mat-chip-set>
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          disabled
+          aria-label="Submit (disabled until the form is editable and valid)"
+        >
+          Submit
+        </button>
+        <p class="action-note">Submission is gated on the editable state and a valid field.</p>
+      </form>
+    }
     @case ('state-public') {
       <div class="state-preview" aria-label="Generated public state preview">
         <button mat-raised-button color="primary" type="button">Submit order</button>
