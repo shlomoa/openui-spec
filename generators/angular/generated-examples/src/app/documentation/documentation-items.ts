@@ -36,6 +36,9 @@ export type ExamplePreview =
   | 'i18n-translatable'
   | 'i18n-fallback'
   | 'i18n-direction'
+  | 'reference-public'
+  | 'reference-associations'
+  | 'reference-validation'
   | 'theme-tokens'
   | 'theme-override'
   | 'theme-density';
@@ -1367,6 +1370,133 @@ export class OrderReferenceComponent {
             'The dir attribute is driven by the active locale so right-to-left content mirrors without custom CSS.',
           ],
           code: `.i18n-preview [dir='rtl'] {
+  text-align: right;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'reference-examples',
+    name: 'Reference examples',
+    summary:
+      'Evidence-backed component examples that show how concrete OpenUI5 metadata maps into generated Angular Material components.',
+    items: [
+      {
+        id: 'reference-action-button',
+        name: 'Reference action button',
+        summary:
+          'A button-like action component derived from sap.m.Button evidence, preserving public properties, accessibility associations, activation events, and validation expectations.',
+        api: {
+          specSection: '23. Reference Examples',
+          specPath: 'spec/23-reference-examples.md',
+          purpose: 'Provide concrete reference components abstracted from upstream OpenUI5 evidence.',
+          derivedFrom: ['reference-component-button'],
+          points: [
+            'Reference examples translate concrete upstream component evidence into implementation-neutral examples.',
+            'Public properties such as text, type, enabled, icon, textDirection, ariaHasPopup, accessibleRole, and badgeStyle form the supported configuration surface.',
+            'ariaLabelledBy and ariaDescribedBy remain non-owning accessibility associations, while press is the normative activation event.',
+            'Hidden properties and deprecated compatibility aliases can be retained as evidence without becoming generated public API.',
+            'Validation expectations connect the component contract to observable behavior such as enabled-state gating, text direction, visibility, and accessibility metadata.',
+          ],
+          jsonMapping: 'specification.sections[22] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'reference-public',
+            title: 'Public property surface',
+            description:
+              'The reference button maps the upstream public property surface to generated Angular inputs and a Material button without exposing hidden evidence.',
+            preview: 'reference-public',
+            code: `@Component({
+  selector: 'app-reference-button',
+  imports: [MatButtonModule, MatChipsModule],
+  template: \`
+    <button mat-raised-button color="primary" type="button" [disabled]="!enabled()">
+      {{ text() }}
+    </button>
+    <mat-chip-set aria-label="Public properties">
+      <mat-chip>type: {{ type() }}</mat-chip>
+      <mat-chip>icon: {{ icon() }}</mat-chip>
+      <mat-chip>badgeStyle: {{ badgeStyle() }}</mat-chip>
+    </mat-chip-set>
+  \`
+})
+export class ReferenceButtonComponent {
+  readonly text = input('Save order');
+  readonly type = input<'Default' | 'Emphasized'>('Default');
+  readonly enabled = input(true);
+  readonly icon = input('');
+  readonly badgeStyle = input<'Default' | 'Attention'>('Default');
+}`,
+          },
+          {
+            id: 'reference-associations',
+            title: 'Associations and activation event',
+            description:
+              'Non-owning accessibility associations become ARIA relationships, and the press event becomes the single public activation handler.',
+            preview: 'reference-associations',
+            code: `@Component({
+  selector: 'app-reference-menu-button',
+  imports: [MatButtonModule, MatMenuModule],
+  template: \`
+    <span id="order-actions-label">Order actions</span>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      [matMenuTriggerFor]="menu"
+      aria-labelledby="order-actions-label"
+      aria-describedby="order-actions-description"
+      aria-haspopup="menu"
+      (click)="press.emit()"
+    >
+      More
+    </button>
+    <span id="order-actions-description">Opens available order actions.</span>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item type="button">Duplicate</button>
+    </mat-menu>
+  \`
+})
+export class ReferenceMenuButtonComponent {
+  readonly press = output<void>();
+}`,
+          },
+          {
+            id: 'reference-validation',
+            title: 'Behavioral validation expectations',
+            description:
+              'Generated tests assert public behavior such as disabled activation gating, text direction preservation, and ariaHasPopup mapping.',
+            preview: 'reference-validation',
+            code: `it('keeps disabled reference buttons from emitting press', () => {
+  const press = vi.fn();
+  render('<app-reference-button [enabled]="false" (press)="press()" />');
+
+  screen.getByRole('button', { name: 'Save order' }).click();
+
+  expect(press).not.toHaveBeenCalled();
+});
+
+it('maps popup and direction metadata to observable attributes', () => {
+  const button = screen.getByRole('button', { name: 'More' });
+  expect(button).toHaveAttribute('aria-haspopup', 'menu');
+  expect(screen.getByText('מספר הזמנה 1000123')).toHaveAttribute('dir', 'rtl');
+});`,
+          },
+        ],
+        styling: {
+          notes: [
+            'The reference preview intentionally reuses Material buttons, chips, and menus so generated examples stay aligned with the Angular target.',
+            'Hidden upstream properties are documented as evidence only; styling and API examples focus on the public, implementation-neutral contract.',
+          ],
+          code: `.reference-preview {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.reference-preview [dir='rtl'] {
   text-align: right;
 }`,
         },
