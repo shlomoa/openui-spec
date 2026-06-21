@@ -493,7 +493,7 @@
     }
     @case ('reference-associations') {
       <div class="reference-preview">
-        <span id="order-actions-label">Order actions</span>
+        <div id="order-actions-label" class="visually-hidden">Order actions</div>
         <button
           mat-raised-button
           color="primary"
@@ -503,11 +503,11 @@
           aria-describedby="order-actions-description"
           aria-haspopup="menu"
         >
-          More
+          Order actions
         </button>
-        <span id="order-actions-description" class="visually-hidden">
+        <div id="order-actions-description" class="visually-hidden">
           Open available order actions.
-        </span>
+        </div>
         <mat-menu #referenceActionsMenu="matMenu">
           <button mat-menu-item type="button">Duplicate</button>
         </mat-menu>
