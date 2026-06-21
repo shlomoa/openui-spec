@@ -115,4 +115,21 @@ describe('Component documentation routing', () => {
     expect(root.querySelector('.compliance-preview')).toBeTruthy();
     expect(root.textContent).toContain('catalog-discoverability: pass');
   });
+
+  it('sources the internationalization API tab from the internationalization spec', async () => {
+    const harness = await RouterTestingHarness.create('/components/localized-field');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('h1')?.textContent).toContain('Localized field');
+    expect(root.querySelector('.api-source')?.textContent).toContain(
+      'spec/17-internationalization.md',
+    );
+  });
+
+  it('renders the localized message and direction previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/localized-field/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('.i18n-preview')).toBeTruthy();
+    expect(root.textContent).toContain('text: order.submit (translatable)');
+    expect(root.querySelector('[dir="rtl"]')).toBeTruthy();
+  });
 });

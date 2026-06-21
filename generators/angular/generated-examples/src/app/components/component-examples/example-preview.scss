@@ -216,6 +216,25 @@
   text-align: right;
 }
 
+.i18n-preview {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.i18n-direction-sample {
+  background: var(--mat-sys-surface);
+  border-radius: 0.5rem;
+  box-shadow: var(--mat-sys-level1);
+  margin: 0;
+  padding: 1rem;
+  width: 100%;
+}
+
+.i18n-preview [dir='rtl'] {
+  text-align: right;
+}
+
 .feedback-preview {
   display: grid;
   gap: 0.75rem;

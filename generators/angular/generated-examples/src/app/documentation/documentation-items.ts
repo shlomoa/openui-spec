@@ -33,6 +33,9 @@ export type ExamplePreview =
   | 'a11y-labelled'
   | 'a11y-popup'
   | 'a11y-direction'
+  | 'i18n-translatable'
+  | 'i18n-fallback'
+  | 'i18n-direction'
   | 'theme-tokens'
   | 'theme-override'
   | 'theme-density'
@@ -1274,6 +1277,99 @@ export class OrderReferenceComponent {
             'The dir attribute drives bidirectional layout so right-to-left content mirrors without custom CSS.',
           ],
           code: `.a11y-preview [dir='rtl'] {
+  text-align: right;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'internationalization',
+    name: 'Internationalization',
+    summary:
+      'Translatable message keys, locale fallback, and locale-driven text direction the generator emits as part of the public contract.',
+    items: [
+      {
+        id: 'localized-field',
+        name: 'Localized field',
+        summary:
+          'A control references user-facing text through translatable message keys resolved from locale bundles, degrades missing keys through a locale fallback chain, and inherits text direction from the active locale.',
+        api: {
+          specSection: '17. Internationalization',
+          specPath: 'spec/17-internationalization.md',
+          purpose: 'Describe locale and translation requirements.',
+          derivedFrom: ['library-catalog-root', 'reference-component-button'],
+          points: [
+            'Public text-bearing properties reference translatable message keys instead of hard-coded literals.',
+            'Locale-specific message bundles supply translated text resolved by message key.',
+            'Message resolution follows a deterministic fallback chain from the most specific locale to a default bundle.',
+            'Text direction is a declarable public property with LTR, RTL, and Inherit values that components inherit from the active locale.',
+          ],
+          jsonMapping: 'specification.sections[16] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'i18n-translatable',
+            title: 'Translatable property and message bundle',
+            description:
+              'The translatable text property carries a message key that each locale bundle resolves to localized text instead of a hard-coded literal.',
+            preview: 'i18n-translatable',
+            code: `@Component({
+  selector: 'app-order-actions',
+  imports: [MatButtonModule],
+  template: \`
+    <button mat-raised-button color="primary" type="button">
+      {{ messages.submit() }}
+    </button>
+  \`
+})
+export class OrderActionsComponent {
+  // property text: string (translatable: message key 'order.submit')
+  // en -> 'Submit order', de -> 'Bestellung absenden'
+  protected readonly messages = inject(OrderMessages);
+}`,
+          },
+          {
+            id: 'i18n-fallback',
+            title: 'Locale fallback resolution',
+            description:
+              'With active locale de-AT a key resolves from the de bundle while a missing key degrades to the en default rather than failing.',
+            preview: 'i18n-fallback',
+            code: `// locale: 'de-AT'
+// fallback chain: ['de-AT', 'de', 'en']
+const messages = {
+  de: { 'order.submit': 'Bestellung absenden' },
+  en: { 'order.submit': 'Submit order', 'order.cancel': 'Cancel' }
+};
+// resolved:
+//   order.submit -> 'Bestellung absenden' (from 'de')
+//   order.cancel -> 'Cancel'              (from 'en' default)`,
+          },
+          {
+            id: 'i18n-direction',
+            title: 'Locale-driven text direction',
+            description:
+              'Text direction is inherited from the active locale so right-to-left content renders deterministically, while Inherit follows the surrounding context.',
+            preview: 'i18n-direction',
+            code: `@Component({
+  selector: 'app-order-reference',
+  template: \`
+    <p [attr.dir]="direction()">{{ messages.reference() }}</p>
+  \`
+})
+export class OrderReferenceComponent {
+  protected readonly messages = inject(OrderMessages);
+  // textDirection inherited from the active locale (RTL for ar, LTR otherwise)
+  readonly direction = input<'ltr' | 'rtl'>('rtl');
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Translated text is resolved from locale bundles so the same component renders different localized strings without markup changes.',
+            'The dir attribute is driven by the active locale so right-to-left content mirrors without custom CSS.',
+          ],
+          code: `.i18n-preview [dir='rtl'] {
   text-align: right;
 }`,
         },
