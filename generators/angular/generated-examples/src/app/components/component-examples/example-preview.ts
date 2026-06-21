@@ -55,4 +55,6 @@ export class ExamplePreviewComponent {
   protected readonly boundOrders = PREVIEW_ORDERS;
   protected readonly basicColumns = ['order', 'customer'];
   protected readonly statusColumns = ['order', 'status'];
+  // Rendered through interpolation so the markup is encoded and shown literally.
+  protected readonly untrustedText = '<script>alert(1)</script>';
 }
