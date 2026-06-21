@@ -1390,7 +1390,8 @@ export class OrderReferenceComponent {
         api: {
           specSection: '23. Reference Examples',
           specPath: 'spec/23-reference-examples.md',
-          purpose: 'Provide concrete reference components abstracted from upstream OpenUI5 evidence.',
+          purpose:
+            'Provide concrete reference components abstracted from upstream OpenUI5 evidence.',
           derivedFrom: ['reference-component-button'],
           points: [
             'Reference examples translate concrete upstream component evidence into implementation-neutral examples.',
