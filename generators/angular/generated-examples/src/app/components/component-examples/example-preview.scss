@@ -8,7 +8,8 @@
 .shell-preview,
 .page-preview,
 .form-preview,
-.state-preview {
+.state-preview,
+.binding-preview {
   background: var(--mat-sys-surface);
   border-radius: 0.5rem;
   box-shadow: var(--mat-sys-level1);
@@ -90,14 +91,20 @@
   width: auto;
 }
 
-.state-preview {
+.state-preview,
+.binding-preview {
   display: grid;
   gap: 1rem;
   justify-items: start;
   padding: 1rem;
 }
 
-.state-preview mat-form-field {
+.state-preview mat-form-field,
+.binding-preview mat-form-field {
+  width: 100%;
+}
+
+.binding-preview mat-list {
   width: 100%;
 }
 
@@ -152,4 +159,92 @@
   color: var(--mat-sys-on-surface-variant);
   font-family: var(--mat-sys-body-large-font, monospace);
   margin: 0;
+}
+
+.navigation-preview {
+  display: grid;
+  gap: 1rem;
+}
+
+.navigation-preview nav {
+  align-items: center;
+  background: var(--mat-sys-surface);
+  border-radius: 0.5rem;
+  box-shadow: var(--mat-sys-level1);
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.navigation-preview nav .spacer {
+  flex: 1 1 auto;
+}
+
+.navigation-overlay-preview .dialog-surface {
+  background: var(--mat-sys-surface);
+  box-shadow: var(--mat-sys-level3);
+}
+
+.navigation-overlay-preview .dialog-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.navigation-routing-preview .component-contract dt {
+  min-width: 4rem;
+}
+
+.a11y-preview {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.a11y-direction-sample {
+  background: var(--mat-sys-surface);
+  border-radius: 0.5rem;
+  box-shadow: var(--mat-sys-level1);
+  margin: 0;
+  padding: 1rem;
+  width: 100%;
+}
+
+.a11y-preview [dir='rtl'] {
+  text-align: right;
+}
+
+.feedback-preview {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.feedback-note {
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0;
+}
+
+.feedback-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--mat-sys-surface-container);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+
+.feedback-message.feedback-success {
+  color: var(--mat-sys-primary);
+}
+
+.empty-state {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: center;
+  background: var(--mat-sys-surface);
+  border: 1px dashed var(--mat-sys-outline-variant);
+  border-radius: 0.5rem;
+  color: var(--mat-sys-on-surface-variant);
+  padding: 2rem 1rem;
 }

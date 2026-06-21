@@ -59,11 +59,46 @@ describe('Component documentation routing', () => {
     expect(root.querySelector('.api-source')?.textContent).toContain('spec/08-component-model.md');
   });
 
-  it('renders the typed component contract on the Examples tab', async () => {
-    const harness = await RouterTestingHarness.create('/components/component-contract/examples');
+  it('renders the navigable container preview on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/navigation-container/examples');
     const root = harness.routeNativeElement as HTMLElement;
-    expect(root.querySelector('.component-preview')).toBeTruthy();
-    expect(root.textContent).toContain('heading: string = "Status"');
-    expect(root.textContent).toContain('liveChange: string');
+    expect(root.querySelector('h1')?.textContent).toContain('Navigation container');
+    expect(root.querySelector('.navigation-preview')).toBeTruthy();
+    expect(root.textContent).toContain('currentPage: orders');
+  });
+
+  it('sources the data-binding API tab from the data binding model spec', async () => {
+    const harness = await RouterTestingHarness.create('/components/binding');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('h1')?.textContent).toContain('Data binding');
+    expect(root.querySelector('.api-source')?.textContent).toContain(
+      'spec/11-data-binding-model.md',
+    );
+  });
+
+  it('renders property and aggregation binding previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/binding/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('.binding-preview')).toBeTruthy();
+    expect(root.textContent).toContain('path: /customer/name');
+    expect(root.textContent).toContain('kind: aggregation');
+  });
+
+  it('sources the accessibility API tab from the accessibility model spec', async () => {
+    const harness = await RouterTestingHarness.create('/components/accessible-field');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('h1')?.textContent).toContain('Accessible field');
+    expect(root.querySelector('.api-source')?.textContent).toContain(
+      'spec/15-accessibility-model.md',
+    );
+  });
+
+  it('renders the accessible naming associations on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/accessible-field/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('.a11y-preview')).toBeTruthy();
+    expect(root.querySelector('[aria-labelledby="customer-name-label"]')).toBeTruthy();
+    expect(root.querySelector('[aria-haspopup="menu"]')).toBeTruthy();
+    expect(root.querySelector('[dir="rtl"]')).toBeTruthy();
   });
 });
