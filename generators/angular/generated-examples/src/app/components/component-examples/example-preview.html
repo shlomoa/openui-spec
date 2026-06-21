@@ -148,7 +148,15 @@
           <mat-chip highlighted>valueState: Error</mat-chip>
           <mat-chip>editable: true</mat-chip>
         </mat-chip-set>
-        <button mat-raised-button color="primary" type="button" disabled>Submit</button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          disabled
+          aria-label="Submit (disabled until the form is editable and valid)"
+        >
+          Submit
+        </button>
         <p class="action-note">Submission is gated on the editable state and a valid field.</p>
       </form>
     }
