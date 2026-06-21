@@ -2205,9 +2205,105 @@
         "document": "spec/19-performance-requirements.md",
         "derivedFrom": ["library-catalog-root", "api-json-projection"],
         "requirements": [
-          "Public library catalogs should allow eager discovery of available components without eager loading every implementation detail.",
-          "Machine-readable API projections should be derivable from the same public contract used by runtime metadata.",
-          "Visual assets and behavior should support lazy or conditional loading when the public contract permits it."
+          "Public library catalogs must allow eager discovery of available components without eagerly loading every implementation detail, so applications can resolve what exists before paying the cost of loading how it works.",
+          "Machine-readable API projections must be derivable from the same public contract used by runtime metadata, so tooling consumes a generated projection instead of re-deriving the contract at runtime.",
+          "Visual assets and behavior must support lazy or conditional loading when the public contract permits it, so components defer loading work that a given view does not require.",
+          "Components that own large or unbounded collections through aggregations must support virtualization, so only the items needed for the current viewport are materialized.",
+          "Immutable public projections, such as the API projection and catalog metadata, must be cacheable by a stable identity so repeated reads avoid recomputation and refetching.",
+          "Performance-relevant behavior must be expressed through the public contract, such as a busy-indicator delay or a lazy-loading flag, rather than hidden renderer timing that applications cannot observe or control.",
+          "Performance expectations must be stated as observable, measurable budgets, such as a maximum number of initially materialized rows, rather than as renderer-specific implementation details."
+        ],
+        "nonGoals": [
+          "The performance model does not mandate specific latency numbers, frame budgets, or hardware baselines; it defines which performance behaviors are observable through the public contract, not absolute thresholds.",
+          "The performance model does not prescribe a bundler, module format, caching server, or network protocol; lazy loading and caching are expressed as contract capabilities, not transport choices.",
+          "The performance model does not replace the data-binding, component, or feedback sections; it reuses their aggregation, metadata, and busy-state contracts rather than defining new ones.",
+          "The performance model does not require every component to be lazy or virtualized; only components whose public contract permits deferred loading or owns large collections participate."
+        ],
+        "tags": [
+          {
+            "name": "eager-discovery-lazy-detail",
+            "meaning": "Public catalogs expose what components exist for eager discovery while deferring the loading of each component's implementation detail."
+          },
+          {
+            "name": "api-projection-cacheable",
+            "meaning": "The machine-readable API projection is derived from the public contract and is cacheable by a stable identity instead of recomputed at runtime."
+          },
+          {
+            "name": "lazy-conditional-loading",
+            "meaning": "Visual assets and behavior load lazily or conditionally when the public contract permits, so a view defers work it does not need."
+          },
+          {
+            "name": "aggregation-virtualization",
+            "meaning": "Components that own large or unbounded aggregations materialize only the items required for the current viewport."
+          },
+          {
+            "name": "projection-caching",
+            "meaning": "Immutable public projections such as catalog metadata and the API projection are cached by stable identity to avoid recomputation and refetching."
+          },
+          {
+            "name": "observable-performance-state",
+            "meaning": "Performance-relevant behavior such as a busy-indicator delay or lazy-loading flag is part of the public contract rather than hidden renderer timing."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Performance budget",
+            "definition": "An observable, measurable limit on a performance-relevant quantity, such as the maximum number of rows materialized before virtualization engages."
+          },
+          {
+            "term": "Eager discovery",
+            "definition": "Resolving which components, types, and interfaces a library catalog publishes without loading each component's full implementation."
+          },
+          {
+            "term": "Lazy loading",
+            "definition": "Deferring the loading of a component's assets or behavior until a view actually requires them, as permitted by the public contract."
+          },
+          {
+            "term": "Conditional loading",
+            "definition": "Loading assets or behavior only when a declared public condition, such as a property value or active route, is satisfied."
+          },
+          {
+            "term": "Virtualization",
+            "definition": "Materializing only the subset of a large or unbounded aggregation that the current viewport needs while preserving the declared child type and ordering."
+          },
+          {
+            "term": "API projection",
+            "definition": "A machine-readable serialization of the public contract derived from runtime metadata, intended to be cached and consumed by tooling."
+          },
+          {
+            "term": "Projection cache",
+            "definition": "A store keyed by the stable identity of an immutable projection so repeated reads reuse the result instead of recomputing or refetching it."
+          }
+        ],
+        "usage": [
+          "Resolve the public catalog to discover available components before loading implementations, so eager discovery stays independent of how much detail each component eventually loads.",
+          "Derive the machine-readable API projection from the public contract once and cache it by a stable identity, so tooling reads a generated artifact instead of re-deriving the contract at runtime.",
+          "Mark assets and behavior as lazily or conditionally loaded in the public contract, and defer their loading until a view needs them, while keeping the declared component identity and types intact.",
+          "Virtualize components that own large or unbounded aggregations so only the items in the current viewport are materialized, and express the materialization budget as observable public state.",
+          "Preserve performance-relevant contract members such as the busy-indicator delay, lazy-loading flags, and virtualization budgets in `/openui.json` so generators and tests can reconstruct the performance contract."
+        ],
+        "implementationNotes": [
+          "Extractors should record performance-relevant contract members such as lazy-loading flags, busy-indicator delays, and virtualization budgets as public metadata, and must not treat renderer-internal timing as normative performance behavior.",
+          "Generators should map the performance contract onto host-framework primitives, such as lazy route loading and a virtual-scroll viewport, while preserving the declared component identity, child types, and budgets.",
+          "Conformance tests should cover eager catalog discovery without full loading, derivation and caching of the API projection, lazy or conditional loading gates, and aggregation virtualization budgets."
+        ],
+        "examples": [
+          {
+            "title": "Eager discovery with lazy detail example",
+            "description": "A library catalog lists component identities and types for eager discovery while each component's full metadata is loaded lazily on demand."
+          },
+          {
+            "title": "Cacheable API projection example",
+            "description": "A machine-readable API projection is derived from the public contract and tagged with a stable version identity so it can be cached and reused instead of recomputed."
+          },
+          {
+            "title": "Aggregation virtualization budget example",
+            "description": "A component that owns an unbounded aggregation declares a virtualization budget so only the rows needed for the current viewport are materialized."
+          },
+          {
+            "title": "Generator output lazy route and virtual scroll example",
+            "description": "A generator maps the lazy-loading and virtualization contract onto a lazily loaded route and a virtual-scroll viewport that materializes only visible items."
+          }
         ]
       },
       {

@@ -290,6 +290,17 @@
   padding: 2rem 1rem;
 }
 
+.performance-preview {
+  display: grid;
+  gap: 1rem;
+}
+
+.orders-viewport {
+  block-size: 12rem;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 0.5rem;
+}
+
 .extension-slot {
   display: grid;
   gap: 0.75rem;

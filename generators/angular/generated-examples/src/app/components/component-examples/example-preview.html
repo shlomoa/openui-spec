@@ -529,6 +529,48 @@
         </div>
       </div>
     }
+    @case ('performance-lazy') {
+      <div class="performance-preview" aria-label="Generated eager-discovery preview">
+        <mat-nav-list aria-label="Eagerly discovered catalog entries">
+          <a mat-list-item href="/orders" (click)="$event.preventDefault()">
+            <mat-icon matListItemIcon aria-hidden="true">view_list</mat-icon>
+            <span matListItemTitle>Orders</span>
+            <span matListItemLine>Loaded on demand when its route activates</span>
+          </a>
+        </mat-nav-list>
+        <mat-chip-set aria-label="Lazy detail loading state">
+          <mat-chip>discovery: eager</mat-chip>
+          <mat-chip highlighted>detail: lazy</mat-chip>
+          <mat-chip>loaded: on-demand</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
+    @case ('performance-virtualization') {
+      <div class="performance-preview" aria-label="Generated aggregation virtualization preview">
+        <cdk-virtual-scroll-viewport itemSize="48" class="orders-viewport">
+          <mat-list aria-label="Virtualized orders">
+            <mat-list-item *cdkVirtualFor="let order of virtualOrders">
+              {{ order.order }} — {{ order.customer }}
+            </mat-list-item>
+          </mat-list>
+        </cdk-virtual-scroll-viewport>
+        <mat-chip-set aria-label="Virtualization budget values">
+          <mat-chip>aggregation: items</mat-chip>
+          <mat-chip highlighted>growingThreshold: 20</mat-chip>
+          <mat-chip>virtualized: true</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
+    @case ('performance-projection') {
+      <div class="performance-preview" aria-label="Generated API projection cache preview">
+        <mat-chip-set aria-label="Cacheable API projection metadata">
+          <mat-chip>catalog: sample.library</mat-chip>
+          <mat-chip highlighted>version: 1.4.0</mat-chip>
+          <mat-chip>cacheKey: sample.library&#64;1.4.0</mat-chip>
+          <mat-chip>immutable: true</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
     @case ('reference-public') {
       <div class="reference-preview">
         <button mat-raised-button color="primary" type="button">Save order</button>
