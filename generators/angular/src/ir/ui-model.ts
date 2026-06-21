@@ -1,4 +1,11 @@
-export type UiFeature = "accessibility" | "feedback" | "form" | "navigation" | "theme" | "ui-concept";
+export type UiFeature =
+  | "accessibility"
+  | "acceptance"
+  | "feedback"
+  | "form"
+  | "navigation"
+  | "theme"
+  | "ui-concept";
 
 export interface UiApplication {
   name: string;

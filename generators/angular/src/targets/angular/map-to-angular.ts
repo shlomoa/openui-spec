@@ -48,6 +48,11 @@ function mapPage(page: UiPage): AngularPageModel {
     members.push("showFeedback(): void { this.snackBar.open('OpenUI feedback action', 'Dismiss', { duration: 3000 }); }");
   }
 
+  if (page.features.includes("acceptance")) {
+    imports.add("MatChipsModule");
+    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+  }
+
   return {
     id: page.id,
     route: page.route,
@@ -87,6 +92,9 @@ function buildTemplate(page: UiPage): string {
   const feedback = page.features.includes("feedback")
     ? '\n    <button mat-raised-button color="primary" type="button" (click)="showFeedback()">Show feedback</button>'
     : "";
+  const acceptance = page.features.includes("acceptance")
+    ? '\n    <section class="acceptance-criteria" aria-label="Acceptance criteria workflow">\n      <h2>Acceptance coverage</h2>\n      <mat-chip-set aria-label="Criteria evidence types">\n        <mat-chip>Traceability matrix</mat-chip>\n        <mat-chip>Metadata projection</mat-chip>\n        <mat-chip>Runtime behavior</mat-chip>\n        <mat-chip>Visual evidence</mat-chip>\n      </mat-chip-set>\n      <mat-list aria-label="Generated acceptance checks">\n        <mat-list-item>Link each criterion to the source specification section, tag, fixture, and evidence artifact.</mat-list-item>\n        <mat-list-item>Compare runtime metadata, /openui.json, and generated API projections before emitting examples.</mat-list-item>\n        <mat-list-item>Record deterministic DOM, accessibility, or screenshot evidence for visual-facing behavior.</mat-list-item>\n      </mat-list>\n    </section>'
+    : "";
 
   return `<section class="spec-page" aria-labelledby="${titleId}">
   <mat-card>
@@ -95,7 +103,7 @@ function buildTemplate(page: UiPage): string {
       <mat-card-subtitle>${escapeHtml(page.id)}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>${escapeHtml(page.summary)}</p>${requirements}${form}${navigation}${feedback}${accessibility}
+      <p>${escapeHtml(page.summary)}</p>${requirements}${form}${navigation}${feedback}${acceptance}${accessibility}
     </mat-card-content>
   </mat-card>
 </section>
@@ -106,6 +114,9 @@ function buildStyles(page: UiPage): string {
   const themeStyles = page.features.includes("theme")
     ? "\n:host {\n  --openui-section-accent: var(--openui-theme-primary);\n}\n"
     : "";
+  const acceptanceStyles = page.features.includes("acceptance")
+    ? "\n.acceptance-criteria {\n  border: 1px solid var(--openui-theme-primary);\n  border-radius: 0.75rem;\n  margin-top: 1rem;\n  padding: 1rem;\n}\n\n.acceptance-criteria h2 {\n  margin-top: 0;\n}\n"
+    : "";
   return `.spec-page {
   display: block;
   padding: 1rem;
@@ -115,7 +126,7 @@ mat-card {
   background: var(--openui-theme-surface);
   color: var(--openui-theme-on-surface);
 }
-${themeStyles}`;
+${themeStyles}${acceptanceStyles}`;
 }
 
 function toPascalCase(value: string): string {

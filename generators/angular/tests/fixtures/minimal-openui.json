@@ -39,6 +39,14 @@
         "title": "Theming / Design Tokens",
         "purpose": "Describe reusable color, spacing, and typography tokens.",
         "requirements": ["Theme tokens map to runtime CSS custom properties."]
+      },
+      {
+        "id": "22-test-acceptance-criteria",
+        "title": "Test & Acceptance Criteria",
+        "purpose": "Describe how the specification should be verified.",
+        "requirements": [
+          "Acceptance criteria remain traceable to specification sections and evidence artifacts."
+        ]
       }
     ]
   }

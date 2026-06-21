@@ -101,4 +101,14 @@ describe('Component documentation routing', () => {
     expect(root.querySelector('[aria-haspopup="menu"]')).toBeTruthy();
     expect(root.querySelector('[dir="rtl"]')).toBeTruthy();
   });
+
+  it('renders acceptance criteria previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/acceptance-criteria/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+
+    expect(root.querySelector('h1')?.textContent).toContain('Acceptance criteria');
+    expect(root.querySelector('.acceptance-preview')).toBeTruthy();
+    expect(root.textContent).toContain('AC-METADATA-PROJECTION');
+    expect(root.textContent).toContain('generated-order-form.png');
+  });
 });

@@ -248,3 +248,16 @@
   color: var(--mat-sys-on-surface-variant);
   padding: 2rem 1rem;
 }
+
+.acceptance-preview {
+  display: grid;
+  gap: 1rem;
+}
+
+.acceptance-preview mat-card {
+  background: var(--mat-sys-surface);
+}
+
+.acceptance-preview mat-chip-set {
+  margin-top: 0.5rem;
+}
