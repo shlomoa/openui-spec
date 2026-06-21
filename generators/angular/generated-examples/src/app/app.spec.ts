@@ -36,6 +36,8 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Data & forms');
     expect(compiled.textContent).toContain('Component model');
     expect(compiled.textContent).toContain('Interaction');
+    expect(compiled.textContent).toContain('Feedback');
+    expect(compiled.textContent).toContain('Accessibility');
 
     const links = compiled.querySelectorAll('.app-sidenav a[mat-list-item]');
     expect(links.length).toBe(expectedLinks);
@@ -45,5 +47,7 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Data binding');
     expect(compiled.textContent).toContain('Component contract');
     expect(compiled.textContent).toContain('Action button');
+    expect(compiled.textContent).toContain('Status feedback');
+    expect(compiled.textContent).toContain('Accessible field');
   });
 });
