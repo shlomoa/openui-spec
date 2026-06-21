@@ -258,6 +258,52 @@
         </dl>
       </div>
     }
+    @case ('navigation-routing') {
+      <div class="navigation-preview navigation-routing-preview">
+        <dl class="component-contract">
+          <div>
+            <dt>Route</dt>
+            <dd>orders &rarr; ordersPage</dd>
+          </div>
+          <div>
+            <dt>Route</dt>
+            <dd>orders/{{ '{' }}orderId{{ '}' }} &rarr; orderPage</dd>
+          </div>
+        </dl>
+        <p class="action-note">Deep-linkable patterns resolve to navigable targets.</p>
+      </div>
+    }
+    @case ('navigation-stack') {
+      <div class="navigation-preview navigation-stack-preview">
+        <nav aria-label="Generated order navigation">
+          <button mat-button type="button" disabled>Back</button>
+          <span>Orders</span>
+          <span class="spacer"></span>
+          <button mat-button type="button">Next</button>
+        </nav>
+        <div class="router-outlet-preview">Active page: Orders</div>
+        <mat-chip-set aria-label="Navigation state values">
+          <mat-chip>pages: [orders, order-detail]</mat-chip>
+          <mat-chip highlighted>currentPage: orders</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
+    @case ('navigation-overlay') {
+      <div class="navigation-preview navigation-overlay-preview">
+        <mat-card class="dialog-surface">
+          <mat-card-title>Confirm order</mat-card-title>
+          <mat-card-content>Submit this order for processing?</mat-card-content>
+          <div class="dialog-actions">
+            <button mat-button type="button">Cancel</button>
+            <button mat-flat-button color="primary" type="button">Confirm</button>
+          </div>
+        </mat-card>
+        <mat-chip-set aria-label="Overlay state values">
+          <mat-chip highlighted>open: true</mat-chip>
+          <mat-chip>afterClose: origin</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
     @case ('a11y-labelled') {
       <div class="a11y-preview">
         <form class="form-preview" aria-label="Generated accessible name preview">

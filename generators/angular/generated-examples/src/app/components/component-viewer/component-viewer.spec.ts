@@ -59,12 +59,12 @@ describe('Component documentation routing', () => {
     expect(root.querySelector('.api-source')?.textContent).toContain('spec/08-component-model.md');
   });
 
-  it('renders the typed component contract on the Examples tab', async () => {
-    const harness = await RouterTestingHarness.create('/components/component-contract/examples');
+  it('renders the navigable container preview on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/navigation-container/examples');
     const root = harness.routeNativeElement as HTMLElement;
-    expect(root.querySelector('.component-preview')).toBeTruthy();
-    expect(root.textContent).toContain('heading: string = "Status"');
-    expect(root.textContent).toContain('liveChange: string');
+    expect(root.querySelector('h1')?.textContent).toContain('Navigation container');
+    expect(root.querySelector('.navigation-preview')).toBeTruthy();
+    expect(root.textContent).toContain('currentPage: orders');
   });
 
   it('sources the data-binding API tab from the data binding model spec', async () => {

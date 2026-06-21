@@ -1492,7 +1492,97 @@
         "requirements": [
           "The framework must support navigable page containers, dialogs, and shell-level composition primitives.",
           "Navigation state must be expressible as public component state and events rather than hidden renderer behavior.",
-          "Route-aware or deep-linkable components should be discoverable from the public component catalog."
+          "Route-aware or deep-linkable components should be discoverable from the public component catalog.",
+          "Navigable containers must own their pages through a public aggregation and expose the active page as public state addressable by id or reference.",
+          "Navigation transitions and overlay dismissal must carry typed parameters such as the source page, target page, route name, and arguments so consumers can react without inspecting renderer internals."
+        ],
+        "nonGoals": [
+          "The navigation model does not define a specific router implementation, URL syntax, or browser history API; it constrains the public navigation contract, not the routing engine.",
+          "The navigation model does not prescribe transition animations, DOM structure, or CSS used to realize a navigation.",
+          "The navigation model does not require every container to expose deep-linkable routes; routing is layered onto the navigable-container contract only when an application needs addressable state."
+        ],
+        "tags": [
+          {
+            "name": "navigable-container",
+            "meaning": "Navigable page containers own an ordered set of pages and move between them through public navigation methods and events."
+          },
+          {
+            "name": "navigation-events",
+            "meaning": "Navigation transitions are reported through public events such as navigate and afterNavigate rather than hidden renderer behavior."
+          },
+          {
+            "name": "overlay-navigation",
+            "meaning": "Dialogs and popovers provide transient modal or contextual surfaces whose open and close state is part of the public contract."
+          },
+          {
+            "name": "shell-composition",
+            "meaning": "Shell-level primitives compose application chrome such as header, side navigation, and content area around navigable containers."
+          },
+          {
+            "name": "route-deep-linking",
+            "meaning": "Route-aware components map URL patterns to navigation targets so application state is deep-linkable and discoverable in the public component catalog."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Navigation container",
+            "definition": "A component that owns an ordered set of pages through a public aggregation and exposes public operations and events to move between them."
+          },
+          {
+            "term": "Page",
+            "definition": "A navigable content unit held in a navigation container's aggregation and addressed by id or reference."
+          },
+          {
+            "term": "Navigation event",
+            "definition": "A public event a container emits before or after a transition, such as navigate or afterNavigate, carrying the source and target page as typed parameters."
+          },
+          {
+            "term": "Overlay",
+            "definition": "A transient navigation surface such as a dialog or popover whose visibility is controlled by public open and close operations and an open state property."
+          },
+          {
+            "term": "Shell",
+            "definition": "A top-level composition primitive that arranges application chrome and hosts navigable containers and routed content."
+          },
+          {
+            "term": "Route",
+            "definition": "A pattern that binds a URL fragment to a navigation target so a navigation state is addressable and deep-linkable."
+          },
+          {
+            "term": "Target",
+            "definition": "The page, view, or component a route resolves to when its pattern matches."
+          }
+        ],
+        "usage": [
+          "Model multi-page flows with a navigable container that exposes its pages as a public aggregation and its current page as public state, rather than swapping DOM behind a private renderer.",
+          "Expose navigation as public methods such as `to` and `back` and public events such as `navigate` and `afterNavigate` so applications and generators can both observe and drive transitions.",
+          "Represent dialogs and popovers as overlay components with public open and close operations and an open state property, and report dismissal through public events such as `afterClose`.",
+          "Compose shell-level chrome with a shell or tool-page primitive that hosts a side navigation, a header, and a routed content area built from navigable containers.",
+          "Bind deep-linkable navigation to routes by mapping URL patterns to targets, and keep route-aware components discoverable in the public component catalog.",
+          "Preserve typed navigation parameters such as source page, target page, route name, and arguments when normalizing metadata into `/openui.json` so tooling can reconstruct the navigation contract."
+        ],
+        "implementationNotes": [
+          "Extraction pipelines should preserve container page aggregations, current-page state, navigation events and their typed parameters, and overlay open and close contracts in the canonical model.",
+          "Generator pipelines should map navigable containers to framework routing or stack constructs such as Angular Router outlets while keeping navigation events and overlay state observable through public APIs.",
+          "Validation tooling should verify that navigation transitions and overlay visibility are reachable through public state and events, and that route-aware components appear in the public component catalog."
+        ],
+        "examples": [
+          {
+            "title": "Navigable page container example",
+            "description": "A navigation container owns its pages through a public 0..n aggregation and identifies the active page through a currentPage association."
+          },
+          {
+            "title": "Navigation events example",
+            "description": "A container reports each transition through public navigate and afterNavigate events whose typed from, to, and direction parameters let consumers react without inspecting renderer internals."
+          },
+          {
+            "title": "Overlay navigation example",
+            "description": "A dialog overlay exposes visibility as public open state and reports open and dismissal transitions through afterOpen and afterClose events."
+          },
+          {
+            "title": "Shell composition and deep-linking example",
+            "description": "A shell-level tool page composes header, side navigation, and navigable containers while routing maps URL patterns to targets so the navigation state stays deep-linkable."
+          }
         ]
       },
       {
