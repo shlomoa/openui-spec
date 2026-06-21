@@ -1385,9 +1385,86 @@
         "document": "spec/11-data-binding-model.md",
         "derivedFrom": ["property-model", "aggregation-model"],
         "requirements": [
-          "Bindable properties and aggregations are part of the component contract and must be explicitly declared.",
-          "Bindings may target scalar properties or compositional collections depending on the metadata kind.",
-          "Async model updates must preserve declared property and aggregation types."
+          "Bindable properties and aggregations are part of the component contract and must be explicitly declared with a bindable flag.",
+          "Bindings may target scalar properties or compositional collections depending on the metadata kind: property bindings connect a single typed value, while aggregation bindings connect a model collection to an owned aggregation through a template.",
+          "Every binding resolves against a model and an addressable path within that model; a binding may use the default model or a named model.",
+          "Async or reactive model updates must preserve the declared property and aggregation types so bound values stay compatible with the component contract.",
+          "Members that are not declared bindable, or that are hidden, are not part of the public binding contract and must not be relied on as binding targets."
+        ],
+        "nonGoals": [
+          "The data binding model does not standardize a single model implementation, query language, or transport protocol such as JSON, OData, or REST.",
+          "The data binding model does not define expression-language grammar, formatter syntax, or two-way change-detection internals; it only requires that updates preserve declared types.",
+          "The data binding model does not describe form-level validation or submission semantics, which belong to the form model, nor renderer or DOM details used to display bound values."
+        ],
+        "tags": [
+          {
+            "name": "bindable-contract",
+            "meaning": "Only metadata members explicitly declared bindable participate in the public data binding contract."
+          },
+          {
+            "name": "property-binding",
+            "meaning": "A property binding connects a single addressable model value to one typed, scalar property."
+          },
+          {
+            "name": "aggregation-binding",
+            "meaning": "An aggregation binding connects a model collection to an owned aggregation by repeating a template for each entry."
+          },
+          {
+            "name": "binding-path-context",
+            "meaning": "Every binding resolves a path against a default or named model, optionally relative to a binding context."
+          },
+          {
+            "name": "type-preserving-updates",
+            "meaning": "Async or reactive model updates must keep bound values compatible with the declared property and aggregation types."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Binding",
+            "definition": "A declared connection between a bindable component member and a value or collection addressed in a model."
+          },
+          {
+            "term": "Model",
+            "definition": "An external, addressable source of state that a binding reads from and, for two-way bindings, writes back to."
+          },
+          {
+            "term": "Binding path",
+            "definition": "The address, optionally qualified by a model name and relative to a binding context, that selects the value or collection a binding targets."
+          },
+          {
+            "term": "Property binding",
+            "definition": "A binding whose target is a single scalar property and whose value must remain compatible with the declared property type."
+          },
+          {
+            "term": "Aggregation binding",
+            "definition": "A binding whose target is an owned aggregation, expanding a model collection into child instances through a declared template while preserving the aggregation's child type and multiplicity."
+          }
+        ],
+        "usage": [
+          "Declare a property or aggregation as bindable in metadata before treating it as a binding target; non-bindable and hidden members are not part of the binding contract.",
+          "Bind scalar configuration values, such as `text`, `value`, or `selected`, with property bindings, and bind owned collections, such as `items` or `content`, with aggregation bindings driven by a template.",
+          "Qualify each binding path with the default model or an explicit named model, and resolve relative paths against the active binding context so list templates address per-entry values.",
+          "Preserve the declared metadata type when normalizing bindings into `/openui.json`: record the bound member, its kind (property or aggregation), the bindable flag, the model, and the path so generators can reconstruct the binding.",
+          "Keep binding semantics separate from interaction and state: a binding describes where a value comes from, while events describe transitions and state describes the current condition, and async updates must not change the declared type."
+        ],
+        "implementationNotes": [
+          "Extraction pipelines should record the bindable flag on properties and aggregations, the model name (default or named), the binding path, and the binding kind so the canonical model captures the full binding contract.",
+          "Generator pipelines should map property bindings to typed framework inputs or bindings and aggregation bindings to template-driven repetition over a typed collection, omitting non-bindable and hidden members from generated binding APIs.",
+          "Validation tooling should verify that bound scalar values stay compatible with the declared property type, that aggregation bindings preserve the child type and multiplicity, and that async updates never violate the declared types."
+        ],
+        "examples": [
+          {
+            "title": "Scalar property binding example",
+            "description": "An input binds its scalar text value to a single model path so the bound value stays compatible with the declared string property type."
+          },
+          {
+            "title": "Aggregation list binding example",
+            "description": "A list binds an owned items aggregation to a model collection, expanding a template for each entry while preserving the child type and multiplicity."
+          },
+          {
+            "title": "Type-preserving async update example",
+            "description": "A named model delivers an asynchronous update that keeps the bound property compatible with its declared type so the component contract is never violated."
+          }
         ]
       },
       {
@@ -1517,7 +1594,104 @@
         "requirements": [
           "The framework must expose components for busy, message, dialog, and empty-state feedback patterns.",
           "Feedback components must be addressable through the same public metadata contract as all other components.",
-          "Action completion, failure, and warning scenarios must be representable through public events and state."
+          "Action completion, failure, and warning scenarios must be representable through public events and state.",
+          "Busy and loading feedback must be modeled as public component state, such as a busy property and an optional busy-indicator delay, rather than hidden renderer behavior.",
+          "Message feedback must declare a semantic severity (information, success, warning, or error) so applications and assistive technology can convey outcome meaning.",
+          "Dialog-based feedback must expose owned content aggregations and public confirm and cancel action events so the resolution of a blocking decision is observable.",
+          "Empty-state feedback must be a public, addressable component that communicates the absence of data and any optional recovery actions.",
+          "Feedback components must declare accessibility live-region semantics so outcomes are announced to assistive technology without custom DOM scripting."
+        ],
+        "nonGoals": [
+          "The feedback model does not prescribe a specific renderer, animation, timing curve, or visual styling for feedback surfaces.",
+          "The feedback model does not define application-specific message text, severity thresholds, or business rules for when feedback is triggered.",
+          "The feedback model does not replace the interaction, state, accessibility, or component-model sections; it reuses their contracts for events, state, live regions, and public metadata."
+        ],
+        "tags": [
+          {
+            "name": "busy-state-feedback",
+            "meaning": "Busy and loading feedback is modeled as public component state, such as a busy property and busy-indicator delay, instead of hidden renderer behavior."
+          },
+          {
+            "name": "message-severity",
+            "meaning": "Message feedback declares a semantic severity (information, success, warning, or error) that conveys the outcome meaning of an action."
+          },
+          {
+            "name": "dialog-feedback-contract",
+            "meaning": "Dialog feedback exposes owned content aggregations and public confirm and cancel events for resolving blocking decisions."
+          },
+          {
+            "name": "empty-state-feedback",
+            "meaning": "Empty-state feedback is a public, addressable component that communicates the absence of data and optional recovery actions."
+          },
+          {
+            "name": "feedback-live-region",
+            "meaning": "Feedback components declare accessibility live-region semantics so outcomes are announced to assistive technology."
+          },
+          {
+            "name": "outcome-event-state",
+            "meaning": "Action completion, failure, and warning outcomes are representable through public events and public state."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Feedback component",
+            "definition": "A public, catalog-addressable component whose purpose is to communicate the status or outcome of an operation to the user."
+          },
+          {
+            "term": "Busy state",
+            "definition": "A public boolean component state indicating that an operation is in progress and that interaction with the affected region is suspended."
+          },
+          {
+            "term": "Message",
+            "definition": "A feedback notification carrying a severity and text that reports the outcome of an action to the user."
+          },
+          {
+            "term": "Severity",
+            "definition": "The semantic level of a message, one of information, success, warning, or error."
+          },
+          {
+            "term": "Dialog feedback",
+            "definition": "A modal feedback component that owns its content through aggregations and resolves a blocking decision through public confirm and cancel events."
+          },
+          {
+            "term": "Empty state",
+            "definition": "A feedback component that communicates the absence of data and may offer recovery actions."
+          },
+          {
+            "term": "Live region",
+            "definition": "An accessibility contract describing how a feedback component's updates are announced, such as polite or assertive politeness."
+          }
+        ],
+        "usage": [
+          "Model loading and in-flight operations through a public busy state instead of hidden spinners, and pair long operations with a busy-indicator delay to avoid flicker.",
+          "Choose message severity from the outcome of an action: success for completion, warning for recoverable issues, error for failure, and information for neutral status.",
+          "Use dialog feedback for blocking decisions that must be resolved before continuing, and expose the resolution through public confirm and cancel events.",
+          "Use empty-state feedback when a data region has no content, and offer a recovery action so the user can proceed.",
+          "Declare live-region politeness and roles in metadata so transient messages are announced by assistive technology without custom DOM scripting.",
+          "Reuse existing contracts: feedback events follow the interaction model, busy follows the state model, and announcements follow the accessibility model."
+        ],
+        "implementationNotes": [
+          "Implementations should publish feedback components such as busy indicators, message or snackbar surfaces, dialogs, and empty states through the same public catalog as other components so generators and validators can enumerate them.",
+          "Busy, severity, and live-region semantics should be declared as public metadata so the feedback contract can be interpreted without inspecting renderer internals.",
+          "Generator pipelines should map busy state to a loading affordance, message severity to host notification roles, dialog confirm and cancel to output handlers, and empty state to a no-data view."
+        ],
+        "examples": [
+          {
+            "title": "Busy-state feedback example",
+            "description": "A container that exposes a public busy boolean and a busyIndicatorDelay property models in-flight work as state, so applications toggle busy rather than depending on hidden renderer spinners."
+          },
+          {
+            "title": "Message severity example",
+            "description": "A message that declares a severity of success, warning, error, or information together with text and a live-region politeness conveys an action outcome with semantics that assistive technology can announce."
+          },
+          {
+            "title": "Dialog confirmation feedback example",
+            "description": "A confirmation dialog that owns its content through aggregations and exposes confirm and cancel events resolves a blocking decision through public outputs rather than renderer-specific callbacks."
+          },
+          {
+            "title": "Generator empty-state and notification example",
+            "description": "A generated empty-state view and a severity-mapped notification show how the busy, message, and empty-state feedback contracts map to a host framework while preserving live-region semantics and the enabled action gate."
+          }
         ]
       },
       {
@@ -1533,7 +1707,91 @@
         "requirements": [
           "Components must support accessible naming and description relationships through public associations or equivalent metadata.",
           "Accessibility roles, popup semantics, and text direction must be declarable as typed public state when applicable.",
-          "Keyboard activation and focus behavior are compliance-relevant parts of the interaction contract."
+          "Keyboard activation and focus behavior are compliance-relevant parts of the interaction contract.",
+          "Accessible naming relationships use non-owning associations such as `ariaLabelledBy` and `ariaDescribedBy`, so a control can reference labelling or describing controls without owning them.",
+          "The accessible name and accessible description are computed from public metadata first, falling back to associated controls, owned text, and finally a literal `tooltip` or label property when no association is present.",
+          "Roles, landmark semantics, and popup semantics such as `ariaHasPopup` must be exposed as typed public state so assistive technology receives the same intent the application declared.",
+          "Text direction must be a declarable public property with `LTR`, `RTL`, and `Inherit` values so bidirectional content renders predictably without reading renderer internals.",
+          "Action controls must remain operable through keyboard activation and expose a visible, ordered focus target so pointer and keyboard users reach the same public interaction contract."
+        ],
+        "nonGoals": [
+          "The accessibility model does not redefine ARIA roles, states, or properties; it maps the public contract onto the established accessibility semantics rather than inventing new ones.",
+          "The accessibility model does not standardize private renderer markup, generated DOM attribute order, or platform screen-reader announcement wording.",
+          "The accessibility model does not replace the interaction, form, navigation, or feedback rules, but it constrains how those contracts expose names, roles, focus, and direction to assistive technology."
+        ],
+        "tags": [
+          {
+            "name": "accessible-name-association",
+            "meaning": "`ariaLabelledBy` and `ariaDescribedBy` are non-owning associations that supply the accessible name and description from other controls."
+          },
+          {
+            "name": "semantic-role-state",
+            "meaning": "Roles and landmark semantics are declared as typed public state rather than inferred from renderer markup."
+          },
+          {
+            "name": "popup-semantics",
+            "meaning": "Controls that open overlays declare popup semantics such as `ariaHasPopup` so assistive technology can announce the expandable relationship."
+          },
+          {
+            "name": "text-direction",
+            "meaning": "Text direction is a declarable public property with `LTR`, `RTL`, and `Inherit` values for bidirectional content."
+          },
+          {
+            "name": "keyboard-focus-contract",
+            "meaning": "Keyboard activation and focus order are part of the public, compliance-relevant interaction contract."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Accessible name",
+            "definition": "The short label exposed to assistive technology, computed from `ariaLabelledBy` associations, owned text, or a literal label property when no association is present."
+          },
+          {
+            "term": "Accessible description",
+            "definition": "Supplementary text exposed to assistive technology through `ariaDescribedBy` associations or an equivalent description property."
+          },
+          {
+            "term": "Labelling association",
+            "definition": "A non-owning association such as `ariaLabelledBy` that references other controls supplying the accessible name without taking ownership of them."
+          },
+          {
+            "term": "Semantic role",
+            "definition": "Typed public state declaring the role, landmark, or popup semantics that assistive technology should report for the control."
+          },
+          {
+            "term": "Text direction",
+            "definition": "A public property declaring `LTR`, `RTL`, or `Inherit` so bidirectional text renders deterministically from the public contract."
+          }
+        ],
+        "usage": [
+          "Provide an accessible name through an `ariaLabelledBy` association when a visible label control exists, and reserve literal label or `tooltip` properties for controls that have no on-screen labelling control.",
+          "Attach supplementary help, hint, or error text through `ariaDescribedBy` associations so the description stays linked to the control even when the text moves in the layout.",
+          "Declare roles, landmark semantics, and popup semantics such as `ariaHasPopup` as typed public state so generators emit the correct ARIA attributes without inspecting renderer internals.",
+          "Set `textDirection` to `Inherit` by default and only override it to `RTL` or `LTR` for content whose direction differs from the surrounding context.",
+          "Keep keyboard activation equivalent to pointer activation for action controls, preserve a logical focus order, and ensure disabled controls drop out of the focus order in line with the interaction model enabled gate."
+        ],
+        "implementationNotes": [
+          "Extractors should normalize accessibility associations and typed role, popup, and direction state from control metadata instead of scraping rendered ARIA attributes.",
+          "Generators should map labelling and describing associations to `aria-labelledby` and `aria-describedby`, and typed role, popup, and direction state to their corresponding ARIA attributes while preserving the enabled focus gate.",
+          "Conformance tests should cover accessible name and description computation, role and popup semantics, text-direction handling, and keyboard activation equivalence for action controls."
+        ],
+        "examples": [
+          {
+            "title": "Accessible name and description associations example",
+            "description": "An input references a label control through `ariaLabelledBy` and a hint control through `ariaDescribedBy`, computing its accessible name and description from non-owning associations."
+          },
+          {
+            "title": "Role and popup semantics example",
+            "description": "A button declares its role and `ariaHasPopup` semantics as typed public state so assistive technology announces that activation opens a menu."
+          },
+          {
+            "title": "Text direction property example",
+            "description": "A text control declares `textDirection` of `RTL` so bidirectional content renders deterministically, while the default `Inherit` follows the surrounding context."
+          },
+          {
+            "title": "Generator accessibility binding example",
+            "description": "A generator maps labelling and describing associations to `aria-labelledby` and `aria-describedby`, preserving the accessible name and description from the public contract."
+          }
         ]
       },
       {

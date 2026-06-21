@@ -16,6 +16,8 @@ export type ExamplePreview =
   | 'form-filter'
   | 'state-public'
   | 'state-derived'
+  | 'binding-property'
+  | 'binding-aggregation'
   | 'action-enabled'
   | 'action-disabled'
   | 'component-properties'
@@ -23,7 +25,13 @@ export type ExamplePreview =
   | 'component-events'
   | 'navigation-stack'
   | 'navigation-overlay'
-  | 'navigation-routing';
+  | 'navigation-routing'
+  | 'feedback-busy'
+  | 'feedback-message'
+  | 'feedback-empty'
+  | 'a11y-labelled'
+  | 'a11y-popup'
+  | 'a11y-direction';
 
 /** A single runnable example shown on a component's "Examples" tab. */
 export interface DocExample {
@@ -303,8 +311,8 @@ export class CatalogPage {
           derivedFrom: ['property-model', 'aggregation-model'],
           points: [
             'Bindable properties and aggregations are part of the component contract and must be explicitly declared.',
-            'Bindings may target scalar properties or compositional collections depending on the metadata kind.',
-            'Async model updates must preserve declared property and aggregation types.',
+            'Aggregation bindings connect a model collection to an owned aggregation by repeating a template for each entry.',
+            'Async model updates must preserve the declared property and aggregation types.',
           ],
           jsonMapping: 'specification.sections[10] in /openui.json',
         },
@@ -563,6 +571,82 @@ export class AmountInputComponent {
 
 mat-form-field {
   width: 100%;
+}`,
+        },
+      },
+      {
+        id: 'binding',
+        name: 'Data binding',
+        summary:
+          'Bindable properties become single-value bindings and bindable aggregations become template-driven list bindings, while async updates preserve the declared types.',
+        api: {
+          specSection: '11. Data Binding Model',
+          specPath: 'spec/11-data-binding-model.md',
+          purpose: 'Describe how component state binds to external models.',
+          derivedFrom: ['property-model', 'aggregation-model'],
+          points: [
+            'Only metadata members explicitly declared bindable participate in the public data binding contract.',
+            'Property bindings connect one model value to a typed scalar property; aggregation bindings expand a model collection through a template.',
+            'Every binding resolves a path against a default or named model, and async updates must keep bound values type-compatible.',
+          ],
+          jsonMapping: 'specification.sections[10] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'binding-property',
+            title: 'Scalar property binding',
+            description:
+              'A bindable scalar property is connected to a single model path, so the bound value stays compatible with the declared string type.',
+            preview: 'binding-property',
+            code: `@Component({
+  selector: 'app-customer-name',
+  imports: [MatFormFieldModule, MatInputModule],
+  template: \`
+    <mat-form-field appearance="outline">
+      <mat-label>Customer name</mat-label>
+      <input matInput [value]="value()" readonly />
+    </mat-form-field>
+  \`
+})
+export class CustomerNameComponent {
+  // Bound to the "/customer/name" path of the orders model.
+  readonly value = input('');
+}`,
+          },
+          {
+            id: 'binding-aggregation',
+            title: 'Aggregation list binding',
+            description:
+              'A bindable aggregation is bound to a model collection and a template is repeated per entry, preserving the child type and 0..n multiplicity.',
+            preview: 'binding-aggregation',
+            code: `@Component({
+  selector: 'app-orders-list',
+  imports: [MatListModule],
+  template: \`
+    <mat-list aria-label="Bound orders">
+      @for (order of items(); track order.id) {
+        <mat-list-item>{{ order.title }}</mat-list-item>
+      }
+    </mat-list>
+  \`
+})
+export class OrdersListComponent {
+  // Bound to the "/orders" collection of the orders model.
+  readonly items = input<readonly OrderItem[]>([]);
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Property bindings reuse Material form fields so the bound scalar value is presented with the standard input styling.',
+            'List bindings render through mat-list so each templated entry keeps consistent Material spacing and dividers.',
+          ],
+          code: `mat-form-field {
+  width: 100%;
+}
+
+mat-list[aria-label='Bound orders'] mat-list-item {
+  font-variant-numeric: tabular-nums;
 }`,
         },
       },
@@ -909,6 +993,234 @@ export class ConfirmDialogComponent {
 
 .navigation-routing-preview code {
   font-family: var(--mat-sys-body-large-font, monospace);
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'feedback',
+    name: 'Feedback',
+    summary:
+      'User-visible feedback patterns the generator emits: busy state, severity messages, and empty states.',
+    items: [
+      {
+        id: 'feedback',
+        name: 'Status feedback',
+        summary:
+          'Busy state, severity-typed messages, and empty states map to public component state and live-region semantics instead of hidden renderer behavior.',
+        api: {
+          specSection: '14. Feedback Model',
+          specPath: 'spec/14-feedback-model.md',
+          purpose: 'Define how user-visible feedback is modeled.',
+          derivedFrom: ['library-component-catalog', 'event-model'],
+          points: [
+            'Busy and loading feedback is modeled as public component state, such as a busy property and a busy-indicator delay.',
+            'Message feedback declares a semantic severity (information, success, warning, or error) with live-region politeness.',
+            'Empty-state feedback is a public, addressable view that communicates absent data and offers a recovery action.',
+          ],
+          jsonMapping: 'specification.sections[13] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'feedback-busy',
+            title: 'Busy-state feedback',
+            description:
+              'The public busy state drives a loading affordance while work is in flight, so applications toggle state instead of injecting renderer spinners.',
+            preview: 'feedback-busy',
+            code: `@Component({
+  selector: 'app-orders-view',
+  imports: [MatProgressBarModule],
+  template: \`
+    @if (busy()) {
+      <mat-progress-bar mode="indeterminate" aria-label="Loading orders" />
+    }
+  \`
+})
+export class OrdersViewComponent {
+  // property busy: boolean = false (bindable)
+  protected readonly busy = signal(false);
+}`,
+          },
+          {
+            id: 'feedback-message',
+            title: 'Severity message and live region',
+            description:
+              'A severity-typed message announces an action outcome through a polite live region so assistive technology conveys the result.',
+            preview: 'feedback-message',
+            code: `@Component({
+  selector: 'app-save-status',
+  imports: [MatButtonModule, MatSnackBarModule],
+  template: \`
+    <button mat-raised-button color="primary" type="button" (click)="save()">
+      Save order
+    </button>
+  \`
+})
+export class SaveStatusComponent {
+  constructor(private readonly snackBar: MatSnackBar) {}
+
+  save(): void {
+    // severity: success -> polite live-region announcement
+    this.snackBar.open('Order saved', undefined, { politeness: 'polite' });
+  }
+}`,
+          },
+          {
+            id: 'feedback-empty',
+            title: 'Empty state with recovery action',
+            description:
+              'When a data region has no content, the public empty-state view communicates the absence of data and offers a recovery action.',
+            preview: 'feedback-empty',
+            code: `@Component({
+  selector: 'app-orders-view',
+  imports: [MatButtonModule],
+  template: \`
+    @if (orders().length === 0) {
+      <div class="empty-state" role="status">
+        <p>No orders found.</p>
+        <button mat-stroked-button type="button" (click)="createOrder()">
+          Create order
+        </button>
+      </div>
+    }
+  \`
+})
+export class OrdersEmptyComponent {
+  protected readonly orders = signal<readonly Order[]>([]);
+
+  createOrder(): void {
+    // Recovery action that lets the user proceed from the empty state.
+  }
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'The busy indicator reuses the Material progress bar so loading feedback inherits the configured theme.',
+            'Severity messages and the empty state use Material system color roles so outcome meaning stays perceivable.',
+          ],
+          code: `.feedback-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.empty-state {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  padding: 2rem 1rem;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'accessibility',
+    name: 'Accessibility',
+    summary:
+      'Accessible naming, role and popup semantics, and text direction the generator emits as part of the public contract.',
+    items: [
+      {
+        id: 'accessible-field',
+        name: 'Accessible field',
+        summary:
+          'A control computes its accessible name and description from non-owning associations, declares role and popup semantics as typed state, and exposes a typed text direction.',
+        api: {
+          specSection: '15. Accessibility Model',
+          specPath: 'spec/15-accessibility-model.md',
+          purpose: 'Capture accessibility requirements visible in the public contract.',
+          derivedFrom: ['association-model', 'reference-component-button', 'renderer-dnd-model'],
+          points: [
+            'ariaLabelledBy and ariaDescribedBy are non-owning associations that supply the accessible name and description from other controls.',
+            'Roles and popup semantics such as ariaHasPopup are declared as typed public state rather than inferred from renderer markup.',
+            'Text direction is a declarable public property with LTR, RTL, and Inherit values for bidirectional content.',
+            'Keyboard activation and focus order are part of the public, compliance-relevant interaction contract.',
+          ],
+          jsonMapping: 'specification.sections[14] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'a11y-labelled',
+            title: 'Accessible name and description associations',
+            description:
+              'The labelling and describing associations map to aria-labelledby and aria-describedby so the accessible name and description come from other controls.',
+            preview: 'a11y-labelled',
+            code: `@Component({
+  selector: 'app-customer-name',
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  template: \`
+    <mat-form-field appearance="outline">
+      <mat-label id="customer-name-label">Customer name</mat-label>
+      <input
+        matInput
+        [formControl]="customerName"
+        [attr.aria-labelledby]="'customer-name-label'"
+        [attr.aria-describedby]="'customer-name-hint'"
+      />
+      <mat-hint id="customer-name-hint">Use the registered legal name.</mat-hint>
+    </mat-form-field>
+  \`
+})
+export class CustomerNameComponent {
+  protected readonly customerName = new FormControl('', { nonNullable: true });
+}`,
+          },
+          {
+            id: 'a11y-popup',
+            title: 'Role and popup semantics',
+            description:
+              'A button declares its role and ariaHasPopup semantics as typed state so assistive technology announces that activation opens a menu.',
+            preview: 'a11y-popup',
+            code: `@Component({
+  selector: 'app-order-actions',
+  imports: [MatButtonModule, MatMenuModule],
+  template: \`
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      [matMenuTriggerFor]="menu"
+      aria-haspopup="menu"
+    >
+      Order actions
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item type="button">Duplicate</button>
+      <button mat-menu-item type="button">Cancel order</button>
+    </mat-menu>
+  \`
+})
+export class OrderActionsComponent {}`,
+          },
+          {
+            id: 'a11y-direction',
+            title: 'Typed text direction',
+            description:
+              'The textDirection property maps to the dir attribute so bidirectional content renders deterministically, while Inherit follows the surrounding context.',
+            preview: 'a11y-direction',
+            code: `@Component({
+  selector: 'app-order-reference',
+  template: \`
+    <p [attr.dir]="textDirection()">{{ text() }}</p>
+  \`
+})
+export class OrderReferenceComponent {
+  // property text: string
+  readonly text = input<string>('מספר הזמנה 1000123');
+  // property textDirection: 'ltr' | 'rtl' | 'auto' (Inherit)
+  readonly textDirection = input<'ltr' | 'rtl' | 'auto'>('rtl');
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Material form fields expose mat-label and mat-hint so the accessible name and description stay visible and linked.',
+            'The dir attribute drives bidirectional layout so right-to-left content mirrors without custom CSS.',
+          ],
+          code: `.a11y-preview [dir='rtl'] {
+  text-align: right;
 }`,
         },
       },
