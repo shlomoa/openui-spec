@@ -50,7 +50,10 @@ export type ExamplePreview =
   | 'compliance-evidence'
   | 'acceptance-traceability'
   | 'acceptance-projection'
-  | 'acceptance-evidence';
+  | 'acceptance-evidence'
+  | 'security-encoding'
+  | 'security-masking'
+  | 'security-confirmation';
 
 /** A single runnable example shown on a component's "Examples" tab. */
 export interface DocExample {
@@ -1923,6 +1926,158 @@ await expect(page).toHaveScreenshot('generated-order-form.png');`,
 
 .acceptance-preview mat-chip-set {
   margin-top: 0.5rem;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'security',
+    name: 'Security & privacy',
+    summary:
+      'Safe rendering, sensitive-value masking, and confirmation and permission gating the generator emits to keep the security contract explicit.',
+    items: [
+      {
+        id: 'security-controls',
+        name: 'Security controls',
+        summary:
+          'Untrusted text and URLs are encoded and validated, sensitive values are masked by default, and irreversible actions are gated by confirmation and permission state instead of unsafe renderer side effects.',
+        api: {
+          specSection: '18. Security / Privacy UI Rules',
+          specPath: 'spec/18-security-privacy-ui-rules.md',
+          purpose: 'State UI-facing security and privacy constraints.',
+          derivedFrom: ['renderer-dnd-model', 'reference-component-button'],
+          points: [
+            'User-visible semantics come from the public contract and encoded values, never from unsafe renderer side effects such as injecting unescaped HTML.',
+            'User-provided text is encoded and user-provided URLs are validated against an allow list of permitted schemes before they affect rendering.',
+            'Sensitive values are presented through a public masking mode that defaults to masked so the rendered output does not disclose the underlying value.',
+            'Irreversible actions request explicit confirmation, and permission-driven visibility removes a restricted action and its popup target from the contract.',
+          ],
+          jsonMapping: 'specification.sections[17] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'security-encoding',
+            title: 'Safe rendering of untrusted text and URLs',
+            description:
+              'Untrusted text is bound through interpolation so markup is shown literally, and a user-provided URL is validated against an allow list before it reaches the rendered href.',
+            preview: 'security-encoding',
+            code: `@Component({
+  selector: 'app-order-note',
+  imports: [],
+  template: \`
+    <!-- Interpolation encodes the value: <script> is shown, not executed. -->
+    <p>{{ note() }}</p>
+    @if (safeHref()) {
+      <a [href]="safeHref()" rel="noopener">Reference</a>
+    }
+  \`
+})
+export class OrderNoteComponent {
+  readonly note = input('<script>alert(1)</script>');
+  readonly href = input('javascript:alert(1)');
+
+  // URL allow list: only http, https, and mailto schemes are bindable.
+  protected readonly safeHref = computed(() => {
+    try {
+      const url = new URL(this.href(), location.origin);
+      return ['http:', 'https:', 'mailto:'].includes(url.protocol)
+        ? url.href
+        : null;
+    } catch {
+      return null;
+    }
+  });
+}`,
+          },
+          {
+            id: 'security-masking',
+            title: 'Sensitive-value masking',
+            description:
+              'A sensitive value is rendered through a masked input mode that defaults to masked, so the value is not disclosed until the user explicitly reveals it.',
+            preview: 'security-masking',
+            code: `@Component({
+  selector: 'app-api-token',
+  imports: [MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule],
+  template: \`
+    <mat-form-field appearance="outline">
+      <mat-label>API token</mat-label>
+      <input matInput [type]="masked() ? 'password' : 'text'" [value]="value()" readonly />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        [attr.aria-label]="masked() ? 'Reveal token' : 'Hide token'"
+        (click)="masked.set(!masked())"
+      >
+        <mat-icon>{{ masked() ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+    </mat-form-field>
+  \`
+})
+export class ApiTokenComponent {
+  readonly value = input('S3cret-Token');
+  // masked defaults to true: the value is hidden until explicitly revealed.
+  protected readonly masked = signal(true);
+}`,
+          },
+          {
+            id: 'security-confirmation',
+            title: 'Confirmation and permission gating',
+            description:
+              'An irreversible action declares its popup disclosure and runs only after explicit confirmation, while a denied permission omits the control entirely instead of disabling it.',
+            preview: 'security-confirmation',
+            code: `@Component({
+  selector: 'app-delete-order',
+  imports: [MatButtonModule, MatDialogModule],
+  template: \`
+    @if (canDelete()) {
+      <button
+        mat-raised-button
+        color="warn"
+        type="button"
+        aria-haspopup="dialog"
+        (click)="requestDelete()"
+      >
+        Delete order
+      </button>
+    }
+  \`
+})
+export class DeleteOrderComponent {
+  // Permission gate: the restricted action is omitted, not just disabled.
+  readonly canDelete = input(false);
+
+  private readonly dialog = inject(MatDialog);
+
+  requestDelete(): void {
+    // Confirmation contract: deletion runs only after explicit confirmation.
+    this.dialog
+      .open(ConfirmDeleteDialogComponent)
+      .afterClosed()
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this.deleteOrder();
+        }
+      });
+  }
+
+  private deleteOrder(): void {}
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Masked values reuse the Material password input and a reveal toggle so the hidden state is perceivable and reversible without custom styling.',
+            'Destructive actions use the Material warn color role so the irreversible action stays visually distinct before confirmation.',
+          ],
+          code: `.security-preview .masked-value {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.15em;
+}
+
+.security-preview button[color='warn'] {
+  font-weight: 600;
 }`,
         },
       },

@@ -775,5 +775,64 @@
         </mat-card>
       </div>
     }
+    @case ('security-encoding') {
+      <div class="security-preview" aria-label="Generated safe rendering preview">
+        <p class="encoded-text">{{ untrustedText }}</p>
+        <mat-chip-set aria-label="Safe rendering details">
+          <mat-chip highlighted>encode: text</mat-chip>
+          <mat-chip>urlAllowList: http, https, mailto</mat-chip>
+          <mat-chip>blocked: javascript:</mat-chip>
+        </mat-chip-set>
+        <p class="action-note">
+          Untrusted text is encoded and disallowed URL schemes are rejected before they render.
+        </p>
+      </div>
+    }
+    @case ('security-masking') {
+      <div class="security-preview" aria-label="Generated sensitive-value masking preview">
+        <mat-form-field appearance="outline">
+          <mat-label>Access token</mat-label>
+          <input matInput type="password" value="S3cret-Token" readonly />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            disabled
+            aria-label="Reveal token (requires explicit action)"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-chip-set aria-label="Masking state values">
+          <mat-chip highlighted>masked: true</mat-chip>
+          <mat-chip>rendered: ••••••••••••</mat-chip>
+        </mat-chip-set>
+        <p class="action-note">
+          The value defaults to masked and stays hidden until the user reveals it.
+        </p>
+      </div>
+    }
+    @case ('security-confirmation') {
+      <div class="security-preview" aria-label="Generated confirmation and permission preview">
+        <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          aria-haspopup="dialog"
+          aria-label="Delete order (opens a confirmation dialog)"
+        >
+          Delete order
+        </button>
+        <mat-chip-set aria-label="Confirmation and permission values">
+          <mat-chip highlighted>ariaHasPopup: dialog</mat-chip>
+          <mat-chip>requiresConfirmation: true</mat-chip>
+          <mat-chip>canDelete: true</mat-chip>
+        </mat-chip-set>
+        <p class="action-note">
+          The destructive action is gated on permission and routes through an explicit confirmation
+          dialog.
+        </p>
+      </div>
+    }
   }
 </div>
