@@ -59,6 +59,15 @@ describe('Component documentation routing', () => {
     expect(root.querySelector('.api-source')?.textContent).toContain('spec/08-component-model.md');
   });
 
+  it('renders extension point previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/extension-point/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('h1')?.textContent).toContain('Extension point');
+    expect(root.querySelector('.extension-preview')).toBeTruthy();
+    expect(root.textContent).toContain('workspace.cards');
+    expect(root.textContent).toContain('drag-drop-extension');
+  });
+
   it('renders the navigable container preview on the Examples tab', async () => {
     const harness = await RouterTestingHarness.create('/components/navigation-container/examples');
     const root = harness.routeNativeElement as HTMLElement;

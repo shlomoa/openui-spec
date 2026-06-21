@@ -9,7 +9,8 @@
 .page-preview,
 .form-preview,
 .state-preview,
-.binding-preview {
+.binding-preview,
+.extension-preview {
   background: var(--mat-sys-surface);
   border-radius: 0.5rem;
   box-shadow: var(--mat-sys-level1);
@@ -92,7 +93,8 @@
 }
 
 .state-preview,
-.binding-preview {
+.binding-preview,
+.extension-preview {
   display: grid;
   gap: 1rem;
   justify-items: start;
@@ -286,6 +288,19 @@
   border-radius: 0.5rem;
   color: var(--mat-sys-on-surface-variant);
   padding: 2rem 1rem;
+}
+
+.extension-slot {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+
+.extension-preview mat-list {
+  background: var(--mat-sys-surface);
+  border-radius: 0.5rem;
+  box-shadow: var(--mat-sys-level1);
+  width: 100%;
 }
 
 .app-primary-button {

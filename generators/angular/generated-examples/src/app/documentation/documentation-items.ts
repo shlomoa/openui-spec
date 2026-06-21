@@ -24,6 +24,9 @@ export type ExamplePreview =
   | 'component-properties'
   | 'component-aggregation'
   | 'component-events'
+  | 'extension-slot'
+  | 'extension-design-time'
+  | 'extension-dnd'
   | 'navigation-stack'
   | 'navigation-overlay'
   | 'navigation-routing'
@@ -938,6 +941,124 @@ export class SearchInput {
 .component-contract dt {
   color: var(--mat-sys-primary);
   font-weight: 600;
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'extension',
+    name: 'Extension',
+    summary:
+      'Catalog-published extension artifacts, design-time overlays, and declarative renderer or drag-and-drop capabilities.',
+    items: [
+      {
+        id: 'extension-point',
+        name: 'Extension point',
+        summary:
+          'A named public outlet whose accepted artifact type, multiplicity, ownership, design-time metadata, and compatibility gates are all declared in metadata.',
+        api: {
+          specSection: '20. Extension Model',
+          specPath: 'spec/20-extension-model.md',
+          purpose: 'Describe supported extension points.',
+          derivedFrom: [
+            'library-interface-catalog',
+            'design-time-evidence',
+            'library-component-catalog',
+          ],
+          points: [
+            'Extension artifacts publish a stable identity, owning library, version, dependencies, and metadata through the same catalog as built-in controls.',
+            'Extension points declare accepted type, multiplicity, ownership, and compatibility constraints before applications inject content.',
+            'Design-time metadata is an optional overlay for labels, palette placement, edit actions, and drag-and-drop hints that does not change runtime APIs.',
+            'Renderer and drag-and-drop extension capabilities are declarative and must preserve theming, accessibility, interaction, and performance contracts.',
+          ],
+          jsonMapping: 'specification.sections[19] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'extension-slot',
+            title: 'Typed extension outlet',
+            description:
+              'The workspace.cards extension point accepts only registered components that satisfy the declared IWorkspaceCard interface and ownership contract.',
+            preview: 'extension-slot',
+            code: `@Component({
+  selector: 'app-workspace-outlet',
+  imports: [NgComponentOutlet],
+  template: \`
+    @for (extension of extensions(); track extension.id) {
+      <ng-container *ngComponentOutlet="extension.component" />
+    }
+  \`
+})
+export class WorkspaceOutletComponent {
+  // extension point workspace.cards accepts IWorkspaceCard-compatible components.
+  readonly extensions = input<readonly WorkspaceCardExtension[]>([]);
+}`,
+          },
+          {
+            id: 'extension-design-time',
+            title: 'Design-time overlay',
+            description:
+              'Authoring labels, palette grouping, editable properties, and drop hints are loaded as an optional overlay and do not change runtime metadata.',
+            preview: 'extension-design-time',
+            code: `{
+  artifact: 'sample.extensions.AnalyticsPanel',
+  designTime: {
+    label: 'Analytics panel',
+    paletteGroup: 'Workspace extensions',
+    editableProperties: ['title'],
+    aggregations: {
+      content: {
+        actions: ['move', 'remove'],
+        allowedDropTypes: ['sap.ui.core.Control']
+      }
+    }
+  }
+}`,
+          },
+          {
+            id: 'extension-dnd',
+            title: 'Renderer and drag-drop contract',
+            description:
+              'A public cards aggregation declares its renderer linkage, accepted card interface, drag source, drop target, drop effects, and compatibility gates.',
+            preview: 'extension-dnd',
+            code: `{
+  artifact: 'sample.extensions.WorkspaceColumn',
+  metadata: {
+    renderer: 'sample.extensions.WorkspaceColumnRenderer',
+    aggregations: {
+      cards: {
+        type: 'sample.extensions.IWorkspaceCard',
+        multiple: true,
+        dragDrop: {
+          source: true,
+          target: true,
+          dropEffects: ['move', 'copy']
+        }
+      }
+    },
+    compatibility: {
+      requires: ['drag-drop-extension', 'theme-token-v1'],
+      since: '1.2.0'
+    }
+  }
+}`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Extension previews use Material cards and chips so injected artifacts inherit the active theme instead of depending on private renderer DOM.',
+            'Compatibility and drag-and-drop metadata is rendered as plain contract data, keeping authoring hints separate from runtime behavior.',
+          ],
+          code: `.extension-preview {
+  display: grid;
+  gap: 1rem;
+}
+
+.extension-slot {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
 }`,
         },
       },

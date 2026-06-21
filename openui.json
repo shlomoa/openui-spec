@@ -2127,7 +2127,111 @@
         "requirements": [
           "The framework must allow new controls, elements, types, and interfaces to be introduced through the same catalog and metadata model.",
           "Design-time metadata may extend authoring semantics without redefining the runtime component contract.",
-          "Extension points must preserve compatibility with theming, accessibility, and interaction rules."
+          "Extension points must preserve compatibility with theming, accessibility, and interaction rules.",
+          "Extension artifacts must publish a stable identity, owning library, version, dependencies, and metadata so tooling can discover them without reading implementation code.",
+          "Runtime extensions must use public metadata members such as properties, aggregations, associations, events, interfaces, and types rather than private renderer state or DOM structure.",
+          "Extension points must declare their allowed content type, multiplicity, lifecycle ownership, and compatibility constraints before applications inject or replace content.",
+          "Design-time extensions must be optional metadata overlays that describe palette placement, authoring labels, allowed drops, and edit actions while preserving the runtime contract.",
+          "Renderer and drag-and-drop extensions must remain declarative: renderer modules, drop targets, drag sources, and drop effects are named in metadata and must not require consumers to patch internal control code.",
+          "Extension contracts must be versioned and additive by default; incompatible changes require a new artifact identity, major version, or explicitly declared compatibility gate."
+        ],
+        "nonGoals": [
+          "The extension model does not define a plug-in package manager, transport format, marketplace, or deployment mechanism.",
+          "The extension model does not allow applications to depend on private renderer DOM, private state, or undocumented lifecycle hooks.",
+          "The extension model does not prescribe a specific design-time tool, IDE, visual editor, or palette layout.",
+          "The extension model does not override the component, theming, accessibility, interaction, security, or performance sections; extensions must satisfy those contracts."
+        ],
+        "tags": [
+          {
+            "name": "extension-artifact",
+            "description": "A catalog-published control, element, type, interface, renderer, or design-time overlay that can be discovered and versioned independently."
+          },
+          {
+            "name": "extension-point-contract",
+            "description": "A named public slot or capability that declares allowed content type, multiplicity, ownership, and compatibility constraints."
+          },
+          {
+            "name": "metadata-extension",
+            "description": "An additive metadata contribution that introduces properties, aggregations, associations, events, interfaces, or types through the standard component model."
+          },
+          {
+            "name": "design-time-extension",
+            "description": "Optional authoring metadata for labels, palette placement, edit actions, and drag-and-drop hints that does not change runtime behavior."
+          },
+          {
+            "name": "renderer-extension",
+            "description": "A declarative renderer linkage or renderer hook that remains compatible with theming, accessibility, and performance rules."
+          },
+          {
+            "name": "drag-drop-extension",
+            "description": "A declarative drag source or drop target capability associated with public aggregations and typed drop effects."
+          },
+          {
+            "name": "compatibility-gate",
+            "description": "Version, feature, or capability metadata that prevents incompatible extension contracts from being consumed silently."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Extension artifact",
+            "definition": "A catalog-addressable item published by a library to extend the framework, such as a control, element, type, interface, renderer, or design-time overlay."
+          },
+          {
+            "term": "Extension point",
+            "definition": "A named public location or capability where extension artifacts may contribute content or behavior under declared type, multiplicity, and lifecycle constraints."
+          },
+          {
+            "term": "Metadata extension",
+            "definition": "An additive contribution to the public metadata contract using the same property, aggregation, association, event, type, and interface structures as built-in components."
+          },
+          {
+            "term": "Design-time extension",
+            "definition": "Metadata consumed by authoring tools to describe labels, palette grouping, editable properties, allowed drops, and contextual actions without changing runtime APIs."
+          },
+          {
+            "term": "Renderer extension",
+            "definition": "Declarative renderer linkage that controls how an artifact is rendered while preserving public theming, accessibility, and interaction contracts."
+          },
+          {
+            "term": "Drag-and-drop extension",
+            "definition": "Metadata that declares which public aggregation can act as a drag source or drop target and which drop effects are supported."
+          },
+          {
+            "term": "Compatibility gate",
+            "definition": "A version, feature flag, required capability, or peer dependency that determines whether a consumer can safely load an extension artifact."
+          }
+        ],
+        "usage": [
+          "Publish extensions through the same library catalog as built-in artifacts so generators, validators, and documentation tools resolve them from one source of truth.",
+          "Prefer explicit extension-point aggregations or interfaces over ad-hoc callbacks; consumers should know the accepted child type, multiplicity, ownership, and supported events before injecting content.",
+          "Keep runtime metadata and design-time metadata separate: design-time overlays may add authoring labels or drag-and-drop hints, but they must not introduce runtime-only behavior.",
+          "Treat renderer linkage as an implementation detail behind a public metadata contract; renderer extensions must keep stable theming tokens, accessible names, keyboard semantics, and performance constraints intact.",
+          "Declare drag-and-drop capabilities against public aggregations and include accepted types and drop effects so generators can map them to host-framework primitives safely.",
+          "Version extension artifacts additively and use compatibility gates for breaking changes, optional features, or host-framework capability requirements.",
+          "Validate extension artifacts with the same compliance tests as built-in controls, including metadata shape, accessibility, theming, interaction, security, and performance checks."
+        ],
+        "implementationNotes": [
+          "Generators should resolve extension artifacts from catalog metadata and reject entries whose compatibility gates or required capabilities are not satisfied by the target framework.",
+          "Design-time metadata should be loaded as an optional overlay so missing authoring metadata never changes runtime behavior or generated component APIs.",
+          "Renderer and drag-and-drop declarations should map only to public host-framework primitives and must not require direct DOM patching or private lifecycle hooks."
+        ],
+        "examples": [
+          {
+            "title": "Extension artifact and public extension point example",
+            "description": "A catalog-published AnalyticsPanel control contributes to the workspace.cards extension point with a declared interface, multiplicity, and ownership contract."
+          },
+          {
+            "title": "Design-time metadata overlay example",
+            "description": "A design-time overlay supplies labels, palette grouping, editable properties, and drop hints without changing the runtime component metadata."
+          },
+          {
+            "title": "Renderer and drag-and-drop extension contract example",
+            "description": "A workspace column links to a renderer module and declares drag source, drop target, drop effects, and compatibility requirements on a public aggregation."
+          },
+          {
+            "title": "Generator extension outlet example",
+            "description": "A host-framework generator maps an extension point to a typed outlet that accepts only registered extension components satisfying the contract."
+          }
         ]
       },
       {
