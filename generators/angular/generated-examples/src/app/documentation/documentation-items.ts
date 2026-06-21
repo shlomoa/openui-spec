@@ -47,7 +47,10 @@ export type ExamplePreview =
   | 'theme-density'
   | 'compliance-catalog'
   | 'compliance-metadata'
-  | 'compliance-evidence';
+  | 'compliance-evidence'
+  | 'acceptance-traceability'
+  | 'acceptance-projection'
+  | 'acceptance-evidence';
 
 /** A single runnable example shown on a component's "Examples" tab. */
 export interface DocExample {
@@ -1831,6 +1834,95 @@ assertCatalogDiscoverable(profile.catalog);`,
 
 .compliance-status {
   color: var(--mat-sys-primary);
+}`,
+        },
+      },
+    ],
+  },
+  {
+    id: 'quality-compliance',
+    name: 'Quality & compliance',
+    summary:
+      'Acceptance criteria, traceability, and evidence artifacts that keep generated output verifiable.',
+    items: [
+      {
+        id: 'acceptance-criteria',
+        name: 'Acceptance criteria',
+        summary:
+          'A generated verification page that links normative requirements to fixtures, assertions, and evidence.',
+        api: {
+          specSection: '22. Test & Acceptance Criteria',
+          specPath: 'spec/22-test-acceptance-criteria.md',
+          purpose: 'Describe how the specification should be verified.',
+          derivedFrom: ['compliance-tests', 'api-json-projection', 'reference-component-button'],
+          points: [
+            'Acceptance criteria are testable rules with setup, action, expected result, and traceability to a normative source.',
+            'Conformance suites separate normative failures from optional capabilities and documented non-goals.',
+            'Metadata projection tests compare source runtime metadata, normalized /openui.json, and generated API output.',
+            'Evidence artifacts include automated results plus DOM, accessibility-tree, screenshot, or generated-source evidence when behavior is visual-facing.',
+          ],
+          jsonMapping:
+            'specification.sections entry with id "22-test-acceptance-criteria" in /openui.json',
+        },
+        examples: [
+          {
+            id: 'acceptance-traceability',
+            title: 'Traceability matrix',
+            description:
+              'A generated coverage matrix links each acceptance criterion to spec sources, fixtures, and the evidence that proves the behavior.',
+            preview: 'acceptance-traceability',
+            code: `const criteria: AcceptanceCriterion[] = [
+  {
+    id: 'AC-METADATA-PROJECTION',
+    covers: [
+      '08-component-model#property-contract',
+      '08-component-model#aggregation-contract',
+    ],
+    fixture: 'reference-component-button',
+    evidence: ['tests/component-metadata.spec.ts'],
+  },
+];`,
+          },
+          {
+            id: 'acceptance-projection',
+            title: 'Metadata projection check',
+            description:
+              'Projection tests fail fast when runtime metadata, /openui.json, and generated API signatures disagree.',
+            preview: 'acceptance-projection',
+            code: `it('keeps Button metadata projections aligned', () => {
+  expect(apiJson.publicProperties).toContain('enabled');
+  expect(openui.referenceModels.button.properties.enabled.defaultValue).toBe(true);
+  expect(generatedApi.inputs.enabled.type).toBe('boolean');
+});`,
+          },
+          {
+            id: 'acceptance-evidence',
+            title: 'Visual and accessibility evidence',
+            description:
+              'Visual-facing behavior records deterministic DOM, accessibility, and screenshot evidence under controlled viewport, theme, and locale settings.',
+            preview: 'acceptance-evidence',
+            code: `await page.setViewportSize({ width: 600, height: 800 });
+await expect(page.getByLabel('Customer name')).toBeVisible();
+await expect(page.getByRole('button', { name: 'Submit' })).toBeDisabled();
+await expect(page).toHaveScreenshot('generated-order-form.png');`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Traceability and evidence summaries use compact Material chips so reviewers can scan coverage dimensions quickly.',
+            'Criteria cards use the same surface and outline tokens as generated component examples to keep compliance output visually aligned.',
+          ],
+          code: `.acceptance-preview {
+  display: grid;
+  gap: 1rem;
+}
+
+.acceptance-preview mat-card {
+  background: var(--mat-sys-surface);
+}
+
+.acceptance-preview mat-chip-set {
+  margin-top: 0.5rem;
 }`,
         },
       },

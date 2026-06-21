@@ -44,6 +44,7 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Reference examples');
     expect(compiled.textContent).toContain('Theming');
     expect(compiled.textContent).toContain('Compliance');
+    expect(compiled.textContent).toContain('Quality & compliance');
 
     const links = compiled.querySelectorAll('.app-sidenav a[mat-list-item]');
     expect(links.length).toBe(expectedLinks);
@@ -61,5 +62,6 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Reference action button');
     expect(compiled.textContent).toContain('Themed button');
     expect(compiled.textContent).toContain('Compliance rules');
+    expect(compiled.textContent).toContain('Acceptance criteria');
   });
 });

@@ -1,5 +1,6 @@
 export type UiFeature =
   | "accessibility"
+  | "acceptance"
   | "feedback"
   | "form"
   | "navigation"
