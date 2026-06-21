@@ -1899,7 +1899,91 @@
         "requirements": [
           "Libraries must support theme-specific assets and shared theme-level styling resources.",
           "Theme composition must allow base styles plus theme overrides without changing the public component contract.",
-          "Density-aware and theme-aware assets are part of the visual system and must remain externally configurable."
+          "Density-aware and theme-aware assets are part of the visual system and must remain externally configurable.",
+          "Visual values must be expressed as named design tokens so themes can re-skin components without editing component markup or logic.",
+          "Themes must be swappable at the application or root scope at runtime, and switching a theme must not require recompiling or changing any component's public contract.",
+          "Density must be selected externally through a root-level mode such as cozy or compact rather than encoded as a per-component property.",
+          "Design tokens must resolve to a defined fallback when a theme does not provide a value, so components render predictably under any theme.",
+          "Theme-specific assets such as images and fonts must be referenced through theme-resolved paths rather than hard-coded URLs so the correct asset loads per theme."
+        ],
+        "nonGoals": [
+          "The theming model does not define a specific color palette, typography scale, or the visual design of any individual theme; it standardizes how tokens and overrides are structured, not their values.",
+          "The theming model does not standardize private CSS class names, generated stylesheet ordering, or renderer-internal markup used to apply a theme.",
+          "The theming model does not replace the layout, component, or accessibility rules; it constrains how visual values are tokenized and themed without changing those public contracts."
+        ],
+        "tags": [
+          {
+            "name": "theme-asset-set",
+            "meaning": "Libraries ship theme-specific assets and shared theme-level styling resources that vary by theme without touching the component contract."
+          },
+          {
+            "name": "theme-composition",
+            "meaning": "A theme is composed of base styles plus theme overrides, so switching themes never changes a component's public API."
+          },
+          {
+            "name": "design-token",
+            "meaning": "Visual values are expressed as named design tokens, such as theming parameters or CSS custom properties, rather than hard-coded literals."
+          },
+          {
+            "name": "density-aware-styling",
+            "meaning": "Density such as cozy or compact is an externally configurable visual mode applied at a root scope, not a per-component property."
+          },
+          {
+            "name": "external-theme-configuration",
+            "meaning": "Theme and density selection are configured externally at the application or root level and remain swappable at runtime."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Theme",
+            "definition": "A named collection of design-token values and assets that determines the visual appearance of all components without altering their public contract."
+          },
+          {
+            "term": "Design token",
+            "definition": "A named, themeable styling value such as a color, spacing, typography, or elevation that is resolved at runtime so components reference the token instead of a literal value."
+          },
+          {
+            "term": "Base styles",
+            "definition": "The theme-independent structural styles a component always carries, over which theme overrides are layered."
+          },
+          {
+            "term": "Theme override",
+            "definition": "Theme-specific token values or assets layered on top of base styles to produce a particular theme's appearance."
+          },
+          {
+            "term": "Density mode",
+            "definition": "An externally configurable visual mode such as cozy or compact applied at a root scope to adjust spacing and sizing across components."
+          }
+        ],
+        "usage": [
+          "Reference colors, spacing, typography, and elevation through design tokens, such as the Material system CSS custom properties `--mat-sys-primary` and `--mat-sys-on-primary`, instead of literal values so a new theme re-skins the component automatically.",
+          "Keep theme-independent structure in base styles and layer only token values and assets as theme overrides, so the public component contract never changes between themes.",
+          "Apply density at a root scope, for example a `cozy` or `compact` body class, rather than adding density properties to individual components.",
+          "Provide a defined fallback for every design token so components stay legible when a theme omits a value.",
+          "Resolve theme-specific assets through theme-aware paths or tokens so switching themes loads the matching image and font set without code changes."
+        ],
+        "implementationNotes": [
+          "Extractors should record design-token references, theme override layers, and density modes from library styling metadata instead of capturing computed pixel values from a single rendered theme.",
+          "Generators should emit token references such as CSS custom properties and density-scoped classes so the output re-skins with the active theme and density without per-component edits.",
+          "Conformance tests should cover token-driven styling, base-plus-override composition, runtime theme swapping, and density mode application."
+        ],
+        "examples": [
+          {
+            "title": "Design tokens instead of literal values example",
+            "description": "A button references named design tokens for background, color, and border radius so switching the theme re-skins it without changing the component contract."
+          },
+          {
+            "title": "Base styles plus theme override example",
+            "description": "A panel keeps theme-independent base styles while each theme layers its own token values, leaving the public contract unchanged across light and dark themes."
+          },
+          {
+            "title": "Density mode example",
+            "description": "Density is selected once at the root scope, such as `sapUiSizeCompact`, so descendant components adapt spacing through density-aware tokens instead of per-component properties."
+          },
+          {
+            "title": "Generator design-token binding example",
+            "description": "A generator emits Material system CSS custom properties and a density-scoped class so the active theme and density re-skin the button without editing the component."
+          }
         ]
       },
       {
@@ -1911,7 +1995,99 @@
         "requirements": [
           "Libraries must provide translatable message resources for public UI text.",
           "Locale-aware rendering must support right-to-left and left-to-right presentation where applicable.",
-          "Public text-bearing components must expose text direction and translatable labels through explicit metadata."
+          "Public text-bearing components must expose text direction and translatable labels through explicit metadata.",
+          "Translatable public text must be referenced through stable message keys resolved from locale-specific message resource bundles rather than hard-coded literals.",
+          "Message resource bundles must resolve through a deterministic locale fallback chain from the most specific locale to a default bundle.",
+          "Locale-sensitive values such as dates, numbers, and currencies must render through typed, locale-aware formatting rather than fixed presentation.",
+          "The active locale and text direction must be externally configurable application-level settings that components inherit rather than hard-code.",
+          "Translatable properties must be marked in public metadata so tooling can extract message keys and reconstruct localized output without reading renderer internals."
+        ],
+        "nonGoals": [
+          "The internationalization model does not mandate a specific message-bundle file format, translation workflow, or translation management system.",
+          "The internationalization model does not define how translated strings are authored, reviewed, or stored; it only constrains how they are referenced and resolved through the public contract.",
+          "The internationalization model does not replace the accessibility, theming, or layout rules, but it constrains how those contracts expose translatable text, locale, and direction."
+        ],
+        "tags": [
+          {
+            "name": "translatable-text",
+            "meaning": "Public text-bearing properties reference translatable message keys instead of hard-coded literals."
+          },
+          {
+            "name": "message-resource-bundle",
+            "meaning": "Locale-specific message bundles supply translated text resolved by message key."
+          },
+          {
+            "name": "locale-fallback",
+            "meaning": "Message resolution follows a deterministic fallback chain from the most specific locale to a default bundle."
+          },
+          {
+            "name": "locale-aware-formatting",
+            "meaning": "Typed values such as dates, numbers, and currencies render according to the active locale."
+          },
+          {
+            "name": "text-direction",
+            "meaning": "Text direction is a declarable public property with `LTR`, `RTL`, and `Inherit` values for bidirectional content."
+          },
+          {
+            "name": "locale-configuration",
+            "meaning": "The active locale and direction are externally configurable application settings that components inherit."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Message resource bundle",
+            "definition": "A locale-specific set of key-to-text entries that supplies translated public text resolved by message key."
+          },
+          {
+            "term": "Message key",
+            "definition": "A stable identifier that references a translatable string in a message resource bundle, decoupling the public text from any single literal."
+          },
+          {
+            "term": "Locale",
+            "definition": "The language and regional identifier (such as `en`, `de`, or `ar-EG`) that selects message bundles and locale-aware formatting."
+          },
+          {
+            "term": "Locale fallback",
+            "definition": "The deterministic resolution order from the most specific locale to a default bundle, used when a key is missing for the active locale."
+          },
+          {
+            "term": "Translatable property",
+            "definition": "A property marked in public metadata as carrying user-facing text, signalling that its value is a message key resolved from a bundle."
+          },
+          {
+            "term": "Text direction",
+            "definition": "A public property declaring `LTR`, `RTL`, or `Inherit` so bidirectional text renders deterministically from the public contract."
+          }
+        ],
+        "usage": [
+          "Reference user-facing text through message keys resolved from message resource bundles, and reserve literal text for non-translatable technical identifiers.",
+          "Mark text-bearing properties as translatable in public metadata so extractors can collect message keys without scraping rendered output.",
+          "Ship one message bundle per supported locale and rely on the locale fallback chain so a missing translation degrades to a less specific bundle rather than failing.",
+          "Render dates, numbers, and currencies through typed locale-aware formatting bound to the active locale instead of formatting values with fixed patterns.",
+          "Inherit the active locale and `textDirection` from application-level configuration, overriding direction only for content whose direction differs from its surrounding context."
+        ],
+        "implementationNotes": [
+          "Extractors should normalize translatable property flags, message keys, and typed locale-aware value types from component metadata instead of reading literal rendered text.",
+          "Generators should map message keys to the target framework's i18n mechanism and typed locale-aware values to locale-bound formatting, while binding text direction to the active locale.",
+          "Conformance tests should cover message-key resolution, locale fallback, locale-aware formatting, and text-direction inheritance for text-bearing components."
+        ],
+        "examples": [
+          {
+            "title": "Translatable property and message bundle example",
+            "description": "A button's `text` property is marked translatable and carries a message key that each locale bundle resolves to localized text instead of a hard-coded literal."
+          },
+          {
+            "title": "Locale fallback resolution example",
+            "description": "With active locale `de-AT`, resolution walks the fallback chain so a key resolves from the `de` bundle while a missing key degrades to the `en` default rather than failing."
+          },
+          {
+            "title": "Locale-aware value formatting example",
+            "description": "A numeric value renders through typed locale-aware formatting so the same `1234.5` becomes `1.234,5` under `de-DE`, following the active locale instead of a fixed pattern."
+          },
+          {
+            "title": "Generator internationalization binding example",
+            "description": "A generator maps the translatable `text` property to a resolved message accessor and binds text direction to the active locale, preserving the localized text and direction from the public contract."
+          }
         ]
       },
       {
@@ -2047,7 +2223,111 @@
         "requirements": [
           "The framework must allow new controls, elements, types, and interfaces to be introduced through the same catalog and metadata model.",
           "Design-time metadata may extend authoring semantics without redefining the runtime component contract.",
-          "Extension points must preserve compatibility with theming, accessibility, and interaction rules."
+          "Extension points must preserve compatibility with theming, accessibility, and interaction rules.",
+          "Extension artifacts must publish a stable identity, owning library, version, dependencies, and metadata so tooling can discover them without reading implementation code.",
+          "Runtime extensions must use public metadata members such as properties, aggregations, associations, events, interfaces, and types rather than private renderer state or DOM structure.",
+          "Extension points must declare their allowed content type, multiplicity, lifecycle ownership, and compatibility constraints before applications inject or replace content.",
+          "Design-time extensions must be optional metadata overlays that describe palette placement, authoring labels, allowed drops, and edit actions while preserving the runtime contract.",
+          "Renderer and drag-and-drop extensions must remain declarative: renderer modules, drop targets, drag sources, and drop effects are named in metadata and must not require consumers to patch internal control code.",
+          "Extension contracts must be versioned and additive by default; incompatible changes require a new artifact identity, major version, or explicitly declared compatibility gate."
+        ],
+        "nonGoals": [
+          "The extension model does not define a plug-in package manager, transport format, marketplace, or deployment mechanism.",
+          "The extension model does not allow applications to depend on private renderer DOM, private state, or undocumented lifecycle hooks.",
+          "The extension model does not prescribe a specific design-time tool, IDE, visual editor, or palette layout.",
+          "The extension model does not override the component, theming, accessibility, interaction, security, or performance sections; extensions must satisfy those contracts."
+        ],
+        "tags": [
+          {
+            "name": "extension-artifact",
+            "description": "A catalog-published control, element, type, interface, renderer, or design-time overlay that can be discovered and versioned independently."
+          },
+          {
+            "name": "extension-point-contract",
+            "description": "A named public slot or capability that declares allowed content type, multiplicity, ownership, and compatibility constraints."
+          },
+          {
+            "name": "metadata-extension",
+            "description": "An additive metadata contribution that introduces properties, aggregations, associations, events, interfaces, or types through the standard component model."
+          },
+          {
+            "name": "design-time-extension",
+            "description": "Optional authoring metadata for labels, palette placement, edit actions, and drag-and-drop hints that does not change runtime behavior."
+          },
+          {
+            "name": "renderer-extension",
+            "description": "A declarative renderer linkage or renderer hook that remains compatible with theming, accessibility, and performance rules."
+          },
+          {
+            "name": "drag-drop-extension",
+            "description": "A declarative drag source or drop target capability associated with public aggregations and typed drop effects."
+          },
+          {
+            "name": "compatibility-gate",
+            "description": "Version, feature, or capability metadata that prevents incompatible extension contracts from being consumed silently."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Extension artifact",
+            "definition": "A catalog-addressable item published by a library to extend the framework, such as a control, element, type, interface, renderer, or design-time overlay."
+          },
+          {
+            "term": "Extension point",
+            "definition": "A named public location or capability where extension artifacts may contribute content or behavior under declared type, multiplicity, and lifecycle constraints."
+          },
+          {
+            "term": "Metadata extension",
+            "definition": "An additive contribution to the public metadata contract using the same property, aggregation, association, event, type, and interface structures as built-in components."
+          },
+          {
+            "term": "Design-time extension",
+            "definition": "Metadata consumed by authoring tools to describe labels, palette grouping, editable properties, allowed drops, and contextual actions without changing runtime APIs."
+          },
+          {
+            "term": "Renderer extension",
+            "definition": "Declarative renderer linkage that controls how an artifact is rendered while preserving public theming, accessibility, and interaction contracts."
+          },
+          {
+            "term": "Drag-and-drop extension",
+            "definition": "Metadata that declares which public aggregation can act as a drag source or drop target and which drop effects are supported."
+          },
+          {
+            "term": "Compatibility gate",
+            "definition": "A version, feature flag, required capability, or peer dependency that determines whether a consumer can safely load an extension artifact."
+          }
+        ],
+        "usage": [
+          "Publish extensions through the same library catalog as built-in artifacts so generators, validators, and documentation tools resolve them from one source of truth.",
+          "Prefer explicit extension-point aggregations or interfaces over ad-hoc callbacks; consumers should know the accepted child type, multiplicity, ownership, and supported events before injecting content.",
+          "Keep runtime metadata and design-time metadata separate: design-time overlays may add authoring labels or drag-and-drop hints, but they must not introduce runtime-only behavior.",
+          "Treat renderer linkage as an implementation detail behind a public metadata contract; renderer extensions must keep stable theming tokens, accessible names, keyboard semantics, and performance constraints intact.",
+          "Declare drag-and-drop capabilities against public aggregations and include accepted types and drop effects so generators can map them to host-framework primitives safely.",
+          "Version extension artifacts additively and use compatibility gates for breaking changes, optional features, or host-framework capability requirements.",
+          "Validate extension artifacts with the same compliance tests as built-in controls, including metadata shape, accessibility, theming, interaction, security, and performance checks."
+        ],
+        "implementationNotes": [
+          "Generators should resolve extension artifacts from catalog metadata and reject entries whose compatibility gates or required capabilities are not satisfied by the target framework.",
+          "Design-time metadata should be loaded as an optional overlay so missing authoring metadata never changes runtime behavior or generated component APIs.",
+          "Renderer and drag-and-drop declarations should map only to public host-framework primitives and must not require direct DOM patching or private lifecycle hooks."
+        ],
+        "examples": [
+          {
+            "title": "Extension artifact and public extension point example",
+            "description": "A catalog-published AnalyticsPanel control contributes to the workspace.cards extension point with a declared interface, multiplicity, and ownership contract."
+          },
+          {
+            "title": "Design-time metadata overlay example",
+            "description": "A design-time overlay supplies labels, palette grouping, editable properties, and drop hints without changing the runtime component metadata."
+          },
+          {
+            "title": "Renderer and drag-and-drop extension contract example",
+            "description": "A workspace column links to a renderer module and declares drag source, drop target, drop effects, and compatibility requirements on a public aggregation."
+          },
+          {
+            "title": "Generator extension outlet example",
+            "description": "A host-framework generator maps an extension point to a typed outlet that accepts only registered extension components satisfying the contract."
+          }
         ]
       },
       {
@@ -2064,7 +2344,103 @@
         "requirements": [
           "A compliant implementation must publish its public surface through a discoverable library catalog.",
           "A compliant implementation must describe every public component with typed metadata for properties, composition, relationships, and events.",
-          "A compliant implementation must preserve accessibility, theming, internationalization, and testing evidence as part of the public contract lifecycle."
+          "A compliant implementation must preserve accessibility, theming, internationalization, and testing evidence as part of the public contract lifecycle.",
+          "Compliance is evaluated against the normalized public contract, not against private source files, renderer internals, generated DOM structure, or framework-specific implementation details.",
+          "Every public library, component, element, type, and interface must be reachable from the catalog with a stable identifier, ownership information, version scope, and documented visibility.",
+          "Component metadata must include enough typed information for validators and generators to reconstruct properties, aggregations, associations, events, extension hooks, and design-time hints without reverse-engineering runtime behavior.",
+          "Cross-cutting rules for accessibility, theming, internationalization, security, performance, and extension compatibility must be traceable to public metadata or documented evidence.",
+          "Automated compliance tests must verify that `/openui.json`, generated API projections, documentation, examples, and implementation behavior remain synchronized for every normative public contract.",
+          "When an implementation intentionally omits an optional capability, the omission must be explicit and must not weaken required baseline metadata, interaction, accessibility, or evidence rules."
+        ],
+        "nonGoals": [
+          "Compliance rules do not prescribe a specific renderer, build system, test runner, package format, or host framework.",
+          "Compliance rules do not require implementations to expose private members, internal DOM nodes, renderer helper APIs, or source-code-only conventions.",
+          "Compliance rules do not redefine section-specific requirements; they aggregate the mandatory checks from the catalog, component, interaction, state, accessibility, theming, internationalization, and testing sections.",
+          "Compliance rules do not certify application-specific business logic, visual design choices, or data schemas beyond their use of the public UI contract."
+        ],
+        "tags": [
+          {
+            "name": "catalog-discoverability",
+            "meaning": "Every public library member is reachable from a stable, machine-readable catalog entry."
+          },
+          {
+            "name": "metadata-completeness",
+            "meaning": "Every public component declares typed properties, aggregations, associations, events, and relevant capability metadata."
+          },
+          {
+            "name": "contract-based-validation",
+            "meaning": "Compliance is evaluated from public metadata, documentation, generated projections, and observable behavior rather than private implementation details."
+          },
+          {
+            "name": "cross-cutting-evidence",
+            "meaning": "Accessibility, theming, internationalization, security, privacy, performance, and extension requirements are backed by public metadata or documented evidence."
+          },
+          {
+            "name": "testable-conformance",
+            "meaning": "Every normative rule has an automated or reviewable acceptance check that can be repeated by implementers and validators."
+          },
+          {
+            "name": "explicit-capability-scope",
+            "meaning": "Optional capabilities are declared as supported or intentionally absent without weakening required baseline conformance."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Compliant implementation",
+            "definition": "A framework, library, generator, or projection that satisfies the required public contract rules for the specification sections it claims to implement."
+          },
+          {
+            "term": "Public surface",
+            "definition": "The catalog-addressable libraries, controls, elements, types, interfaces, metadata members, events, examples, and generated projections exposed to consumers."
+          },
+          {
+            "term": "Compliance evidence",
+            "definition": "Machine-readable metadata, API projections, documentation, examples, test results, or reviewable records that demonstrate a rule is satisfied."
+          },
+          {
+            "term": "Conformance profile",
+            "definition": "The declared scope of sections, libraries, components, and optional capabilities that an implementation claims to support."
+          },
+          {
+            "term": "Compliance gap",
+            "definition": "Any missing, inconsistent, private-only, or untested part of a claimed public contract."
+          },
+          {
+            "term": "Validation artifact",
+            "definition": "A repeatable test, generated file, documentation page, screenshot, or report used to verify conformance."
+          }
+        ],
+        "usage": [
+          "Start compliance validation from the catalog root and walk only public entries; any component that cannot be discovered from the catalog is outside the compliant public surface.",
+          "Validate metadata completeness before validating behavior so downstream checks can rely on declared property types, aggregation multiplicity, association targets, event parameters, defaults, visibility, and capability flags.",
+          "Treat documentation, `/openui.json`, generated `api.json`-style projections, generated examples, and runtime metadata as synchronized views of the same public contract.",
+          "Record cross-cutting evidence next to the public contract it supports, such as accessibility associations, theme token usage, localized text handling, popup relationships, or lazy-loading declarations.",
+          "Make optional capability support explicit: a component may omit drag-and-drop, design-time metadata, or a generator mapping only when the conformance profile says the capability is not claimed.",
+          "Fail compliance when an implementation relies on private renderer details for behavior that the specification requires to be public, even if the visible UI appears correct.",
+          "Keep validation artifacts deterministic and versioned so maintainers can compare compliance before and after library, metadata, or generator changes."
+        ],
+        "implementationNotes": [
+          "Validators should report compliance gaps with the section, catalog entry, metadata member, evidence artifact, and expected rule so maintainers can correct the public contract without guessing.",
+          "Generators should fail fast when required metadata is missing and should preserve optional capability declarations as explicit supported or unsupported features in generated output.",
+          "Documentation builds should treat missing examples, stale JSON mappings, or generated projections that disagree with `/openui.json` as compliance failures rather than editorial warnings."
+        ],
+        "examples": [
+          {
+            "title": "Catalog discoverability checklist example",
+            "description": "A conformance profile lists a catalog with libraries, components, types, and interfaces, then verifies that every claimed public member resolves from the catalog root with a stable identifier and owning library."
+          },
+          {
+            "title": "Metadata completeness gate example",
+            "description": "A Button contract is compliant when typed text and enabled properties, an ariaLabelledBy association, and the press event are public metadata and the implementation does not require private renderer inspection."
+          },
+          {
+            "title": "Cross-cutting evidence record example",
+            "description": "An Input contract carries accessibility associations, theme token usage, internationalized text handling, and repeatable tests as evidence tied to the same public component contract."
+          },
+          {
+            "title": "Generator compliance guard example",
+            "description": "A generator guard verifies that generated inputs mirror properties, outputs mirror events, catalog entries resolve, metadata projections stay synchronized, and accessibility bindings come from public associations."
+          }
         ]
       },
       {
@@ -2078,9 +2454,13 @@
           "reference-component-button"
         ],
         "requirements": [
-          "Every public metadata contract should be verifiable by automated tests that exercise properties, events, and rendering-facing semantics.",
-          "Acceptance criteria should cover unit behavior, visual states, accessibility semantics, and responsive or theme-sensitive presentation.",
-          "Machine-readable projections such as `api.json` should remain consistent with runtime metadata and documented behavior."
+          "Every public metadata contract must be verifiable by automated tests that exercise properties, aggregations, associations, events, default values, visibility, and rendering-facing semantics.",
+          "Acceptance criteria must be traceable to the specification section, tag, formal definition, example, or reference model that introduced the behavior.",
+          "Acceptance criteria must define observable pass/fail conditions for unit behavior, generated API shape, visual states, accessibility semantics, keyboard and pointer interaction, data binding, navigation, internationalization, security, performance, and responsive or theme-sensitive presentation.",
+          "Machine-readable projections such as `api.json` must remain consistent with runtime metadata, documentation, generated examples, and recorded evidence artifacts.",
+          "Conformance suites must separate normative failures from implementation notes, optional capabilities, and documented non-goals so optional features do not become accidental requirements.",
+          "Test fixtures must be deterministic, minimal, and reusable across generators so the same contract can validate source metadata, normalized `/openui.json`, generated code, and runtime output.",
+          "Evidence for a passing implementation must include automated test results and, where behavior is visual or assistive-technology-facing, a stable artifact such as a screenshot, accessibility-tree assertion, or rendered DOM snapshot."
         ],
         "examples": [
           {
@@ -2098,19 +2478,208 @@
           {
             "title": "Component model acceptance test",
             "description": "A compliant test should verify that each component exposes a stable identity, that properties declare types and default values, that aggregations declare child types and multiplicity, that associations remain non-owning references, that events declare typed parameters, and that renderer, design-time, and drag-and-drop metadata stay optional capability hints rather than part of the core contract."
+          },
+          {
+            "title": "Traceability matrix for acceptance coverage",
+            "description": "A traceability matrix records the specification section, tags, fixtures, tests, and evidence artifacts that cover each criterion so reviewers can identify covered and unverified requirements."
+          },
+          {
+            "title": "Metadata projection consistency criterion",
+            "description": "A projection criterion compares runtime metadata, normalized `/openui.json`, generated `api.json`, and generated API signatures so names, types, defaults, visibility, multiplicity, association ownership, and event payloads stay consistent."
+          },
+          {
+            "title": "Visual and accessibility evidence criterion",
+            "description": "A visual and accessibility criterion records deterministic viewport, theme, density, data, and locale inputs before asserting accessible names, descriptions, keyboard order, disabled states, and screenshot evidence."
           }
+        ],
+        "nonGoals": [
+          "The test and acceptance criteria do not prescribe a specific test runner, browser automation framework, visual-diff service, or continuous-integration provider.",
+          "The section does not require implementations to expose private renderer internals or non-public metadata solely to make tests easier to write.",
+          "The section does not turn examples, implementation notes, or optional capabilities into mandatory conformance points unless another section marks them normative.",
+          "The section does not replace accessibility, security, internationalization, performance, or compliance rules; it defines how their observable requirements are verified."
+        ],
+        "tags": [
+          {
+            "name": "acceptance-criterion",
+            "meaning": "A testable rule with explicit setup, action, expected result, and traceability to a normative specification source."
+          },
+          {
+            "name": "conformance-suite",
+            "meaning": "The collection of automated checks that decides whether an implementation satisfies the specification contract."
+          },
+          {
+            "name": "metadata-projection-test",
+            "meaning": "A check that compares source runtime metadata with normalized `/openui.json` and generated API projections."
+          },
+          {
+            "name": "runtime-behavior-test",
+            "meaning": "A check that exercises observable behavior such as events, state transitions, validation, navigation, or data binding."
+          },
+          {
+            "name": "visual-accessibility-evidence",
+            "meaning": "A stable artifact or assertion that proves visual, responsive, theme, keyboard, and assistive-technology-facing behavior."
+          },
+          {
+            "name": "traceability-matrix",
+            "meaning": "A mapping from specification requirements and tags to tests and evidence artifacts that cover them."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Acceptance criterion",
+            "definition": "A verifiable statement that names a normative requirement, defines the setup and action, and states the observable condition for passing."
+          },
+          {
+            "term": "Conformance suite",
+            "definition": "The implementation-independent group of tests and evidence checks used to decide whether a library, generator, or application output complies with the specification."
+          },
+          {
+            "term": "Test fixture",
+            "definition": "A minimal representative metadata entry, application structure, generated component, or rendered page used as the input to one or more acceptance criteria."
+          },
+          {
+            "term": "Metadata projection",
+            "definition": "The normalized machine-readable representation, such as `/openui.json` or `api.json`, produced from runtime metadata and used by generators and documentation."
+          },
+          {
+            "term": "Evidence artifact",
+            "definition": "Durable output from a validation run, such as a test report, screenshot, DOM snapshot, accessibility assertion, or generated source excerpt."
+          },
+          {
+            "term": "Traceability matrix",
+            "definition": "A table or structured object that links each requirement, tag, formal definition, and example to the tests and evidence that verify it."
+          }
+        ],
+        "usage": [
+          "Write acceptance criteria in implementation-independent language: identify the contract under test, the observable action or projection, and the pass/fail assertion without depending on private renderer state.",
+          "Maintain a traceability matrix from `/openui.json` section IDs and tag names to test IDs so reviewers can identify which requirements are covered and which remain unverified.",
+          "Validate metadata projections before generated output: schema and projection tests should fail fast when properties, aggregations, associations, events, default values, or visibility are missing or renamed.",
+          "Cover runtime behavior with focused fixtures that exercise enabled and disabled states, value changes, validation feedback, navigation transitions, binding updates, keyboard activation, pointer activation, and responsive reflow.",
+          "Record visual and accessibility evidence only for observable outcomes whose correctness cannot be fully represented by metadata, such as focus order, accessible naming, density, theme tokens, and breakpoint-specific layout.",
+          "Treat optional capabilities as conditional criteria: if a component declares `dnd`, `renderer`, `designtime`, overlay, or routing metadata, test the declared behavior; if it does not, assert that consumers do not depend on it.",
+          "Keep generated examples and documentation synchronized with the same fixtures that drive tests so examples demonstrate behavior that the conformance suite can verify.",
+          "Store enough evidence with each run to reproduce a failure, including the fixture identifier, spec section, generated artifact path, assertion name, and expected versus actual result."
+        ],
+        "implementationNotes": [
+          "Extractors should emit stable identifiers for requirements, tags, fixtures, and evidence artifacts so downstream generators can keep their tests linked to the source specification.",
+          "Generators should create host-framework tests from metadata projections instead of hand-coding assumptions about component names, event payloads, or default values.",
+          "Visual and accessibility checks should run against deterministic fixtures with controlled data, viewport, density, locale, and theme settings.",
+          "Compliance reports should distinguish failed normative criteria from skipped optional criteria and should include links to generated examples or screenshots when applicable."
         ]
       },
       {
         "id": "23-reference-examples",
         "title": "Reference Examples",
-        "purpose": "Provide a concrete reference component abstracted from upstream OpenUI5 evidence.",
+        "purpose": "Provide concrete reference components abstracted from upstream OpenUI5 evidence.",
         "document": "spec/23-reference-examples.md",
         "derivedFrom": ["reference-component-button"],
         "requirements": [
-          "A reference action component exposes text, style, width, enabled state, icon configuration, accessibility state, and a primary activation event.",
-          "The same component may expose label/description associations, drag capability, and theme-aware visuals.",
-          "Its expected behavior is validated by tests for state accessors, text direction, activation events, and visibility."
+          "Reference examples translate concrete upstream component evidence into implementation-neutral specification examples.",
+          "A reference action component must preserve its stable identity, owning library, advertised interfaces, public properties, associations, events, and optional capability metadata.",
+          "Public properties define the component's configurable state, including text, visual type, width, enabled state, icon configuration, icon ordering, icon density behavior, text direction, accessibility popup state, accessibility role, and badge style.",
+          "Hidden properties may be recorded as implementation evidence, but they must not be treated as public API in generated documentation or conformance tests.",
+          "Accessibility relationships are represented through non-owning associations such as `ariaLabelledBy` and `ariaDescribedBy`.",
+          "User activation is represented by the current public `press` event; deprecated compatibility aliases such as `tap` may be recorded but must not replace the normative activation event.",
+          "Optional renderer, design-time, drag-and-drop, badge, and theme-aware visual metadata may be retained as capabilities when they are present in upstream evidence.",
+          "Reference examples must include validation expectations that connect the component contract to observable behavior such as state accessors, text direction, activation events, enabled-state gating, visibility, and accessibility metadata."
+        ],
+        "nonGoals": [
+          "Reference examples do not standardize OpenUI5 runtime internals, renderer DOM structure, CSS class names, or event ordering.",
+          "Reference examples do not require every implementation to expose a button component with the exact same API; they provide concrete evidence for applying the abstract specification models.",
+          "Reference examples do not make hidden or deprecated members normative for new generated APIs.",
+          "Reference examples do not replace the component, interaction, state, form, accessibility, or theming sections; they demonstrate those sections working together."
+        ],
+        "tags": [
+          {
+            "name": "reference-component-evidence",
+            "meaning": "A concrete upstream component is captured as evidence for the abstract metadata model."
+          },
+          {
+            "name": "action-component-contract",
+            "meaning": "A button-like component combines configurable state, accessibility associations, and a public activation event."
+          },
+          {
+            "name": "public-property-surface",
+            "meaning": "Public properties such as `text`, `type`, `width`, `enabled`, and icon settings define the supported configuration surface."
+          },
+          {
+            "name": "accessibility-association-surface",
+            "meaning": "Label and description relationships are represented through associations instead of owned content."
+          },
+          {
+            "name": "activation-event-surface",
+            "meaning": "The current public activation event is normative, while deprecated aliases are compatibility evidence only."
+          },
+          {
+            "name": "optional-capability-evidence",
+            "meaning": "Renderer, design-time, drag-and-drop, badge, and theme-aware metadata are recorded as optional capabilities."
+          },
+          {
+            "name": "behavioral-validation-evidence",
+            "meaning": "Reference examples include observable expectations that conformance tests can validate."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Reference example",
+            "definition": "A concrete, evidence-backed example used to show how the abstract specification models apply to a real component while remaining implementation-neutral."
+          },
+          {
+            "term": "Reference action component",
+            "definition": "A button-like component that exposes configurable state, accessibility relationships, and an activation event for application handlers."
+          },
+          {
+            "term": "Evidence metadata",
+            "definition": "Upstream metadata captured for a reference example, including identity, interfaces, properties, associations, events, renderer, design-time, and capability flags."
+          },
+          {
+            "term": "Public property surface",
+            "definition": "The set of public properties that applications and generators may use as the component's supported configuration contract."
+          },
+          {
+            "term": "Compatibility event alias",
+            "definition": "A deprecated event retained for migration or historical evidence while the current event remains normative."
+          },
+          {
+            "term": "Optional capability",
+            "definition": "Metadata that may be preserved when present, such as drag capability, badge styling, renderer linkage, design-time hints, or theme-aware visuals, without becoming mandatory for all components."
+          },
+          {
+            "term": "Reference validation expectation",
+            "definition": "An observable behavior or conformance check derived from the reference example, such as enabled-state gating or text-direction preservation."
+          }
+        ],
+        "usage": [
+          "Use reference examples to verify that the abstract section models can represent a real component without depending on private framework internals.",
+          "Preserve identity (`sap.m.Button`), library (`sap.m`), and interface evidence so generated catalogs can link the example back to the component and form/access-key/toolbar contracts it advertises.",
+          "Normalize public properties with their declared types, groups, defaults, visibility, and deprecation state; keep hidden properties out of generated public APIs unless a diagnostic view explicitly asks for evidence metadata.",
+          "Model `ariaLabelledBy` and `ariaDescribedBy` as multiple non-owning associations so accessibility tooling can resolve labels and descriptions without assuming DOM proximity.",
+          "Treat `press` as the normative activation event for new examples and tests; record `tap` only as a deprecated compatibility alias when preserving upstream evidence.",
+          "Retain optional renderer, design-time, drag-and-drop, badge, and theme-aware icon metadata as capabilities that enrich documentation and tests without changing the core component contract.",
+          "Derive behavioral tests from public behavior: property accessors return normalized values, disabled controls do not dispatch activation, text direction is preserved, visibility follows the public state, and accessibility popup metadata maps to the declared value."
+        ],
+        "implementationNotes": [
+          "Extraction pipelines should store reference evidence separately from normative generated APIs so hidden or deprecated members can be audited without being exposed by default.",
+          "Generator pipelines should render reference examples using the common component, state, interaction, accessibility, form, and theming models rather than special-casing OpenUI5 runtime behavior.",
+          "Conformance tooling should validate the reference example through public metadata and observable behavior, including enabled-state gating for activation and accessibility association preservation."
+        ],
+        "examples": [
+          {
+            "title": "Reference action component metadata example",
+            "description": "A `sap.m.Button` reference preserves identity, library, interfaces, and public properties such as text, type, width, enabled, icon, text direction, accessibility popup state, accessibility role, and badge style."
+          },
+          {
+            "title": "Accessibility associations and activation event example",
+            "description": "A reference button exposes `ariaDescribedBy` and `ariaLabelledBy` associations and treats `press` as the normative activation event while retaining deprecated `tap` only as compatibility evidence."
+          },
+          {
+            "title": "Optional capabilities and hidden evidence example",
+            "description": "Renderer, design-time, drag-and-drop, badge, and theme-aware metadata may be recorded as optional capabilities while hidden properties remain evidence-only."
+          },
+          {
+            "title": "Behavioral validation expectations example",
+            "description": "Reference validation expectations cover enabled-state activation gating, text-direction preservation, accessibility popup mapping, and public visibility behavior."
+          }
         ]
       }
     ],

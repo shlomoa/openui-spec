@@ -8,6 +8,8 @@ const SECTION_FEATURES: Record<string, UiFeature> = {
   "14-feedback-model": "feedback",
   "15-accessibility-model": "accessibility",
   "16-theming-design-tokens": "theme",
+  "22-test-acceptance-criteria": "acceptance",
+  "23-reference-examples": "reference",
 };
 
 export function normalizeRoute(sectionId: string): string {
