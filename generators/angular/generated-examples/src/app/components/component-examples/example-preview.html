@@ -427,22 +427,16 @@
         <mat-card class="compliance-card">
           <mat-card-title>core-ui catalog</mat-card-title>
           <mat-card-content>
-            <mat-list aria-label="Catalog compliance checks" role="list">
-              <mat-list-item role="listitem"
-                >sample.library.Button resolves from the catalog root</mat-list-item
-              >
-              <mat-list-item role="listitem"
-                >sample.library.Form resolves from the catalog root</mat-list-item
-              >
-              <mat-list-item role="listitem"
-                >sample.library.IFormContent resolves as a public interface</mat-list-item
-              >
-            </mat-list>
+            <ul class="compliance-checklist" aria-label="Catalog compliance checks">
+              <li>sample.library.Button resolves from the catalog root</li>
+              <li>sample.library.Form resolves from the catalog root</li>
+              <li>sample.library.IFormContent resolves as a public interface</li>
+            </ul>
           </mat-card-content>
         </mat-card>
         <mat-chip-set aria-label="Catalog compliance status">
           <mat-chip highlighted>catalog-discoverability: pass</mat-chip>
-          <mat-chip>public-contract-compliance: pass</mat-chip>
+          <mat-chip>contract-based-validation: pass</mat-chip>
         </mat-chip-set>
       </div>
     }

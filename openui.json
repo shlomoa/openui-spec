@@ -1992,7 +1992,7 @@
             "meaning": "Every public component declares typed properties, aggregations, associations, events, and relevant capability metadata."
           },
           {
-            "name": "public-contract-compliance",
+            "name": "contract-based-validation",
             "meaning": "Compliance is evaluated from public metadata, documentation, generated projections, and observable behavior rather than private implementation details."
           },
           {
