@@ -40,6 +40,7 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Feedback');
     expect(compiled.textContent).toContain('Accessibility');
     expect(compiled.textContent).toContain('Internationalization');
+    expect(compiled.textContent).toContain('Reference examples');
     expect(compiled.textContent).toContain('Theming');
     expect(compiled.textContent).toContain('Compliance');
 
@@ -55,6 +56,7 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Status feedback');
     expect(compiled.textContent).toContain('Accessible field');
     expect(compiled.textContent).toContain('Localized field');
+    expect(compiled.textContent).toContain('Reference action button');
     expect(compiled.textContent).toContain('Themed button');
     expect(compiled.textContent).toContain('Compliance rules');
   });

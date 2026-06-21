@@ -132,4 +132,24 @@ describe('Component documentation routing', () => {
     expect(root.textContent).toContain('text: order.submit (translatable)');
     expect(root.querySelector('[dir="rtl"]')).toBeTruthy();
   });
+
+  it('sources the reference examples API tab from the reference examples spec', async () => {
+    const harness = await RouterTestingHarness.create('/components/reference-action-button');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('h1')?.textContent).toContain('Reference action button');
+    expect(root.querySelector('.api-source')?.textContent).toContain(
+      'spec/23-reference-examples.md',
+    );
+  });
+
+  it('renders the reference examples previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create(
+      '/components/reference-action-button/examples',
+    );
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('.reference-preview')).toBeTruthy();
+    expect(root.querySelector('[aria-haspopup="menu"]')).toBeTruthy();
+    expect(root.querySelector('[dir="rtl"]')).toBeTruthy();
+    expect(root.textContent).toContain('Hidden upstream metadata stays evidence-only.');
+  });
 });

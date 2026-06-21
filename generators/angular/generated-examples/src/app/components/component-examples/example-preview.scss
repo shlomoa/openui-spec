@@ -197,6 +197,7 @@
 }
 
 .a11y-preview,
+.reference-preview,
 .theme-preview {
   display: grid;
   gap: 1rem;
@@ -256,6 +257,24 @@
 
 .feedback-message.feedback-success {
   color: var(--mat-sys-primary);
+}
+
+.reference-note {
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0;
+}
+
+.reference-direction-sample {
+  background: var(--mat-sys-surface);
+  border-radius: 0.5rem;
+  box-shadow: var(--mat-sys-level1);
+  margin: 0;
+  padding: 1rem;
+  width: 100%;
+}
+
+.reference-preview [dir='rtl'] {
+  text-align: right;
 }
 
 .empty-state {

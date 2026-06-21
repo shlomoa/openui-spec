@@ -2280,13 +2280,116 @@
       {
         "id": "23-reference-examples",
         "title": "Reference Examples",
-        "purpose": "Provide a concrete reference component abstracted from upstream OpenUI5 evidence.",
+        "purpose": "Provide concrete reference components abstracted from upstream OpenUI5 evidence.",
         "document": "spec/23-reference-examples.md",
         "derivedFrom": ["reference-component-button"],
         "requirements": [
-          "A reference action component exposes text, style, width, enabled state, icon configuration, accessibility state, and a primary activation event.",
-          "The same component may expose label/description associations, drag capability, and theme-aware visuals.",
-          "Its expected behavior is validated by tests for state accessors, text direction, activation events, and visibility."
+          "Reference examples translate concrete upstream component evidence into implementation-neutral specification examples.",
+          "A reference action component must preserve its stable identity, owning library, advertised interfaces, public properties, associations, events, and optional capability metadata.",
+          "Public properties define the component's configurable state, including text, visual type, width, enabled state, icon configuration, icon ordering, icon density behavior, text direction, accessibility popup state, accessibility role, and badge style.",
+          "Hidden properties may be recorded as implementation evidence, but they must not be treated as public API in generated documentation or conformance tests.",
+          "Accessibility relationships are represented through non-owning associations such as `ariaLabelledBy` and `ariaDescribedBy`.",
+          "User activation is represented by the current public `press` event; deprecated compatibility aliases such as `tap` may be recorded but must not replace the normative activation event.",
+          "Optional renderer, design-time, drag-and-drop, badge, and theme-aware visual metadata may be retained as capabilities when they are present in upstream evidence.",
+          "Reference examples must include validation expectations that connect the component contract to observable behavior such as state accessors, text direction, activation events, enabled-state gating, visibility, and accessibility metadata."
+        ],
+        "nonGoals": [
+          "Reference examples do not standardize OpenUI5 runtime internals, renderer DOM structure, CSS class names, or event ordering.",
+          "Reference examples do not require every implementation to expose a button component with the exact same API; they provide concrete evidence for applying the abstract specification models.",
+          "Reference examples do not make hidden or deprecated members normative for new generated APIs.",
+          "Reference examples do not replace the component, interaction, state, form, accessibility, or theming sections; they demonstrate those sections working together."
+        ],
+        "tags": [
+          {
+            "name": "reference-component-evidence",
+            "meaning": "A concrete upstream component is captured as evidence for the abstract metadata model."
+          },
+          {
+            "name": "action-component-contract",
+            "meaning": "A button-like component combines configurable state, accessibility associations, and a public activation event."
+          },
+          {
+            "name": "public-property-surface",
+            "meaning": "Public properties such as `text`, `type`, `width`, `enabled`, and icon settings define the supported configuration surface."
+          },
+          {
+            "name": "accessibility-association-surface",
+            "meaning": "Label and description relationships are represented through associations instead of owned content."
+          },
+          {
+            "name": "activation-event-surface",
+            "meaning": "The current public activation event is normative, while deprecated aliases are compatibility evidence only."
+          },
+          {
+            "name": "optional-capability-evidence",
+            "meaning": "Renderer, design-time, drag-and-drop, badge, and theme-aware metadata are recorded as optional capabilities."
+          },
+          {
+            "name": "behavioral-validation-evidence",
+            "meaning": "Reference examples include observable expectations that conformance tests can validate."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Reference example",
+            "definition": "A concrete, evidence-backed example used to show how the abstract specification models apply to a real component while remaining implementation-neutral."
+          },
+          {
+            "term": "Reference action component",
+            "definition": "A button-like component that exposes configurable state, accessibility relationships, and an activation event for application handlers."
+          },
+          {
+            "term": "Evidence metadata",
+            "definition": "Upstream metadata captured for a reference example, including identity, interfaces, properties, associations, events, renderer, design-time, and capability flags."
+          },
+          {
+            "term": "Public property surface",
+            "definition": "The set of public properties that applications and generators may use as the component's supported configuration contract."
+          },
+          {
+            "term": "Compatibility event alias",
+            "definition": "A deprecated event retained for migration or historical evidence while the current event remains normative."
+          },
+          {
+            "term": "Optional capability",
+            "definition": "Metadata that may be preserved when present, such as drag capability, badge styling, renderer linkage, design-time hints, or theme-aware visuals, without becoming mandatory for all components."
+          },
+          {
+            "term": "Reference validation expectation",
+            "definition": "An observable behavior or conformance check derived from the reference example, such as enabled-state gating or text-direction preservation."
+          }
+        ],
+        "usage": [
+          "Use reference examples to verify that the abstract section models can represent a real component without depending on private framework internals.",
+          "Preserve identity (`sap.m.Button`), library (`sap.m`), and interface evidence so generated catalogs can link the example back to the component and form/access-key/toolbar contracts it advertises.",
+          "Normalize public properties with their declared types, groups, defaults, visibility, and deprecation state; keep hidden properties out of generated public APIs unless a diagnostic view explicitly asks for evidence metadata.",
+          "Model `ariaLabelledBy` and `ariaDescribedBy` as multiple non-owning associations so accessibility tooling can resolve labels and descriptions without assuming DOM proximity.",
+          "Treat `press` as the normative activation event for new examples and tests; record `tap` only as a deprecated compatibility alias when preserving upstream evidence.",
+          "Retain optional renderer, design-time, drag-and-drop, badge, and theme-aware icon metadata as capabilities that enrich documentation and tests without changing the core component contract.",
+          "Derive behavioral tests from public behavior: property accessors return normalized values, disabled controls do not dispatch activation, text direction is preserved, visibility follows the public state, and accessibility popup metadata maps to the declared value."
+        ],
+        "implementationNotes": [
+          "Extraction pipelines should store reference evidence separately from normative generated APIs so hidden or deprecated members can be audited without being exposed by default.",
+          "Generator pipelines should render reference examples using the common component, state, interaction, accessibility, form, and theming models rather than special-casing OpenUI5 runtime behavior.",
+          "Conformance tooling should validate the reference example through public metadata and observable behavior, including enabled-state gating for activation and accessibility association preservation."
+        ],
+        "examples": [
+          {
+            "title": "Reference action component metadata example",
+            "description": "A `sap.m.Button` reference preserves identity, library, interfaces, and public properties such as text, type, width, enabled, icon, text direction, accessibility popup state, accessibility role, and badge style."
+          },
+          {
+            "title": "Accessibility associations and activation event example",
+            "description": "A reference button exposes `ariaDescribedBy` and `ariaLabelledBy` associations and treats `press` as the normative activation event while retaining deprecated `tap` only as compatibility evidence."
+          },
+          {
+            "title": "Optional capabilities and hidden evidence example",
+            "description": "Renderer, design-time, drag-and-drop, badge, and theme-aware metadata may be recorded as optional capabilities while hidden properties remain evidence-only."
+          },
+          {
+            "title": "Behavioral validation expectations example",
+            "description": "Reference validation expectations cover enabled-state activation gating, text-direction preservation, accessibility popup mapping, and public visibility behavior."
+          }
         ]
       }
     ],

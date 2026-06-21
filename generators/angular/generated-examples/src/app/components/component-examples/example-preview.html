@@ -478,6 +478,62 @@
         </div>
       </div>
     }
+    @case ('reference-public') {
+      <div class="reference-preview">
+        <button mat-raised-button color="primary" type="button">Save order</button>
+        <mat-chip-set aria-label="Reference public properties">
+          <mat-chip>text: Save order</mat-chip>
+          <mat-chip>type: Emphasized</mat-chip>
+          <mat-chip>enabled: true</mat-chip>
+          <mat-chip>icon: accept</mat-chip>
+          <mat-chip>badgeStyle: Attention</mat-chip>
+        </mat-chip-set>
+        <p class="reference-note">Hidden upstream metadata stays evidence-only.</p>
+      </div>
+    }
+    @case ('reference-associations') {
+      <div class="reference-preview">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          [matMenuTriggerFor]="referenceActionsMenu"
+          aria-describedby="order-actions-description"
+          aria-haspopup="menu"
+        >
+          Order actions
+        </button>
+        <p id="order-actions-description" class="reference-note">
+          Choose duplicate or other order-specific actions from the menu.
+        </p>
+        <mat-menu #referenceActionsMenu="matMenu">
+          <button mat-menu-item type="button">Duplicate</button>
+        </mat-menu>
+        <dl class="component-contract">
+          <div>
+            <dt>Association</dt>
+            <dd>ariaDescribedBy: order-actions-description</dd>
+          </div>
+          <div>
+            <dt>Event</dt>
+            <dd>press: activation output</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('reference-validation') {
+      <div class="reference-preview">
+        <button mat-raised-button color="primary" type="button" disabled>Save order</button>
+        <p class="reference-note">Disabled reference buttons do not emit press.</p>
+        <!-- Hebrew: Order number 1000123. -->
+        <p class="reference-direction-sample" dir="rtl" lang="he">מספר הזמנה 1000123</p>
+        <mat-chip-set aria-label="Reference validation expectations">
+          <mat-chip highlighted>enabled gates activation</mat-chip>
+          <mat-chip>ariaHasPopup: menu</mat-chip>
+          <mat-chip>textDirection: RTL</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
     @case ('theme-tokens') {
       <div class="theme-preview">
         <button mat-raised-button color="primary" type="button" class="app-primary-button">
