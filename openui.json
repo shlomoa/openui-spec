@@ -1899,7 +1899,91 @@
         "requirements": [
           "Libraries must support theme-specific assets and shared theme-level styling resources.",
           "Theme composition must allow base styles plus theme overrides without changing the public component contract.",
-          "Density-aware and theme-aware assets are part of the visual system and must remain externally configurable."
+          "Density-aware and theme-aware assets are part of the visual system and must remain externally configurable.",
+          "Visual values must be expressed as named design tokens so themes can re-skin components without editing component markup or logic.",
+          "Themes must be swappable at the application or root scope at runtime, and switching a theme must not require recompiling or changing any component's public contract.",
+          "Density must be selected externally through a root-level mode such as cozy or compact rather than encoded as a per-component property.",
+          "Design tokens must resolve to a defined fallback when a theme does not provide a value, so components render predictably under any theme.",
+          "Theme-specific assets such as images and fonts must be referenced through theme-resolved paths rather than hard-coded URLs so the correct asset loads per theme."
+        ],
+        "nonGoals": [
+          "The theming model does not define a specific color palette, typography scale, or the visual design of any individual theme; it standardizes how tokens and overrides are structured, not their values.",
+          "The theming model does not standardize private CSS class names, generated stylesheet ordering, or renderer-internal markup used to apply a theme.",
+          "The theming model does not replace the layout, component, or accessibility rules; it constrains how visual values are tokenized and themed without changing those public contracts."
+        ],
+        "tags": [
+          {
+            "name": "theme-asset-set",
+            "meaning": "Libraries ship theme-specific assets and shared theme-level styling resources that vary by theme without touching the component contract."
+          },
+          {
+            "name": "theme-composition",
+            "meaning": "A theme is composed of base styles plus theme overrides, so switching themes never changes a component's public API."
+          },
+          {
+            "name": "design-token",
+            "meaning": "Visual values are expressed as named design tokens, such as theming parameters or CSS custom properties, rather than hard-coded literals."
+          },
+          {
+            "name": "density-aware-styling",
+            "meaning": "Density such as cozy or compact is an externally configurable visual mode applied at a root scope, not a per-component property."
+          },
+          {
+            "name": "external-theme-configuration",
+            "meaning": "Theme and density selection are configured externally at the application or root level and remain swappable at runtime."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Theme",
+            "definition": "A named collection of design-token values and assets that determines the visual appearance of all components without altering their public contract."
+          },
+          {
+            "term": "Design token",
+            "definition": "A named, themeable styling value such as a color, spacing, typography, or elevation that is resolved at runtime so components reference the token instead of a literal value."
+          },
+          {
+            "term": "Base styles",
+            "definition": "The theme-independent structural styles a component always carries, over which theme overrides are layered."
+          },
+          {
+            "term": "Theme override",
+            "definition": "Theme-specific token values or assets layered on top of base styles to produce a particular theme's appearance."
+          },
+          {
+            "term": "Density mode",
+            "definition": "An externally configurable visual mode such as cozy or compact applied at a root scope to adjust spacing and sizing across components."
+          }
+        ],
+        "usage": [
+          "Reference colors, spacing, typography, and elevation through design tokens, such as the Material system CSS custom properties `--mat-sys-primary` and `--mat-sys-on-primary`, instead of literal values so a new theme re-skins the component automatically.",
+          "Keep theme-independent structure in base styles and layer only token values and assets as theme overrides, so the public component contract never changes between themes.",
+          "Apply density at a root scope, for example a `cozy` or `compact` body class, rather than adding density properties to individual components.",
+          "Provide a defined fallback for every design token so components stay legible when a theme omits a value.",
+          "Resolve theme-specific assets through theme-aware paths or tokens so switching themes loads the matching image and font set without code changes."
+        ],
+        "implementationNotes": [
+          "Extractors should record design-token references, theme override layers, and density modes from library styling metadata instead of capturing computed pixel values from a single rendered theme.",
+          "Generators should emit token references such as CSS custom properties and density-scoped classes so the output re-skins with the active theme and density without per-component edits.",
+          "Conformance tests should cover token-driven styling, base-plus-override composition, runtime theme swapping, and density mode application."
+        ],
+        "examples": [
+          {
+            "title": "Design tokens instead of literal values example",
+            "description": "A button references named design tokens for background, color, and border radius so switching the theme re-skins it without changing the component contract."
+          },
+          {
+            "title": "Base styles plus theme override example",
+            "description": "A panel keeps theme-independent base styles while each theme layers its own token values, leaving the public contract unchanged across light and dark themes."
+          },
+          {
+            "title": "Density mode example",
+            "description": "Density is selected once at the root scope, such as `sapUiSizeCompact`, so descendant components adapt spacing through density-aware tokens instead of per-component properties."
+          },
+          {
+            "title": "Generator design-token binding example",
+            "description": "A generator emits Material system CSS custom properties and a density-scoped class so the active theme and density re-skin the button without editing the component."
+          }
         ]
       },
       {
@@ -1911,7 +1995,99 @@
         "requirements": [
           "Libraries must provide translatable message resources for public UI text.",
           "Locale-aware rendering must support right-to-left and left-to-right presentation where applicable.",
-          "Public text-bearing components must expose text direction and translatable labels through explicit metadata."
+          "Public text-bearing components must expose text direction and translatable labels through explicit metadata.",
+          "Translatable public text must be referenced through stable message keys resolved from locale-specific message resource bundles rather than hard-coded literals.",
+          "Message resource bundles must resolve through a deterministic locale fallback chain from the most specific locale to a default bundle.",
+          "Locale-sensitive values such as dates, numbers, and currencies must render through typed, locale-aware formatting rather than fixed presentation.",
+          "The active locale and text direction must be externally configurable application-level settings that components inherit rather than hard-code.",
+          "Translatable properties must be marked in public metadata so tooling can extract message keys and reconstruct localized output without reading renderer internals."
+        ],
+        "nonGoals": [
+          "The internationalization model does not mandate a specific message-bundle file format, translation workflow, or translation management system.",
+          "The internationalization model does not define how translated strings are authored, reviewed, or stored; it only constrains how they are referenced and resolved through the public contract.",
+          "The internationalization model does not replace the accessibility, theming, or layout rules, but it constrains how those contracts expose translatable text, locale, and direction."
+        ],
+        "tags": [
+          {
+            "name": "translatable-text",
+            "meaning": "Public text-bearing properties reference translatable message keys instead of hard-coded literals."
+          },
+          {
+            "name": "message-resource-bundle",
+            "meaning": "Locale-specific message bundles supply translated text resolved by message key."
+          },
+          {
+            "name": "locale-fallback",
+            "meaning": "Message resolution follows a deterministic fallback chain from the most specific locale to a default bundle."
+          },
+          {
+            "name": "locale-aware-formatting",
+            "meaning": "Typed values such as dates, numbers, and currencies render according to the active locale."
+          },
+          {
+            "name": "text-direction",
+            "meaning": "Text direction is a declarable public property with `LTR`, `RTL`, and `Inherit` values for bidirectional content."
+          },
+          {
+            "name": "locale-configuration",
+            "meaning": "The active locale and direction are externally configurable application settings that components inherit."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Message resource bundle",
+            "definition": "A locale-specific set of key-to-text entries that supplies translated public text resolved by message key."
+          },
+          {
+            "term": "Message key",
+            "definition": "A stable identifier that references a translatable string in a message resource bundle, decoupling the public text from any single literal."
+          },
+          {
+            "term": "Locale",
+            "definition": "The language and regional identifier (such as `en`, `de`, or `ar-EG`) that selects message bundles and locale-aware formatting."
+          },
+          {
+            "term": "Locale fallback",
+            "definition": "The deterministic resolution order from the most specific locale to a default bundle, used when a key is missing for the active locale."
+          },
+          {
+            "term": "Translatable property",
+            "definition": "A property marked in public metadata as carrying user-facing text, signalling that its value is a message key resolved from a bundle."
+          },
+          {
+            "term": "Text direction",
+            "definition": "A public property declaring `LTR`, `RTL`, or `Inherit` so bidirectional text renders deterministically from the public contract."
+          }
+        ],
+        "usage": [
+          "Reference user-facing text through message keys resolved from message resource bundles, and reserve literal text for non-translatable technical identifiers.",
+          "Mark text-bearing properties as translatable in public metadata so extractors can collect message keys without scraping rendered output.",
+          "Ship one message bundle per supported locale and rely on the locale fallback chain so a missing translation degrades to a less specific bundle rather than failing.",
+          "Render dates, numbers, and currencies through typed locale-aware formatting bound to the active locale instead of formatting values with fixed patterns.",
+          "Inherit the active locale and `textDirection` from application-level configuration, overriding direction only for content whose direction differs from its surrounding context."
+        ],
+        "implementationNotes": [
+          "Extractors should normalize translatable property flags, message keys, and typed locale-aware value types from component metadata instead of reading literal rendered text.",
+          "Generators should map message keys to the target framework's i18n mechanism and typed locale-aware values to locale-bound formatting, while binding text direction to the active locale.",
+          "Conformance tests should cover message-key resolution, locale fallback, locale-aware formatting, and text-direction inheritance for text-bearing components."
+        ],
+        "examples": [
+          {
+            "title": "Translatable property and message bundle example",
+            "description": "A button's `text` property is marked translatable and carries a message key that each locale bundle resolves to localized text instead of a hard-coded literal."
+          },
+          {
+            "title": "Locale fallback resolution example",
+            "description": "With active locale `de-AT`, resolution walks the fallback chain so a key resolves from the `de` bundle while a missing key degrades to the `en` default rather than failing."
+          },
+          {
+            "title": "Locale-aware value formatting example",
+            "description": "A numeric value renders through typed locale-aware formatting so the same `1234.5` becomes `1.234,5` under `de-DE`, following the active locale instead of a fixed pattern."
+          },
+          {
+            "title": "Generator internationalization binding example",
+            "description": "A generator maps the translatable `text` property to a resolved message accessor and binds text direction to the active locale, preserving the localized text and direction from the public contract."
+          }
         ]
       },
       {
@@ -2072,7 +2248,103 @@
         "requirements": [
           "A compliant implementation must publish its public surface through a discoverable library catalog.",
           "A compliant implementation must describe every public component with typed metadata for properties, composition, relationships, and events.",
-          "A compliant implementation must preserve accessibility, theming, internationalization, and testing evidence as part of the public contract lifecycle."
+          "A compliant implementation must preserve accessibility, theming, internationalization, and testing evidence as part of the public contract lifecycle.",
+          "Compliance is evaluated against the normalized public contract, not against private source files, renderer internals, generated DOM structure, or framework-specific implementation details.",
+          "Every public library, component, element, type, and interface must be reachable from the catalog with a stable identifier, ownership information, version scope, and documented visibility.",
+          "Component metadata must include enough typed information for validators and generators to reconstruct properties, aggregations, associations, events, extension hooks, and design-time hints without reverse-engineering runtime behavior.",
+          "Cross-cutting rules for accessibility, theming, internationalization, security, performance, and extension compatibility must be traceable to public metadata or documented evidence.",
+          "Automated compliance tests must verify that `/openui.json`, generated API projections, documentation, examples, and implementation behavior remain synchronized for every normative public contract.",
+          "When an implementation intentionally omits an optional capability, the omission must be explicit and must not weaken required baseline metadata, interaction, accessibility, or evidence rules."
+        ],
+        "nonGoals": [
+          "Compliance rules do not prescribe a specific renderer, build system, test runner, package format, or host framework.",
+          "Compliance rules do not require implementations to expose private members, internal DOM nodes, renderer helper APIs, or source-code-only conventions.",
+          "Compliance rules do not redefine section-specific requirements; they aggregate the mandatory checks from the catalog, component, interaction, state, accessibility, theming, internationalization, and testing sections.",
+          "Compliance rules do not certify application-specific business logic, visual design choices, or data schemas beyond their use of the public UI contract."
+        ],
+        "tags": [
+          {
+            "name": "catalog-discoverability",
+            "meaning": "Every public library member is reachable from a stable, machine-readable catalog entry."
+          },
+          {
+            "name": "metadata-completeness",
+            "meaning": "Every public component declares typed properties, aggregations, associations, events, and relevant capability metadata."
+          },
+          {
+            "name": "contract-based-validation",
+            "meaning": "Compliance is evaluated from public metadata, documentation, generated projections, and observable behavior rather than private implementation details."
+          },
+          {
+            "name": "cross-cutting-evidence",
+            "meaning": "Accessibility, theming, internationalization, security, privacy, performance, and extension requirements are backed by public metadata or documented evidence."
+          },
+          {
+            "name": "testable-conformance",
+            "meaning": "Every normative rule has an automated or reviewable acceptance check that can be repeated by implementers and validators."
+          },
+          {
+            "name": "explicit-capability-scope",
+            "meaning": "Optional capabilities are declared as supported or intentionally absent without weakening required baseline conformance."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Compliant implementation",
+            "definition": "A framework, library, generator, or projection that satisfies the required public contract rules for the specification sections it claims to implement."
+          },
+          {
+            "term": "Public surface",
+            "definition": "The catalog-addressable libraries, controls, elements, types, interfaces, metadata members, events, examples, and generated projections exposed to consumers."
+          },
+          {
+            "term": "Compliance evidence",
+            "definition": "Machine-readable metadata, API projections, documentation, examples, test results, or reviewable records that demonstrate a rule is satisfied."
+          },
+          {
+            "term": "Conformance profile",
+            "definition": "The declared scope of sections, libraries, components, and optional capabilities that an implementation claims to support."
+          },
+          {
+            "term": "Compliance gap",
+            "definition": "Any missing, inconsistent, private-only, or untested part of a claimed public contract."
+          },
+          {
+            "term": "Validation artifact",
+            "definition": "A repeatable test, generated file, documentation page, screenshot, or report used to verify conformance."
+          }
+        ],
+        "usage": [
+          "Start compliance validation from the catalog root and walk only public entries; any component that cannot be discovered from the catalog is outside the compliant public surface.",
+          "Validate metadata completeness before validating behavior so downstream checks can rely on declared property types, aggregation multiplicity, association targets, event parameters, defaults, visibility, and capability flags.",
+          "Treat documentation, `/openui.json`, generated `api.json`-style projections, generated examples, and runtime metadata as synchronized views of the same public contract.",
+          "Record cross-cutting evidence next to the public contract it supports, such as accessibility associations, theme token usage, localized text handling, popup relationships, or lazy-loading declarations.",
+          "Make optional capability support explicit: a component may omit drag-and-drop, design-time metadata, or a generator mapping only when the conformance profile says the capability is not claimed.",
+          "Fail compliance when an implementation relies on private renderer details for behavior that the specification requires to be public, even if the visible UI appears correct.",
+          "Keep validation artifacts deterministic and versioned so maintainers can compare compliance before and after library, metadata, or generator changes."
+        ],
+        "implementationNotes": [
+          "Validators should report compliance gaps with the section, catalog entry, metadata member, evidence artifact, and expected rule so maintainers can correct the public contract without guessing.",
+          "Generators should fail fast when required metadata is missing and should preserve optional capability declarations as explicit supported or unsupported features in generated output.",
+          "Documentation builds should treat missing examples, stale JSON mappings, or generated projections that disagree with `/openui.json` as compliance failures rather than editorial warnings."
+        ],
+        "examples": [
+          {
+            "title": "Catalog discoverability checklist example",
+            "description": "A conformance profile lists a catalog with libraries, components, types, and interfaces, then verifies that every claimed public member resolves from the catalog root with a stable identifier and owning library."
+          },
+          {
+            "title": "Metadata completeness gate example",
+            "description": "A Button contract is compliant when typed text and enabled properties, an ariaLabelledBy association, and the press event are public metadata and the implementation does not require private renderer inspection."
+          },
+          {
+            "title": "Cross-cutting evidence record example",
+            "description": "An Input contract carries accessibility associations, theme token usage, internationalized text handling, and repeatable tests as evidence tied to the same public component contract."
+          },
+          {
+            "title": "Generator compliance guard example",
+            "description": "A generator guard verifies that generated inputs mirror properties, outputs mirror events, catalog entries resolve, metadata projections stay synchronized, and accessibility bindings come from public associations."
+          }
         ]
       },
       {
@@ -2112,13 +2384,116 @@
       {
         "id": "23-reference-examples",
         "title": "Reference Examples",
-        "purpose": "Provide a concrete reference component abstracted from upstream OpenUI5 evidence.",
+        "purpose": "Provide concrete reference components abstracted from upstream OpenUI5 evidence.",
         "document": "spec/23-reference-examples.md",
         "derivedFrom": ["reference-component-button"],
         "requirements": [
-          "A reference action component exposes text, style, width, enabled state, icon configuration, accessibility state, and a primary activation event.",
-          "The same component may expose label/description associations, drag capability, and theme-aware visuals.",
-          "Its expected behavior is validated by tests for state accessors, text direction, activation events, and visibility."
+          "Reference examples translate concrete upstream component evidence into implementation-neutral specification examples.",
+          "A reference action component must preserve its stable identity, owning library, advertised interfaces, public properties, associations, events, and optional capability metadata.",
+          "Public properties define the component's configurable state, including text, visual type, width, enabled state, icon configuration, icon ordering, icon density behavior, text direction, accessibility popup state, accessibility role, and badge style.",
+          "Hidden properties may be recorded as implementation evidence, but they must not be treated as public API in generated documentation or conformance tests.",
+          "Accessibility relationships are represented through non-owning associations such as `ariaLabelledBy` and `ariaDescribedBy`.",
+          "User activation is represented by the current public `press` event; deprecated compatibility aliases such as `tap` may be recorded but must not replace the normative activation event.",
+          "Optional renderer, design-time, drag-and-drop, badge, and theme-aware visual metadata may be retained as capabilities when they are present in upstream evidence.",
+          "Reference examples must include validation expectations that connect the component contract to observable behavior such as state accessors, text direction, activation events, enabled-state gating, visibility, and accessibility metadata."
+        ],
+        "nonGoals": [
+          "Reference examples do not standardize OpenUI5 runtime internals, renderer DOM structure, CSS class names, or event ordering.",
+          "Reference examples do not require every implementation to expose a button component with the exact same API; they provide concrete evidence for applying the abstract specification models.",
+          "Reference examples do not make hidden or deprecated members normative for new generated APIs.",
+          "Reference examples do not replace the component, interaction, state, form, accessibility, or theming sections; they demonstrate those sections working together."
+        ],
+        "tags": [
+          {
+            "name": "reference-component-evidence",
+            "meaning": "A concrete upstream component is captured as evidence for the abstract metadata model."
+          },
+          {
+            "name": "action-component-contract",
+            "meaning": "A button-like component combines configurable state, accessibility associations, and a public activation event."
+          },
+          {
+            "name": "public-property-surface",
+            "meaning": "Public properties such as `text`, `type`, `width`, `enabled`, and icon settings define the supported configuration surface."
+          },
+          {
+            "name": "accessibility-association-surface",
+            "meaning": "Label and description relationships are represented through associations instead of owned content."
+          },
+          {
+            "name": "activation-event-surface",
+            "meaning": "The current public activation event is normative, while deprecated aliases are compatibility evidence only."
+          },
+          {
+            "name": "optional-capability-evidence",
+            "meaning": "Renderer, design-time, drag-and-drop, badge, and theme-aware metadata are recorded as optional capabilities."
+          },
+          {
+            "name": "behavioral-validation-evidence",
+            "meaning": "Reference examples include observable expectations that conformance tests can validate."
+          }
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Reference example",
+            "definition": "A concrete, evidence-backed example used to show how the abstract specification models apply to a real component while remaining implementation-neutral."
+          },
+          {
+            "term": "Reference action component",
+            "definition": "A button-like component that exposes configurable state, accessibility relationships, and an activation event for application handlers."
+          },
+          {
+            "term": "Evidence metadata",
+            "definition": "Upstream metadata captured for a reference example, including identity, interfaces, properties, associations, events, renderer, design-time, and capability flags."
+          },
+          {
+            "term": "Public property surface",
+            "definition": "The set of public properties that applications and generators may use as the component's supported configuration contract."
+          },
+          {
+            "term": "Compatibility event alias",
+            "definition": "A deprecated event retained for migration or historical evidence while the current event remains normative."
+          },
+          {
+            "term": "Optional capability",
+            "definition": "Metadata that may be preserved when present, such as drag capability, badge styling, renderer linkage, design-time hints, or theme-aware visuals, without becoming mandatory for all components."
+          },
+          {
+            "term": "Reference validation expectation",
+            "definition": "An observable behavior or conformance check derived from the reference example, such as enabled-state gating or text-direction preservation."
+          }
+        ],
+        "usage": [
+          "Use reference examples to verify that the abstract section models can represent a real component without depending on private framework internals.",
+          "Preserve identity (`sap.m.Button`), library (`sap.m`), and interface evidence so generated catalogs can link the example back to the component and form/access-key/toolbar contracts it advertises.",
+          "Normalize public properties with their declared types, groups, defaults, visibility, and deprecation state; keep hidden properties out of generated public APIs unless a diagnostic view explicitly asks for evidence metadata.",
+          "Model `ariaLabelledBy` and `ariaDescribedBy` as multiple non-owning associations so accessibility tooling can resolve labels and descriptions without assuming DOM proximity.",
+          "Treat `press` as the normative activation event for new examples and tests; record `tap` only as a deprecated compatibility alias when preserving upstream evidence.",
+          "Retain optional renderer, design-time, drag-and-drop, badge, and theme-aware icon metadata as capabilities that enrich documentation and tests without changing the core component contract.",
+          "Derive behavioral tests from public behavior: property accessors return normalized values, disabled controls do not dispatch activation, text direction is preserved, visibility follows the public state, and accessibility popup metadata maps to the declared value."
+        ],
+        "implementationNotes": [
+          "Extraction pipelines should store reference evidence separately from normative generated APIs so hidden or deprecated members can be audited without being exposed by default.",
+          "Generator pipelines should render reference examples using the common component, state, interaction, accessibility, form, and theming models rather than special-casing OpenUI5 runtime behavior.",
+          "Conformance tooling should validate the reference example through public metadata and observable behavior, including enabled-state gating for activation and accessibility association preservation."
+        ],
+        "examples": [
+          {
+            "title": "Reference action component metadata example",
+            "description": "A `sap.m.Button` reference preserves identity, library, interfaces, and public properties such as text, type, width, enabled, icon, text direction, accessibility popup state, accessibility role, and badge style."
+          },
+          {
+            "title": "Accessibility associations and activation event example",
+            "description": "A reference button exposes `ariaDescribedBy` and `ariaLabelledBy` associations and treats `press` as the normative activation event while retaining deprecated `tap` only as compatibility evidence."
+          },
+          {
+            "title": "Optional capabilities and hidden evidence example",
+            "description": "Renderer, design-time, drag-and-drop, badge, and theme-aware metadata may be recorded as optional capabilities while hidden properties remain evidence-only."
+          },
+          {
+            "title": "Behavioral validation expectations example",
+            "description": "Reference validation expectations cover enabled-state activation gating, text-direction preservation, accessibility popup mapping, and public visibility behavior."
+          }
         ]
       }
     ],

@@ -39,6 +39,14 @@
         "title": "Theming / Design Tokens",
         "purpose": "Describe reusable color, spacing, and typography tokens.",
         "requirements": ["Theme tokens map to runtime CSS custom properties."]
+      },
+      {
+        "id": "23-reference-examples",
+        "title": "Reference Examples",
+        "purpose": "Provide concrete reference components abstracted from upstream OpenUI5 evidence.",
+        "requirements": [
+          "Reference examples connect component contracts to observable behavior."
+        ]
       }
     ]
   }
