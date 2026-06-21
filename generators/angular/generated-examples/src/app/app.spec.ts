@@ -35,6 +35,7 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Application structure');
     expect(compiled.textContent).toContain('Data & forms');
     expect(compiled.textContent).toContain('Component model');
+    expect(compiled.textContent).toContain('Extension');
     expect(compiled.textContent).toContain('Interaction');
     expect(compiled.textContent).toContain('Navigation');
     expect(compiled.textContent).toContain('Feedback');
@@ -47,6 +48,7 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Component state');
     expect(compiled.textContent).toContain('Data binding');
     expect(compiled.textContent).toContain('Component contract');
+    expect(compiled.textContent).toContain('Extension point');
     expect(compiled.textContent).toContain('Action button');
     expect(compiled.textContent).toContain('Navigation container');
     expect(compiled.textContent).toContain('Status feedback');

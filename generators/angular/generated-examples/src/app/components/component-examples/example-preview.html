@@ -281,6 +281,57 @@
         </dl>
       </div>
     }
+    @case ('extension-slot') {
+      <div class="extension-preview">
+        <div class="extension-slot" aria-label="Workspace cards extension point">
+          <mat-card>
+            <mat-card-title>Revenue</mat-card-title>
+            <mat-card-content>Registered IWorkspaceCard extension</mat-card-content>
+          </mat-card>
+          <mat-card>
+            <mat-card-title>Pipeline</mat-card-title>
+            <mat-card-content>Registered IWorkspaceCard extension</mat-card-content>
+          </mat-card>
+        </div>
+        <dl class="component-contract">
+          <div>
+            <dt>Point</dt>
+            <dd>workspace.cards</dd>
+          </div>
+          <div>
+            <dt>Type</dt>
+            <dd>IWorkspaceCard [0..n]</dd>
+          </div>
+        </dl>
+      </div>
+    }
+    @case ('extension-design-time') {
+      <div class="extension-preview">
+        <mat-card>
+          <mat-card-title>Analytics panel</mat-card-title>
+          <mat-card-content>Palette group: Workspace extensions</mat-card-content>
+        </mat-card>
+        <mat-chip-set aria-label="Design-time metadata">
+          <mat-chip>editable: title</mat-chip>
+          <mat-chip>actions: move, remove</mat-chip>
+          <mat-chip>drop: sap.ui.core.Control</mat-chip>
+        </mat-chip-set>
+        <p class="action-note">Authoring metadata is optional and does not change runtime APIs.</p>
+      </div>
+    }
+    @case ('extension-dnd') {
+      <div class="extension-preview">
+        <mat-list aria-label="Workspace column drag and drop contract">
+          <mat-list-item>renderer: WorkspaceColumnRenderer</mat-list-item>
+          <mat-list-item>aggregation: cards</mat-list-item>
+          <mat-list-item>dropEffects: move, copy</mat-list-item>
+        </mat-list>
+        <mat-chip-set aria-label="Compatibility gates">
+          <mat-chip highlighted>drag-drop-extension</mat-chip>
+          <mat-chip>theme-token-v1</mat-chip>
+        </mat-chip-set>
+      </div>
+    }
     @case ('navigation-routing') {
       <div class="navigation-preview navigation-routing-preview">
         <dl class="component-contract">
