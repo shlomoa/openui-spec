@@ -23,6 +23,88 @@
         <div class="router-outlet-preview">Routed page content</div>
       </div>
     }
+    @case ('application-dependencies') {
+      <mat-card class="application-preview">
+        <mat-card-title>sample.app</mat-card-title>
+        <mat-card-content>
+          <mat-chip-set aria-label="Explicit application dependencies">
+            <mat-chip>sample.library</mat-chip>
+            <mat-chip>sample.layout</mat-chip>
+            <mat-chip highlighted>root: sample.app.Shell</mat-chip>
+          </mat-chip-set>
+        </mat-card-content>
+      </mat-card>
+    }
+    @case ('application-shell-metadata') {
+      <mat-card class="application-preview">
+        <mat-card-title>sample.app.Shell</mat-card-title>
+        <mat-card-content>
+          <dl class="component-contract">
+            <div>
+              <dt>navigation</dt>
+              <dd>aggregation: sample.library.NavList</dd>
+            </div>
+            <div>
+              <dt>header</dt>
+              <dd>aggregation: sample.library.Control</dd>
+            </div>
+            <div>
+              <dt>pages</dt>
+              <dd>aggregation[]: sample.library.Page</dd>
+            </div>
+            <div>
+              <dt>currentPage</dt>
+              <dd>association: sample.library.Page</dd>
+            </div>
+          </dl>
+        </mat-card-content>
+      </mat-card>
+    }
+    @case ('application-page-hierarchy') {
+      <div class="application-preview application-grid">
+        <mat-card>
+          <mat-card-title>sample.library.Page</mat-card-title>
+          <mat-card-content>
+            <mat-chip-set aria-label="Page aggregations">
+              <mat-chip>content[]: Control</mat-chip>
+              <mat-chip>subPages[]: Page</mat-chip>
+            </mat-chip-set>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-title>sample.layout.SplitContainer</mat-card-title>
+          <mat-card-content>
+            <mat-chip-set aria-label="Split container aggregations">
+              <mat-chip>masterPages[]: Page</mat-chip>
+              <mat-chip>detailPages[]: Page</mat-chip>
+            </mat-chip-set>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+    @case ('application-structure-tree') {
+      <mat-card class="application-preview">
+        <mat-card-title>sample.app.Shell</mat-card-title>
+        <mat-card-content>
+          <ul class="structure-tree" aria-label="Resolved application structure">
+            <li>navigation: sample.library.NavList</li>
+            <li>
+              orders: sample.library.Page
+              <ul>
+                <li>order-detail: sample.library.Page</li>
+              </ul>
+            </li>
+            <li>
+              customers: sample.layout.SplitContainer
+              <ul>
+                <li>masterPages: customer-list</li>
+                <li>detailPages: customer-detail</li>
+              </ul>
+            </li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
+    }
     @case ('page-card') {
       <div class="page-preview">
         <mat-card>
