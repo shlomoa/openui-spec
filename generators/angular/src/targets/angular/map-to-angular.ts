@@ -23,6 +23,7 @@ function mapPage(page: UiPage): AngularPageModel {
   ]);
   const constructorParameters: string[] = [];
   const members: string[] = [];
+  const contractItems = buildComponentContractItems(page);
 
   if (page.features.includes("form")) {
     imports.add("ReactiveFormsModule");
@@ -56,9 +57,7 @@ function mapPage(page: UiPage): AngularPageModel {
   if (page.features.includes("component")) {
     imports.add("MatChipsModule");
     componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
-    members.push(
-      "protected readonly componentContract = ['property: text string = \"\"', 'aggregation: content Control [0..n]', 'association: ariaLabelledBy Control [0..n]', 'event: liveChange(value: string)'];",
-    );
+    members.push(`protected readonly componentContract = ${toTypeScriptStringArray(contractItems)};`);
   }
 
   if (page.features.includes("reference")) {
@@ -197,12 +196,7 @@ function buildAcceptanceStyles(): string {
 }
 
 function buildComponentTemplate(page: UiPage): string {
-  const contractItems = page.formalDefinitions
-    .filter((definition) =>
-      ["Component", "Property", "Aggregation", "Association", "Event"].includes(definition.term),
-    )
-    .map((definition) => `${definition.term}: ${definition.definition}`)
-    .slice(0, 5)
+  const contractItems = buildComponentContractItems(page)
     .map((item) => `          <mat-chip>${escapeHtml(item)}</mat-chip>`)
     .join("\n");
   return `
@@ -239,6 +233,14 @@ ${contractItems}
         }
       </mat-list>
     </section>`;
+}
+
+function buildComponentContractItems(page: UiPage): string[] {
+  return page.formalDefinitions
+    .filter((definition) =>
+      ["Component", "Property", "Aggregation", "Association", "Event"].includes(definition.term),
+    )
+    .map((definition) => `${definition.term}: ${definition.definition}`);
 }
 
 function buildComponentStyles(): string {
@@ -297,4 +299,8 @@ function escapeHtml(value: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+function toTypeScriptStringArray(values: string[]): string {
+  return `[${values.map((value) => JSON.stringify(value)).join(", ")}]`;
 }

@@ -932,7 +932,7 @@ export class SearchInput {
             preview: 'component-capabilities',
             code: `@Component({
   selector: 'app-card',
-  imports: [MatCardModule, CdkDropList],
+  imports: [MatCardModule, DragDropModule],
   template: \`
     <mat-card cdkDropList>
       <mat-card-title>Workspace card</mat-card-title>
