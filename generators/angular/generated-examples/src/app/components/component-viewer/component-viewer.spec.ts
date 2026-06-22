@@ -118,6 +118,15 @@ describe('Component documentation routing', () => {
     expect(root.textContent).toContain('kind: aggregation');
   });
 
+  it('renders interaction enabled and disabled activation previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/action/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('h1')?.textContent).toContain('Action button');
+    expect(root.querySelectorAll('.action-preview').length).toBe(2);
+    expect(root.textContent).toContain('Pointer, touch, and keyboard activation');
+    expect(root.textContent).toContain('enabled gate suppresses activation');
+  });
+
   it('sources the accessibility API tab from the accessibility model spec', async () => {
     const harness = await RouterTestingHarness.create('/components/accessible-field');
     const root = harness.routeNativeElement as HTMLElement;
