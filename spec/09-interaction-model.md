@@ -44,6 +44,12 @@
 - Preserve event parameter names, types, optionality, and cancellation semantics in `/openui.json` so generators and tests can create stable handler signatures.
 - Document compatibility aliases only when they are part of the supported public surface, and point consumers to the current event name for new implementations.
 
+## Implementation notes
+
+- Extractors should normalize public interaction metadata from control event declarations and avoid treating private renderer listeners as normative events.
+- Generators should bind application handlers through the target framework activation mechanism while preserving the specification enabled gate and handler signature.
+- Conformance tests should cover pointer activation, keyboard activation, disabled-state suppression, and any documented compatibility aliases for action controls.
+
 ## Examples
 
 ### Example 1 — button activation event contract

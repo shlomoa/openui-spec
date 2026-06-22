@@ -43,6 +43,12 @@
 - Keep library dependencies explicit and minimal so that tooling, validators, and generators can reconstruct the full application graph from the dependency declaration plus the public component catalog without reverse-engineering runtime code.
 - When normalizing the structure into `/openui.json`, preserve dependency names, container aggregations, child types, multiplicity, and the semantic role of each region so the navigable hierarchy can be rebuilt deterministically.
 
+## Implementation notes
+
+- Implementations should publish navigation containers, shells, and pages through stable library catalogs so applications, validators, and generators can resolve the structure without source inspection.
+- Applications should declare their library dependencies explicitly and reference a single root component so the full application graph can be reconstructed from the dependency declaration plus public metadata.
+- Extraction and generator pipelines should rebuild the shell and page hierarchy from container aggregations while treating references such as the current or initial page as non-owning associations.
+
 ## Examples
 
 ### Example 1 — explicit library dependencies for an application

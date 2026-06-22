@@ -32,6 +32,20 @@ describe('DocumentationItems', () => {
     }
   });
 
+  it('documents Section 06 application structure with generated examples', () => {
+    const component = docs.getComponentById('shell');
+
+    expect(component?.api.specPath).toBe('spec/06-application-structure.md');
+    expect(component?.examples.map((example) => example.preview)).toEqual([
+      'application-dependencies',
+      'application-shell-metadata',
+      'application-page-hierarchy',
+      'application-structure-tree',
+      'shell-side',
+      'shell-toolbar',
+    ]);
+  });
+
   it('documents Section 22 acceptance criteria with runnable examples', () => {
     const component = docs.getComponentById('acceptance-criteria');
 
@@ -41,6 +55,35 @@ describe('DocumentationItems', () => {
       'acceptance-projection',
       'acceptance-evidence',
     ]);
+  });
+
+  it('documents Section 07 layout-system concepts with runnable examples', () => {
+    const component = docs.getComponentById('page');
+
+    expect(component?.api.specPath).toBe('spec/07-layout-system.md');
+    expect(component?.examples.map((example) => example.preview)).toEqual([
+      'page-card',
+      'page-split',
+      'page-responsive',
+      'page-density',
+      'page-dnd',
+    ]);
+
+    const densityExample = component?.examples.find((example) => example.id === 'page-density');
+    expect(densityExample).toMatchObject({
+      title: 'Density and spacing page',
+      preview: 'page-density',
+    });
+    expect(densityExample?.description).toContain('spacing scale');
+    expect(densityExample?.code).toContain('.density-page.compact');
+
+    const dndExample = component?.examples.find((example) => example.id === 'page-dnd');
+    expect(dndExample).toMatchObject({
+      title: 'Drag-and-drop region page',
+      preview: 'page-dnd',
+    });
+    expect(dndExample?.description).toContain('ordered region');
+    expect(dndExample?.code).toContain('board-columns');
   });
 
   it('returns undefined for an unknown component id', () => {

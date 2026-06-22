@@ -48,6 +48,11 @@ class InteractionModelSpecTest(unittest.TestCase):
         self.assertEqual(len(self.section["formalDefinitions"]), 5)
         self.assertEqual(len(self.section["usage"]), 5)
         self.assertEqual(len(self.section["implementationNotes"]), 3)
+        self.assertIn("## Implementation notes", self.markdown)
+        self.assertIn(
+            "private renderer listeners as normative events",
+            self.markdown,
+        )
 
     def test_interaction_model_examples_define_press_and_disabled_gate(self):
         example_titles = {example["title"] for example in self.section["examples"]}

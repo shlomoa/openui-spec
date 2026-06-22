@@ -45,6 +45,31 @@ describe('Component documentation routing', () => {
     expect(root.querySelectorAll('app-example-preview').length).toBe(examples.length);
   });
 
+  it('renders application structure previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/shell/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+
+    expect(root.querySelector('.application-preview')).toBeTruthy();
+    expect(root.textContent).toContain('sample.library');
+    expect(root.textContent).toContain('currentPage');
+    expect(root.textContent).toContain('masterPages');
+    expect(root.textContent).toContain('order-detail');
+  });
+
+  it('renders layout density and drag-and-drop previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/page/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+
+    expect(root.querySelector('h1')?.textContent).toContain('Page layout');
+    expect(root.textContent).toContain('Density and spacing page');
+    expect(root.textContent).toContain('density: compact');
+    expect(root.querySelectorAll('.density-page mat-form-field').length).toBe(2);
+    expect(root.querySelector('.density-page mat-chip-set')).toBeTruthy();
+    expect(root.textContent).toContain('Drag-and-drop region page');
+    expect(root.textContent).toContain('columns region');
+    expect(root.querySelectorAll('.board-preview mat-card').length).toBe(3);
+  });
+
   it('renders styling guidance on the Styling tab', async () => {
     const harness = await RouterTestingHarness.create('/components/form/styling');
     const root = harness.routeNativeElement as HTMLElement;
@@ -99,6 +124,15 @@ describe('Component documentation routing', () => {
     expect(root.querySelector('.binding-preview')).toBeTruthy();
     expect(root.textContent).toContain('path: /customer/name');
     expect(root.textContent).toContain('kind: aggregation');
+  });
+
+  it('renders interaction enabled and disabled activation previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/action/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('h1')?.textContent).toContain('Action button');
+    expect(root.querySelectorAll('.action-preview').length).toBe(2);
+    expect(root.textContent).toContain('Pointer, touch, and keyboard activation');
+    expect(root.textContent).toContain('enabled gate suppresses activation');
   });
 
   it('sources the accessibility API tab from the accessibility model spec', async () => {
