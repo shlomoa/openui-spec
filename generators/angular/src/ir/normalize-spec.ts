@@ -3,6 +3,7 @@ import type { UiFeature } from "./ui-model";
 
 const SECTION_FEATURES: Record<string, UiFeature> = {
   "05-ui-concept-model": "ui-concept",
+  "08-component-model": "component",
   "12-form-model": "form",
   "13-navigation-model": "navigation",
   "14-feedback-model": "feedback",

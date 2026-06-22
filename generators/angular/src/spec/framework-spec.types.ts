@@ -17,7 +17,7 @@ export interface FrameworkSpecSection {
   document?: string;
   requirements?: string[];
   tags?: string[];
-  formalDefinitions?: unknown[];
+  formalDefinitions?: Array<{ term?: string; definition?: string }>;
   implementationNotes?: string[];
   examples?: Array<{ title?: string; description?: string }>;
 }

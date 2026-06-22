@@ -281,6 +281,25 @@
         </dl>
       </div>
     }
+    @case ('component-capabilities') {
+      <div class="component-preview component-capabilities-preview">
+        <mat-card>
+          <mat-card-title>Workspace card</mat-card-title>
+          <mat-card-content
+            >Projected content rendered by sample.library.CardRenderer.</mat-card-content
+          >
+        </mat-card>
+        <mat-chip-set aria-label="Optional component capabilities">
+          <mat-chip highlighted>renderer: CardRenderer</mat-chip>
+          <mat-chip>designtime: Card.designtime</mat-chip>
+          <mat-chip>dnd: draggable + droppable</mat-chip>
+        </mat-chip-set>
+        <p class="action-note">
+          Capability metadata is generated beside the core contract; it does not redefine public
+          properties, aggregations, associations, or events.
+        </p>
+      </div>
+    }
     @case ('extension-slot') {
       <div class="extension-preview">
         <div class="extension-slot" aria-label="Workspace cards extension point">

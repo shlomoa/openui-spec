@@ -11,6 +11,36 @@
         "requirements": ["Controls and elements have stable semantic names."]
       },
       {
+        "id": "08-component-model",
+        "title": "Component Model",
+        "purpose": "Define the normative component contract.",
+        "requirements": [
+          "Components expose stable identity, owning library, public metadata, and typed properties, aggregations, associations, and events."
+        ],
+        "formalDefinitions": [
+          {
+            "term": "Component",
+            "definition": "a public, named unit published by a library"
+          },
+          {
+            "term": "Property",
+            "definition": "a typed configuration value with a default and visibility"
+          },
+          {
+            "term": "Aggregation",
+            "definition": "owned child content with multiplicity"
+          },
+          {
+            "term": "Association",
+            "definition": "a non-owning reference to another component"
+          },
+          {
+            "term": "Event",
+            "definition": "a named notification with typed parameters"
+          }
+        ]
+      },
+      {
         "id": "12-form-model",
         "title": "Form Model",
         "purpose": "Describe fields, labels, validation, and submission semantics.",

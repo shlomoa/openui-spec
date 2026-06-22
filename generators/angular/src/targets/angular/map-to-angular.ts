@@ -53,6 +53,14 @@ function mapPage(page: UiPage): AngularPageModel {
     componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
   }
 
+  if (page.features.includes("component")) {
+    imports.add("MatChipsModule");
+    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    members.push(
+      "protected readonly componentContract = ['property: text string = \"\"', 'aggregation: content Control [0..n]', 'association: ariaLabelledBy Control [0..n]', 'event: liveChange(value: string)'];",
+    );
+  }
+
   if (page.features.includes("reference")) {
     imports.add("MatChipsModule");
     componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
@@ -99,6 +107,7 @@ function buildTemplate(page: UiPage): string {
     ? '\n    <button mat-raised-button color="primary" type="button" (click)="showFeedback()">Show feedback</button>'
     : "";
   const acceptance = page.features.includes("acceptance") ? buildAcceptanceTemplate() : "";
+  const component = page.features.includes("component") ? buildComponentTemplate(page) : "";
   const reference = page.features.includes("reference")
     ? `\n    <div class="reference-example" aria-label="Reference action component example">
       <button mat-raised-button color="primary" type="button" aria-describedby="${page.route}-description">
@@ -122,7 +131,7 @@ function buildTemplate(page: UiPage): string {
       <mat-card-subtitle>${escapeHtml(page.id)}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>${escapeHtml(page.summary)}</p>${requirements}${form}${navigation}${feedback}${acceptance}${reference}${accessibility}
+      <p>${escapeHtml(page.summary)}</p>${requirements}${form}${navigation}${feedback}${acceptance}${component}${reference}${accessibility}
     </mat-card-content>
   </mat-card>
 </section>
@@ -134,6 +143,7 @@ function buildStyles(page: UiPage): string {
     ? "\n:host {\n  --openui-section-accent: var(--openui-theme-primary);\n}\n"
     : "";
   const acceptanceStyles = page.features.includes("acceptance") ? buildAcceptanceStyles() : "";
+  const componentStyles = page.features.includes("component") ? buildComponentStyles() : "";
   return `.spec-page {
   display: block;
   padding: 1rem;
@@ -150,7 +160,7 @@ mat-card {
   justify-items: start;
   margin-top: 1rem;
 }
-${themeStyles}${acceptanceStyles}`;
+${themeStyles}${acceptanceStyles}${componentStyles}`;
 }
 
 function buildAcceptanceTemplate(): string {
@@ -182,6 +192,88 @@ function buildAcceptanceStyles(): string {
 
 .acceptance-criteria h2 {
   margin-top: 0;
+}
+`;
+}
+
+function buildComponentTemplate(page: UiPage): string {
+  const contractItems = page.formalDefinitions
+    .filter((definition) =>
+      ["Component", "Property", "Aggregation", "Association", "Event"].includes(definition.term),
+    )
+    .map((definition) => `${definition.term}: ${definition.definition}`)
+    .slice(0, 5)
+    .map((item) => `          <mat-chip>${escapeHtml(item)}</mat-chip>`)
+    .join("\n");
+  return `
+    <section class="component-contract-example" aria-label="Component metadata contract">
+      <h2>Component contract projection</h2>
+      <mat-chip-set aria-label="Public metadata definitions">
+${contractItems}
+      </mat-chip-set>
+      <dl>
+        <div>
+          <dt>Stable identity</dt>
+          <dd>sample.library.SearchInput</dd>
+        </div>
+        <div>
+          <dt>Public property</dt>
+          <dd>value: string = "" (bindable)</dd>
+        </div>
+        <div>
+          <dt>Owned aggregation</dt>
+          <dd>content: sap.ui.core.Control [0..n]</dd>
+        </div>
+        <div>
+          <dt>Association</dt>
+          <dd>ariaLabelledBy: sap.ui.core.Control [0..n]</dd>
+        </div>
+        <div>
+          <dt>Event output</dt>
+          <dd>liveChange(value: string)</dd>
+        </div>
+      </dl>
+      <mat-list aria-label="Generated Angular projection">
+        @for (item of componentContract; track item) {
+          <mat-list-item>{{ item }}</mat-list-item>
+        }
+      </mat-list>
+    </section>`;
+}
+
+function buildComponentStyles(): string {
+  return `
+.component-contract-example {
+  border: 1px solid var(--openui-theme-primary);
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.component-contract-example h2 {
+  margin: 0;
+}
+
+.component-contract-example dl {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.component-contract-example div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.component-contract-example dt {
+  color: var(--openui-theme-primary);
+  font-weight: 600;
+}
+
+.component-contract-example dd {
+  margin: 0;
 }
 `;
 }

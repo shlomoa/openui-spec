@@ -29,6 +29,7 @@ test("generates an Angular Material standalone app from the specification", asyn
 
     const routes = await readFile(path.join(outDir, "src/app/app.routes.ts"), "utf8");
     assert.match(routes, /path: 'form-model'/);
+    assert.match(routes, /path: 'component-model'/);
     assert.match(routes, /path: 'navigation-model'/);
     assert.match(routes, /path: 'feedback-model'/);
     assert.match(routes, /path: 'test-acceptance-criteria'/);
@@ -69,6 +70,21 @@ test("generates section-specific Angular Material details for implemented specs"
     );
     assert.match(feedbackPage, /MatSnackBarModule/);
     assert.match(feedbackPage, /showFeedback\(\)/);
+
+    const componentPage = await readFile(
+      path.join(outDir, "src/app/pages/component-model/component-model.page.ts"),
+      "utf8",
+    );
+    assert.match(componentPage, /MatChipsModule/);
+    assert.match(componentPage, /componentContract/);
+
+    const componentTemplate = await readFile(
+      path.join(outDir, "src/app/pages/component-model/component-model.page.html"),
+      "utf8",
+    );
+    assert.match(componentTemplate, /aria-label="Component metadata contract"/);
+    assert.match(componentTemplate, /sample\.library\.SearchInput/);
+    assert.match(componentTemplate, /liveChange\(value: string\)/);
 
     const accessibilityTemplate = await readFile(
       path.join(outDir, "src/app/pages/accessibility-model/accessibility-model.page.html"),
