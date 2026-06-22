@@ -43,6 +43,19 @@ describe('DocumentationItems', () => {
     ]);
   });
 
+  it('documents Section 07 layout-system concepts with runnable examples', () => {
+    const component = docs.getComponentById('page');
+
+    expect(component?.api.specPath).toBe('spec/07-layout-system.md');
+    expect(component?.examples.map((example) => example.preview)).toEqual([
+      'page-card',
+      'page-split',
+      'page-responsive',
+      'page-density',
+      'page-dnd',
+    ]);
+  });
+
   it('returns undefined for an unknown component id', () => {
     expect(docs.getComponentById('does-not-exist')).toBeUndefined();
   });

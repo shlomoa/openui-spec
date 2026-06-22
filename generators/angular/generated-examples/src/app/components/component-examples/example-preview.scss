@@ -57,6 +57,29 @@
   padding: 0;
 }
 
+.page-preview.density-page {
+  --layout-gap: 1rem;
+  display: grid;
+  gap: var(--layout-gap);
+}
+
+.page-preview.density-page.compact {
+  --layout-gap: 0.5rem;
+}
+
+.page-preview.board-preview {
+  background: transparent;
+  box-shadow: none;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 0;
+}
+
+.page-preview.board-preview .action-note {
+  grid-column: 1 / -1;
+}
+
 .page-preview mat-card-title {
   display: block;
   margin: 0 0 0.5rem;
@@ -128,6 +151,10 @@
 
   .page-preview.catalog-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-preview.board-preview {
+    grid-template-columns: 1fr;
   }
 }
 
