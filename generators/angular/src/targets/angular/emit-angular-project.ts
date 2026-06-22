@@ -13,6 +13,8 @@ export function emitAngularProject(project: AngularProjectModel): GeneratedFile[
     emitMain(),
     emitAppComponent(project),
     ...emitApplicationStructureModel(project),
+    ...emitExtensionFiles(project),
+    ...emitInternationalizationFiles(project),
     emitRoutes(project),
     emitTheme(project),
     ...project.pages.flatMap(emitPageComponent),
@@ -156,15 +158,21 @@ function emitTsConfig(): GeneratedFile {
 function emitMain(): GeneratedFile {
   return {
     path: "src/main.ts",
-    content: `import { provideAnimations } from '@angular/platform-browser/animations';
+    content: `import { LOCALE_ID } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 
 import { AppComponent } from './app/app.component';
+import { OPENUI_I18N } from './app/openui-i18n.service';
 import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
-  providers: [provideAnimations(), provideRouter(routes)],
+  providers: [
+    provideAnimations(),
+    provideRouter(routes),
+    { provide: LOCALE_ID, useValue: OPENUI_I18N.angularLocale },
+  ],
 }).catch((error) => console.error(error));
 `,
   };
@@ -182,6 +190,349 @@ function emitApplicationStructureModel(project: AngularProjectModel): GeneratedF
 `,
     },
   ];
+}
+
+function emitExtensionFiles(project: AngularProjectModel): GeneratedFile[] {
+  if (!project.extensionModel) {
+    return [];
+  }
+
+  const extensionModel = project.extensionModel;
+  const workspaceCardsPoint = extensionModel.extensionPoints[0];
+  const extensionPointsLiteral = Object.fromEntries(
+    extensionModel.extensionPoints.map((point) => [
+      point.propertyName,
+      {
+        name: point.name,
+        acceptedType: point.acceptedType,
+        multiple: point.multiple,
+        ownsContent: point.ownsContent,
+        compatibilityGate: {
+          requires: point.requiredCapabilities,
+          minHostVersion: extensionModel.hostVersion,
+        },
+        renderer: {
+          module: point.rendererModule,
+          declared: true,
+        },
+        dragDrop: point.dragDrop,
+        designTime: point.designTime,
+      },
+    ]),
+  );
+
+  return [
+    {
+      path: "src/app/openui-extension.model.ts",
+      content: `import type { Type } from '@angular/core';
+
+export const OPENUI_EXTENSION_HOST = ${toTypeScriptObjectLiteral({
+        version: extensionModel.hostVersion,
+        capabilities: extensionModel.hostCapabilities,
+      })} as const;
+
+export const OPENUI_EXTENSION_POINTS = ${toTypeScriptObjectLiteral(extensionPointsLiteral)} as const;
+
+export type OpenUiExtensionCapability = typeof OPENUI_EXTENSION_HOST.capabilities[number];
+export type WorkspaceCardArtifactType = ${JSON.stringify(workspaceCardsPoint?.acceptedType ?? "sample.extensions.IWorkspaceCard")};
+
+export interface OpenUiDesignTimeOverlay {
+  readonly label: string;
+  readonly paletteGroup: string;
+  readonly editableProperties: readonly string[];
+  readonly aggregations: Record<
+    string,
+    {
+      readonly actions: readonly string[];
+      readonly allowedDropTypes: readonly string[];
+    }
+  >;
+}
+
+export interface OpenUiRuntimeMetadata {
+  readonly properties: Record<string, { readonly type: string; readonly defaultValue?: unknown }>;
+  readonly aggregations: Record<string, { readonly type: string; readonly multiple: boolean }>;
+  readonly events: Record<string, { readonly parameters: Record<string, string> }>;
+}
+
+export interface OpenUiExtensionPoint<TAcceptedType extends string> {
+  readonly name: string;
+  readonly acceptedType: TAcceptedType;
+  readonly multiple: boolean;
+  readonly ownsContent: boolean;
+  readonly compatibilityGate: {
+    readonly requires: readonly OpenUiExtensionCapability[];
+    readonly minHostVersion: string;
+  };
+  readonly renderer: {
+    readonly module: string;
+    readonly declared: true;
+  };
+  readonly dragDrop: {
+    readonly aggregation: string;
+    readonly acceptedTypes: readonly TAcceptedType[];
+    readonly dropEffects: readonly string[];
+    readonly source: boolean;
+    readonly target: boolean;
+  };
+  readonly designTime: {
+    readonly label: string;
+    readonly paletteGroup: string;
+    readonly editableProperties: readonly string[];
+    readonly actions: readonly string[];
+    readonly allowedDropTypes: readonly string[];
+  };
+}
+
+export interface OpenUiExtensionArtifact<TArtifactType extends string> {
+  readonly id: string;
+  readonly library: string;
+  readonly version: string;
+  readonly extensionPoint: string;
+  readonly artifactType: TArtifactType;
+  readonly component: Type<unknown>;
+  readonly capabilities: readonly OpenUiExtensionCapability[];
+  readonly runtimeMetadata: OpenUiRuntimeMetadata;
+  readonly designTime?: OpenUiDesignTimeOverlay;
+  readonly renderer?: { readonly module: string };
+  readonly dragDrop?: {
+    readonly aggregation: string;
+    readonly acceptedTypes: readonly string[];
+    readonly dropEffects: readonly string[];
+    readonly source: boolean;
+    readonly target: boolean;
+  };
+  readonly compatibility: {
+    readonly since: string;
+    readonly requires: readonly OpenUiExtensionCapability[];
+  };
+}
+
+export type WorkspaceCardExtension = OpenUiExtensionArtifact<WorkspaceCardArtifactType>;
+
+export function satisfiesExtensionPoint(
+  extension: OpenUiExtensionArtifact<string>,
+  extensionPoint: OpenUiExtensionPoint<WorkspaceCardArtifactType>,
+  hostCapabilities: readonly OpenUiExtensionCapability[] = OPENUI_EXTENSION_HOST.capabilities,
+): extension is WorkspaceCardExtension {
+  const hostSatisfiesGate = extensionPoint.compatibilityGate.requires.every((capability) =>
+    hostCapabilities.includes(capability),
+  );
+  const extensionSatisfiesGate = extension.compatibility.requires.every((capability) =>
+    hostCapabilities.includes(capability),
+  );
+
+  return (
+    hostSatisfiesGate &&
+    extensionSatisfiesGate &&
+    extension.extensionPoint === extensionPoint.name &&
+    extension.artifactType === extensionPoint.acceptedType &&
+    (extensionPoint.dragDrop.acceptedTypes as readonly string[]).includes(extension.artifactType)
+  );
+}
+
+export function filterCompatibleExtensions(
+  extensions: readonly OpenUiExtensionArtifact<string>[],
+  extensionPoint: OpenUiExtensionPoint<WorkspaceCardArtifactType>,
+): readonly WorkspaceCardExtension[] {
+  return extensions.filter((extension): extension is WorkspaceCardExtension =>
+    satisfiesExtensionPoint(extension, extensionPoint),
+  );
+}
+`,
+    },
+    {
+      path: "src/app/openui-extension-samples.ts",
+      content: `import { Component } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+
+import type { OpenUiExtensionArtifact, WorkspaceCardExtension } from './openui-extension.model';
+
+@Component({
+  selector: 'openui-analytics-panel-extension',
+  standalone: true,
+  imports: [MatCardModule],
+  template: \`
+    <mat-card appearance="outlined">
+      <mat-card-title>Analytics panel</mat-card-title>
+      <mat-card-content>Runtime component rendered through the typed workspace.cards outlet.</mat-card-content>
+    </mat-card>
+  \`,
+})
+export class OpenUiAnalyticsPanelExtensionComponent {}
+
+export const OPENUI_SAMPLE_WORKSPACE_CARD_EXTENSIONS: readonly WorkspaceCardExtension[] = [
+  {
+    id: 'sample.extensions.AnalyticsPanel',
+    library: 'sample.extensions',
+    version: '1.2.0',
+    extensionPoint: 'workspace.cards',
+    artifactType: 'sample.extensions.IWorkspaceCard',
+    component: OpenUiAnalyticsPanelExtensionComponent,
+    capabilities: ['extension-artifact', 'design-time-extension', 'renderer-extension', 'drag-drop-extension', 'theme-token-v1'],
+    runtimeMetadata: {
+      properties: {
+        title: { type: 'string', defaultValue: 'Analytics' },
+      },
+      aggregations: {
+        content: { type: 'sap.ui.core.Control', multiple: true },
+      },
+      events: {
+        refresh: { parameters: { reason: 'string' } },
+      },
+    },
+    designTime: {
+      label: 'Analytics panel',
+      paletteGroup: 'Workspace extensions',
+      editableProperties: ['title'],
+      aggregations: {
+        content: {
+          actions: ['move', 'remove'],
+          allowedDropTypes: ['sap.ui.core.Control'],
+        },
+      },
+    },
+    renderer: { module: 'sample.extensions.WorkspaceColumnRenderer' },
+    dragDrop: {
+      aggregation: 'cards',
+      acceptedTypes: ['sample.extensions.IWorkspaceCard'],
+      dropEffects: ['move', 'copy'],
+      source: true,
+      target: true,
+    },
+    compatibility: {
+      since: '1.2.0',
+      requires: ['extension-artifact', 'theme-token-v1'],
+    },
+  },
+] as const;
+
+export const OPENUI_INCOMPATIBLE_WORKSPACE_CARD_EXTENSION = {
+  id: 'sample.extensions.RawControl',
+  library: 'sample.extensions',
+  version: '1.0.0',
+  extensionPoint: 'workspace.cards',
+  artifactType: 'sap.ui.core.Control',
+  component: OpenUiAnalyticsPanelExtensionComponent,
+  capabilities: ['extension-artifact'],
+  runtimeMetadata: {
+    properties: {},
+    aggregations: {},
+    events: {},
+  },
+  compatibility: {
+    since: '1.0.0',
+    requires: ['extension-artifact'],
+  },
+} as const satisfies OpenUiExtensionArtifact<'sap.ui.core.Control'>;
+`,
+    },
+    {
+      path: "src/app/openui-workspace-outlet.component.ts",
+      content: `import { NgComponentOutlet } from '@angular/common';
+import { Component, computed, input } from '@angular/core';
+
+import {
+  OPENUI_EXTENSION_POINTS,
+  filterCompatibleExtensions,
+  type WorkspaceCardExtension,
+} from './openui-extension.model';
+
+@Component({
+  selector: 'openui-workspace-outlet',
+  standalone: true,
+  imports: [NgComponentOutlet],
+  template: \`
+    <section class="workspace-extension-outlet" aria-label="Workspace cards extension point" data-openui-extension-point="workspace.cards">
+      @for (extension of compatibleExtensions(); track extension.id) {
+        <article
+          class="workspace-extension-outlet__entry"
+          [attr.data-openui-extension-artifact]="extension.id"
+          [attr.data-openui-extension-type]="extension.artifactType"
+          [attr.data-openui-renderer-extension]="extension.renderer?.module ?? null"
+          [attr.data-openui-drag-drop-extension]="extension.dragDrop?.aggregation ?? null"
+        >
+          <ng-container *ngComponentOutlet="extension.component" />
+        </article>
+      }
+    </section>
+  \`,
+})
+export class OpenUiWorkspaceOutletComponent {
+  readonly extensions = input<readonly WorkspaceCardExtension[]>([]);
+
+  protected readonly compatibleExtensions = computed(() =>
+    filterCompatibleExtensions(this.extensions(), OPENUI_EXTENSION_POINTS.workspaceCards),
+  );
+}
+`,
+    },
+  ];
+}
+
+function emitInternationalizationFiles(project: AngularProjectModel): GeneratedFile[] {
+  if (!project.internationalization) {
+    return [
+      {
+        path: "src/app/openui-i18n.service.ts",
+        content: `export const OPENUI_I18N = {
+  activeLocale: 'en',
+  angularLocale: 'en-US',
+  defaultLocale: 'en',
+  fallbackLocales: ['en'],
+  messageBundles: { en: {} },
+  rtlLocales: [],
+} as const;
+`,
+      },
+    ];
+  }
+
+  return [
+    {
+      path: "src/app/openui-i18n.service.ts",
+      content: `import { Injectable } from '@angular/core';
+
+    export const OPENUI_I18N = ${toTypeScriptObjectLiteral(project.internationalization)} as const;
+
+type MessageBundles = typeof OPENUI_I18N.messageBundles;
+type Locale = keyof MessageBundles;
+
+@Injectable({ providedIn: 'root' })
+export class OpenUiI18nService {
+  readonly activeLocale = OPENUI_I18N.activeLocale;
+  readonly angularLocale = OPENUI_I18N.angularLocale;
+
+  fallbackChain(): string[] {
+    return [...OPENUI_I18N.fallbackLocales];
+  }
+
+  message(key: string): string {
+    for (const locale of this.fallbackChain()) {
+      const bundle = OPENUI_I18N.messageBundles[locale as Locale];
+      const value = bundle?.[key as keyof typeof bundle];
+      if (value) {
+        return value;
+      }
+    }
+
+    return key;
+  }
+
+  textDirection(): 'ltr' | 'rtl' {
+    const rtlLocales = OPENUI_I18N.rtlLocales as readonly string[];
+    return rtlLocales.includes(this.activeLocale) || rtlLocales.includes(this.activeLocale.split('-')[0])
+      ? 'rtl'
+      : 'ltr';
+  }
+}
+`,
+    },
+  ];
+}
+
+function toTypeScriptObjectLiteral(value: unknown): string {
+  return JSON.stringify(value, null, 2).replace(/"([A-Za-z_$][\w$]*)":/g, "$1:");
 }
 
 function emitAppComponent(project: AngularProjectModel): GeneratedFile {

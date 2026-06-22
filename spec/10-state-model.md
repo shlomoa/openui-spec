@@ -42,6 +42,14 @@
 - Validate default values, assigned values, and derived values against the declared metadata type so boolean, string, enum, numeric, object, and array states remain predictable.
 - Keep state semantics separate from events: a state property describes the current condition, while events describe the interaction or lifecycle transitions that may change it.
 
+## Angular Material generator materialization
+
+- The Angular Material generator maps this section to a dedicated State Model page whenever `/openui.json` contains section `10-state-model`.
+- Public metadata properties are emitted as typed Angular signal inputs or equivalent generated accessors with their declared default values, and the generated page renders those defaults through Angular Material controls such as buttons, chips, and form fields.
+- Hidden or internal state is filtered out before generating public Angular inputs, accessors, API tables, and runnable examples; generated output documents the exclusion policy without exposing hidden metadata as an application-facing API unless a compliance rule explicitly requires an audit.
+- Derived state is emitted as a typed compatibility contract that lists source properties, the declared return type, and allowed values, then demonstrates the computed state through Material validation feedback while preserving the declared metadata type.
+- The generated-examples application includes runnable State Model examples with `specPath: "spec/10-state-model.md"` so documentation, examples, and generator behavior remain traceable to this section.
+
 ## Examples
 
 ### Example 1 — public typed state with defaults

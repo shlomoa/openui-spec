@@ -5,6 +5,47 @@ export interface AngularProjectModel {
   pages: AngularPageModel[];
   themeTokens: Array<{ name: string; value: string }>;
   applicationStructure?: AngularApplicationStructureModel;
+  extensionModel?: AngularExtensionModel;
+  internationalization?: AngularInternationalizationModel;
+}
+
+export interface AngularExtensionModel {
+  hostVersion: string;
+  hostCapabilities: string[];
+  extensionPoints: AngularExtensionPointModel[];
+}
+
+export interface AngularExtensionPointModel {
+  propertyName: string;
+  name: string;
+  acceptedType: string;
+  multiple: boolean;
+  ownsContent: boolean;
+  requiredCapabilities: string[];
+  rendererModule: string;
+  dragDrop: {
+    aggregation: string;
+    acceptedTypes: string[];
+    dropEffects: string[];
+    source: boolean;
+    target: boolean;
+  };
+  designTime: {
+    label: string;
+    paletteGroup: string;
+    editableProperties: string[];
+    actions: string[];
+    allowedDropTypes: string[];
+  };
+}
+
+export interface AngularInternationalizationModel {
+  activeLocale: string;
+  angularLocale: string;
+  defaultLocale: string;
+  fallbackLocales: string[];
+  messageBundles: Record<string, Record<string, string>>;
+  rtlLocales: string[];
 }
 
 export interface AngularApplicationStructureModel {

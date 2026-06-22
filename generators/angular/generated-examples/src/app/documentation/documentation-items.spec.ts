@@ -99,6 +99,28 @@ describe('DocumentationItems', () => {
     expect(dndExample?.code).toContain('board-columns');
   });
 
+  it('documents Section 10 state model with public defaults and derived state examples', () => {
+    const component = docs.getComponentById('state');
+
+    expect(component?.api.specPath).toBe('spec/10-state-model.md');
+    expect(component?.examples.map((example) => example.preview)).toEqual([
+      'state-public',
+      'state-derived',
+    ]);
+    expect(component?.api.points.join(' ')).toContain('hidden state stays out of generated APIs');
+
+    const publicExample = component?.examples.find((example) => example.id === 'state-public-defaults');
+    expect(publicExample?.code).toContain("readonly text = input('Submit order')");
+    expect(publicExample?.code).toContain('readonly enabled = input(true)');
+    expect(publicExample?.code).toContain("readonly type = input<ButtonType>('Default')");
+    expect(publicExample?.code).not.toContain('_lastMeasuredWidth');
+
+    const derivedExample = component?.examples.find((example) => example.id === 'state-derived-validation');
+    expect(derivedExample?.code).toContain('computed<ValueState>');
+    expect(derivedExample?.code).toContain("? 'Error' : this.valueState()");
+    expect(derivedExample?.code).not.toContain('_lastMeasuredWidth');
+  });
+
   it('returns undefined for an unknown component id', () => {
     expect(docs.getComponentById('does-not-exist')).toBeUndefined();
   });

@@ -14,7 +14,12 @@ export function buildUiModel(document: FrameworkSpecDocument): UiApplication {
       summary: normalizeSummary(section),
       sourceDocument: section.document,
       requirements: section.requirements ?? [],
-      tags: section.tags ?? [],
+      tags: (section.tags ?? []).flatMap((tag) => {
+        if (typeof tag === "string") {
+          return [tag];
+        }
+        return tag.name ? [tag.name] : [];
+      }),
       formalDefinitions: (section.formalDefinitions ?? []).flatMap((definition) =>
         definition.term && definition.definition
           ? [{ term: definition.term, definition: definition.definition }]

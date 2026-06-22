@@ -139,6 +139,19 @@ describe('Component documentation routing', () => {
     expect(root.textContent).toContain('kind: aggregation');
   });
 
+  it('renders state model public defaults and derived state previews without hidden state API', async () => {
+    const harness = await RouterTestingHarness.create('/components/state/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+
+    expect(root.querySelector('h1')?.textContent).toContain('Component state');
+    expect(root.querySelectorAll('.state-preview').length).toBe(2);
+    expect(root.textContent).toContain('text: "Submit order"');
+    expect(root.textContent).toContain('enabled: true');
+    expect(root.textContent).toContain('type: Default');
+    expect(root.textContent).toContain('effectiveValueState: Error');
+    expect(root.textContent).not.toContain('_lastMeasuredWidth');
+  });
+
   it('renders interaction enabled and disabled activation previews on the Examples tab', async () => {
     const harness = await RouterTestingHarness.create('/components/action/examples');
     const root = harness.routeNativeElement as HTMLElement;

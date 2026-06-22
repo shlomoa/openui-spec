@@ -27,3 +27,17 @@ When the input specification includes `07-layout-system`, the generated Layout
 System page emits named and ordered aggregation-backed regions, breakpoint CSS,
 density and spacing CSS custom properties, and Angular CDK drag/drop directives
 only for metadata-declared drag-and-drop regions.
+
+When the input specification includes `17-internationalization`, the generated
+application emits `src/app/openui-i18n.service.ts` with message bundles,
+specific-to-default locale fallback, message-key resolution, Angular `LOCALE_ID`
+wiring, locale-aware number/currency/date formatting hooks, and active-locale
+text-direction bindings.
+
+When the input specification includes `20-extension-model`, the generated
+application emits `src/app/openui-extension.model.ts`,
+`src/app/openui-extension-samples.ts`, and
+`src/app/openui-workspace-outlet.component.ts`. These artifacts provide a typed
+extension outlet, compatibility gate filtering, optional design-time overlay
+metadata, and declarative renderer plus drag-and-drop capability records without
+turning authoring metadata into runtime component inputs.

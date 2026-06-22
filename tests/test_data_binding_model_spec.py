@@ -59,6 +59,7 @@ class DataBindingModelSpecTest(unittest.TestCase):
         self.assertIn("## Tags", self.markdown)
         self.assertIn("## Formal definitions", self.markdown)
         self.assertIn("## Usage and implementation guidance", self.markdown)
+        self.assertIn("## Angular Material generator materialization", self.markdown)
         self.assertIn(
             "### Example 2 — aggregation list binding with a template",
             self.markdown,

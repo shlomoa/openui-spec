@@ -51,6 +51,16 @@
 - Fail compliance when an implementation relies on private renderer details for behavior that the specification requires to be public, even if the visible UI appears correct.
 - Keep validation artifacts deterministic and versioned so maintainers can compare compliance before and after library, metadata, or generator changes.
 
+## Angular Material generator materialization
+
+The Angular Material generator materializes compliance rules as executable validation and visible generated evidence:
+
+- `validate` checks the `21-compliance-rules` section for the required compliance tags, formal definitions, examples, documentation mapping, and implementation-note coverage for catalog, metadata, documentation, generated projection, and evidence diagnostics.
+- Catalog discoverability is verified through traversal evidence nodes such as `library-catalog-root`, `library-component-catalog`, `api-json-projection`, and `compliance-tests`; missing nodes or evidence fail validation with diagnostics that identify the failing section, node, and artifact class.
+- Metadata completeness is verified by requiring public-contract coverage for properties, aggregations, associations, events, defaults, visibility, and capability metadata before Angular output can claim compliance materialization.
+- Cross-cutting evidence checks require synchronized sections for component metadata, accessibility, theming, internationalization, security/privacy, performance, extension behavior, and test acceptance criteria when `spec/21-compliance-rules.md` is present.
+- The generated Compliance Rules page emits Angular Material cards, lists, and chips for catalog resolution, metadata completeness, synchronized evidence records, and diagnostic coverage so the validation contract is reviewable in generated output rather than prose only.
+
 ## Examples
 
 ### Example 1 — catalog discoverability checklist

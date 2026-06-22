@@ -42,6 +42,14 @@
 - Preserve the declared metadata type when normalizing bindings into `/openui.json`: record the bound member, its kind (property or aggregation), the bindable flag, the model, and the path so generators can reconstruct the binding.
 - Keep binding semantics separate from interaction and state: a binding describes where a value comes from, while events describe transitions and state describes the current condition, and async updates must not change the declared type.
 
+## Angular Material generator materialization
+
+- The Angular Material generator maps this section to a dedicated Data Binding Model page whenever `/openui.json` contains section `11-data-binding-model`.
+- Generated scalar property bindings preserve the model name, binding path, target member, declared scalar type, bindable flag, and hidden flag in generated TypeScript metadata, then project the value through a typed Angular Material input binding such as `[value]="ordersModel.customer.name"`.
+- Generated aggregation bindings preserve the collection model path, target aggregation, child type, and `0..n` multiplicity, then render the collection with Angular template-driven repetition while tracking each child identity.
+- Generated output omits non-bindable or hidden members as binding targets; only metadata members declared with `bindable: true` and `hidden: false` participate in the emitted binding contract.
+- Generated async update examples use typed promises so resolved values continue to satisfy the declared property and enum types before they are rendered.
+
 ## Examples
 
 ### Example 1 — scalar property binding

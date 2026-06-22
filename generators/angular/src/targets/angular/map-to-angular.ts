@@ -1,6 +1,7 @@
 import type { UiApplication, UiPage } from "../../ir/ui-model";
 import type {
   AngularApplicationStructureModel,
+  AngularInternationalizationModel,
   AngularPageModel,
   AngularProjectModel,
 } from "./angular-model";
@@ -15,6 +16,9 @@ export function mapToAngularProject(uiModel: UiApplication): AngularProjectModel
     themeTokens: uiModel.themeTokens,
     applicationStructure: uiModel.pages.some((page) => page.features.includes("application-structure"))
       ? buildApplicationStructure(pages)
+      : undefined,
+    internationalization: uiModel.pages.some((page) => page.features.includes("internationalization"))
+      ? buildInternationalizationModel()
       : undefined,
   };
 }
@@ -83,6 +87,145 @@ function mapPage(page: UiPage): AngularPageModel {
   }`);
   }
 
+  if (page.features.includes("state-model")) {
+    imports.add("MatChipsModule");
+    imports.add("MatFormFieldModule");
+    imports.add("MatInputModule");
+    componentImports.delete("import { Component } from '@angular/core';");
+    componentImports.add("import { Component, computed, input } from '@angular/core';");
+    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    componentImports.add("import { MatFormFieldModule } from '@angular/material/form-field';");
+    componentImports.add("import { MatInputModule } from '@angular/material/input';");
+    members.push(`readonly text = input<string>("Submit order");`);
+    members.push("readonly enabled = input<boolean>(true);");
+    members.push("readonly visible = input<boolean>(true);");
+    members.push(`readonly type = input<"Default" | "Emphasized" | "Reject" | "Accept">("Default");`);
+    members.push(`readonly value = input<string>("");`);
+    members.push("readonly required = input<boolean>(true);");
+    members.push(
+      `readonly valueState = input<"None" | "Error" | "Warning" | "Success" | "Information">("None");`,
+    );
+    members.push(`protected readonly effectiveValueState = computed<
+    "None" | "Error" | "Warning" | "Success" | "Information"
+  >(() => (this.required() && this.value() === "" ? "Error" : this.valueState()));`);
+    members.push(`protected readonly publicStateInputs = ${toTypeScriptLiteral(buildPublicStateInputs())} as const;`);
+    members.push(`protected readonly hiddenStateExclusion = ${toTypeScriptLiteral(buildHiddenStateExclusion())} as const;`);
+    members.push(`protected readonly derivedStateContract = ${toTypeScriptLiteral(buildDerivedStateContract())} as const;`);
+  }
+
+  if (page.features.includes("data-binding")) {
+    imports.add("MatChipsModule");
+    imports.add("MatFormFieldModule");
+    imports.add("MatInputModule");
+    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    componentImports.add("import { MatFormFieldModule } from '@angular/material/form-field';");
+    componentImports.add("import { MatInputModule } from '@angular/material/input';");
+    members.push(`protected readonly dataBindingContracts = ${toTypeScriptLiteral(buildDataBindingContracts())} as const;`);
+    members.push(`protected readonly ordersModel: {
+    customer: { name: string };
+    orders: ReadonlyArray<{ id: string; title: string; quantity: number }>;
+  } = {
+    customer: { name: "Ada Lovelace" },
+    orders: [
+      { id: "order-100", title: "Notebook", quantity: 2 },
+      { id: "order-101", title: "Keyboard", quantity: 1 },
+    ],
+  };`);
+    members.push(`protected readonly typePreservingStatusUpdate: Promise<{
+    text: string;
+    state: "None" | "Success" | "Warning" | "Error";
+  }> = Promise.resolve({ text: "Loaded", state: "Success" });`);
+  }
+
+  if (page.features.includes("security")) {
+    imports.add("MatChipsModule");
+    imports.add("MatDialogModule");
+    imports.add("MatFormFieldModule");
+    imports.add("MatInputModule");
+    componentImports.delete("import { Component } from '@angular/core';");
+    componentImports.add("import { Component, TemplateRef, inject, viewChild } from '@angular/core';");
+    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    componentImports.add("import { MatDialog, MatDialogModule } from '@angular/material/dialog';");
+    componentImports.add("import { MatFormFieldModule } from '@angular/material/form-field';");
+    componentImports.add("import { MatInputModule } from '@angular/material/input';");
+    members.push("private readonly dialog = inject(MatDialog);");
+    members.push(
+      `private readonly deleteConfirmationDialog = viewChild.required<TemplateRef<unknown>>("deleteConfirmationDialog");`,
+    );
+    members.push(`protected readonly securityContracts = ${toTypeScriptLiteral(buildSecurityContracts())} as const;`);
+    members.push("protected readonly untrustedDisplayText = '<script>alert(1)</script> is rendered as text, not markup.';");
+    members.push("protected readonly supportHref = 'https://support.example/orders/100';");
+    members.push("protected readonly blockedHref = 'ftp://support.example/private-dump';");
+    members.push("protected revealSensitiveValue = false;");
+    members.push("protected readonly sensitiveValueMask = '••••••••••••';");
+    members.push("private readonly sensitiveValue = 'sample-sensitive-token';");
+    members.push("protected readonly canDeleteOrder = false;");
+    members.push("protected confirmationRequests = 0;");
+    members.push("protected confirmedDeleteCount = 0;");
+    members.push(`protected get validatedSupportHref(): string | null {
+    return this.validateAllowedUrl(this.supportHref);
+  }`);
+    members.push(`protected get rejectedSupportHref(): string | null {
+    return this.validateAllowedUrl(this.blockedHref);
+  }`);
+    members.push(`protected get displayedSensitiveValue(): string {
+    return this.revealSensitiveValue ? this.sensitiveValue : this.sensitiveValueMask;
+  }`);
+    members.push(`protected toggleSensitiveReveal(): void {
+    this.revealSensitiveValue = !this.revealSensitiveValue;
+  }`);
+    members.push(`protected requestDeleteConfirmation(): void {
+    if (!this.canDeleteOrder) {
+      return;
+    }
+
+    this.confirmationRequests += 1;
+    this.dialog
+      .open(this.deleteConfirmationDialog(), {
+        ariaDescribedBy: "${page.route}-delete-confirmation-description",
+        ariaLabelledBy: "${page.route}-delete-confirmation-title",
+        role: "alertdialog",
+      })
+      .afterClosed()
+      .subscribe((confirmed) => this.completeDeleteAfterConfirmation(confirmed === true));
+  }`);
+    members.push(`protected completeDeleteAfterConfirmation(confirmed: boolean): void {
+    if (!confirmed || !this.canDeleteOrder) {
+      return;
+    }
+
+    this.confirmedDeleteCount += 1;
+  }`);
+    members.push(`private validateAllowedUrl(value: string): string | null {
+    try {
+      const url = new URL(value, "https://example.invalid");
+      const allowedSchemes: readonly string[] = this.securityContracts.allowedUrlSchemes;
+      return allowedSchemes.includes(url.protocol) ? value : null;
+    } catch {
+      return null;
+    }
+  }`);
+  }
+
+  if (page.features.includes("performance")) {
+    imports.add("ScrollingModule");
+    imports.add("MatChipsModule");
+    componentImports.add("import { ScrollingModule } from '@angular/cdk/scrolling';");
+    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    members.push(`protected readonly lazyDetailContract = ${toTypeScriptLiteral(buildLazyDetailContract(page))} as const;`);
+    members.push(`protected readonly projectionCache = ${toTypeScriptLiteral(buildProjectionCacheContract())} as const;`);
+    members.push(`protected readonly virtualizationBudget = ${toTypeScriptLiteral(buildVirtualizationBudgetContract())} as const;`);
+    members.push(`protected readonly virtualRows: Array<{ id: string; customer: string; total: string }> = Array.from(
+    { length: 120 },
+    (_, index) => ({
+      id: \`ORD-\${String(index + 1).padStart(3, "0")}\`,
+      customer: index % 2 === 0 ? "Ada Lovelace" : "Grace Hopper",
+      total: \`$\${(125 + index).toFixed(2)}\`,
+    }),
+  );`);
+    members.push("protected trackVirtualOrder(_index: number, order: { id: string }): string { return order.id; }");
+  }
+
   if (page.features.includes("layout")) {
     imports.add("CdkDrag");
     imports.add("CdkDropList");
@@ -127,6 +270,21 @@ function mapPage(page: UiPage): AngularPageModel {
     imports.add("MatChipsModule");
     componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
     members.push("protected readonly referenceProperties = ['text', 'type', 'enabled', 'icon', 'ariaHasPopup'];");
+  }
+
+  if (page.features.includes("internationalization")) {
+    imports.add("CurrencyPipe");
+    imports.add("DatePipe");
+    imports.add("DecimalPipe");
+    imports.add("MatChipsModule");
+    componentImports.add("import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';");
+    componentImports.add("import { inject } from '@angular/core';");
+    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    componentImports.add("import { OPENUI_I18N, OpenUiI18nService } from '../../openui-i18n.service';");
+    members.push("protected readonly i18n = inject(OpenUiI18nService);");
+    members.push("protected readonly i18nConfig = OPENUI_I18N;");
+    members.push("protected readonly orderTotal = 1234.5;");
+    members.push("protected readonly deliveryDate = new Date('2026-06-22T00:00:00.000Z');");
   }
 
   return {
@@ -174,8 +332,15 @@ function buildTemplate(page: UiPage): string {
     : "";
   const component = page.features.includes("component") ? buildComponentTemplate(page) : "";
   const interaction = page.features.includes("interaction") ? buildInteractionTemplate(page) : "";
+  const dataBinding = page.features.includes("data-binding") ? buildDataBindingTemplate(page) : "";
+  const security = page.features.includes("security") ? buildSecurityTemplate(page) : "";
   const layout = page.features.includes("layout") ? buildLayoutTemplate(page) : "";
+  const stateModel = page.features.includes("state-model") ? buildStateModelTemplate(page) : "";
+  const performance = page.features.includes("performance") ? buildPerformanceTemplate(page) : "";
   const uiConcept = page.features.includes("ui-concept") ? buildUiConceptTemplate() : "";
+  const internationalization = page.features.includes("internationalization")
+    ? buildInternationalizationTemplate(page)
+    : "";
   const reference = page.features.includes("reference")
     ? `\n    <div class="reference-example" aria-label="Reference action component example">
       <button mat-raised-button color="primary" type="button" aria-describedby="${page.route}-description">
@@ -199,7 +364,7 @@ function buildTemplate(page: UiPage): string {
       <mat-card-subtitle>${escapeHtml(page.id)}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>${escapeHtml(page.summary)}</p>${requirements}${form}${navigation}${feedback}${acceptance}${applicationStructure}${component}${interaction}${layout}${uiConcept}${reference}${accessibility}
+      <p>${escapeHtml(page.summary)}</p>${requirements}${form}${navigation}${feedback}${acceptance}${applicationStructure}${component}${interaction}${dataBinding}${security}${layout}${stateModel}${performance}${uiConcept}${internationalization}${reference}${accessibility}
     </mat-card-content>
   </mat-card>
 </section>
@@ -216,8 +381,15 @@ function buildStyles(page: UiPage): string {
     : "";
   const componentStyles = page.features.includes("component") ? buildComponentStyles() : "";
   const interactionStyles = page.features.includes("interaction") ? buildInteractionStyles() : "";
+  const dataBindingStyles = page.features.includes("data-binding") ? buildDataBindingStyles() : "";
+  const securityStyles = page.features.includes("security") ? buildSecurityStyles() : "";
   const layoutStyles = page.features.includes("layout") ? buildLayoutStyles() : "";
+  const stateModelStyles = page.features.includes("state-model") ? buildStateModelStyles() : "";
+  const performanceStyles = page.features.includes("performance") ? buildPerformanceStyles() : "";
   const uiConceptStyles = page.features.includes("ui-concept") ? buildUiConceptStyles() : "";
+  const internationalizationStyles = page.features.includes("internationalization")
+    ? buildInternationalizationStyles()
+    : "";
   return `.spec-page {
   display: block;
   padding: 1rem;
@@ -234,7 +406,531 @@ mat-card {
   justify-items: start;
   margin-top: 1rem;
 }
-${themeStyles}${acceptanceStyles}${applicationStructureStyles}${componentStyles}${interactionStyles}${layoutStyles}${uiConceptStyles}`;
+${themeStyles}${acceptanceStyles}${applicationStructureStyles}${componentStyles}${interactionStyles}${dataBindingStyles}${securityStyles}${layoutStyles}${stateModelStyles}${performanceStyles}${uiConceptStyles}${internationalizationStyles}`;
+}
+
+function buildSecurityContracts(): {
+  allowedUrlSchemes: string[];
+  rendering: { text: string; html: string; unsafeApi: string };
+  masking: { defaultMode: "masked"; revealRequiresAction: true };
+  confirmation: { popup: "dialog"; firstActivation: "request-confirmation"; finalActivation: "confirmed-only" };
+  permissionGate: { deniedBehavior: "omit"; preventsValueActionAndPopupLeakage: true };
+} {
+  return {
+    allowedUrlSchemes: ["http:", "https:", "mailto:"],
+    rendering: {
+      text: "Angular interpolation",
+      html: "not generated for untrusted values",
+      unsafeApi: "unsafe trust APIs are not emitted",
+    },
+    masking: { defaultMode: "masked", revealRequiresAction: true },
+    confirmation: {
+      popup: "dialog",
+      firstActivation: "request-confirmation",
+      finalActivation: "confirmed-only",
+    },
+    permissionGate: { deniedBehavior: "omit", preventsValueActionAndPopupLeakage: true },
+  };
+}
+
+function buildSecurityTemplate(page: UiPage): string {
+  return `
+    <section class="security-privacy-example" aria-label="Security and privacy UI materialization">
+      <h2>Safe rendering and privacy gates</h2>
+      <mat-chip-set aria-label="Allowed URL schemes">
+        @for (scheme of securityContracts.allowedUrlSchemes; track scheme) {
+          <mat-chip>{{ scheme }}</mat-chip>
+        }
+      </mat-chip-set>
+      <section class="safe-rendering-contract" aria-labelledby="${page.route}-safe-rendering">
+        <h3 id="${page.route}-safe-rendering">Safe text and URL rendering</h3>
+        <p class="encoded-text" data-openui-rendering="encoded-text">{{ untrustedDisplayText }}</p>
+        <a
+          mat-button
+          [href]="validatedSupportHref"
+          rel="noopener noreferrer"
+          target="_blank"
+          data-openui-url-allow-list="http,https,mailto"
+        >
+          Validated support link
+        </a>
+        @if (rejectedSupportHref === null) {
+          <p class="blocked-url" data-openui-url-rejected="true">
+            Disallowed URL schemes are omitted before a value reaches href binding.
+          </p>
+        }
+      </section>
+      <section class="masking-contract" aria-labelledby="${page.route}-masking">
+        <h3 id="${page.route}-masking">Sensitive-value masking</h3>
+        <mat-form-field appearance="outline" data-openui-masking-default="masked">
+          <mat-label>API token</mat-label>
+          <input matInput readonly [value]="displayedSensitiveValue" aria-describedby="${page.route}-masking-help" />
+        </mat-form-field>
+        <button mat-button type="button" (click)="toggleSensitiveReveal()" aria-controls="${page.route}-masking-help">
+          {{ revealSensitiveValue ? 'Mask value' : 'Reveal value' }}
+        </button>
+        <p id="${page.route}-masking-help">
+          The generated field defaults to a masked value and cleartext appears only after an explicit reveal action.
+        </p>
+      </section>
+      <section class="permission-contract" aria-labelledby="${page.route}-permission">
+        <h3 id="${page.route}-permission">Confirmation and permission gates</h3>
+        @if (canDeleteOrder) {
+          <button
+            mat-raised-button
+            color="warn"
+            type="button"
+            aria-haspopup="dialog"
+            data-openui-confirmation-required="true"
+            data-openui-permission-gate="canDeleteOrder"
+            (click)="requestDeleteConfirmation()"
+          >
+            Delete order
+          </button>
+          <ng-template #deleteConfirmationDialog>
+            <h4 id="${page.route}-delete-confirmation-title" mat-dialog-title>Confirm irreversible delete</h4>
+            <mat-dialog-content id="${page.route}-delete-confirmation-description">
+              Deleting the order cannot be undone. The generated handler runs only after explicit confirmation.
+            </mat-dialog-content>
+            <mat-dialog-actions align="end">
+              <button mat-button type="button" [mat-dialog-close]="false">Cancel</button>
+              <button mat-button color="warn" type="button" [mat-dialog-close]="true">Confirm delete</button>
+            </mat-dialog-actions>
+          </ng-template>
+        } @else {
+          <p class="permission-omission" data-openui-permission-gate="omitted">
+            Restricted action, value, and popup target are omitted for denied permissions.
+          </p>
+        }
+      </section>
+    </section>`;
+}
+
+function buildSecurityStyles(): string {
+  return `
+.security-privacy-example {
+  border: 1px solid var(--openui-theme-primary);
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.security-privacy-example h2,
+.security-privacy-example h3 {
+  margin: 0;
+}
+
+.safe-rendering-contract,
+.masking-contract,
+.permission-contract {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+}
+
+.encoded-text,
+.blocked-url,
+.permission-omission {
+  border-inline-start: 0.25rem solid var(--openui-theme-primary);
+  margin: 0;
+  padding-inline-start: 0.75rem;
+}
+`;
+}
+
+function buildLazyDetailContract(page: UiPage): {
+  catalog: string;
+  routePath: string;
+  angularRoute: string;
+  detailLoading: "loadComponent";
+  eagerDiscovery: true;
+  lazy: true;
+} {
+  return {
+    catalog: "sample.library",
+    routePath: page.route,
+    angularRoute: `loadComponent: () => import('./pages/${page.route}/${page.route}.page').then((m) => m.${toPascalCase(page.route)}Page)`,
+    detailLoading: "loadComponent",
+    eagerDiscovery: true,
+    lazy: true,
+  };
+}
+
+function buildProjectionCacheContract(): {
+  projection: "api-json";
+  derivedFrom: "public-contract";
+  library: string;
+  version: string;
+  identity: string;
+  immutable: true;
+  cacheKeyMembers: string[];
+} {
+  return {
+    projection: "api-json",
+    derivedFrom: "public-contract",
+    library: "sample.library",
+    version: "1.4.0",
+    identity: "sample.library@1.4.0#api-json",
+    immutable: true,
+    cacheKeyMembers: ["library", "version", "projection"],
+  };
+}
+
+function buildVirtualizationBudgetContract(): {
+  component: string;
+  aggregation: string;
+  childType: string;
+  multiple: true;
+  virtualized: true;
+  materialPrimitive: "cdk-virtual-scroll-viewport";
+  itemSize: number;
+  viewportHeightPx: number;
+  initialMaterializationBudget: number;
+} {
+  return {
+    component: "sample.library.OrderTable",
+    aggregation: "items",
+    childType: "sample.library.OrderRow",
+    multiple: true,
+    virtualized: true,
+    materialPrimitive: "cdk-virtual-scroll-viewport",
+    itemSize: 48,
+    viewportHeightPx: 240,
+    initialMaterializationBudget: 20,
+  };
+}
+
+function buildPerformanceTemplate(page: UiPage): string {
+  return `
+    <section class="performance-requirements-example" aria-label="Performance requirements materialization">
+      <h2>Eager discovery, lazy detail, and measurable budgets</h2>
+      <section class="performance-lazy-detail" aria-label="Lazy detail loading" [attr.data-openui-lazy-route]="lazyDetailContract.routePath" [attr.data-openui-detail-loading]="lazyDetailContract.detailLoading">
+        <h3>Route-level lazy detail</h3>
+        <p>
+          The generated route keeps catalog discovery eager while loading this page through Angular Router <code>loadComponent</code> only when the route activates.
+        </p>
+        <mat-chip-set aria-label="Lazy detail contract">
+          <mat-chip>{{ lazyDetailContract.catalog }}</mat-chip>
+          <mat-chip>route: {{ lazyDetailContract.routePath }}</mat-chip>
+          <mat-chip>lazy: {{ lazyDetailContract.lazy }}</mat-chip>
+        </mat-chip-set>
+      </section>
+      <section class="performance-projection-cache" aria-label="Cacheable projection identity" [attr.data-openui-projection-cache-key]="projectionCache.identity" [attr.data-openui-projection-immutable]="projectionCache.immutable">
+        <h3>Cacheable API projection</h3>
+        <dl>
+          <div>
+            <dt>Projection</dt>
+            <dd>{{ projectionCache.projection }}</dd>
+          </div>
+          <div>
+            <dt>Derived from</dt>
+            <dd>{{ projectionCache.derivedFrom }}</dd>
+          </div>
+          <div>
+            <dt>Stable cache key</dt>
+            <dd>{{ projectionCache.identity }}</dd>
+          </div>
+        </dl>
+      </section>
+      <section class="performance-virtualization" aria-label="Aggregation virtualization budget">
+        <h3>Virtualized aggregation</h3>
+        <p id="${page.route}-virtualization-budget">
+          The unbounded items aggregation is emitted as a CDK virtual-scroll viewport with an observable materialization budget.
+        </p>
+        <cdk-virtual-scroll-viewport
+          class="performance-viewport"
+          [itemSize]="virtualizationBudget.itemSize"
+          [attr.data-openui-component]="virtualizationBudget.component"
+          [attr.data-openui-aggregation]="virtualizationBudget.aggregation"
+          [attr.data-openui-child-type]="virtualizationBudget.childType"
+          [attr.data-openui-virtualized]="virtualizationBudget.virtualized"
+          [attr.data-openui-materialization-budget]="virtualizationBudget.initialMaterializationBudget"
+          aria-describedby="${page.route}-virtualization-budget"
+        >
+          <mat-list>
+            <mat-list-item *cdkVirtualFor="let row of virtualRows; trackBy: trackVirtualOrder">
+              {{ row.id }} — {{ row.customer }} — {{ row.total }}
+            </mat-list-item>
+          </mat-list>
+        </cdk-virtual-scroll-viewport>
+      </section>
+    </section>`;
+}
+
+function buildPerformanceStyles(): string {
+  return `
+.performance-requirements-example {
+  border: 1px solid var(--openui-theme-primary);
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.performance-requirements-example h2,
+.performance-requirements-example h3,
+.performance-requirements-example p,
+.performance-requirements-example dl {
+  margin: 0;
+}
+
+.performance-lazy-detail,
+.performance-projection-cache,
+.performance-virtualization {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.performance-projection-cache dl {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.performance-projection-cache dt {
+  color: var(--openui-theme-primary);
+  font-weight: 600;
+}
+
+.performance-projection-cache dd {
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+  margin: 0;
+}
+
+.performance-viewport {
+  border: 1px solid color-mix(in srgb, var(--openui-theme-primary) 35%, transparent);
+  border-radius: 0.5rem;
+  height: 240px;
+  max-width: 36rem;
+}
+`;
+}
+
+function buildInternationalizationModel(): AngularInternationalizationModel {
+  return {
+    activeLocale: "ar-EG",
+    angularLocale: "en-US",
+    defaultLocale: "en",
+    fallbackLocales: ["ar-EG", "ar", "en"],
+    messageBundles: {
+      ar: {
+        "order.submit": "إرسال الطلب",
+      },
+      en: {
+        "order.cancel": "Cancel",
+        "order.submit": "Submit order",
+        "order.total": "Order total",
+      },
+    },
+    rtlLocales: ["ar", "ar-EG", "fa", "he", "ur"],
+  };
+}
+
+function buildInternationalizationTemplate(page: UiPage): string {
+  return `
+    <section
+      class="internationalization-example"
+      aria-label="Internationalization materialization"
+      [attr.dir]="i18n.textDirection()"
+      [attr.lang]="i18n.activeLocale"
+      data-openui-locale-fallback="specific-to-default"
+    >
+      <h2>Locale resource wiring</h2>
+      <button mat-raised-button color="primary" type="button" data-openui-message-key="order.submit">
+        {{ i18n.message('order.submit') }}
+      </button>
+      <p id="${page.route}-fallback">
+        Fallback chain: {{ i18n.fallbackChain().join(' → ') }}. Missing regional keys degrade to the default {{ i18nConfig.defaultLocale }} bundle.
+      </p>
+      <mat-list aria-label="Resolved translatable message keys">
+        <mat-list-item>order.submit → {{ i18n.message('order.submit') }}</mat-list-item>
+        <mat-list-item>order.cancel → {{ i18n.message('order.cancel') }}</mat-list-item>
+      </mat-list>
+      <dl>
+        <div>
+          <dt>Text direction</dt>
+          <dd>{{ i18n.textDirection() }}</dd>
+        </div>
+        <div>
+          <dt>Locale-aware number</dt>
+          <dd>{{ orderTotal | number:'1.1-1':i18n.angularLocale }}</dd>
+        </div>
+        <div>
+          <dt>Locale-aware currency</dt>
+          <dd>{{ orderTotal | currency:'USD':'symbol':'1.2-2':i18n.angularLocale }}</dd>
+        </div>
+        <div>
+          <dt>Locale-aware date</dt>
+          <dd>{{ deliveryDate | date:'mediumDate':undefined:i18n.angularLocale }}</dd>
+        </div>
+      </dl>
+      <mat-chip-set aria-label="Locale fallback chain">
+        @for (locale of i18n.fallbackChain(); track locale) {
+          <mat-chip>{{ locale }}</mat-chip>
+        }
+      </mat-chip-set>
+    </section>`;
+}
+
+function buildInternationalizationStyles(): string {
+  return `
+.internationalization-example {
+  border: 1px solid var(--openui-theme-primary);
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.internationalization-example h2,
+.internationalization-example dl {
+  margin: 0;
+}
+
+.internationalization-example dl {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.internationalization-example dt {
+  color: var(--openui-theme-primary);
+  font-weight: 600;
+}
+
+.internationalization-example dd {
+  margin: 0;
+}
+
+.internationalization-example[dir='rtl'] {
+  text-align: right;
+}
+`;
+}
+
+function buildDataBindingContracts(): Array<
+  | {
+      target: string;
+      kind: "property";
+      model: string;
+      path: string;
+      type: string;
+      bindable: true;
+      hidden: false;
+      angularBinding: string;
+      asyncUpdate: string;
+    }
+  | {
+      target: string;
+      kind: "aggregation";
+      model: string;
+      path: string;
+      childType: string;
+      multiple: true;
+      multiplicity: "0..n";
+      bindable: true;
+      hidden: false;
+      angularBinding: string;
+      template: {
+        component: string;
+        contextPath: string;
+        relativeBindings: Array<{ target: string; path: string; type: string }>;
+      };
+    }
+> {
+  return [
+    {
+      target: "value",
+      kind: "property",
+      model: "orders",
+      path: "/customer/name",
+      type: "string",
+      bindable: true,
+      hidden: false,
+      angularBinding: '[value]="ordersModel.customer.name"',
+      asyncUpdate: "Promise<string>",
+    },
+    {
+      target: "items",
+      kind: "aggregation",
+      model: "orders",
+      path: "/orders",
+      childType: "sample.library.ListItem",
+      multiple: true,
+      multiplicity: "0..n",
+      bindable: true,
+      hidden: false,
+      angularBinding: "@for (order of ordersModel.orders; track order.id)",
+      template: {
+        component: "sample.library.ListItem",
+        contextPath: "orders:/orders[]",
+        relativeBindings: [{ target: "title", path: "title", type: "string" }],
+      },
+    },
+  ];
+}
+
+function buildDataBindingTemplate(page: UiPage): string {
+  return `
+    <section class="data-binding-example" aria-label="Data binding model materialization">
+      <h2>Bindable metadata projection</h2>
+      <mat-chip-set aria-label="Generated binding contracts">
+        @for (binding of dataBindingContracts; track binding.target) {
+          <mat-chip>{{ binding.kind }}: {{ binding.model }}{{ binding.path }} → {{ binding.target }}</mat-chip>
+        }
+      </mat-chip-set>
+      <mat-form-field appearance="outline" data-openui-binding-target="value" data-openui-binding-kind="property" data-openui-binding-model="orders" data-openui-binding-path="/customer/name" data-openui-binding-type="string" data-openui-bindable="true">
+        <mat-label>Customer name</mat-label>
+        <input matInput readonly [value]="ordersModel.customer.name" aria-describedby="${page.route}-scalar-binding" />
+      </mat-form-field>
+      <p id="${page.route}-scalar-binding">
+        The scalar property binding maps the named orders model path /customer/name to the typed Angular input binding [value]="ordersModel.customer.name".
+      </p>
+      <mat-list aria-label="Generated aggregation binding" data-openui-binding-target="items" data-openui-binding-kind="aggregation" data-openui-binding-model="orders" data-openui-binding-path="/orders" data-openui-binding-child-type="sample.library.ListItem" data-openui-binding-multiplicity="0..n" data-openui-bindable="true">
+        @for (order of ordersModel.orders; track order.id) {
+          <mat-list-item data-openui-template-context="orders:/orders[]" data-openui-template-child-type="sample.library.ListItem">
+            {{ order.title }} × {{ order.quantity }}
+          </mat-list-item>
+        }
+      </mat-list>
+      @if (typePreservingStatusUpdate | async; as statusUpdate) {
+        <p class="async-update" data-openui-async-update="type-preserving">
+          Async status update: {{ statusUpdate.text }} / {{ statusUpdate.state }}
+        </p>
+      }
+      <p>
+        Non-bindable or hidden metadata members are intentionally absent from generated binding targets; only entries with bindable="true" and hidden="false" are emitted.
+      </p>
+    </section>`;
+}
+
+function buildDataBindingStyles(): string {
+  return `
+.data-binding-example {
+  border: 1px solid var(--openui-theme-primary);
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.data-binding-example h2 {
+  margin: 0;
+}
+
+.data-binding-example mat-form-field,
+.data-binding-example mat-list {
+  max-width: 32rem;
+}
+
+.async-update {
+  font-weight: 600;
+}
+`;
 }
 
 function buildActivationEventContract(): {
@@ -332,6 +1028,218 @@ function buildInteractionStyles(): string {
 
 .interaction-model-example dd {
   margin: 0;
+}
+`;
+}
+
+function buildPublicStateInputs(): Array<{
+  property: string;
+  metadataType: string;
+  angularType: string;
+  defaultValue: string;
+  angularAccessor: string;
+  materialBinding: string;
+}> {
+  return [
+    {
+      property: "text",
+      metadataType: "string",
+      angularType: "string",
+      defaultValue: '"Submit order"',
+      angularAccessor: 'input<string>("Submit order")',
+      materialBinding: "button text content",
+    },
+    {
+      property: "enabled",
+      metadataType: "boolean",
+      angularType: "boolean",
+      defaultValue: "true",
+      angularAccessor: "input<boolean>(true)",
+      materialBinding: '[disabled]="!enabled()"',
+    },
+    {
+      property: "visible",
+      metadataType: "boolean",
+      angularType: "boolean",
+      defaultValue: "true",
+      angularAccessor: "input<boolean>(true)",
+      materialBinding: "@if (visible())",
+    },
+    {
+      property: "type",
+      metadataType: "sample.library.ButtonType",
+      angularType: '"Default" | "Emphasized" | "Reject" | "Accept"',
+      defaultValue: '"Default"',
+      angularAccessor: 'input<"Default" | "Emphasized" | "Reject" | "Accept">("Default")',
+      materialBinding: "Material button variant adapter",
+    },
+  ];
+}
+
+function buildHiddenStateExclusion(): {
+  policy: string;
+  omittedFrom: string[];
+  retainedAs: string;
+} {
+  return {
+    policy: "visibility: hidden metadata is not emitted as an Angular input, public accessor, API row, or runnable example",
+    omittedFrom: ["Angular inputs", "public accessors", "API examples", "runnable examples"],
+    retainedAs: "private implementation evidence only",
+  };
+}
+
+function buildDerivedStateContract(): {
+  stateName: string;
+  from: string[];
+  declaredType: string;
+  defaultValue: string;
+  compatibleValues: string[];
+  angularAccessor: string;
+} {
+  return {
+    stateName: "effectiveValueState",
+    from: ["required", "value", "valueState"],
+    declaredType: "sample.library.ValueState",
+    defaultValue: '"None"',
+    compatibleValues: ["None", "Error", "Warning", "Success", "Information"],
+    angularAccessor: 'computed<ValueState>(() => required() && value() === "" ? "Error" : valueState())',
+  };
+}
+
+function buildStateModelTemplate(page: UiPage): string {
+  return `
+    <section class="state-model-example" aria-label="State model materialization">
+      <h2>Public state inputs with declared defaults</h2>
+      <p id="${page.route}-state-contract">
+        Public metadata properties become typed Angular signal inputs with declared defaults. Hidden metadata is filtered before public API and example emission.
+      </p>
+      <mat-chip-set aria-label="Public state input defaults">
+        @for (state of publicStateInputs; track state.property) {
+          <mat-chip
+            [attr.data-openui-property]="state.property"
+            [attr.data-openui-type]="state.metadataType"
+            [attr.data-openui-default-value]="state.defaultValue"
+            data-openui-visibility="public"
+          >
+            {{ state.property }}: {{ state.angularType }} = {{ state.defaultValue }}
+          </mat-chip>
+        }
+      </mat-chip-set>
+      @if (visible()) {
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          [disabled]="!enabled()"
+          aria-describedby="${page.route}-state-contract"
+          data-openui-property="enabled"
+          data-openui-type="boolean"
+          data-openui-default-value="true"
+        >
+          {{ text() }} ({{ type() }})
+        </button>
+      }
+      <dl class="state-accessors" aria-label="Generated Angular state accessors">
+        @for (state of publicStateInputs; track state.property) {
+          <div>
+            <dt>{{ state.property }}</dt>
+            <dd>{{ state.angularAccessor }} → {{ state.materialBinding }}</dd>
+          </div>
+        }
+      </dl>
+      <section class="state-hidden-exclusion" aria-label="Hidden state exclusion" data-openui-hidden-state-excluded="true">
+        <h3>Hidden state exclusion</h3>
+        <p>{{ hiddenStateExclusion.policy }}; it is retained as {{ hiddenStateExclusion.retainedAs }}.</p>
+        <mat-chip-set aria-label="Hidden state omitted from generated surfaces">
+          @for (target of hiddenStateExclusion.omittedFrom; track target) {
+            <mat-chip>{{ target }}</mat-chip>
+          }
+        </mat-chip-set>
+      </section>
+      <section class="state-derived-compatibility" aria-label="Derived state compatibility">
+        <h3>Derived state remains type-compatible</h3>
+        <mat-form-field appearance="outline" data-openui-derived-state="effectiveValueState" data-openui-type="sample.library.ValueState">
+          <mat-label>Amount</mat-label>
+          <input matInput [value]="value()" readonly [attr.aria-invalid]="effectiveValueState() === 'Error'" data-openui-property="value" data-openui-type="string" data-openui-default-value="&quot;&quot;" />
+          @if (effectiveValueState() === 'Error') {
+            <mat-error>Value is required</mat-error>
+          }
+        </mat-form-field>
+        <dl class="state-accessors">
+          <div>
+            <dt>Derived state</dt>
+            <dd>{{ derivedStateContract.stateName }}</dd>
+          </div>
+          <div>
+            <dt>Source properties</dt>
+            <dd>{{ derivedStateContract.from.join(', ') }}</dd>
+          </div>
+          <div>
+            <dt>Declared type</dt>
+            <dd>{{ derivedStateContract.declaredType }}</dd>
+          </div>
+          <div>
+            <dt>Computed value</dt>
+            <dd>{{ effectiveValueState() }}</dd>
+          </div>
+        </dl>
+        <mat-chip-set aria-label="Derived state compatible values">
+          @for (value of derivedStateContract.compatibleValues; track value) {
+            <mat-chip>{{ value }}</mat-chip>
+          }
+        </mat-chip-set>
+      </section>
+    </section>`;
+}
+
+function buildStateModelStyles(): string {
+  return `
+.state-model-example {
+  border: 1px solid var(--openui-theme-primary);
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.state-model-example h2,
+.state-model-example h3,
+.state-model-example p,
+.state-model-example dl {
+  margin: 0;
+}
+
+.state-accessors,
+.state-derived-compatibility,
+.state-hidden-exclusion {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.state-accessors div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.state-accessors dt {
+  color: var(--openui-theme-primary);
+  font-weight: 600;
+}
+
+.state-accessors dd {
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+  margin: 0;
+}
+
+.state-hidden-exclusion {
+  border-inline-start: 0.25rem solid var(--openui-theme-primary);
+  padding-inline-start: 1rem;
+}
+
+.state-derived-compatibility mat-form-field {
+  width: min(100%, 24rem);
 }
 `;
 }

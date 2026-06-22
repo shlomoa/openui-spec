@@ -71,6 +71,26 @@
         ]
       },
       {
+        "id": "10-state-model",
+        "title": "State Model",
+        "purpose": "Describe state held or exposed by components.",
+        "requirements": [
+          "Component state is represented by typed properties with explicit default values.",
+          "State may be public or hidden, but only public state participates in the external component contract.",
+          "Defaulted state and derived state must remain compatible with the declared metadata type system."
+        ]
+      },
+      {
+        "id": "11-data-binding-model",
+        "title": "Data Binding Model",
+        "purpose": "Describe how component state binds to external models.",
+        "requirements": [
+          "Bindable properties and aggregations are part of the component contract and must be explicitly declared with a bindable flag.",
+          "Property bindings connect a single typed value, while aggregation bindings connect a model collection to an owned aggregation through a template.",
+          "Every binding resolves against a default or named model path, and async updates preserve declared types."
+        ]
+      },
+      {
         "id": "12-form-model",
         "title": "Form Model",
         "purpose": "Describe fields, labels, validation, and submission semantics.",
@@ -99,6 +119,37 @@
         "title": "Theming / Design Tokens",
         "purpose": "Describe reusable color, spacing, and typography tokens.",
         "requirements": ["Theme tokens map to runtime CSS custom properties."]
+      },
+      {
+        "id": "17-internationalization",
+        "title": "Internationalization",
+        "purpose": "Describe locale and translation requirements.",
+        "requirements": [
+          "Translatable public text must be referenced through stable message keys resolved from locale-specific message resource bundles rather than hard-coded literals.",
+          "Message resource bundles must resolve through a deterministic locale fallback chain from the most specific locale to a default bundle.",
+          "Locale-sensitive values such as dates, numbers, and currencies must render through typed, locale-aware formatting rather than fixed presentation.",
+          "The active locale and text direction must be externally configurable application-level settings that components inherit rather than hard-code."
+        ]
+      },
+      {
+        "id": "18-security-privacy-ui-rules",
+        "title": "Security / Privacy UI Rules",
+        "purpose": "State UI-facing security and privacy constraints.",
+        "requirements": [
+          "User-provided text, URLs, and style values are untrusted input and must be encoded, validated, or constrained before rendering.",
+          "Components that reveal sensitive values must default to masked output and require explicit reveal actions.",
+          "Irreversible or restricted actions require confirmation and permission gates before invoking application behavior."
+        ]
+      },
+      {
+        "id": "19-performance-requirements",
+        "title": "Performance Requirements",
+        "purpose": "Describe performance-oriented expectations that follow from the public model.",
+        "requirements": [
+          "Public library catalogs must allow eager discovery of available components without eagerly loading every implementation detail.",
+          "Immutable public projections, such as the API projection and catalog metadata, must be cacheable by a stable identity.",
+          "Components that own large or unbounded collections through aggregations must support virtualization with observable materialization budgets."
+        ]
       },
       {
         "id": "22-test-acceptance-criteria",
