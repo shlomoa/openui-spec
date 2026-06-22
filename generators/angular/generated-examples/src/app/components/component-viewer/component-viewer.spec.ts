@@ -53,7 +53,7 @@ describe('Component documentation routing', () => {
     expect(root.textContent).toContain('Density and spacing page');
     expect(root.textContent).toContain('density: compact');
     expect(root.textContent).toContain('Drag-and-drop region page');
-    expect(root.textContent).toContain('columns aggregation');
+    expect(root.textContent).toContain('columns region');
   });
 
   it('renders styling guidance on the Styling tab', async () => {
