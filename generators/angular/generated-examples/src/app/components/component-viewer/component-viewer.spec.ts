@@ -45,6 +45,20 @@ describe('Component documentation routing', () => {
     expect(root.querySelectorAll('app-example-preview').length).toBe(examples.length);
   });
 
+  it('renders layout density and drag-and-drop previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/page/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+
+    expect(root.querySelector('h1')?.textContent).toContain('Page layout');
+    expect(root.textContent).toContain('Density and spacing page');
+    expect(root.textContent).toContain('density: compact');
+    expect(root.querySelectorAll('.density-page mat-form-field').length).toBe(2);
+    expect(root.querySelector('.density-page mat-chip-set')).toBeTruthy();
+    expect(root.textContent).toContain('Drag-and-drop region page');
+    expect(root.textContent).toContain('columns region');
+    expect(root.querySelectorAll('.board-preview mat-card').length).toBe(3);
+  });
+
   it('renders styling guidance on the Styling tab', async () => {
     const harness = await RouterTestingHarness.create('/components/form/styling');
     const root = harness.routeNativeElement as HTMLElement;

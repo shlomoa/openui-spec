@@ -59,6 +59,42 @@
         </mat-card>
       </div>
     }
+    @case ('page-density') {
+      <mat-card class="page-preview density-page compact" aria-label="Generated compact layout">
+        <mat-card-title>Compact order</mat-card-title>
+        <mat-form-field appearance="outline">
+          <mat-label>Customer</mat-label>
+          <input matInput value="Contoso Retail" readonly />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Reference</mat-label>
+          <input matInput value="PO-4321" readonly />
+        </mat-form-field>
+        <mat-chip-set aria-label="Density scale details">
+          <mat-chip>density: compact</mat-chip>
+          <mat-chip>gap: spacing scale step 2</mat-chip>
+        </mat-chip-set>
+      </mat-card>
+    }
+    @case ('page-dnd') {
+      <div class="page-preview board-preview" aria-label="Generated drag-and-drop region">
+        <mat-card>
+          <mat-card-title>Backlog</mat-card-title>
+          <mat-card-content>Ordered region index 1</mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-title>In progress</mat-card-title>
+          <mat-card-content>Ordered region index 2</mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-title>Done</mat-card-title>
+          <mat-card-content>Ordered region index 3</mat-card-content>
+        </mat-card>
+        <p class="action-note">
+          Static preview of a columns region prepared for constrained drag-and-drop.
+        </p>
+      </div>
+    }
     @case ('table-basic') {
       <div class="page-preview">
         <table
