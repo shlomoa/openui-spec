@@ -37,12 +37,12 @@ describe('DocumentationItems', () => {
 
     expect(component?.api.specPath).toBe('spec/06-application-structure.md');
     expect(component?.examples.map((example) => example.preview)).toEqual([
-      'shell-side',
-      'shell-toolbar',
       'application-dependencies',
       'application-shell-metadata',
       'application-page-hierarchy',
       'application-structure-tree',
+      'shell-side',
+      'shell-toolbar',
     ]);
   });
 

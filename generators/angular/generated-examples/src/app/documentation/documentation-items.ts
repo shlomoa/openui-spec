@@ -133,51 +133,6 @@ const CATEGORIES: readonly DocCategory[] = [
         },
         examples: [
           {
-            id: 'shell-side-navigation',
-            title: 'Side navigation shell',
-            description:
-              'A primary toolbar with a persistent side navigation drives top-level routing into a router outlet.',
-            preview: 'shell-side',
-            code: `@Component({
-  selector: 'app-root',
-  imports: [MatListModule, MatSidenavModule, MatToolbarModule, RouterLink, RouterOutlet],
-  template: \`
-    <mat-toolbar color="primary">Sales Workspace</mat-toolbar>
-    <mat-sidenav-container>
-      <mat-sidenav mode="side" opened>
-        <a mat-list-item routerLink="/orders">Orders</a>
-        <a mat-list-item routerLink="/customers">Customers</a>
-      </mat-sidenav>
-      <mat-sidenav-content>
-        <router-outlet />
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-  \`
-})
-export class AppComponent {}`,
-          },
-          {
-            id: 'shell-toolbar-actions',
-            title: 'Toolbar actions shell',
-            description:
-              'Shell-level actions are emitted as toolbar buttons so global commands stay discoverable.',
-            preview: 'shell-toolbar',
-            code: `@Component({
-  selector: 'app-root',
-  imports: [MatButtonModule, MatIconModule, MatToolbarModule, RouterOutlet],
-  template: \`
-    <mat-toolbar color="primary">
-      <span>Sales Workspace</span>
-      <span class="spacer"></span>
-      <button mat-icon-button aria-label="Search"><mat-icon>search</mat-icon></button>
-      <button mat-flat-button color="accent">New order</button>
-    </mat-toolbar>
-    <router-outlet />
-  \`
-})
-export class AppComponent {}`,
-          },
-          {
             id: 'application-dependencies',
             title: 'Explicit application dependencies',
             description:
@@ -253,6 +208,51 @@ export class AppComponent {}`,
     },
   ],
 } as const;`,
+          },
+          {
+            id: 'shell-side-navigation',
+            title: 'Side navigation shell',
+            description:
+              'A primary toolbar with a persistent side navigation drives top-level routing into a router outlet.',
+            preview: 'shell-side',
+            code: `@Component({
+  selector: 'app-root',
+  imports: [MatListModule, MatSidenavModule, MatToolbarModule, RouterLink, RouterOutlet],
+  template: \`
+    <mat-toolbar color="primary">Sales Workspace</mat-toolbar>
+    <mat-sidenav-container>
+      <mat-sidenav mode="side" opened>
+        <a mat-list-item routerLink="/orders">Orders</a>
+        <a mat-list-item routerLink="/customers">Customers</a>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <router-outlet />
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  \`
+})
+export class AppComponent {}`,
+          },
+          {
+            id: 'shell-toolbar-actions',
+            title: 'Toolbar actions shell',
+            description:
+              'Shell-level actions are emitted as toolbar buttons so global commands stay discoverable.',
+            preview: 'shell-toolbar',
+            code: `@Component({
+  selector: 'app-root',
+  imports: [MatButtonModule, MatIconModule, MatToolbarModule, RouterOutlet],
+  template: \`
+    <mat-toolbar color="primary">
+      <span>Sales Workspace</span>
+      <span class="spacer"></span>
+      <button mat-icon-button aria-label="Search"><mat-icon>search</mat-icon></button>
+      <button mat-flat-button color="accent">New order</button>
+    </mat-toolbar>
+    <router-outlet />
+  \`
+})
+export class AppComponent {}`,
           },
         ],
         styling: {
