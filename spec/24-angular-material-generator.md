@@ -64,6 +64,65 @@ The generated UI should prefer Angular Material components and directives wherev
 
 Semantic HTML remains appropriate for document structure and accessibility landmarks, such as `main`, `section`, `form`, headings, and the native `table` element when it is enhanced with `mat-table`.
 
+## Examples
+
+The examples below start from the repository root and use only repository-local files. Replace `generated-openui-angular-app` with any workspace-local output directory when you want to keep multiple generated applications side by side.
+
+### Example 1 — validate `openui.json` with the current CLI
+
+Build the generator package first so the CLI exists at `dist/src/cli/main.js`, then validate the canonical specification:
+
+```bash
+cd generators/angular
+npm ci
+npm run build
+node dist/src/cli/main.js validate --spec ../../openui.json --target angular
+```
+
+Expected result: validation exits with status code `0`. The command is intentionally quiet on success; it prints an error and returns a non-zero status when `openui.json` cannot be loaded, required sections are missing, or an unsupported `--target` is requested.
+
+### Example 2 — generate an Angular Material application
+
+After the generator has been built, generate an Angular Material app from the canonical specification:
+
+```bash
+node dist/src/cli/main.js generate --spec ../../openui.json --target angular --out generated-openui-angular-app
+```
+
+Expected result: the output directory contains a standalone Angular Material project. The first generated artifacts to inspect are:
+
+- `generated-openui-angular-app/package.json` with Angular, Angular Material, and Angular CDK dependencies pinned to the repository-supported package set;
+- `generated-openui-angular-app/angular.json` and `generated-openui-angular-app/tsconfig.json` for the generated Angular workspace configuration;
+- `generated-openui-angular-app/src/main.ts` for `bootstrapApplication`, `provideRouter`, and locale provider wiring;
+- `generated-openui-angular-app/src/app/app.component.ts` for the Material toolbar, sidenav shell, and routed content outlet;
+- `generated-openui-angular-app/src/app/app.routes.ts` for routes derived from the specification sections; and
+- `generated-openui-angular-app/src/styles.scss` plus generated page components under `generated-openui-angular-app/src/app/pages/`.
+
+The generated `package.json` currently pins `@angular/material` and `@angular/cdk` to `22.0.2`, matching the generator's emitted Angular Material package expectations.
+
+### Example 3 — verify the generated output
+
+Use the generator's repository-supported build and CLI workflow, then verify the generated project artifacts:
+
+```bash
+npm run build
+node dist/src/cli/main.js validate --spec ../../openui.json --target angular
+node dist/src/cli/main.js generate --spec ../../openui.json --target angular --out generated-openui-angular-app
+node -e "const fs = require('node:fs'); const path = require('node:path'); const out = 'generated-openui-angular-app'; const required = ['package.json', 'angular.json', 'tsconfig.json', 'src/main.ts', 'src/app/app.component.ts', 'src/app/app.routes.ts', 'src/styles.scss']; for (const file of required) { if (!fs.existsSync(path.join(out, file))) throw new Error('Missing generated artifact: ' + file); } const pkg = JSON.parse(fs.readFileSync(path.join(out, 'package.json'), 'utf8')); if (pkg.dependencies['@angular/material'] !== '22.0.2') throw new Error('Expected @angular/material 22.0.2'); if (pkg.dependencies['@angular/cdk'] !== '22.0.2') throw new Error('Expected @angular/cdk 22.0.2'); console.log('Generated Angular Material artifacts verified.');"
+```
+
+Expected result: the generator builds, validation stays quiet with status code `0`, generation creates the output directory, and the artifact check prints `Generated Angular Material artifacts verified.`.
+
+To compile the generated app itself, install dependencies inside the generated project and run its Angular build:
+
+```bash
+cd generated-openui-angular-app
+npm install
+npm run build
+```
+
+Expected result: the generated application builds successfully with the emitted Angular Material dependencies.
+
 ## Install and build the generator
 
 From the repository root:
