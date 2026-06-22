@@ -14,6 +14,8 @@ export type ExamplePreview =
   | 'page-card'
   | 'page-split'
   | 'page-responsive'
+  | 'page-density'
+  | 'page-dnd'
   | 'table-basic'
   | 'table-status'
   | 'form-order'
@@ -378,6 +380,63 @@ export class OrdersPage {}`,
 })
 export class CatalogPage {
   readonly items = input<CatalogItem[]>([]);
+}`,
+          },
+          {
+            id: 'page-density',
+            title: 'Density and spacing page',
+            description:
+              'A form-like layout applies compact density by selecting smaller gaps from the same spacing scale without changing regions or children.',
+            preview: 'page-density',
+            code: `@Component({
+  selector: 'app-density-spacing-page',
+  imports: [MatCardModule, MatFormFieldModule, MatInputModule],
+  template: \`
+    <mat-card class="density-page compact">
+      <mat-card-title>Compact order</mat-card-title>
+      <mat-form-field appearance="outline">
+        <mat-label>Customer</mat-label>
+        <input matInput />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Reference</mat-label>
+        <input matInput />
+      </mat-form-field>
+    </mat-card>
+  \`,
+  styles: \`
+    .density-page {
+      --layout-gap: 1rem;
+      display: grid;
+      gap: var(--layout-gap);
+    }
+
+    .density-page.compact {
+      --layout-gap: 0.5rem;
+    }
+  \`
+})
+export class CompactFormPage {}`,
+          },
+          {
+            id: 'page-dnd',
+            title: 'Drag-and-drop region page',
+            description:
+              'A board layout exposes columns as an ordered region where reordering is allowed only inside the declared aggregation contract.',
+            preview: 'page-dnd',
+            code: `@Component({
+  selector: 'app-dnd-board-page',
+  imports: [MatCardModule],
+  template: \`
+    <section class="board-columns" aria-label="Board columns">
+      @for (column of columns; track column) {
+        <mat-card>{{ column }}</mat-card>
+      }
+    </section>
+  \`
+})
+export class BoardPage {
+  readonly columns = ['Backlog', 'In progress', 'Done'];
 }`,
           },
         ],

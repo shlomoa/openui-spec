@@ -51,6 +51,7 @@ describe('App', () => {
     const links = compiled.querySelectorAll('.app-sidenav a[mat-list-item]');
     expect(links.length).toBe(expectedLinks);
     expect(compiled.textContent).toContain('Application shell');
+    expect(compiled.textContent).toContain('Page layout');
     expect(compiled.textContent).toContain('Form');
     expect(compiled.textContent).toContain('Component state');
     expect(compiled.textContent).toContain('Data binding');
