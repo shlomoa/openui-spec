@@ -308,7 +308,7 @@ export class CatalogPage {
               'A form-like layout applies compact density by selecting smaller gaps from the same spacing scale without changing regions or children.',
             preview: 'page-density',
             code: `@Component({
-  selector: 'app-compact-form-page',
+  selector: 'app-density-spacing-page',
   imports: [MatCardModule, MatFormFieldModule, MatInputModule],
   template: \`
     <mat-card class="density-page compact">
@@ -344,7 +344,7 @@ export class CompactFormPage {}`,
               'A board layout exposes columns as an ordered region where reordering is allowed only inside the declared aggregation contract.',
             preview: 'page-dnd',
             code: `@Component({
-  selector: 'app-board-page',
+  selector: 'app-dnd-board-page',
   imports: [MatCardModule],
   template: \`
     <section class="board-columns" aria-label="Board columns">
