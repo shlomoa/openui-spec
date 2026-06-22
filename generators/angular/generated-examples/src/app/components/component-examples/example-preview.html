@@ -1,5 +1,83 @@
 <div class="example-preview" [attr.data-preview]="preview">
   @switch (preview) {
+    @case ('ui-concept-building-blocks') {
+      <div class="ui-concept-preview" aria-label="Generated UI concept catalog preview">
+        <mat-card>
+          <mat-card-title>sample.library</mat-card-title>
+          <mat-card-content>
+            <mat-chip-set aria-label="Published controls and elements">
+              <mat-chip highlighted>Control: Page</mat-chip>
+              <mat-chip highlighted>Control: Button</mat-chip>
+              <mat-chip highlighted>Control: Form</mat-chip>
+              <mat-chip>Element: FormContainer</mat-chip>
+              <mat-chip>Element: FormElement</mat-chip>
+            </mat-chip-set>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+    @case ('ui-concept-named-regions') {
+      <div class="ui-concept-preview ui-concept-regions" aria-label="Generated named regions">
+        <mat-card>
+          <mat-card-title>header</mat-card-title>
+          <mat-card-content>aggregation: Control [0..1]</mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-title>content</mat-card-title>
+          <mat-card-content>aggregation: Control [0..n]</mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-title>footer</mat-card-title>
+          <mat-card-content>aggregation: Control [0..1]</mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-title>actions</mat-card-title>
+          <mat-card-content>
+            <button mat-raised-button color="primary" type="button">Save</button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+    @case ('ui-concept-form-dialog') {
+      <div class="ui-concept-preview" aria-label="Generated form and dialog compositions">
+        <mat-card>
+          <mat-card-title>Form control</mat-card-title>
+          <mat-card-content>
+            <mat-list aria-label="Form owned elements">
+              <mat-list-item>Form owns FormContainer elements</mat-list-item>
+              <mat-list-item>FormContainer owns FormElement elements</mat-list-item>
+              <mat-list-item>FormElement owns field controls</mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="dialog-surface">
+          <mat-card-title>Dialog control</mat-card-title>
+          <mat-card-content>Owned content region with begin and end button actions.</mat-card-content>
+        </mat-card>
+      </div>
+    }
+    @case ('ui-concept-relationships') {
+      <div class="ui-concept-preview" aria-label="Generated aggregation and association relationships">
+        <dl class="component-contract">
+          <div>
+            <dt>Aggregation</dt>
+            <dd>content: owned Control [0..n]</dd>
+          </div>
+          <div>
+            <dt>Aggregation</dt>
+            <dd>beginButton: owned Control [0..1]</dd>
+          </div>
+          <div>
+            <dt>Association</dt>
+            <dd>ariaLabelledBy: non-owning Control [0..n]</dd>
+          </div>
+          <div>
+            <dt>Association</dt>
+            <dd>ariaDescribedBy: non-owning Control [0..n]</dd>
+          </div>
+        </dl>
+      </div>
+    }
     @case ('shell-side') {
       <div class="shell-preview">
         <mat-toolbar class="preview-toolbar" color="primary">Sales Workspace</mat-toolbar>

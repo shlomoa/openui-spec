@@ -56,6 +56,19 @@ describe('Component documentation routing', () => {
     expect(root.textContent).toContain('order-detail');
   });
 
+  it('renders UI concept model previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/ui-concept-model/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+
+    expect(root.querySelector('h1')?.textContent).toContain('UI concept model');
+    expect(root.querySelector('.ui-concept-preview')).toBeTruthy();
+    expect(root.textContent).toContain('Control: Page');
+    expect(root.textContent).toContain('Element: FormElement');
+    expect(root.textContent).toContain('aggregation: Control [0..n]');
+    expect(root.textContent).toContain('Dialog control');
+    expect(root.textContent).toContain('ariaLabelledBy: non-owning Control [0..n]');
+  });
+
   it('renders layout density and drag-and-drop previews on the Examples tab', async () => {
     const harness = await RouterTestingHarness.create('/components/page/examples');
     const root = harness.routeNativeElement as HTMLElement;

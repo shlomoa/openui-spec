@@ -26,6 +26,12 @@ export function buildUiModel(document: FrameworkSpecDocument): UiApplication {
       { name: "--openui-theme-primary", value: "#0a6ed1" },
       { name: "--openui-theme-surface", value: "#ffffff" },
       { name: "--openui-theme-on-surface", value: "#1f2937" },
+      { name: "--openui-spacing-1", value: "0.25rem" },
+      { name: "--openui-spacing-2", value: "0.5rem" },
+      { name: "--openui-spacing-4", value: "1rem" },
+      { name: "--openui-spacing-6", value: "1.5rem" },
+      { name: "--openui-density-cozy-control-height", value: "3rem" },
+      { name: "--openui-density-compact-control-height", value: "2rem" },
     ],
   };
 }

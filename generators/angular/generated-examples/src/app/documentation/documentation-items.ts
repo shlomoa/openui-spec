@@ -5,6 +5,10 @@ import { Injectable } from '@angular/core';
  * Material preview that reflects the generator's expected output for a concept.
  */
 export type ExamplePreview =
+  | 'ui-concept-building-blocks'
+  | 'ui-concept-named-regions'
+  | 'ui-concept-form-dialog'
+  | 'ui-concept-relationships'
   | 'shell-side'
   | 'shell-toolbar'
   | 'application-dependencies'
@@ -112,6 +116,116 @@ export interface DocCategory {
 }
 
 const CATEGORIES: readonly DocCategory[] = [
+  {
+    id: 'ui-concept-model',
+    name: 'UI concept model',
+    summary:
+      'Controls, elements, named regions, actions, forms, dialogs, aggregations, and associations generated from the public UI concept contract.',
+    items: [
+      {
+        id: 'ui-concept-model',
+        name: 'UI concept model',
+        summary:
+          'A generated Angular Material concept page that distinguishes renderable controls from supporting elements and keeps owned composition separate from non-owning associations.',
+        api: {
+          specSection: '05. UI Concept Model',
+          specPath: 'spec/05-ui-concept-model.md',
+          purpose: 'Define the abstract building blocks of the framework UI.',
+          derivedFrom: [
+            'library-component-catalog',
+            'library-element-catalog',
+            'aggregation-model',
+          ],
+          points: [
+            'Libraries publish named controls and elements as the reusable public UI surface.',
+            'Controls are standalone renderable units while elements are supporting composition units.',
+            'Aggregations declare owned child content, named regions, child types, and multiplicity.',
+            'Associations express non-owning semantic references such as labels and descriptions.',
+            'Pages, dialogs, forms, lists, toolbars, and actions are modeled as specialized controls and elements connected by metadata.',
+          ],
+          jsonMapping: 'specification.sections[4] in /openui.json',
+        },
+        examples: [
+          {
+            id: 'ui-concept-building-blocks',
+            title: 'Controls and elements catalog',
+            description:
+              'The generator surfaces library-published controls and supporting elements separately before mapping them to Angular components and supporting data.',
+            preview: 'ui-concept-building-blocks',
+            code: `export const uiCatalog = {
+  library: 'sample.library',
+  controls: ['Page', 'Button', 'Form', 'Dialog'],
+  elements: ['FormContainer', 'FormElement'],
+} as const;`,
+          },
+          {
+            id: 'ui-concept-named-regions',
+            title: 'Named regions and actions',
+            description:
+              'A page control owns semantic regions through aggregations, including an actions region that becomes generated Material buttons.',
+            preview: 'ui-concept-named-regions',
+            code: `export const pageMetadata = {
+  component: 'sample.library.Page',
+  aggregations: {
+    header: { type: 'sap.ui.core.Control', multiple: false },
+    content: { type: 'sap.ui.core.Control', multiple: true },
+    footer: { type: 'sap.ui.core.Control', multiple: false },
+    actions: { type: 'sap.ui.core.Control', multiple: true },
+  },
+} as const;`,
+          },
+          {
+            id: 'ui-concept-form-dialog',
+            title: 'Form and dialog compositions',
+            description:
+              'Higher-level UI concepts are generated as specialized controls composed from owned regions and supporting elements.',
+            preview: 'ui-concept-form-dialog',
+            code: `export const conceptCompositions = [
+  {
+    control: 'sample.library.Form',
+    owns: ['FormContainer', 'FormElement', 'FieldControl'],
+  },
+  {
+    control: 'sample.library.Dialog',
+    owns: ['content', 'beginButton', 'endButton'],
+  },
+] as const;`,
+          },
+          {
+            id: 'ui-concept-relationships',
+            title: 'Aggregations vs. associations',
+            description:
+              'Owned aggregations drive Angular content structure while non-owning associations become semantic references such as aria-labelledby.',
+            preview: 'ui-concept-relationships',
+            code: `export const relationships = {
+  aggregations: {
+    content: { ownership: 'owned', type: 'sap.ui.core.Control', multiple: true },
+  },
+  associations: {
+    ariaLabelledBy: { ownership: 'non-owning', type: 'sap.ui.core.Control', multiple: true },
+  },
+} as const;`,
+          },
+        ],
+        styling: {
+          notes: [
+            'Concept previews reuse Material cards, lists, chips, and buttons so generated examples stay aligned with the Angular Material target.',
+            'Owned regions are rendered as grouped surfaces, while associations are shown as references rather than projected child content.',
+          ],
+          code: `.ui-concept-preview {
+  display: grid;
+  gap: 1rem;
+}
+
+.ui-concept-regions {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}`,
+        },
+      },
+    ],
+  },
   {
     id: 'application-structure',
     name: 'Application structure',

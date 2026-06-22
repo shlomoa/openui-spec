@@ -46,6 +46,19 @@ describe('DocumentationItems', () => {
     ]);
   });
 
+  it('documents Section 05 UI Concept Model with generated examples', () => {
+    const component = docs.getComponentById('ui-concept-model');
+
+    expect(component?.api.specPath).toBe('spec/05-ui-concept-model.md');
+    expect(component?.examples.map((example) => example.preview)).toEqual([
+      'ui-concept-building-blocks',
+      'ui-concept-named-regions',
+      'ui-concept-form-dialog',
+      'ui-concept-relationships',
+    ]);
+    expect(component?.api.points.join(' ')).toContain('Controls are standalone renderable units');
+  });
+
   it('documents Section 22 acceptance criteria with runnable examples', () => {
     const component = docs.getComponentById('acceptance-criteria');
 

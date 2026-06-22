@@ -16,3 +16,14 @@ Generated applications are expected to use the latest Angular Material package s
 supported by this repository. The current emitter pins Angular and Angular
 Material packages to `22.0.2` and prefers Material primitives for shells, page
 surfaces, requirement summaries, navigation, forms, and feedback.
+
+When the input specification includes `06-application-structure`, the generated
+application also emits `src/app/application-structure.model.ts` and exposes the
+resolved root component, explicit Angular dependencies, shell regions, routed
+content outlet, page hierarchy, and navigation container in generated Angular
+files.
+
+When the input specification includes `07-layout-system`, the generated Layout
+System page emits named and ordered aggregation-backed regions, breakpoint CSS,
+density and spacing CSS custom properties, and Angular CDK drag/drop directives
+only for metadata-declared drag-and-drop regions.

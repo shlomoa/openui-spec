@@ -6,6 +6,7 @@
 }
 
 .shell-preview,
+.ui-concept-preview,
 .application-preview,
 .page-preview,
 .form-preview,
@@ -52,6 +53,24 @@
   gap: 1rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   padding: 0;
+}
+
+.ui-concept-preview {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.ui-concept-preview.ui-concept-regions {
+  background: transparent;
+  box-shadow: none;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  padding: 0;
+}
+
+.ui-concept-preview mat-card-title {
+  display: block;
+  margin: 0 0 0.5rem;
 }
 
 .structure-tree {

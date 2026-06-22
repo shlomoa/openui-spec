@@ -41,6 +41,13 @@
 - Describe higher-level constructs such as pages, dialogs, forms, and list rows as compositions of controls and elements connected through named regions rather than through renderer-specific DOM assumptions.
 - When normalizing metadata into `/openui.json`, preserve aggregation names, child types, multiplicity, and semantic roles so tooling can reconstruct the UI concept hierarchy without reverse-engineering runtime code.
 
+## Angular Material generator materialization
+
+- The Angular Material generator maps this section to a dedicated UI Concept Model page whenever `/openui.json` contains section `05-ui-concept-model`.
+- The generated page uses Angular Material cards, chips, lists, and buttons to distinguish controls from elements and to show named regions such as header, content, footer, and actions.
+- The materialized output includes visible examples of action controls, form and dialog composition, owned aggregation relationships, and non-owning associations such as labelled-by or described-by references.
+- The generated-examples application includes runnable UI Concept Model examples with `specPath: "spec/05-ui-concept-model.md"` so documentation, examples, and generator behavior remain traceable to this section.
+
 ## Examples
 
 ### Example 1 — library-published building blocks

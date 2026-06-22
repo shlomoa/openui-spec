@@ -11,6 +11,26 @@
         "requirements": ["Controls and elements have stable semantic names."]
       },
       {
+        "id": "06-application-structure",
+        "title": "Application Structure",
+        "purpose": "Describe the required structure of applications built on the framework.",
+        "requirements": [
+          "Applications compose pages, dialogs, forms, lists, and navigation containers from library-published components rather than from framework-private primitives.",
+          "The framework must support a navigable shell-level structure and a page hierarchy built entirely from public components discoverable through the library catalog.",
+          "Library dependencies must be explicit so that the application structure can be resolved by reading the dependency declaration and the public component catalog alone."
+        ]
+      },
+      {
+        "id": "07-layout-system",
+        "title": "Layout System",
+        "purpose": "Describe the abstract layout and composition requirements.",
+        "requirements": [
+          "Layout is expressed as ordered or named composition regions exposed through aggregations.",
+          "Responsive behavior must preserve component composition semantics when layout density, theme, or viewport changes.",
+          "Container components may expose drag-and-drop semantics only when declared in metadata."
+        ]
+      },
+      {
         "id": "08-component-model",
         "title": "Component Model",
         "purpose": "Define the normative component contract.",
@@ -38,6 +58,16 @@
             "term": "Event",
             "definition": "a named notification with typed parameters"
           }
+        ]
+      },
+      {
+        "id": "09-interaction-model",
+        "title": "Interaction Model",
+        "purpose": "Describe how user interaction is represented in the specification.",
+        "requirements": [
+          "User-triggered behavior is modeled as named events with stable semantics, such as press for activation.",
+          "Interaction events describe component-level intent rather than raw browser gestures.",
+          "Application handlers attach to the public event contract and must not depend on private DOM events, renderer internals, or browser-specific event ordering."
         ]
       },
       {

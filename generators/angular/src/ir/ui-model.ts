@@ -1,9 +1,12 @@
 export type UiFeature =
   | "accessibility"
   | "acceptance"
+  | "application-structure"
   | "component"
   | "feedback"
   | "form"
+  | "interaction"
+  | "layout"
   | "navigation"
   | "reference"
   | "theme"

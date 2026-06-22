@@ -12,6 +12,7 @@ export function emitAngularProject(project: AngularProjectModel): GeneratedFile[
     emitIndexHtml(project),
     emitMain(),
     emitAppComponent(project),
+    ...emitApplicationStructureModel(project),
     emitRoutes(project),
     emitTheme(project),
     ...project.pages.flatMap(emitPageComponent),
@@ -169,13 +170,40 @@ bootstrapApplication(AppComponent, {
   };
 }
 
+function emitApplicationStructureModel(project: AngularProjectModel): GeneratedFile[] {
+  if (!project.applicationStructure) {
+    return [];
+  }
+
+  return [
+    {
+      path: "src/app/application-structure.model.ts",
+      content: `export const APPLICATION_STRUCTURE = ${JSON.stringify(project.applicationStructure, null, 2)} as const;
+`,
+    },
+  ];
+}
+
 function emitAppComponent(project: AngularProjectModel): GeneratedFile {
   const navItems = project.pages
     .map((page) => `      <a mat-list-item routerLink="/${page.route}">${escapeHtml(page.title)}</a>`)
     .join("\n");
+  const applicationStructureImport = project.applicationStructure
+    ? "import { APPLICATION_STRUCTURE } from './application-structure.model';\n"
+    : "";
+  const applicationStructureMetadata = project.applicationStructure
+    ? `
+        <mat-list class="shell-metadata" aria-label="Resolved application structure">
+          <mat-list-item>Root component: {{ applicationStructure.rootComponent }}</mat-list-item>
+          <mat-list-item>Navigation container: {{ applicationStructure.navigationContainer.component }}</mat-list-item>
+        </mat-list>`
+    : "";
+  const applicationStructureMember = project.applicationStructure
+    ? "\n  protected readonly applicationStructure = APPLICATION_STRUCTURE;"
+    : "";
   return {
     path: "src/app/app.component.ts",
-    content: `import { Component } from '@angular/core';
+    content: `${applicationStructureImport}import { Component } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -189,6 +217,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
     <mat-toolbar color="primary">${escapeHtml(project.appName)}</mat-toolbar>
     <mat-sidenav-container class="shell">
       <mat-sidenav mode="side" opened>
+${applicationStructureMetadata}
 ${navItems}
       </mat-sidenav>
       <mat-sidenav-content>
@@ -198,10 +227,12 @@ ${navItems}
   \`,
   styles: [\`
     .shell { min-height: calc(100vh - 64px); }
+    .shell-metadata { font-size: 0.875rem; }
     mat-sidenav { width: 18rem; }
   \`],
 })
-export class AppComponent {}
+export class AppComponent {${applicationStructureMember}
+}
 `,
   };
 }

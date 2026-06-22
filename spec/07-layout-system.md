@@ -52,6 +52,13 @@
 - Declare drag-and-drop only where reordering or cross-region moves are part of the contract, and constrain it to the target aggregation's child type and multiplicity so a drop can never violate the component model.
 - When normalizing a layout into `/openui.json`, preserve each region's aggregation name, child type, multiplicity, and any drag-and-drop declaration so tooling can reconstruct the layout contract without inspecting renderer code.
 
+## Angular Material generator materialization
+
+- The Angular Material generator maps this section to a dedicated layout-system page whenever `/openui.json` contains section `07-layout-system`.
+- Generated layout examples preserve named region identity through `data-openui-region` and `data-openui-aggregation` attributes, and render ordered `0..n` content with Angular control flow that tracks the original item identity.
+- Generated SCSS uses theme-level spacing and density CSS custom properties such as `--openui-spacing-4` and `--openui-density-compact-control-height`, then applies breakpoint media queries to reflow the same regions without reparenting or inventing content.
+- Generated drag-and-drop output is limited to regions whose metadata includes an explicit drag-and-drop declaration; undeclared regions are rendered without CDK drag/drop directives.
+
 ## Examples
 
 ### Example 1 — ordered and named composition regions

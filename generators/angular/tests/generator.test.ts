@@ -28,6 +28,10 @@ test("generates an Angular Material standalone app from the specification", asyn
     assert.match(indexHtml, /<openui-root><\/openui-root>/);
 
     const routes = await readFile(path.join(outDir, "src/app/app.routes.ts"), "utf8");
+    assert.match(routes, /path: 'ui-concept-model'/);
+    assert.match(routes, /path: 'application-structure'/);
+    assert.match(routes, /path: 'layout-system'/);
+    assert.match(routes, /path: 'interaction-model'/);
     assert.match(routes, /path: 'form-model'/);
     assert.match(routes, /path: 'component-model'/);
     assert.match(routes, /path: 'navigation-model'/);
@@ -36,8 +40,21 @@ test("generates an Angular Material standalone app from the specification", asyn
     assert.match(routes, /path: 'reference-examples'/);
 
     const appComponent = await readFile(path.join(outDir, "src/app/app.component.ts"), "utf8");
+    assert.match(appComponent, /APPLICATION_STRUCTURE/);
     assert.match(appComponent, /MatSidenavModule/);
+    assert.match(appComponent, /Root component: {{ applicationStructure\.rootComponent }}/);
     assert.match(appComponent, /routerLink="\/form-model"/);
+
+    const applicationStructureModel = await readFile(
+      path.join(outDir, "src/app/application-structure.model.ts"),
+      "utf8",
+    );
+    assert.match(applicationStructureModel, /rootComponent/);
+    assert.match(applicationStructureModel, /openui-root/);
+    assert.match(applicationStructureModel, /@angular\/material\/toolbar/);
+    assert.match(applicationStructureModel, /MatSidenavContainer/);
+    assert.match(applicationStructureModel, /ApplicationStructurePage/);
+    assert.match(applicationStructureModel, /LayoutSystemPage/);
   } finally {
     await rm(outDir, { recursive: true, force: true });
   }
@@ -47,6 +64,90 @@ test("generates section-specific Angular Material details for implemented specs"
   const outDir = await mkdtemp(path.join(tmpdir(), "openui-angular-generator-"));
   try {
     await run(["generate", "--spec", FIXTURE, "--out", outDir]);
+
+    const uiConceptPage = await readFile(
+      path.join(outDir, "src/app/pages/ui-concept-model/ui-concept-model.page.ts"),
+      "utf8",
+    );
+    assert.match(uiConceptPage, /MatChipsModule/);
+    assert.match(uiConceptPage, /uiConceptBlocks/);
+    assert.match(uiConceptPage, /uiConceptRegions/);
+    assert.match(uiConceptPage, /uiConceptRelationships/);
+
+    const uiConceptTemplate = await readFile(
+      path.join(outDir, "src/app/pages/ui-concept-model/ui-concept-model.page.html"),
+      "utf8",
+    );
+    assert.match(uiConceptTemplate, /aria-label="UI concept model materialization"/);
+    assert.match(uiConceptTemplate, /Controls and elements/);
+    assert.match(uiConceptTemplate, /Named regions and actions/);
+    assert.match(uiConceptTemplate, /Form control owns FormContainer/);
+    assert.match(uiConceptTemplate, /Dialog control owns content/);
+    assert.match(uiConceptTemplate, /aggregation owns child content/);
+    assert.match(uiConceptTemplate, /association references labelled-by controls/);
+
+    const applicationStructurePage = await readFile(
+      path.join(outDir, "src/app/pages/application-structure/application-structure.page.ts"),
+      "utf8",
+    );
+    assert.match(applicationStructurePage, /MatChipsModule/);
+    assert.match(applicationStructurePage, /applicationDependencies/);
+    assert.match(applicationStructurePage, /shellRegions/);
+    assert.match(applicationStructurePage, /pageHierarchy/);
+
+    const applicationStructureTemplate = await readFile(
+      path.join(outDir, "src/app/pages/application-structure/application-structure.page.html"),
+      "utf8",
+    );
+    assert.match(applicationStructureTemplate, /aria-label="Application structure materialization"/);
+    assert.match(applicationStructureTemplate, /Explicit library dependencies/);
+    assert.match(applicationStructureTemplate, /Root component resolution/);
+    assert.match(applicationStructureTemplate, /mat-sidenav-container owns mat-sidenav navigation/);
+    assert.match(applicationStructureTemplate, /router-outlet resolves page hierarchy nodes/);
+
+    const layoutPage = await readFile(
+      path.join(outDir, "src/app/pages/layout-system/layout-system.page.ts"),
+      "utf8",
+    );
+    assert.match(layoutPage, /CdkDrag/);
+    assert.match(layoutPage, /CdkDropList/);
+    assert.match(layoutPage, /MatToolbarModule/);
+    assert.match(layoutPage, /layoutRegions/);
+    assert.match(layoutPage, /aggregation: "content"/);
+    assert.match(layoutPage, /multiple: true/);
+    assert.match(layoutPage, /ordered: true/);
+    assert.match(layoutPage, /dragDrop: null/);
+    assert.match(layoutPage, /dragDrop: \{\n\s+draggable: true,\n\s+droppable: true,\n\s+layout: "Horizontal"/);
+    assert.match(layoutPage, /dragDropRegions = this\.layoutRegions\.filter\(\(region\) => region\.dragDrop !== null\)/);
+
+    const layoutTemplate = await readFile(
+      path.join(outDir, "src/app/pages/layout-system/layout-system.page.html"),
+      "utf8",
+    );
+    assert.match(layoutTemplate, /aria-label="Layout system materialization"/);
+    assert.match(layoutTemplate, /data-openui-region="header" data-openui-aggregation="header"/);
+    assert.match(layoutTemplate, /data-openui-region="content" data-openui-aggregation="content"/);
+    assert.match(layoutTemplate, /@for \(item of orderedContent; track item\)/);
+    assert.match(layoutTemplate, /data-openui-region="columns" data-openui-aggregation="columns" cdkDropList/);
+    assert.match(layoutTemplate, /<mat-card class="layout-board-column" cdkDrag>/);
+    assert.doesNotMatch(layoutTemplate, /data-openui-region="header"[^\n]*cdkDropList/);
+    assert.doesNotMatch(layoutTemplate, /data-openui-region="content"[^\n]*cdkDropList/);
+    assert.doesNotMatch(layoutTemplate, /data-openui-region="footer"[^\n]*cdkDropList/);
+
+    const layoutStyles = await readFile(
+      path.join(outDir, "src/app/pages/layout-system/layout-system.page.scss"),
+      "utf8",
+    );
+    assert.match(layoutStyles, /--layout-gap: var\(--openui-spacing-4\)/);
+    assert.match(layoutStyles, /--layout-control-height: var\(--openui-density-cozy-control-height\)/);
+    assert.match(layoutStyles, /\.layout-density--compact/);
+    assert.match(layoutStyles, /@media \(max-width: 599px\)/);
+    assert.match(layoutStyles, /@media \(min-width: 1024px\)/);
+    assert.match(layoutStyles, /grid-template-areas:\n\s+"header header"\n\s+"content footer"/);
+
+    const globalStyles = await readFile(path.join(outDir, "src/styles.scss"), "utf8");
+    assert.match(globalStyles, /--openui-spacing-4: 1rem/);
+    assert.match(globalStyles, /--openui-density-compact-control-height: 2rem/);
 
     const formPage = await readFile(
       path.join(outDir, "src/app/pages/form-model/form-model.page.ts"),
@@ -85,6 +186,35 @@ test("generates section-specific Angular Material details for implemented specs"
     assert.match(componentTemplate, /aria-label="Component metadata contract"/);
     assert.match(componentTemplate, /sample\.library\.SearchInput/);
     assert.match(componentTemplate, /liveChange\(value: string\)/);
+
+    const interactionPage = await readFile(
+      path.join(outDir, "src/app/pages/interaction-model/interaction-model.page.ts"),
+      "utf8",
+    );
+    assert.match(interactionPage, /MatChipsModule/);
+    assert.match(interactionPage, /eventName: "press"/);
+    assert.match(interactionPage, /owner: "sample\.library\.Button"/);
+    assert.match(interactionPage, /kind: "activation"/);
+    assert.match(interactionPage, /angularMaterialBinding: "\(click\)=\\"handlePressActivation\(\)\\""/);
+    assert.match(interactionPage, /enabledPrecondition: "isActionEnabled === true"/);
+    assert.match(interactionPage, /handlerPath: "handlePressActivation"/);
+    assert.match(interactionPage, /sources: \[\n\s+"pointer",\n\s+"touch",\n\s+"keyboard",\n\s+"assistive-technology"/);
+    assert.match(interactionPage, /protected handlePressActivation\(\): void \{\n\s+if \(!this\.isActionEnabled\) \{\n\s+return;\n\s+\}/);
+    assert.doesNotMatch(interactionPage, /KeyboardEvent|PointerEvent|TouchEvent|Renderer2|ElementRef/);
+
+    const interactionTemplate = await readFile(
+      path.join(outDir, "src/app/pages/interaction-model/interaction-model.page.html"),
+      "utf8",
+    );
+    assert.match(interactionTemplate, /aria-label="Interaction model materialization"/);
+    assert.match(interactionTemplate, /data-openui-event="press"/);
+    assert.match(interactionTemplate, /data-openui-event-kind="activation"/);
+    assert.match(interactionTemplate, /data-openui-enabled-required="true"/);
+    assert.match(interactionTemplate, /\[disabled\]="!isActionEnabled"/);
+    assert.match(interactionTemplate, /\(click\)="handlePressActivation\(\)"/);
+    assert.match(interactionTemplate, /pointer, touch, keyboard, and assistive-technology activation/);
+    assert.match(interactionTemplate, /{{ activationEvent\.handlerPath }}/);
+    assert.doesNotMatch(interactionTemplate, /\(keydown\)|\(keyup\)|\(pointerdown\)|\(pointerup\)|\(touchstart\)|\(touchend\)/);
 
     const accessibilityTemplate = await readFile(
       path.join(outDir, "src/app/pages/accessibility-model/accessibility-model.page.html"),

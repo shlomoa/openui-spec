@@ -16,9 +16,16 @@ The generated application includes:
 
 - `package.json`, `angular.json`, `tsconfig.json`, and `src/main.ts`;
 - Angular routes derived from specification sections;
-- a standalone root component with Angular Material toolbar, sidenav, and navigation links;
+- a standalone root component with Angular Material toolbar, sidenav, navigation links, and generated application-structure metadata;
+- a generated `src/app/application-structure.model.ts` artifact when `spec/06-application-structure.md` is present, exposing root component resolution, explicit Angular library dependencies, shell regions, page hierarchy, and navigation container structure;
 - global theme styles; and
-- generated page components for specification sections, including section-specific form, navigation, feedback, accessibility, theming, and UI concept details where mappings exist.
+- generated page components for specification sections, including section-specific application-structure, layout-system, form, navigation, feedback, accessibility, theming, and UI concept details where mappings exist.
+
+When `spec/05-ui-concept-model.md` is present, the generated UI Concept Model page emits Angular Material content that distinguishes controls from elements, shows named regions such as header/content/footer/actions, renders action controls, and documents forms, dialogs, owned aggregation relationships, and non-owning associations as visible generated output.
+
+When `spec/07-layout-system.md` is present, the generated Layout System page emits aggregation-backed named regions, an ordered content region whose document order is preserved with Angular control flow, breakpoint-driven CSS reflow, density and spacing custom properties, and Angular CDK drag/drop directives only for the region whose metadata declares drag-and-drop.
+
+When `spec/09-interaction-model.md` is present, the generated Interaction Model page emits a semantic activation contract for `press`, preserves the owning component and stable handler path in generated metadata, maps the activation to a Material button `(click)` binding, binds `[disabled]` to the enabled gate, and guards the generated handler so disabled controls cannot invoke application behavior through alternate activation paths. The generated page documents that Angular Material and the native button element normalize pointer, touch, keyboard, and assistive-technology activation for the enabled control without depending on private DOM events, renderer internals, or browser-specific event ordering.
 
 ## Expected Angular Material output
 
@@ -27,6 +34,10 @@ Generated Angular applications must target the latest Angular Material package s
 The generated UI should prefer Angular Material components and directives wherever Angular Material provides an equivalent:
 
 - application shells use `MatToolbarModule`, `MatSidenavModule`, and `MatListModule`;
+- application-structure materialization emits a typed model for the root component, explicit dependencies, shell regions, navigation container, routed content outlet, and page hierarchy;
+- layout-system materialization uses Material toolbar/card/list/chip primitives, CSS grid breakpoints, theme spacing tokens, density-scoped CSS variables, and CDK drag/drop only for declared drag-and-drop aggregations;
+- interaction-model materialization uses a semantic `press` activation contract, Material button binding, generated enabled-state gating, and no private pointer, touch, or keyboard listener assumptions;
+- UI concept materialization uses Material cards, chips, lists, and buttons to show controls vs. elements, named composition regions, actions, form/dialog composition, owned aggregations, and non-owning associations;
 - generated pages use `MatCardModule` for page surfaces and `MatListModule` for requirement summaries;
 - generated forms use reactive forms with `MatFormFieldModule`, `MatInputModule`, `MatSelectModule`, and Material buttons;
 - generated navigation uses Material list or button navigation patterns; and
