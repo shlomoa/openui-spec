@@ -84,6 +84,14 @@ describe('Component documentation routing', () => {
     expect(root.querySelector('.api-source')?.textContent).toContain('spec/08-component-model.md');
   });
 
+  it('renders component contract previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/component-contract/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+    expect(root.querySelector('.component-preview')).toBeTruthy();
+    expect(root.textContent).toContain('renderer: CardRenderer');
+    expect(root.textContent).toContain('dnd: draggable + droppable');
+  });
+
   it('renders extension point previews on the Examples tab', async () => {
     const harness = await RouterTestingHarness.create('/components/extension-point/examples');
     const root = harness.routeNativeElement as HTMLElement;

@@ -15,6 +15,11 @@ export function buildUiModel(document: FrameworkSpecDocument): UiApplication {
       sourceDocument: section.document,
       requirements: section.requirements ?? [],
       tags: section.tags ?? [],
+      formalDefinitions: (section.formalDefinitions ?? []).flatMap((definition) =>
+        definition.term && definition.definition
+          ? [{ term: definition.term, definition: definition.definition }]
+          : [],
+      ),
       features: normalizeFeatures(section),
     })),
     themeTokens: [

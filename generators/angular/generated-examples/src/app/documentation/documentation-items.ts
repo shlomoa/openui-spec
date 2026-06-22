@@ -30,6 +30,7 @@ export type ExamplePreview =
   | 'component-properties'
   | 'component-aggregation'
   | 'component-events'
+  | 'component-capabilities'
   | 'extension-slot'
   | 'extension-design-time'
   | 'extension-dnd'
@@ -1061,6 +1062,30 @@ export class SearchInput {
   readonly describedBy = input<string>();
   // event liveChange: emits typed parameter
   readonly liveChange = output<string>();
+}`,
+          },
+          {
+            id: 'component-capabilities',
+            title: 'Renderer and design-time capabilities',
+            description:
+              'Optional renderer linkage, design-time hooks, and drag-and-drop flags augment the public contract without replacing properties, aggregations, associations, or events.',
+            preview: 'component-capabilities',
+            code: `@Component({
+  selector: 'app-card',
+  imports: [MatCardModule, DragDropModule],
+  template: \`
+    <mat-card cdkDropList>
+      <mat-card-title>Workspace card</mat-card-title>
+      <mat-card-content>
+        <!-- renderer: sample.library.CardRenderer -->
+        <ng-content />
+      </mat-card-content>
+    </mat-card>
+  \`
+})
+export class Card {
+  // dnd: { draggable: true, droppable: true }
+  readonly designTime = 'sample/library/designtime/Card.designtime';
 }`,
           },
         ],

@@ -1,6 +1,7 @@
 export type UiFeature =
   | "accessibility"
   | "acceptance"
+  | "component"
   | "feedback"
   | "form"
   | "navigation"
@@ -23,7 +24,13 @@ export interface UiPage {
   sourceDocument?: string;
   requirements: string[];
   tags: string[];
+  formalDefinitions: UiFormalDefinition[];
   features: UiFeature[];
+}
+
+export interface UiFormalDefinition {
+  term: string;
+  definition: string;
 }
 
 export interface UiThemeToken {
