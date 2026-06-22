@@ -45,6 +45,17 @@ describe('Component documentation routing', () => {
     expect(root.querySelectorAll('app-example-preview').length).toBe(examples.length);
   });
 
+  it('renders application structure previews on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/shell/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+
+    expect(root.querySelector('.application-preview')).toBeTruthy();
+    expect(root.textContent).toContain('sample.library');
+    expect(root.textContent).toContain('currentPage');
+    expect(root.textContent).toContain('masterPages');
+    expect(root.textContent).toContain('order-detail');
+  });
+
   it('renders layout density and drag-and-drop previews on the Examples tab', async () => {
     const harness = await RouterTestingHarness.create('/components/page/examples');
     const root = harness.routeNativeElement as HTMLElement;

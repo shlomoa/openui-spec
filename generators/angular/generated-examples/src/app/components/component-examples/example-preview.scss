@@ -6,6 +6,7 @@
 }
 
 .shell-preview,
+.application-preview,
 .page-preview,
 .form-preview,
 .state-preview,
@@ -33,6 +34,35 @@
   border-top: 1px solid var(--mat-sys-outline-variant);
   color: var(--mat-sys-on-surface-variant);
   padding: 2rem 1rem;
+}
+
+.application-preview {
+  padding: 1rem;
+}
+
+.application-preview mat-card-title {
+  display: block;
+  margin: 0 0 0.75rem;
+}
+
+.application-preview.application-grid {
+  background: transparent;
+  box-shadow: none;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 0;
+}
+
+.structure-tree {
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.structure-tree ul {
+  margin: 0.5rem 0;
+  padding-left: 1.25rem;
 }
 
 .page-preview {
@@ -153,6 +183,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .application-preview.application-grid,
   .page-preview.board-preview {
     grid-template-columns: 1fr;
   }

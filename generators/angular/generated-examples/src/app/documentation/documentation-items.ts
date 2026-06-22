@@ -7,6 +7,10 @@ import { Injectable } from '@angular/core';
 export type ExamplePreview =
   | 'shell-side'
   | 'shell-toolbar'
+  | 'application-dependencies'
+  | 'application-shell-metadata'
+  | 'application-page-hierarchy'
+  | 'application-structure-tree'
   | 'page-card'
   | 'page-split'
   | 'page-responsive'
@@ -130,6 +134,83 @@ const CATEGORIES: readonly DocCategory[] = [
           jsonMapping: 'specification.sections[5] in /openui.json',
         },
         examples: [
+          {
+            id: 'application-dependencies',
+            title: 'Explicit application dependencies',
+            description:
+              'The generator starts from the application declaration, keeps library dependencies explicit, and resolves a single root shell component.',
+            preview: 'application-dependencies',
+            code: `export const application = {
+  name: 'sample.app',
+  dependencies: ['sample.library', 'sample.layout'],
+  rootComponent: 'sample.app.Shell',
+} as const;`,
+          },
+          {
+            id: 'application-shell-metadata',
+            title: 'Shell metadata contract',
+            description:
+              'Shell regions are generated from public aggregations while the selected page remains a non-owning association.',
+            preview: 'application-shell-metadata',
+            code: `export const shellMetadata = {
+  component: 'sample.app.Shell',
+  aggregations: {
+    navigation: { type: 'sample.library.NavList', multiple: false },
+    header: { type: 'sample.library.Control', multiple: false },
+    pages: { type: 'sample.library.Page', multiple: true },
+  },
+  associations: {
+    currentPage: { type: 'sample.library.Page', multiple: false },
+  },
+} as const;`,
+          },
+          {
+            id: 'application-page-hierarchy',
+            title: 'Page hierarchy graph',
+            description:
+              'Pages and split containers become an owned hierarchy by following public aggregation names and child types.',
+            preview: 'application-page-hierarchy',
+            code: `export const pageHierarchy = [
+  {
+    name: 'sample.library.Page',
+    aggregations: {
+      content: { type: 'sample.library.Control', multiple: true },
+      subPages: { type: 'sample.library.Page', multiple: true },
+    },
+  },
+  {
+    name: 'sample.layout.SplitContainer',
+    aggregations: {
+      masterPages: { type: 'sample.library.Page', multiple: true },
+      detailPages: { type: 'sample.library.Page', multiple: true },
+    },
+  },
+] as const;`,
+          },
+          {
+            id: 'resolved-application-structure',
+            title: 'Resolved application structure tree',
+            description:
+              'The resolved tree combines the shell, navigation, pages, and nested containers with only public component references.',
+            preview: 'application-structure-tree',
+            code: `export const structure = {
+  root: 'sample.app.Shell',
+  navigation: 'sample.library.NavList',
+  pages: [
+    {
+      component: 'sample.library.Page',
+      id: 'orders',
+      subPages: [{ component: 'sample.library.Page', id: 'order-detail' }],
+    },
+    {
+      component: 'sample.layout.SplitContainer',
+      id: 'customers',
+      masterPages: [{ component: 'sample.library.Page', id: 'customer-list' }],
+      detailPages: [{ component: 'sample.library.Page', id: 'customer-detail' }],
+    },
+  ],
+} as const;`,
+          },
           {
             id: 'shell-side-navigation',
             title: 'Side navigation shell',

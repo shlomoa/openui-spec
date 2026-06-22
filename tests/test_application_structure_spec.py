@@ -48,6 +48,8 @@ class ApplicationStructureSpecTest(unittest.TestCase):
         self.assertIn("## Tags", content)
         self.assertIn("## Formal definitions", content)
         self.assertIn("## Usage and implementation guidance", content)
+        self.assertIn("## Implementation notes", content)
+        self.assertIn("Applications should declare their library dependencies explicitly", content)
         self.assertIn(
             "### Example 2 — shell-level structure with global navigation".casefold(),
             content.casefold(),

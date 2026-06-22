@@ -32,6 +32,20 @@ describe('DocumentationItems', () => {
     }
   });
 
+  it('documents Section 06 application structure with generated examples', () => {
+    const component = docs.getComponentById('shell');
+
+    expect(component?.api.specPath).toBe('spec/06-application-structure.md');
+    expect(component?.examples.map((example) => example.preview)).toEqual([
+      'application-dependencies',
+      'application-shell-metadata',
+      'application-page-hierarchy',
+      'application-structure-tree',
+      'shell-side',
+      'shell-toolbar',
+    ]);
+  });
+
   it('documents Section 22 acceptance criteria with runnable examples', () => {
     const component = docs.getComponentById('acceptance-criteria');
 
