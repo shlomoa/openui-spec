@@ -6,15 +6,10 @@ OpenUI is a technology-independent specification for a Web UI framework. It defi
 
 It serves application developers, designers and UX owners, framework maintainers, and generator/tooling authors, who all consume the same public contract.
 
-## Spec structure
+## Spec folder structure
 
-It has two manifests:
-1. openui.json: the main manifest, which contains the complete spec.
-  - Each scope is a key in the JSON object, and each scope has a value that is either:
-    - an object with child scopes, or
-    - an array of objects with no child scopes.
-2. scopes:
-  - application: application level bootstrap artifacts.
+1. scopes folder: structured hierarchically, each scope is a folder or a markdown file, and each scope contains one or more objects.
+  - Application: application level bootstrap artifacts.
   - Controls: 
     - Native: Window resize, scroll bars, font size, color scheme
     - Dialog: A modal or non-modal dialog with a title, content, and actions.
@@ -22,13 +17,24 @@ It has two manifests:
     - "Dashboard" see [Dashboard Schematic] for more details.
     - "Shell page": A page with no content with routing and navigation.
     - "Empty page": A page with no content and no routing or navigation.
-  - views: A user facing view of bussiness objects.
+  - Views: A user facing view of bussiness objects.
     - Reports: read-only data including filtering, sorting, grouping, and pagination.
     - Forms: read-write data including validation, submission, and dirty state.
 
+### Scope folder
+
+Structured hierarchicaly, named in Pascal Case for folders and snake case for files of the object name, each 'level' is a scope and is structured in one of two ways:
+- If it has child objects:
+  - scope.md
+  - Every child scope will have the same structure (either .md file or a folder).
+- If it has no child objects:
+  - <object_name>.scope.md object-name will be a snake case version of the object name, e.g. "myObject" becomes "my_object.scope.md".
+
+---
+
 ## Spec format
 
-## Naming conventions
+### Naming conventions
 
 the "id" field is a unique identifier for each element, and it must be a camelCase alphanumeric  string.
 
@@ -55,7 +61,13 @@ Both key and value should align with the framework's attribute naming convention
 ```ebnf
 (* OpenUI specification in EBNF notation *)
 
-openui-document = ui-element ;
+openui-document = "{" 
+  [ version-field "," ]
+  id-field ","
+  type-field ","
+  [ attrs-field "," ]
+  [ children-field [ "," ] ]
+"}" ;
 
 ui-element = "{" 
   id-field ","
@@ -63,6 +75,10 @@ ui-element = "{"
   [ attrs-field "," ]
   [ children-field [ "," ] ]
 "}" ;
+
+version-field = '"version"' ":" version-value ;
+version-value = '"' version-string '"' ;
+version-string = digit+ "." digit+ "." digit+ ;
 
 id-field = '"id"' ":" id-value ;
 type-field = '"type"' ":" type-value ;
@@ -103,6 +119,7 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 ```
 
 ### Syntax rules
+- **Version field (top-level only):** Optional semantic version string (e.g., "1.0.0") identifying the spec version
 - **ID field:** Must be a camelCase alphanumeric string (starts with lowercase letter, can contain uppercase letters and digits)
 - **Type field:** Can be HTML tag names, kebab-case names (e.g., `mat-date-range-input`), or PascalCase names (e.g., `MainPage`)
 - **Attributes field:** Key-value pairs where values are strings (for bindings, directives, properties) or null (for valueless attributes)
@@ -110,12 +127,14 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 - **No loose properties:** All properties must be contained within the `attrs` object
 
 
-## openui.json examples
+
+## app.json examples
 
 ### Example: Main page with a date range input
 ```json
 {
   "id": "mainpage",
+  "version": "1.0.0",
   "type": "MainPage",
   "attrs": {
     "size": "1960x1080",
@@ -155,51 +174,16 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
   ]
 }
 ```
-## Scope folder
 
-Structured hierarchicaly, named in snake case of the object name, each 'level' is a scope and is structured in one of two ways:
-- If it has child objects:
-  - scope.md
-  - Every child scope will have the same structure (either .md file or a folder).
-- If it has no child objects:
-  - <object_name>.scope.md object-name will be a snake case version of the object name, e.g. "myObject" becomes "my_object.scope.md".
-
+---
 
 ## How to read this spec
 
 The specification defines **what** a compliant Web UI implementation must provide, without saying **how** it is implemented. For example:
-
+<!--
 ### Example: Hierarchical structure of a page
 
-### Example: Data bnding
+### Example: Data binding
 
 ### Example: User interaction model
-
-## Sections - To be reviewed
-
-| #   | Section                     | Purpose                                                      | File                               |
-| --- | --------------------------- | ------------------------------------------------------------ | ---------------------------------- |
-| 01  | Introduction                | Purpose, scope, non-goals, terminology                       | `01-introduction.md`               |
-| 02  | Design Goals                | What the UI framework must enable                            | `02-design-goals.md`               |
-| 03  | Design Principles           | Consistency, accessibility, responsiveness, composability    | `03-design-principles.md`          |
-| 04  | Target Users                | App developers, designers, UX owners, framework maintainers  | `04-target-users.md`               |
-| 05  | UI Concept Model            | Pages, layouts, regions, components, actions, forms, dialogs | `05-ui-concept-model.md`           |
-| 06  | Application Structure       | Navigation, routing, shell, page hierarchy                   | `06-application-structure.md`      |
-| 07  | Layout System               | Grid, spacing, breakpoints, responsive behavior              | `07-layout-system.md`              |
-| 08  | Component Model             | Component categories, contracts, inputs/outputs, states      | `08-component-model.md`            |
-| 09  | Interaction Model           | Events, actions, gestures, keyboard behavior                 | `09-interaction-model.md`          |
-| 10  | State Model                 | Local state, page state, global UI state, persistence rules  | `10-state-model.md`                |
-| 11  | Data Binding Model          | Read-only data, editable data, validation, async loading     | `11-data-binding-model.md`         |
-| 12  | Form Model                  | Fields, validation, errors, submission, dirty state          | `12-form-model.md`                 |
-| 13  | Navigation Model            | Routes, breadcrumbs, tabs, deep links, guards                | `13-navigation-model.md`           |
-| 14  | Feedback Model              | Loading, success, warning, error, empty states               | `14-feedback-model.md`             |
-| 15  | Accessibility Model         | Keyboard, focus, ARIA roles, contrast, screen readers        | `15-accessibility-model.md`        |
-| 16  | Theming / Design Tokens     | Colors, typography, spacing, elevation, density              | `16-theming-design-tokens.md`      |
-| 17  | Internationalization        | RTL/LTR, locale, formatting, translations                    | `17-internationalization.md`       |
-| 18  | Security / Privacy UI Rules | Masking, confirmation, permissions, sensitive data           | `18-security-privacy-ui-rules.md`  |
-| 19  | Performance Requirements    | Render latency, loading, virtualization, caching             | `19-performance-requirements.md`   |
-| 20  | Extension Model             | Custom components, plugins, slots, hooks                     | `20-extension-model.md`            |
-| 21  | Compliance Rules            | What every implementation must satisfy                       | `21-compliance-rules.md`           |
-| 22  | Test & Acceptance Criteria  | Behavioral, visual, accessibility, responsive tests          | `22-test-acceptance-criteria.md`   |
-| 23  | Reference Examples          | Abstract examples, not framework-specific code               | `23-reference-examples.md`         |
-| 24  | Angular Material Generator  | Angular Material reference generator (executable consumer)   | `24-angular-material-generator.md` |
+-->
