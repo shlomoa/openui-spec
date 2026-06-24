@@ -22,7 +22,7 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.app-title')?.textContent).toContain('OpenUI5 Spec');
+    expect(compiled.querySelector('.app-title')?.textContent).toContain('OpenUI Spec');
   });
 
   it('should render a sidenav navigation listing components by category', () => {

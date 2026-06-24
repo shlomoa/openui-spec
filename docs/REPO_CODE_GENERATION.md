@@ -1,174 +1,156 @@
-# Repository code generation starting point
+# Repository Code Generation Starting Point
 
-## Goal
+This document records the practical starting point for repository code generation. It complements `docs/GENERATOR_STRUCTURE.md`, which describes the implemented Angular generator package in `generators/angular/`.
 
-Find a practical starting point for code generation based on the table entries already documented in `docs/README.md`.
+## Current status
 
-The issue specifically asks for:
+The repository now has a working initial Angular Material generator:
 
-- a parser for the JSON artifacts referenced there
-- a generator that converts the parsed model into HTML, JS, and CSS files
+```text
+generators/angular/
+├─ src/cli/main.ts
+├─ src/spec/
+├─ src/validation/
+├─ src/ir/
+├─ src/targets/angular/
+├─ src/writers/
+└─ tests/
+```
 
-## Relevant table entries reviewed
+The implemented generator currently consumes an OpenUI specification document shaped like `generators/angular/tests/fixtures/minimal-openui.json`, validates it, builds a UI IR, maps it to an Angular project model, and emits a standalone Angular Material application skeleton.
 
-The most generator-relevant entries in `docs/README.md` are:
+This means the next code-generation work should extend the existing pipeline rather than create a second generator path.
 
-1. `lib/jsdoc/schemas/sap-ui-library-api.json`
-2. `lib/jsdoc/schemas/sap-ui-library-api-index.json`
-3. `lib/jsdoc/jsdoc-config-template.json`
-4. `lib/jsdoc/transformApiJson.js`
-5. `src/sap.ui.core/.dtsgenrc`
-6. `docs/GENERATOR_STRUCTURE.md`
+## Parser input scope
 
-## Research outcome
+This document does **not** define the final source of truth for the OpenUI specification. It only identifies a practical, implementable parser input for the next code-generation slice.
 
-### 1. Best parser starting point
+Based on the generator-related entries already recorded in `docs/README.md`, the first parser should target schema-backed JSON artifacts such as `api.json` and `api-index.json`. Those artifacts are useful because they are structured, deterministic, and easier to validate than raw framework source files.
 
-The best **implementable parser starting point** is the generated `api.json` / `api-index.json` pipeline, not the raw runtime source files.
+Other upstream artifacts may still be relevant as supporting references when a specific generator feature needs them:
 
-Why:
+| Supporting reference | Typical use |
+| --- | --- |
+| `transformApiJson.js` | Understand existing upstream normalization of generated API JSON. |
+| `.dtsgenrc` | Understand TypeScript overlays, exclusions, and type-shaping constraints. |
+| Runtime metadata and design-time metadata files | Fill gaps only when the JSON projection lacks metadata required by a generator feature. |
+| Tests and examples | Provide acceptance evidence for generated behavior and compatibility. |
 
-- `sap-ui-library-api.json` is an explicit JSON Schema for the generated `api.json` files.
-- `sap-ui-library-api-index.json` is an explicit JSON Schema for the aggregated symbol index.
-- `jsdoc-config-template.json` shows that OpenUI5 configures JSDoc to emit the `apijson` variant.
-- `transformApiJson.js` proves there is already an upstream normalization step from raw JSDoc output into a structured JSON representation suitable for tooling.
+Do not infer normative source-of-truth rules from this document alone; keep those decisions in the specification documents and their validation tests.
 
-This makes the `api.json` family the easiest machine-readable input for a first generator parser:
+## Practical parser starting point
 
-- stable JSON shape
-- schema-backed validation
-- library and symbol inventory already flattened
-- easier to automate than parsing arbitrary JavaScript source files directly
+For implementation work, start with JSON artifacts because they are deterministic and schema-backed.
 
-### 2. Parser scope recommendation
+### First parser scope
 
-The first parser should read:
+Read:
 
-1. one library `api.json`
+1. one library-level `api.json`
 2. optionally the aggregated `api-index.json`
 
-The parser should extract at least:
+Extract at least:
 
 - library name and version
-- symbol list
+- symbol inventory
 - symbol kind (`class`, `interface`, `enum`, `typedef`, `namespace`, `function`)
-- inheritance / implementation relationships
+- inheritance and implementation relationships
 - public properties
 - methods and parameters
 - events
-- UI5 metadata-derived information when present
+- metadata-derived properties, aggregations, associations, defaults, visibility, and bindability when present
 
-Recommended first local module shape:
+### Parser output
 
-```text
-src/spec/load-spec.ts
-src/spec/framework-spec.types.ts
-src/validation/validate-spec.ts
-src/ir/build-ir.ts
-```
-
-In the terminology of `docs/GENERATOR_STRUCTURE.md`, this aligns with:
-
-- `spec-loader`
-- `validator`
-- `normalizer`
-- `ir`
-
-### 3. Best generator starting point
-
-The best **generator starting point** is not OpenUI5 runtime code generation, because no upstream generator was found that converts UI5 metadata directly into Angular or generic web UI files.
-
-Instead, the strongest starting point in the current repo is the pipeline already documented in `docs/GENERATOR_STRUCTURE.md`:
+The parser should not feed Angular emitters directly. It should produce a local normalized model that can be validated and then converted into the generator IR.
 
 ```text
-Framework Spec
-        ↓
-Parse / Load
-        ↓
-Validate
-        ↓
-Normalize
-        ↓
-Build Intermediate Model
-        ↓
-Map to Angular Model
-        ↓
-Generate TypeScript / HTML / SCSS
-```
-
-This means the first generator should begin after normalization and IR construction, not directly from raw JSON records.
-
-### 4. First code generation slice to implement
-
-The smallest useful generator slice is:
-
-1. parse one `api.json` file
-2. normalize one or more public UI symbols into an implementation-agnostic IR
-3. map one page/component concept into an Angular component model
-4. emit:
-   - one `.ts` component file
-   - one `.html` template file
-   - one `.scss` or `.css` style file
-
-Recommended first emitters:
-
-```text
-src/targets/angular/emit-component.ts
-src/targets/angular/emit-angular-project.ts
-src/targets/angular/emit-theme.ts
-```
-
-If the immediate target is described as HTML, JS, and CSS, the practical Angular equivalent is:
-
-- TypeScript source for component behavior
-- HTML for template structure
-- SCSS/CSS for styling
-
-### 5. Why `.dtsgenrc` still matters
-
-`src/sap.ui.core/.dtsgenrc` is not itself the parser input, but it is an important supporting reference for the mapping phase.
-
-It shows:
-
-- how OpenUI5 adjusts generated types
-- which symbols need overlays or exclusions
-- where raw API data needs type corrections before code emission
-
-For this reason, `.dtsgenrc` should be used as a **type-mapping reference**, not as the primary parser source.
-
-## Recommended starting architecture
-
-### Parser
-
-Start here:
-
-```text
-generated api.json / api-index.json
+upstream api.json / api-index.json
   → schema validation
-  → local normalized model
-  → IR
+  → local normalized OpenUI source model
+  → FrameworkSpecDocument or equivalent spec artifact
+  → UiApplication IR
+  → AngularProjectModel
+  → GeneratedFile[]
 ```
 
-Do **not** start by parsing raw OpenUI5 JavaScript source as the first implementation step.
+If the parser produces or updates repository-level `openui.json`, keep that file synchronized with `spec/` prose and the validation tests.
 
-That source remains the conceptual basis for the specification, but the JSON pipeline is the better starting point for an actual generator implementation.
+## Existing generator entry points
 
-### Generator
+Use these implemented modules as the starting architecture:
 
-Start here:
+| Concern | Existing file |
+| --- | --- |
+| CLI orchestration | `generators/angular/src/cli/main.ts` |
+| JSON loading | `generators/angular/src/spec/load-spec.ts` |
+| Input types | `generators/angular/src/spec/framework-spec.types.ts` |
+| Validation and diagnostics | `generators/angular/src/validation/validate-spec.ts`, `generators/angular/src/validation/diagnostics.ts` |
+| Normalization | `generators/angular/src/ir/normalize-spec.ts` |
+| UI IR construction | `generators/angular/src/ir/build-ir.ts`, `generators/angular/src/ir/ui-model.ts` |
+| Angular model mapping | `generators/angular/src/targets/angular/map-to-angular.ts`, `generators/angular/src/targets/angular/angular-model.ts` |
+| Project emission | `generators/angular/src/targets/angular/emit-angular-project.ts` |
+| Page component triplets | `generators/angular/src/targets/angular/emit-component.ts` |
+| Routes | `generators/angular/src/targets/angular/emit-routes.ts` |
+| Theme tokens | `generators/angular/src/targets/angular/emit-theme.ts` |
+| Safe file writes | `generators/angular/src/writers/file-writer.ts`, `generators/angular/src/writers/safe-write.ts` |
+| Tests | `generators/angular/tests/generator.test.ts` |
 
-```text
-IR
-  → Angular model
-  → emit .ts + .html + .scss/.css
+## Recommended next implementation slice
+
+The smallest useful next parser-to-generator slice is:
+
+1. Add a parser for one schema-backed `api.json` fixture.
+2. Normalize one public component contract into the local spec or IR shape.
+3. Validate required metadata: identity, library, public properties, aggregations, associations, events, defaults, and visibility.
+4. Map the normalized contract into an Angular page or component model.
+5. Emit the existing Angular triplet:
+   - `.page.ts` for behavior and typed state
+   - `.page.html` for Material-backed template structure
+   - `.page.scss` for token-backed styling
+6. Add tests that assert the parser output, diagnostics, and generated Angular files.
+
+This keeps the work small while connecting the upstream machine-readable projection to the already implemented generator.
+
+## HTML, JS, and CSS output interpretation
+
+If an issue asks for generated HTML, JS, and CSS, the Angular generator equivalent is:
+
+| Requested artifact | Angular generator artifact |
+| --- | --- |
+| HTML | Standalone component template: `<route>.page.html` |
+| JS | TypeScript source compiled to JavaScript: `<route>.page.ts`, `main.ts`, routes, services |
+| CSS | SCSS/CSS source: `<route>.page.scss`, `src/styles.scss` |
+
+The generator should continue emitting TypeScript rather than handwritten JavaScript because Angular source is TypeScript-first and the package already compiles generated apps through Angular tooling.
+
+## Validation strategy
+
+For generator changes, run the generator package test command from `generators/angular/`:
+
+```bash
+npm run test
 ```
 
-Do **not** generate files directly from raw `api.json` objects without an IR step.
+That command type-checks the TypeScript generator and runs the Node test suite.
+
+For generated example applications, validate from `generators/angular/generated-examples/` with its configured Angular build and test scripts.
+
+For repository-wide checks, use the local Python virtual environment as required by repository instructions and run the configured pre-commit checks when available.
+
+## Guardrails
+
+- Do not treat `api.json` or `api-index.json` as the complete standard by themselves; use them as the first parser input.
+- Do not parse raw framework JavaScript source as the first generator implementation path unless the JSON artifacts lack metadata required by a specific feature.
+- Do not generate Angular files directly from raw `api.json` records.
+- Do not bypass the `FrameworkSpecDocument → UiApplication → AngularProjectModel → GeneratedFile[]` separation.
+- Do not write generated files outside the selected output directory; use the existing safe writer.
+- Do not add a new target before the Angular pipeline has parser-backed fixtures and tests.
 
 ## Final conclusion
 
-- **Parser starting point:** the schema-backed `api.json` / `api-index.json` artifacts produced by the JSDoc pipeline.
-- **Normalization reference:** `transformApiJson.js`.
-- **Type-mapping support:** `.dtsgenrc`.
-- **Generator starting point:** the IR-to-Angular emission pipeline already described in `docs/GENERATOR_STRUCTURE.md`.
-- **First practical output:** a minimal Angular component/page triplet that emits behavior, template, and styling files.
+- **Practical parser starting point:** schema-backed `api.json` / `api-index.json` artifacts.
+- **Normalization reference:** upstream `transformApiJson.js` and local `ir/normalize-spec.ts`.
+- **Type-mapping support:** upstream `.dtsgenrc` behavior.
+- **Generator starting point:** the existing Angular IR-to-emitter pipeline in `generators/angular/`.
+- **Next practical output:** parser-backed generation of one Angular Material component/page triplet with tests for parsed metadata, diagnostics, and emitted TypeScript/HTML/SCSS.

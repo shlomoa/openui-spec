@@ -235,7 +235,7 @@ const CATEGORIES: readonly DocCategory[] = [
         id: 'shell',
         name: 'Application shell',
         summary:
-          'A standalone Angular shell with Material navigation for top-level OpenUI5 application areas.',
+          'A standalone Angular shell with Material navigation for top-level application areas.',
         api: {
           specSection: '06. Application Structure',
           specPath: 'spec/06-application-structure.md',
@@ -1886,7 +1886,7 @@ export class OrderReferenceComponent {
     id: 'reference-examples',
     name: 'Reference examples',
     summary:
-      'Evidence-backed component examples that show how concrete OpenUI5 metadata maps into generated Angular Material components.',
+      'Evidence-backed component examples that show how concrete metadata maps into generated Angular Material components.',
     items: [
       {
         id: 'reference-action-button',
@@ -1896,8 +1896,7 @@ export class OrderReferenceComponent {
         api: {
           specSection: '23. Reference Examples',
           specPath: 'spec/23-reference-examples.md',
-          purpose:
-            'Provide concrete reference components abstracted from upstream OpenUI5 evidence.',
+          purpose: 'Provide concrete reference components abstracted from upstream evidence.',
           derivedFrom: ['reference-component-button'],
           points: [
             'Reference examples translate concrete upstream component evidence into implementation-neutral examples.',

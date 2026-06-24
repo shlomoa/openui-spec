@@ -1,6 +1,6 @@
-# openui5-spec
+# OpenUI Specification
 
-`openui5-spec` is a technology-independent specification for a Web UI framework. Although not a fork, it is entirely based on [OpenUI5](https://github.com/UI5/openui5). It also includes an Angular TypeScript generator that produces a skeleton app from the spec. The goal is to use the specification as the basis for a standard.
+This repository contains a technology-independent specification for a Web UI framework. It also includes an Angular TypeScript generator that produces a skeleton app from the spec. The goal is to use the specification as the basis for a standard.
 
 ## Where to go
 

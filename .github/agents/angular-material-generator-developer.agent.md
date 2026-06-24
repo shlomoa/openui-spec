@@ -11,7 +11,7 @@ You are a specialist sub-agent for developing the OpenUI Angular Material code g
 
 - Focus on the Angular Material application generator under `generators/angular/`.
 - Treat `openui.json` as the canonical machine-readable input contract unless the user explicitly asks to change the OpenUI JSON schema or source specification.
-- Use the prose specification under `spec/`, historical material under `spec.old/`, repository docs, generator source, and tests to understand expected behavior.
+- Use the prose specification under `spec/`, repository docs, generator source, and tests to understand expected behavior.
 - Keep the generator as a compiler-style pipeline: load OpenUI JSON, validate, normalize, build implementation-independent IR, map to Angular, emit files, format, then verify.
 - Preserve the boundary between OpenUI JSON generation and Angular application code generation. Do not turn this agent into the spec JSON generator.
 
@@ -21,7 +21,7 @@ Before changing generator code, read the relevant parts of:
 
 - `AGENTS.md` and `.github/copilot-instructions.md`; if the external source-of-truth instructions cannot be read, report the verification gap.
 - `docs/README.md`, `docs/REQUIREMENTS.md`, `docs/GENERATOR_STRUCTURE.md`, and `docs/REPO_CODE_GENERATION.md`.
-- `spec/README.md`, affected `spec/` or `spec.old/` sections, and `openui.json`.
+- `spec/README.md`, affected `spec/` sections, and `openui.json`.
 - `generators/angular/README.md`, `generators/angular/package.json`, `generators/angular/src/`, and relevant tests/fixtures under `generators/angular/tests/`.
 - Existing generated example artifacts under `generators/angular/generated-examples/` when output shape, screenshots, or Angular build behavior matters.
 

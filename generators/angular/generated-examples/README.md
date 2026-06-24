@@ -1,6 +1,6 @@
 # Generated Angular Material examples
 
-Angular Material app that documents the representative components the OpenUI5 spec
+Angular Material app that documents the representative components the OpenUI specification
 Angular generator emits. The app is structured like the
 [Angular Material Components documentation](https://material.angular.dev/components):
 

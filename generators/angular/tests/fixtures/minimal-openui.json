@@ -162,7 +162,7 @@
       {
         "id": "23-reference-examples",
         "title": "Reference Examples",
-        "purpose": "Provide concrete reference components abstracted from upstream OpenUI5 evidence.",
+        "purpose": "Provide concrete reference components abstracted from upstream evidence.",
         "requirements": [
           "Reference examples connect component contracts to observable behavior."
         ]
