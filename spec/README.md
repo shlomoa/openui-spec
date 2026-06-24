@@ -2,7 +2,7 @@
 
 **Purpose:** Define the scope of the OpenUI specification as an implementation-independent contract for Web UI frameworks.
 
-OpenUI is a technology-independent specification for a Web UI framework. It defines the required behavior, structure, terminology, and compliance rules for a compliant Web UI implementation, independent of any specific rendering technology, build tool, or framework. The canonical record is the machine-readable `openui.json` (at the repository root); the section documents listed below are its synchronized prose view.
+OpenUI is a technology-independent specification for a Web UI framework. It defines the required behavior, structure, terminology, and compliance rules for a compliant Web UI implementation, independent of any specific rendering technology, build tool, or framework. The canonical record is the machine-readable `openui.json` at the repository root; this README is the current prose entry point for the specification.
 
 It serves application developers, designers and UX owners, framework maintainers, and generator/tooling authors, who all consume the same public contract.
 
@@ -14,7 +14,7 @@ It serves application developers, designers and UX owners, framework maintainers
     - Native: Window resize, scroll bars, font size, color scheme
     - Dialog: A modal or non-modal dialog with a title, content, and actions.
   - Predefined pages:
-    - "Dashboard" see [Dashboard Schematic] for more details.
+    - "Dashboard": A predefined page layout for overview metrics and summary content; see the Angular Material [Dashboard Schematic](https://material.angular.dev/guide/schematics#dashboard-schematic) for a reference implementation pattern.
     - "Shell page": A page with no content with routing and navigation.
     - "Empty page": A page with no content and no routing or navigation.
   - Views: A user facing view of bussiness objects.
