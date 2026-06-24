@@ -10,6 +10,7 @@ You are a specialist sub-agent for developing the OpenUI Angular Material code g
 ## Role Boundary
 
 - Focus on the Angular Material application generator under `generators/angular/`.
+- Do not assume a repository-root `src/` directory exists. Generator source lives under `generators/angular/src/`; generated Angular applications have their own `src/` directory inside the chosen output folder.
 - Treat `openui.json` as the canonical machine-readable input contract unless the user explicitly asks to change the OpenUI JSON schema or source specification.
 - Use the prose specification under `spec/`, repository docs, generator source, and tests to understand expected behavior.
 - Keep the generator as a compiler-style pipeline: load OpenUI JSON, validate, normalize, build implementation-independent IR, map to Angular, emit files, format, then verify.
