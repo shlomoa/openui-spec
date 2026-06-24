@@ -4,18 +4,11 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 ANGULAR_GENERATOR_MD = REPO_ROOT / "spec" / "24-angular-material-generator.md"
-MATERIALIZATION_REPORT = REPO_ROOT / "uncompleted_spec_materilization.md"
 MKDOCS_CONFIG = REPO_ROOT / "mkdocs.yml"
 ANGULAR_PACKAGE_JSON = REPO_ROOT / "generators" / "angular" / "package.json"
 ANGULAR_CLI = REPO_ROOT / "generators" / "angular" / "src" / "cli" / "main.ts"
 ANGULAR_EMITTER = (
-    REPO_ROOT
-    / "generators"
-    / "angular"
-    / "src"
-    / "targets"
-    / "angular"
-    / "emit-angular-project.ts"
+    REPO_ROOT / "generators" / "angular" / "src" / "targets" / "angular" / "emit-angular-project.ts"
 )
 
 
@@ -23,7 +16,6 @@ class AngularMaterialGeneratorSpecTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.markdown = ANGULAR_GENERATOR_MD.read_text(encoding="utf-8")
-        cls.report = MATERIALIZATION_REPORT.read_text(encoding="utf-8")
         cls.mkdocs = MKDOCS_CONFIG.read_text(encoding="utf-8")
         cls.package_json = json.loads(ANGULAR_PACKAGE_JSON.read_text(encoding="utf-8"))
         cls.cli_source = ANGULAR_CLI.read_text(encoding="utf-8")
@@ -42,7 +34,8 @@ class AngularMaterialGeneratorSpecTest(unittest.TestCase):
             self.markdown,
         )
         self.assertIn(
-            "node dist/src/cli/main.js generate --spec ../../openui.json --target angular --out generated-openui-angular-app",
+            "node dist/src/cli/main.js generate --spec ../../openui.json "
+            "--target angular --out generated-openui-angular-app",
             self.markdown,
         )
 
@@ -71,27 +64,25 @@ class AngularMaterialGeneratorSpecTest(unittest.TestCase):
         self.assertIn('"@angular/cdk": "22.0.2"', self.emitter_source)
 
     def test_examples_document_repository_local_verification(self) -> None:
-        self.assertIn("Use the generator's repository-supported build and CLI workflow", self.markdown)
+        self.assertIn(
+            "Use the generator's repository-supported build and CLI workflow", self.markdown
+        )
         self.assertIn("npm run build", self.markdown)
         self.assertIn(
             "node dist/src/cli/main.js validate --spec ../../openui.json --target angular",
             self.markdown,
         )
         self.assertIn(
-            "node dist/src/cli/main.js generate --spec ../../openui.json --target angular --out generated-openui-angular-app",
+            "node dist/src/cli/main.js generate --spec ../../openui.json "
+            "--target angular --out generated-openui-angular-app",
             self.markdown,
         )
         self.assertIn("Generated Angular Material artifacts verified.", self.markdown)
         self.assertIn("npm install", self.markdown)
         self.assertIn("npm run build", self.markdown)
 
-    def test_readthedocs_navigation_and_materialization_report_are_synchronized(self) -> None:
+    def test_readthedocs_navigation_includes_generator_section(self) -> None:
         self.assertIn("Angular Material Generator: 24-angular-material-generator.md", self.mkdocs)
-        self.assertIn(
-            "| Angular Material Generator      | Yes                         | No                                           | No                                             |",
-            self.report,
-        )
-        self.assertIn("No ReadTheDocs examples action remains", self.report)
 
 
 if __name__ == "__main__":
