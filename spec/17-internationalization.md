@@ -2,8 +2,6 @@
 
 **Purpose:** Describe locale and translation requirements.
 
-**Derived from traversal nodes:** `library-catalog-root`, `reference-component-button`
-
 ## Specification
 
 - Libraries must provide translatable message resources for public UI text.
@@ -46,14 +44,6 @@
 - Ship one message bundle per supported locale and rely on the locale fallback chain so a missing translation degrades to a less specific bundle rather than failing.
 - Render dates, numbers, and currencies through typed locale-aware formatting bound to the active locale instead of formatting values with fixed patterns.
 - Inherit the active locale and `textDirection` from application-level configuration, overriding direction only for content whose direction differs from its surrounding context.
-
-## Angular Material generator materialization
-
-- The Angular Material generator maps this section to a dedicated Internationalization page whenever `/openui.json` contains section `17-internationalization`.
-- Generated output emits `src/app/openui-i18n.service.ts` with locale/message resource configuration, stable message bundles, a deterministic fallback chain from the active locale to the default bundle, and a `message(key)` resolver that returns the message key only when every configured bundle misses.
-- Generated standalone pages reference translatable public text through `data-openui-message-key` metadata and `OpenUiI18nService.message(...)` calls instead of hard-coded literals.
-- Generated locale-aware formatting uses Angular formatting pipes with the configured locale hook, and generated bootstrap providers wire Angular `LOCALE_ID` to the emitted i18n configuration.
-- Generated bidirectional output binds `dir` and `lang` to the active locale configuration so right-to-left locales render deterministically while left-to-right locales keep the default direction.
 
 ## Examples
 
@@ -133,7 +123,3 @@ export class OrderActionsComponent {
 ```
 
 The generator maps the translatable `text` property to a resolved message accessor and binds text direction to the active locale, preserving the localized text and direction from the public contract.
-
-## JSON Mapping
-
-- `specification.sections[16]` in `/openui.json`

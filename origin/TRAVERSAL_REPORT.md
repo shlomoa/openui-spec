@@ -1,6 +1,6 @@
 # Traversal Report
 
-The specification roots were identified from the starting points documented in issue #6 and `REPO_STRUCTURE.md`. Traversal was performed breadth-first so that each hierarchy level can be mirrored into the master JSON specification and markdown documents.
+The specification roots were identified from the starting points documented in issue #6 and `docs/README.md`. Traversal was performed breadth-first so that each hierarchy level can be mirrored into the master JSON specification and markdown documents.
 
 ## Identified roots
 
@@ -11,7 +11,7 @@ The specification roots were identified from the starting points documented in i
 
 | Step | Level | Node                         | Parent                    | Children                                                                                                             | Evidence                                                                                                       | Section mapping                                                           |
 | ---: | ----: | ---------------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-|    1 |     0 | `openui-root`                | —                         | library-catalog-root, metadata-grammar-root                                                                          | REPO_STRUCTURE.md<br>REQUIREMENTS.md<br>spec/SPECIFICATION_STRUCTURE.md                                        | 01-introduction, 02-design-goals, 21-compliance-rules                     |
+|    1 |     0 | `openui-root`                | —                         | library-catalog-root, metadata-grammar-root                                                                          | docs/README.md<br>docs/REQUIREMENTS.md<br>spec/README.md                                                       | 01-introduction, 02-design-goals, 21-compliance-rules                     |
 |    2 |     1 | `library-catalog-root`       | openui-root               | library-identity, library-type-system, library-interface-catalog, library-component-catalog, library-element-catalog | docs/controllibraries.md<br>src/\*/src/<library>/library.js                                                    | 05-ui-concept-model, 06-application-structure, 08-component-model         |
 |    3 |     1 | `metadata-grammar-root`      | openui-root               | property-model, aggregation-model, association-model, event-model, visibility-default-model, renderer-dnd-model      | src/sap.ui.core/src/sap/ui/base/ManagedObjectMetadata.js<br>src/sap.ui.core/src/sap/ui/core/ElementMetadata.js | 07-layout-system, 08-component-model, 09-interaction-model                |
 |    4 |     2 | `library-identity`           | library-catalog-root      | —                                                                                                                    | library.js -> name, version, dependencies                                                                      | 06-application-structure, 21-compliance-rules                             |

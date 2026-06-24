@@ -2,8 +2,6 @@
 
 **Purpose:** Describe the navigation structures the framework must support.
 
-**Derived from traversal nodes:** `library-component-catalog`
-
 ## Specification
 
 - The framework must support navigable page containers, dialogs, and shell-level composition primitives.
@@ -154,7 +152,3 @@ A dialog is a transient overlay whose visibility is public `open` state; its `af
 ```
 
 A shell-level tool page composes a header, side navigation, and one or more navigable containers, while its routing configuration maps URL patterns such as `orders/{orderId}` to targets so the navigation state stays deep-linkable and catalog-discoverable.
-
-## JSON Mapping
-
-- `specification.sections[12]` in `/openui.json`

@@ -2,8 +2,6 @@
 
 **Purpose:** Describe how user interaction is represented in the specification.
 
-**Derived from traversal nodes:** `event-model`, `reference-component-button`
-
 ## Specification
 
 - User-triggered behavior is modeled as named events with stable semantics, such as `press` for activation.
@@ -122,7 +120,3 @@ export class SaveActionComponent {
 ```
 
 A generator may map the specification's activation event to the host framework's canonical binding, provided it preserves the enabled gate and exposes one stable application handler path.
-
-## JSON Mapping
-
-- `specification.sections[8]` in `/openui.json`

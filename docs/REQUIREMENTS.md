@@ -12,4 +12,4 @@ The generator is a tool that takes the specification as input, and an existing A
 
 - Implemented in TypeScript and as an npmjs package.
 - Use folder generators/angular for implementation.
-- Generator implementation should follow the structure and implementation details documented in GENERATOR_STRUCTURE.md.
+- Generator implementation should follow the structure and implementation details documented in docs/GENERATOR_STRUCTURE.md.

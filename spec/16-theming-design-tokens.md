@@ -2,8 +2,6 @@
 
 **Purpose:** Describe visual customization requirements.
 
-**Derived from traversal nodes:** `library-catalog-root`
-
 ## Specification
 
 - Libraries must support theme-specific assets and shared theme-level styling resources.
@@ -107,7 +105,3 @@ Density is selected once at the root scope; every descendant component adapts it
 ```
 
 The generator emits design-token references, the Material system CSS custom properties, plus a density-scoped class, so the active theme and density re-skin the button without editing the component.
-
-## JSON Mapping
-
-- `specification.sections[15]` in `/openui.json`

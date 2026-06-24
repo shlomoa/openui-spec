@@ -2,8 +2,6 @@
 
 **Purpose:** Define how user-visible feedback is modeled.
 
-**Derived from traversal nodes:** `library-component-catalog`, `event-model`
-
 ## Specification
 
 - The framework must expose components for busy, message, dialog, and empty-state feedback patterns.
@@ -155,7 +153,3 @@ export class OrdersViewComponent {
 ```
 
 A generator maps the busy, empty-state, and message feedback contracts onto the host framework: busy state drives a loading affordance, the empty state is a public no-data view with a recovery action, and a success message becomes a live-region notification.
-
-## JSON Mapping
-
-- `specification.sections[13]` in `/openui.json`

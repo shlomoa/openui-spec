@@ -6,7 +6,6 @@ theme:
 docs_dir: spec
 nav:
   - Overview: README.md
-  - Specification Structure: SPECIFICATION_STRUCTURE.md
   - Introduction: 01-introduction.md
   - Design Goals: 02-design-goals.md
   - Design Principles: 03-design-principles.md
@@ -31,4 +30,3 @@ nav:
   - Test & Acceptance Criteria: 22-test-acceptance-criteria.md
   - Reference Examples: 23-reference-examples.md
   - Angular Material Generator: 24-angular-material-generator.md
-  - Traversal Report: TRAVERSAL_REPORT.md

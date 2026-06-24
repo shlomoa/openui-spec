@@ -2,8 +2,6 @@
 
 **Purpose:** Capture the principles used to normalize OpenUI5 concepts into a reusable framework specification.
 
-**Derived from traversal nodes:** `metadata-grammar-root`, `api-json-projection`
-
 ## Specification
 
 - Prefer public library catalogs and runtime metadata over private implementation details, renderer internals, or undocumented helper code.
@@ -112,7 +110,3 @@ This normalized shape follows the principles because it preserves the public nam
 ```
 
 In this case the specification keeps the public `text` property and ignores `internalState` because it is not declared by the authoritative runtime metadata.
-
-## JSON Mapping
-
-- `specification.sections[2]` in `/openui.json`

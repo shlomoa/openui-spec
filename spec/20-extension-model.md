@@ -2,8 +2,6 @@
 
 **Purpose:** Describe supported extension points.
 
-**Derived from traversal nodes:** `library-interface-catalog`, `design-time-evidence`, `library-component-catalog`
-
 ## Specification
 
 - The framework must allow new controls, elements, types, and interfaces to be introduced through the same catalog and metadata model.
@@ -165,11 +163,3 @@ export class WorkspaceOutletComponent {
 ```
 
 A generator maps the extension point to a typed outlet in the host framework. The outlet accepts only registry entries that satisfy the declared extension-point contract, keeping injected content discoverable and testable.
-
-### Angular Material generator materialization
-
-When this section is present, the Angular Material generator emits a dedicated extension model and a typed workspace outlet. The generated `openui-extension.model.ts` file records host capabilities, extension-point metadata, compatibility gates, renderer linkage, drag-and-drop declarations, runtime metadata, and optional design-time overlays as separate typed artifacts. The generated outlet accepts `WorkspaceCardExtension` entries, filters them through compatibility gates before rendering with `NgComponentOutlet`, and keeps design-time labels, palette grouping, edit actions, and drop hints out of the runtime component API.
-
-## JSON Mapping
-
-- `specification.sections[19]` in `/openui.json`

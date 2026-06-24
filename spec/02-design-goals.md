@@ -2,8 +2,6 @@
 
 **Purpose:** Describe the outcomes a compliant web UI framework must enable.
 
-**Derived from traversal nodes:** `library-catalog-root`, `metadata-grammar-root`
-
 ## Specification
 
 - Enable library-based discovery of the public UI surface through a stable catalog of controls, elements, interfaces, and types.
@@ -89,7 +87,3 @@ This metadata satisfies the declarative contract goal because composition, acces
 - A validator can confirm that every public component declares typed metadata members and library ownership.
 - A documentation pipeline can render the same contract into prose, tables, and API indexes.
 - A generator can transform the normalized metadata into framework-specific component scaffolding without parsing renderer internals.
-
-## JSON Mapping
-
-- `specification.sections[1]` in `/openui.json`

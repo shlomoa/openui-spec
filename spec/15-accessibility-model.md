@@ -2,8 +2,6 @@
 
 **Purpose:** Capture accessibility requirements visible in the public contract.
 
-**Derived from traversal nodes:** `association-model`, `reference-component-button`, `renderer-dnd-model`
-
 ## Specification
 
 - Components must support accessible naming and description relationships through public associations or equivalent metadata.
@@ -119,7 +117,3 @@ export class CustomerNameComponent {
 ```
 
 The generator maps the labelling and describing associations to `aria-labelledby` and `aria-describedby`, preserving the accessible name and description from the public contract.
-
-## JSON Mapping
-
-- `specification.sections[14]` in `/openui.json`

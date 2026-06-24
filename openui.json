@@ -155,9 +155,9 @@
           "parent": null,
           "children": ["library-catalog-root", "metadata-grammar-root"],
           "evidence": [
-            "REPO_STRUCTURE.md",
-            "REQUIREMENTS.md",
-            "spec/SPECIFICATION_STRUCTURE.md"
+            "docs/README.md",
+            "docs/REQUIREMENTS.md",
+            "spec/README.md"
           ],
           "mappedSections": [
             "01-introduction",

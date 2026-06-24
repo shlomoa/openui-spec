@@ -2,8 +2,6 @@
 
 **Purpose:** Describe form-oriented components and semantics.
 
-**Derived from traversal nodes:** `library-interface-catalog`, `association-model`, `reference-component-button`
-
 ## Specification
 
 - Form-compatible components may advertise dedicated interfaces such as form-content contracts.
@@ -211,7 +209,3 @@ export class OrderFormComponent {
 ```
 
 A generator maps the specification's form structure to the host framework's form primitives: form-content fields become typed non-nullable reactive controls, required validation becomes validators, and the submission event becomes a `save` handler that validates before submitting.
-
-## JSON Mapping
-
-- `specification.sections[11]` in `/openui.json`

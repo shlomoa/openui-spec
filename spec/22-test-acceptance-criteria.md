@@ -2,8 +2,6 @@
 
 **Purpose:** Describe how the specification should be verified.
 
-**Derived from traversal nodes:** `compliance-tests`, `api-json-projection`, `reference-component-button`
-
 ## Specification
 
 - Every public metadata contract must be verifiable by automated tests that exercise properties, aggregations, associations, events, default values, visibility, and rendering-facing semantics.
@@ -176,7 +174,3 @@ Projection criteria compare the source metadata, normalized `/openui.json`, and 
 ```
 
 Visual and accessibility criteria combine DOM assertions, accessibility-tree checks, keyboard traversal, and screenshot evidence. The fixture must control viewport, theme, density, data, and locale so failures identify a contract change rather than environment drift.
-
-## JSON Mapping
-
-- `specification.sections[21]` in `/openui.json`

@@ -2,8 +2,6 @@
 
 **Purpose:** State UI-facing security and privacy constraints.
 
-**Derived from traversal nodes:** `renderer-dnd-model`, `reference-component-button`
-
 ## Specification
 
 - Public component contracts must not rely on unsafe renderer side effects for user-visible semantics.
@@ -46,15 +44,6 @@
 - Declare popup, menu, and external-target relationships through public metadata such as `ariaHasPopup` and an `opens` reference so the disclosure is part of the contract and assistive technology and tests can detect it.
 - Expose a masking mode for components that present passwords, tokens, or other sensitive values, default it to masked, and require explicit user action to reveal the value.
 - Gate irreversible or sensitive actions behind a confirmation contract, and gate restricted values, actions, and popup targets on the permission-driven visibility and enablement state so a hidden or disabled control never exposes what it protects.
-
-## Angular Material generator materialization
-
-- The Angular Material generator maps this section to a dedicated Security / Privacy UI Rules page whenever `/openui.json` contains section `18-security-privacy-ui-rules`.
-- Generated safe-rendering output renders untrusted text through Angular interpolation and validates URL values against an explicit `http`, `https`, and `mailto` scheme allow list before binding to `href`.
-- Generated output deliberately avoids unsafe HTML and DOM escape hatches for untrusted values, including raw HTML bindings, direct renderer or element access, and `bypassSecurityTrust*` APIs.
-- Generated sensitive-value controls default to masked display and expose an explicit reveal action before cleartext can be shown.
-- Generated irreversible or restricted actions are permission-gated with Angular control flow so denied actions, values, and popup targets are omitted, not merely hidden by styling.
-- Generated confirmation examples use Angular Material dialog semantics, expose popup disclosure such as `aria-haspopup="dialog"`, and route the irreversible operation through a confirmed-only handler path.
 
 ## Examples
 
@@ -195,7 +184,3 @@ export class OrderActionsComponent {
 ```
 
 The generator preserves the security contract: the permission gate omits the restricted control with `@if`, the popup disclosure maps to `aria-haspopup`, and the confirmation contract routes the irreversible action through an explicit confirmation dialog before it runs.
-
-## JSON Mapping
-
-- `specification.sections[17]` in `/openui.json`

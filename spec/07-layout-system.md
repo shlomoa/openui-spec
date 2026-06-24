@@ -2,8 +2,6 @@
 
 **Purpose:** Describe the abstract layout and composition requirements.
 
-**Derived from traversal nodes:** `aggregation-model`, `renderer-dnd-model`
-
 ## Specification
 
 - Layout is expressed as ordered or named composition regions exposed through aggregations; a region's name and the multiplicity of its backing aggregation define where content is placed and how many children it accepts.
@@ -51,13 +49,6 @@
 - Apply density and theming as layout-wide modifiers sourced from the spacing scale and design tokens, rather than hard-coding per-component spacing, so density and theme changes preserve alignment and composition.
 - Declare drag-and-drop only where reordering or cross-region moves are part of the contract, and constrain it to the target aggregation's child type and multiplicity so a drop can never violate the component model.
 - When normalizing a layout into `/openui.json`, preserve each region's aggregation name, child type, multiplicity, and any drag-and-drop declaration so tooling can reconstruct the layout contract without inspecting renderer code.
-
-## Angular Material generator materialization
-
-- The Angular Material generator maps this section to a dedicated layout-system page whenever `/openui.json` contains section `07-layout-system`.
-- Generated layout examples preserve named region identity through `data-openui-region` and `data-openui-aggregation` attributes, and render ordered `0..n` content with Angular control flow that tracks the original item identity.
-- Generated SCSS uses theme-level spacing and density CSS custom properties such as `--openui-spacing-4` and `--openui-density-compact-control-height`, then applies breakpoint media queries to reflow the same regions without reparenting or inventing content.
-- Generated drag-and-drop output is limited to regions whose metadata includes an explicit drag-and-drop declaration; undeclared regions are rendered without CDK drag/drop directives.
 
 ## Examples
 
@@ -167,7 +158,3 @@ A form exposes `density` as a layout-wide modifier that selects spacing and cont
 ```
 
 A board declares drag-and-drop on its ordered `columns` aggregation, so columns may be reordered within the declared `0..n` contract; the drag-and-drop capability is part of the metadata and never moves content outside the aggregation's child type or multiplicity.
-
-## JSON Mapping
-
-- `specification.sections[6]` in `/openui.json`

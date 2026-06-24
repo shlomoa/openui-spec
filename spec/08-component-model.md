@@ -2,8 +2,6 @@
 
 **Purpose:** Define the normative component contract.
 
-**Derived from traversal nodes:** `library-component-catalog`, `property-model`, `aggregation-model`, `association-model`, `event-model`
-
 ## Specification
 
 - Each component must expose a stable identity, owning library, supported interfaces, and public metadata.
@@ -146,7 +144,3 @@ An input exposes a bindable `value` property as input, semantic `ariaLabelledBy`
 ```
 
 A card augments its core aggregation contract with optional capability metadata: a renderer linkage, drag-and-drop flags, and a design-time reference, none of which change the normative property, aggregation, association, or event contract.
-
-## JSON Mapping
-
-- `specification.sections[7]` in `/openui.json`

@@ -54,13 +54,11 @@ class SecurityPrivacyUiRulesSpecTest(unittest.TestCase):
         self.assertIn("## Tags", self.markdown)
         self.assertIn("## Formal definitions", self.markdown)
         self.assertIn("## Usage and implementation guidance", self.markdown)
-        self.assertIn("## Angular Material generator materialization", self.markdown)
         self.assertIn("### Example 1 — safe rendering of untrusted text and URLs", self.markdown)
         self.assertIn('"encode": "text"', self.markdown)
         self.assertIn('"urlAllowList": ["http", "https", "mailto"]', self.markdown)
         self.assertIn('"masked": true', self.markdown)
         self.assertIn('"requiresConfirmation"', self.markdown)
-        self.assertIn("bypassSecurityTrust*", self.markdown)
         self.assertIn('aria-haspopup="dialog"', self.markdown)
 
     def test_security_privacy_examples_define_encoding_and_masking(self):

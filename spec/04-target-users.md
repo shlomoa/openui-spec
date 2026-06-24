@@ -2,8 +2,6 @@
 
 **Purpose:** Identify the intended consumers of the specification.
 
-**Derived from traversal nodes:** `openui-root`
-
 ## Specification
 
 - Application developers use the specification to discover stable component contracts, supported composition patterns, interaction semantics, and state behavior before building application features.
@@ -104,7 +102,3 @@ A designer or UX owner uses this contract to align validation feedback and label
 ```
 
 Documentation and compliance authors use the canonical section to derive consistent guidance and trace review or acceptance evidence back to the same normative contract used by other audiences.
-
-## JSON Mapping
-
-- `specification.sections[3]` in `/openui.json`

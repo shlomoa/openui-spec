@@ -2,8 +2,6 @@
 
 **Purpose:** Provide concrete reference components abstracted from upstream OpenUI5 evidence.
 
-**Derived from traversal nodes:** `reference-component-button`
-
 ## Specification
 
 - Reference examples translate concrete upstream component evidence into implementation-neutral specification examples.
@@ -232,7 +230,3 @@ Optional evidence records capabilities that generators may use for documentation
 ```
 
 Reference validation expectations connect metadata to observable behavior. They are intentionally framed in implementation-neutral terms so any conforming generator or runtime can test the same public contract.
-
-## JSON Mapping
-
-- `specification.sections[22]` in `/openui.json`

@@ -2,8 +2,6 @@
 
 **Purpose:** Define the abstract building blocks of the framework UI.
 
-**Derived from traversal nodes:** `library-component-catalog`, `library-element-catalog`, `aggregation-model`
-
 ## Specification
 
 - The public UI surface is composed from libraries that publish named controls and elements as reusable building blocks.
@@ -40,13 +38,6 @@
 - Model owned UI structure through aggregations and reserve associations for cross-references that do not transfer ownership, such as labels, descriptions, or semantic links.
 - Describe higher-level constructs such as pages, dialogs, forms, and list rows as compositions of controls and elements connected through named regions rather than through renderer-specific DOM assumptions.
 - When normalizing metadata into `/openui.json`, preserve aggregation names, child types, multiplicity, and semantic roles so tooling can reconstruct the UI concept hierarchy without reverse-engineering runtime code.
-
-## Angular Material generator materialization
-
-- The Angular Material generator maps this section to a dedicated UI Concept Model page whenever `/openui.json` contains section `05-ui-concept-model`.
-- The generated page uses Angular Material cards, chips, lists, and buttons to distinguish controls from elements and to show named regions such as header, content, footer, and actions.
-- The materialized output includes visible examples of action controls, form and dialog composition, owned aggregation relationships, and non-owning associations such as labelled-by or described-by references.
-- The generated-examples application includes runnable UI Concept Model examples with `specPath: "spec/05-ui-concept-model.md"` so documentation, examples, and generator behavior remain traceable to this section.
 
 ## Examples
 
@@ -144,7 +135,3 @@ This hierarchy shows how a form can be modeled as a control that owns element-ba
 ```
 
 This dialog example shows that owned composition stays in aggregations, while semantic references such as accessible labels and descriptions remain non-owning associations.
-
-## JSON Mapping
-
-- `specification.sections[4]` in `/openui.json`

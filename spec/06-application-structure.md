@@ -2,8 +2,6 @@
 
 **Purpose:** Describe the required structure of applications built on the framework.
 
-**Derived from traversal nodes:** `library-catalog-root`, `library-component-catalog`
-
 ## Specification
 
 - Applications compose pages, dialogs, forms, lists, and navigation containers from library-published components rather than from framework-private primitives.
@@ -143,7 +141,3 @@ Pages own their content and may own nested pages, and a split container holds ma
 ```
 
 This resolved tree shows how the shell, navigation, pages, and nested containers combine into a single navigable hierarchy in which every node references a public component from a declared library dependency.
-
-## JSON Mapping
-
-- `specification.sections[5]` in `/openui.json`

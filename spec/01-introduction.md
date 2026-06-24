@@ -1,8 +1,6 @@
 # 01. Introduction
 
-**Purpose:** Define the scope of the OpenUI specification as an implementation-independent contract derived from OpenUI5 public metadata and library declarations.
-
-**Derived from traversal nodes:** `openui-root`, `library-catalog-root`, `metadata-grammar-root`
+**Purpose:** see the canonical purpose and scope in the [OpenUI Specification overview](README.md).
 
 ## Specification
 
@@ -86,7 +84,3 @@ The metadata block expresses the formal contract that later specification sectio
 - `api.json` may project the same `press` event and `enabled` property into a machine-readable format for tooling.
 - Automated tests may verify that disabling the button suppresses activation behavior.
 - Neither artifact may expand the contract beyond what the public runtime metadata already declares.
-
-## JSON Mapping
-
-- `specification.sections[0]` in `/openui.json`

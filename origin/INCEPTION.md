@@ -1,4 +1,25 @@
-# Repository Structure
+# Repo inception
+
+## How to regenerate the spec 
+
+The spec is extracted from [UI5 openui5 github].
+
+## Specification authoring priority
+
+For this kind of spec, the most important sections to author are:
+
+| Priority | Section                 |
+| -------: | ----------------------- |
+|        1 | UI Concept Model        |
+|        2 | Component Model         |
+|        3 | Layout System           |
+|        4 | Interaction Model       |
+|        5 | State Model             |
+|        6 | Accessibility Model     |
+|        7 | Theming / Design Tokens |
+|        8 | Compliance Rules        |
+
+## Repository structure (upstream OpenUI5 mapping)
 
 **Note** It pertains to the original [OpenUI5](https://github.com/UI5/openui5) repository structure
 
@@ -20,7 +41,7 @@ This repository has two goals: (1) documenting a framework specification derived
 | `src/sap.ui.core/src/sap/ui/model/`                        | Contains the binding and model implementations (`Model`, `Binding`, `JSONModel`, OData models, list/property bindings). This area is directly relevant to the local data-binding, state, and form sections.                                                                        |
 | `docs/guidelines.md:1-49`                                  | Captures cross-cutting coding and API design conventions. It is useful background when documenting compliance rules and naming/behavior expectations in the local specification.                                                                                                   |
 
-## Specification starting points
+### Specification starting points - requires review
 
 Surveying the upstream leads above shows that, for the framework specification itself, the best true starting point is the **public control metadata model**. The JSDoc/`api.json` pipeline is still important, but it is best treated as a machine-readable projection of that contract and as a downstream input for tooling and generator work.
 
@@ -44,6 +65,22 @@ The table below summarizes which files should seed the specification effort, why
 
 **Conclusion:** the strongest basis for the framework standard is the combination of **`library.js` for scope discovery** and **control `metadata` interpreted through the core metadata classes for normative structure**. The JSDoc/`api.json` pipeline, designtime files, and tests are important supporting sources for extraction, tooling, and validation, but they should not replace the runtime metadata model as the conceptual starting point.
 
-## Angular generator implication
+### Angular generator implication
 
 No Angular-specific generator or `@angular/core` usage was found in the upstream OpenUI5 repository (`UI5/openui5`). The closest TypeScript-related assets are the `api.json`/JSDoc pipeline and the `.dtsgenrc` declaration-generation configuration. The Angular generator in this repository will therefore need to be designed from those API and typing inputs rather than adapted from an upstream Angular implementation.
+
+
+
+## References
+
+- [Angular Material Toolbar]
+- [View Sets]
+- [Angular Material Schematics]
+- [Dashboard Schematic]
+- [UI5 openui5 github]
+
+[Angular Material Toolbar]: https://material.angular.dev/components/toolbar/
+[View Sets]: https://www.django-rest-framework.org/api-guide/viewsets/
+[Angular Material Schematics]: https://material.angular.dev/guide/schematics
+[Dashboard Schematic]: https://material.angular.dev/guide/schematics#dashboard-schematic
+[UI5 openui5 github]: https://github.com/UI5/openui5

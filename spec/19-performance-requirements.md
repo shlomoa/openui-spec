@@ -2,8 +2,6 @@
 
 **Purpose:** Describe performance-oriented expectations that follow from the public model.
 
-**Derived from traversal nodes:** `library-catalog-root`, `api-json-projection`
-
 ## Specification
 
 - Public library catalogs must allow eager discovery of available components without eagerly loading every implementation detail, so applications can resolve what exists before paying the cost of loading how it works.
@@ -47,13 +45,6 @@
 - Mark assets and behavior as lazily or conditionally loaded in the public contract, and defer their loading until a view needs them, while keeping the declared component identity and types intact.
 - Virtualize components that own large or unbounded aggregations so only the items in the current viewport are materialized, and express the materialization budget as observable public state.
 - Preserve performance-relevant contract members such as the busy-indicator delay, lazy-loading flags, and virtualization budgets in `/openui.json` so generators and tests can reconstruct the performance contract.
-
-### Angular Material generator materialization
-
-- Section routes are emitted with Angular Router `loadComponent`, so the generated application can eagerly discover the Performance Requirements page in navigation while lazily loading the page component only when the route activates.
-- The generated Performance Requirements page exposes a cacheable projection contract with a stable identity such as `sample.library@1.4.0#api-json`, preserving the projection name, source contract, version, immutability flag, and cache-key members in generated TypeScript and template metadata.
-- Large or unbounded aggregations are rendered with Angular CDK `ScrollingModule` and `cdk-virtual-scroll-viewport`; generated metadata keeps the component name, aggregation name, child type, item size, viewport height, and initial materialization budget observable.
-- Generated tests assert lazy route/component output, projection cache key output, and virtualization budget output so this section has concrete Angular Material generator impact rather than prose-only coverage.
 
 ## Examples
 
@@ -154,7 +145,3 @@ export class OrdersPage {
 ```
 
 A generator maps the performance contract onto host-framework primitives: the lazy-loading flag becomes a lazily loaded route so the feature loads only when activated, and the virtualized aggregation becomes a virtual-scroll viewport that materializes only the visible rows while preserving the declared child type.
-
-## JSON Mapping
-
-- `specification.sections[18]` in `/openui.json`
