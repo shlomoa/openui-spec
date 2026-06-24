@@ -13,7 +13,9 @@ NAV_ENTRY_PATTERN = re.compile(r"^\s*-\s+.*?:\s+(.+\.md)$")
 
 class SpecReadmeSpecTest(unittest.TestCase):
     def test_spec_folder_currently_has_single_markdown_entrypoint(self) -> None:
-        markdown_files = sorted(path.relative_to(SPEC_DIR).as_posix() for path in SPEC_DIR.rglob("*.md"))
+        markdown_files = sorted(
+            path.relative_to(SPEC_DIR).as_posix() for path in SPEC_DIR.rglob("*.md")
+        )
 
         self.assertEqual(markdown_files, ["README.md"])
 
