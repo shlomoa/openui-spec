@@ -80,7 +80,7 @@ This plan implements the immediate actions identified after reviewing `spec/READ
 2. Use these table columns:
 
    | Scope | File | Type | Status | Purpose |
-   | --- | --- | --- | --- | --- |
+   | ----- | ---- | ---- | ------ | ------- |
 
 3. Keep a separate “Planned / future scopes” section only if needed. Do not mix planned scopes into the current index unless the files exist.
 4. Add direct links to all created scope files.
@@ -251,7 +251,7 @@ This plan implements the immediate actions identified after reviewing `spec/READ
 4. Suggested columns:
 
    | Field | Required | Applies to | Type | Rule |
-   | --- | --- | --- | --- | --- |
+   | ----- | -------- | ---------- | ---- | ---- |
 
 5. Add explicit validation rules:
    - IDs must be globally unique, or scoped uniqueness must be documented clearly,
