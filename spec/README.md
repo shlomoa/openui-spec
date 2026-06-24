@@ -13,7 +13,7 @@ It serves application developers, designers and UX owners, framework maintainers
   - Controls: 
     - Native: Window resize, scroll bars, font size, color scheme
     - Dialog: A modal or non-modal dialog with a title, content, and actions.
-  - Predefined pages:
+  - Pages:
     - "Dashboard": A predefined page layout for overview metrics and summary content; see the Angular Material [Dashboard Schematic](https://material.angular.dev/guide/schematics#dashboard-schematic) for a reference implementation pattern.
     - "Shell page": A page with no content with routing and navigation.
     - "Empty page": A page with no content and no routing or navigation.
