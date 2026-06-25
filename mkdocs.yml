@@ -16,7 +16,6 @@ nav:
   - Controls:
       - Overview: scopes/Controls/scope.md
       - Native: scopes/Controls/native.scope.md
-      - Dialog: scopes/Controls/dialog.scope.md
   - Behaviors:
       - Overview: scopes/Behaviors/scope.md
       - Drag and drop: scopes/Behaviors/drag_and_drop.scope.md
@@ -43,3 +42,4 @@ nav:
       - Lists: scopes/Widgets/lists.scope.md
       - Date/Time pickers: scopes/Widgets/date_time_pickers.scope.md
       - Stepper: scopes/Widgets/stepper.scope.md
+    - Dialog: scopes/Widgets/dialog.scope.md

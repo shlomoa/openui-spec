@@ -11,3 +11,5 @@ Containers define layout structures that arrange child content in a specific lay
 ## Boundaries
 
 The Containers scope describes content arrangement patterns. It does not require a specific CSS layout mechanism, component library, breakpoint system, or framework container implementation.
+
+Container objects follow the shared [scope folder and attribute category rules](../scope.md).

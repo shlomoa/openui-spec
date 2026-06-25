@@ -14,7 +14,10 @@ More complex widgets include:
 
 - [Date/Time pickers](date_time_pickers.scope.md): Calendar-based date and time selection components.
 - [Stepper](stepper.scope.md): A component that guides users through a multi-step process.
+- [Dialog](dialog.scope.md): A modal or non-modal dialog with a title, content, and actions.
 
 ## Boundaries
 
 The Widgets scope describes reusable user-interface components. It does not require a specific charting library, data-grid implementation, input component, state-management model, or framework widget library.
+
+Widget objects follow the shared [scope folder and attribute category rules](../scope.md).

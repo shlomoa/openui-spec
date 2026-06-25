@@ -25,3 +25,5 @@ shape.
 The Application scope describes what bootstrap concepts and assets exist. It
 does not require a specific workspace format, command-line tool, bundler,
 router, component model, or generated file layout.
+
+Application objects follow the shared [scope folder and attribute category rules](../scope.md).

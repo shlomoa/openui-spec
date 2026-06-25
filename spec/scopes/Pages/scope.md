@@ -15,3 +15,5 @@ Pages are predefined page-level specification scopes.
 
 This scope has child objects, so it uses `scope.md` for the parent scope and
 snake_case `*.scope.md` files for leaf objects.
+
+Page objects follow the shared [scope folder and attribute category rules](../scope.md).

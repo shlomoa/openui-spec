@@ -11,3 +11,5 @@ Behaviors define reusable interaction capabilities that can be applied to pages,
 ## Boundaries
 
 The Behaviors scope describes user-facing interaction capabilities. It does not require a specific event system, gesture library, browser API, animation model, or framework directive.
+
+Behavior objects follow the shared [scope folder and attribute category rules](../scope.md).

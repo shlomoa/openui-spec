@@ -98,16 +98,6 @@
                 "scopeDocument": "scopes/Controls/native.scope.md",
                 "status": "draft"
               }
-            },
-            {
-              "id": "dialog",
-              "type": "Dialog",
-              "attrs": {
-                "title": "Dialog",
-                "purpose": "A modal or non-modal dialog with a title, content, and actions.",
-                "scopeDocument": "scopes/Controls/dialog.scope.md",
-                "status": "draft"
-              }
             }
           ]
         },
@@ -326,6 +316,16 @@
                 "title": "Stepper",
                 "purpose": "A component that guides users through a multi-step process.",
                 "scopeDocument": "scopes/Widgets/stepper.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "dialog",
+              "type": "Dialog",
+              "attrs": {
+                "title": "Dialog",
+                "purpose": "A modal or non-modal dialog with a title, content, and actions.",
+                "scopeDocument": "scopes/Widgets/dialog.scope.md",
                 "status": "draft"
               }
             }
