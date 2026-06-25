@@ -13,7 +13,7 @@ const SCOPE_FEATURES: Record<string, UiFeature[]> = {
   dragAndDrop: ["interaction", "layout"],
   resizable: ["interaction", "layout"],
   collapsible: ["interaction"],
-  pages: ["navigation"],
+  predefinedPages: ["navigation"],
   dashboard: ["navigation", "layout"],
   shellPage: ["application-structure", "navigation"],
   emptyPage: ["navigation"],

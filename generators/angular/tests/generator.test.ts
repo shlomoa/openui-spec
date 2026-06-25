@@ -5,12 +5,34 @@ import path from "node:path";
 import { test } from "node:test";
 
 import { buildUiModel } from "../src/ir/build-ir";
+import type { UiPage } from "../src/ir/ui-model";
 import { run } from "../src/cli/main";
 import type { OpenUiElement } from "../src/spec/openui-spec.types";
 import { SpecValidationError } from "../src/validation/diagnostics";
 import { validateOpenUiSpec } from "../src/validation/validate-spec";
 
 const FIXTURE = path.resolve("tests/fixtures/minimal-openui.json");
+
+function pageById(pages: UiPage[], id: string): UiPage {
+  const page = pages.find((candidate) => candidate.id === id);
+  if (!page) {
+    throw new assert.AssertionError({ message: `Expected page '${id}' to exist.` });
+  }
+  return page;
+}
+
+function firstChild(node: OpenUiElement, message: string): OpenUiElement {
+  const child = node.children?.[0];
+  if (!child) {
+    throw new assert.AssertionError({ message });
+  }
+  return child;
+}
+
+function specValidationMessage(error: unknown): string {
+  assert.ok(error instanceof SpecValidationError);
+  return error.message;
+}
 
 test("builds the UI model from canonical scope-tree OpenUI nodes", async () => {
   const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));
@@ -53,25 +75,24 @@ test("builds the UI model from canonical scope-tree OpenUI nodes", async () => {
     ],
   );
 
-  const application = uiModel.pages.find((page) => page.id === "application");
-  assert.ok(application);
+  const application = pageById(uiModel.pages, "application");
   assert.equal(application.route, "application");
   assert.equal(application.title, "Application");
   assert.equal(application.sourceDocument, "scopes/Application/scope.md");
   assert.deepEqual(application.features, ["application-structure"]);
   assert.match(application.requirements[0], /Routing: Application-level route definitions/);
 
-  const dragAndDrop = uiModel.pages.find((page) => page.id === "dragAndDrop");
-  assert.ok(dragAndDrop);
+  const dragAndDrop = pageById(uiModel.pages, "dragAndDrop");
   assert.equal(dragAndDrop.route, "drag-and-drop");
   assert.deepEqual(dragAndDrop.features, ["interaction", "layout"]);
 
-  const forms = uiModel.pages.find((page) => page.id === "forms");
-  assert.ok(forms);
+  const predefinedPages = pageById(uiModel.pages, "predefinedPages");
+  assert.deepEqual(predefinedPages.features, ["navigation"]);
+
+  const forms = pageById(uiModel.pages, "forms");
   assert.deepEqual(forms.features, ["form", "data-binding"]);
 
-  const dialog = uiModel.pages.find((page) => page.id === "dialog");
-  assert.ok(dialog);
+  const dialog = pageById(uiModel.pages, "dialog");
   assert.equal(dialog.sourceDocument, "scopes/Widgets/dialog.scope.md");
 });
 
@@ -186,8 +207,7 @@ test("generates scope-specific Angular Material details from the canonical tree"
 test("validates canonical root values, attrs, and scoped document uniqueness", async () => {
   const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));
   const scopes = (fixture.children as OpenUiElement[])[0];
-  const firstScope = scopes.children?.[0];
-  assert.ok(firstScope);
+  const firstScope = firstChild(scopes, "Expected at least one scoped child.");
 
   firstScope.attrs = {
     ...firstScope.attrs,
@@ -197,17 +217,15 @@ test("validates canonical root values, attrs, and scoped document uniqueness", a
 
   assert.throws(
     () => validateOpenUiSpec(fixture),
-    (error) => {
-      assert.ok(error instanceof SpecValidationError);
-      assert.match(error.message, /Attribute values must be strings or null/);
+    (error: unknown) => {
+      assert.match(specValidationMessage(error), /Attribute values must be strings or null/);
       return true;
     },
   );
 
   const duplicateFixture = JSON.parse(await readFile(FIXTURE, "utf8"));
   const duplicateScopes = (duplicateFixture.children as OpenUiElement[])[0];
-  const duplicateFirstScope = duplicateScopes.children?.[0];
-  assert.ok(duplicateFirstScope);
+  const duplicateFirstScope = firstChild(duplicateScopes, "Expected at least one scoped child.");
 
   duplicateFirstScope.attrs = {
     ...duplicateFirstScope.attrs,
@@ -216,9 +234,8 @@ test("validates canonical root values, attrs, and scoped document uniqueness", a
 
   assert.throws(
     () => validateOpenUiSpec(duplicateFixture),
-    (error) => {
-      assert.ok(error instanceof SpecValidationError);
-      assert.match(error.message, /Duplicate scope document 'scopes\/Controls\/scope\.md'/);
+    (error: unknown) => {
+      assert.match(specValidationMessage(error), /Duplicate scope document 'scopes\/Controls\/scope\.md'/);
       return true;
     },
   );

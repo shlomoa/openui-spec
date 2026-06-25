@@ -77,7 +77,7 @@ Before changing generator code, read the relevant parts of:
 - Preserve the native OpenUI document shape defined in `spec/README.md`: top-level `version`, `id`, `type`, optional `attrs`, and optional `children`.
 - Do not generate, preserve, or adapt to `FrameworkSpecDocument` or any other transitional shape.
 - Generate root `openui.json` with exact top-level values `id: "root"`, `type: "html"`, and `version: "0.0.1"`.
-- Keep section IDs stable and aligned with specification section names such as `06-application-structure`.
+- Keep scope IDs stable and aligned with the scope tree described in `spec/README.md`, such as `application`, `predefinedPages`, and `dateTimePickers`.
 - Preserve traversal relationships, mapped sections, evidence links, requirements, tags, formal definitions, usage notes, implementation notes, and examples when available.
 - Generate valid JSON only: no comments, trailing commas, Markdown syntax, or non-deterministic ordering.
 - Prefer explicit validation diagnostics for missing required sections, duplicate IDs, invalid references, malformed traversal nodes, and unsupported source shapes.

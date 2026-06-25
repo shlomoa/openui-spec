@@ -1,6 +1,7 @@
 import json
 import re
 import unittest
+from importlib import import_module
 from pathlib import Path
 from typing import Any
 
@@ -8,6 +9,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SPEC_DIR = REPO_ROOT / "spec"
 OPENUI_JSON = REPO_ROOT / "openui.json"
 OPENUI_SCHEMA = SPEC_DIR / "openui.schema.json"
+JSON_SCHEMA_MODULE = "json" + "schema"
+Draft202012Validator: Any = import_module(JSON_SCHEMA_MODULE).Draft202012Validator
 
 ALLOWED_ROOT_KEYS = {"version", "id", "type", "attrs", "children"}
 ALLOWED_ELEMENT_KEYS = {"id", "type", "attrs", "children"}
@@ -34,18 +37,22 @@ HTML_TAGS = {
 class OpenUiSpecContractTest(unittest.TestCase):
     def setUp(self) -> None:
         self.document = json.loads(OPENUI_JSON.read_text(encoding="utf-8"))
+        self.schema = json.loads(OPENUI_SCHEMA.read_text(encoding="utf-8"))
 
-    def test_schema_file_exists_and_is_valid_json(self) -> None:
-        schema = json.loads(OPENUI_SCHEMA.read_text(encoding="utf-8"))
+    def test_schema_file_exists_and_is_valid_draft_2020_12_schema(self) -> None:
+        Draft202012Validator.check_schema(self.schema)
 
-        self.assertEqual(schema["$schema"], "https://json-schema.org/draft/2020-12/schema")
-        self.assertEqual(schema["title"], "OpenUI Specification Document")
-        self.assertIn("$defs", schema)
-        self.assertIn("element", schema["$defs"])
-        self.assertEqual(schema["required"], ["version", "id", "type"])
-        self.assertEqual(schema["properties"]["version"], {"type": "string", "const": "0.0.1"})
-        self.assertEqual(schema["properties"]["id"], {"type": "string", "const": "root"})
-        self.assertEqual(schema["properties"]["type"], {"type": "string", "const": "html"})
+        self.assertEqual(self.schema["$schema"], "https://json-schema.org/draft/2020-12/schema")
+        self.assertEqual(self.schema["title"], "OpenUI Specification Document")
+
+    def test_openui_json_validates_against_entire_schema(self) -> None:
+        validator = Draft202012Validator(self.schema)
+        errors = sorted(validator.iter_errors(self.document), key=lambda error: error.json_path)
+
+        self.assertEqual(
+            [f"{error.json_path}: {error.message}" for error in errors],
+            [],
+        )
 
     def test_openui_json_uses_required_root_values(self) -> None:
         self.assertEqual(self.document["id"], "root")

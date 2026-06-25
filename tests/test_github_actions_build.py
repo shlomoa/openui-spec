@@ -22,8 +22,13 @@ class GitHubActionsBuildWorkflowTest(unittest.TestCase):
             self.workflow,
         )
 
+    def test_build_workflow_installs_python_validation_tools(self):
+        self.assertIn(
+            "python -m pip install pre-commit==4.6.0 -r requirements-test.txt",
+            self.workflow,
+        )
+
     def test_build_workflow_runs_lint_checks(self):
-        self.assertIn("python -m pip install pre-commit==4.6.0", self.workflow)
         self.assertIn("pre-commit run --all-files", self.workflow)
 
     def test_build_workflow_runs_angular_examples_checks(self):

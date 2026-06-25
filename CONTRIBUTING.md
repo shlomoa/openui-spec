@@ -29,7 +29,7 @@ Use a repository-local Python virtual environment for validation tooling.
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python -m pip install pre-commit==4.6.0
+.\.venv\Scripts\python -m pip install pre-commit==4.6.0 -r requirements-test.txt
 .\.venv\Scripts\python -m unittest discover -s tests -p 'test_*.py'
 .\.venv\Scripts\pre-commit run --all-files
 ```

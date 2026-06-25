@@ -83,7 +83,7 @@ generators/angular/
 | `spec/openui-spec.types.ts`         | Defines the native OpenUI `id` / `type` / `attrs` / `children` input contract.                                                          |
 | `spec/openui-sections.ts`           | Extracts scoped OpenUI nodes that carry `attrs.scopeDocument` traceability from the canonical scope tree.                               |
 | `validation/validate-spec.ts`       | Fails early for malformed OpenUI node data and compliance-rule synchronization gaps.                                                    |
-| `ir/normalize-spec.ts`              | Converts native section IDs into routes, summaries, and feature flags.                                                                  |
+| `ir/normalize-spec.ts`              | Converts native scope IDs into routes, summaries, and feature flags.                                                                    |
 | `ir/build-ir.ts`                    | Builds the implementation-independent `UiApplication` model.                                                                            |
 | `targets/angular/angular-model.ts`  | Defines Angular-specific project, page, application-structure, internationalization, and extension model types.                         |
 | `targets/angular/map-to-angular.ts` | Maps `UiApplication` pages and features into an `AngularProjectModel`.                                                                  |
