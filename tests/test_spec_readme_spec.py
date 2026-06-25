@@ -41,6 +41,7 @@ EXPECTED_SPEC_MARKDOWN = [
     "scopes/Widgets/scope.md",
     "scopes/Widgets/stepper.scope.md",
     "scopes/Widgets/tables.scope.md",
+    "scopes/scope.md",
 ]
 
 

@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 
+import { buildUiModel } from "../src/ir/build-ir";
 import { run } from "../src/cli/main";
 import type { OpenUiElement } from "../src/spec/openui-spec.types";
 import { SpecValidationError } from "../src/validation/diagnostics";
@@ -11,7 +12,70 @@ import { validateOpenUiSpec } from "../src/validation/validate-spec";
 
 const FIXTURE = path.resolve("tests/fixtures/minimal-openui.json");
 
-test("generates an Angular Material standalone app from the specification", async () => {
+test("builds the UI model from canonical scope-tree OpenUI nodes", async () => {
+  const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));
+
+  const uiModel = buildUiModel(fixture);
+
+  assert.equal(uiModel.name, "OpenUI");
+  assert.equal(uiModel.version, "0.0.1");
+  assert.deepEqual(
+    uiModel.pages.map((page) => page.id),
+    [
+      "application",
+      "routing",
+      "navigation",
+      "toolBars",
+      "controls",
+      "native",
+      "behaviors",
+      "dragAndDrop",
+      "resizable",
+      "collapsible",
+      "predefinedPages",
+      "dashboard",
+      "shellPage",
+      "emptyPage",
+      "views",
+      "reports",
+      "forms",
+      "containers",
+      "grid",
+      "expandablePanels",
+      "tabs",
+      "widgets",
+      "charts",
+      "tables",
+      "lists",
+      "dateTimePickers",
+      "stepper",
+      "dialog",
+    ],
+  );
+
+  const application = uiModel.pages.find((page) => page.id === "application");
+  assert.ok(application);
+  assert.equal(application.route, "application");
+  assert.equal(application.title, "Application");
+  assert.equal(application.sourceDocument, "scopes/Application/scope.md");
+  assert.deepEqual(application.features, ["application-structure"]);
+  assert.match(application.requirements[0], /Routing: Application-level route definitions/);
+
+  const dragAndDrop = uiModel.pages.find((page) => page.id === "dragAndDrop");
+  assert.ok(dragAndDrop);
+  assert.equal(dragAndDrop.route, "drag-and-drop");
+  assert.deepEqual(dragAndDrop.features, ["interaction", "layout"]);
+
+  const forms = uiModel.pages.find((page) => page.id === "forms");
+  assert.ok(forms);
+  assert.deepEqual(forms.features, ["form", "data-binding"]);
+
+  const dialog = uiModel.pages.find((page) => page.id === "dialog");
+  assert.ok(dialog);
+  assert.equal(dialog.sourceDocument, "scopes/Widgets/dialog.scope.md");
+});
+
+test("generates an Angular Material standalone app from canonical scope-tree OpenUI", async () => {
   const outDir = await mkdtemp(path.join(tmpdir(), "openui-angular-generator-"));
   try {
     await run(["generate", "--spec", FIXTURE, "--out", outDir]);
@@ -31,32 +95,20 @@ test("generates an Angular Material standalone app from the specification", asyn
     assert.match(indexHtml, /<openui-root><\/openui-root>/);
 
     const routes = await readFile(path.join(outDir, "src/app/app.routes.ts"), "utf8");
-    assert.match(routes, /path: 'ui-concept-model'/);
-    assert.match(routes, /path: 'application-structure'/);
-    assert.match(routes, /path: 'layout-system'/);
-    assert.match(routes, /path: 'interaction-model'/);
-    assert.match(routes, /path: 'state-model'/);
-    assert.match(routes, /path: 'data-binding-model'/);
-    assert.match(routes, /path: 'form-model'/);
-    assert.match(routes, /path: 'component-model'/);
-    assert.match(routes, /path: 'navigation-model'/);
-    assert.match(routes, /path: 'feedback-model'/);
-    assert.match(routes, /path: 'internationalization'/);
-    assert.match(routes, /path: 'performance-requirements'/);
-    assert.match(
-      routes,
-      /path: 'performance-requirements',[\s\S]*loadComponent: \(\) => import\('\.\/pages\/performance-requirements\/performance-requirements\.page'\)/,
-    );
-    assert.match(routes, /path: 'test-acceptance-criteria'/);
-    assert.match(routes, /path: 'compliance-rules'/);
-    assert.match(routes, /path: 'security-privacy-ui-rules'/);
-    assert.match(routes, /path: 'reference-examples'/);
+    assert.match(routes, /path: 'application'/);
+    assert.match(routes, /path: 'routing'/);
+    assert.match(routes, /path: 'navigation'/);
+    assert.match(routes, /path: 'tool-bars'/);
+    assert.match(routes, /path: 'drag-and-drop'/);
+    assert.match(routes, /path: 'shell-page'/);
+    assert.match(routes, /path: 'date-time-pickers'/);
+    assert.match(routes, /path: '', pathMatch: 'full', redirectTo: 'application'/);
 
     const appComponent = await readFile(path.join(outDir, "src/app/app.component.ts"), "utf8");
     assert.match(appComponent, /APPLICATION_STRUCTURE/);
     assert.match(appComponent, /MatSidenavModule/);
     assert.match(appComponent, /Root component: {{ applicationStructure\.rootComponent }}/);
-    assert.match(appComponent, /routerLink="\/form-model"/);
+    assert.match(appComponent, /routerLink="\/forms"/);
 
     const applicationStructureModel = await readFile(
       path.join(outDir, "src/app/application-structure.model.ts"),
@@ -66,497 +118,107 @@ test("generates an Angular Material standalone app from the specification", asyn
     assert.match(applicationStructureModel, /openui-root/);
     assert.match(applicationStructureModel, /@angular\/material\/toolbar/);
     assert.match(applicationStructureModel, /MatSidenavContainer/);
-    assert.match(applicationStructureModel, /ApplicationStructurePage/);
-    assert.match(applicationStructureModel, /LayoutSystemPage/);
+    assert.match(applicationStructureModel, /ApplicationPage/);
+    assert.match(applicationStructureModel, /ShellPagePage/);
 
     const i18nService = await readFile(path.join(outDir, "src/app/openui-i18n.service.ts"), "utf8");
-    assert.match(i18nService, /OPENUI_I18N/);
-    assert.match(i18nService, /activeLocale: "ar-EG"/);
-    assert.match(i18nService, /fallbackLocales: \[/);
-    assert.match(i18nService, /"ar-EG"/);
-    assert.match(i18nService, /"ar"/);
-    assert.match(i18nService, /"en"/);
-    assert.match(i18nService, /"order.submit": "إرسال الطلب"/);
-    assert.match(i18nService, /"order.cancel": "Cancel"/);
-    assert.match(i18nService, /message\(key: string\)/);
-    assert.match(i18nService, /textDirection\(\): 'ltr' \| 'rtl'/);
-
-    const mainTs = await readFile(path.join(outDir, "src/main.ts"), "utf8");
-    assert.match(mainTs, /LOCALE_ID/);
-    assert.match(mainTs, /useValue: OPENUI_I18N\.angularLocale/);
+    assert.match(i18nService, /activeLocale: 'en'/);
+    assert.match(i18nService, /messageBundles: \{ en: \{\} \}/);
   } finally {
     await rm(outDir, { recursive: true, force: true });
   }
 });
 
-test("generates section-specific Angular Material details for implemented specs", async () => {
+test("generates scope-specific Angular Material details from the canonical tree", async () => {
   const outDir = await mkdtemp(path.join(tmpdir(), "openui-angular-generator-"));
   try {
     await run(["generate", "--spec", FIXTURE, "--out", outDir]);
 
-    const uiConceptPage = await readFile(
-      path.join(outDir, "src/app/pages/ui-concept-model/ui-concept-model.page.ts"),
+    const applicationTemplate = await readFile(
+      path.join(outDir, "src/app/pages/application/application.page.html"),
       "utf8",
     );
-    assert.match(uiConceptPage, /MatChipsModule/);
-    assert.match(uiConceptPage, /uiConceptBlocks/);
-    assert.match(uiConceptPage, /uiConceptRegions/);
-    assert.match(uiConceptPage, /uiConceptRelationships/);
+    assert.match(applicationTemplate, /aria-label="Application structure materialization"/);
+    assert.match(applicationTemplate, /Routing: Application-level route definitions and route resolution behavior\./);
+    assert.match(applicationTemplate, /mat-sidenav-container owns mat-sidenav navigation/);
 
-    const uiConceptTemplate = await readFile(
-      path.join(outDir, "src/app/pages/ui-concept-model/ui-concept-model.page.html"),
+    const dragAndDropPage = await readFile(
+      path.join(outDir, "src/app/pages/drag-and-drop/drag-and-drop.page.ts"),
       "utf8",
     );
-    assert.match(uiConceptTemplate, /aria-label="UI concept model materialization"/);
-    assert.match(uiConceptTemplate, /Controls and elements/);
-    assert.match(uiConceptTemplate, /Named regions and actions/);
-    assert.match(uiConceptTemplate, /Form control owns FormContainer/);
-    assert.match(uiConceptTemplate, /Dialog control owns content/);
-    assert.match(uiConceptTemplate, /aggregation owns child content/);
-    assert.match(uiConceptTemplate, /association references labelled-by controls/);
+    assert.match(dragAndDropPage, /CdkDrag/);
+    assert.match(dragAndDropPage, /CdkDropList/);
+    assert.match(dragAndDropPage, /eventName: "press"/);
+    assert.match(dragAndDropPage, /handlePressActivation/);
 
-    const applicationStructurePage = await readFile(
-      path.join(outDir, "src/app/pages/application-structure/application-structure.page.ts"),
+    const dragAndDropTemplate = await readFile(
+      path.join(outDir, "src/app/pages/drag-and-drop/drag-and-drop.page.html"),
       "utf8",
     );
-    assert.match(applicationStructurePage, /MatChipsModule/);
-    assert.match(applicationStructurePage, /applicationDependencies/);
-    assert.match(applicationStructurePage, /shellRegions/);
-    assert.match(applicationStructurePage, /pageHierarchy/);
+    assert.match(dragAndDropTemplate, /aria-label="Interaction model materialization"/);
+    assert.match(dragAndDropTemplate, /aria-label="Layout system materialization"/);
+    assert.match(dragAndDropTemplate, /data-openui-event="press"/);
+    assert.match(dragAndDropTemplate, /data-openui-region="columns" data-openui-aggregation="columns" cdkDropList/);
 
-    const applicationStructureTemplate = await readFile(
-      path.join(outDir, "src/app/pages/application-structure/application-structure.page.html"),
-      "utf8",
-    );
-    assert.match(applicationStructureTemplate, /aria-label="Application structure materialization"/);
-    assert.match(applicationStructureTemplate, /Explicit library dependencies/);
-    assert.match(applicationStructureTemplate, /Root component resolution/);
-    assert.match(applicationStructureTemplate, /mat-sidenav-container owns mat-sidenav navigation/);
-    assert.match(applicationStructureTemplate, /router-outlet resolves page hierarchy nodes/);
+    const formsPage = await readFile(path.join(outDir, "src/app/pages/forms/forms.page.ts"), "utf8");
+    assert.match(formsPage, /ReactiveFormsModule/);
+    assert.match(formsPage, /MatFormFieldModule/);
+    assert.match(formsPage, /dataBindingContracts/);
 
-    const layoutPage = await readFile(
-      path.join(outDir, "src/app/pages/layout-system/layout-system.page.ts"),
-      "utf8",
-    );
-    assert.match(layoutPage, /CdkDrag/);
-    assert.match(layoutPage, /CdkDropList/);
-    assert.match(layoutPage, /MatToolbarModule/);
-    assert.match(layoutPage, /layoutRegions/);
-    assert.match(layoutPage, /aggregation: "content"/);
-    assert.match(layoutPage, /multiple: true/);
-    assert.match(layoutPage, /ordered: true/);
-    assert.match(layoutPage, /dragDrop: null/);
-    assert.match(layoutPage, /dragDrop: \{\n\s+draggable: true,\n\s+droppable: true,\n\s+layout: "Horizontal"/);
-    assert.match(layoutPage, /dragDropRegions = this\.layoutRegions\.filter\(\(region\) => region\.dragDrop !== null\)/);
+    const formsTemplate = await readFile(path.join(outDir, "src/app/pages/forms/forms.page.html"), "utf8");
+    assert.match(formsTemplate, /<mat-form-field appearance="outline">/);
+    assert.match(formsTemplate, /aria-label="Data binding model materialization"/);
+    assert.match(formsTemplate, /Read-write data including validation, submission, and dirty state\./);
 
-    const layoutTemplate = await readFile(
-      path.join(outDir, "src/app/pages/layout-system/layout-system.page.html"),
-      "utf8",
-    );
-    assert.match(layoutTemplate, /aria-label="Layout system materialization"/);
-    assert.match(layoutTemplate, /data-openui-region="header" data-openui-aggregation="header"/);
-    assert.match(layoutTemplate, /data-openui-region="content" data-openui-aggregation="content"/);
-    assert.match(layoutTemplate, /@for \(item of orderedContent; track item\)/);
-    assert.match(layoutTemplate, /data-openui-region="columns" data-openui-aggregation="columns" cdkDropList/);
-    assert.match(layoutTemplate, /<mat-card class="layout-board-column" cdkDrag>/);
-    assert.doesNotMatch(layoutTemplate, /data-openui-region="header"[^\n]*cdkDropList/);
-    assert.doesNotMatch(layoutTemplate, /data-openui-region="content"[^\n]*cdkDropList/);
-    assert.doesNotMatch(layoutTemplate, /data-openui-region="footer"[^\n]*cdkDropList/);
+    const dialogPage = await readFile(path.join(outDir, "src/app/pages/dialog/dialog.page.ts"), "utf8");
+    assert.match(dialogPage, /MatChipsModule/);
+    assert.match(dialogPage, /MatSnackBarModule/);
+    assert.match(dialogPage, /showFeedback\(\)/);
 
-    const layoutStyles = await readFile(
-      path.join(outDir, "src/app/pages/layout-system/layout-system.page.scss"),
-      "utf8",
-    );
-    assert.match(layoutStyles, /--layout-gap: var\(--openui-spacing-4\)/);
-    assert.match(layoutStyles, /--layout-control-height: var\(--openui-density-cozy-control-height\)/);
-    assert.match(layoutStyles, /\.layout-density--compact/);
-    assert.match(layoutStyles, /@media \(max-width: 599px\)/);
-    assert.match(layoutStyles, /@media \(min-width: 1024px\)/);
-    assert.match(layoutStyles, /grid-template-areas:\n\s+"header header"\n\s+"content footer"/);
-
-    const globalStyles = await readFile(path.join(outDir, "src/styles.scss"), "utf8");
-    assert.match(globalStyles, /--openui-spacing-4: 1rem/);
-    assert.match(globalStyles, /--openui-density-compact-control-height: 2rem/);
-
-    const formPage = await readFile(
-      path.join(outDir, "src/app/pages/form-model/form-model.page.ts"),
-      "utf8",
-    );
-    assert.match(formPage, /ReactiveFormsModule/);
-    assert.match(formPage, /MatFormFieldModule/);
-    assert.match(formPage, /MatListModule/);
-
-    const formTemplate = await readFile(
-      path.join(outDir, "src/app/pages/form-model/form-model.page.html"),
-      "utf8",
-    );
-    assert.match(formTemplate, /<mat-list aria-label="Key requirements">/);
-    assert.match(formTemplate, /<mat-list-item>/);
-    assert.doesNotMatch(formTemplate, /<ul>|<li>/);
-
-    const feedbackPage = await readFile(
-      path.join(outDir, "src/app/pages/feedback-model/feedback-model.page.ts"),
-      "utf8",
-    );
-    assert.match(feedbackPage, /MatSnackBarModule/);
-    assert.match(feedbackPage, /showFeedback\(\)/);
-
-    const componentPage = await readFile(
-      path.join(outDir, "src/app/pages/component-model/component-model.page.ts"),
-      "utf8",
-    );
-    assert.match(componentPage, /MatChipsModule/);
-    assert.match(componentPage, /componentContract/);
-
-    const componentTemplate = await readFile(
-      path.join(outDir, "src/app/pages/component-model/component-model.page.html"),
-      "utf8",
-    );
-    assert.match(componentTemplate, /aria-label="Component metadata contract"/);
-    assert.match(componentTemplate, /sample\.library\.SearchInput/);
-    assert.match(componentTemplate, /liveChange\(value: string\)/);
-
-    const interactionPage = await readFile(
-      path.join(outDir, "src/app/pages/interaction-model/interaction-model.page.ts"),
-      "utf8",
-    );
-    assert.match(interactionPage, /MatChipsModule/);
-    assert.match(interactionPage, /eventName: "press"/);
-    assert.match(interactionPage, /owner: "sample\.library\.Button"/);
-    assert.match(interactionPage, /kind: "activation"/);
-    assert.match(interactionPage, /angularMaterialBinding: "\(click\)=\\"handlePressActivation\(\)\\""/);
-    assert.match(interactionPage, /enabledPrecondition: "isActionEnabled === true"/);
-    assert.match(interactionPage, /handlerPath: "handlePressActivation"/);
-    assert.match(interactionPage, /sources: \[\n\s+"pointer",\n\s+"touch",\n\s+"keyboard",\n\s+"assistive-technology"/);
-    assert.match(interactionPage, /protected handlePressActivation\(\): void \{\n\s+if \(!this\.isActionEnabled\) \{\n\s+return;\n\s+\}/);
-    assert.doesNotMatch(interactionPage, /KeyboardEvent|PointerEvent|TouchEvent|Renderer2|ElementRef/);
-
-    const interactionTemplate = await readFile(
-      path.join(outDir, "src/app/pages/interaction-model/interaction-model.page.html"),
-      "utf8",
-    );
-    assert.match(interactionTemplate, /aria-label="Interaction model materialization"/);
-    assert.match(interactionTemplate, /data-openui-event="press"/);
-    assert.match(interactionTemplate, /data-openui-event-kind="activation"/);
-    assert.match(interactionTemplate, /data-openui-enabled-required="true"/);
-    assert.match(interactionTemplate, /\[disabled\]="!isActionEnabled"/);
-    assert.match(interactionTemplate, /\(click\)="handlePressActivation\(\)"/);
-    assert.match(interactionTemplate, /pointer, touch, keyboard, and assistive-technology activation/);
-    assert.match(interactionTemplate, /{{ activationEvent\.handlerPath }}/);
-    assert.doesNotMatch(interactionTemplate, /\(keydown\)|\(keyup\)|\(pointerdown\)|\(pointerup\)|\(touchstart\)|\(touchend\)/);
-
-    const stateModelPage = await readFile(
-      path.join(outDir, "src/app/pages/state-model/state-model.page.ts"),
-      "utf8",
-    );
-    assert.match(stateModelPage, /import \{ Component, computed, input \} from '@angular\/core';/);
-    assert.match(stateModelPage, /MatChipsModule/);
-    assert.match(stateModelPage, /MatFormFieldModule/);
-    assert.match(stateModelPage, /MatInputModule/);
-    assert.match(stateModelPage, /readonly text = input<string>\("Submit order"\);/);
-    assert.match(stateModelPage, /readonly enabled = input<boolean>\(true\);/);
-    assert.match(stateModelPage, /readonly visible = input<boolean>\(true\);/);
-    assert.match(stateModelPage, /readonly type = input<"Default" \| "Emphasized" \| "Reject" \| "Accept">\("Default"\);/);
-    assert.match(stateModelPage, /readonly valueState = input<"None" \| "Error" \| "Warning" \| "Success" \| "Information">\("None"\);/);
-    assert.match(stateModelPage, /effectiveValueState = computed</);
-    assert.match(stateModelPage, /publicStateInputs/);
-    assert.match(stateModelPage, /property: "text"/);
-    assert.match(stateModelPage, /metadataType: "string"/);
-    assert.match(stateModelPage, /angularAccessor: "input<string>\(\\"Submit order\\"\)"/);
-    assert.match(stateModelPage, /property: "enabled"/);
-    assert.match(stateModelPage, /metadataType: "boolean"/);
-    assert.match(stateModelPage, /defaultValue: "true"/);
-    assert.match(stateModelPage, /hiddenStateExclusion/);
-    assert.match(stateModelPage, /visibility: hidden metadata is not emitted as an Angular input/);
-    assert.match(stateModelPage, /derivedStateContract/);
-    assert.match(stateModelPage, /stateName: "effectiveValueState"/);
-    assert.match(stateModelPage, /declaredType: "sample\.library\.ValueState"/);
-    assert.match(stateModelPage, /compatibleValues: \[/);
-    assert.doesNotMatch(stateModelPage, /_lastMeasuredWidth/);
-
-    const stateModelTemplate = await readFile(
-      path.join(outDir, "src/app/pages/state-model/state-model.page.html"),
-      "utf8",
-    );
-    assert.match(stateModelTemplate, /aria-label="State model materialization"/);
-    assert.match(stateModelTemplate, /aria-label="Public state input defaults"/);
-    assert.match(stateModelTemplate, /\[attr\.data-openui-property\]="state\.property"/);
-    assert.match(stateModelTemplate, /\[attr\.data-openui-type\]="state\.metadataType"/);
-    assert.match(stateModelTemplate, /\[attr\.data-openui-default-value\]="state\.defaultValue"/);
-    assert.match(stateModelTemplate, /data-openui-visibility="public"/);
-    assert.match(stateModelTemplate, /data-openui-hidden-state-excluded="true"/);
-    assert.match(stateModelTemplate, /Hidden state exclusion/);
-    assert.match(stateModelTemplate, /data-openui-derived-state="effectiveValueState" data-openui-type="sample\.library\.ValueState"/);
-    assert.match(stateModelTemplate, /Derived state remains type-compatible/);
-    assert.match(stateModelTemplate, /data-openui-default-value="&quot;&quot;"/);
-    assert.doesNotMatch(stateModelTemplate, /_lastMeasuredWidth/);
-
-    const dataBindingPage = await readFile(
-      path.join(outDir, "src/app/pages/data-binding-model/data-binding-model.page.ts"),
-      "utf8",
-    );
-    assert.match(dataBindingPage, /MatFormFieldModule/);
-    assert.match(dataBindingPage, /MatInputModule/);
-    assert.match(dataBindingPage, /dataBindingContracts/);
-    assert.match(dataBindingPage, /target: "value"/);
-    assert.match(dataBindingPage, /kind: "property"/);
-    assert.match(dataBindingPage, /model: "orders"/);
-    assert.match(dataBindingPage, /path: "\/customer\/name"/);
-    assert.match(dataBindingPage, /type: "string"/);
-    assert.match(dataBindingPage, /angularBinding: "\[value\]=\\"ordersModel\.customer\.name\\""/);
-    assert.match(dataBindingPage, /target: "items"/);
-    assert.match(dataBindingPage, /kind: "aggregation"/);
-    assert.match(dataBindingPage, /path: "\/orders"/);
-    assert.match(dataBindingPage, /childType: "sample\.library\.ListItem"/);
-    assert.match(dataBindingPage, /multiplicity: "0\.\.n"/);
-    assert.match(dataBindingPage, /orders: ReadonlyArray<\{ id: string; title: string; quantity: number \}>/);
-    assert.match(dataBindingPage, /typePreservingStatusUpdate: Promise<\{/);
-    assert.match(dataBindingPage, /state: "None" \| "Success" \| "Warning" \| "Error"/);
-    assert.doesNotMatch(dataBindingPage, /internalMeasurement|rendererCache/);
-
-    const dataBindingTemplate = await readFile(
-      path.join(outDir, "src/app/pages/data-binding-model/data-binding-model.page.html"),
-      "utf8",
-    );
-    assert.match(dataBindingTemplate, /aria-label="Data binding model materialization"/);
-    assert.match(dataBindingTemplate, /data-openui-binding-target="value"/);
-    assert.match(dataBindingTemplate, /data-openui-binding-kind="property"/);
-    assert.match(dataBindingTemplate, /data-openui-binding-model="orders"/);
-    assert.match(dataBindingTemplate, /data-openui-binding-path="\/customer\/name"/);
-    assert.match(dataBindingTemplate, /\[value\]="ordersModel\.customer\.name"/);
-    assert.match(dataBindingTemplate, /data-openui-binding-target="items"/);
-    assert.match(dataBindingTemplate, /data-openui-binding-kind="aggregation"/);
-    assert.match(dataBindingTemplate, /data-openui-binding-path="\/orders"/);
-    assert.match(dataBindingTemplate, /data-openui-binding-child-type="sample\.library\.ListItem"/);
-    assert.match(dataBindingTemplate, /data-openui-binding-multiplicity="0\.\.n"/);
-    assert.match(dataBindingTemplate, /@for \(order of ordersModel\.orders; track order\.id\)/);
-    assert.match(dataBindingTemplate, /data-openui-async-update="type-preserving"/);
-    assert.doesNotMatch(dataBindingTemplate, /data-openui-binding-target="internalMeasurement"/);
-    assert.doesNotMatch(dataBindingTemplate, /data-openui-binding-target="rendererCache"/);
-
-    const securityPage = await readFile(
-      path.join(outDir, "src/app/pages/security-privacy-ui-rules/security-privacy-ui-rules.page.ts"),
-      "utf8",
-    );
-    assert.match(securityPage, /MatChipsModule/);
-    assert.match(securityPage, /MatDialogModule/);
-    assert.match(securityPage, /MatFormFieldModule/);
-    assert.match(securityPage, /MatInputModule/);
-    assert.match(securityPage, /securityContracts/);
-    assert.match(securityPage, /allowedUrlSchemes: \[\n\s+"http:",\n\s+"https:",\n\s+"mailto:"/);
-    assert.match(securityPage, /validateAllowedUrl\(value: string\): string \| null/);
-    assert.match(securityPage, /displayedSensitiveValue\(\): string/);
-    assert.match(securityPage, /return this\.revealSensitiveValue \? this\.sensitiveValue : this\.sensitiveValueMask/);
-    assert.match(securityPage, /protected readonly canDeleteOrder = false/);
-    assert.match(securityPage, /protected requestDeleteConfirmation\(\): void \{\n\s+if \(!this\.canDeleteOrder\) \{\n\s+return;/);
-    assert.match(securityPage, /\.open\(this\.deleteConfirmationDialog\(\), \{\n\s+ariaDescribedBy: "security-privacy-ui-rules-delete-confirmation-description"/);
-    assert.match(securityPage, /role: "alertdialog"/);
-    assert.match(securityPage, /\.afterClosed\(\)/);
-    assert.match(securityPage, /protected completeDeleteAfterConfirmation\(confirmed: boolean\): void \{\n\s+if \(!confirmed \|\| !this\.canDeleteOrder\) \{\n\s+return;/);
-    assert.doesNotMatch(securityPage, /bypassSecurityTrust|DomSanitizer|Renderer2|ElementRef/);
-
-    const securityTemplate = await readFile(
-      path.join(outDir, "src/app/pages/security-privacy-ui-rules/security-privacy-ui-rules.page.html"),
-      "utf8",
-    );
-    assert.match(securityTemplate, /aria-label="Security and privacy UI materialization"/);
-    assert.match(securityTemplate, /{{ untrustedDisplayText }}/);
-    assert.match(securityTemplate, /\[href\]="validatedSupportHref"/);
-    assert.match(securityTemplate, /data-openui-url-allow-list="http,https,mailto"/);
-    assert.match(securityTemplate, /data-openui-url-rejected="true"/);
-    assert.match(securityTemplate, /data-openui-masking-default="masked"/);
-    assert.match(securityTemplate, /\[value\]="displayedSensitiveValue"/);
-    assert.match(securityTemplate, /\(click\)="toggleSensitiveReveal\(\)"/);
-    assert.match(securityTemplate, /@if \(canDeleteOrder\)/);
-    assert.match(securityTemplate, /aria-haspopup="dialog"/);
-    assert.match(securityTemplate, /data-openui-confirmation-required="true"/);
-    assert.match(securityTemplate, /data-openui-permission-gate="canDeleteOrder"/);
-    assert.match(securityTemplate, /mat-dialog-title/);
-    assert.match(securityTemplate, /mat-dialog-content/);
-    assert.match(securityTemplate, /\[mat-dialog-close\]="true"/);
-    assert.match(securityTemplate, /data-openui-permission-gate="omitted"/);
-    assert.doesNotMatch(securityTemplate, /\[innerHTML\]|\[outerHTML\]|srcdoc|\[style\]|javascript:/);
-
-    const accessibilityTemplate = await readFile(
-      path.join(outDir, "src/app/pages/accessibility-model/accessibility-model.page.html"),
-      "utf8",
-    );
-    assert.match(accessibilityTemplate, /aria-labelledby="accessibility-model-title"/);
-    assert.match(accessibilityTemplate, /keyboard-visible focus states/);
-
-    const themeStyles = await readFile(
-      path.join(outDir, "src/app/pages/theming-design-tokens/theming-design-tokens.page.scss"),
-      "utf8",
-    );
-    assert.match(themeStyles, /--openui-section-accent: var\(--openui-theme-primary\)/);
-
-    const internationalizationPage = await readFile(
-      path.join(outDir, "src/app/pages/internationalization/internationalization.page.ts"),
-      "utf8",
-    );
-    assert.match(internationalizationPage, /OpenUiI18nService/);
-    assert.match(internationalizationPage, /OPENUI_I18N/);
-    assert.match(internationalizationPage, /CurrencyPipe/);
-    assert.match(internationalizationPage, /DatePipe/);
-    assert.match(internationalizationPage, /DecimalPipe/);
-    assert.match(internationalizationPage, /orderTotal = 1234\.5/);
-
-    const internationalizationTemplate = await readFile(
-      path.join(outDir, "src/app/pages/internationalization/internationalization.page.html"),
-      "utf8",
-    );
-    assert.match(internationalizationTemplate, /aria-label="Internationalization materialization"/);
-    assert.match(internationalizationTemplate, /data-openui-message-key="order.submit"/);
-    assert.match(internationalizationTemplate, /i18n\.message\('order.submit'\)/);
-    assert.match(internationalizationTemplate, /i18n\.message\('order.cancel'\)/);
-    assert.match(internationalizationTemplate, /i18n\.fallbackChain\(\)\.join/);
-    assert.match(internationalizationTemplate, /\[attr\.dir\]="i18n\.textDirection\(\)"/);
-    assert.match(internationalizationTemplate, /\[attr\.lang\]="i18n\.activeLocale"/);
-    assert.match(internationalizationTemplate, /number:'1\.1-1':i18n\.angularLocale/);
-    assert.match(internationalizationTemplate, /currency:'USD':'symbol':'1\.2-2':i18n\.angularLocale/);
-    assert.match(internationalizationTemplate, /date:'mediumDate':undefined:i18n\.angularLocale/);
-
-    const internationalizationStyles = await readFile(
-      path.join(outDir, "src/app/pages/internationalization/internationalization.page.scss"),
-      "utf8",
-    );
-    assert.match(internationalizationStyles, /\.internationalization-example\[dir='rtl'\]/);
-
-    const performancePage = await readFile(
-      path.join(outDir, "src/app/pages/performance-requirements/performance-requirements.page.ts"),
-      "utf8",
-    );
-    assert.match(performancePage, /ScrollingModule/);
-    assert.match(performancePage, /MatChipsModule/);
-    assert.match(performancePage, /lazyDetailContract/);
-    assert.match(performancePage, /detailLoading: "loadComponent"/);
-    assert.match(performancePage, /routePath: "performance-requirements"/);
-    assert.match(performancePage, /projectionCache/);
-    assert.match(performancePage, /identity: "sample\.library@1\.4\.0#api-json"/);
-    assert.match(performancePage, /immutable: true/);
-    assert.match(performancePage, /virtualizationBudget/);
-    assert.match(performancePage, /materialPrimitive: "cdk-virtual-scroll-viewport"/);
-    assert.match(performancePage, /initialMaterializationBudget: 20/);
-    assert.match(performancePage, /protected readonly virtualRows: Array<\{ id: string; customer: string; total: string \}>/);
-    assert.match(performancePage, /trackVirtualOrder\(_index: number, order: \{ id: string \}\): string/);
-
-    const performanceTemplate = await readFile(
-      path.join(outDir, "src/app/pages/performance-requirements/performance-requirements.page.html"),
-      "utf8",
-    );
-    assert.match(performanceTemplate, /aria-label="Performance requirements materialization"/);
-    assert.match(performanceTemplate, /aria-label="Lazy detail loading"/);
-    assert.match(performanceTemplate, /\[attr\.data-openui-lazy-route\]="lazyDetailContract\.routePath"/);
-    assert.match(performanceTemplate, /\[attr\.data-openui-detail-loading\]="lazyDetailContract\.detailLoading"/);
-    assert.match(performanceTemplate, /loadComponent/);
-    assert.match(performanceTemplate, /\[attr\.data-openui-projection-cache-key\]="projectionCache\.identity"/);
-    assert.match(performanceTemplate, /\[attr\.data-openui-projection-immutable\]="projectionCache\.immutable"/);
-    assert.match(performanceTemplate, /<cdk-virtual-scroll-viewport/);
-    assert.match(performanceTemplate, /\*cdkVirtualFor="let row of virtualRows; trackBy: trackVirtualOrder"/);
-    assert.match(performanceTemplate, /\[attr\.data-openui-materialization-budget\]="virtualizationBudget\.initialMaterializationBudget"/);
-    assert.match(performanceTemplate, /\[attr\.data-openui-child-type\]="virtualizationBudget\.childType"/);
-
-    const performanceStyles = await readFile(
-      path.join(outDir, "src/app/pages/performance-requirements/performance-requirements.page.scss"),
-      "utf8",
-    );
-    assert.match(performanceStyles, /\.performance-viewport/);
-    assert.match(performanceStyles, /height: 240px/);
-
-    const compliancePage = await readFile(
-      path.join(outDir, "src/app/pages/compliance-rules/compliance-rules.page.ts"),
-      "utf8",
-    );
-    assert.match(compliancePage, /MatChipsModule/);
-    assert.match(compliancePage, /complianceContracts/);
-    assert.match(compliancePage, /catalogRoot: "library-catalog-root"/);
-    assert.match(compliancePage, /component: "sample\.library\.Button"/);
-    assert.match(compliancePage, /"properties",\n\s+"aggregations",\n\s+"associations",\n\s+"events",\n\s+"defaults",\n\s+"visibility",\n\s+"capability metadata"/);
-    assert.match(compliancePage, /area: "generated examples"/);
-    assert.match(compliancePage, /area: "security\/privacy"/);
-    assert.match(compliancePage, /area: "extension"/);
-    assert.match(compliancePage, /missing catalog entry identifies section and traversal node/);
-
-    const complianceTemplate = await readFile(
-      path.join(outDir, "src/app/pages/compliance-rules/compliance-rules.page.html"),
-      "utf8",
-    );
-    assert.match(complianceTemplate, /aria-label="Compliance rules materialization"/);
-    assert.match(complianceTemplate, /data-openui-compliance-section="21-compliance-rules"/);
-    assert.match(complianceTemplate, /Catalog discoverability and public component resolution/);
-    assert.match(complianceTemplate, /\[attr\.data-openui-catalog-root\]="complianceContracts\.catalogDiscoverability\.catalogRoot"/);
-    assert.match(complianceTemplate, /aria-label="Metadata completeness gate"/);
-    assert.match(complianceTemplate, /\[attr\.data-openui-component\]="complianceContracts\.metadataCompleteness\.component"/);
-    assert.match(complianceTemplate, /aria-label="Synchronized cross-cutting evidence"/);
-    assert.match(complianceTemplate, /\[attr\.data-openui-evidence-area\]="evidence\.area"/);
-    assert.match(complianceTemplate, /aria-label="Generator compliance diagnostics"/);
-
-    const complianceStyles = await readFile(
-      path.join(outDir, "src/app/pages/compliance-rules/compliance-rules.page.scss"),
-      "utf8",
-    );
-    assert.match(complianceStyles, /\.compliance-rules-example/);
-    assert.match(complianceStyles, /\.compliance-metadata dt/);
-
-    const acceptancePage = await readFile(
-      path.join(outDir, "src/app/pages/test-acceptance-criteria/test-acceptance-criteria.page.ts"),
-      "utf8",
-    );
-    assert.match(acceptancePage, /MatChipsModule/);
-
-    const acceptanceTemplate = await readFile(
-      path.join(outDir, "src/app/pages/test-acceptance-criteria/test-acceptance-criteria.page.html"),
-      "utf8",
-    );
-    assert.match(acceptanceTemplate, /aria-label="Acceptance criteria workflow"/);
-    assert.match(acceptanceTemplate, /Traceability matrix/);
-    assert.match(acceptanceTemplate, /Generated acceptance checks/);
-
-    const referencePage = await readFile(
-      path.join(outDir, "src/app/pages/reference-examples/reference-examples.page.ts"),
-      "utf8",
-    );
-    assert.match(referencePage, /MatChipsModule/);
-    assert.match(referencePage, /referenceProperties/);
-
-    const referenceTemplate = await readFile(
-      path.join(outDir, "src/app/pages/reference-examples/reference-examples.page.html"),
-      "utf8",
-    );
-    assert.match(referenceTemplate, /Reference action component example/);
-    assert.match(referenceTemplate, /press activation event/);
-    assert.match(referenceTemplate, /aria-describedby="reference-examples-description"/);
+    const controlsTemplate = await readFile(path.join(outDir, "src/app/pages/controls/controls.page.html"), "utf8");
+    assert.match(controlsTemplate, /aria-label="Component metadata contract"/);
+    assert.match(controlsTemplate, /Native: Browser and framework-provided native controls/);
   } finally {
     await rm(outDir, { recursive: true, force: true });
   }
 });
 
-test("validates compliance catalog, metadata, and evidence materialization", async () => {
+test("validates canonical root values, attrs, and scoped document uniqueness", async () => {
   const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));
-  const rootChildren = fixture.children as OpenUiElement[];
-  const complianceSection = rootChildren.find(
-    (section) => section.type === "SpecSection" && section.attrs?.sectionId === "21-compliance-rules",
-  );
-  assert.ok(complianceSection);
+  const scopes = (fixture.children as OpenUiElement[])[0];
+  const firstScope = scopes.children?.[0];
+  assert.ok(firstScope);
 
-  const traversalEvidence = rootChildren.find((child) => child.id === "complianceTraversalEvidence");
-  assert.ok(traversalEvidence);
-  traversalEvidence.children = traversalEvidence.children?.filter(
-    (node) => node.attrs?.nodeId !== "library-component-catalog",
-  );
-  complianceSection.children = complianceSection.children?.filter(
-    (child) =>
-      !(child.type === "Tag" && child.attrs?.name === "metadata-completeness") &&
-      !(child.type === "Example" && child.attrs?.title?.includes("Cross-cutting evidence")),
-  );
+  firstScope.attrs = {
+    ...firstScope.attrs,
+    scopeDocument: "scopes/Controls/scope.md",
+    invalidAttr: 42 as never,
+  };
 
   assert.throws(
     () => validateOpenUiSpec(fixture),
     (error) => {
       assert.ok(error instanceof SpecValidationError);
-      assert.match(error.message, /missing required tag 'metadata-completeness'/);
-      assert.match(error.message, /missing synchronized evidence example 'Cross-cutting evidence'/);
-      assert.match(error.message, /missing traversal node 'library-component-catalog'/);
+      assert.match(error.message, /Attribute values must be strings or null/);
+      return true;
+    },
+  );
+
+  const duplicateFixture = JSON.parse(await readFile(FIXTURE, "utf8"));
+  const duplicateScopes = (duplicateFixture.children as OpenUiElement[])[0];
+  const duplicateFirstScope = duplicateScopes.children?.[0];
+  assert.ok(duplicateFirstScope);
+
+  duplicateFirstScope.attrs = {
+    ...duplicateFirstScope.attrs,
+    scopeDocument: "scopes/Controls/scope.md",
+  };
+
+  assert.throws(
+    () => validateOpenUiSpec(duplicateFixture),
+    (error) => {
+      assert.ok(error instanceof SpecValidationError);
+      assert.match(error.message, /Duplicate scope document 'scopes\/Controls\/scope\.md'/);
       return true;
     },
   );

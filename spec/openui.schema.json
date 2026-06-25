@@ -4,43 +4,19 @@
   "title": "OpenUI Specification Document",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "type"],
+  "required": ["version", "id", "type"],
   "properties": {
     "version": {
       "type": "string",
-      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+      "const": "0.0.1"
     },
     "id": {
       "type": "string",
-      "pattern": "^[a-z][A-Za-z0-9]*$"
+      "const": "root"
     },
     "type": {
       "type": "string",
-      "anyOf": [
-        {
-          "enum": [
-            "html",
-            "body",
-            "main",
-            "section",
-            "article",
-            "header",
-            "footer",
-            "nav",
-            "div",
-            "span",
-            "input",
-            "button",
-            "table"
-          ]
-        },
-        {
-          "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
-        },
-        {
-          "pattern": "^[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?$"
-        }
-      ]
+      "const": "html"
     },
     "attrs": {
       "type": "object",

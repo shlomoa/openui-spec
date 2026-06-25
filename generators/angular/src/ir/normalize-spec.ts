@@ -1,37 +1,50 @@
-import type { OpenUiSpecSection } from "../spec/openui-spec.types";
+import type { OpenUiScopeNode } from "../spec/openui-spec.types";
 import type { UiFeature } from "./ui-model";
 
-const SECTION_FEATURES: Record<string, UiFeature> = {
-  "05-ui-concept-model": "ui-concept",
-  "06-application-structure": "application-structure",
-  "07-layout-system": "layout",
-  "08-component-model": "component",
-  "09-interaction-model": "interaction",
-  "10-state-model": "state-model",
-  "11-data-binding-model": "data-binding",
-  "12-form-model": "form",
-  "13-navigation-model": "navigation",
-  "14-feedback-model": "feedback",
-  "15-accessibility-model": "accessibility",
-  "16-theming-design-tokens": "theme",
-  "17-internationalization": "internationalization",
-  "18-security-privacy-ui-rules": "security",
-  "19-performance-requirements": "performance",
-  "20-extension-model": "extension",
-  "21-compliance-rules": "compliance",
-  "22-test-acceptance-criteria": "acceptance",
-  "23-reference-examples": "reference",
+const SCOPE_FEATURES: Record<string, UiFeature[]> = {
+  application: ["application-structure"],
+  routing: ["navigation"],
+  navigation: ["navigation"],
+  toolBars: ["navigation"],
+  controls: ["component"],
+  native: ["component"],
+  dialog: ["component", "feedback"],
+  behaviors: ["interaction"],
+  dragAndDrop: ["interaction", "layout"],
+  resizable: ["interaction", "layout"],
+  collapsible: ["interaction"],
+  pages: ["navigation"],
+  dashboard: ["navigation", "layout"],
+  shellPage: ["application-structure", "navigation"],
+  emptyPage: ["navigation"],
+  views: ["data-binding"],
+  reports: ["data-binding"],
+  forms: ["form", "data-binding"],
+  containers: ["layout"],
+  grid: ["layout"],
+  expandablePanels: ["layout"],
+  tabs: ["layout"],
+  widgets: ["component"],
+  charts: ["component", "data-binding"],
+  tables: ["component", "data-binding"],
+  lists: ["component", "data-binding"],
+  dateTimePickers: ["component", "form"],
+  stepper: ["component", "navigation"],
 };
 
 export function normalizeRoute(sectionId: string): string {
-  return sectionId.replace(/^\d+-/, "").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "");
+  return sectionId
+    .replace(/^\d+-/, "")
+    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+    .replace(/[^a-z0-9]+/gi, "-")
+    .replace(/^-|-$/g, "")
+    .toLowerCase();
 }
 
-export function normalizeSummary(section: OpenUiSpecSection): string {
-  return section.purpose ?? section.requirements?.[0] ?? `Generated page for ${section.title}.`;
+export function normalizeSummary(scope: OpenUiScopeNode): string {
+  return scope.purpose ?? scope.requirements?.[0] ?? `Generated page for ${scope.title}.`;
 }
 
-export function normalizeFeatures(section: OpenUiSpecSection): UiFeature[] {
-  const feature = SECTION_FEATURES[section.id];
-  return feature ? [feature] : [];
+export function normalizeFeatures(scope: OpenUiScopeNode): UiFeature[] {
+  return SCOPE_FEATURES[scope.id] ?? [];
 }

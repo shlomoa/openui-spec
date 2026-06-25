@@ -42,6 +42,10 @@ class OpenUiSpecContractTest(unittest.TestCase):
         self.assertEqual(schema["title"], "OpenUI Specification Document")
         self.assertIn("$defs", schema)
         self.assertIn("element", schema["$defs"])
+        self.assertEqual(schema["required"], ["version", "id", "type"])
+        self.assertEqual(schema["properties"]["version"], {"type": "string", "const": "0.0.1"})
+        self.assertEqual(schema["properties"]["id"], {"type": "string", "const": "root"})
+        self.assertEqual(schema["properties"]["type"], {"type": "string", "const": "html"})
 
     def test_openui_json_uses_required_root_values(self) -> None:
         self.assertEqual(self.document["id"], "root")

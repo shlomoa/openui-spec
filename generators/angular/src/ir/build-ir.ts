@@ -1,23 +1,23 @@
-import { extractOpenUiSections } from "../spec/openui-sections";
+import { extractOpenUiScopeNodes } from "../spec/openui-sections";
 import type { OpenUiDocument } from "../spec/openui-spec.types";
 import { normalizeFeatures, normalizeRoute, normalizeSummary } from "./normalize-spec";
 import type { UiApplication } from "./ui-model";
 
 export function buildUiModel(document: OpenUiDocument): UiApplication {
-  const sections = extractOpenUiSections(document);
+  const scopes = extractOpenUiScopeNodes(document);
   return {
     name: typeof document.attrs?.name === "string" ? document.attrs.name : "OpenUI Specification",
     version: document.version,
-    pages: sections.map((section) => ({
-      id: section.id,
-      route: normalizeRoute(section.id),
-      title: section.title,
-      summary: normalizeSummary(section),
-      sourceDocument: section.document,
-      requirements: section.requirements ?? [],
-      tags: section.tags,
-      formalDefinitions: section.formalDefinitions,
-      features: normalizeFeatures(section),
+    pages: scopes.map((scope) => ({
+      id: scope.id,
+      route: normalizeRoute(scope.id),
+      title: scope.title,
+      summary: normalizeSummary(scope),
+      sourceDocument: scope.document,
+      requirements: scope.requirements ?? [],
+      tags: scope.tags,
+      formalDefinitions: scope.formalDefinitions,
+      features: normalizeFeatures(scope),
     })),
     themeTokens: [
       { name: "--openui-theme-primary", value: "#0a6ed1" },

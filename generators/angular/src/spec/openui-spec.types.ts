@@ -13,8 +13,9 @@ export interface OpenUiDocument extends OpenUiElement {
   version: "0.0.1";
 }
 
-export interface OpenUiSpecSection {
+export interface OpenUiScopeNode {
   id: string;
+  type: string;
   title: string;
   purpose?: string;
   document?: string;

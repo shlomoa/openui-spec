@@ -6,6 +6,7 @@ theme:
 docs_dir: spec
 nav:
   - Overview: README.md
+  - Scopes: scopes/scope.md
   - Application:
       - Overview: scopes/Application/scope.md
       - Routing: scopes/Application/routing.scope.md
@@ -42,4 +43,4 @@ nav:
       - Lists: scopes/Widgets/lists.scope.md
       - Date/Time pickers: scopes/Widgets/date_time_pickers.scope.md
       - Stepper: scopes/Widgets/stepper.scope.md
-    - Dialog: scopes/Widgets/dialog.scope.md
+      - Dialog: scopes/Widgets/dialog.scope.md

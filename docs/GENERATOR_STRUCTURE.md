@@ -81,7 +81,7 @@ generators/angular/
 | `cli/main.ts`                       | Parses `generate` and `validate` commands, loads native OpenUI JSON, validates it, and orchestrates generation.                         |
 | `spec/load-spec.ts`                 | Reads JSON and parses it into the native OpenUI document type.                                                                          |
 | `spec/openui-spec.types.ts`         | Defines the native OpenUI `id` / `type` / `attrs` / `children` input contract.                                                          |
-| `spec/openui-sections.ts`           | Extracts generator-specific section records when present; this is not the canonical OpenUI source-of-truth shape.                       |
+| `spec/openui-sections.ts`           | Extracts scoped OpenUI nodes that carry `attrs.scopeDocument` traceability from the canonical scope tree.                               |
 | `validation/validate-spec.ts`       | Fails early for malformed OpenUI node data and compliance-rule synchronization gaps.                                                    |
 | `ir/normalize-spec.ts`              | Converts native section IDs into routes, summaries, and feature flags.                                                                  |
 | `ir/build-ir.ts`                    | Builds the implementation-independent `UiApplication` model.                                                                            |
@@ -129,42 +129,26 @@ version: "0.0.1"
 ```
 
 Scope coverage is represented by native OpenUI nodes whose `attrs.scopeDocument`
-values point to Markdown files under `spec/scopes/`.
+values point to Markdown files under `spec/`, including the scope documents under
+`spec/scopes/`. Generator fixtures must use this same scope-tree shape.
 
-Older generator fixtures may still include generator-specific section nodes such
-as `SpecSection`. Those records are implementation details of the Angular
-generator and must not be treated as the canonical OpenUI specification shape.
+## Generator-specific scope-to-feature mapping
 
-## Generator-specific section-to-feature mapping
-
-For generator-specific section records, `ir/normalize-spec.ts` maps section IDs
-to `UiFeature` values. `map-to-angular.ts` then adds Angular imports, component
+For scoped OpenUI records, `ir/normalize-spec.ts` maps selected scope IDs to
+`UiFeature` values. `map-to-angular.ts` then adds Angular imports, component
 state, template fragments, styles, and optional project-level models.
 
 This mapping documents the Angular generator implementation only. It must not be
 used to redefine or constrain the canonical `openui.json` contract.
 
-| Section ID                     | Feature                 | Current Angular materialization                                                                                                      |
-| ------------------------------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `05-ui-concept-model`          | `ui-concept`            | Control/element concept chips, regions, actions, aggregation/association examples.                                                   |
-| `06-application-structure`     | `application-structure` | Shell metadata, `APPLICATION_STRUCTURE`, `mat-toolbar`, `mat-sidenav-container`, navigation, `router-outlet`.                        |
-| `07-layout-system`             | `layout`                | Named aggregation-backed regions, responsive grid styles, density tokens, declared CDK drag/drop only for drag/drop-enabled regions. |
-| `08-component-model`           | `component`             | Public metadata contract examples for properties, aggregations, associations, and events.                                            |
-| `09-interaction-model`         | `interaction`           | Semantic `press` activation mapped to Material button `(click)` without private DOM event plumbing.                                  |
-| `10-state-model`               | `state-model`           | Angular signal inputs, default values, hidden-state exclusion, derived state compatibility.                                          |
-| `11-data-binding-model`        | `data-binding`          | Property and aggregation binding contracts, typed async update example, hidden/non-bindable filtering.                               |
-| `12-form-model`                | `form`                  | Reactive Forms import, `FormControl`, Material form field and input.                                                                 |
-| `13-navigation-model`          | `navigation`            | Router link navigation example.                                                                                                      |
-| `14-feedback-model`            | `feedback`              | Material snackbar action.                                                                                                            |
-| `15-accessibility-model`       | `accessibility`         | Semantic labels and focus-state note in generated page markup.                                                                       |
-| `16-theming-design-tokens`     | `theme`                 | CSS custom properties and section accent style.                                                                                      |
-| `17-internationalization`      | `internationalization`  | `OpenUiI18nService`, locale fallback, `LOCALE_ID`, direction binding, date/number/currency pipes.                                    |
-| `18-security-privacy-ui-rules` | `security`              | Safe text rendering, URL scheme allow-listing, masked values, permission and confirmation gates.                                     |
-| `19-performance-requirements`  | `performance`           | Lazy route detail, cacheable projection identity, CDK virtual scroll budget.                                                         |
-| `20-extension-model`           | `extension`             | Recognized by normalization; emitter support exists, but `map-to-angular.ts` does not yet populate `extensionModel`.                 |
-| `21-compliance-rules`          | `compliance`            | Compliance tags, metadata completeness, cross-cutting evidence, diagnostics.                                                         |
-| `22-test-acceptance-criteria`  | `acceptance`            | Acceptance traceability and evidence checklist.                                                                                      |
-| `23-reference-examples`        | `reference`             | Reference action component example and public property chips.                                                                        |
+| Scope ID                         | Feature                 | Current Angular materialization                                                                                                      |
+| -------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `application`, `shellPage`       | `application-structure` | Shell metadata, `APPLICATION_STRUCTURE`, `mat-toolbar`, `mat-sidenav-container`, navigation, `router-outlet`.                        |
+| `routing`, `navigation`, `pages` | `navigation`            | Router link navigation example.                                                                                                      |
+| `containers`, `grid`, `tabs`     | `layout`                | Named aggregation-backed regions, responsive grid styles, density tokens, declared CDK drag/drop only for drag/drop-enabled regions. |
+| `controls`, `widgets`            | `component`             | Public metadata contract examples for properties, aggregations, associations, and events.                                            |
+| `behaviors`, `dragAndDrop`       | `interaction`           | Semantic `press` activation mapped to Material button `(click)` without private DOM event plumbing.                                  |
+| `views`, `reports`, `forms`      | `data-binding` / `form` | Property and aggregation binding contracts, typed async update example, and Reactive Forms materialization where applicable.         |
 
 Future work should extend the native OpenUI extraction and IR mapping directly;
 do not add adapter or compatibility shapes.

@@ -27,7 +27,7 @@ It serves application developers, designers and UX owners, framework maintainers
   - "Dashboard": A predefined page layout for overview metrics and summary content; see the Angular Material [Dashboard Schematic](https://material.angular.dev/guide/schematics#dashboard-schematic) for a reference implementation pattern.
   - "Shell page": A page with no content with routing and navigation.
   - "Empty page": A page with no content and no routing or navigation.
-- Views: A user facing view of bussiness objects.
+- Views: A user facing view of business objects.
   - Reports: read-only data including filtering, sorting, grouping, and pagination.
   - Forms: read-write data including validation, submission, and dirty state.
 - Containers: A layout container that arranges its children in a specific layout.
@@ -35,18 +35,18 @@ It serves application developers, designers and UX owners, framework maintainers
   - Expandable panels: A collapsible panel that can be expanded or collapsed to show or hide content.
   - Tabs: A tabbed interface that allows users to switch between different views or content.
 - Widgets: A reusable component that can be used in multiple pages or views.
-  Common widgets include:
-  - Charts: A visual representation of data, including bar charts, line charts, pie charts, etc.
-  - Tables: A tabular representation of data, including sorting, filtering, and pagination.
-  - Lists: A list of items, including sorting, filtering, and pagination.
-    More complex widgets may include:
-  - Date/Time pickers: A calendar-based date and time selection component.
-  - Stepper: A component that guides users through a multi-step process.
-  - Dialog: A modal or non-modal dialog with a title, content, and actions.
+  - Common widgets include:
+    - Charts: A visual representation of data, including bar charts, line charts, pie charts, etc.
+    - Tables: A tabular representation of data, including sorting, filtering, and pagination.
+    - Lists: A list of items, including sorting, filtering, and pagination.
+  - More complex widgets may include:
+    - Date/Time pickers: A calendar-based date and time selection component.
+    - Stepper: A component that guides users through a multi-step process.
+    - Dialog: A modal or non-modal dialog with a title, content, and actions.
 
 ### Scope folder
 
-Structured hierarchicaly, named in Pascal Case for folders and snake case for files of the object name, each 'level' is a scope and is structured in one of two ways:
+Structured hierarchically, named in Pascal Case for folders and snake case for files of the object name, each 'level' is a scope and is structured in one of two ways:
 
 - If it has child objects:
   - scope.md
@@ -75,7 +75,7 @@ the "id" field is a unique identifier for each element, and it must be a camelCa
 Types are names that are either:
 
 - following the kebab-case naming convention, e.g. "my-component".
-- PascalCase virtual/spec names, e.g. "MyComponent". PascalCase names do not require a concrete tag-name mapping in this document.
+- PascalCase virtual/spec names, e.g. "MyComponent". PascalCase names do not require a concrete tag name in this document.
 
 Types are categorized to these groups:
 

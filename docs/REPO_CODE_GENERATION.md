@@ -34,7 +34,7 @@ generators/angular/
 └─ tests/
 ```
 
-The implemented generator consumes the native OpenUI fixture shape in
+The implemented generator consumes the native OpenUI scope-tree shape in
 `generators/angular/tests/fixtures/minimal-openui.json`, validates it, builds a
 UI IR, maps it to an Angular project model, and emits a standalone Angular
 Material application skeleton.
@@ -105,12 +105,12 @@ Use these implemented modules as the starting architecture:
 The smallest useful golden-source-to-generator slice is:
 
 1. Populate `openui.json` from the current scope model.
-2. Add `spec/openui.schema.json` for the native `id` / `type` / `attrs` /
-   `children` shape.
+2. Keep `spec/openui.schema.json` synchronized with the native `version` / `id` /
+   `type` / `attrs` / `children` shape.
 3. Add Python validation that checks `openui.json`, schema rules, scope document
    paths, and MkDocs navigation.
 4. Map at least one native scope/page node directly into `UiApplication`.
-5. Generate one Angular Material page/component triplet from that adapted model:
+5. Generate one Angular Material page/component triplet from that IR model:
    - `.page.ts` for behavior and typed state,
    - `.page.html` for Material-backed template structure,
    - `.page.scss` for token-backed styling.
