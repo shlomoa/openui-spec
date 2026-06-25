@@ -5,8 +5,9 @@ import path from "node:path";
 import { test } from "node:test";
 
 import { run } from "../src/cli/main";
+import type { OpenUiElement } from "../src/spec/openui-spec.types";
 import { SpecValidationError } from "../src/validation/diagnostics";
-import { validateFrameworkSpec } from "../src/validation/validate-spec";
+import { validateOpenUiSpec } from "../src/validation/validate-spec";
 
 const FIXTURE = path.resolve("tests/fixtures/minimal-openui.json");
 
@@ -532,24 +533,25 @@ test("generates section-specific Angular Material details for implemented specs"
 
 test("validates compliance catalog, metadata, and evidence materialization", async () => {
   const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));
-  const sections = fixture.specification.sections as Array<{
-    id: string;
-    tags?: Array<{ name?: string; meaning?: string }>;
-    examples?: Array<{ title?: string; description?: string }>;
-  }>;
-  const complianceSection = sections.find((section) => section.id === "21-compliance-rules");
+  const rootChildren = fixture.children as OpenUiElement[];
+  const complianceSection = rootChildren.find(
+    (section) => section.type === "SpecSection" && section.attrs?.sectionId === "21-compliance-rules",
+  );
   assert.ok(complianceSection);
 
-  fixture.specification.traversal.nodes = fixture.specification.traversal.nodes.filter(
-    (node: { id?: string }) => node.id !== "library-component-catalog",
+  const traversalEvidence = rootChildren.find((child) => child.id === "complianceTraversalEvidence");
+  assert.ok(traversalEvidence);
+  traversalEvidence.children = traversalEvidence.children?.filter(
+    (node) => node.attrs?.nodeId !== "library-component-catalog",
   );
-  complianceSection.tags = complianceSection.tags?.filter((tag) => tag.name !== "metadata-completeness");
-  complianceSection.examples = complianceSection.examples?.filter(
-    (example) => !example.title?.includes("Cross-cutting evidence"),
+  complianceSection.children = complianceSection.children?.filter(
+    (child) =>
+      !(child.type === "Tag" && child.attrs?.name === "metadata-completeness") &&
+      !(child.type === "Example" && child.attrs?.title?.includes("Cross-cutting evidence")),
   );
 
   assert.throws(
-    () => validateFrameworkSpec(fixture),
+    () => validateOpenUiSpec(fixture),
     (error) => {
       assert.ok(error instanceof SpecValidationError);
       assert.match(error.message, /missing required tag 'metadata-completeness'/);

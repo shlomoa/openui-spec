@@ -6,3 +6,8 @@ theme:
 docs_dir: spec
 nav:
   - Overview: README.md
+  - Pages:
+      - Overview: scopes/Pages/scope.md
+      - Dashboard: scopes/Pages/dashboard.scope.md
+      - Shell page: scopes/Pages/shell_page.scope.md
+      - Empty page: scopes/Pages/empty_page.scope.md

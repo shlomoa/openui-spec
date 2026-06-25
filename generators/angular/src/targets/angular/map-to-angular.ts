@@ -5,6 +5,10 @@ import type {
   AngularPageModel,
   AngularProjectModel,
 } from "./angular-model";
+import { routedPageImportPath } from "./angular-paths";
+import { escapeHtml } from "./emit-utils";
+import { AngularImportCollector } from "./import-collector";
+import { toIndentedTypeScriptLiteral as toTypeScriptLiteral, toTypeScriptStringArray } from "./typescript-literals";
 
 export function mapToAngularProject(uiModel: UiApplication): AngularProjectModel {
   const pages = uiModel.pages.map(mapPage);
@@ -26,13 +30,12 @@ export function mapToAngularProject(uiModel: UiApplication): AngularProjectModel
 function mapPage(page: UiPage): AngularPageModel {
   const className = `${toPascalCase(page.route)}Page`;
   const imports = new Set(["CommonModule", "MatCardModule", "MatButtonModule", "MatListModule"]);
-  const componentImports = new Set([
-    "import { CommonModule } from '@angular/common';",
-    "import { Component } from '@angular/core';",
-    "import { MatButtonModule } from '@angular/material/button';",
-    "import { MatCardModule } from '@angular/material/card';",
-    "import { MatListModule } from '@angular/material/list';",
-  ]);
+  const componentImports = new AngularImportCollector();
+  componentImports.add("@angular/common", "CommonModule");
+  componentImports.add("@angular/core", "Component");
+  componentImports.add("@angular/material/button", "MatButtonModule");
+  componentImports.add("@angular/material/card", "MatCardModule");
+  componentImports.add("@angular/material/list", "MatListModule");
   const constructorParameters: string[] = [];
   const members: string[] = [];
   const contractItems = buildComponentContractItems(page);
@@ -41,40 +44,40 @@ function mapPage(page: UiPage): AngularPageModel {
     imports.add("ReactiveFormsModule");
     imports.add("MatFormFieldModule");
     imports.add("MatInputModule");
-    componentImports.add("import { ReactiveFormsModule, FormControl } from '@angular/forms';");
-    componentImports.add("import { MatFormFieldModule } from '@angular/material/form-field';");
-    componentImports.add("import { MatInputModule } from '@angular/material/input';");
+    componentImports.add("@angular/forms", "FormControl", "ReactiveFormsModule");
+    componentImports.add("@angular/material/form-field", "MatFormFieldModule");
+    componentImports.add("@angular/material/input", "MatInputModule");
     members.push("readonly sampleControl = new FormControl('');");
   }
 
   if (page.features.includes("navigation")) {
     imports.add("RouterLink");
     imports.add("MatListModule");
-    componentImports.add("import { RouterLink } from '@angular/router';");
-    componentImports.add("import { MatListModule } from '@angular/material/list';");
+    componentImports.add("@angular/router", "RouterLink");
+    componentImports.add("@angular/material/list", "MatListModule");
   }
 
   if (page.features.includes("feedback")) {
     imports.add("MatSnackBarModule");
-    componentImports.add("import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';");
+    componentImports.add("@angular/material/snack-bar", "MatSnackBar", "MatSnackBarModule");
     constructorParameters.push("private readonly snackBar: MatSnackBar");
     members.push("showFeedback(): void { this.snackBar.open('OpenUI feedback action', 'Dismiss', { duration: 3000 }); }");
   }
 
   if (page.features.includes("acceptance")) {
     imports.add("MatChipsModule");
-    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    componentImports.add("@angular/material/chips", "MatChipsModule");
   }
 
   if (page.features.includes("component")) {
     imports.add("MatChipsModule");
-    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    componentImports.add("@angular/material/chips", "MatChipsModule");
     members.push(`protected readonly componentContract = ${toTypeScriptStringArray(contractItems)};`);
   }
 
   if (page.features.includes("interaction")) {
     imports.add("MatChipsModule");
-    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    componentImports.add("@angular/material/chips", "MatChipsModule");
     members.push(`protected readonly activationEvent = ${toTypeScriptLiteral(buildActivationEventContract())} as const;`);
     members.push("protected isActionEnabled = true;");
     members.push("protected pressActivations = 0;");
@@ -91,11 +94,10 @@ function mapPage(page: UiPage): AngularPageModel {
     imports.add("MatChipsModule");
     imports.add("MatFormFieldModule");
     imports.add("MatInputModule");
-    componentImports.delete("import { Component } from '@angular/core';");
-    componentImports.add("import { Component, computed, input } from '@angular/core';");
-    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
-    componentImports.add("import { MatFormFieldModule } from '@angular/material/form-field';");
-    componentImports.add("import { MatInputModule } from '@angular/material/input';");
+    componentImports.add("@angular/core", "computed", "input");
+    componentImports.add("@angular/material/chips", "MatChipsModule");
+    componentImports.add("@angular/material/form-field", "MatFormFieldModule");
+    componentImports.add("@angular/material/input", "MatInputModule");
     members.push(`readonly text = input<string>("Submit order");`);
     members.push("readonly enabled = input<boolean>(true);");
     members.push("readonly visible = input<boolean>(true);");
@@ -117,9 +119,9 @@ function mapPage(page: UiPage): AngularPageModel {
     imports.add("MatChipsModule");
     imports.add("MatFormFieldModule");
     imports.add("MatInputModule");
-    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
-    componentImports.add("import { MatFormFieldModule } from '@angular/material/form-field';");
-    componentImports.add("import { MatInputModule } from '@angular/material/input';");
+    componentImports.add("@angular/material/chips", "MatChipsModule");
+    componentImports.add("@angular/material/form-field", "MatFormFieldModule");
+    componentImports.add("@angular/material/input", "MatInputModule");
     members.push(`protected readonly dataBindingContracts = ${toTypeScriptLiteral(buildDataBindingContracts())} as const;`);
     members.push(`protected readonly ordersModel: {
     customer: { name: string };
@@ -142,12 +144,11 @@ function mapPage(page: UiPage): AngularPageModel {
     imports.add("MatDialogModule");
     imports.add("MatFormFieldModule");
     imports.add("MatInputModule");
-    componentImports.delete("import { Component } from '@angular/core';");
-    componentImports.add("import { Component, TemplateRef, inject, viewChild } from '@angular/core';");
-    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
-    componentImports.add("import { MatDialog, MatDialogModule } from '@angular/material/dialog';");
-    componentImports.add("import { MatFormFieldModule } from '@angular/material/form-field';");
-    componentImports.add("import { MatInputModule } from '@angular/material/input';");
+    componentImports.add("@angular/core", "TemplateRef", "inject", "viewChild");
+    componentImports.add("@angular/material/chips", "MatChipsModule");
+    componentImports.add("@angular/material/dialog", "MatDialog", "MatDialogModule");
+    componentImports.add("@angular/material/form-field", "MatFormFieldModule");
+    componentImports.add("@angular/material/input", "MatInputModule");
     members.push("private readonly dialog = inject(MatDialog);");
     members.push(
       `private readonly deleteConfirmationDialog = viewChild.required<TemplateRef<unknown>>("deleteConfirmationDialog");`,
@@ -210,8 +211,8 @@ function mapPage(page: UiPage): AngularPageModel {
   if (page.features.includes("performance")) {
     imports.add("ScrollingModule");
     imports.add("MatChipsModule");
-    componentImports.add("import { ScrollingModule } from '@angular/cdk/scrolling';");
-    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    componentImports.add("@angular/cdk/scrolling", "ScrollingModule");
+    componentImports.add("@angular/material/chips", "MatChipsModule");
     members.push(`protected readonly lazyDetailContract = ${toTypeScriptLiteral(buildLazyDetailContract(page))} as const;`);
     members.push(`protected readonly projectionCache = ${toTypeScriptLiteral(buildProjectionCacheContract())} as const;`);
     members.push(`protected readonly virtualizationBudget = ${toTypeScriptLiteral(buildVirtualizationBudgetContract())} as const;`);
@@ -231,9 +232,9 @@ function mapPage(page: UiPage): AngularPageModel {
     imports.add("CdkDropList");
     imports.add("MatChipsModule");
     imports.add("MatToolbarModule");
-    componentImports.add("import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';");
-    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
-    componentImports.add("import { MatToolbarModule } from '@angular/material/toolbar';");
+    componentImports.add("@angular/cdk/drag-drop", "CdkDrag", "CdkDropList");
+    componentImports.add("@angular/material/chips", "MatChipsModule");
+    componentImports.add("@angular/material/toolbar", "MatToolbarModule");
     members.push(`protected readonly layoutRegions = ${toTypeScriptLiteral(buildLayoutRegions())};`);
     members.push("protected readonly orderedContent = ['Summary card', 'Metrics card', 'Activity card'];");
     members.push("protected readonly layoutBoardColumns = ['Backlog', 'In progress', 'Done'];");
@@ -244,7 +245,7 @@ function mapPage(page: UiPage): AngularPageModel {
 
   if (page.features.includes("application-structure")) {
     imports.add("MatChipsModule");
-    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    componentImports.add("@angular/material/chips", "MatChipsModule");
     members.push(
       "protected readonly applicationDependencies = ['@angular/material/toolbar: shell header', '@angular/material/sidenav: navigation container', '@angular/router: routed content outlet'];",
     );
@@ -256,7 +257,7 @@ function mapPage(page: UiPage): AngularPageModel {
 
   if (page.features.includes("ui-concept")) {
     imports.add("MatChipsModule");
-    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    componentImports.add("@angular/material/chips", "MatChipsModule");
     members.push(
       "protected readonly uiConceptBlocks = ['Control: sample.library.Page', 'Control: sample.library.Button', 'Element: sample.library.FormElement'];",
     );
@@ -268,8 +269,14 @@ function mapPage(page: UiPage): AngularPageModel {
 
   if (page.features.includes("reference")) {
     imports.add("MatChipsModule");
-    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
+    componentImports.add("@angular/material/chips", "MatChipsModule");
     members.push("protected readonly referenceProperties = ['text', 'type', 'enabled', 'icon', 'ariaHasPopup'];");
+  }
+
+  if (page.features.includes("compliance")) {
+    imports.add("MatChipsModule");
+    componentImports.add("@angular/material/chips", "MatChipsModule");
+    members.push(`protected readonly complianceContracts = ${toTypeScriptLiteral(buildComplianceContracts())} as const;`);
   }
 
   if (page.features.includes("internationalization")) {
@@ -277,10 +284,10 @@ function mapPage(page: UiPage): AngularPageModel {
     imports.add("DatePipe");
     imports.add("DecimalPipe");
     imports.add("MatChipsModule");
-    componentImports.add("import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';");
-    componentImports.add("import { inject } from '@angular/core';");
-    componentImports.add("import { MatChipsModule } from '@angular/material/chips';");
-    componentImports.add("import { OPENUI_I18N, OpenUiI18nService } from '../../openui-i18n.service';");
+    componentImports.add("@angular/common", "CurrencyPipe", "DatePipe", "DecimalPipe");
+    componentImports.add("@angular/core", "inject");
+    componentImports.add("@angular/material/chips", "MatChipsModule");
+    componentImports.add("../../openui-i18n.service", "OPENUI_I18N", "OpenUiI18nService");
     members.push("protected readonly i18n = inject(OpenUiI18nService);");
     members.push("protected readonly i18nConfig = OPENUI_I18N;");
     members.push("protected readonly orderTotal = 1234.5;");
@@ -297,7 +304,7 @@ function mapPage(page: UiPage): AngularPageModel {
     summary: page.summary,
     requirements: page.requirements,
     imports: Array.from(imports),
-    componentImports: Array.from(componentImports).sort(),
+    componentImports: componentImports.toImportStatements(),
     constructorParameters,
     members,
     template: buildTemplate(page),
@@ -341,6 +348,7 @@ function buildTemplate(page: UiPage): string {
   const internationalization = page.features.includes("internationalization")
     ? buildInternationalizationTemplate(page)
     : "";
+  const compliance = page.features.includes("compliance") ? buildComplianceTemplate() : "";
   const reference = page.features.includes("reference")
     ? `\n    <div class="reference-example" aria-label="Reference action component example">
       <button mat-raised-button color="primary" type="button" aria-describedby="${page.route}-description">
@@ -364,7 +372,7 @@ function buildTemplate(page: UiPage): string {
       <mat-card-subtitle>${escapeHtml(page.id)}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>${escapeHtml(page.summary)}</p>${requirements}${form}${navigation}${feedback}${acceptance}${applicationStructure}${component}${interaction}${dataBinding}${security}${layout}${stateModel}${performance}${uiConcept}${internationalization}${reference}${accessibility}
+      <p>${escapeHtml(page.summary)}</p>${requirements}${form}${navigation}${feedback}${acceptance}${applicationStructure}${component}${interaction}${dataBinding}${security}${layout}${stateModel}${performance}${uiConcept}${internationalization}${compliance}${reference}${accessibility}
     </mat-card-content>
   </mat-card>
 </section>
@@ -390,6 +398,7 @@ function buildStyles(page: UiPage): string {
   const internationalizationStyles = page.features.includes("internationalization")
     ? buildInternationalizationStyles()
     : "";
+  const complianceStyles = page.features.includes("compliance") ? buildComplianceStyles() : "";
   return `.spec-page {
   display: block;
   padding: 1rem;
@@ -406,7 +415,7 @@ mat-card {
   justify-items: start;
   margin-top: 1rem;
 }
-${themeStyles}${acceptanceStyles}${applicationStructureStyles}${componentStyles}${interactionStyles}${dataBindingStyles}${securityStyles}${layoutStyles}${stateModelStyles}${performanceStyles}${uiConceptStyles}${internationalizationStyles}`;
+${themeStyles}${acceptanceStyles}${applicationStructureStyles}${componentStyles}${interactionStyles}${dataBindingStyles}${securityStyles}${layoutStyles}${stateModelStyles}${performanceStyles}${uiConceptStyles}${internationalizationStyles}${complianceStyles}`;
 }
 
 function buildSecurityContracts(): {
@@ -551,7 +560,7 @@ function buildLazyDetailContract(page: UiPage): {
   return {
     catalog: "sample.library",
     routePath: page.route,
-    angularRoute: `loadComponent: () => import('./pages/${page.route}/${page.route}.page').then((m) => m.${toPascalCase(page.route)}Page)`,
+    angularRoute: `loadComponent: () => import('${routedPageImportPath(page.route, `${page.route}.page`)}').then((m) => m.${toPascalCase(page.route)}Page)`,
     detailLoading: "loadComponent",
     eagerDiscovery: true,
     lazy: true,
@@ -807,6 +816,139 @@ function buildInternationalizationStyles(): string {
 
 .internationalization-example[dir='rtl'] {
   text-align: right;
+}
+`;
+}
+
+function buildComplianceContracts(): {
+  catalogDiscoverability: {
+    catalogRoot: string;
+    component: string;
+    traversalNodes: string[];
+  };
+  metadataCompleteness: {
+    component: string;
+    requiredMembers: string[];
+  };
+  synchronizedEvidence: Array<{ area: string; source: string; generatedArtifact: string }>;
+  diagnostics: string[];
+} {
+  return {
+    catalogDiscoverability: {
+      catalogRoot: "library-catalog-root",
+      component: "sample.library.Button",
+      traversalNodes: ["openui-root", "library-catalog-root", "library-component-catalog"],
+    },
+    metadataCompleteness: {
+      component: "sample.library.Button",
+      requiredMembers: [
+        "properties",
+        "aggregations",
+        "associations",
+        "events",
+        "defaults",
+        "visibility",
+        "capability metadata",
+      ],
+    },
+    synchronizedEvidence: [
+      { area: "documentation", source: "spec/21-compliance-rules.md", generatedArtifact: "compliance page" },
+      { area: "generated examples", source: "generators/angular/tests/fixtures/minimal-openui.json", generatedArtifact: "Angular Material page" },
+      { area: "security/privacy", source: "18-security-privacy-ui-rules", generatedArtifact: "safe rendering guards" },
+      { area: "extension", source: "20-extension-model", generatedArtifact: "extension compatibility gates" },
+    ],
+    diagnostics: [
+      "missing catalog entry identifies section and traversal node",
+      "missing public metadata identifies component and member group",
+      "stale evidence identifies documentation, generated example, and projection artifact",
+    ],
+  };
+}
+
+function buildComplianceTemplate(): string {
+  return `
+    <section class="compliance-rules-example" aria-label="Compliance rules materialization" data-openui-compliance-section="21-compliance-rules">
+      <h2>Catalog discoverability and public component resolution</h2>
+      <section class="compliance-catalog" aria-label="Catalog discoverability" [attr.data-openui-catalog-root]="complianceContracts.catalogDiscoverability.catalogRoot">
+        <p>
+          The generated compliance gate starts from the public catalog root and requires each component to resolve through traversal evidence before examples are emitted.
+        </p>
+        <mat-chip-set aria-label="Catalog traversal nodes">
+          @for (node of complianceContracts.catalogDiscoverability.traversalNodes; track node) {
+            <mat-chip>{{ node }}</mat-chip>
+          }
+        </mat-chip-set>
+      </section>
+      <section class="compliance-metadata" aria-label="Metadata completeness gate" [attr.data-openui-component]="complianceContracts.metadataCompleteness.component">
+        <h3>Metadata completeness gate</h3>
+        <dl>
+          <div>
+            <dt>Component</dt>
+            <dd>{{ complianceContracts.metadataCompleteness.component }}</dd>
+          </div>
+          <div>
+            <dt>Required members</dt>
+            <dd>{{ complianceContracts.metadataCompleteness.requiredMembers.join(', ') }}</dd>
+          </div>
+        </dl>
+      </section>
+      <section class="compliance-evidence" aria-label="Synchronized cross-cutting evidence">
+        <h3>Synchronized evidence</h3>
+        @for (evidence of complianceContracts.synchronizedEvidence; track evidence.area) {
+          <mat-card [attr.data-openui-evidence-area]="evidence.area">
+            <mat-card-title>{{ evidence.area }}</mat-card-title>
+            <mat-card-content>{{ evidence.source }} → {{ evidence.generatedArtifact }}</mat-card-content>
+          </mat-card>
+        }
+      </section>
+      <section class="compliance-diagnostics" aria-label="Generator compliance diagnostics">
+        <h3>Generator compliance diagnostics</h3>
+        <mat-list>
+          @for (diagnostic of complianceContracts.diagnostics; track diagnostic) {
+            <mat-list-item>{{ diagnostic }}</mat-list-item>
+          }
+        </mat-list>
+      </section>
+    </section>`;
+}
+
+function buildComplianceStyles(): string {
+  return `
+.compliance-rules-example {
+  border: 1px solid var(--openui-theme-primary);
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.compliance-rules-example h2,
+.compliance-rules-example h3,
+.compliance-rules-example p,
+.compliance-rules-example dl {
+  margin: 0;
+}
+
+.compliance-catalog,
+.compliance-diagnostics,
+.compliance-evidence,
+.compliance-metadata {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.compliance-evidence {
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.compliance-metadata dt {
+  color: var(--openui-theme-primary);
+  font-weight: 600;
+}
+
+.compliance-metadata dd {
+  margin: 0;
 }
 `;
 }
@@ -1071,7 +1213,7 @@ function buildPublicStateInputs(): Array<{
       angularType: '"Default" | "Emphasized" | "Reject" | "Accept"',
       defaultValue: '"Default"',
       angularAccessor: 'input<"Default" | "Emphasized" | "Reject" | "Accept">("Default")',
-      materialBinding: "Material button variant adapter",
+      materialBinding: "Material button variant mapping",
     },
   ];
 }
@@ -1705,23 +1847,4 @@ function toPascalCase(value: string): string {
 
 function toPackageName(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "openui-app";
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
-function toTypeScriptStringArray(values: string[]): string {
-  return `[${values.map((value) => JSON.stringify(value)).join(", ")}]`;
-}
-
-function toTypeScriptLiteral(value: unknown): string {
-  return JSON.stringify(value, null, 2)
-    .replace(/"([^"\\]*(?:\\.[^"\\]*)*)":/g, "$1:")
-    .replace(/\n/g, "\n  ");
 }

@@ -1,10 +1,27 @@
 # Repository Code Generation Starting Point
 
-This document records the practical starting point for repository code generation. It complements `docs/GENERATOR_STRUCTURE.md`, which describes the implemented Angular generator package in `generators/angular/`.
+This document describes how repository-local OpenUI specification artifacts
+become generator input and, eventually, generated Angular files. It complements
+`docs/GENERATOR_STRUCTURE.md`, which documents the implemented Angular generator
+package in `generators/angular/`.
+
+For the immediate spec-population sequence, see
+`../initial_spec_population.md`.
+
+## Golden source
+
+The golden source for code generation is the repository OpenUI specification:
+
+- `spec/README.md` for the prose entry point and JSON format rules,
+- Markdown files under `spec/` for synchronized prose scopes, and
+- root `openui.json` for the canonical machine-readable specification.
+
+Generator fixtures, generated examples, and Angular target models are derived
+artifacts. They must not redefine the specification.
 
 ## Current status
 
-The repository now has a working initial Angular Material generator:
+The repository has an initial Angular Material generator:
 
 ```text
 generators/angular/
@@ -17,140 +34,157 @@ generators/angular/
 └─ tests/
 ```
 
-The implemented generator currently consumes an OpenUI specification document shaped like `generators/angular/tests/fixtures/minimal-openui.json`, validates it, builds a UI IR, maps it to an Angular project model, and emits a standalone Angular Material application skeleton.
+The implemented generator consumes the native OpenUI fixture shape in
+`generators/angular/tests/fixtures/minimal-openui.json`, validates it, builds a
+UI IR, maps it to an Angular project model, and emits a standalone Angular
+Material application skeleton.
 
-This means the next code-generation work should extend the existing pipeline rather than create a second generator path.
+The next code-generation work should extend this pipeline directly from native
+OpenUI nodes into the existing IR. Transitional input definitions and adapters
+are not allowed.
 
-## Parser input scope
+## Native OpenUI input scope
 
-This document does **not** define the final source of truth for the OpenUI specification. It only identifies a practical, implementable parser input for the next code-generation slice.
+The native parser should read:
 
-Based on the generator-related entries already recorded in `docs/README.md`, the first parser should target schema-backed JSON artifacts such as `api.json` and `api-index.json`. Those artifacts are useful because they are structured, deterministic, and easier to validate than raw framework source files.
+1. root `openui.json`,
+2. `spec/README.md`, and
+3. the Markdown scope documents under `spec/`.
 
-Other upstream artifacts may still be relevant as supporting references when a specific generator feature needs them:
+It should extract or verify at least:
 
-| Supporting reference | Typical use |
-| --- | --- |
-| `transformApiJson.js` | Understand existing upstream normalization of generated API JSON. |
-| `.dtsgenrc` | Understand TypeScript overlays, exclusions, and type-shaping constraints. |
-| Runtime metadata and design-time metadata files | Fill gaps only when the JSON projection lacks metadata required by a generator feature. |
-| Tests and examples | Provide acceptance evidence for generated behavior and compatibility. |
+- document `version`, `id`, `type`, `attrs`, and `children`,
+- scope and leaf-node identity,
+- `attrs.scopeDocument` traceability,
+- `Pages` as the short folder/navigation name,
+- `PredefinedPages` as the long semantic JSON type name,
+- current status values such as `draft`,
+- parent/child relationships, and
+- validation constraints documented in the spec.
 
-Do not infer normative source-of-truth rules from this document alone; keep those decisions in the specification documents and their validation tests.
+## Parser output
 
-## Practical parser starting point
-
-For implementation work, start with JSON artifacts because they are deterministic and schema-backed.
-
-### First parser scope
-
-Read:
-
-1. one library-level `api.json`
-2. optionally the aggregated `api-index.json`
-
-Extract at least:
-
-- library name and version
-- symbol inventory
-- symbol kind (`class`, `interface`, `enum`, `typedef`, `namespace`, `function`)
-- inheritance and implementation relationships
-- public properties
-- methods and parameters
-- events
-- metadata-derived properties, aggregations, associations, defaults, visibility, and bindability when present
-
-### Parser output
-
-The parser should not feed Angular emitters directly. It should produce a local normalized model that can be validated and then converted into the generator IR.
+The parser must not feed Angular emitters directly. It should produce explicit
+intermediate models.
 
 ```text
-upstream api.json / api-index.json
-  → schema validation
-  → local normalized OpenUI source model
-  → FrameworkSpecDocument or equivalent spec artifact
+spec/README.md + spec/**/*.md + openui.json
+  → golden-source validation
+  → native OpenUI document model
   → UiApplication IR
   → AngularProjectModel
   → GeneratedFile[]
 ```
 
-If the parser produces or updates repository-level `openui.json`, keep that file synchronized with `spec/` prose and the validation tests.
+The native OpenUI document model is the only supported generator input shape.
+Downstream generators must consume it directly through validation, extraction,
+and IR construction.
 
 ## Existing generator entry points
 
 Use these implemented modules as the starting architecture:
 
-| Concern | Existing file |
-| --- | --- |
-| CLI orchestration | `generators/angular/src/cli/main.ts` |
-| JSON loading | `generators/angular/src/spec/load-spec.ts` |
-| Input types | `generators/angular/src/spec/framework-spec.types.ts` |
-| Validation and diagnostics | `generators/angular/src/validation/validate-spec.ts`, `generators/angular/src/validation/diagnostics.ts` |
-| Normalization | `generators/angular/src/ir/normalize-spec.ts` |
-| UI IR construction | `generators/angular/src/ir/build-ir.ts`, `generators/angular/src/ir/ui-model.ts` |
-| Angular model mapping | `generators/angular/src/targets/angular/map-to-angular.ts`, `generators/angular/src/targets/angular/angular-model.ts` |
-| Project emission | `generators/angular/src/targets/angular/emit-angular-project.ts` |
-| Page component triplets | `generators/angular/src/targets/angular/emit-component.ts` |
-| Routes | `generators/angular/src/targets/angular/emit-routes.ts` |
-| Theme tokens | `generators/angular/src/targets/angular/emit-theme.ts` |
-| Safe file writes | `generators/angular/src/writers/file-writer.ts`, `generators/angular/src/writers/safe-write.ts` |
-| Tests | `generators/angular/tests/generator.test.ts` |
+| Concern                    | Existing file                                                                                                         |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| CLI orchestration          | `generators/angular/src/cli/main.ts`                                                                                  |
+| JSON loading               | `generators/angular/src/spec/load-spec.ts`                                                                            |
+| Native input types         | `generators/angular/src/spec/openui-spec.types.ts`, `generators/angular/src/spec/openui-sections.ts`                  |
+| Validation and diagnostics | `generators/angular/src/validation/validate-spec.ts`, `generators/angular/src/validation/diagnostics.ts`              |
+| Normalization              | `generators/angular/src/ir/normalize-spec.ts`                                                                         |
+| UI IR construction         | `generators/angular/src/ir/build-ir.ts`, `generators/angular/src/ir/ui-model.ts`                                      |
+| Angular model mapping      | `generators/angular/src/targets/angular/map-to-angular.ts`, `generators/angular/src/targets/angular/angular-model.ts` |
+| Project emission           | `generators/angular/src/targets/angular/emit-angular-project.ts`                                                      |
+| Page component triplets    | `generators/angular/src/targets/angular/emit-component.ts`                                                            |
+| Routes                     | `generators/angular/src/targets/angular/emit-routes.ts`                                                               |
+| Theme tokens               | `generators/angular/src/targets/angular/emit-theme.ts`                                                                |
+| Safe file writes           | `generators/angular/src/writers/file-writer.ts`, `generators/angular/src/writers/safe-write.ts`                       |
+| Tests                      | `generators/angular/tests/generator.test.ts`                                                                          |
 
 ## Recommended next implementation slice
 
-The smallest useful next parser-to-generator slice is:
+The smallest useful golden-source-to-generator slice is:
 
-1. Add a parser for one schema-backed `api.json` fixture.
-2. Normalize one public component contract into the local spec or IR shape.
-3. Validate required metadata: identity, library, public properties, aggregations, associations, events, defaults, and visibility.
-4. Map the normalized contract into an Angular page or component model.
-5. Emit the existing Angular triplet:
-   - `.page.ts` for behavior and typed state
-   - `.page.html` for Material-backed template structure
-   - `.page.scss` for token-backed styling
-6. Add tests that assert the parser output, diagnostics, and generated Angular files.
+1. Populate `openui.json` from the current scope model.
+2. Add `spec/openui.schema.json` for the native `id` / `type` / `attrs` /
+   `children` shape.
+3. Add Python validation that checks `openui.json`, schema rules, scope document
+   paths, and MkDocs navigation.
+4. Map at least one native scope/page node directly into `UiApplication`.
+5. Generate one Angular Material page/component triplet from that adapted model:
+   - `.page.ts` for behavior and typed state,
+   - `.page.html` for Material-backed template structure,
+   - `.page.scss` for token-backed styling.
+6. Add tests that assert parser output, native extraction behavior, diagnostics, and
+   generated Angular files.
 
-This keeps the work small while connecting the upstream machine-readable projection to the already implemented generator.
+This keeps the work small while connecting the golden source to the existing
+Angular generator pipeline.
 
 ## HTML, JS, and CSS output interpretation
 
-If an issue asks for generated HTML, JS, and CSS, the Angular generator equivalent is:
+If an issue asks for generated HTML, JS, and CSS, the Angular generator
+equivalent is:
 
-| Requested artifact | Angular generator artifact |
-| --- | --- |
-| HTML | Standalone component template: `<route>.page.html` |
-| JS | TypeScript source compiled to JavaScript: `<route>.page.ts`, `main.ts`, routes, services |
-| CSS | SCSS/CSS source: `<route>.page.scss`, `src/styles.scss` |
+| Requested artifact | Angular generator artifact                                                               |
+| ------------------ | ---------------------------------------------------------------------------------------- |
+| HTML               | Standalone component template: `<route>.page.html`                                       |
+| JS                 | TypeScript source compiled to JavaScript: `<route>.page.ts`, `main.ts`, routes, services |
+| CSS                | SCSS/CSS source: `<route>.page.scss`, `src/styles.scss`                                  |
 
-The generator should continue emitting TypeScript rather than handwritten JavaScript because Angular source is TypeScript-first and the package already compiles generated apps through Angular tooling.
+The generator should continue emitting TypeScript rather than handwritten
+JavaScript because Angular source is TypeScript-first and the package already
+compiles generated apps through Angular tooling.
 
 ## Validation strategy
 
-For generator changes, run the generator package test command from `generators/angular/`:
+Run repository Python and documentation validation through the local `.venv`:
 
-```bash
-npm run test
+```powershell
+./.venv/Scripts/python -m pytest
+./.venv/Scripts/pre-commit run --all-files
+./.venv/Scripts/python -m mkdocs build --strict
+git diff --check
 ```
 
-That command type-checks the TypeScript generator and runs the Node test suite.
+Run generator validation from `generators/angular/`:
 
-For generated example applications, validate from `generators/angular/generated-examples/` with its configured Angular build and test scripts.
+```powershell
+Push-Location generators/angular
+npm run test
+Pop-Location
+```
 
-For repository-wide checks, use the local Python virtual environment as required by repository instructions and run the configured pre-commit checks when available.
+Validate generated example applications separately:
+
+```powershell
+Push-Location generators/angular/generated-examples
+npm run build
+npm run test
+Pop-Location
+```
 
 ## Guardrails
 
-- Do not treat `api.json` or `api-index.json` as the complete standard by themselves; use them as the first parser input.
-- Do not parse raw framework JavaScript source as the first generator implementation path unless the JSON artifacts lack metadata required by a specific feature.
-- Do not generate Angular files directly from raw `api.json` records.
-- Do not bypass the `FrameworkSpecDocument → UiApplication → AngularProjectModel → GeneratedFile[]` separation.
-- Do not write generated files outside the selected output directory; use the existing safe writer.
-- Do not add a new target before the Angular pipeline has parser-backed fixtures and tests.
+- Do not treat generator fixtures as the source of truth.
+- Do not generate Angular files directly from raw `openui.json` nodes.
+- Do not bypass the golden source → native extraction → IR → Angular model → files
+  separation.
+- Do not write generated files outside the selected output directory; use the
+  existing safe writer.
+- Do not add a new target before the Angular pipeline has golden-source-backed
+  fixtures and validation tests.
+- Keep `Pages` as the short folder/navigation name and `PredefinedPages` as the
+  long semantic JSON type name.
 
 ## Final conclusion
 
-- **Practical parser starting point:** schema-backed `api.json` / `api-index.json` artifacts.
-- **Normalization reference:** upstream `transformApiJson.js` and local `ir/normalize-spec.ts`.
-- **Type-mapping support:** upstream `.dtsgenrc` behavior.
-- **Generator starting point:** the existing Angular IR-to-emitter pipeline in `generators/angular/`.
-- **Next practical output:** parser-backed generation of one Angular Material component/page triplet with tests for parsed metadata, diagnostics, and emitted TypeScript/HTML/SCSS.
+- **Golden source:** `spec/README.md`, Markdown under `spec/`, and root
+  `openui.json`.
+- **Immediate parser starting point:** native OpenUI `id` / `type` / `attrs` /
+  `children` records from `openui.json` plus scope-document traceability.
+- **Generator bridge:** direct native OpenUI extraction into `UiApplication`.
+- **Generator starting point:** the existing Angular IR-to-emitter pipeline in
+  `generators/angular/`.
+- **Next practical output:** golden-source-backed generation of one Angular
+  Material component/page triplet with tests for parsed metadata, diagnostics,
+  and emitted TypeScript/HTML/SCSS.

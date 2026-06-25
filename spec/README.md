@@ -9,21 +9,24 @@ It serves application developers, designers and UX owners, framework maintainers
 ## Spec folder structure
 
 1. scopes folder: structured hierarchically, each scope is a folder or a markdown file, and each scope contains one or more objects.
-  - Application: application level bootstrap artifacts.
-  - Controls: 
-    - Native: Window resize, scroll bars, font size, color scheme
-    - Dialog: A modal or non-modal dialog with a title, content, and actions.
-  - Pages:
-    - "Dashboard": A predefined page layout for overview metrics and summary content; see the Angular Material [Dashboard Schematic](https://material.angular.dev/guide/schematics#dashboard-schematic) for a reference implementation pattern.
-    - "Shell page": A page with no content with routing and navigation.
-    - "Empty page": A page with no content and no routing or navigation.
-  - Views: A user facing view of bussiness objects.
-    - Reports: read-only data including filtering, sorting, grouping, and pagination.
-    - Forms: read-write data including validation, submission, and dirty state.
+
+- Application:
+  - Application level bootstrap artifacts.
+- Controls:
+  - Native: Window resize, scroll bars, font size, color scheme
+  - Dialog: A modal or non-modal dialog with a title, content, and actions.
+- Pages:
+  - "Dashboard": A predefined page layout for overview metrics and summary content; see the Angular Material [Dashboard Schematic](https://material.angular.dev/guide/schematics#dashboard-schematic) for a reference implementation pattern.
+  - "Shell page": A page with no content with routing and navigation.
+  - "Empty page": A page with no content and no routing or navigation.
+- Views: A user facing view of bussiness objects.
+  - Reports: read-only data including filtering, sorting, grouping, and pagination.
+  - Forms: read-write data including validation, submission, and dirty state.
 
 ### Scope folder
 
 Structured hierarchicaly, named in Pascal Case for folders and snake case for files of the object name, each 'level' is a scope and is structured in one of two ways:
+
 - If it has child objects:
   - scope.md
   - Every child scope will have the same structure (either .md file or a folder).
@@ -34,22 +37,32 @@ Structured hierarchicaly, named in Pascal Case for folders and snake case for fi
 
 ## Spec format
 
+### Canonical root document
+
+The repository root `openui.json` MUST use these exact top-level root values:
+
+- `"id": "root"`
+- `"type": "html"`
+- `"version": "0.0.1"`
+
 ### Naming conventions
 
-the "id" field is a unique identifier for each element, and it must be a camelCase alphanumeric  string.
+the "id" field is a unique identifier for each element, and it must be a camelCase alphanumeric string.
 
 ### types - "type" field
 
-Types are tag names either:
+Types are names that are either:
+
 - following the kebab-case naming convention, e.g. "my-component".
-- Having an alias that maps a PascalCase name to a kebab-case tag name, e.g. "MyComponent" maps to "my-component".
+- PascalCase virtual/spec names, e.g. "MyComponent". PascalCase names do not require a concrete tag-name mapping in this document.
 
 Types are categorized to these groups:
+
 - html tags
 - Framework specific tags: for example Angular Material
-  - Angular Material CDK directives: <table cdk*\/>
-  - Angular Material tags: mat-* 
-- Other names: either native names in kebab-case or included in a PascalCase mapping to kebab-case, e.g. "app-*", "my-*", "custom-*"
+  - Angular Material CDK directives: <table cdk\*\/>
+  - Angular Material tags: mat-\*
+- Other names: either native names in kebab-case or PascalCase virtual/spec names, e.g. "app-_", "my-_", "custom-\*"
 
 ### attributes - "attrs" field
 
@@ -61,7 +74,7 @@ Both key and value should align with the framework's attribute naming convention
 ```ebnf
 (* OpenUI specification in EBNF notation *)
 
-openui-document = "{" 
+openui-document = "{"
   [ version-field "," ]
   id-field ","
   type-field ","
@@ -69,7 +82,7 @@ openui-document = "{"
   [ children-field [ "," ] ]
 "}" ;
 
-ui-element = "{" 
+ui-element = "{"
   id-field ","
   type-field ","
   [ attrs-field "," ]
@@ -119,6 +132,7 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 ```
 
 ### Syntax rules
+
 - **Version field (top-level only):** Optional semantic version string (e.g., "1.0.0") identifying the spec version
 - **ID field:** Must be a camelCase alphanumeric string (starts with lowercase letter, can contain uppercase letters and digits)
 - **Type field:** Can be HTML tag names, kebab-case names (e.g., `mat-date-range-input`), or PascalCase names (e.g., `MainPage`)
@@ -126,11 +140,10 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 - **Children field:** Array of UI elements forming a hierarchical tree structure
 - **No loose properties:** All properties must be contained within the `attrs` object
 
-
-
 ## app.json examples
 
 ### Example: Main page with a date range input
+
 ```json
 {
   "id": "mainpage",
@@ -138,7 +151,7 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
   "type": "MainPage",
   "attrs": {
     "size": "1960x1080",
-    "text": "App navigation demo",
+    "text": "App navigation demo"
   },
   "children": [
     {
@@ -169,7 +182,7 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
             "formControlName": "\"end\""
           }
         }
-      ],
+      ]
     }
   ]
 }
@@ -180,6 +193,7 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 ## How to read this spec
 
 The specification defines **what** a compliant Web UI implementation must provide, without saying **how** it is implemented. For example:
+
 <!--
 ### Example: Hierarchical structure of a page
 

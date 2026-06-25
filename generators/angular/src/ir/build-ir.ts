@@ -1,30 +1,22 @@
-import type { FrameworkSpecDocument } from "../spec/framework-spec.types";
+import { extractOpenUiSections } from "../spec/openui-sections";
+import type { OpenUiDocument } from "../spec/openui-spec.types";
 import { normalizeFeatures, normalizeRoute, normalizeSummary } from "./normalize-spec";
 import type { UiApplication } from "./ui-model";
 
-export function buildUiModel(document: FrameworkSpecDocument): UiApplication {
-  const specification = document.specification;
+export function buildUiModel(document: OpenUiDocument): UiApplication {
+  const sections = extractOpenUiSections(document);
   return {
-    name: specification.name ?? specification.id ?? "OpenUI Specification",
-    version: specification.version ?? "0.0.0",
-    pages: specification.sections.map((section) => ({
+    name: typeof document.attrs?.name === "string" ? document.attrs.name : "OpenUI Specification",
+    version: document.version,
+    pages: sections.map((section) => ({
       id: section.id,
       route: normalizeRoute(section.id),
       title: section.title,
       summary: normalizeSummary(section),
       sourceDocument: section.document,
       requirements: section.requirements ?? [],
-      tags: (section.tags ?? []).flatMap((tag) => {
-        if (typeof tag === "string") {
-          return [tag];
-        }
-        return tag.name ? [tag.name] : [];
-      }),
-      formalDefinitions: (section.formalDefinitions ?? []).flatMap((definition) =>
-        definition.term && definition.definition
-          ? [{ term: definition.term, definition: definition.definition }]
-          : [],
-      ),
+      tags: section.tags,
+      formalDefinitions: section.formalDefinitions,
       features: normalizeFeatures(section),
     })),
     themeTokens: [

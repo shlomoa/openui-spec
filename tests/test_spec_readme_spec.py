@@ -9,15 +9,22 @@ SPEC_README = SPEC_DIR / "README.md"
 OPENUI_JSON = REPO_ROOT / "openui.json"
 MKDOCS_CONFIG = REPO_ROOT / "mkdocs.yml"
 NAV_ENTRY_PATTERN = re.compile(r"^\s*-\s+.*?:\s+(.+\.md)$")
+EXPECTED_SPEC_MARKDOWN = [
+    "README.md",
+    "scopes/Pages/dashboard.scope.md",
+    "scopes/Pages/empty_page.scope.md",
+    "scopes/Pages/scope.md",
+    "scopes/Pages/shell_page.scope.md",
+]
 
 
 class SpecReadmeSpecTest(unittest.TestCase):
-    def test_spec_folder_currently_has_single_markdown_entrypoint(self) -> None:
+    def test_spec_folder_contains_expected_markdown_files(self) -> None:
         markdown_files = sorted(
             path.relative_to(SPEC_DIR).as_posix() for path in SPEC_DIR.rglob("*.md")
         )
 
-        self.assertEqual(markdown_files, ["README.md"])
+        self.assertEqual(markdown_files, EXPECTED_SPEC_MARKDOWN)
 
     def test_spec_readme_documents_current_minimal_contract(self) -> None:
         content = SPEC_README.read_text(encoding="utf-8")
@@ -40,7 +47,7 @@ class SpecReadmeSpecTest(unittest.TestCase):
         if content:
             json.loads(content)
 
-    def test_mkdocs_nav_points_only_to_existing_spec_markdown(self) -> None:
+    def test_mkdocs_nav_points_to_expected_spec_markdown(self) -> None:
         config = MKDOCS_CONFIG.read_text(encoding="utf-8")
         referenced_docs = [
             match.group(1)
@@ -49,7 +56,7 @@ class SpecReadmeSpecTest(unittest.TestCase):
             if match is not None
         ]
 
-        self.assertEqual(referenced_docs, ["README.md"])
+        self.assertEqual(sorted(referenced_docs), EXPECTED_SPEC_MARKDOWN)
         for relative_path in referenced_docs:
             with self.subTest(relative_path=relative_path):
                 self.assertTrue((SPEC_DIR / relative_path).is_file())

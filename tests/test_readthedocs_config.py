@@ -27,7 +27,9 @@ class ReadTheDocsConfigTest(unittest.TestCase):
             for match in [NAV_ENTRY_PATTERN.match(line)]
             if match is not None
         ]
-        expected_docs = sorted(path.name for path in DOCS_ROOT.glob("*.md"))
+        expected_docs = sorted(
+            path.relative_to(DOCS_ROOT).as_posix() for path in DOCS_ROOT.rglob("*.md")
+        )
 
         self.assertCountEqual(referenced_docs, expected_docs)
         for relative_path in referenced_docs:

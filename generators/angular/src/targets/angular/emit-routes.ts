@@ -1,13 +1,15 @@
 import type { GeneratedFile } from "../../writers/file-writer";
 import type { AngularProjectModel } from "./angular-model";
+import { routedPageImportPath } from "./angular-paths";
+import { escapeTsString } from "./emit-utils";
 
 export function emitRoutes(project: AngularProjectModel): GeneratedFile {
   const routes = project.pages
     .map(
       (page) => `  {
     path: '${page.route}',
-    loadComponent: () => import('./pages/${page.route}/${page.fileName}').then((m) => m.${page.className}),
-    title: '${escapeTs(page.title)}',
+    loadComponent: () => import('${routedPageImportPath(page.route, page.fileName)}').then((m) => m.${page.className}),
+    title: '${escapeTsString(page.title)}',
   }`,
     )
     .join(",\n");
@@ -23,8 +25,4 @@ ${routes},
 ];
 `,
   };
-}
-
-function escapeTs(value: string): string {
-  return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
 }

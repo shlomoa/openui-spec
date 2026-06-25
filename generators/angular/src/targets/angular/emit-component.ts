@@ -1,11 +1,11 @@
 import type { GeneratedFile } from "../../writers/file-writer";
 import type { AngularPageModel } from "./angular-model";
+import { pageFilePath } from "./angular-paths";
 
 export function emitPageComponent(page: AngularPageModel): GeneratedFile[] {
-  const pageDirectory = `src/app/pages/${page.route}`;
   return [
     {
-      path: `${pageDirectory}/${page.fileName}.ts`,
+      path: pageFilePath(page.route, page.fileName, "ts"),
       content: `${page.componentImports.join("\n")}
 
 @Component({
@@ -20,7 +20,7 @@ ${page.constructorParameters.length > 0 ? `  constructor(${page.constructorParam
 }
 `,
     },
-    { path: `${pageDirectory}/${page.fileName}.html`, content: page.template },
-    { path: `${pageDirectory}/${page.fileName}.scss`, content: page.styles },
+    { path: pageFilePath(page.route, page.fileName, "html"), content: page.template },
+    { path: pageFilePath(page.route, page.fileName, "scss"), content: page.styles },
   ];
 }

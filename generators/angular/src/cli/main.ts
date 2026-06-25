@@ -1,22 +1,21 @@
 #!/usr/bin/env node
-import { loadFrameworkSpec } from "../spec/load-spec";
+import { loadOpenUiSpec } from "../spec/load-spec";
 import { buildUiModel } from "../ir/build-ir";
 import { mapToAngularProject } from "../targets/angular/map-to-angular";
 import { emitAngularProject } from "../targets/angular/emit-angular-project";
-import { validateFrameworkSpec } from "../validation/validate-spec";
+import { validateOpenUiSpec } from "../validation/validate-spec";
 import { writeGeneratedFiles } from "../writers/file-writer";
 
 interface CliOptions {
   command: "generate" | "validate";
   specPath: string;
   outPath?: string;
-  target: "angular";
 }
 
 export async function run(argv: string[] = process.argv.slice(2)): Promise<void> {
   const options = parseArgs(argv);
-  const spec = await loadFrameworkSpec(options.specPath);
-  validateFrameworkSpec(spec);
+  const spec = await loadOpenUiSpec(options.specPath);
+  validateOpenUiSpec(spec);
 
   if (options.command === "validate") {
     return;
@@ -61,7 +60,6 @@ function parseArgs(argv: string[]): CliOptions {
     command,
     specPath,
     outPath: values.get("--out"),
-    target,
   };
 }
 

@@ -1,4 +1,4 @@
-import type { FrameworkSpecSection } from "../spec/framework-spec.types";
+import type { OpenUiSpecSection } from "../spec/openui-spec.types";
 import type { UiFeature } from "./ui-model";
 
 const SECTION_FEATURES: Record<string, UiFeature> = {
@@ -27,11 +27,11 @@ export function normalizeRoute(sectionId: string): string {
   return sectionId.replace(/^\d+-/, "").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "");
 }
 
-export function normalizeSummary(section: FrameworkSpecSection): string {
+export function normalizeSummary(section: OpenUiSpecSection): string {
   return section.purpose ?? section.requirements?.[0] ?? `Generated page for ${section.title}.`;
 }
 
-export function normalizeFeatures(section: FrameworkSpecSection): UiFeature[] {
+export function normalizeFeatures(section: OpenUiSpecSection): UiFeature[] {
   const feature = SECTION_FEATURES[section.id];
   return feature ? [feature] : [];
 }

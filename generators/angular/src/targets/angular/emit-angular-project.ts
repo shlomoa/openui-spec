@@ -1,8 +1,10 @@
 import type { GeneratedFile } from "../../writers/file-writer";
 import type { AngularProjectModel } from "./angular-model";
+import { escapeHtml } from "./emit-utils";
 import { emitPageComponent } from "./emit-component";
 import { emitRoutes } from "./emit-routes";
 import { emitTheme } from "./emit-theme";
+import { toTypeScriptObjectLiteral } from "./typescript-literals";
 
 export function emitAngularProject(project: AngularProjectModel): GeneratedFile[] {
   return [
@@ -19,15 +21,6 @@ export function emitAngularProject(project: AngularProjectModel): GeneratedFile[
     emitTheme(project),
     ...project.pages.flatMap(emitPageComponent),
   ];
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
 }
 
 function emitIndexHtml(project: AngularProjectModel): GeneratedFile {
@@ -493,7 +486,7 @@ function emitInternationalizationFiles(project: AngularProjectModel): GeneratedF
       path: "src/app/openui-i18n.service.ts",
       content: `import { Injectable } from '@angular/core';
 
-    export const OPENUI_I18N = ${toTypeScriptObjectLiteral(project.internationalization)} as const;
+export const OPENUI_I18N = ${toTypeScriptObjectLiteral(project.internationalization)} as const;
 
 type MessageBundles = typeof OPENUI_I18N.messageBundles;
 type Locale = keyof MessageBundles;
@@ -529,10 +522,6 @@ export class OpenUiI18nService {
 `,
     },
   ];
-}
-
-function toTypeScriptObjectLiteral(value: unknown): string {
-  return JSON.stringify(value, null, 2).replace(/"([A-Za-z_$][\w$]*)":/g, "$1:");
 }
 
 function emitAppComponent(project: AngularProjectModel): GeneratedFile {

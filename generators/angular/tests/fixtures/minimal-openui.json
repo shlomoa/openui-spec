@@ -1,172 +1,925 @@
 {
-  "specification": {
-    "id": "openui-test",
-    "name": "OpenUI Test",
-    "version": "0.1.0",
-    "sections": [
-      {
-        "id": "05-ui-concept-model",
+  "id": "root",
+  "type": "html",
+  "version": "0.0.1",
+  "attrs": {
+    "name": "OpenUI Test"
+  },
+  "children": [
+    {
+      "id": "uiConceptModel",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "05-ui-concept-model",
         "title": "UI Concept Model",
-        "purpose": "Classify controls, elements, aggregations, associations, and events.",
-        "requirements": ["Controls and elements have stable semantic names."]
+        "purpose": "Classify controls, elements, aggregations, associations, and events."
       },
-      {
-        "id": "06-application-structure",
+      "children": [
+        {
+          "id": "uiConceptRequirement",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Controls and elements have stable semantic names."
+          }
+        }
+      ]
+    },
+    {
+      "id": "applicationStructure",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "06-application-structure",
         "title": "Application Structure",
-        "purpose": "Describe the required structure of applications built on the framework.",
-        "requirements": [
-          "Applications compose pages, dialogs, forms, lists, and navigation containers from library-published components rather than from framework-private primitives.",
-          "The framework must support a navigable shell-level structure and a page hierarchy built entirely from public components discoverable through the library catalog.",
-          "Library dependencies must be explicit so that the application structure can be resolved by reading the dependency declaration and the public component catalog alone."
-        ]
+        "purpose": "Describe the required structure of applications built on the framework."
       },
-      {
-        "id": "07-layout-system",
+      "children": [
+        {
+          "id": "applicationStructureRequirement1",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Applications compose pages, dialogs, forms, lists, and navigation containers from library-published components rather than from framework-private primitives."
+          }
+        },
+        {
+          "id": "applicationStructureRequirement2",
+          "type": "Requirement",
+          "attrs": {
+            "text": "The framework must support a navigable shell-level structure and a page hierarchy built entirely from public components discoverable through the library catalog."
+          }
+        },
+        {
+          "id": "applicationStructureRequirement3",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Library dependencies must be explicit so that the application structure can be resolved by reading the dependency declaration and the public component catalog alone."
+          }
+        }
+      ]
+    },
+    {
+      "id": "layoutSystem",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "07-layout-system",
         "title": "Layout System",
-        "purpose": "Describe the abstract layout and composition requirements.",
-        "requirements": [
-          "Layout is expressed as ordered or named composition regions exposed through aggregations.",
-          "Responsive behavior must preserve component composition semantics when layout density, theme, or viewport changes.",
-          "Container components may expose drag-and-drop semantics only when declared in metadata."
-        ]
+        "purpose": "Describe the abstract layout and composition requirements."
       },
-      {
-        "id": "08-component-model",
+      "children": [
+        {
+          "id": "layoutSystemRequirement1",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Layout is expressed as ordered or named composition regions exposed through aggregations."
+          }
+        },
+        {
+          "id": "layoutSystemRequirement2",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Responsive behavior must preserve component composition semantics when layout density, theme, or viewport changes."
+          }
+        },
+        {
+          "id": "layoutSystemRequirement3",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Container components may expose drag-and-drop semantics only when declared in metadata."
+          }
+        }
+      ]
+    },
+    {
+      "id": "componentModel",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "08-component-model",
         "title": "Component Model",
-        "purpose": "Define the normative component contract.",
-        "requirements": [
-          "Components expose stable identity, owning library, public metadata, and typed properties, aggregations, associations, and events."
-        ],
-        "formalDefinitions": [
-          {
+        "purpose": "Define the normative component contract."
+      },
+      "children": [
+        {
+          "id": "componentModelRequirement",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Components expose stable identity, owning library, public metadata, and typed properties, aggregations, associations, and events."
+          }
+        },
+        {
+          "id": "componentDefinition",
+          "type": "FormalDefinition",
+          "attrs": {
             "term": "Component",
             "definition": "a public, named unit published by a library"
-          },
-          {
+          }
+        },
+        {
+          "id": "propertyDefinition",
+          "type": "FormalDefinition",
+          "attrs": {
             "term": "Property",
             "definition": "a typed configuration value with a default and visibility"
-          },
-          {
+          }
+        },
+        {
+          "id": "aggregationDefinition",
+          "type": "FormalDefinition",
+          "attrs": {
             "term": "Aggregation",
             "definition": "owned child content with multiplicity"
-          },
-          {
+          }
+        },
+        {
+          "id": "associationDefinition",
+          "type": "FormalDefinition",
+          "attrs": {
             "term": "Association",
             "definition": "a non-owning reference to another component"
-          },
-          {
+          }
+        },
+        {
+          "id": "eventDefinition",
+          "type": "FormalDefinition",
+          "attrs": {
             "term": "Event",
             "definition": "a named notification with typed parameters"
           }
-        ]
-      },
-      {
-        "id": "09-interaction-model",
+        }
+      ]
+    },
+    {
+      "id": "interactionModel",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "09-interaction-model",
         "title": "Interaction Model",
-        "purpose": "Describe how user interaction is represented in the specification.",
-        "requirements": [
-          "User-triggered behavior is modeled as named events with stable semantics, such as press for activation.",
-          "Interaction events describe component-level intent rather than raw browser gestures.",
-          "Application handlers attach to the public event contract and must not depend on private DOM events, renderer internals, or browser-specific event ordering."
-        ]
+        "purpose": "Describe how user interaction is represented in the specification."
       },
-      {
-        "id": "10-state-model",
+      "children": [
+        {
+          "id": "interactionRequirement1",
+          "type": "Requirement",
+          "attrs": {
+            "text": "User-triggered behavior is modeled as named events with stable semantics, such as press for activation."
+          }
+        },
+        {
+          "id": "interactionRequirement2",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Interaction events describe component-level intent rather than raw browser gestures."
+          }
+        },
+        {
+          "id": "interactionRequirement3",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Application handlers attach to the public event contract and must not depend on private DOM events, renderer internals, or browser-specific event ordering."
+          }
+        }
+      ]
+    },
+    {
+      "id": "stateModel",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "10-state-model",
         "title": "State Model",
-        "purpose": "Describe state held or exposed by components.",
-        "requirements": [
-          "Component state is represented by typed properties with explicit default values.",
-          "State may be public or hidden, but only public state participates in the external component contract.",
-          "Defaulted state and derived state must remain compatible with the declared metadata type system."
-        ]
+        "purpose": "Describe state held or exposed by components."
       },
-      {
-        "id": "11-data-binding-model",
+      "children": [
+        {
+          "id": "stateRequirement1",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Component state is represented by typed properties with explicit default values."
+          }
+        },
+        {
+          "id": "stateRequirement2",
+          "type": "Requirement",
+          "attrs": {
+            "text": "State may be public or hidden, but only public state participates in the external component contract."
+          }
+        },
+        {
+          "id": "stateRequirement3",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Defaulted state and derived state must remain compatible with the declared metadata type system."
+          }
+        }
+      ]
+    },
+    {
+      "id": "dataBindingModel",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "11-data-binding-model",
         "title": "Data Binding Model",
-        "purpose": "Describe how component state binds to external models.",
-        "requirements": [
-          "Bindable properties and aggregations are part of the component contract and must be explicitly declared with a bindable flag.",
-          "Property bindings connect a single typed value, while aggregation bindings connect a model collection to an owned aggregation through a template.",
-          "Every binding resolves against a default or named model path, and async updates preserve declared types."
-        ]
+        "purpose": "Describe how component state binds to external models."
       },
-      {
-        "id": "12-form-model",
+      "children": [
+        {
+          "id": "dataBindingRequirement1",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Bindable properties and aggregations are part of the component contract and must be explicitly declared with a bindable flag."
+          }
+        },
+        {
+          "id": "dataBindingRequirement2",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Property bindings connect a single typed value, while aggregation bindings connect a model collection to an owned aggregation through a template."
+          }
+        },
+        {
+          "id": "dataBindingRequirement3",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Every binding resolves against a default or named model path, and async updates preserve declared types."
+          }
+        }
+      ]
+    },
+    {
+      "id": "formModel",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "12-form-model",
         "title": "Form Model",
-        "purpose": "Describe fields, labels, validation, and submission semantics.",
-        "requirements": ["Fields expose validation state."]
+        "purpose": "Describe fields, labels, validation, and submission semantics."
       },
-      {
-        "id": "13-navigation-model",
+      "children": [
+        {
+          "id": "formRequirement",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Fields expose validation state."
+          }
+        }
+      ]
+    },
+    {
+      "id": "navigationModel",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "13-navigation-model",
         "title": "Navigation Model",
-        "purpose": "Describe route and navigation item semantics.",
-        "requirements": ["Navigation items reference valid pages."]
+        "purpose": "Describe route and navigation item semantics."
       },
-      {
-        "id": "14-feedback-model",
+      "children": [
+        {
+          "id": "navigationRequirement",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Navigation items reference valid pages."
+          }
+        }
+      ]
+    },
+    {
+      "id": "feedbackModel",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "14-feedback-model",
         "title": "Feedback Model",
-        "purpose": "Describe transient and persistent feedback.",
-        "requirements": ["Feedback messages have severity and lifecycle."]
+        "purpose": "Describe transient and persistent feedback."
       },
-      {
-        "id": "15-accessibility-model",
+      "children": [
+        {
+          "id": "feedbackRequirement",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Feedback messages have severity and lifecycle."
+          }
+        }
+      ]
+    },
+    {
+      "id": "accessibilityModel",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "15-accessibility-model",
         "title": "Accessibility Model",
-        "purpose": "Describe labels, descriptions, focus, and keyboard support.",
-        "requirements": ["Interactive elements expose accessible names."]
+        "purpose": "Describe labels, descriptions, focus, and keyboard support."
       },
-      {
-        "id": "16-theming-design-tokens",
+      "children": [
+        {
+          "id": "accessibilityRequirement",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Interactive elements expose accessible names."
+          }
+        }
+      ]
+    },
+    {
+      "id": "themingDesignTokens",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "16-theming-design-tokens",
         "title": "Theming / Design Tokens",
-        "purpose": "Describe reusable color, spacing, and typography tokens.",
-        "requirements": ["Theme tokens map to runtime CSS custom properties."]
+        "purpose": "Describe reusable color, spacing, and typography tokens."
       },
-      {
-        "id": "17-internationalization",
+      "children": [
+        {
+          "id": "themeRequirement",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Theme tokens map to runtime CSS custom properties."
+          }
+        }
+      ]
+    },
+    {
+      "id": "internationalization",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "17-internationalization",
         "title": "Internationalization",
-        "purpose": "Describe locale and translation requirements.",
-        "requirements": [
-          "Translatable public text must be referenced through stable message keys resolved from locale-specific message resource bundles rather than hard-coded literals.",
-          "Message resource bundles must resolve through a deterministic locale fallback chain from the most specific locale to a default bundle.",
-          "Locale-sensitive values such as dates, numbers, and currencies must render through typed, locale-aware formatting rather than fixed presentation.",
-          "The active locale and text direction must be externally configurable application-level settings that components inherit rather than hard-code."
-        ]
+        "purpose": "Describe locale and translation requirements."
       },
-      {
-        "id": "18-security-privacy-ui-rules",
+      "children": [
+        {
+          "id": "internationalizationRequirement1",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Translatable public text must be referenced through stable message keys resolved from locale-specific message resource bundles rather than hard-coded literals."
+          }
+        },
+        {
+          "id": "internationalizationRequirement2",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Message resource bundles must resolve through a deterministic locale fallback chain from the most specific locale to a default bundle."
+          }
+        },
+        {
+          "id": "internationalizationRequirement3",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Locale-sensitive values such as dates, numbers, and currencies must render through typed, locale-aware formatting rather than fixed presentation."
+          }
+        },
+        {
+          "id": "internationalizationRequirement4",
+          "type": "Requirement",
+          "attrs": {
+            "text": "The active locale and text direction must be externally configurable application-level settings that components inherit rather than hard-code."
+          }
+        }
+      ]
+    },
+    {
+      "id": "securityPrivacyUiRules",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "18-security-privacy-ui-rules",
         "title": "Security / Privacy UI Rules",
-        "purpose": "State UI-facing security and privacy constraints.",
-        "requirements": [
-          "User-provided text, URLs, and style values are untrusted input and must be encoded, validated, or constrained before rendering.",
-          "Components that reveal sensitive values must default to masked output and require explicit reveal actions.",
-          "Irreversible or restricted actions require confirmation and permission gates before invoking application behavior."
-        ]
+        "purpose": "State UI-facing security and privacy constraints."
       },
-      {
-        "id": "19-performance-requirements",
+      "children": [
+        {
+          "id": "securityRequirement1",
+          "type": "Requirement",
+          "attrs": {
+            "text": "User-provided text, URLs, and style values are untrusted input and must be encoded, validated, or constrained before rendering."
+          }
+        },
+        {
+          "id": "securityRequirement2",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Components that reveal sensitive values must default to masked output and require explicit reveal actions."
+          }
+        },
+        {
+          "id": "securityRequirement3",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Irreversible or restricted actions require confirmation and permission gates before invoking application behavior."
+          }
+        }
+      ]
+    },
+    {
+      "id": "performanceRequirements",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "19-performance-requirements",
         "title": "Performance Requirements",
-        "purpose": "Describe performance-oriented expectations that follow from the public model.",
-        "requirements": [
-          "Public library catalogs must allow eager discovery of available components without eagerly loading every implementation detail.",
-          "Immutable public projections, such as the API projection and catalog metadata, must be cacheable by a stable identity.",
-          "Components that own large or unbounded collections through aggregations must support virtualization with observable materialization budgets."
-        ]
+        "purpose": "Describe performance-oriented expectations that follow from the public model."
       },
-      {
-        "id": "22-test-acceptance-criteria",
+      "children": [
+        {
+          "id": "performanceRequirement1",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Public library catalogs must allow eager discovery of available components without eagerly loading every implementation detail."
+          }
+        },
+        {
+          "id": "performanceRequirement2",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Immutable public projections, such as the API projection and catalog metadata, must be cacheable by a stable identity."
+          }
+        },
+        {
+          "id": "performanceRequirement3",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Components that own large or unbounded collections through aggregations must support virtualization with observable materialization budgets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "extensionModel",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "20-extension-model",
+        "title": "Extension Model",
+        "purpose": "Describe supported extension points, extension artifacts, and compatibility gates."
+      },
+      "children": [
+        {
+          "id": "extensionRequirement1",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Extension points declare accepted artifact type, multiplicity, ownership, and host capability gates before runtime content is rendered."
+          }
+        },
+        {
+          "id": "extensionRequirement2",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Extension artifacts publish runtime metadata and optional design-time overlays without changing the host component public API."
+          }
+        },
+        {
+          "id": "extensionRequirement3",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Renderer and drag-and-drop capabilities are explicit metadata and must not depend on private DOM contracts."
+          }
+        }
+      ]
+    },
+    {
+      "id": "complianceRules",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "21-compliance-rules",
+        "title": "Compliance Rules",
+        "purpose": "Summarize what every implementation must satisfy.",
+        "document": "spec/21-compliance-rules.md"
+      },
+      "children": [
+        {
+          "id": "complianceRequirement1",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Every public library member must be discoverable from a stable machine-readable catalog entry."
+          }
+        },
+        {
+          "id": "complianceRequirement2",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Every public component must declare complete public metadata for properties, aggregations, associations, events, defaults, visibility, and capabilities."
+          }
+        },
+        {
+          "id": "complianceRequirement3",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Compliance evidence must stay synchronized across documentation, generated examples, tests, and generated projections."
+          }
+        },
+        {
+          "id": "catalogDiscoverabilityTag",
+          "type": "Tag",
+          "attrs": {
+            "name": "catalog-discoverability",
+            "meaning": "Public components resolve from catalog traversal evidence."
+          }
+        },
+        {
+          "id": "metadataCompletenessTag",
+          "type": "Tag",
+          "attrs": {
+            "name": "metadata-completeness",
+            "meaning": "Public metadata contains every required member group."
+          }
+        },
+        {
+          "id": "contractBasedValidationTag",
+          "type": "Tag",
+          "attrs": {
+            "name": "contract-based-validation",
+            "meaning": "Validation checks the public contract rather than private renderer details."
+          }
+        },
+        {
+          "id": "crossCuttingEvidenceTag",
+          "type": "Tag",
+          "attrs": {
+            "name": "cross-cutting-evidence",
+            "meaning": "Accessibility, theming, internationalization, security, performance, extension, and tests remain synchronized."
+          }
+        },
+        {
+          "id": "testableConformanceTag",
+          "type": "Tag",
+          "attrs": {
+            "name": "testable-conformance",
+            "meaning": "Compliance rules emit diagnostics that automated tests can assert."
+          }
+        },
+        {
+          "id": "explicitCapabilityScopeTag",
+          "type": "Tag",
+          "attrs": {
+            "name": "explicit-capability-scope",
+            "meaning": "Capabilities are declared before generated output depends on them."
+          }
+        },
+        {
+          "id": "compliantImplementationDefinition",
+          "type": "FormalDefinition",
+          "attrs": {
+            "term": "Compliant implementation",
+            "definition": "an implementation whose public catalog, metadata, generated projection, and evidence satisfy all mandatory OpenUI rules"
+          }
+        },
+        {
+          "id": "publicSurfaceDefinition",
+          "type": "FormalDefinition",
+          "attrs": {
+            "term": "Public surface",
+            "definition": "the cataloged components, metadata, events, aggregation contracts, and generated projections that applications may rely on"
+          }
+        },
+        {
+          "id": "complianceEvidenceDefinition",
+          "type": "FormalDefinition",
+          "attrs": {
+            "term": "Compliance evidence",
+            "definition": "documentation, generated examples, tests, and projection artifacts that demonstrate conformance"
+          }
+        },
+        {
+          "id": "conformanceProfileDefinition",
+          "type": "FormalDefinition",
+          "attrs": {
+            "term": "Conformance profile",
+            "definition": "the declared set of capabilities and rules an implementation claims to satisfy"
+          }
+        },
+        {
+          "id": "complianceGapDefinition",
+          "type": "FormalDefinition",
+          "attrs": {
+            "term": "Compliance gap",
+            "definition": "a missing or stale catalog, metadata, documentation, generated example, projection, or test artifact"
+          }
+        },
+        {
+          "id": "validationArtifactDefinition",
+          "type": "FormalDefinition",
+          "attrs": {
+            "term": "Validation artifact",
+            "definition": "a generated or tested file that records a compliance decision in a repeatable form"
+          }
+        },
+        {
+          "id": "catalogVerificationNote",
+          "type": "ImplementationNote",
+          "attrs": {
+            "text": "Catalog verification diagnostics identify the missing catalog entry and traversal node."
+          }
+        },
+        {
+          "id": "metadataVerificationNote",
+          "type": "ImplementationNote",
+          "attrs": {
+            "text": "Metadata verification diagnostics identify the component and missing public metadata group."
+          }
+        },
+        {
+          "id": "evidenceVerificationNote",
+          "type": "ImplementationNote",
+          "attrs": {
+            "text": "Evidence verification diagnostics identify stale generated examples and test artifacts."
+          }
+        },
+        {
+          "id": "documentationVerificationNote",
+          "type": "ImplementationNote",
+          "attrs": {
+            "text": "Documentation verification diagnostics keep prose synchronized with generated examples."
+          }
+        },
+        {
+          "id": "generatedProjectionsVerificationNote",
+          "type": "ImplementationNote",
+          "attrs": {
+            "text": "Generated projections verification diagnostics compare api-json projection artifacts with the public contract."
+          }
+        },
+        {
+          "id": "catalogDiscoverabilityExample",
+          "type": "Example",
+          "attrs": {
+            "title": "Catalog discoverability check",
+            "description": "Validates that sample.library.Button is reachable from library-catalog-root and library-component-catalog traversal nodes."
+          }
+        },
+        {
+          "id": "metadataCompletenessExample",
+          "type": "Example",
+          "attrs": {
+            "title": "Metadata completeness gate",
+            "description": "Checks properties, aggregations, associations, events, defaults, visibility, and capability metadata before generation succeeds."
+          }
+        },
+        {
+          "id": "crossCuttingEvidenceExample",
+          "type": "Example",
+          "attrs": {
+            "title": "Cross-cutting evidence record",
+            "description": "Synchronizes accessibility, theming, internationalization, security/privacy, performance, extension, and acceptance-test evidence."
+          }
+        },
+        {
+          "id": "generatorComplianceGuardExample",
+          "type": "Example",
+          "attrs": {
+            "title": "Generator compliance guard",
+            "description": "Fails generation with diagnostics when catalog traversal, metadata completeness, or synchronized evidence is missing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "testAcceptanceCriteria",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "22-test-acceptance-criteria",
         "title": "Test & Acceptance Criteria",
-        "purpose": "Describe how the specification should be verified.",
-        "requirements": [
-          "Acceptance criteria remain traceable to specification sections and evidence artifacts."
-        ]
+        "purpose": "Describe how the specification should be verified."
       },
-      {
-        "id": "23-reference-examples",
+      "children": [
+        {
+          "id": "acceptanceRequirement",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Acceptance criteria remain traceable to specification sections and evidence artifacts."
+          }
+        }
+      ]
+    },
+    {
+      "id": "referenceExamples",
+      "type": "SpecSection",
+      "attrs": {
+        "sectionId": "23-reference-examples",
         "title": "Reference Examples",
-        "purpose": "Provide concrete reference components abstracted from upstream evidence.",
-        "requirements": [
-          "Reference examples connect component contracts to observable behavior."
-        ]
-      }
-    ]
-  }
+        "purpose": "Provide concrete reference components abstracted from upstream evidence."
+      },
+      "children": [
+        {
+          "id": "referenceRequirement",
+          "type": "Requirement",
+          "attrs": {
+            "text": "Reference examples connect component contracts to observable behavior."
+          }
+        }
+      ]
+    },
+    {
+      "id": "complianceTraversalEvidence",
+      "type": "TraversalEvidence",
+      "children": [
+        {
+          "id": "openuiRootTraversal",
+          "type": "TraversalNode",
+          "attrs": {
+            "nodeId": "openui-root",
+            "title": "OpenUI root",
+            "parent": null
+          },
+          "children": [
+            {
+              "id": "openuiRootEvidence",
+              "type": "Evidence",
+              "attrs": {
+                "path": "spec/README.md"
+              }
+            }
+          ]
+        },
+        {
+          "id": "libraryCatalogRootTraversal",
+          "type": "TraversalNode",
+          "attrs": {
+            "nodeId": "library-catalog-root",
+            "title": "Library catalog root",
+            "parent": "openui-root"
+          },
+          "children": [
+            {
+              "id": "libraryCatalogRootEvidence",
+              "type": "Evidence",
+              "attrs": {
+                "path": "spec/06-application-structure.md"
+              }
+            }
+          ]
+        },
+        {
+          "id": "libraryComponentCatalogTraversal",
+          "type": "TraversalNode",
+          "attrs": {
+            "nodeId": "library-component-catalog",
+            "title": "Library component catalog",
+            "parent": "library-catalog-root"
+          },
+          "children": [
+            {
+              "id": "libraryComponentCatalogEvidence",
+              "type": "Evidence",
+              "attrs": {
+                "path": "spec/08-component-model.md"
+              }
+            }
+          ]
+        },
+        {
+          "id": "metadataGrammarRootTraversal",
+          "type": "TraversalNode",
+          "attrs": {
+            "nodeId": "metadata-grammar-root",
+            "title": "Metadata grammar root",
+            "parent": "openui-root"
+          },
+          "children": [
+            {
+              "id": "metadataGrammarRootEvidence",
+              "type": "Evidence",
+              "attrs": {
+                "path": "spec/README.md"
+              }
+            }
+          ]
+        },
+        {
+          "id": "propertyModelTraversal",
+          "type": "TraversalNode",
+          "attrs": {
+            "nodeId": "property-model",
+            "title": "Property model",
+            "parent": "library-component-catalog"
+          },
+          "children": [
+            {
+              "id": "propertyModelEvidence",
+              "type": "Evidence",
+              "attrs": {
+                "path": "spec/10-state-model.md"
+              }
+            }
+          ]
+        },
+        {
+          "id": "aggregationModelTraversal",
+          "type": "TraversalNode",
+          "attrs": {
+            "nodeId": "aggregation-model",
+            "title": "Aggregation model",
+            "parent": "library-component-catalog"
+          },
+          "children": [
+            {
+              "id": "aggregationModelEvidence",
+              "type": "Evidence",
+              "attrs": {
+                "path": "spec/07-layout-system.md"
+              }
+            }
+          ]
+        },
+        {
+          "id": "associationModelTraversal",
+          "type": "TraversalNode",
+          "attrs": {
+            "nodeId": "association-model",
+            "title": "Association model",
+            "parent": "library-component-catalog"
+          },
+          "children": [
+            {
+              "id": "associationModelEvidence",
+              "type": "Evidence",
+              "attrs": {
+                "path": "spec/15-accessibility-model.md"
+              }
+            }
+          ]
+        },
+        {
+          "id": "eventModelTraversal",
+          "type": "TraversalNode",
+          "attrs": {
+            "nodeId": "event-model",
+            "title": "Event model",
+            "parent": "library-component-catalog"
+          },
+          "children": [
+            {
+              "id": "eventModelEvidence",
+              "type": "Evidence",
+              "attrs": {
+                "path": "spec/09-interaction-model.md"
+              }
+            }
+          ]
+        },
+        {
+          "id": "visibilityDefaultModelTraversal",
+          "type": "TraversalNode",
+          "attrs": {
+            "nodeId": "visibility-default-model",
+            "title": "Visibility and defaults model",
+            "parent": "metadata-grammar-root"
+          },
+          "children": [
+            {
+              "id": "visibilityDefaultModelEvidence",
+              "type": "Evidence",
+              "attrs": {
+                "path": "spec/10-state-model.md"
+              }
+            }
+          ]
+        },
+        {
+          "id": "rendererDndModelTraversal",
+          "type": "TraversalNode",
+          "attrs": {
+            "nodeId": "renderer-dnd-model",
+            "title": "Renderer and drag-and-drop model",
+            "parent": "metadata-grammar-root"
+          },
+          "children": [
+            {
+              "id": "rendererDndModelEvidence",
+              "type": "Evidence",
+              "attrs": {
+                "path": "spec/20-extension-model.md"
+              }
+            }
+          ]
+        },
+        {
+          "id": "apiJsonProjectionTraversal",
+          "type": "TraversalNode",
+          "attrs": {
+            "nodeId": "api-json-projection",
+            "title": "API JSON projection",
+            "parent": "metadata-grammar-root"
+          },
+          "children": [
+            {
+              "id": "apiJsonProjectionEvidence",
+              "type": "Evidence",
+              "attrs": {
+                "path": "openui.json"
+              }
+            }
+          ]
+        },
+        {
+          "id": "complianceTestsTraversal",
+          "type": "TraversalNode",
+          "attrs": {
+            "nodeId": "compliance-tests",
+            "title": "Compliance tests",
+            "parent": "openui-root"
+          },
+          "children": [
+            {
+              "id": "complianceTestsEvidence",
+              "type": "Evidence",
+              "attrs": {
+                "path": "generators/angular/tests/generator.test.ts"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
