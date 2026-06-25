@@ -17,6 +17,23 @@ supported by this repository. The current emitter pins Angular and Angular
 Material packages to `22.0.2` and prefers Material primitives for shells, page
 surfaces, requirement summaries, navigation, forms, and feedback.
 
+## Dashboard reference implementation pattern
+
+The Angular Material Dashboard schematic is a useful reference pattern for the
+Angular generator target:
+
+- Online
+  [Dashboard Schematic](https://material.angular.dev/guide/schematics#dashboard-schematic)
+  documentation.
+- [GitHub Dashboard Schematic](https://github.com/angular/components/tree/main/src/material/schematics/ng-generate/dashboard)
+  source.
+
+The referenced schematic generates a component with a Material grid list, cards,
+card titles, card content, card menu actions, and responsive card spans. The
+Angular generator may use that pattern when translating the OpenUI Dashboard page
+scope into Angular Material output, while the OpenUI specification remains
+implementation-independent.
+
 When the input specification includes `06-application-structure`, the generated
 application also emits `src/app/application-structure.model.ts` and exposes the
 resolved root component, explicit Angular dependencies, shell regions, routed

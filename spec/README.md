@@ -12,6 +12,8 @@ It serves application developers, designers and UX owners, framework maintainers
 
 - Application:
   - Application level bootstrap artifacts.
+    - See the [Create a workspace and initial application](https://angular.dev/tools/cli/setup-local#create-a-workspace-and-initial-application) for Angular Material reference implementation.
+    - See the source code of the `ng new` command in the [Angular CLI repository](https://github.com/angular/angular-cli/tree/main/packages/angular/cli/src/commands/new)
 - Controls:
   - Native: Window resize, scroll bars, font size, color scheme
   - Dialog: A modal or non-modal dialog with a title, content, and actions.
