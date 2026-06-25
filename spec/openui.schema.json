@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shlomoa.github.io/openui5-spec/openui.schema.json",
+  "title": "OpenUI Specification Document",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "type"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][A-Za-z0-9]*$"
+    },
+    "type": {
+      "type": "string",
+      "anyOf": [
+        {
+          "enum": [
+            "html",
+            "body",
+            "main",
+            "section",
+            "article",
+            "header",
+            "footer",
+            "nav",
+            "div",
+            "span",
+            "input",
+            "button",
+            "table"
+          ]
+        },
+        {
+          "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+        },
+        {
+          "pattern": "^[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?$"
+        }
+      ]
+    },
+    "attrs": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "null"]
+      }
+    },
+    "children": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/element"
+      }
+    }
+  },
+  "$defs": {
+    "element": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][A-Za-z0-9]*$"
+        },
+        "type": {
+          "type": "string",
+          "anyOf": [
+            {
+              "enum": [
+                "html",
+                "body",
+                "main",
+                "section",
+                "article",
+                "header",
+                "footer",
+                "nav",
+                "div",
+                "span",
+                "input",
+                "button",
+                "table"
+              ]
+            },
+            {
+              "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+            },
+            {
+              "pattern": "^[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?$"
+            }
+          ]
+        },
+        "attrs": {
+          "type": "object",
+          "additionalProperties": {
+            "type": ["string", "null"]
+          }
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/element"
+          }
+        }
+      }
+    }
+  }
+}

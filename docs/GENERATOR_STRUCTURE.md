@@ -81,7 +81,7 @@ generators/angular/
 | `cli/main.ts`                       | Parses `generate` and `validate` commands, loads native OpenUI JSON, validates it, and orchestrates generation.                         |
 | `spec/load-spec.ts`                 | Reads JSON and parses it into the native OpenUI document type.                                                                          |
 | `spec/openui-spec.types.ts`         | Defines the native OpenUI `id` / `type` / `attrs` / `children` input contract.                                                          |
-| `spec/openui-sections.ts`           | Extracts `SpecSection`, requirement, tag, definition, example, and evidence records from native OpenUI nodes.                           |
+| `spec/openui-sections.ts`           | Extracts generator-specific section records when present; this is not the canonical OpenUI source-of-truth shape.                       |
 | `validation/validate-spec.ts`       | Fails early for malformed OpenUI node data and compliance-rule synchronization gaps.                                                    |
 | `ir/normalize-spec.ts`              | Converts native section IDs into routes, summaries, and feature flags.                                                                  |
 | `ir/build-ir.ts`                    | Builds the implementation-independent `UiApplication` model.                                                                            |
@@ -117,11 +117,10 @@ same OpenUI specification
    └─ Web Components
 ```
 
-## Current native input model
+## Canonical input model
 
-The generator consumes native OpenUI JSON shaped like
-`generators/angular/tests/fixtures/minimal-openui.json`. The repository root
-document uses exact root values:
+The canonical repository input is root `openui.json` plus synchronized Markdown
+under `spec/`. The repository root document uses exact root values:
 
 ```text
 id: "root"
@@ -129,17 +128,21 @@ type: "html"
 version: "0.0.1"
 ```
 
-Specification sections are represented as native nodes with `type:
-"SpecSection"`; the stable section identifier lives in `attrs.sectionId`, and
-repeated records such as requirements, tags, definitions, examples, and traversal
-evidence are represented as child nodes.
+Scope coverage is represented by native OpenUI nodes whose `attrs.scopeDocument`
+values point to Markdown files under `spec/scopes/`.
 
-## Current section-to-feature mapping
+Older generator fixtures may still include generator-specific section nodes such
+as `SpecSection`. Those records are implementation details of the Angular
+generator and must not be treated as the canonical OpenUI specification shape.
 
-`ir/normalize-spec.ts` maps native `SpecSection.attrs.sectionId` values to
-`UiFeature` values.
-`map-to-angular.ts` then adds Angular imports, component state, template
-fragments, styles, and optional project-level models.
+## Generator-specific section-to-feature mapping
+
+For generator-specific section records, `ir/normalize-spec.ts` maps section IDs
+to `UiFeature` values. `map-to-angular.ts` then adds Angular imports, component
+state, template fragments, styles, and optional project-level models.
+
+This mapping documents the Angular generator implementation only. It must not be
+used to redefine or constrain the canonical `openui.json` contract.
 
 | Section ID                     | Feature                 | Current Angular materialization                                                                                                      |
 | ------------------------------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
