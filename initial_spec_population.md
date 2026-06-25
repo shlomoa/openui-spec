@@ -1,14 +1,12 @@
 # Initial Spec Population Follow-up Plan
 
-The initial population stages are complete and intentionally removed from this
-plan. The repository now has the scope tree, `spec/scopes/scope.md`, populated
-`openui.json`, `spec/openui.schema.json`, MkDocs navigation, and Python tests for
-the current minimal OpenUI contract.
-
-This document tracks only active follow-up decisions and partially completed
-work that can still change the spec contract.
+This document tracks only open decisions, partially completed work, and ongoing
+maintenance items that can still change the spec contract. Completed tasks are
+intentionally omitted.
 
 ## 1. Reconcile the prose README with the concrete scope index
+
+Status: **Open decision**.
 
 Current state:
 
@@ -40,14 +38,15 @@ Acceptance criteria:
 
 ## 2. Expand scope details only from approved source material
 
+Status: **Partially complete; waiting for approved behavioral details**.
+
 Current state:
 
 - Every current scope file exists and is represented in `openui.json`.
 - Shared folder, object-shape, and `attrs` category rules live in
   `spec/scopes/scope.md`.
-- Leaf files are intentionally concise. Some leaves have basic scope details;
-  many do not yet define full behavior, child models, examples, or validation
-  notes.
+- Leaf files are intentionally concise and should stay that way until behavior
+  is approved.
 
 Follow-up rule:
 
@@ -74,6 +73,8 @@ Acceptance criteria for each enriched scope:
 - Focused tests are updated when the public contract changes.
 
 ## 3. Keep generator-facing documentation synchronized
+
+Status: **Partially complete; ongoing while the Angular generator evolves**.
 
 Current state:
 
@@ -103,6 +104,8 @@ Acceptance criteria:
 
 ## 4. Keep developer docs and validation instructions current
 
+Status: **Ongoing maintenance**.
+
 Current state:
 
 - Python spec tests, MkDocs strict build, markdown/YAML linting, and Angular
@@ -124,6 +127,8 @@ Acceptance criteria:
 - No stale OpenUI5/provenance assumptions are reintroduced unless intentional.
 
 ## 5. Validation checklist for future changes
+
+Status: **Reference checklist; run as applicable**.
 
 Run the relevant subset first, then the full sequence before final review:
 
