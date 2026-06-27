@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, rm } from "node:fs/promises";
-import { tmpdir } from "node:os";
+import { mkdir, mkdtemp, readFile, rm } from "node:fs/promises";
 import path from "node:path";
 import { test } from "node:test";
 
@@ -11,7 +10,19 @@ import type { OpenUiElement } from "../src/spec/openui-spec.types";
 import { SpecValidationError } from "../src/validation/diagnostics";
 import { validateOpenUiSpec } from "../src/validation/validate-spec";
 
-const FIXTURE = path.resolve("tests/fixtures/minimal-openui.json");
+const ANGULAR_GENERATOR_ROOT =
+  path.basename(path.dirname(__dirname)) === "dist"
+    ? path.resolve(__dirname, "..", "..")
+    : path.resolve(__dirname, "..");
+const REPOSITORY_ROOT = path.resolve(ANGULAR_GENERATOR_ROOT, "..", "..");
+const FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "minimal-openui.json");
+const TEST_OUTPUT_ROOT = path.join(REPOSITORY_ROOT, "tmp");
+const TEST_OUTPUT_PREFIX = path.join(TEST_OUTPUT_ROOT, "openui-angular-generator-");
+
+async function createTestOutputDirectory(): Promise<string> {
+  await mkdir(TEST_OUTPUT_ROOT, { recursive: true });
+  return mkdtemp(TEST_OUTPUT_PREFIX);
+}
 
 function pageById(pages: UiPage[], id: string): UiPage {
   const page = pages.find((candidate) => candidate.id === id);
@@ -97,7 +108,7 @@ test("builds the UI model from canonical scope-tree OpenUI nodes", async () => {
 });
 
 test("generates an Angular Material standalone app from canonical scope-tree OpenUI", async () => {
-  const outDir = await mkdtemp(path.join(tmpdir(), "openui-angular-generator-"));
+  const outDir = await createTestOutputDirectory();
   try {
     await run(["generate", "--spec", FIXTURE, "--out", outDir]);
 
@@ -151,7 +162,7 @@ test("generates an Angular Material standalone app from canonical scope-tree Ope
 });
 
 test("generates scope-specific Angular Material details from the canonical tree", async () => {
-  const outDir = await mkdtemp(path.join(tmpdir(), "openui-angular-generator-"));
+  const outDir = await createTestOutputDirectory();
   try {
     await run(["generate", "--spec", FIXTURE, "--out", outDir]);
 

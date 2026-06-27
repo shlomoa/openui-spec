@@ -6,41 +6,42 @@ theme:
 docs_dir: spec
 nav:
   - Overview: README.md
-  - Scopes: scopes/scope.md
-  - Application:
-      - Overview: scopes/Application/scope.md
-      - Routing: scopes/Application/routing.scope.md
-      - Navigation: scopes/Application/navigation.scope.md
-      - Tool bars: scopes/Application/tool_bars.scope.md
-      - favicon.ico: scopes/Application/favicon.scope.md
-      - index.html: scopes/Application/index_html.scope.md
-  - Controls:
-      - Overview: scopes/Controls/scope.md
-      - Native: scopes/Controls/native.scope.md
-  - Behaviors:
-      - Overview: scopes/Behaviors/scope.md
-      - Drag and drop: scopes/Behaviors/drag_and_drop.scope.md
-      - Resizable: scopes/Behaviors/resizable.scope.md
-      - Collapsible: scopes/Behaviors/collapsible.scope.md
-  - Pages:
-      - Overview: scopes/Pages/scope.md
-      - Dashboard: scopes/Pages/dashboard.scope.md
-      - Shell page: scopes/Pages/shell_page.scope.md
-      - Empty page: scopes/Pages/empty_page.scope.md
-  - Views:
-      - Overview: scopes/Views/scope.md
-      - Reports: scopes/Views/reports.scope.md
-      - Forms: scopes/Views/forms.scope.md
-  - Containers:
-      - Overview: scopes/Containers/scope.md
-      - Grid: scopes/Containers/grid.scope.md
-      - Expandable panels: scopes/Containers/expandable_panels.scope.md
-      - Tabs: scopes/Containers/tabs.scope.md
-  - Widgets:
-      - Overview: scopes/Widgets/scope.md
-      - Charts: scopes/Widgets/charts.scope.md
-      - Tables: scopes/Widgets/tables.scope.md
-      - Lists: scopes/Widgets/lists.scope.md
-      - Date/Time pickers: scopes/Widgets/date_time_pickers.scope.md
-      - Stepper: scopes/Widgets/stepper.scope.md
-      - Dialog: scopes/Widgets/dialog.scope.md
+  - Scopes:
+      - Overview: scopes/scope.md
+      - Application:
+          - Overview: scopes/Application/scope.md
+          - Routing: scopes/Application/routing.scope.md
+          - Navigation: scopes/Application/navigation.scope.md
+          - Tool bars: scopes/Application/tool_bars.scope.md
+          - favicon.ico: scopes/Application/favicon.scope.md
+          - index.html: scopes/Application/index_html.scope.md
+      - Controls:
+          - Overview: scopes/Controls/scope.md
+          - Native: scopes/Controls/native.scope.md
+      - Behaviors:
+          - Overview: scopes/Behaviors/scope.md
+          - Drag and drop: scopes/Behaviors/drag_and_drop.scope.md
+          - Resizable: scopes/Behaviors/resizable.scope.md
+          - Collapsible: scopes/Behaviors/collapsible.scope.md
+      - Pages:
+          - Overview: scopes/Pages/scope.md
+          - Dashboard: scopes/Pages/dashboard.scope.md
+          - Shell page: scopes/Pages/shell_page.scope.md
+          - Empty page: scopes/Pages/empty_page.scope.md
+      - Views:
+          - Overview: scopes/Views/scope.md
+          - Reports: scopes/Views/reports.scope.md
+          - Forms: scopes/Views/forms.scope.md
+      - Containers:
+          - Overview: scopes/Containers/scope.md
+          - Grid: scopes/Containers/grid.scope.md
+          - Expandable panels: scopes/Containers/expandable_panels.scope.md
+          - Tabs: scopes/Containers/tabs.scope.md
+      - Widgets:
+          - Overview: scopes/Widgets/scope.md
+          - Charts: scopes/Widgets/charts.scope.md
+          - Tables: scopes/Widgets/tables.scope.md
+          - Lists: scopes/Widgets/lists.scope.md
+          - Date/Time pickers: scopes/Widgets/date_time_pickers.scope.md
+          - Stepper: scopes/Widgets/stepper.scope.md
+          - Dialog: scopes/Widgets/dialog.scope.md
