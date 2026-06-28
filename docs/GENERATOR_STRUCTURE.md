@@ -14,6 +14,14 @@ Root `openui.json` is **generated** from that prose. It — together with genera
 fixtures, generated examples, and Angular target models — is a derived artifact
 that must not replace or redefine the golden source.
 
+The repository-local converter for the generated catalog lives in `spec/to_json/`.
+After changing scope prose or converter-relevant structure, regenerate the root
+catalog with:
+
+```powershell
+./.venv/Scripts/python -m spec.to_json --spec-dir spec --output openui.json
+```
+
 The Angular generator's runtime input is an `input.json` UI description authored
 against the OpenUI specification; the specification itself — root `openui.json`
 (catalog), `spec/openui.schema.json` (grammar), and the `spec/**/*.md` prose — is
@@ -86,6 +94,16 @@ generators/angular/
 └─ generated-examples/
 ```
 
+The catalog converter is outside the Angular package because it belongs to the
+specification layer:
+
+```text
+spec/to_json/
+├─ __init__.py
+├─ __main__.py
+└─ converter.py
+```
+
 ## Module responsibilities
 
 | Module                                   | Current responsibility                                                                                                                  |
@@ -146,10 +164,11 @@ document does not redefine them. For the generator's purposes:
   `spec/README.md` and `openui.schema.json` for the authoritative root contract.
 
   Scope coverage is represented by native OpenUI nodes whose `attrs.scopeDocument`
-  values point to Markdown files under `spec/`, including the scope documents
-  under `spec/scopes/`. Scope nodes are metadata-only; each scope's object
-  contract is carried by a single typed instance child (`<scopeId>Instance`) that
-  has no `scopeDocument`. See `spec/scopes/scope.md` for the serialization rule.
+  values are relative to `spec/`, for example `scopes/Widgets/dialog.scope.md`.
+  Scope nodes are metadata-only; each scope's object contract is carried by a
+  single typed instance child (`<scopeId>Instance`) that has no `scopeDocument`.
+  Generated child-model ids are scoped by the owning leaf when needed so ids stay
+  globally unique. See `spec/scopes/scope.md` for the serialization rule.
 
 - **Input** — an `input.json` authored against the catalog: a well-formed OpenUI
   document (per `openui.schema.json`) whose every `type` is a real catalog object
@@ -249,9 +268,9 @@ Pop-Location
 Run repository Python and documentation validation through the local `.venv`:
 
 ```powershell
-./.venv/Scripts/python -m pytest
-./.venv/Scripts/pre-commit run --all-files
-./.venv/Scripts/python -m mkdocs build --strict
+./.venv/Scripts/python -m unittest discover -s tests
+./.venv/Scripts/python -m ruff check .
+./.venv/Scripts/python -m ruff format --check .
 git diff --check
 ```
 
@@ -270,12 +289,13 @@ Avoid shortcuts that collapse these layers. For example, do not add a new
 OpenUI concept by string-building Angular output directly from raw source JSON.
 Instead:
 
-1. Update the golden source in `spec/README.md`, `spec/`, and `openui.json`.
-2. Validate the golden source and schema constraints.
-3. Adapt the native OpenUI source into the generator model or IR.
-4. Map the IR into Angular model fields.
-5. Emit files from the Angular model.
-6. Add tests that verify generated TypeScript, HTML, SCSS, and diagnostics.
+1. Update the golden source in `spec/README.md` and `spec/`.
+2. Regenerate `openui.json` with `python -m spec.to_json`.
+3. Validate the golden source, generated catalog, and schema constraints.
+4. Adapt the native OpenUI source into the generator model or IR.
+5. Map the IR into Angular model fields.
+6. Emit files from the Angular model.
+7. Add tests that verify generated TypeScript, HTML, SCSS, and diagnostics.
 
 This distinction keeps the generator maintainable as the OpenUI specification
 grows.

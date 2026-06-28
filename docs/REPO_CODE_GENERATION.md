@@ -2,7 +2,7 @@
 
 This document describes how repository-local OpenUI specification artifacts
 become generator input and, eventually, generated Angular files. It complements
-`docs/GENERATOR_STRUCTURE.md`, which documents the implemented Angular generator
+`GENERATOR_STRUCTURE.md`, which documents the implemented Angular generator
 package in `generators/angular/generator/`.
 
 For the immediate spec-population sequence, see
@@ -13,11 +13,22 @@ For the immediate spec-population sequence, see
 The golden source for code generation is the repository OpenUI specification:
 
 - `spec/README.md` for the prose entry point and JSON format rules,
-- Markdown files under `spec/` for synchronized prose scopes, and
-- root `openui.json` for the canonical machine-readable specification.
+- Markdown files under `spec/` for synchronized prose scopes,
+- `spec/to_json/` for deterministic Markdown-to-JSON conversion, and
+- root `openui.json` for the generated machine-readable specification catalog.
 
 Generator fixtures, generated examples, and Angular target models are derived
 artifacts. They must not redefine the specification.
+
+Regenerate the catalog after changing scope prose or schema-relevant structure:
+
+```powershell
+./.venv/Scripts/python -m spec.to_json --spec-dir spec --output openui.json
+```
+
+The generated catalog keeps `attrs.scopeDocument` values relative to `spec/`, for
+example `scopes/Widgets/dialog.scope.md`, so tests and tooling can resolve them
+as `spec/<scopeDocument>`.
 
 ## Current status
 
@@ -39,13 +50,28 @@ The implemented generator consumes the native OpenUI scope-tree shape in
 UI IR, maps it to an Angular project model, and emits a standalone Angular
 Material application skeleton.
 
+The repository also has a Python scope catalog converter in `spec/to_json/`:
+
+```text
+spec/to_json/
+├─ __init__.py
+├─ __main__.py
+└─ converter.py
+```
+
+The converter parses `spec/scopes/**/*.scope.md` and parent `scope.md` files into
+the native OpenUI `id` / `type` / `attrs` / `children` tree. Leaf scope nodes are
+metadata-only and contain one generated `<scopeId>Instance` child that carries the
+object contract attributes and child model. Child-model ids are scoped by the
+owning leaf when needed, so generated ids remain globally unique.
+
 The next code-generation work should extend this pipeline directly from native
 OpenUI nodes into the existing IR. Transitional input definitions and adapters
 are not allowed.
 
 ## Native OpenUI input scope
 
-The native parser should read:
+The native parser and catalog converter should read:
 
 1. root `openui.json`,
 2. `spec/README.md`, and
@@ -56,6 +82,7 @@ It should extract or verify at least:
 - document `version`, `id`, `type`, `attrs`, and `children`,
 - scope and leaf-node identity,
 - `attrs.scopeDocument` traceability,
+- generated `<scopeId>Instance` nodes for leaf object contracts,
 - `Pages` as the short folder/navigation name,
 - `PredefinedPages` as the long semantic JSON type name,
 - current status values such as `draft`,
@@ -104,11 +131,11 @@ Use these implemented modules as the starting architecture:
 
 The smallest useful golden-source-to-generator slice is:
 
-1. Populate `openui.json` from the current scope model.
+1. Keep regenerating `openui.json` from `spec/to_json` after scope changes.
 2. Keep `spec/openui.schema.json` synchronized with the native `version` / `id` /
    `type` / `attrs` / `children` shape.
-3. Add Python validation that checks `openui.json`, schema rules, scope document
-   paths, and MkDocs navigation.
+3. Keep Python validation that checks `openui.json`, schema rules, scope document
+   paths, converter behavior, and MkDocs navigation.
 4. Map at least one native scope/page node directly into `UiApplication`.
 5. Generate one Angular Material page/component triplet from that IR model:
    - `.page.ts` for behavior and typed state,
@@ -140,9 +167,9 @@ compiles generated apps through Angular tooling.
 Run repository Python and documentation validation through the local `.venv`:
 
 ```powershell
-./.venv/Scripts/python -m pytest
-./.venv/Scripts/pre-commit run --all-files
-./.venv/Scripts/python -m mkdocs build --strict
+./.venv/Scripts/python -m unittest discover -s tests
+./.venv/Scripts/python -m ruff check .
+./.venv/Scripts/python -m ruff format --check .
 git diff --check
 ```
 
@@ -165,7 +192,9 @@ Pop-Location
 
 ## Guardrails
 
-- Do not treat generator fixtures as the source of truth.
+- Do not treat generator fixtures or root `openui.json` as hand-authored source.
+- Do not hand-edit generated catalog changes; update scope prose or converter
+  logic, then rerun `python -m spec.to_json`.
 - Do not generate Angular files directly from raw `openui.json` nodes.
 - Do not bypass the golden source → native extraction → IR → Angular model → files
   separation.
@@ -178,8 +207,8 @@ Pop-Location
 
 ## Final conclusion
 
-- **Golden source:** `spec/README.md`, Markdown under `spec/`, and root
-  `openui.json`.
+- **Golden source:** `spec/README.md` and Markdown under `spec/`; root
+  `openui.json` is generated from that source.
 - **Immediate parser starting point:** native OpenUI `id` / `type` / `attrs` /
   `children` records from `openui.json` plus scope-document traceability.
 - **Generator bridge:** direct native OpenUI extraction into `UiApplication`.
