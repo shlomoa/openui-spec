@@ -111,6 +111,54 @@ class ScopeToJsonConverterTest(unittest.TestCase):
                 )
                 self.assertEqual(node["children"][0]["id"], f"{node['id']}Instance")
 
+    def test_legacy_leaf_without_identity_derives_identity_and_purpose(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            scopes_dir = Path(temporary_directory)
+            legacy_scope = scopes_dir / "legacy_widget.scope.md"
+            legacy_scope.write_text(
+                "# Legacy widget\n"
+                "\n"
+                "Legacy prose purpose that predates the formal template.\n"
+                "\n"
+                "## Scope\n"
+                "\n"
+                "Additional non-machine prose.\n",
+                encoding="utf-8",
+            )
+
+            node = parse_leaf_scope(legacy_scope, scopes_dir=scopes_dir)
+
+            self.assertEqual(node["id"], "legacyWidget")
+            self.assertEqual(node["type"], "LegacyWidget")
+            self.assertEqual(node["attrs"]["purpose"], "Legacy prose purpose that predates the formal template.")
+            self.assertEqual(node["attrs"]["scopeDocument"], "legacy_widget.scope.md")
+            self.assertEqual(node["children"][0]["id"], "legacyWidgetInstance")
+            self.assertEqual(node["children"][0]["type"], "LegacyWidget")
+
+    def test_invalid_attribute_category_raises_value_error(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            scopes_dir = Path(temporary_directory)
+            invalid_scope = scopes_dir / "invalid.scope.md"
+            invalid_scope.write_text(
+                "# Invalid\n"
+                "\n"
+                "## Identity\n"
+                "\n"
+                "- id: invalid · type: Invalid · status: draft\n"
+                "\n"
+                "## Purpose\n"
+                "\n"
+                "Invalid test scope.\n"
+                "\n"
+                "## Attributes\n"
+                "\n"
+                "- `(close)` — Uses — output attributes cannot use Uses.\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "must use Produces or Behaves"):
+                parse_leaf_scope(invalid_scope, scopes_dir=scopes_dir)
+
     def _find_by_id(self, node: dict[str, object], node_id: str) -> dict[str, object] | None:
         if node.get("id") == node_id:
             return node
