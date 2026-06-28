@@ -57,16 +57,16 @@ class ScopeToJsonConverterTest(unittest.TestCase):
 
         self.assertEqual(tree["id"], "scopes")
         self.assertEqual(tree["type"], "Scopes")
-        self.assertEqual(tree["attrs"]["scopeDocument"], "scope.md")
+        self.assertEqual(tree["attrs"]["scopeDocument"], "scopes/scope.md")
 
         dialog = self._find_by_id(tree, "dialog")
         self.assertIsNotNone(dialog)
-        self.assertEqual(dialog["attrs"]["scopeDocument"], "Widgets/dialog.scope.md")
+        self.assertEqual(dialog["attrs"]["scopeDocument"], "scopes/Widgets/dialog.scope.md")
         self.assertEqual(dialog["children"][0]["id"], "dialogInstance")
 
         table_scope = self._find_by_id(tree, "tableScope")
         self.assertIsNotNone(table_scope)
-        self.assertEqual(table_scope["attrs"]["scopeDocument"], "Controls/Table/scope.md")
+        self.assertEqual(table_scope["attrs"]["scopeDocument"], "scopes/Controls/Table/scope.md")
 
     def test_build_openui_document_uses_schema_version_and_scopes_tree(self) -> None:
         document = build_openui_document(spec_dir=SPEC_DIR)
@@ -107,7 +107,7 @@ class ScopeToJsonConverterTest(unittest.TestCase):
                 node = parse_leaf_scope(path, scopes_dir=SCOPES_DIR)
                 self.assertEqual(
                     node["attrs"]["scopeDocument"],
-                    path.relative_to(SCOPES_DIR).as_posix(),
+                    f"scopes/{path.relative_to(SCOPES_DIR).as_posix()}",
                 )
                 self.assertEqual(node["children"][0]["id"], f"{node['id']}Instance")
 
@@ -134,7 +134,7 @@ class ScopeToJsonConverterTest(unittest.TestCase):
                 node["attrs"]["purpose"],
                 "Legacy prose purpose that predates the formal template.",
             )
-            self.assertEqual(node["attrs"]["scopeDocument"], "legacy_widget.scope.md")
+            self.assertEqual(node["attrs"]["scopeDocument"], "scopes/legacy_widget.scope.md")
             self.assertEqual(node["children"][0]["id"], "legacyWidgetInstance")
             self.assertEqual(node["children"][0]["type"], "LegacyWidget")
 

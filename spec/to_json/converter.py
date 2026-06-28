@@ -98,7 +98,7 @@ def build_openui_document(
     """Build the full OpenUI JSON document from the prose scope tree."""
     resolved_spec_dir = (
         Path(spec_dir) if spec_dir is not None else Path(__file__).resolve().parents[1]
-    )
+    ).resolve()
     resolved_version = (
         version or (resolved_spec_dir.parent / "SCHEMA_VERSION").read_text(encoding="utf-8").strip()
     )
@@ -119,7 +119,7 @@ def build_openui_document(
 
 def build_scope_tree(scopes_dir: Path | str) -> dict[str, Any]:
     """Build the generated JSON node for `spec/scopes` or any scope directory."""
-    root = Path(scopes_dir)
+    root = Path(scopes_dir).resolve()
     if not root.is_dir():
         raise ValueError(f"{root}: scope directory does not exist")
     return _build_scope_directory(root, root)
@@ -196,7 +196,7 @@ def _build_scope_directory(path: Path, scopes_dir: Path) -> dict[str, Any]:
         "attrs": {
             "title": title,
             "purpose": _leading_prose(text),
-            "scopeDocument": scope_file.relative_to(scopes_dir).as_posix(),
+            "scopeDocument": _scope_document(scope_file, scopes_dir),
             "status": "draft",
         },
     }
@@ -312,7 +312,7 @@ def _children(lines: list[str], path: Path) -> list[dict[str, str]]:
 def _scope_document(path: Path, scopes_dir: Path | str | None) -> str:
     if scopes_dir is None:
         return path.as_posix()
-    return path.relative_to(Path(scopes_dir)).as_posix()
+    return f"scopes/{path.resolve().relative_to(Path(scopes_dir).resolve()).as_posix()}"
 
 
 def _pascal_case(value: str) -> str:
