@@ -85,7 +85,7 @@ def parse_leaf_scope(path: Path | str, *, scopes_dir: Path | str | None = None) 
         purpose=purpose,
         scope_document=scope_document,
         attrs=_attributes(sections.get("Attributes", []), source_path),
-        children=_children(sections.get("Child model", []), source_path),
+        children=_children(sections.get("Child model", []), source_path, identity["id"]),
     )
     return leaf.to_node()
 
@@ -299,13 +299,18 @@ def _attributes(lines: list[str], path: Path) -> dict[str, None]:
     return attrs
 
 
-def _children(lines: list[str], path: Path) -> list[dict[str, str]]:
+def _children(lines: list[str], path: Path, scope_id: str) -> list[dict[str, str]]:
     children: list[dict[str, str]] = []
     for line in lines:
         match = CHILD_RE.fullmatch(line)
         if not match:
             continue
-        children.append({"id": match.group("id"), "type": match.group("type")})
+        children.append(
+            {
+                "id": _scoped_child_id(scope_id, match.group("id")),
+                "type": match.group("type"),
+            }
+        )
     return children
 
 
@@ -325,6 +330,12 @@ def _leaf_id_from_path(path: Path) -> str:
     if not parts:
         raise ValueError(f"{path}: cannot derive id from file name")
     return parts[0].lower() + "".join(part[:1].upper() + part[1:] for part in parts[1:])
+
+
+def _scoped_child_id(scope_id: str, child_id: str) -> str:
+    if child_id.startswith(scope_id):
+        return child_id
+    return f"{scope_id}{_pascal_case(child_id)}"
 
 
 def _pascal_words(value: str) -> str:

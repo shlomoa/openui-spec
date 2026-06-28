@@ -68,6 +68,23 @@ class ScopeToJsonConverterTest(unittest.TestCase):
         self.assertIsNotNone(table_scope)
         self.assertEqual(table_scope["attrs"]["scopeDocument"], "scopes/Controls/Table/scope.md")
 
+    def test_child_model_ids_are_scoped_when_needed(self) -> None:
+        node = parse_leaf_scope(
+            SCOPES_DIR / "Behaviors" / "drag_and_drop.scope.md",
+            scopes_dir=SCOPES_DIR,
+        )
+
+        instance = node["children"][0]
+        self.assertEqual(
+            [child["id"] for child in instance["children"]],
+            [
+                "dragAndDropTargetPage",
+                "dragAndDropTargetView",
+                "dragAndDropTargetContainer",
+                "dragAndDropTargetWidget",
+            ],
+        )
+
     def test_build_openui_document_uses_schema_version_and_scopes_tree(self) -> None:
         document = build_openui_document(spec_dir=SPEC_DIR)
 
