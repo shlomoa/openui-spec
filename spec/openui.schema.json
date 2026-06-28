@@ -6,17 +6,47 @@
   "additionalProperties": false,
   "required": ["version", "id", "type"],
   "properties": {
-    "version": {
-      "type": "string",
-      "const": "0.0.1"
-    },
+    "version": { "$ref": "#/$defs/version" },
     "id": {
       "type": "string",
       "const": "root"
     },
-    "type": {
+    "type": { "$ref": "#/$defs/typeName" },
+    "attrs": { "$ref": "#/$defs/attrs" },
+    "children": { "$ref": "#/$defs/children" }
+  },
+  "$defs": {
+    "version": {
       "type": "string",
-      "const": "html"
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "typeName": {
+      "type": "string",
+      "anyOf": [
+        {
+          "enum": [
+            "html",
+            "body",
+            "main",
+            "section",
+            "article",
+            "header",
+            "footer",
+            "nav",
+            "div",
+            "span",
+            "input",
+            "button",
+            "table"
+          ]
+        },
+        {
+          "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+        },
+        {
+          "pattern": "^[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?$"
+        }
+      ]
     },
     "attrs": {
       "type": "object",
@@ -29,9 +59,7 @@
       "items": {
         "$ref": "#/$defs/element"
       }
-    }
-  },
-  "$defs": {
+    },
     "element": {
       "type": "object",
       "additionalProperties": false,
@@ -41,46 +69,9 @@
           "type": "string",
           "pattern": "^[a-z][A-Za-z0-9]*$"
         },
-        "type": {
-          "type": "string",
-          "anyOf": [
-            {
-              "enum": [
-                "html",
-                "body",
-                "main",
-                "section",
-                "article",
-                "header",
-                "footer",
-                "nav",
-                "div",
-                "span",
-                "input",
-                "button",
-                "table"
-              ]
-            },
-            {
-              "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
-            },
-            {
-              "pattern": "^[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?$"
-            }
-          ]
-        },
-        "attrs": {
-          "type": "object",
-          "additionalProperties": {
-            "type": ["string", "null"]
-          }
-        },
-        "children": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/element"
-          }
-        }
+        "type": { "$ref": "#/$defs/typeName" },
+        "attrs": { "$ref": "#/$defs/attrs" },
+        "children": { "$ref": "#/$defs/children" }
       }
     }
   }

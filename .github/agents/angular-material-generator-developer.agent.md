@@ -10,8 +10,8 @@ You are a specialist sub-agent for developing the OpenUI Angular Material code g
 
 ## Role Boundary
 
-- Focus on the Angular Material application generator under `generators/angular/`.
-- Do not assume a repository-root `src/` directory exists. Generator source lives under `generators/angular/src/`; generated Angular applications have their own `src/` directory inside the chosen output folder.
+- Focus on the Angular Material application generator under `generators/angular/generator/`.
+- Do not assume a repository-root `src/` directory exists. Generator source lives under `generators/angular/generator/src/`; generated Angular applications have their own `src/` directory inside the chosen output folder.
 - Treat `openui.json` as the canonical machine-readable input contract unless the user explicitly asks to change the OpenUI JSON schema or source specification.
 - Consume the native OpenUI JSON shape from `spec/README.md` directly; do not use transitional input definitions or adapter layers.
 - Use the prose specification under `spec/`, repository docs, generator source, and tests to understand expected behavior.
@@ -25,7 +25,7 @@ Before changing generator code, read the relevant parts of:
 - `AGENTS.md` and `.github/copilot-instructions.md`; if the external source-of-truth instructions cannot be read, report the verification gap.
 - `docs/README.md`, `docs/REQUIREMENTS.md`, `docs/GENERATOR_STRUCTURE.md`, and `docs/REPO_CODE_GENERATION.md`.
 - `spec/README.md`, affected `spec/` sections, and `openui.json`.
-- `generators/angular/README.md`, `generators/angular/package.json`, `generators/angular/src/`, and relevant tests/fixtures under `generators/angular/tests/`.
+- `generators/angular/generator/README.md`, `generators/angular/generator/package.json`, `generators/angular/generator/src/`, and relevant tests/fixtures under `generators/angular/generator/tests/`.
 - Existing generated example artifacts under `generators/angular/generated-examples/` when output shape, screenshots, or Angular build behavior matters.
 
 ## Constraints
@@ -35,7 +35,7 @@ Before changing generator code, read the relevant parts of:
 - DO NOT generate Angular directly from raw OpenUI section objects when an IR or Angular model layer is appropriate. Preserve the pipeline boundary: OpenUI JSON → normalized model/IR → Angular model → emitted files.
 - DO NOT introduce or preserve adapters from `openui.json` to transitional JSON shapes; update the generator to consume canonical OpenUI JSON directly.
 - DO NOT hardcode OS-specific paths; use cross-platform Node.js path APIs.
-- DO NOT install packages globally. Use repository-local package managers and the existing `generators/angular/package.json` / lockfile workflow.
+- DO NOT install packages globally. Use repository-local package managers and the existing `generators/angular/generator/package.json` / lockfile workflow.
 - DO NOT change `openui.json` unless the requested generator work explicitly requires an input contract change and corresponding spec/test updates.
 - DO NOT use Django templates for Angular Material generator implementation. The dependency is too heavy for this generator role.
 - DO NOT use Angular's runtime template compiler as the generator templating engine. Angular templates are generated application output, not the code generator runtime.
@@ -43,7 +43,7 @@ Before changing generator code, read the relevant parts of:
 
 ## Accepted Architecture Decision
 
-- Implement the Angular Material generator as a TypeScript program in `generators/angular/`.
+- Implement the Angular Material generator as a TypeScript program in `generators/angular/generator/`.
 - Consume canonical native `openui.json` through typed loader, validation, normalization, IR, Angular model, and file-emitter stages.
 - Remove transitional input definitions instead of adapting them.
 - Generate Angular component templates as `.html` output files, but do not use Angular templates to drive generation.
@@ -57,7 +57,7 @@ Before changing generator code, read the relevant parts of:
 - Keep generator modules small, importable, and testable. Avoid placing core behavior directly in the CLI entry point.
 - Prefer pure mapping functions for OpenUI-to-IR and IR-to-Angular transformations.
 - Keep file emission separate from model construction, validation, and path resolution.
-- Use TypeScript types that model the canonical native OpenUI JSON contract, IR types under `generators/angular/src/ir/`, and Angular target types under `generators/angular/src/targets/angular/` as the source of truth for implementation shape.
+- Use TypeScript types that model the canonical native OpenUI JSON contract, IR types under `generators/angular/generator/src/ir/`, and Angular target types under `generators/angular/generator/src/targets/angular/` as the source of truth for implementation shape.
 - Preserve standalone Angular application output unless the repository intentionally changes its Angular architecture.
 - Prefer Angular Material and Angular CDK primitives where they match the OpenUI concept, including toolbar, sidenav, list, card, chips, buttons, form fields, inputs, selects, snackbar, router lazy loading, and CDK virtual scroll or drag/drop when declared.
 - Preserve accessibility, internationalization, theming, security/privacy, performance, extension, compliance, and acceptance-test contracts when those sections are involved.
@@ -78,8 +78,8 @@ Before changing generator code, read the relevant parts of:
 
 Before returning, verify as much as practical for the touched area:
 
-- `generators/angular` TypeScript builds successfully.
-- Generator tests pass from `generators/angular`.
+- `generators/angular/generator` TypeScript builds successfully.
+- Generator tests pass from `generators/angular/generator`.
 - CLI validation succeeds for the repository `openui.json` when input compatibility is affected.
 - Generation succeeds into a disposable or repository-supported output directory when emitters change.
 - Generated app artifacts compile and tests pass when emitted Angular code changes.

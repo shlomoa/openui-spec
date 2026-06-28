@@ -1,7 +1,7 @@
 # Angular Generator Structure
 
-The Angular generator lives in `generators/angular/`. Keep it structured as a
-**compiler pipeline**, not as a template script.
+The Angular generator lives in `generators/angular/generator/`. Keep it structured
+as a **compiler pipeline**, not as a template script.
 
 ## Golden source boundary
 
@@ -40,38 +40,39 @@ For the initial golden-source population plan, see
 
 ```text
 generators/angular/
-├─ src/
-│  ├─ cli/
-│  │  └─ main.ts
-│  ├─ spec/
-│  │  ├─ openui-sections.ts
-│  │  ├─ openui-spec.types.ts
-│  │  └─ load-spec.ts
-│  ├─ validation/
-│  │  ├─ diagnostics.ts
-│  │  └─ validate-spec.ts
-│  ├─ ir/
-│  │  ├─ build-ir.ts
-│  │  ├─ normalize-spec.ts
-│  │  └─ ui-model.ts
-│  ├─ targets/
-│  │  └─ angular/
-│  │     ├─ angular-model.ts
-│  │     ├─ emit-angular-project.ts
-│  │     ├─ emit-component.ts
-│  │     ├─ emit-routes.ts
-│  │     ├─ emit-theme.ts
-│  │     └─ map-to-angular.ts
-│  └─ writers/
-│     ├─ file-writer.ts
-│     └─ safe-write.ts
-├─ tests/
-│  ├─ fixtures/
-│  │  └─ minimal-openui.json
-│  └─ generator.test.ts
-├─ generated-examples/
-├─ package.json
-└─ tsconfig.json
+├─ generator/
+│  ├─ src/
+│  │  ├─ cli/
+│  │  │  └─ main.ts
+│  │  ├─ spec/
+│  │  │  ├─ openui-sections.ts
+│  │  │  ├─ openui-spec.types.ts
+│  │  │  └─ load-spec.ts
+│  │  ├─ validation/
+│  │  │  ├─ diagnostics.ts
+│  │  │  └─ validate-spec.ts
+│  │  ├─ ir/
+│  │  │  ├─ build-ir.ts
+│  │  │  ├─ normalize-spec.ts
+│  │  │  └─ ui-model.ts
+│  │  ├─ targets/
+│  │  │  └─ angular/
+│  │  │     ├─ angular-model.ts
+│  │  │     ├─ emit-angular-project.ts
+│  │  │     ├─ emit-component.ts
+│  │  │     ├─ emit-routes.ts
+│  │  │     ├─ emit-theme.ts
+│  │  │     └─ map-to-angular.ts
+│  │  └─ writers/
+│  │     ├─ file-writer.ts
+│  │     └─ safe-write.ts
+│  ├─ tests/
+│  │  ├─ fixtures/
+│  │  │  └─ minimal-openui.json
+│  │  └─ generator.test.ts
+│  ├─ package.json
+│  └─ tsconfig.json
+└─ generated-examples/
 ```
 
 ## Module responsibilities
@@ -200,10 +201,10 @@ the default and only supported target.
 
 ## Validation and tests
 
-Run generator package validation from `generators/angular/`:
+Run generator package validation from `generators/angular/generator/`:
 
 ```powershell
-Push-Location generators/angular
+Push-Location generators/angular/generator
 npm run test
 Pop-Location
 ```

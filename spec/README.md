@@ -8,41 +8,42 @@ It serves application developers, designers and UX owners, framework maintainers
 
 ## Spec folder structure
 
-1. scopes folder: structured hierarchically, each scope is a folder or a markdown file, and each scope contains one or more objects.
+The `scopes` folder is structured hierarchically. Each top-level scope is a folder; each object is either a child scope folder or a snake_case `*.scope.md` leaf file.
 
-- Application:
-  - Application level bootstrap artifacts are mostly framework dependent.
-  - Non-framework specifics include abstract notions like Routing, Navigation, Tool bars and actual assets like favicon.ico & index.html files.
-    - See the [Create a workspace and initial application](https://angular.dev/tools/cli/setup-local#create-a-workspace-and-initial-application) for Angular Material reference implementation.
-    - See the source code of the `ng new` command in the [Angular CLI repository](https://github.com/angular/angular-cli/tree/main/packages/angular/cli/src/commands/new)
-- Controls:
-  - Native: Scroll bars, font size type and family, color schemes, etc.
-    - Provided in html, css, and js files.
-    - Usually standard and handled by the framework and the browser.
-- Behaviors: A set of behaviors that can be applied to pages, views, and widgets.
-  - Drag and drop: A behavior that allows users to drag and drop elements within a page or view.
-  - Resizable: A behavior that allows users to resize elements within a page or view.
-  - Collapsible: A behavior that allows users to collapse and expand elements within a page or view.
-- Pages:
-  - "Dashboard": A predefined page layout for overview metrics and summary content; see the Angular Material [Dashboard Schematic](https://material.angular.dev/guide/schematics#dashboard-schematic) for a reference implementation pattern.
-  - "Shell page": A page with no content with routing and navigation.
-  - "Empty page": A page with no content and no routing or navigation.
-- Views: A user facing view of business objects.
-  - Reports: read-only data including filtering, sorting, grouping, and pagination.
-  - Forms: read-write data including validation, submission, and dirty state.
-- Containers: A layout container that arranges its children in a specific layout.
-  - Grid: A grid layout that arranges its children in rows and columns.
-  - Expandable panels: A collapsible panel that can be expanded or collapsed to show or hide content.
-  - Tabs: A tabbed interface that allows users to switch between different views or content.
-- Widgets: A reusable component that can be used in multiple pages or views.
-  - Common widgets include:
-    - Charts: A visual representation of data, including bar charts, line charts, pie charts, etc.
-    - Tables: A tabular representation of data, including sorting, filtering, and pagination.
-    - Lists: A list of items, including sorting, filtering, and pagination.
-  - More complex widgets may include:
-    - Date/Time pickers: A calendar-based date and time selection component.
-    - Stepper: A component that guides users through a multi-step process.
-    - Dialog: A modal or non-modal dialog with a title, content, and actions.
+| Scope                                          | Object                                                            | Description                                                                    |
+| ---------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| **[Application](scopes/Application/scope.md)** |                                                                   | Application-level bootstrap artifacts and implementation-independent concepts. |
+|                                                | [Routing](scopes/Application/routing.scope.md)                    | Application-level route definitions and route resolution.                      |
+|                                                | [Navigation](scopes/Application/navigation.scope.md)              | User-facing navigation exposing routes, pages, and views.                      |
+|                                                | [Tool bars](scopes/Application/tool_bars.scope.md)                | Application-level command surfaces and action placement.                       |
+|                                                | [favicon.ico](scopes/Application/favicon.scope.md)                | Application icon asset for browser and shell identity.                         |
+|                                                | [index.html](scopes/Application/index_html.scope.md)              | Application host document and static bootstrap metadata.                       |
+| **[Controls](scopes/Controls/scope.md)**       |                                                                   | Browser, framework, or runtime-provided native controls.                       |
+|                                                | [Native](scopes/Controls/native.scope.md)                         | Native controls and presentation (scroll bars, fonts, color schemes).          |
+| **[Behaviors](scopes/Behaviors/scope.md)**     |                                                                   | Reusable behaviors applied to pages, views, containers, and widgets.           |
+|                                                | [Drag and drop](scopes/Behaviors/drag_and_drop.scope.md)          | Move elements within a page, view, container, or widget.                       |
+|                                                | [Resizable](scopes/Behaviors/resizable.scope.md)                  | Resize elements within a page or view.                                         |
+|                                                | [Collapsible](scopes/Behaviors/collapsible.scope.md)              | Collapse and expand elements within a page or view.                            |
+| **[Pages](scopes/Pages/scope.md)**             |                                                                   | Predefined page-level layouts and page shells.                                 |
+|                                                | [Dashboard](scopes/Pages/dashboard.scope.md)                      | Overview metrics and summary content layout.                                   |
+|                                                | [Shell page](scopes/Pages/shell_page.scope.md)                    | A page with no content but with routing and navigation.                        |
+|                                                | [Empty page](scopes/Pages/empty_page.scope.md)                    | A page with no content and no routing or navigation.                           |
+| **[Views](scopes/Views/scope.md)**             |                                                                   | User-facing views of business objects.                                         |
+|                                                | [Reports](scopes/Views/reports.scope.md)                          | Read-only data with filtering, sorting, grouping, and pagination.              |
+|                                                | [Forms](scopes/Views/forms.scope.md)                              | Read-write data with validation, submission, and dirty state.                  |
+| **[Containers](scopes/Containers/scope.md)**   |                                                                   | Layout containers that arrange child content.                                  |
+|                                                | [Grid](scopes/Containers/grid.scope.md)                           | Arranges children in rows and columns.                                         |
+|                                                | [Expandable panels](scopes/Containers/expandable_panels.scope.md) | Panels that expand or collapse to show or hide content.                        |
+|                                                | [Tabs](scopes/Containers/tabs.scope.md)                           | Tabbed interface switching between views or content.                           |
+| **[Widgets](scopes/Widgets/scope.md)**         |                                                                   | Reusable components usable across pages or views.                              |
+|                                                | [Charts](scopes/Widgets/charts.scope.md)                          | Visual data representations (bar, line, pie).                                  |
+|                                                | [Tables](scopes/Widgets/tables.scope.md)                          | Tabular data with sorting, filtering, and pagination.                          |
+|                                                | [Lists](scopes/Widgets/lists.scope.md)                            | Lists of items with sorting, filtering, and pagination.                        |
+|                                                | [Date/Time pickers](scopes/Widgets/date_time_pickers.scope.md)    | Calendar-based date and time selection.                                        |
+|                                                | [Stepper](scopes/Widgets/stepper.scope.md)                        | Guides users through a multi-step process.                                     |
+|                                                | [Dialog](scopes/Widgets/dialog.scope.md)                          | Modal or non-modal dialog with title, content, and actions.                    |
+
+Each linked path is the scope's `attrs.scopeDocument` value in the root `openui.json`, which maps every `spec/scopes/**` document to its machine-readable node.
 
 ### Scope folder
 

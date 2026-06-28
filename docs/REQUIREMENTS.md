@@ -11,5 +11,5 @@ The specification is a json file providing abstraction of a web UI component. It
 The generator is a tool that takes the specification as input, and an existing Angular project as context, and implements the specification to produce a skeleton Angular app as output.
 
 - Implemented in TypeScript and as an npmjs package.
-- Use folder generators/angular for implementation.
+- Use folder generators/angular/generator for implementation.
 - Generator implementation should follow the structure and implementation details documented in docs/GENERATOR_STRUCTURE.md.

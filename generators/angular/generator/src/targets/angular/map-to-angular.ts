@@ -853,7 +853,7 @@ function buildComplianceContracts(): {
     },
     synchronizedEvidence: [
       { area: "documentation", source: "spec/21-compliance-rules.md", generatedArtifact: "compliance page" },
-      { area: "generated examples", source: "generators/angular/tests/fixtures/minimal-openui.json", generatedArtifact: "Angular Material page" },
+      { area: "generated examples", source: "generators/angular/generator/tests/fixtures/minimal-openui.json", generatedArtifact: "Angular Material page" },
       { area: "security/privacy", source: "18-security-privacy-ui-rules", generatedArtifact: "safe rendering guards" },
       { area: "extension", source: "20-extension-model", generatedArtifact: "extension compatibility gates" },
     ],

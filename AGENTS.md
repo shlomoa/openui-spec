@@ -20,7 +20,7 @@ This project goals is to create a standard specification for Web UI framework sp
 - A folder containing all the documentation for the specification.
 - spec/README.md - Specification entry point: purpose, how to read the spec, and the section index.
 
-- generators/angular/
+- generators/angular/generator/
 
 - location of the Angular TypeScript generator implementation.
 - docs/GENERATOR_STRUCTURE.md - The structure and implementation details of the Angular TypeScript generator.

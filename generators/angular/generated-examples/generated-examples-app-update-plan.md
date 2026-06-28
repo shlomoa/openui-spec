@@ -109,38 +109,42 @@
      - preview mapping or explanation fallback.
 
 10. **Update or add tests**
-   - Add tests for the documentation data model:
-     - every expected scope file is represented or intentionally marked as not sensible/applicable,
-     - every example has either before/after code or explanation-only content,
-     - examples with HTML include preview/code data for both before and after,
-     - examples without HTML include textual explanation.
-   - Add component tests where practical for:
-     - nested navigation rendering,
-     - before/after panel rendering,
-     - no-HTML fallback rendering.
+
+- Add tests for the documentation data model:
+  - every expected scope file is represented or intentionally marked as not sensible/applicable,
+  - every example has either before/after code or explanation-only content,
+  - examples with HTML include preview/code data for both before and after,
+  - examples without HTML include textual explanation.
+- Add component tests where practical for:
+  - nested navigation rendering,
+  - before/after panel rendering,
+  - no-HTML fallback rendering.
 
 11. **Validate generated-examples only**
-   - From generated-examples, run:
-     - `npm run format:check`
-     - `npm run lint`
-     - `npm test`
-     - `npm run build`
-   - If formatting fails, run the app’s formatter and rerun checks.
-   - Do not run or change the Angular generator unless explicitly requested.
+
+- From generated-examples, run:
+  - `npm run format:check`
+  - `npm run lint`
+  - `npm test`
+  - `npm run build`
+- If formatting fails, run the app’s formatter and rerun checks.
+- Do not run or change the Angular generator unless explicitly requested.
 
 12. **Validate repository docs/tests only if affected**
-   - If no root docs/spec files are changed, avoid unrelated repo-wide edits.
-   - If shared repo validation is needed, run it using the local .venv.
-   - Do not accept incidental hook changes unless they are directly necessary or explicitly approved.
+
+- If no root docs/spec files are changed, avoid unrelated repo-wide edits.
+- If shared repo validation is needed, run it using the local .venv.
+- Do not accept incidental hook changes unless they are directly necessary or explicitly approved.
 
 13. **Final review**
-   - Confirm changed files are limited to `generators/angular/generated-examples/**`, unless tests/config in that app require otherwise.
-   - Summarize:
-     - scope hierarchy support,
-     - example coverage,
-     - before/after panel behavior,
-     - no-HTML fallback behavior,
-     - validations run.
+
+- Confirm changed files are limited to `generators/angular/generated-examples/**`, unless tests/config in that app require otherwise.
+- Summarize:
+  - scope hierarchy support,
+  - example coverage,
+  - before/after panel behavior,
+  - no-HTML fallback behavior,
+  - validations run.
 
 ## One remaining implementation note
 

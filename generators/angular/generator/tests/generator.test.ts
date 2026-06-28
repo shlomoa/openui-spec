@@ -14,7 +14,7 @@ const ANGULAR_GENERATOR_ROOT =
   path.basename(path.dirname(__dirname)) === "dist"
     ? path.resolve(__dirname, "..", "..")
     : path.resolve(__dirname, "..");
-const REPOSITORY_ROOT = path.resolve(ANGULAR_GENERATOR_ROOT, "..", "..");
+const REPOSITORY_ROOT = path.resolve(ANGULAR_GENERATOR_ROOT, "..", "..", "..");
 const FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "minimal-openui.json");
 const TEST_OUTPUT_ROOT = path.join(REPOSITORY_ROOT, "tmp");
 const TEST_OUTPUT_PREFIX = path.join(TEST_OUTPUT_ROOT, "openui-angular-generator-");

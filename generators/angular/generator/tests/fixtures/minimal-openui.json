@@ -1,0 +1,317 @@
+{
+  "id": "root",
+  "type": "html",
+  "version": "0.0.1",
+  "attrs": {
+    "name": "OpenUI",
+    "description": "Technology-independent Web UI framework specification",
+    "scopeDocument": "README.md",
+    "status": "draft"
+  },
+  "children": [
+    {
+      "id": "scopes",
+      "type": "Scopes",
+      "attrs": {
+        "title": "Scopes",
+        "status": "draft"
+      },
+      "children": [
+        {
+          "id": "application",
+          "type": "Application",
+          "attrs": {
+            "title": "Application",
+            "purpose": "Application-level bootstrap artifacts and implementation-independent application concepts.",
+            "scopeDocument": "scopes/Application/scope.md",
+            "status": "draft"
+          },
+          "children": [
+            {
+              "id": "routing",
+              "type": "Routing",
+              "attrs": {
+                "title": "Routing",
+                "purpose": "Application-level route definitions and route resolution behavior.",
+                "scopeDocument": "scopes/Application/routing.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "navigation",
+              "type": "Navigation",
+              "attrs": {
+                "title": "Navigation",
+                "purpose": "User-facing navigation structures that expose routes, pages, and views.",
+                "scopeDocument": "scopes/Application/navigation.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "toolBars",
+              "type": "ToolBars",
+              "attrs": {
+                "title": "Tool bars",
+                "purpose": "Application-level command surfaces and action placement.",
+                "scopeDocument": "scopes/Application/tool_bars.scope.md",
+                "status": "draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "controls",
+          "type": "Controls",
+          "attrs": {
+            "title": "Controls",
+            "purpose": "Reusable interaction and rendering primitives.",
+            "scopeDocument": "scopes/Controls/scope.md",
+            "status": "draft"
+          },
+          "children": [
+            {
+              "id": "native",
+              "type": "NativeControls",
+              "attrs": {
+                "title": "Native",
+                "purpose": "Browser and framework-provided native controls and presentation capabilities.",
+                "scopeDocument": "scopes/Controls/native.scope.md",
+                "status": "draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "behaviors",
+          "type": "Behaviors",
+          "attrs": {
+            "title": "Behaviors",
+            "purpose": "Reusable interaction capabilities that can be applied to pages, views, containers, and widgets.",
+            "scopeDocument": "scopes/Behaviors/scope.md",
+            "status": "draft"
+          },
+          "children": [
+            {
+              "id": "dragAndDrop",
+              "type": "DragAndDrop",
+              "attrs": {
+                "title": "Drag and drop",
+                "purpose": "Move elements within a page, view, container, or widget.",
+                "scopeDocument": "scopes/Behaviors/drag_and_drop.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "resizable",
+              "type": "Resizable",
+              "attrs": {
+                "title": "Resizable",
+                "purpose": "Resize elements within a page or view.",
+                "scopeDocument": "scopes/Behaviors/resizable.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "collapsible",
+              "type": "Collapsible",
+              "attrs": {
+                "title": "Collapsible",
+                "purpose": "Collapse and expand elements within a page or view.",
+                "scopeDocument": "scopes/Behaviors/collapsible.scope.md",
+                "status": "draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "predefinedPages",
+          "type": "PredefinedPages",
+          "attrs": {
+            "title": "Pages",
+            "purpose": "Predefined page layouts and navigation destinations.",
+            "scopeDocument": "scopes/Pages/scope.md",
+            "status": "draft"
+          },
+          "children": [
+            {
+              "id": "dashboard",
+              "type": "Dashboard",
+              "attrs": {
+                "title": "Dashboard",
+                "purpose": "Overview metrics and summary content page layout.",
+                "scopeDocument": "scopes/Pages/dashboard.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "shellPage",
+              "type": "ShellPage",
+              "attrs": {
+                "title": "Shell page",
+                "purpose": "A page with no content with routing and navigation.",
+                "scopeDocument": "scopes/Pages/shell_page.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "emptyPage",
+              "type": "EmptyPage",
+              "attrs": {
+                "title": "Empty page",
+                "purpose": "A page with no content and no routing or navigation.",
+                "scopeDocument": "scopes/Pages/empty_page.scope.md",
+                "status": "draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "views",
+          "type": "Views",
+          "attrs": {
+            "title": "Views",
+            "purpose": "User-facing views of business objects.",
+            "scopeDocument": "scopes/Views/scope.md",
+            "status": "draft"
+          },
+          "children": [
+            {
+              "id": "reports",
+              "type": "Reports",
+              "attrs": {
+                "title": "Reports",
+                "purpose": "Read-only data with filtering, sorting, grouping, and pagination.",
+                "scopeDocument": "scopes/Views/reports.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "forms",
+              "type": "Forms",
+              "attrs": {
+                "title": "Forms",
+                "purpose": "Read-write data including validation, submission, and dirty state.",
+                "scopeDocument": "scopes/Views/forms.scope.md",
+                "status": "draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "containers",
+          "type": "Containers",
+          "attrs": {
+            "title": "Containers",
+            "purpose": "Layout containers that arrange children in specific layouts.",
+            "scopeDocument": "scopes/Containers/scope.md",
+            "status": "draft"
+          },
+          "children": [
+            {
+              "id": "grid",
+              "type": "Grid",
+              "attrs": {
+                "title": "Grid",
+                "purpose": "A grid layout that arranges children in rows and columns.",
+                "scopeDocument": "scopes/Containers/grid.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "expandablePanels",
+              "type": "ExpandablePanels",
+              "attrs": {
+                "title": "Expandable panels",
+                "purpose": "Panels that can expand or collapse to show or hide content.",
+                "scopeDocument": "scopes/Containers/expandable_panels.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "tabs",
+              "type": "Tabs",
+              "attrs": {
+                "title": "Tabs",
+                "purpose": "A tabbed interface that switches between views or content.",
+                "scopeDocument": "scopes/Containers/tabs.scope.md",
+                "status": "draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "widgets",
+          "type": "Widgets",
+          "attrs": {
+            "title": "Widgets",
+            "purpose": "Reusable components that can be used in multiple pages or views.",
+            "scopeDocument": "scopes/Widgets/scope.md",
+            "status": "draft"
+          },
+          "children": [
+            {
+              "id": "charts",
+              "type": "Charts",
+              "attrs": {
+                "title": "Charts",
+                "purpose": "Visual data representations such as bar charts, line charts, and pie charts.",
+                "scopeDocument": "scopes/Widgets/charts.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "tables",
+              "type": "Tables",
+              "attrs": {
+                "title": "Tables",
+                "purpose": "Tabular data with sorting, filtering, and pagination.",
+                "scopeDocument": "scopes/Widgets/tables.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "lists",
+              "type": "Lists",
+              "attrs": {
+                "title": "Lists",
+                "purpose": "Lists of items with sorting, filtering, and pagination.",
+                "scopeDocument": "scopes/Widgets/lists.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "dateTimePickers",
+              "type": "DateTimePickers",
+              "attrs": {
+                "title": "Date/Time pickers",
+                "purpose": "Calendar-based date and time selection controls.",
+                "scopeDocument": "scopes/Widgets/date_time_pickers.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "stepper",
+              "type": "Stepper",
+              "attrs": {
+                "title": "Stepper",
+                "purpose": "Guides users through a multi-step process.",
+                "scopeDocument": "scopes/Widgets/stepper.scope.md",
+                "status": "draft"
+              }
+            },
+            {
+              "id": "dialog",
+              "type": "Dialog",
+              "attrs": {
+                "title": "Dialog",
+                "purpose": "A modal or non-modal dialog with a title, content, and actions.",
+                "scopeDocument": "scopes/Widgets/dialog.scope.md",
+                "status": "draft"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

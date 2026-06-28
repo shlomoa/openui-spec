@@ -9,14 +9,14 @@ This repository contains a technology-independent specification for a Web UI fra
 
 ## Repository map
 
-| Path                                         | What's here                                                                                                    |
-| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| [`spec/`](spec/)                             | The specification — section documents and the ReadTheDocs source; start at [`spec/README.md`](spec/README.md). |
-| [`openui.json`](openui.json)                 | Canonical machine-readable specification (single source of truth).                                             |
-| [`generators/angular/`](generators/angular/) | Angular Material generator (TypeScript npm package).                                                           |
-| [`docs/`](docs/)                             | Developer documentation hub — [`docs/README.md`](docs/README.md).                                              |
-| [`origin/`](origin/)                         | Upstream-derivation / provenance (e.g. the traversal report).                                                  |
-| `AGENTS.md` / `CLAUDE.md` / `GEMINI.md`      | AI coding-assistant guides.                                                                                    |
-| [`CONTRIBUTING.md`](CONTRIBUTING.md)         | How to contribute.                                                                                             |
+| Path                                                             | What's here                                                                                                    |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| [`spec/`](spec/)                                                 | The specification — section documents and the ReadTheDocs source; start at [`spec/README.md`](spec/README.md). |
+| [`openui.json`](openui.json)                                     | Canonical machine-readable specification (single source of truth).                                             |
+| [`generators/angular/generator/`](generators/angular/generator/) | Angular Material generator (TypeScript npm package).                                                           |
+| [`docs/`](docs/)                                                 | Developer documentation hub — [`docs/README.md`](docs/README.md).                                              |
+| [`origin/`](origin/)                                             | Upstream-derivation / provenance (e.g. the traversal report).                                                  |
+| `AGENTS.md` / `CLAUDE.md` / `GEMINI.md`                          | AI coding-assistant guides.                                                                                    |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md)                             | How to contribute.                                                                                             |
 
 Local validation and build steps live in the [developer hub](docs/README.md).

@@ -62,11 +62,19 @@ class SpecReadmeSpecTest(unittest.TestCase):
         self.assertIn("### EBNF notation", content)
         self.assertIn("### Syntax rules", content)
         self.assertIn("## How to read this spec", content)
-        self.assertIn(
-            "[Dashboard Schematic](https://material.angular.dev/guide/schematics#dashboard-schematic)",
-            content,
-        )
         self.assertNotIn("section documents listed below", content)
+
+    def test_spec_readme_scope_table_links_every_scope_document(self) -> None:
+        content = SPEC_README.read_text(encoding="utf-8")
+
+        # The "Spec folder structure" table is the full scope inventory: every
+        # scope document is linked from the README except the README itself and
+        # the top-level scopes index.
+        for relative_path in EXPECTED_SPEC_MARKDOWN:
+            if relative_path in {"README.md", "scopes/scope.md"}:
+                continue
+            with self.subTest(relative_path=relative_path):
+                self.assertIn(f"]({relative_path})", content)
 
     def test_openui_json_exists_and_is_valid_when_populated(self) -> None:
         content = OPENUI_JSON.read_text(encoding="utf-8").strip()

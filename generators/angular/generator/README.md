@@ -5,7 +5,7 @@ This package contains the initial Angular Material generator for `openui.json`.
 ```bash
 npm install
 npm run build
-node dist/src/cli/main.js generate --spec ../../openui.json --out /tmp/openui-angular-app
+node dist/src/cli/main.js generate --spec ../../../openui.json --out /tmp/openui-angular-app
 ```
 
 The generator follows the documented pipeline: load the specification, validate it,

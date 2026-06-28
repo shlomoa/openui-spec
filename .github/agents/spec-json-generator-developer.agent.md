@@ -13,7 +13,7 @@ You are a specialist sub-agent for developing the virtual-environment-based Pyth
 - Focus on the generator that creates or synchronizes spec JSON, not on generating Angular applications from that JSON.
 - Implement and run the spec JSON generator as a Python program inside the repository-local virtual environment.
 - Treat `spec/README.md` and root `openui.json` as the only canonical machine-readable contract.
-- Use the Angular generator under `generators/angular/` only to verify that it consumes the canonical native OpenUI JSON contract directly.
+- Use the Angular generator under `generators/angular/generator/` only to verify that it consumes the canonical native OpenUI JSON contract directly.
 - Do not preserve transitional JSON definitions, compatibility shapes, or adapter layers.
 - Treat Markdown specification files and provenance docs as source material; do not invent semantics that are not supported by source text, existing JSON, or tests.
 
@@ -90,7 +90,7 @@ Before returning, verify as much as practical for the touched area:
 - The generator output is deterministic across repeated runs.
 - Focused Python tests for the generator pass under the repository-local `.venv`.
 - Affected Python spec tests pass under the repository-local `.venv` when spec prose/JSON content is changed.
-- `generators/angular` tests pass when the JSON contract or `openui.json` compatibility changes.
+- `generators/angular/generator` tests pass when the JSON contract or `openui.json` compatibility changes.
 - Repository formatting/lint/pre-commit checks pass when configured and practical.
 
 ## Output Format

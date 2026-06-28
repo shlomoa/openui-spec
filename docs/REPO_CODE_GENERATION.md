@@ -3,7 +3,7 @@
 This document describes how repository-local OpenUI specification artifacts
 become generator input and, eventually, generated Angular files. It complements
 `docs/GENERATOR_STRUCTURE.md`, which documents the implemented Angular generator
-package in `generators/angular/`.
+package in `generators/angular/generator/`.
 
 For the immediate spec-population sequence, see
 `../initial_spec_population.md`.
@@ -24,7 +24,7 @@ artifacts. They must not redefine the specification.
 The repository has an initial Angular Material generator:
 
 ```text
-generators/angular/
+generators/angular/generator/
 ├─ src/cli/main.ts
 ├─ src/spec/
 ├─ src/validation/
@@ -35,7 +35,7 @@ generators/angular/
 ```
 
 The implemented generator consumes the native OpenUI scope-tree shape in
-`generators/angular/tests/fixtures/minimal-openui.json`, validates it, builds a
+`generators/angular/generator/tests/fixtures/minimal-openui.json`, validates it, builds a
 UI IR, maps it to an Angular project model, and emits a standalone Angular
 Material application skeleton.
 
@@ -84,21 +84,21 @@ and IR construction.
 
 Use these implemented modules as the starting architecture:
 
-| Concern                    | Existing file                                                                                                         |
-| -------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| CLI orchestration          | `generators/angular/src/cli/main.ts`                                                                                  |
-| JSON loading               | `generators/angular/src/spec/load-spec.ts`                                                                            |
-| Native input types         | `generators/angular/src/spec/openui-spec.types.ts`, `generators/angular/src/spec/openui-sections.ts`                  |
-| Validation and diagnostics | `generators/angular/src/validation/validate-spec.ts`, `generators/angular/src/validation/diagnostics.ts`              |
-| Normalization              | `generators/angular/src/ir/normalize-spec.ts`                                                                         |
-| UI IR construction         | `generators/angular/src/ir/build-ir.ts`, `generators/angular/src/ir/ui-model.ts`                                      |
-| Angular model mapping      | `generators/angular/src/targets/angular/map-to-angular.ts`, `generators/angular/src/targets/angular/angular-model.ts` |
-| Project emission           | `generators/angular/src/targets/angular/emit-angular-project.ts`                                                      |
-| Page component triplets    | `generators/angular/src/targets/angular/emit-component.ts`                                                            |
-| Routes                     | `generators/angular/src/targets/angular/emit-routes.ts`                                                               |
-| Theme tokens               | `generators/angular/src/targets/angular/emit-theme.ts`                                                                |
-| Safe file writes           | `generators/angular/src/writers/file-writer.ts`, `generators/angular/src/writers/safe-write.ts`                       |
-| Tests                      | `generators/angular/tests/generator.test.ts`                                                                          |
+| Concern                    | Existing file                                                                                                                             |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| CLI orchestration          | `generators/angular/generator/src/cli/main.ts`                                                                                            |
+| JSON loading               | `generators/angular/generator/src/spec/load-spec.ts`                                                                                      |
+| Native input types         | `generators/angular/generator/src/spec/openui-spec.types.ts`, `generators/angular/generator/src/spec/openui-sections.ts`                  |
+| Validation and diagnostics | `generators/angular/generator/src/validation/validate-spec.ts`, `generators/angular/generator/src/validation/diagnostics.ts`              |
+| Normalization              | `generators/angular/generator/src/ir/normalize-spec.ts`                                                                                   |
+| UI IR construction         | `generators/angular/generator/src/ir/build-ir.ts`, `generators/angular/generator/src/ir/ui-model.ts`                                      |
+| Angular model mapping      | `generators/angular/generator/src/targets/angular/map-to-angular.ts`, `generators/angular/generator/src/targets/angular/angular-model.ts` |
+| Project emission           | `generators/angular/generator/src/targets/angular/emit-angular-project.ts`                                                                |
+| Page component triplets    | `generators/angular/generator/src/targets/angular/emit-component.ts`                                                                      |
+| Routes                     | `generators/angular/generator/src/targets/angular/emit-routes.ts`                                                                         |
+| Theme tokens               | `generators/angular/generator/src/targets/angular/emit-theme.ts`                                                                          |
+| Safe file writes           | `generators/angular/generator/src/writers/file-writer.ts`, `generators/angular/generator/src/writers/safe-write.ts`                       |
+| Tests                      | `generators/angular/generator/tests/generator.test.ts`                                                                                    |
 
 ## Recommended next implementation slice
 
@@ -146,10 +146,10 @@ Run repository Python and documentation validation through the local `.venv`:
 git diff --check
 ```
 
-Run generator validation from `generators/angular/`:
+Run generator validation from `generators/angular/generator/`:
 
 ```powershell
-Push-Location generators/angular
+Push-Location generators/angular/generator
 npm run test
 Pop-Location
 ```
@@ -184,7 +184,7 @@ Pop-Location
   `children` records from `openui.json` plus scope-document traceability.
 - **Generator bridge:** direct native OpenUI extraction into `UiApplication`.
 - **Generator starting point:** the existing Angular IR-to-emitter pipeline in
-  `generators/angular/`.
+  `generators/angular/generator/`.
 - **Next practical output:** golden-source-backed generation of one Angular
   Material component/page triplet with tests for parsed metadata, diagnostics,
   and emitted TypeScript/HTML/SCSS.
