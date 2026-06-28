@@ -1,19 +1,33 @@
 # Stepper
 
-Stepper is a component that guides users through a multi-step process.
+This leaf follows the [leaf scope template](../template.scope.md). Its contract is
+drawn from the `spec/README.md` scope rule; the Angular Material stepper is cited
+only as a reference pattern, recorded technology-independently.
 
-## Scope
+## Identity
 
-A stepper definition may describe:
+- id: stepper · type: Stepper · status: draft
 
-- stepper identity,
-- step identity,
-- step labels,
-- step ordering,
-- current step state,
-- completed or invalid step state,
-- navigation between steps,
-- optional linear progression rules, and
-- submission or completion behavior.
+## Purpose
 
-The specification does not require a specific wizard component, router integration, form library, validation engine, or framework component.
+A control that guides the user through a multi-step process as an ordered sequence
+of steps.
+
+## Child model
+
+A stepper owns its ordered steps:
+
+- step — step — 1..n — a single step in the ordered sequence.
+
+## Accessibility
+
+- Announces the current step and the total number of steps to assistive
+  technology.
+- Step navigation is operable by keyboard, with focus following the active step.
+
+## Validation notes
+
+- `id` is a camelCase identifier and `type` is a valid type per
+  `openui.schema.json`.
+- Steps are ordered; the framework stepper is a reference pattern only and is not
+  part of the contract.
