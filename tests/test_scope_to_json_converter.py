@@ -130,7 +130,10 @@ class ScopeToJsonConverterTest(unittest.TestCase):
 
             self.assertEqual(node["id"], "legacyWidget")
             self.assertEqual(node["type"], "LegacyWidget")
-            self.assertEqual(node["attrs"]["purpose"], "Legacy prose purpose that predates the formal template.")
+            self.assertEqual(
+                node["attrs"]["purpose"],
+                "Legacy prose purpose that predates the formal template.",
+            )
             self.assertEqual(node["attrs"]["scopeDocument"], "legacy_widget.scope.md")
             self.assertEqual(node["children"][0]["id"], "legacyWidgetInstance")
             self.assertEqual(node["children"][0]["type"], "LegacyWidget")
