@@ -1,6 +1,6 @@
 # Table
 
-The Table family covers the HTML5 standard tags that present tabular data: `table`, `tr`, `th`, and `td`. Each tag is a leaf following the [leaf scope template](../../scope.md).
+The Table family covers the HTML5 standard tags that present tabular data: `table`, `tr`, `th`, and `td`. Each tag is a leaf following the [leaf scope template](../../template.scope.md).
 
 ## Objects
 

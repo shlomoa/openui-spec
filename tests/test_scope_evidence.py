@@ -24,7 +24,9 @@ class ScopeEvidenceRegisterTest(unittest.TestCase):
 
     def test_register_covers_every_leaf_one_to_one(self) -> None:
         actual_leaves = {
-            path.relative_to(SPEC_DIR).as_posix() for path in SCOPES_DIR.rglob("*.scope.md")
+            path.relative_to(SPEC_DIR).as_posix()
+            for path in SCOPES_DIR.rglob("*.scope.md")
+            if path.name != "template.scope.md"
         }
 
         self.assertEqual(set(self.rows), actual_leaves)

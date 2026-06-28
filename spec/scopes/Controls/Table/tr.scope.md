@@ -1,22 +1,20 @@
 # tr
 
-This leaf follows the [leaf scope template](../../scope.md). Its contract is drawn from the HTML `tr` element, recorded technology-independently.
+This leaf follows the [leaf scope template](../../template.scope.md). Its contract
+is drawn from the HTML `tr` element, recorded technology-independently.
+
+## Identity
+
+- id: tr · type: tr · status: draft
 
 ## Purpose
 
 A single row of cells within a table.
 
-## Attributes
-
-Grouped by the Uses / Produces / Behaves categories defined in [`../../scope.md`](../../scope.md):
-
-- **Uses** — none. The HTML `tr` element has no standard content attributes; presentation is governed by CSS.
-
 ## Child model
 
-A `tr` owns cells:
-
-- `th` header cells and `td` data cells (`0..n`), in document order.
+- trHeaderCell — th — 0..n — header cells in the row.
+- trDataCell — td — 0..n — data cells in the row.
 
 ## Accessibility
 
@@ -24,5 +22,4 @@ A `tr` owns cells:
 
 ## Validation notes
 
-- `id` is a camelCase identifier and `type` is `tr`.
-- `children` are `th` or `td` cells.
+- Children are `th` or `td` cells; the element carries no authored attributes.

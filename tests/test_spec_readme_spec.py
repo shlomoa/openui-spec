@@ -11,6 +11,7 @@ MKDOCS_CONFIG = REPO_ROOT / "mkdocs.yml"
 NAV_ENTRY_PATTERN = re.compile(r"^\s*-\s+.*?:\s+(.+\.md)$")
 EXPECTED_SPEC_MARKDOWN = [
     "README.md",
+    "examples/README.md",
     "scopes/Application/favicon.scope.md",
     "scopes/Application/index_html.scope.md",
     "scopes/Application/navigation.scope.md",
@@ -48,6 +49,8 @@ EXPECTED_SPEC_MARKDOWN = [
     "scopes/Widgets/tables.scope.md",
     "scopes/evidence.md",
     "scopes/scope.md",
+    "scopes/template.scope.md",
+    "to_json/todo.md",
 ]
 
 
@@ -80,7 +83,14 @@ class SpecReadmeSpecTest(unittest.TestCase):
         for relative_path in EXPECTED_SPEC_MARKDOWN:
             segments = relative_path.split("/")
             is_family_tag_leaf = len(segments) >= 4 and segments[-1] != "scope.md"
-            if relative_path in {"README.md", "scopes/scope.md", "scopes/evidence.md"}:
+            if relative_path in {
+                "README.md",
+                "scopes/scope.md",
+                "scopes/evidence.md",
+                "scopes/template.scope.md",
+                "examples/README.md",
+                "to_json/todo.md",
+            }:
                 continue
             if is_family_tag_leaf:
                 continue

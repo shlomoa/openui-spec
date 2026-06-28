@@ -1,6 +1,11 @@
 # th
 
-This leaf follows the [leaf scope template](../../scope.md). Its contract is drawn from the HTML `th` element, recorded technology-independently.
+This leaf follows the [leaf scope template](../../template.scope.md). Its contract
+is drawn from the HTML `th` element, recorded technology-independently.
+
+## Identity
+
+- id: th · type: th · status: draft
 
 ## Purpose
 
@@ -8,13 +13,13 @@ A header cell that labels a column or row of a table.
 
 ## Attributes
 
-Grouped by the Uses / Produces / Behaves categories defined in [`../../scope.md`](../../scope.md):
+Categories are defined in [`../../scope.md`](../../scope.md):
 
-- **Uses** — `[colspan]` (number of columns spanned), `[rowspan]` (number of rows spanned), `[scope]` (`col` / `row` / `colgroup` / `rowgroup`), `[headers]` (ids of associated header cells), `[abbr]` (abbreviated label).
-
-## Child model
-
-A `th` owns flow content: the header label.
+- `[colspan]` — Uses — number of columns the cell spans.
+- `[rowspan]` — Uses — number of rows the cell spans.
+- `[scope]` — Uses — association direction: col, row, colgroup, or rowgroup.
+- `[headers]` — Uses — ids of header cells that describe this cell.
+- `[abbr]` — Uses — abbreviated label used by assistive technology.
 
 ## Accessibility
 
@@ -22,5 +27,5 @@ A `th` owns flow content: the header label.
 
 ## Validation notes
 
-- `id` is a camelCase identifier and `type` is `th`.
-- `[colspan]` and `[rowspan]` are positive integers; `[scope]` is one of `col`, `row`, `colgroup`, `rowgroup`.
+- `[colspan]` and `[rowspan]` are positive integers; `[scope]` is one of `col`,
+  `row`, `colgroup`, `rowgroup`. The cell owns flow content, not child scopes.

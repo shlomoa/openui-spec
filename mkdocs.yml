@@ -9,6 +9,7 @@ nav:
   - Scopes:
       - Overview: scopes/scope.md
       - Evidence: scopes/evidence.md
+      - Template: scopes/template.scope.md
       - Application:
           - Overview: scopes/Application/scope.md
           - Routing: scopes/Application/routing.scope.md
@@ -52,3 +53,5 @@ nav:
           - Date/Time pickers: scopes/Widgets/date_time_pickers.scope.md
           - Stepper: scopes/Widgets/stepper.scope.md
           - Dialog: scopes/Widgets/dialog.scope.md
+  - Examples: examples/README.md
+  - Conversion: to_json/todo.md
