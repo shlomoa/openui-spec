@@ -1,18 +1,32 @@
 # Tabs
 
-Tabs are containers that let users switch between different views or content regions.
+This leaf follows the [leaf scope template](../template.scope.md). Its contract is
+drawn from the `spec/README.md` scope rule and the ARIA tablist pattern, recorded
+technology-independently.
 
-## Scope
+## Identity
 
-A tabs definition may describe:
+- id: tabs · type: Tabs · status: draft
 
-- tab group identity,
-- tab item identity,
-- labels,
-- selected tab state,
-- disabled state,
-- associated content panels,
-- ordering, and
-- keyboard navigation expectations.
+## Purpose
 
-The specification does not require a specific tab component, router integration, animation model, or framework implementation.
+A tabbed container that switches between views or content regions.
+
+## Child model
+
+A tabs container owns its ordered tabs:
+
+- tab — tab — 1..n — a tab exposing a view or content region.
+
+## Accessibility
+
+- Exposes the `tablist` role with each tab exposing the `tab` role and its
+  associated panel the `tabpanel` role.
+- Tab selection is operable by keyboard, with focus following the active tab.
+
+## Validation notes
+
+- `id` is a camelCase identifier and `type` is a valid type per
+  `openui.schema.json`.
+- Tabs are ordered; selected and disabled state require an explicit owner decision
+  before they are added as attributes.
