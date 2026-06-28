@@ -41,6 +41,7 @@ EXPECTED_SPEC_MARKDOWN = [
     "scopes/Widgets/scope.md",
     "scopes/Widgets/stepper.scope.md",
     "scopes/Widgets/tables.scope.md",
+    "scopes/evidence.md",
     "scopes/scope.md",
 ]
 
@@ -68,10 +69,10 @@ class SpecReadmeSpecTest(unittest.TestCase):
         content = SPEC_README.read_text(encoding="utf-8")
 
         # The "Spec folder structure" table is the full scope inventory: every
-        # scope document is linked from the README except the README itself and
-        # the top-level scopes index.
+        # scope document is linked from the README except the README itself, the
+        # top-level scopes index, and the evidence register (not a scope).
         for relative_path in EXPECTED_SPEC_MARKDOWN:
-            if relative_path in {"README.md", "scopes/scope.md"}:
+            if relative_path in {"README.md", "scopes/scope.md", "scopes/evidence.md"}:
                 continue
             with self.subTest(relative_path=relative_path):
                 self.assertIn(f"]({relative_path})", content)

@@ -8,6 +8,7 @@ nav:
   - Overview: README.md
   - Scopes:
       - Overview: scopes/scope.md
+      - Evidence: scopes/evidence.md
       - Application:
           - Overview: scopes/Application/scope.md
           - Routing: scopes/Application/routing.scope.md

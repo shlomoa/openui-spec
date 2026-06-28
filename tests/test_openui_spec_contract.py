@@ -80,7 +80,9 @@ class OpenUiSpecContractTest(unittest.TestCase):
     def test_scope_documents_exist_and_cover_scope_markdown(self) -> None:
         scope_documents = set(self._scope_documents(self.document))
         expected_scope_documents = {
-            path.relative_to(SPEC_DIR).as_posix() for path in (SPEC_DIR / "scopes").rglob("*.md")
+            path.relative_to(SPEC_DIR).as_posix()
+            for path in (SPEC_DIR / "scopes").rglob("*.md")
+            if path.name == "scope.md" or path.name.endswith(".scope.md")
         }
 
         self.assertLessEqual(expected_scope_documents, scope_documents)
