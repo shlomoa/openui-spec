@@ -2,7 +2,7 @@
 
 **Purpose:** Define the scope of the OpenUI specification as an implementation-independent contract for Web UI frameworks.
 
-OpenUI is a technology-independent specification for a Web UI framework. It defines the required behavior, structure, terminology, and compliance rules for a compliant Web UI implementation, independent of any specific rendering technology, build tool, or framework. The canonical record is the machine-readable `openui.json` at the repository root; this README is the current prose entry point for the specification.
+OpenUI is a technology-independent specification for a Web UI framework. It defines the required behavior, structure, terminology, and compliance rules for a compliant Web UI implementation, independent of any specific rendering technology, build tool, or framework. The prose scopes under `spec/scopes/` are the source of truth; the machine-readable `openui.json` at the repository root is generated from them. This README is the prose entry point for the specification.
 
 It serves application developers, designers and UX owners, framework maintainers, and generator/tooling authors, who all consume the same public contract.
 
