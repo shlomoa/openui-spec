@@ -8,13 +8,13 @@ its `<scopeId>Instance` (see the section EBNF in [`../README.md`](../README.md))
 Three sections are **machine-bearing** and follow fixed line patterns — Identity,
 Attributes, Child model. The rest is free prose. Do not re-list machine fields in
 the prose sections: the machine-bearing sections are the sole enumerators of ids,
-keys, types, categories, and multiplicity. Prose may *reference* a name to add new
+keys, types, categories, and multiplicity. Prose may _reference_ a name to add new
 information, but must never restate the set; the shared category definitions
 live in [`scope.md`](scope.md) and are referenced by link, never copied.
 
 ## Identity
 
-A single bullet of fixed `key: value` fields separated by ` · ` (middot). All three
+A single bullet of fixed `key: value` fields separated by `·` (middot). All three
 keys are required, in this order:
 
 - id: `<camelCaseId>` · type: `<instanceType>` · status: `<draft|review|stable>`
@@ -36,7 +36,7 @@ concept it represents. Free prose; not parsed.
 
 ## Attributes
 
-One bullet per attribute. Fixed pattern, ` — ` (em dash) separated:
+One bullet per attribute. Fixed pattern, `—` (em dash) separated:
 
 - `` `<key>` — <Category> — <free prose description> ``
 
@@ -49,7 +49,7 @@ approved source material. Omit the whole section if the object has no attributes
 
 ## Child model
 
-One bullet per owned child type. Fixed pattern, ` — ` (em dash) separated:
+One bullet per owned child type. Fixed pattern, `—` (em dash) separated:
 
 - `<childId> — <childType> — <multiplicity> — <free prose description>`
 

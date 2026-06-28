@@ -15,7 +15,7 @@ DEC-2 (decided) gates DEC-1: a machine-readable per-object contract is the
 precondition for per-object containment encoding (DEC-1 B/C/D), and the
 `<scopeId>Instance` convention provides it — so DEC-1's richer options are on the
 table. **DEC-3–DEC-7** are the decisions raised by the `scope*.md` →
-`openui.json` conversion (see [spec/to_json/todo.md](../spec/to_json/todo.md)).
+`openui.json` conversion.
 
 ---
 
@@ -30,17 +30,17 @@ options differ in granularity and where the rule lives.
 > children), which takes the category-only option A off the table — the open
 > choice is now **C vs. D**.
 
-| Criterion | A · Category | B · Per-object | C · Hybrid | D · Slots/aggregations |
-| --- | --- | --- | --- | --- |
-| Rule keyed on | the 7 categories | each object | category default + object override | named typed regions per object |
-| Expressiveness | coarse | object-precise | object-precise where needed | per-region typing |
-| "Dialog *actions* accepts only Button" | ❌ | ❌ | ❌ | ✅ |
-| "Dashboard allows Chart but not Form" | ❌ | ✅ | ✅ | ✅ |
-| Authoring cost / new object | ~none | one rule each | none unless special | highest |
-| DRY | best | worst | good | moderate |
-| Validator complexity | trivial | trivial | small | higher |
-| Requires DEC-2 = Decided? | **No** | **Yes** | **Yes** | **Yes** |
-| Fit with `<scopeId>Instance` + aggregations | weak | ok | ok | **strongest** |
+| Criterion                                   | A · Category     | B · Per-object | C · Hybrid                         | D · Slots/aggregations         |
+| ------------------------------------------- | ---------------- | -------------- | ---------------------------------- | ------------------------------ |
+| Rule keyed on                               | the 7 categories | each object    | category default + object override | named typed regions per object |
+| Expressiveness                              | coarse           | object-precise | object-precise where needed        | per-region typing              |
+| "Dialog _actions_ accepts only Button"      | ❌               | ❌             | ❌                                 | ✅                             |
+| "Dashboard allows Chart but not Form"       | ❌               | ✅             | ✅                                 | ✅                             |
+| Authoring cost / new object                 | ~none            | one rule each  | none unless special                | highest                        |
+| DRY                                         | best             | worst          | good                               | moderate                       |
+| Validator complexity                        | trivial          | trivial        | small                              | higher                         |
+| Requires DEC-2 = Decided?                   | **No**           | **Yes**        | **Yes**                            | **Yes**                        |
+| Fit with `<scopeId>Instance` + aggregations | weak             | ok             | ok                                 | **strongest**                  |
 
 **Why C→D:** category defaults give near-zero-authoring coverage; per-object
 overrides handle the few objects that need precision; promote objects whose
@@ -58,19 +58,19 @@ Already settled by [spec/scopes/scope.md](../spec/scopes/scope.md): the catalog
 **does** carry a machine-readable contract — each scope node is metadata-only and
 a single `<scopeId>Instance` child holds the attributes (Uses/Produces/Behaves)
 and typed child model. Open question: the prose `.scope.md` leaf template carries
-the *same* Attributes + Child-model sections, so **which is authoritative, and
+the _same_ Attributes + Child-model sections, so **which is authoritative, and
 what derives from what?**
 
-| Criterion | 1 · Catalog-authoritative | 2 · Prose-authoritative | 3 · Dual + cross-validated | 4 · Status quo |
-| --- | --- | --- | --- | --- |
-| SSOT for contract | `openui.json` | `.scope.md` | none (two copies) | none |
-| Authoring | edit JSON | write Markdown | write both | uncoordinated |
-| Tooling needed | catalog→prose gen / validator | Markdown→JSON parser (hard) | consistency validator | none |
-| Enables L2/L3 validation | ✅ | ✅ | ✅ | ⚠️ unenforced |
-| DRY | ✅ | ✅ | ❌ duplicated | ❌ |
-| Fit with instance-node convention | **strongest** | weak (inverts it) | medium | n/a |
-| Fit with "`openui.json` is canonical SSOT" | ✅ | ❌ | ⚠️ | ⚠️ |
-| Migration effort | medium | high | low–medium | none |
+| Criterion                                  | 1 · Catalog-authoritative     | 2 · Prose-authoritative     | 3 · Dual + cross-validated | 4 · Status quo |
+| ------------------------------------------ | ----------------------------- | --------------------------- | -------------------------- | -------------- |
+| SSOT for contract                          | `openui.json`                 | `.scope.md`                 | none (two copies)          | none           |
+| Authoring                                  | edit JSON                     | write Markdown              | write both                 | uncoordinated  |
+| Tooling needed                             | catalog→prose gen / validator | Markdown→JSON parser (hard) | consistency validator      | none           |
+| Enables L2/L3 validation                   | ✅                            | ✅                          | ✅                         | ⚠️ unenforced  |
+| DRY                                        | ✅                            | ✅                          | ❌ duplicated              | ❌             |
+| Fit with instance-node convention          | **strongest**                 | weak (inverts it)           | medium                     | n/a            |
+| Fit with "`openui.json` is canonical SSOT" | ✅                            | ❌                          | ⚠️                         | ⚠️             |
+| Migration effort                           | medium                        | high                        | low–medium                 | none           |
 
 **Decision:** The `scope*.md` files are the single source of truth. Their content
 must be unique — use cross-referencing (the shared leaf template plus links)
@@ -83,15 +83,15 @@ the `scope*.md` files; it is no longer hand-authored.
   (Attributes, Child model, …) must be structured enough to parse
   deterministically. This is option 2's main cost; the "unique content +
   referencing" rule is what keeps the parse tractable.
-- Statements that call `openui.json` *the* source of truth must be reworded to
+- Statements that call `openui.json` _the_ source of truth must be reworded to
   "generated, canonical machine-readable form," with the prose as authoritative.
   Affects [README.md](../README.md), [REQUIREMENTS.md](REQUIREMENTS.md) §1, and the
   GENERATOR_STRUCTURE.md golden-source boundary.
-- DEC-1 is unblocked: containment is authored in each leaf's *Child model* section
+- DEC-1 is unblocked: containment is authored in each leaf's _Child model_ section
   and serialized into `openui.json`.
 
 > Note: [scope.md](../spec/scopes/scope.md) "the template is the source of truth
-> for leaf structure" refers to the prose *section layout*, not contract
+> for leaf structure" refers to the prose _section layout_, not contract
 > authority — it does not pre-decide DEC-2.
 
 ---
@@ -111,7 +111,7 @@ its `<scopeId>Instance`. Where do the machine fields (instance `type`, child
   micro-syntax inside section bodies (Attributes, Child model) that the EBNF
   covers.
 
-**Decision:** No front-matter. The prose sections *are* the formal structure,
+**Decision:** No front-matter. The prose sections _are_ the formal structure,
 parsed via the EBNF (todo 1.3); every machine field lives inside a section body
 under a fixed, EBNF-governed micro-syntax.
 
@@ -135,7 +135,7 @@ under a fixed, EBNF-governed micro-syntax.
 
 **Status:** Decided 2026-06-28 — **Option A (prose-only)**.
 
-Prose carries `[open]` *(boolean: whether shown)* — richer than `openui.json`
+Prose carries `[open]` _(boolean: whether shown)_ — richer than `openui.json`
 `attrs`, which are `string | null` per the grammar. Where do value-type and
 description go?
 

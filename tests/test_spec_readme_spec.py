@@ -87,7 +87,7 @@ class SpecReadmeSpecTest(unittest.TestCase):
                 "scopes/scope.md",
                 "scopes/evidence.md",
                 "scopes/template.scope.md",
-                "examples/README.md"
+                "examples/README.md",
             }:
                 continue
             if is_family_tag_leaf:

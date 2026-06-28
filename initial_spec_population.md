@@ -69,11 +69,11 @@ enrichment content in this step.
 
 Example evidence entries:
 
-| Leaf scope | Source | Citation | Authorizes |
-| --- | --- | --- | --- |
-| `scopes/Behaviors/drag_and_drop.scope.md` | `spec/README.md` scope table | "Move elements within a page, view, container, or widget." | Purpose; Child model = applies to page, view, container, and widget scopes. Specific attribute keys require an explicit owner decision. |
-| `scopes/Widgets/date_time_pickers.scope.md` | Angular Material reference (`mat-date-range-input`) | `matStartDate` / `matEndDate` inputs and the `(dateChange)` output | Attributes, recorded technology-independently with the Angular Material binding shown only as a reference pattern |
-| `scopes/Controls/native.scope.md` | HTML primitive (`input`) | Standard `input` element attributes (`type`, `value`, `placeholder`, `disabled`) | Attributes, drawn from the HTML standard and recorded technology-independently |
+| Leaf scope                                  | Source                                              | Citation                                                                         | Authorizes                                                                                                                              |
+| ------------------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `scopes/Behaviors/drag_and_drop.scope.md`   | `spec/README.md` scope table                        | "Move elements within a page, view, container, or widget."                       | Purpose; Child model = applies to page, view, container, and widget scopes. Specific attribute keys require an explicit owner decision. |
+| `scopes/Widgets/date_time_pickers.scope.md` | Angular Material reference (`mat-date-range-input`) | `matStartDate` / `matEndDate` inputs and the `(dateChange)` output               | Attributes, recorded technology-independently with the Angular Material binding shown only as a reference pattern                       |
+| `scopes/Controls/native.scope.md`           | HTML primitive (`input`)                            | Standard `input` element attributes (`type`, `value`, `placeholder`, `disabled`) | Attributes, drawn from the HTML standard and recorded technology-independently                                                          |
 
 Acceptance criteria:
 

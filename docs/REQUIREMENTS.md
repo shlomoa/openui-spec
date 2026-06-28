@@ -9,7 +9,7 @@ authored against that specification to an existing Angular workspace.
 The OpenUI specification is a technology-independent contract for Web UI
 frameworks. It is defined by three artifacts at different levels of abstraction:
 
-- **Grammar** — `spec/openui.schema.json`, a JSON Schema defining the *shape*
+- **Grammar** — `spec/openui.schema.json`, a JSON Schema defining the _shape_
   every OpenUI document must satisfy (the `id` / `type` / `attrs` / `children`
   structure and the id/type naming rules). It is content-blind: it validates
   form, not vocabulary.
@@ -23,8 +23,8 @@ frameworks. It is defined by three artifacts at different levels of abstraction:
   for tooling to consume; each scope node links back to its prose through
   `attrs.scopeDocument`.
 
-The specification defines *what* a compliant Web UI must provide; it never
-prescribes *how* it is implemented.
+The specification defines _what_ a compliant Web UI must provide; it never
+prescribes _how_ it is implemented.
 
 ## 2. Angular TypeScript Generator
 
@@ -47,7 +47,7 @@ existing Angular workspace.
 Implementation constraints:
 
 - The generator is hand-written TypeScript, published as an npm package. It is
-  *not* generated from `openui.json`, and it is not a generator-generating
+  _not_ generated from `openui.json`, and it is not a generator-generating
   program; `openui.json` is data the generator consumes at runtime.
 - Implemented in folder `generators/angular/generator`.
 - Follows the structure and implementation details documented in

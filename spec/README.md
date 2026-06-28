@@ -205,7 +205,7 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 source of truth. Every leaf
 `*.scope.md` follows the shared
 [`scopes/template.scope.md`](scopes/template.scope.md). Three of its sections are
-*machine-bearing* — **Identity**, **Attributes**, **Child model** — and follow
+_machine-bearing_ — **Identity**, **Attributes**, **Child model** — and follow
 fixed line patterns; **Purpose**, **Accessibility**, and **Validation notes** are
 free prose and are not parsed. The converter lives in
 `to_json/` and walks the tree.
@@ -215,20 +215,20 @@ free prose and are not parsed. The converter lives in
 A leaf produces a metadata-only **scope node** plus a single **`<scopeId>Instance`**
 child (see [`scopes/scope.md`](scopes/scope.md)). Fields come from:
 
-| `openui.json` field | Source in the leaf |
-| --- | --- |
-| scope `id` | Identity `id:` (camelCase) |
-| scope `type` | derived: PascalCase of the scope `id` |
-| scope `attrs.title` | the `#` H1 heading |
-| scope `attrs.purpose` | the Purpose section body |
-| scope `attrs.scopeDocument` | the leaf's path under `scopes/` |
-| scope `attrs.status` | Identity `status:` |
-| instance `id` | derived: `<scopeId>Instance` |
-| instance `type` | Identity `type:` (the concrete/virtual primitive) |
-| instance `attrs` keys | Attributes — each `key` by category, value `null` |
-| instance `children` | Child model — one node (`id`, `type`) per bullet, in order |
+| `openui.json` field         | Source in the leaf                                         |
+| --------------------------- | ---------------------------------------------------------- |
+| scope `id`                  | Identity `id:` (camelCase)                                 |
+| scope `type`                | derived: PascalCase of the scope `id`                      |
+| scope `attrs.title`         | the `#` H1 heading                                         |
+| scope `attrs.purpose`       | the Purpose section body                                   |
+| scope `attrs.scopeDocument` | the leaf's path under `scopes/`                            |
+| scope `attrs.status`        | Identity `status:`                                         |
+| instance `id`               | derived: `<scopeId>Instance`                               |
+| instance `type`             | Identity `type:` (the concrete/virtual primitive)          |
+| instance `attrs` keys       | Attributes — each `key` by category, value `null`          |
+| instance `children`         | Child model — one node (`id`, `type`) per bullet, in order |
 
-Separators are fixed: ` · ` (middot, U+00B7) between Identity fields, and ` — `
+Separators are fixed: `·` (middot, U+00B7) between Identity fields, and `—`
 (em dash, U+2014) between Attributes and Child-model fields. The Attributes
 **category** word is authoritative; its key bracket must agree (`[name]` → `Uses`;
 `(name)` → `Produces` or `Behaves`). Value-types, descriptions, and multiplicity

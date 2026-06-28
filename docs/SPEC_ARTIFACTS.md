@@ -11,8 +11,8 @@ does not redefine the contract.
 ## TL;DR
 
 - `spec/openui.schema.json` is the **grammar**: a JSON Schema that validates the
-  *shape* of any OpenUI document.
-- `openui.json` is a **document written in that grammar** whose *content* is the
+  _shape_ of any OpenUI document.
+- `openui.json` is a **document written in that grammar** whose _content_ is the
   specification's object **catalog**.
 
 `openui.json` is to `openui.schema.json` as an XML file is to its XSD, or a
@@ -37,15 +37,15 @@ PascalCase `type`.
 
 **Purpose:** validate that any OpenUI JSON is well-formed.
 
-## `openui.json` — the spec catalog (an *instance* of the grammar)
+## `openui.json` — the spec catalog (an _instance_ of the grammar)
 
-A concrete document that **conforms to** `openui.schema.json`. Its *content* is the
+A concrete document that **conforms to** `openui.schema.json`. Its _content_ is the
 authoritative catalog of the specification's scopes:
 `Scopes → Application / Controls / Behaviors / Pages / Views / Containers /
 Widgets → …`, each node carrying `attrs.scopeDocument` pointers into the prose
 `spec/**` files.
 
-**Purpose:** be the machine-readable vocabulary of *what objects the spec defines*,
+**Purpose:** be the machine-readable vocabulary of _what objects the spec defines_,
 and the trace links to their prose.
 
 > `openui.json` is **generated** from the `spec/scopes/**` prose, which is the
@@ -60,19 +60,19 @@ openui.schema.json   ← grammar / meta-schema (validates shape)
 openui.json          ← the spec's catalog of available objects (vocabulary)
 ```
 
-| | `openui.schema.json` | `openui.json` |
-| --- | --- | --- |
-| Kind | JSON **Schema** (grammar) | JSON **document** (instance) |
-| Level | meta / type-level | content / catalog-level |
-| Knows about | shapes, id/type/attrs rules | `Charts`, `Dashboard`, `Forms`… |
-| Changes when | the *format* changes | the *spec's objects* change |
-| Validates | every OpenUI doc, incl. `openui.json` | nothing (it is data) |
+|              | `openui.schema.json`                  | `openui.json`                   |
+| ------------ | ------------------------------------- | ------------------------------- |
+| Kind         | JSON **Schema** (grammar)             | JSON **document** (instance)    |
+| Level        | meta / type-level                     | content / catalog-level         |
+| Knows about  | shapes, id/type/attrs rules           | `Charts`, `Dashboard`, `Forms`… |
+| Changes when | the _format_ changes                  | the _spec's objects_ change     |
+| Validates    | every OpenUI doc, incl. `openui.json` | nothing (it is data)            |
 
 ## Where `input.json` fits
 
 A generator `input.json` (a concrete UI, e.g. a dashboard with three charts)
 conforms to the **same grammar** as `openui.json`. The two are distinguished by
-*role*, not by *shape*:
+_role_, not by _shape_:
 
 ```text
 openui.schema.json   ← grammar
@@ -88,5 +88,5 @@ openui.json   input.json
 - `input.json` = "here is the **app** I want, using that vocabulary."
 - `openui.schema.json` = "here is the **syntax** both must obey."
 
-The grammar alone cannot tell whether `input.json` uses a *real* object in a
-*legal place* — that check is against the **catalog**, not the schema.
+The grammar alone cannot tell whether `input.json` uses a _real_ object in a
+_legal place_ — that check is against the **catalog**, not the schema.

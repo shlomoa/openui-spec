@@ -34,7 +34,9 @@ class ScopeEvidenceRegisterTest(unittest.TestCase):
     def test_every_entry_cites_a_source_and_citation(self) -> None:
         for leaf, cells in self.rows.items():
             with self.subTest(leaf=leaf):
-                self.assertGreaterEqual(len(cells), 3, f"{leaf}: expected Source/Citation/Authorizes")
+                self.assertGreaterEqual(
+                    len(cells), 3, f"{leaf}: expected Source/Citation/Authorizes"
+                )
                 source, citation = cells[0], cells[1]
                 self.assertTrue(source, f"{leaf}: empty Source")
                 self.assertTrue(citation, f"{leaf}: empty Citation")
