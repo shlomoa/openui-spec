@@ -50,7 +50,6 @@ EXPECTED_SPEC_MARKDOWN = [
     "scopes/evidence.md",
     "scopes/scope.md",
     "scopes/template.scope.md",
-    "to_json/todo.md",
 ]
 
 
@@ -88,8 +87,7 @@ class SpecReadmeSpecTest(unittest.TestCase):
                 "scopes/scope.md",
                 "scopes/evidence.md",
                 "scopes/template.scope.md",
-                "examples/README.md",
-                "to_json/todo.md",
+                "examples/README.md"
             }:
                 continue
             if is_family_tag_leaf:

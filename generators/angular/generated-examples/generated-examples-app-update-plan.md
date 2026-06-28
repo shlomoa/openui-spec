@@ -1,20 +1,31 @@
 # Implementation plan
 
+This plan restructures the generated-examples documentation app so it manifests
+the **same** example set that now lives under
+[`spec/examples/`](../../../spec/examples/README.md): one app entry per worked
+OpenUI document, mirroring the `spec/examples/**` hierarchy one-to-one. The
+example JSON documents are the source of truth — the app documents them, it does
+not regenerate them or invent generator behavior.
+
 1. **Protect current workspace state**
    - Check `git status`.
    - Identify and preserve unrelated staged/uncommitted changes, especially current mkdocs.yml / requirements-test.txt changes if still present.
    - Do not modify generator files under `generators/angular/src/**`.
 
-2. **Inventory the scope hierarchy**
-   - Read all files under scopes.
-   - Build the expected documentation hierarchy from the filesystem:
-     - `scopes/scope.md`
-     - `Application/scope.md`
-     - `Application/*.scope.md`
-     - `Controls/scope.md`
+2. **Inventory the scope and example hierarchy**
+   - Read all files under `spec/scopes/**` and `spec/examples/**`.
+   - Build the expected documentation hierarchy from the filesystem, which the
+     two trees share one-to-one:
+     - `scopes/scope.md` ↔ `examples/scope.example.json`
+     - `Application/scope.md` ↔ `Application/scope.example.json`
+     - `Application/*.scope.md` ↔ `Application/*.example.json`
+     - `Controls/scope.md` ↔ `Controls/scope.example.json`
      - etc.
-   - Define which files are “sensible” to document with examples.
-   - For files where no concrete generated example exists, mark them for textual explanation instead of fake examples.
+   - Every scope now has a concrete worked example under `spec/examples/**`
+     (see the [examples index](../../../spec/examples/README.md)), so fake or
+     invented examples are unnecessary.
+   - Reserve the textual-explanation fallback for the rare entry whose example
+     document has no meaningful rendered form.
 
 3. **Inventory the existing generated-examples app**
    - Review current app structure under app.
@@ -51,13 +62,19 @@
        - preview/render key if available
    - Keep each example traceable to its source scope file.
 
-5. **Map scope files to documented examples**
-   - For each scope file under scopes, decide one of:
-     - has before/after generated example,
-     - has generated TS/CSS but no HTML,
-     - has no sensible generated example and should show textual explanation.
+5. **Map example documents to documented app entries**
+   - For each `*.example.json` under `spec/examples/**`, create exactly one app
+     entry, traceable back to both its example document and its scope file.
+   - The `spec/examples/**` document supplies the framework-independent **before**
+     content; the Angular Material rendering is the **after**. Each entry decides
+     one of:
+     - has a before/after example (neutral document + Angular Material rendering),
+     - has generated TS/SCSS but no HTML preview,
+     - has textual explanation only (rare — when the example has no meaningful
+       rendered form).
    - Avoid inventing generator behavior.
-   - Use existing generated examples and current app preview code as source material.
+   - Use the `spec/examples/**` documents and current app preview code as source
+     material — the app must manifest the same set, in the same order.
 
 6. **Update navigation to preserve scopes hierarchy**
    - Change the generated-examples app navigation from flat component categories to a nested scope tree.
@@ -92,7 +109,7 @@
    - Keep this behavior data-driven so each example declares whether it has HTML output.
 
 9. **Populate examples incrementally**
-   - Start with a representative top-level set:
+   - Start with the composite parents (`scope.example.json` per folder):
      - `Application`
      - `Controls`
      - `Behaviors`
@@ -100,18 +117,23 @@
      - `Views`
      - `Containers`
      - `Widgets`
-   - Then fill each leaf `*.scope.md`.
+   - Then fill each leaf `*.example.json` (Routing, Navigation, Tool bars,
+     favicon.ico, index.html, Native, Drag and drop, Resizable, Collapsible,
+     Dashboard, Shell page, Empty page, Reports, Forms, Grid, Expandable panels,
+     Tabs, Charts, Tables, Lists, Date/Time pickers, Stepper, Dialog), matching
+     the [examples index](../../../spec/examples/README.md).
    - For each entry, add:
-     - spec path,
+     - scope path and example path,
      - summary,
-     - before code,
-     - after code,
+     - before code (the `spec/examples/**` document),
+     - after code (the Angular Material rendering),
      - preview mapping or explanation fallback.
 
 10. **Update or add tests**
 
 - Add tests for the documentation data model:
-  - every expected scope file is represented or intentionally marked as not sensible/applicable,
+  - every `spec/examples/**` document is represented one-to-one (or intentionally
+    marked as not sensible/applicable),
   - every example has either before/after code or explanation-only content,
   - examples with HTML include preview/code data for both before and after,
   - examples without HTML include textual explanation.
@@ -150,7 +172,8 @@
 
 The phrase **“for each scope file generate an example”** is clear enough with your clarification as:
 
-> Use existing generated examples and document them per scope file when possible and sensible.
+> Use the worked documents under `spec/examples/**` and document them per scope
+> file, manifesting the same set one-to-one when possible and sensible.
 
 I would not interpret it as:
 

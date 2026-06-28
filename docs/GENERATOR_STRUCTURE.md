@@ -65,11 +65,15 @@ generators/angular/
 │  │  ├─ targets/
 │  │  │  └─ angular/
 │  │  │     ├─ angular-model.ts
+│  │  │     ├─ angular-paths.ts
 │  │  │     ├─ emit-angular-project.ts
 │  │  │     ├─ emit-component.ts
 │  │  │     ├─ emit-routes.ts
 │  │  │     ├─ emit-theme.ts
-│  │  │     └─ map-to-angular.ts
+│  │  │     ├─ emit-utils.ts
+│  │  │     ├─ import-collector.ts
+│  │  │     ├─ map-to-angular.ts
+│  │  │     └─ typescript-literals.ts
 │  │  └─ writers/
 │  │     ├─ file-writer.ts
 │  │     └─ safe-write.ts
@@ -84,21 +88,25 @@ generators/angular/
 
 ## Module responsibilities
 
-| Module                              | Current responsibility                                                                                                                  |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `cli/main.ts`                       | Parses `generate` and `validate` commands, loads native OpenUI JSON, validates it, and orchestrates generation.                         |
-| `spec/load-spec.ts`                 | Reads JSON and parses it into the native OpenUI document type.                                                                          |
-| `spec/openui-spec.types.ts`         | Defines the native OpenUI `id` / `type` / `attrs` / `children` input contract.                                                          |
-| `spec/openui-sections.ts`           | Extracts scoped OpenUI nodes that carry `attrs.scopeDocument` traceability from the canonical scope tree.                               |
-| `validation/validate-spec.ts`       | Fails early for malformed OpenUI node data and compliance-rule synchronization gaps.                                                    |
-| `ir/normalize-spec.ts`              | Converts native scope IDs into routes, summaries, and feature flags.                                                                    |
-| `ir/build-ir.ts`                    | Builds the implementation-independent `UiApplication` model.                                                                            |
-| `targets/angular/angular-model.ts`  | Defines Angular-specific project, page, application-structure, internationalization, and extension model types.                         |
-| `targets/angular/map-to-angular.ts` | Maps `UiApplication` pages and features into an `AngularProjectModel`.                                                                  |
-| `targets/angular/emit-*.ts`         | Emits Angular project files, routes, global theme styles, optional project-level support files, and standalone page component triplets. |
-| `writers/file-writer.ts`            | Writes generated file records.                                                                                                          |
-| `writers/safe-write.ts`             | Prevents path traversal by refusing to write outside the requested output directory.                                                    |
-| `tests/generator.test.ts`           | Verifies CLI generation, Angular Material dependencies, routes, feature-specific page output, and compliance validation diagnostics.    |
+| Module                                   | Current responsibility                                                                                                                  |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `cli/main.ts`                            | Parses `generate` and `validate` commands, loads native OpenUI JSON, validates it, and orchestrates generation.                         |
+| `spec/load-spec.ts`                      | Reads JSON and parses it into the native OpenUI document type.                                                                          |
+| `spec/openui-spec.types.ts`              | Defines the native OpenUI `id` / `type` / `attrs` / `children` input contract.                                                          |
+| `spec/openui-sections.ts`                | Extracts scoped OpenUI nodes that carry `attrs.scopeDocument` traceability from the canonical scope tree.                               |
+| `validation/validate-spec.ts`            | Fails early for malformed OpenUI node data and compliance-rule synchronization gaps.                                                    |
+| `ir/normalize-spec.ts`                   | Converts native scope IDs into routes, summaries, and feature flags.                                                                    |
+| `ir/build-ir.ts`                         | Builds the implementation-independent `UiApplication` model.                                                                            |
+| `targets/angular/angular-model.ts`       | Defines Angular-specific project, page, application-structure, internationalization, and extension model types.                         |
+| `targets/angular/map-to-angular.ts`      | Maps `UiApplication` pages and features into an `AngularProjectModel`.                                                                  |
+| `targets/angular/emit-*.ts`              | Emits Angular project files, routes, global theme styles, optional project-level support files, and standalone page component triplets. |
+| `targets/angular/angular-paths.ts`       | Centralizes the generated page directory, file, and import-path naming conventions used by the emitters.                                |
+| `targets/angular/import-collector.ts`    | Accumulates and de-duplicates Angular import symbols per module, emitting sorted `import` statements.                                   |
+| `targets/angular/typescript-literals.ts` | Renders data values as TypeScript object, indented, and string-array literals for embedding in emitted source.                          |
+| `targets/angular/emit-utils.ts`          | Shared HTML and TypeScript string-escaping helpers for the emitters.                                                                    |
+| `writers/file-writer.ts`                 | Writes generated file records.                                                                                                          |
+| `writers/safe-write.ts`                  | Prevents path traversal by refusing to write outside the requested output directory.                                                    |
+| `tests/generator.test.ts`                | Verifies CLI generation, Angular Material dependencies, routes, feature-specific page output, and compliance validation diagnostics.    |
 
 ## Core design rule
 
@@ -142,6 +150,7 @@ document does not redefine them. For the generator's purposes:
   under `spec/scopes/`. Scope nodes are metadata-only; each scope's object
   contract is carried by a single typed instance child (`<scopeId>Instance`) that
   has no `scopeDocument`. See `spec/scopes/scope.md` for the serialization rule.
+
 - **Input** — an `input.json` authored against the catalog: a well-formed OpenUI
   document (per `openui.schema.json`) whose every `type` is a real catalog object
   used in a legal place.

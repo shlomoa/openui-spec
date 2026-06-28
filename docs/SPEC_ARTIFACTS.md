@@ -49,7 +49,7 @@ Widgets → …`, each node carrying `attrs.scopeDocument` pointers into the pro
 and the trace links to their prose.
 
 > `openui.json` is **generated** from the `spec/scopes/**` prose, which is the
-> source of truth (see [DECISIONS.md](DECISIONS.md) DEC-2). It is canonical as the
+> source of truth. It is canonical as the
 > machine-readable form, but it is a derived artifact, not hand-authored.
 
 ## The relationship

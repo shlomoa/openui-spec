@@ -2,16 +2,15 @@
 
 Source-of-truth template for every leaf `*.scope.md` (a scope with no child
 objects). Copy this file, rename it to `<object_name>.scope.md`, and fill in each
-section. The sections below are the **formal structure**: the converter in
-[`../to_json/`](../to_json/) parses them deterministically into a scope node plus
+section. The sections below are the **formal structure**: the converter in `../to_json/` parses them deterministically into a scope node plus
 its `<scopeId>Instance` (see the section EBNF in [`../README.md`](../README.md)).
 
 Three sections are **machine-bearing** and follow fixed line patterns — Identity,
 Attributes, Child model. The rest is free prose. Do not re-list machine fields in
 the prose sections: the machine-bearing sections are the sole enumerators of ids,
 keys, types, categories, and multiplicity. Prose may *reference* a name to add new
-information, but must never restate the set (DEC-2; the shared category definitions
-live in [`scope.md`](scope.md) and are referenced by link, never copied — DEC-5).
+information, but must never restate the set; the shared category definitions
+live in [`scope.md`](scope.md) and are referenced by link, never copied.
 
 ## Identity
 
@@ -44,7 +43,7 @@ One bullet per attribute. Fixed pattern, ` — ` (em dash) separated:
 Where `<key>` carries its category in its own syntax — Uses `[name]`, Produces
 `(name)`, Behaves `(name)` — and `<Category>` is the matching word `Uses`,
 `Produces`, or `Behaves`. The converter reads the **key** and **category** only;
-the description (and any value-type note) is prose (DEC-4). The emitted instance
+the description (and any value-type note) is prose. The emitted instance
 attr carries just the key with value `null`. List only attributes supported by
 approved source material. Omit the whole section if the object has no attributes.
 
@@ -58,7 +57,7 @@ Where `<childId>` is camelCase, `<childType>` is a valid `type`, and
 `<multiplicity>` is one of `1`, `0..1`, `0..n`, `1..n`. The converter reads
 `childId`, `childType`, and `multiplicity`; it emits one child node (`id`, `type`)
 per bullet under the instance, in listed order. Multiplicity is recorded for
-validation but is not serialized into the grammar (DEC-4 pattern). Omit the whole
+validation but is not serialized into the grammar. Omit the whole
 section if the object owns no children.
 
 ## Accessibility

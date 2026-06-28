@@ -8,7 +8,7 @@ attributes its scope describes, using Angular-Material-style `[uses]` and
 `(produces)` / `(behaves)` attribute keys for illustration only — the format is
 framework-independent.
 
-The folder mirrors [`../scopes`](../scopes): each leaf scope has a
+The folder mirrors [`../scopes`](../scopes/scope.md): each leaf scope has a
 `<object>.example.json`, and each parent scope has a composite `scope.example.json`
 that assembles its child objects into a realistic whole.
 

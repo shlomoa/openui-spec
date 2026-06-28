@@ -21,7 +21,7 @@ frameworks. It is defined by three artifacts at different levels of abstraction:
   OpenUI objects (scopes such as `Application`, `Grid`, `Charts`), **generated
   from the prose**. It conforms to the grammar and carries each object's contract
   for tooling to consume; each scope node links back to its prose through
-  `attrs.scopeDocument`. See [DECISIONS.md](DECISIONS.md) DEC-2.
+  `attrs.scopeDocument`.
 
 The specification defines *what* a compliant Web UI must provide; it never
 prescribes *how* it is implemented.

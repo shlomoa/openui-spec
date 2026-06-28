@@ -202,13 +202,13 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 ## Leaf scope source format (`*.scope.md`)
 
 `openui.json` is **generated** from the `spec/scopes/**` prose; the prose is the
-source of truth ([DECISIONS.md](../docs/DECISIONS.md) DEC-2). Every leaf
+source of truth. Every leaf
 `*.scope.md` follows the shared
 [`scopes/template.scope.md`](scopes/template.scope.md). Three of its sections are
 *machine-bearing* — **Identity**, **Attributes**, **Child model** — and follow
 fixed line patterns; **Purpose**, **Accessibility**, and **Validation notes** are
 free prose and are not parsed. The converter lives in
-[`to_json/`](to_json/) and walks the tree per DEC-6.
+`to_json/` and walks the tree.
 
 ### Field mapping
 
@@ -225,17 +225,17 @@ child (see [`scopes/scope.md`](scopes/scope.md)). Fields come from:
 | scope `attrs.status` | Identity `status:` |
 | instance `id` | derived: `<scopeId>Instance` |
 | instance `type` | Identity `type:` (the concrete/virtual primitive) |
-| instance `attrs` keys | Attributes — each `key` by category, value `null` (DEC-4) |
+| instance `attrs` keys | Attributes — each `key` by category, value `null` |
 | instance `children` | Child model — one node (`id`, `type`) per bullet, in order |
 
 Separators are fixed: ` · ` (middot, U+00B7) between Identity fields, and ` — `
 (em dash, U+2014) between Attributes and Child-model fields. The Attributes
 **category** word is authoritative; its key bracket must agree (`[name]` → `Uses`;
 `(name)` → `Produces` or `Behaves`). Value-types, descriptions, and multiplicity
-are recorded in prose only and are not serialized into the grammar (DEC-4).
+are recorded in prose only and are not serialized into the grammar.
 Machine-bearing sections are the **sole enumerators** of ids, keys, types,
 categories, and multiplicity; prose sections may reference those names but must not
-re-list them (DEC-2).
+re-list them.
 
 ### Section EBNF
 

@@ -1,5 +1,7 @@
 # Design decisions
 
+A transient file for recording open and decided design decisions. do not reference it anywhere.
+
 Open decisions for the OpenUI catalog and generator. Each records the question,
 the options compared, and the current recommendation. Status stays **Open** until
 chosen; once decided, fold the outcome into the relevant spec/doc and mark it
