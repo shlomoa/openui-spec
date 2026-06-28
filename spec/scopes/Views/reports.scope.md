@@ -1,19 +1,35 @@
 # Reports
 
-Reports are read-only data views that help users inspect, filter, sort, group, and page through business data.
+This leaf follows the [leaf scope template](../template.scope.md). Its contract is
+drawn from the `spec/README.md` scope rule, recorded technology-independently.
 
-## Scope
+## Identity
 
-A report definition may describe:
+- id: reports · type: Reports · status: draft
 
-- report identity,
-- data fields,
-- read-only presentation rules,
-- filtering options,
-- sorting options,
-- grouping options,
-- pagination behavior,
-- empty state, and
-- loading or error state.
+## Purpose
 
-The specification does not require a specific table, grid, chart, data service, query language, or framework component.
+A read-only data view that lets the user filter, sort, group, and page through
+business data.
+
+## Attributes
+
+Categories are defined in [`../scope.md`](../scope.md):
+
+- `(filter)` — Behaves — narrows the visible data by a predicate.
+- `(sort)` — Behaves — orders the data by a chosen key.
+- `(group)` — Behaves — groups the data by a chosen key.
+- `(paginate)` — Behaves — splits the data into navigable pages.
+
+## Accessibility
+
+- Presents data in a read-only form and announces the active filter, sort, and
+  grouping to assistive technology.
+- Pagination controls are operable by keyboard with clear position information.
+
+## Validation notes
+
+- `id` is a camelCase identifier and `type` is a valid type per
+  `openui.schema.json`.
+- The view is read-only; presentation primitives (table, grid, chart) require an
+  explicit owner decision before they are added as a child model.
