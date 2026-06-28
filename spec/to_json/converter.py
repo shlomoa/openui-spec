@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import argparse
+import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -22,6 +24,7 @@ CHILD_RE = re.compile(
     r"(?P<multiplicity>1|0\.\.1|0\.\.n|1\.\.n)\s+—\s+.+$"
 )
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
+OBJECT_LINK_RE = re.compile(r"^-\s+\[[^\]]+\]\((?P<link>[^)]+)\):")
 
 
 @dataclass(frozen=True)
@@ -86,6 +89,70 @@ def parse_leaf_scope(path: Path | str, *, scopes_dir: Path | str | None = None) 
     return leaf.to_node()
 
 
+def build_openui_document(
+    *,
+    spec_dir: Path | str | None = None,
+    version: str | None = None,
+) -> dict[str, Any]:
+    """Build the full OpenUI JSON document from the prose scope tree."""
+    resolved_spec_dir = Path(spec_dir) if spec_dir is not None else Path(__file__).resolve().parents[1]
+    resolved_version = version or (resolved_spec_dir.parent / "SCHEMA_VERSION").read_text(
+        encoding="utf-8"
+    ).strip()
+
+    return {
+        "id": "root",
+        "type": "html",
+        "version": resolved_version,
+        "attrs": {
+            "name": "OpenUI",
+            "description": "Technology-independent Web UI framework specification",
+            "scopeDocument": "README.md",
+            "status": "draft",
+        },
+        "children": [build_scope_tree(resolved_spec_dir / "scopes")],
+    }
+
+
+def build_scope_tree(scopes_dir: Path | str) -> dict[str, Any]:
+    """Build the generated JSON node for `spec/scopes` or any scope directory."""
+    root = Path(scopes_dir)
+    if not root.is_dir():
+        raise ValueError(f"{root}: scope directory does not exist")
+    return _build_scope_directory(root, root)
+
+
+def main(argv: list[str] | None = None) -> int:
+    """Run the converter from the command line."""
+    parser = argparse.ArgumentParser(description="Convert OpenUI scope markdown to JSON.")
+    parser.add_argument(
+        "--spec-dir",
+        type=Path,
+        default=Path(__file__).resolve().parents[1],
+        help="Path to the spec directory that contains README.md and scopes/.",
+    )
+    parser.add_argument(
+        "--output",
+        "-o",
+        type=Path,
+        help="Output JSON file. Defaults to stdout when omitted.",
+    )
+    parser.add_argument(
+        "--version",
+        help="Override the generated top-level version.",
+    )
+    args = parser.parse_args(argv)
+
+    document = build_openui_document(spec_dir=args.spec_dir, version=args.version)
+    output = json.dumps(document, ensure_ascii=False, indent=2) + "\n"
+    if args.output is None:
+        print(output, end="")
+    else:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(output, encoding="utf-8")
+    return 0
+
+
 def _title(text: str, path: Path) -> str:
     for line in text.splitlines():
         match = HEADING_RE.fullmatch(line)
@@ -106,6 +173,82 @@ def _sections(text: str) -> dict[str, list[str]]:
         if current is not None:
             sections[current].append(line)
     return sections
+
+
+def _build_scope_directory(path: Path, scopes_dir: Path) -> dict[str, Any]:
+    scope_file = path / "scope.md"
+    if not scope_file.is_file():
+        raise ValueError(f"{path}: missing scope.md")
+
+    text = scope_file.read_text(encoding="utf-8")
+    title = _title(text, scope_file)
+    children = [_build_child(child_path, scopes_dir) for child_path in _ordered_children(path, text)]
+    child_ids = {child["id"] for child in children}
+    node_id = _scope_directory_id(path, scopes_dir, title, child_ids)
+    node: dict[str, Any] = {
+        "id": node_id,
+        "type": _pascal_words(title),
+        "attrs": {
+            "title": title,
+            "purpose": _leading_prose(text),
+            "scopeDocument": scope_file.relative_to(scopes_dir).as_posix(),
+            "status": "draft",
+        },
+    }
+    if children:
+        node["children"] = children
+    return node
+
+
+def _build_child(path: Path, scopes_dir: Path) -> dict[str, Any]:
+    if path.is_dir():
+        return _build_scope_directory(path, scopes_dir)
+    return parse_leaf_scope(path, scopes_dir=scopes_dir)
+
+
+def _ordered_children(path: Path, text: str) -> list[Path]:
+    children: list[Path] = []
+    seen: set[Path] = set()
+    for line in _sections(text).get("Objects", []):
+        match = OBJECT_LINK_RE.fullmatch(line)
+        if not match:
+            continue
+        target = (path / match.group("link")).resolve()
+        if target.name == "scope.md":
+            target = target.parent
+        if target.exists() and target not in seen:
+            children.append(target)
+            seen.add(target)
+
+    discoverable = [
+        child
+        for child in [*path.glob("*.scope.md"), *[item for item in path.iterdir() if item.is_dir()]]
+        if child.name != "template.scope.md"
+    ]
+    for child in sorted(discoverable, key=lambda item: (item.is_file(), item.name.lower())):
+        resolved = child.resolve()
+        if resolved not in seen:
+            children.append(resolved)
+            seen.add(resolved)
+    return children
+
+
+def _scope_directory_id(path: Path, scopes_dir: Path, title: str, child_ids: set[str]) -> str:
+    if path == scopes_dir:
+        return "scopes"
+    node_id = _camel_words(title)
+    if node_id in child_ids:
+        return f"{node_id}Scope"
+    return node_id
+
+
+def _leading_prose(text: str) -> str:
+    lines: list[str] = []
+    for line in text.splitlines()[1:]:
+        if line.startswith("## "):
+            break
+        lines.append(line)
+    return _prose(lines)
 
 
 def _identity(sections: dict[str, list[str]], path: Path) -> dict[str, str]:
@@ -168,3 +311,13 @@ def _scope_document(path: Path, scopes_dir: Path | str | None) -> str:
 
 def _pascal_case(value: str) -> str:
     return value[:1].upper() + value[1:]
+
+
+def _pascal_words(value: str) -> str:
+    words = re.findall(r"[A-Za-z0-9]+", value)
+    return "".join(word[:1].upper() + word[1:] for word in words)
+
+
+def _camel_words(value: str) -> str:
+    pascal = _pascal_words(value)
+    return pascal[:1].lower() + pascal[1:]
