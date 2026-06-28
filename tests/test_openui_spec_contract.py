@@ -9,6 +9,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SPEC_DIR = REPO_ROOT / "spec"
 OPENUI_JSON = REPO_ROOT / "openui.json"
 OPENUI_SCHEMA = SPEC_DIR / "openui.schema.json"
+SCHEMA_VERSION_FILE = REPO_ROOT / "SCHEMA_VERSION"
 JSON_SCHEMA_MODULE = "json" + "schema"
 Draft202012Validator: Any = import_module(JSON_SCHEMA_MODULE).Draft202012Validator
 
@@ -56,10 +57,21 @@ class OpenUiSpecContractTest(unittest.TestCase):
 
     def test_openui_json_uses_required_root_values(self) -> None:
         self.assertEqual(self.document["id"], "root")
-        self.assertEqual(self.document["type"], "html")
-        self.assertEqual(self.document["version"], "0.0.1")
+        self.assertTrue(
+            self._is_valid_type(self.document["type"]),
+            f"root type={self.document['type']}",
+        )
+        self.assertEqual(
+            self.document["version"],
+            SCHEMA_VERSION_FILE.read_text(encoding="utf-8").strip(),
+        )
         self.assertIsInstance(self.document.get("children"), list)
         self.assertGreater(len(self.document["children"]), 0)
+
+    def test_schema_version_file_matches_grammar_version_pattern(self) -> None:
+        current_version = SCHEMA_VERSION_FILE.read_text(encoding="utf-8").strip()
+        version_pattern = self.schema["$defs"]["version"]["pattern"]
+        self.assertRegex(current_version, version_pattern)
 
     def test_openui_json_matches_document_shape(self) -> None:
         seen_ids: set[str] = set()

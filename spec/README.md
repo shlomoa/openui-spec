@@ -61,11 +61,16 @@ Structured hierarchically, named in Pascal Case for folders and snake case for f
 
 ### Canonical root document
 
-The repository root `openui.json` MUST use these exact top-level root values:
+The repository root `openui.json` MUST satisfy these top-level root rules:
 
-- `"id": "root"`
-- `"type": "html"`
-- `"version": "0.0.1"`
+- `"id"` MUST be `"root"`.
+- `"version"` is REQUIRED (top-level only) and MUST equal the current value in
+  the repository-root `SCHEMA_VERSION` file (currently `0.0.1`).
+- `"type"` follows the general type rules below and is not pinned to a specific
+  value.
+
+These rules are enforced by `openui.schema.json`, the machine-readable grammar
+for OpenUI documents.
 
 ### Naming conventions
 
@@ -127,7 +132,7 @@ but the base JSON format does not execute them.
 (* OpenUI specification in EBNF notation *)
 
 openui-document = "{"
-  [ version-field "," ]
+  version-field ","
   id-field ","
   type-field ","
   [ attrs-field "," ]
@@ -186,7 +191,7 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 
 ### Syntax rules
 
-- **Version field (top-level only):** Optional semantic version string (e.g., "1.0.0") identifying the spec version
+- **Version field (top-level only):** Required semantic version string (e.g., "0.0.1") identifying the spec version
 - **ID field:** Must be a camelCase alphanumeric string (starts with lowercase letter, can contain uppercase letters and digits)
 - **Type field:** Can be HTML tag names, kebab-case names (e.g., `mat-date-range-input`), or PascalCase names (e.g., `MainPage`)
 - **Attributes field:** Key-value pairs where values are strings or null. Attribute key syntax identifies input, output, and behavior categories; all such categories must stay inside the `attrs` object.
@@ -199,7 +204,7 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 
 ```json
 {
-  "id": "mainpage",
+  "id": "root",
   "version": "1.0.0",
   "type": "MainPage",
   "attrs": {
