@@ -136,11 +136,11 @@
                   "type": "Collapsible",
                   "children": [
                     {
-                      "id": "targetPage",
+                      "id": "collapsibleTargetPage",
                       "type": "page"
                     },
                     {
-                      "id": "targetView",
+                      "id": "collapsibleTargetView",
                       "type": "view"
                     }
                   ]
@@ -162,19 +162,19 @@
                   "type": "DragAndDrop",
                   "children": [
                     {
-                      "id": "targetPage",
+                      "id": "dragAndDropTargetPage",
                       "type": "page"
                     },
                     {
-                      "id": "targetView",
+                      "id": "dragAndDropTargetView",
                       "type": "view"
                     },
                     {
-                      "id": "targetContainer",
+                      "id": "dragAndDropTargetContainer",
                       "type": "container"
                     },
                     {
-                      "id": "targetWidget",
+                      "id": "dragAndDropTargetWidget",
                       "type": "widget"
                     }
                   ]
@@ -196,11 +196,11 @@
                   "type": "Resizable",
                   "children": [
                     {
-                      "id": "targetPage",
+                      "id": "resizableTargetPage",
                       "type": "page"
                     },
                     {
-                      "id": "targetView",
+                      "id": "resizableTargetView",
                       "type": "view"
                     }
                   ]
@@ -276,7 +276,7 @@
                   "type": "Tabs",
                   "children": [
                     {
-                      "id": "tab",
+                      "id": "tabsTab",
                       "type": "tab"
                     }
                   ]
@@ -641,7 +641,7 @@
                   },
                   "children": [
                     {
-                      "id": "listItem",
+                      "id": "listsListItem",
                       "type": "li"
                     }
                   ]
@@ -663,7 +663,7 @@
                   "type": "Stepper",
                   "children": [
                     {
-                      "id": "step",
+                      "id": "stepperStep",
                       "type": "step"
                     }
                   ]
@@ -690,7 +690,7 @@
                   },
                   "children": [
                     {
-                      "id": "tableRow",
+                      "id": "tablesTableRow",
                       "type": "tr"
                     }
                   ]

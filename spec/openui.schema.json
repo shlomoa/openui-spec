@@ -37,7 +37,11 @@
             "span",
             "input",
             "button",
-            "table"
+            "table",
+            "tr",
+            "th",
+            "td",
+            "li"
           ]
         },
         {

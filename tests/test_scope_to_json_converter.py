@@ -25,7 +25,7 @@ class ScopeToJsonConverterTest(unittest.TestCase):
                     "A modal or non-modal interaction surface that overlays the page with a "
                     "title, content, and actions."
                 ),
-                "scopeDocument": "Widgets/dialog.scope.md",
+                "scopeDocument": "scopes/Widgets/dialog.scope.md",
                 "status": "draft",
             },
         )
