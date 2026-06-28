@@ -96,7 +96,9 @@ def build_openui_document(
     version: str | None = None,
 ) -> dict[str, Any]:
     """Build the full OpenUI JSON document from the prose scope tree."""
-    resolved_spec_dir = Path(spec_dir) if spec_dir is not None else Path(__file__).resolve().parents[1]
+    resolved_spec_dir = (
+        Path(spec_dir) if spec_dir is not None else Path(__file__).resolve().parents[1]
+    )
     resolved_version = version or (resolved_spec_dir.parent / "SCHEMA_VERSION").read_text(
         encoding="utf-8"
     ).strip()
@@ -183,7 +185,9 @@ def _build_scope_directory(path: Path, scopes_dir: Path) -> dict[str, Any]:
 
     text = scope_file.read_text(encoding="utf-8")
     title = _title(text, scope_file)
-    children = [_build_child(child_path, scopes_dir) for child_path in _ordered_children(path, text)]
+    children = [
+        _build_child(child_path, scopes_dir) for child_path in _ordered_children(path, text)
+    ]
     child_ids = {child["id"] for child in children}
     node_id = _scope_directory_id(path, scopes_dir, title, child_ids)
     node: dict[str, Any] = {
