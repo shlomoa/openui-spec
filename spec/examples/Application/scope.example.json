@@ -1,0 +1,81 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Application",
+  "attrs": {
+    "title": "\"Application bootstrap example\""
+  },
+  "children": [
+    {
+      "id": "appHost",
+      "type": "IndexHtml",
+      "attrs": {
+        "[lang]": "\"en\"",
+        "[title]": "\"OpenUI Demo\"",
+        "[mount]": "\"app-root\""
+      },
+      "children": [
+        {
+          "id": "appFavicon",
+          "type": "Favicon",
+          "attrs": {
+            "rel": "\"icon\"",
+            "href": "\"/favicon.ico\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "appRouting",
+      "type": "Routing",
+      "attrs": {
+        "[defaultRoute]": "\"home\""
+      },
+      "children": [
+        {
+          "id": "homeRoute",
+          "type": "Route",
+          "attrs": {
+            "[path]": "\"home\"",
+            "[target]": "\"homePage\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "appNavigation",
+      "type": "Navigation",
+      "attrs": {
+        "[ariaLabel]": "\"Primary\""
+      },
+      "children": [
+        {
+          "id": "navHome",
+          "type": "NavItem",
+          "attrs": {
+            "[label]": "\"Home\"",
+            "[target]": "\"home\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "appToolbar",
+      "type": "ToolBar",
+      "attrs": {
+        "[placement]": "\"top\""
+      },
+      "children": [
+        {
+          "id": "helpAction",
+          "type": "ToolAction",
+          "attrs": {
+            "[label]": "\"Help\"",
+            "[icon]": "\"help\"",
+            "(click)": "openHelp()"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Controls",
+  "attrs": {
+    "title": "\"Controls example\""
+  },
+  "children": [
+    {
+      "id": "nativeControls",
+      "type": "NativeControls",
+      "children": [
+        {
+          "id": "colorScheme",
+          "type": "native-color-scheme",
+          "attrs": {
+            "[supported]": "\"light dark\""
+          }
+        },
+        {
+          "id": "scrollRegion",
+          "type": "native-scrollbar",
+          "attrs": {
+            "[overflow]": "\"auto\""
+          }
+        }
+      ]
+    }
+  ]
+}

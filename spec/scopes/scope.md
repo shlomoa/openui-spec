@@ -44,3 +44,13 @@ Scope object attributes are represented through `attrs` key syntax:
 - **Behaves:** behavior attributes. These describe actions or side effects, such as setting another attribute value, running a callback, or invoking target-framework logic.
 
 For Angular Material examples, `[name]` represents a Uses/input binding and `(name)` represents a Produces/output or Behaves/action binding. The base OpenUI scope model records those keys as strings and does not execute their values.
+
+## Leaf scope template
+
+Every leaf `*.scope.md` (a scope with no child objects) uses this single shared template. It is the source of truth for leaf structure: leaf files fill these sections and do not redefine them.
+
+- **Purpose** — one or two sentences stating what the object is and the implementation-independent concept it represents.
+- **Attributes** — the object's `attrs`, grouped by the Uses (`[value]`), Produces (`(selectionChange)`), and Behaves (`(click)`) attribute categories defined in this document. List only attributes supported by approved source material.
+- **Child model** — the child object types the scope owns and their multiplicity, consistent with the `children` field defined in `../README.md`.
+- **Accessibility** — role, label, focus, and keyboard expectations for interactive scopes, stated technology-independently.
+- **Validation notes** — constraints on `id`, `type`, `attrs`, and `children` specific to this scope, beyond the base `openui.schema.json` grammar.

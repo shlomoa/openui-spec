@@ -1,0 +1,67 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Application",
+  "attrs": {
+    "title": "\"Tool bar example\""
+  },
+  "children": [
+    {
+      "id": "appToolbar",
+      "type": "ToolBar",
+      "attrs": {
+        "[placement]": "\"top\"",
+        "[overflow]": "\"menu\""
+      },
+      "children": [
+        {
+          "id": "primaryActions",
+          "type": "ToolGroup",
+          "attrs": {
+            "[order]": "1"
+          },
+          "children": [
+            {
+              "id": "newAction",
+              "type": "ToolAction",
+              "attrs": {
+                "[label]": "\"New\"",
+                "[icon]": "\"add\"",
+                "(click)": "onNew()"
+              }
+            },
+            {
+              "id": "saveAction",
+              "type": "ToolAction",
+              "attrs": {
+                "[label]": "\"Save\"",
+                "[icon]": "\"save\"",
+                "[disabled]": "isPristine",
+                "(click)": "onSave()"
+              }
+            }
+          ]
+        },
+        {
+          "id": "secondaryActions",
+          "type": "ToolGroup",
+          "attrs": {
+            "[order]": "2"
+          },
+          "children": [
+            {
+              "id": "deleteAction",
+              "type": "ToolAction",
+              "attrs": {
+                "[label]": "\"Delete\"",
+                "[icon]": "\"delete\"",
+                "[hidden]": "!canDelete",
+                "(click)": "onDelete()"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

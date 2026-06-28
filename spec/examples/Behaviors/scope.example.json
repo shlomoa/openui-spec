@@ -1,0 +1,42 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Behaviors",
+  "attrs": {
+    "title": "\"Behaviors example\""
+  },
+  "children": [
+    {
+      "id": "workspacePanel",
+      "type": "Panel",
+      "attrs": {
+        "[title]": "\"Workspace\""
+      },
+      "children": [
+        {
+          "id": "panelCollapsible",
+          "type": "Collapsible",
+          "attrs": {
+            "[expanded]": "true"
+          }
+        },
+        {
+          "id": "panelResizable",
+          "type": "Resizable",
+          "attrs": {
+            "[handles]": "\"right\"",
+            "[minSize]": "\"240x160\""
+          }
+        },
+        {
+          "id": "panelDnd",
+          "type": "Draggable",
+          "attrs": {
+            "[itemType]": "\"panel\"",
+            "[ariaLabel]": "\"Move panel\""
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Application",
+  "attrs": {
+    "title": "\"Routing example\""
+  },
+  "children": [
+    {
+      "id": "appRouting",
+      "type": "Routing",
+      "attrs": {
+        "[defaultRoute]": "\"dashboard\"",
+        "(activeRouteChange)": "onActiveRouteChange($event)"
+      },
+      "children": [
+        {
+          "id": "dashboardRoute",
+          "type": "Route",
+          "attrs": {
+            "[path]": "\"dashboard\"",
+            "[target]": "\"dashboardPage\"",
+            "[active]": "true"
+          }
+        },
+        {
+          "id": "reportRoute",
+          "type": "Route",
+          "attrs": {
+            "[path]": "\"reports/:reportId\"",
+            "[target]": "\"reportsView\"",
+            "[params]": "\"reportId\""
+          }
+        },
+        {
+          "id": "fallbackRoute",
+          "type": "Route",
+          "attrs": {
+            "[path]": "\"**\"",
+            "[target]": "\"emptyPage\"",
+            "[fallback]": "true"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Widgets",
+  "attrs": {
+    "title": "\"Widgets example\""
+  },
+  "children": [
+    {
+      "id": "salesChart",
+      "type": "Chart",
+      "attrs": {
+        "[chartType]": "\"bar\"",
+        "[series]": "salesSeries",
+        "[ariaLabel]": "\"Sales by month\""
+      }
+    },
+    {
+      "id": "salesTable",
+      "type": "table",
+      "attrs": {
+        "[data]": "sales"
+      },
+      "children": [
+        {
+          "id": "colMonth",
+          "type": "Column",
+          "attrs": {
+            "[field]": "\"month\"",
+            "[header]": "\"Month\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "recentList",
+      "type": "List",
+      "attrs": {
+        "[items]": "recent"
+      },
+      "children": [
+        {
+          "id": "recentItem",
+          "type": "ListItem",
+          "attrs": {
+            "[label]": "item.title"
+          }
+        }
+      ]
+    },
+    {
+      "id": "rangePicker",
+      "type": "mat-date-range-input",
+      "attrs": {
+        "[rangePicker]": "\"picker\""
+      },
+      "children": [
+        {
+          "id": "rangeStart",
+          "type": "input",
+          "attrs": {
+            "matStartDate": null,
+            "placeholder": "\"Start\""
+          }
+        },
+        {
+          "id": "rangeEnd",
+          "type": "input",
+          "attrs": {
+            "matEndDate": null,
+            "placeholder": "\"End\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "wizard",
+      "type": "Stepper",
+      "attrs": {
+        "[linear]": "true"
+      },
+      "children": [
+        {
+          "id": "stepOne",
+          "type": "Step",
+          "attrs": {
+            "[label]": "\"Step 1\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "infoDialog",
+      "type": "Dialog",
+      "attrs": {
+        "[modal]": "true",
+        "[open]": "showInfo"
+      },
+      "children": [
+        {
+          "id": "infoTitle",
+          "type": "DialogTitle",
+          "attrs": {
+            "text": "\"Info\""
+          }
+        }
+      ]
+    }
+  ]
+}

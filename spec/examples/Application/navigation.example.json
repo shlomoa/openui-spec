@@ -1,0 +1,66 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Application",
+  "attrs": {
+    "title": "\"Navigation example\""
+  },
+  "children": [
+    {
+      "id": "primaryNav",
+      "type": "Navigation",
+      "attrs": {
+        "[ariaLabel]": "\"Primary\"",
+        "(navItemSelect)": "onNavSelect($event)"
+      },
+      "children": [
+        {
+          "id": "navHome",
+          "type": "NavItem",
+          "attrs": {
+            "[label]": "\"Home\"",
+            "[icon]": "\"home\"",
+            "[target]": "\"dashboard\"",
+            "[selected]": "true"
+          }
+        },
+        {
+          "id": "navReportsGroup",
+          "type": "NavGroup",
+          "attrs": {
+            "[label]": "\"Reports\"",
+            "[icon]": "\"insights\""
+          },
+          "children": [
+            {
+              "id": "navSalesReport",
+              "type": "NavItem",
+              "attrs": {
+                "[label]": "\"Sales\"",
+                "[target]": "\"reports/sales\""
+              }
+            },
+            {
+              "id": "navAuditReport",
+              "type": "NavItem",
+              "attrs": {
+                "[label]": "\"Audit\"",
+                "[target]": "\"reports/audit\"",
+                "[disabled]": "true"
+              }
+            }
+          ]
+        },
+        {
+          "id": "navAdmin",
+          "type": "NavItem",
+          "attrs": {
+            "[label]": "\"Admin\"",
+            "[target]": "\"admin\"",
+            "[hidden]": "true"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Application",
+  "attrs": {
+    "title": "\"OpenUI demo application\"",
+    "size": "\"1960x1080\""
+  },
+  "children": [
+    {
+      "id": "appRouting",
+      "type": "Routing",
+      "attrs": {
+        "[defaultRoute]": "\"dashboard\""
+      },
+      "children": [
+        {
+          "id": "dashboardRoute",
+          "type": "Route",
+          "attrs": {
+            "[path]": "\"dashboard\"",
+            "[target]": "\"dashboardPage\""
+          }
+        },
+        {
+          "id": "ordersRoute",
+          "type": "Route",
+          "attrs": {
+            "[path]": "\"orders\"",
+            "[target]": "\"ordersReport\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "appNavigation",
+      "type": "Navigation",
+      "attrs": {
+        "[ariaLabel]": "\"Primary\""
+      },
+      "children": [
+        {
+          "id": "navDashboard",
+          "type": "NavItem",
+          "attrs": {
+            "[label]": "\"Dashboard\"",
+            "[target]": "\"dashboard\"",
+            "[selected]": "true"
+          }
+        },
+        {
+          "id": "navOrders",
+          "type": "NavItem",
+          "attrs": {
+            "[label]": "\"Orders\"",
+            "[target]": "\"orders\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "appToolbar",
+      "type": "ToolBar",
+      "attrs": {
+        "[placement]": "\"top\""
+      },
+      "children": [
+        {
+          "id": "newOrderAction",
+          "type": "ToolAction",
+          "attrs": {
+            "[label]": "\"New order\"",
+            "[icon]": "\"add\"",
+            "(click)": "onNewOrder()"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dashboardPage",
+      "type": "DashboardPage",
+      "attrs": {
+        "title": "\"Dashboard\""
+      },
+      "children": [
+        {
+          "id": "dashboardGrid",
+          "type": "Grid",
+          "attrs": {
+            "[columns]": "12",
+            "[responsive]": "true"
+          },
+          "children": [
+            {
+              "id": "kpiCard",
+              "type": "Card",
+              "attrs": {
+                "[colSpan]": "4",
+                "[title]": "\"Revenue\""
+              },
+              "children": [
+                {
+                  "id": "kpiChart",
+                  "type": "Chart",
+                  "attrs": {
+                    "[chartType]": "\"line\"",
+                    "[series]": "revenueSeries"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ordersReport",
+      "type": "ReportView",
+      "attrs": {
+        "title": "\"Orders\"",
+        "[readOnly]": "true"
+      },
+      "children": [
+        {
+          "id": "ordersTable",
+          "type": "table",
+          "attrs": {
+            "[data]": "orders"
+          },
+          "children": [
+            {
+              "id": "colOrderId",
+              "type": "Column",
+              "attrs": {
+                "[field]": "\"id\"",
+                "[header]": "\"Order\"",
+                "[sortable]": "true"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ContainerExample",
+  "attrs": {
+    "title": "\"Grid example\""
+  },
+  "children": [
+    {
+      "id": "contentGrid",
+      "type": "Grid",
+      "attrs": {
+        "[columns]": "12",
+        "[rowGap]": "\"16px\"",
+        "[columnGap]": "\"16px\"",
+        "[responsive]": "true"
+      },
+      "children": [
+        {
+          "id": "mainRegion",
+          "type": "GridItem",
+          "attrs": {
+            "[colSpan]": "8",
+            "[rowSpan]": "2",
+            "[order]": "1"
+          }
+        },
+        {
+          "id": "sideRegion",
+          "type": "GridItem",
+          "attrs": {
+            "[colSpan]": "4",
+            "[order]": "2"
+          }
+        },
+        {
+          "id": "footerRegion",
+          "type": "GridItem",
+          "attrs": {
+            "[colSpan]": "12",
+            "[order]": "3"
+          }
+        }
+      ]
+    }
+  ]
+}

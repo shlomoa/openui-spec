@@ -1,0 +1,57 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "WidgetExample",
+  "attrs": {
+    "title": "\"Stepper example\""
+  },
+  "children": [
+    {
+      "id": "checkoutStepper",
+      "type": "Stepper",
+      "attrs": {
+        "[linear]": "true",
+        "[selectedIndex]": "0",
+        "(stepChange)": "onStepChange($event)",
+        "(completed)": "onComplete()"
+      },
+      "children": [
+        {
+          "id": "cartStep",
+          "type": "Step",
+          "attrs": {
+            "[label]": "\"Cart\"",
+            "[order]": "1",
+            "[completed]": "true"
+          }
+        },
+        {
+          "id": "shippingStep",
+          "type": "Step",
+          "attrs": {
+            "[label]": "\"Shipping\"",
+            "[order]": "2",
+            "[invalid]": "shippingForm.invalid"
+          }
+        },
+        {
+          "id": "paymentStep",
+          "type": "Step",
+          "attrs": {
+            "[label]": "\"Payment\"",
+            "[order]": "3"
+          }
+        },
+        {
+          "id": "stepperSubmit",
+          "type": "button",
+          "attrs": {
+            "text": "\"Place order\"",
+            "[disabled]": "!allStepsValid",
+            "(click)": "submit()"
+          }
+        }
+      ]
+    }
+  ]
+}

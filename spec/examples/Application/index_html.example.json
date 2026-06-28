@@ -1,0 +1,84 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "html",
+  "attrs": {
+    "lang": "\"en\"",
+    "dir": "\"ltr\""
+  },
+  "children": [
+    {
+      "id": "documentHead",
+      "type": "head",
+      "children": [
+        {
+          "id": "pageTitle",
+          "type": "title",
+          "attrs": {
+            "text": "\"OpenUI Demo\""
+          }
+        },
+        {
+          "id": "charset",
+          "type": "meta",
+          "attrs": {
+            "charset": "\"utf-8\""
+          }
+        },
+        {
+          "id": "viewport",
+          "type": "meta",
+          "attrs": {
+            "name": "\"viewport\"",
+            "content": "\"width=device-width, initial-scale=1\""
+          }
+        },
+        {
+          "id": "description",
+          "type": "meta",
+          "attrs": {
+            "name": "\"description\"",
+            "content": "\"OpenUI specification demo application\""
+          }
+        },
+        {
+          "id": "faviconLink",
+          "type": "link",
+          "attrs": {
+            "rel": "\"icon\"",
+            "href": "\"/favicon.ico\""
+          }
+        },
+        {
+          "id": "themeStyles",
+          "type": "link",
+          "attrs": {
+            "rel": "\"stylesheet\"",
+            "href": "\"/styles.css\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "documentBody",
+      "type": "body",
+      "children": [
+        {
+          "id": "appRoot",
+          "type": "app-root",
+          "attrs": {
+            "role": "\"application\""
+          }
+        },
+        {
+          "id": "appBootstrap",
+          "type": "script",
+          "attrs": {
+            "src": "\"/main.js\"",
+            "type": "\"module\""
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ContainerExample",
+  "attrs": {
+    "title": "\"Expandable panels example\""
+  },
+  "children": [
+    {
+      "id": "settingsAccordion",
+      "type": "PanelGroup",
+      "attrs": {
+        "[multi]": "false"
+      },
+      "children": [
+        {
+          "id": "generalPanel",
+          "type": "ExpandablePanel",
+          "attrs": {
+            "[heading]": "\"General\"",
+            "[expanded]": "true",
+            "[defaultExpanded]": "true",
+            "(expandedChange)": "onToggle('general', $event)"
+          },
+          "children": [
+            {
+              "id": "generalContent",
+              "type": "div",
+              "attrs": {
+                "text": "\"General settings\""
+              }
+            }
+          ]
+        },
+        {
+          "id": "advancedPanel",
+          "type": "ExpandablePanel",
+          "attrs": {
+            "[heading]": "\"Advanced\"",
+            "[expanded]": "false",
+            "[ariaControls]": "\"advancedContent\""
+          },
+          "children": [
+            {
+              "id": "advancedContent",
+              "type": "div",
+              "attrs": {
+                "text": "\"Advanced settings\""
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

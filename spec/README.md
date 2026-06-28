@@ -200,6 +200,10 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 
 ## app.json examples
 
+A worked example per scope lives in [`examples/`](examples/README.md), mirroring
+the `scopes` tree: a `<object>.example.json` for each leaf scope and a composite
+`scope.example.json` for each parent scope.
+
 ### Example: Main page with a date range input
 
 ```json

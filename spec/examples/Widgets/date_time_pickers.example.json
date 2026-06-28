@@ -1,0 +1,46 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "WidgetExample",
+  "attrs": {
+    "title": "\"Date/time picker example\""
+  },
+  "children": [
+    {
+      "id": "appointmentPicker",
+      "type": "mat-datetime-picker",
+      "attrs": {
+        "[min]": "\"2026-01-01\"",
+        "[max]": "\"2026-12-31\"",
+        "[matDatepickerFilter]": "isBusinessDay",
+        "[displayFormat]": "\"yyyy-MM-dd HH:mm\"",
+        "[parseFormat]": "\"yyyy-MM-dd HH:mm\"",
+        "[required]": "true",
+        "[ariaLabel]": "\"Appointment date and time\"",
+        "(dateChange)": "onDateChange($event)"
+      },
+      "children": [
+        {
+          "id": "appointmentDate",
+          "type": "input",
+          "attrs": {
+            "matInput": null,
+            "type": "\"date\"",
+            "placeholder": "\"Date\"",
+            "formControlName": "\"date\""
+          }
+        },
+        {
+          "id": "appointmentTime",
+          "type": "input",
+          "attrs": {
+            "matInput": null,
+            "type": "\"time\"",
+            "placeholder": "\"Time\"",
+            "formControlName": "\"time\""
+          }
+        }
+      ]
+    }
+  ]
+}
