@@ -1,6 +1,6 @@
 # OpenUI Specification
 
-This repository contains a technology-independent specification for a Web UI framework. It also includes an Angular TypeScript generator that produces a skeleton app from the spec. The goal is to use the specification as the basis for a standard.
+This repository contains a technology-independent specification for a Web UI framework. It also includes an Angular TypeScript generator that applies a UI description authored against the spec to an existing Angular workspace. The goal is to use the specification as the basis for a standard.
 
 ## Where to go
 
@@ -11,8 +11,8 @@ This repository contains a technology-independent specification for a Web UI fra
 
 | Path                                                             | What's here                                                                                                    |
 | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| [`spec/`](spec/)                                                 | The specification — section documents and the ReadTheDocs source; start at [`spec/README.md`](spec/README.md). |
-| [`openui.json`](openui.json)                                     | Canonical machine-readable specification (single source of truth).                                             |
+| [`spec/`](spec/)                                                 | The specification source of truth — prose scope documents and the ReadTheDocs source; start at [`spec/README.md`](spec/README.md). |
+| [`openui.json`](openui.json)                                     | Generated canonical machine-readable specification, built from `spec/scopes/`.                                 |
 | [`generators/angular/generator/`](generators/angular/generator/) | Angular Material generator (TypeScript npm package).                                                           |
 | [`docs/`](docs/)                                                 | Developer documentation hub — [`docs/README.md`](docs/README.md).                                              |
 | [`origin/`](origin/)                                             | Upstream-derivation / provenance (e.g. the traversal report).                                                  |

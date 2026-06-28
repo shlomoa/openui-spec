@@ -24,6 +24,13 @@ Global invariants (every step must hold these):
   not disagree about scopes.
 - Each step ends green: `pre-commit`, `mkdocs build --strict`, and `pytest` pass.
 
+Authored contract vs generated `openui.json`: each leaf's contract is authored
+**only** in its `*.scope.md` prose (Attributes + Child model). `openui.json` is a
+derived artifact generated from that prose — it is never hand-edited for
+contracts. The generated `openui.json` represents each contract as a typed
+instance child under the metadata-only scope node, per the serialization rule in
+`spec/scopes/scope.md`.
+
 ### Step 1 — Define the shared leaf-scope template
 
 There is exactly one shared leaf-scope template, and it is the single source of
@@ -89,47 +96,71 @@ source citation.
 
 ### Step 3 — Enrich one pilot leaf end-to-end
 
-Fully populate the template for one approved leaf, add the matching `attrs` and
-child nodes to its `openui.json` node, and set the reference pattern.
+Fully populate the template for one approved leaf in its `*.scope.md` prose — the
+authored contract — and set the reference pattern. `openui.json` is not
+hand-edited; it is generated from the prose.
 
 Acceptance criteria:
 
 - The pilot leaf fills every template section from registered evidence only.
-- The pilot's `openui.json` node carries the documented attribute keys (correct
-  Uses/Produces/Behaves syntax) and declared child types, and validates against
-  `openui.schema.json`.
+- The pilot leaf's Attributes and Child model document the contract (Uses /
+  Produces / Behaves keys and child types) from neutral evidence; no contract is
+  hand-written into `openui.json`.
 
 Test: a focused contract test asserts the pilot leaf contains all template
-sections and the pilot `openui.json` node exposes the documented attribute
-categories and child types.
+sections and documents the attribute contract.
 
 ### Step 4 — Roll out by top-level group in approved batches
 
-Enrich leaves group by group, in order: Application, Controls, Behaviors, Pages,
-Views, Containers, Widgets. Approve and validate each batch before the next.
+Enrich leaves group by group, ordered by evidence availability (best-sourced
+first, most abstract last). Each sub-step below is one batch: enrich every leaf in
+the group (leaf template + `openui.json` instance node + register update), then
+approve and validate before starting the next sub-step.
 
-Acceptance criteria:
+Per-batch acceptance criteria (apply to every sub-step):
 
-- Every leaf in a completed group fills all template sections from evidence.
+- Every leaf in the group fills all template sections from registered evidence.
+- Each leaf's `*.scope.md` prose documents its attribute keys (Uses / Produces /
+  Behaves) and child model, per the leaf template; `openui.json` is not
+  hand-edited for contracts.
 - Groups not yet started remain concise and are not partially enriched.
 
-Test: a parametrized test marks each group `complete` or `pending`; every leaf in
-a `complete` group must pass the Step 3 contract assertions, and `pending` groups
-are skipped.
+Per-batch test: a parametrized group test marks the group `complete`; every leaf
+in a `complete` group must pass the Step 3 contract assertions, and `pending`
+groups are skipped.
 
-### Step 5 — Synchronize `openui.json` with every enriched leaf
+Sub-steps (batches):
 
-Reflect each enriched leaf's attributes and child nodes in `openui.json` with
-correct `scopeDocument` links.
+- **4.1 Controls** — `native`. HTML `input`; native presentation contract to
+  confirm with the owner.
+- **4.2 Widgets** — `charts`, `tables`, `lists`, `date_time_pickers`, `stepper`
+  (`dialog` already piloted). HTML `table` / `ul` / `li`; Angular Material
+  reference for pickers, stepper, and charts.
+- **4.3 Containers** — `grid`, `expandable_panels`, `tabs`. HTML
+  `details`/`summary`; ARIA tablist pattern.
+- **4.4 Views** — `reports`, `forms`. HTML form controls and tabular data.
+- **4.5 Behaviors** — `drag_and_drop`, `resizable`, `collapsible`. HTML
+  drag-and-drop; owner decisions likely.
+- **4.6 Pages** — `dashboard`, `shell_page`, `empty_page`. Layout composition;
+  some abstract.
+- **4.7 Application** — `favicon` (HTML `link rel="icon"`), `index_html` (HTML
+  document head); `routing`, `navigation`, `tool_bars` require owner decisions.
+
+### Step 5 — Regenerate `openui.json` from the enriched prose
+
+`openui.json` is a derived artifact generated from the prose scopes; it is not
+hand-edited for contracts. Once the prose→`openui.json` generator exists,
+regenerate it so every enriched leaf's contract appears as its instance node.
 
 Acceptance criteria:
 
-- Each enriched leaf has a matching `openui.json` node with the same attribute
-  keys and `scopeDocument`.
-- `openui.json` still validates against `openui.schema.json` with no scope drift.
+- `openui.json` is produced from the prose, not hand-authored; the generated tree
+  validates against `openui.schema.json` with no scope drift.
+- Until the generator exists, `openui.json` carries scope metadata only and is not
+  hand-edited with contracts.
 
-Test: extend `tests/test_openui_spec_contract.py` so each enriched leaf maps to an
-`openui.json` node carrying its documented attribute keys and `scopeDocument`.
+Test: extend `tests/test_openui_spec_contract.py` (with the generator) to assert
+the generated `openui.json` matches the prose contracts.
 
 ### Step 6 — Extend focused tests with each batch
 

@@ -20,6 +20,7 @@ The `scopes` folder is structured hierarchically. Each top-level scope is a fold
 |                                                | [index.html](scopes/Application/index_html.scope.md)              | Application host document and static bootstrap metadata.                       |
 | **[Controls](scopes/Controls/scope.md)**       |                                                                   | Browser, framework, or runtime-provided native controls.                       |
 |                                                | [Native](scopes/Controls/native.scope.md)                         | Native controls and presentation (scroll bars, fonts, color schemes).          |
+|                                                | [Table](scopes/Controls/Table/scope.md)                           | HTML5 tabular data tags (`table`, `tr`, `th`, `td`).                           |
 | **[Behaviors](scopes/Behaviors/scope.md)**     |                                                                   | Reusable behaviors applied to pages, views, containers, and widgets.           |
 |                                                | [Drag and drop](scopes/Behaviors/drag_and_drop.scope.md)          | Move elements within a page, view, container, or widget.                       |
 |                                                | [Resizable](scopes/Behaviors/resizable.scope.md)                  | Resize elements within a page or view.                                         |
@@ -197,6 +198,99 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 - **Attributes field:** Key-value pairs where values are strings or null. Attribute key syntax identifies input, output, and behavior categories; all such categories must stay inside the `attrs` object.
 - **Children field:** Array of UI elements forming a hierarchical tree structure
 - **No loose properties:** All properties must be contained within the `attrs` object
+
+## Leaf scope source format (`*.scope.md`)
+
+`openui.json` is **generated** from the `spec/scopes/**` prose; the prose is the
+source of truth ([DECISIONS.md](../docs/DECISIONS.md) DEC-2). Every leaf
+`*.scope.md` follows the shared
+[`scopes/template.scope.md`](scopes/template.scope.md). Three of its sections are
+*machine-bearing* — **Identity**, **Attributes**, **Child model** — and follow
+fixed line patterns; **Purpose**, **Accessibility**, and **Validation notes** are
+free prose and are not parsed. The converter lives in
+[`to_json/`](to_json/) and walks the tree per DEC-6.
+
+### Field mapping
+
+A leaf produces a metadata-only **scope node** plus a single **`<scopeId>Instance`**
+child (see [`scopes/scope.md`](scopes/scope.md)). Fields come from:
+
+| `openui.json` field | Source in the leaf |
+| --- | --- |
+| scope `id` | Identity `id:` (camelCase) |
+| scope `type` | derived: PascalCase of the scope `id` |
+| scope `attrs.title` | the `#` H1 heading |
+| scope `attrs.purpose` | the Purpose section body |
+| scope `attrs.scopeDocument` | the leaf's path under `scopes/` |
+| scope `attrs.status` | Identity `status:` |
+| instance `id` | derived: `<scopeId>Instance` |
+| instance `type` | Identity `type:` (the concrete/virtual primitive) |
+| instance `attrs` keys | Attributes — each `key` by category, value `null` (DEC-4) |
+| instance `children` | Child model — one node (`id`, `type`) per bullet, in order |
+
+Separators are fixed: ` · ` (middot, U+00B7) between Identity fields, and ` — `
+(em dash, U+2014) between Attributes and Child-model fields. The Attributes
+**category** word is authoritative; its key bracket must agree (`[name]` → `Uses`;
+`(name)` → `Produces` or `Behaves`). Value-types, descriptions, and multiplicity
+are recorded in prose only and are not serialized into the grammar (DEC-4).
+Machine-bearing sections are the **sole enumerators** of ids, keys, types,
+categories, and multiplicity; prose sections may reference those names but must not
+re-list them (DEC-2).
+
+### Section EBNF
+
+```ebnf
+(* OpenUI leaf scope (*.scope.md) — machine-bearing section grammar.
+   Only Identity, Attributes, and Child model are parsed; Purpose,
+   Accessibility, and Validation notes are free prose, matched as prose-line.
+   "—" is U+2014 (em dash); "·" is U+00B7 (middot). *)
+
+leaf-scope          = title-heading
+                      { prose-line }
+                      identity-section
+                      { section } ;
+section             = attributes-section | child-model-section | prose-section ;
+
+title-heading       = "#" WS object-title NL ;
+
+identity-section    = "## Identity" NL { prose-line } identity-line ;
+identity-line       = "-" WS "id:" WS id-value WS "·" WS
+                            "type:" WS type-value WS "·" WS
+                            "status:" WS status-value NL ;
+
+attributes-section  = "## Attributes" NL { prose-line }
+                      attribute-line { attribute-line | prose-line } ;
+attribute-line      = "-" WS "`" attr-key "`" WS "—" WS
+                            category WS "—" WS description NL ;
+attr-key            = uses-key | output-key ;
+uses-key            = "[" attr-name "]" ;        (* category MUST be "Uses" *)
+output-key          = "(" attr-name ")" ;        (* category MUST be "Produces" | "Behaves" *)
+category            = "Uses" | "Produces" | "Behaves" ;
+
+child-model-section = "## Child model" NL { prose-line }
+                      child-line { child-line | prose-line } ;
+child-line          = "-" WS child-id WS "—" WS
+                            child-type WS "—" WS
+                            multiplicity WS "—" WS description NL ;
+multiplicity        = "1" | "0..1" | "0..n" | "1..n" ;
+
+prose-section       = heading NL { prose-line } ;
+heading             = "##" WS { character } ;
+
+(* lexical — id/type/attr rules reuse the document grammar above *)
+id-value            = camel-case ;
+child-id            = camel-case ;
+type-value          = type-name ;                (* per the document type grammar *)
+child-type          = type-name ;
+status-value        = "draft" | "review" | "stable" ;
+attr-name           = letter { letter | digit } ;
+camel-case          = lowercase-letter { letter | digit } ;
+object-title        = { character } ;
+description         = { character } ;             (* free prose; not interpreted *)
+prose-line          = ? any line that is not an identity / attribute / child line ? ;
+WS                  = ( " " | "\t" ) { " " | "\t" } ;
+NL                  = ? line break ? ;
+```
 
 ## app.json examples
 

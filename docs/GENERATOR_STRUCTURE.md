@@ -5,22 +5,29 @@ as a **compiler pipeline**, not as a template script.
 
 ## Golden source boundary
 
-The golden source for the OpenUI specification is:
+The golden source for the OpenUI specification is the hand-authored prose:
 
-- `spec/README.md` for the prose entry point and format rules,
-- the Markdown files under `spec/` for the synchronized prose scopes, and
-- root `openui.json` for the canonical machine-readable representation.
+- `spec/README.md` for the entry point and format rules, and
+- the `spec/scopes/**` Markdown scopes (authoritative for each object's contract).
 
-Generator fixtures, generated examples, and Angular target models are derived
-artifacts. They must not replace or redefine the golden source.
+Root `openui.json` is **generated** from that prose. It — together with generator
+fixtures, generated examples, and Angular target models — is a derived artifact
+that must not replace or redefine the golden source.
 
-The Angular generator consumes the native `openui.json` shape directly. No
-transitional input definitions or adapters are allowed. The required pipeline is:
+The Angular generator's runtime input is an `input.json` UI description authored
+against the OpenUI specification; the specification itself — root `openui.json`
+(catalog), `spec/openui.schema.json` (grammar), and the `spec/**/*.md` prose — is
+the rule set the generator validates and interprets that input against. See
+[REQUIREMENTS.md](REQUIREMENTS.md) §1–§2 for the authoritative input, context, and
+output contract; this document does not redefine it.
+
+`input.json` uses the native OpenUI grammar directly; no transitional input
+definitions or adapters are allowed. The required pipeline is:
 
 ```text
-spec/README.md + spec/**/*.md + openui.json
+input.json
   ↓
-validate golden source
+validate against the specification (openui.json + openui.schema.json + spec/**/*.md)
   ↓
 build implementation-independent UI IR
   ↓
@@ -95,43 +102,52 @@ generators/angular/
 
 ## Core design rule
 
-Do **not** generate Angular directly from raw `openui.json` nodes.
+Do **not** generate Angular directly from raw `input.json` nodes.
 
 Use explicit model boundaries:
 
 ```text
-Golden OpenUI source
+input.json (validated against the catalog)
   → native OpenUI validation and extraction
   → UiApplication
   → AngularProjectModel
   → GeneratedFile[]
 ```
 
-That keeps source parsing, validation, normalization, target mapping, and file
+That keeps input parsing, validation, normalization, target mapping, and file
 emission independently testable. It also preserves room for future targets:
 
 ```text
-same OpenUI specification
+same OpenUI input
    ├─ Angular Material
    ├─ React
    ├─ Vue
    └─ Web Components
 ```
 
-## Canonical input model
+## Specification and input
 
-The canonical repository input is root `openui.json` plus synchronized Markdown
-under `spec/`. The repository root document uses exact root values:
+The generator's runtime input is an `input.json` document; the OpenUI
+specification is the rule set it is validated and interpreted against. See
+[REQUIREMENTS.md](REQUIREMENTS.md) §1–§2 for the authoritative definitions — this
+document does not redefine them. For the generator's purposes:
 
-```text
-id: "root"
-type: "html"
-version: "0.0.1"
-```
+- **Catalog** — root `openui.json`. Its root `id` is `root` and `version` is
+  required (its current value is tracked by the repository-root `SCHEMA_VERSION`
+  file); the root `type` follows the general type rules and is not pinned. See
+  `spec/README.md` and `openui.schema.json` for the authoritative root contract.
 
-Scope coverage is represented by native OpenUI nodes whose `attrs.scopeDocument`
-values point to Markdown files under `spec/`, including the scope documents under
-`spec/scopes/`. Generator fixtures must use this same scope-tree shape.
+  Scope coverage is represented by native OpenUI nodes whose `attrs.scopeDocument`
+  values point to Markdown files under `spec/`, including the scope documents
+  under `spec/scopes/`. Scope nodes are metadata-only; each scope's object
+  contract is carried by a single typed instance child (`<scopeId>Instance`) that
+  has no `scopeDocument`. See `spec/scopes/scope.md` for the serialization rule.
+- **Input** — an `input.json` authored against the catalog: a well-formed OpenUI
+  document (per `openui.schema.json`) whose every `type` is a real catalog object
+  used in a legal place.
+
+Test fixtures that stand in for the catalog must use this scope-tree shape;
+fixtures that stand in for `input.json` must be valid input documents.
 
 ## Generator-specific scope-to-feature mapping
 
@@ -235,7 +251,7 @@ git diff --check
 Separate these concerns:
 
 ```text
-WHAT exists              → golden source + UI IR
+WHAT to build            → input.json (validated against the catalog) + UI IR
 HOW Angular sees it      → Angular project/page model
 HOW files look           → emitters
 WHERE files are written  → writer

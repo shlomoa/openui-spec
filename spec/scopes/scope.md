@@ -35,6 +35,16 @@ Scope objects follow the JSON shape defined in `../README.md`:
 - `children` contains nested UI elements.
 - No loose object properties are allowed outside `attrs` except the structural fields defined by the spec.
 
+### Scope node and instance representation (generated `openui.json`)
+
+`openui.json` is generated from the prose scopes; it is not hand-authored. A leaf's contract is authored in its `*.scope.md` Attributes and Child model sections. When generated, each scope node is metadata-only (its `attrs` carry `title`, `purpose`, `scopeDocument`, and `status`) and the scope's object contract is represented by a single child instance node:
+
+- `id` is `<scopeId>Instance` (camelCase).
+- `type` is the concrete primitive the scope materializes (for example `dialog`, `input`, or `table`) or a PascalCase virtual type.
+- `attrs` carry the contract attributes by category — Uses `[name]`, Produces `(name)`, Behaves `(name)` — using the Attribute categories below.
+- `children` carry the instance's typed child model.
+- The instance node has no `scopeDocument`; scope-document traceability stays on the scope node.
+
 ## Attribute categories
 
 Scope object attributes are represented through `attrs` key syntax:
@@ -47,10 +57,9 @@ For Angular Material examples, `[name]` represents a Uses/input binding and `(na
 
 ## Leaf scope template
 
-Every leaf `*.scope.md` (a scope with no child objects) uses this single shared template. It is the source of truth for leaf structure: leaf files fill these sections and do not redefine them.
-
-- **Purpose** — one or two sentences stating what the object is and the implementation-independent concept it represents.
-- **Attributes** — the object's `attrs`, grouped by the Uses (`[value]`), Produces (`(selectionChange)`), and Behaves (`(click)`) attribute categories defined in this document. List only attributes supported by approved source material.
-- **Child model** — the child object types the scope owns and their multiplicity, consistent with the `children` field defined in `../README.md`.
-- **Accessibility** — role, label, focus, and keyboard expectations for interactive scopes, stated technology-independently.
-- **Validation notes** — constraints on `id`, `type`, `attrs`, and `children` specific to this scope, beyond the base `openui.schema.json` grammar.
+Every leaf `*.scope.md` (a scope with no child objects) uses the single shared
+[`template.scope.md`](template.scope.md), which is the source of truth for leaf
+structure: leaf files fill its sections and do not redefine them. The template's
+three machine-bearing sections (Identity, Attributes, Child model) parse
+deterministically into a scope node plus its `<scopeId>Instance`; the section
+grammar and field mapping are documented in [`../README.md`](../README.md).

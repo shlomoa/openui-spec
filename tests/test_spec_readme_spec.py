@@ -25,6 +25,11 @@ EXPECTED_SPEC_MARKDOWN = [
     "scopes/Containers/grid.scope.md",
     "scopes/Containers/scope.md",
     "scopes/Containers/tabs.scope.md",
+    "scopes/Controls/Table/scope.md",
+    "scopes/Controls/Table/table.scope.md",
+    "scopes/Controls/Table/td.scope.md",
+    "scopes/Controls/Table/th.scope.md",
+    "scopes/Controls/Table/tr.scope.md",
     "scopes/Controls/native.scope.md",
     "scopes/Controls/scope.md",
     "scopes/Pages/dashboard.scope.md",
@@ -68,11 +73,16 @@ class SpecReadmeSpecTest(unittest.TestCase):
     def test_spec_readme_scope_table_links_every_scope_document(self) -> None:
         content = SPEC_README.read_text(encoding="utf-8")
 
-        # The "Spec folder structure" table is the full scope inventory: every
-        # scope document is linked from the README except the README itself, the
-        # top-level scopes index, and the evidence register (not a scope).
+        # The "Spec folder structure" table links every top-level scope, its
+        # direct leaves, and each family index — but not individual family tag
+        # leaves (those are reached by drilling into the family index). It also
+        # excludes the README itself, the scopes index, and the evidence register.
         for relative_path in EXPECTED_SPEC_MARKDOWN:
+            segments = relative_path.split("/")
+            is_family_tag_leaf = len(segments) >= 4 and segments[-1] != "scope.md"
             if relative_path in {"README.md", "scopes/scope.md", "scopes/evidence.md"}:
+                continue
+            if is_family_tag_leaf:
                 continue
             with self.subTest(relative_path=relative_path):
                 self.assertIn(f"]({relative_path})", content)

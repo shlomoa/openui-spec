@@ -19,6 +19,12 @@ nav:
       - Controls:
           - Overview: scopes/Controls/scope.md
           - Native: scopes/Controls/native.scope.md
+          - Table:
+              - Overview: scopes/Controls/Table/scope.md
+              - table: scopes/Controls/Table/table.scope.md
+              - tr: scopes/Controls/Table/tr.scope.md
+              - th: scopes/Controls/Table/th.scope.md
+              - td: scopes/Controls/Table/td.scope.md
       - Behaviors:
           - Overview: scopes/Behaviors/scope.md
           - Drag and drop: scopes/Behaviors/drag_and_drop.scope.md

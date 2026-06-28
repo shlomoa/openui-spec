@@ -5,6 +5,7 @@ Controls define reusable interaction and rendering primitives that can appear in
 ## Objects
 
 - [Native](native.scope.md): Browser and framework-provided native controls and presentation capabilities.
+- [Table](Table/scope.md): HTML5 tabular data tags (`table`, `tr`, `th`, `td`).
 
 ## Boundaries
 
