@@ -103,9 +103,12 @@ class ScopeToJsonConverterTest(unittest.TestCase):
         for path in sorted(SCOPES_DIR.rglob("*.scope.md")):
             if path.name == "template.scope.md":
                 continue
-+            with self.subTest(path=path.relative_to(SCOPES_DIR).as_posix()):
+            with self.subTest(path=path.relative_to(SCOPES_DIR).as_posix()):
                 node = parse_leaf_scope(path, scopes_dir=SCOPES_DIR)
-                self.assertEqual(node["attrs"]["scopeDocument"], path.relative_to(SCOPES_DIR).as_posix())
+                self.assertEqual(
+                    node["attrs"]["scopeDocument"],
+                    path.relative_to(SCOPES_DIR).as_posix(),
+                )
                 self.assertEqual(node["children"][0]["id"], f"{node['id']}Instance")
 
     def _find_by_id(self, node: dict[str, object], node_id: str) -> dict[str, object] | None:

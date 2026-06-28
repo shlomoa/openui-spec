@@ -75,13 +75,14 @@ def parse_leaf_scope(path: Path | str, *, scopes_dir: Path | str | None = None) 
     title = _title(text, source_path)
     identity = _identity(sections, source_path)
     scope_document = _scope_document(source_path, scopes_dir)
+    purpose = _prose(sections.get("Purpose", [])) or _leading_prose(text)
 
     leaf = LeafScope(
         id=identity["id"],
         type=identity["type"],
         status=identity["status"],
         title=title,
-        purpose=_prose(sections.get("Purpose", [])),
+        purpose=purpose,
         scope_document=scope_document,
         attrs=_attributes(sections.get("Attributes", []), source_path),
         children=_children(sections.get("Child model", []), source_path),
@@ -256,7 +257,8 @@ def _identity(sections: dict[str, list[str]], path: Path) -> dict[str, str]:
         match = IDENTITY_RE.fullmatch(line)
         if match:
             return match.groupdict()
-    raise ValueError(f"{path}: missing or invalid Identity line")
+    leaf_id = _leaf_id_from_path(path)
+    return {"id": leaf_id, "type": _pascal_case(leaf_id), "status": "draft"}
 
 
 def _prose(lines: list[str]) -> str:
@@ -311,6 +313,14 @@ def _scope_document(path: Path, scopes_dir: Path | str | None) -> str:
 
 def _pascal_case(value: str) -> str:
     return value[:1].upper() + value[1:]
+
+
+def _leaf_id_from_path(path: Path) -> str:
+    name = path.name.removesuffix(".scope.md")
+    parts = [part for part in re.split(r"[^A-Za-z0-9]+", name) if part]
+    if not parts:
+        raise ValueError(f"{path}: cannot derive id from file name")
+    return parts[0].lower() + "".join(part[:1].upper() + part[1:] for part in parts[1:])
 
 
 def _pascal_words(value: str) -> str:
