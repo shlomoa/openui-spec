@@ -99,9 +99,9 @@ def build_openui_document(
     resolved_spec_dir = (
         Path(spec_dir) if spec_dir is not None else Path(__file__).resolve().parents[1]
     )
-    resolved_version = version or (resolved_spec_dir.parent / "SCHEMA_VERSION").read_text(
-        encoding="utf-8"
-    ).strip()
+    resolved_version = (
+        version or (resolved_spec_dir.parent / "SCHEMA_VERSION").read_text(encoding="utf-8").strip()
+    )
 
     return {
         "id": "root",
