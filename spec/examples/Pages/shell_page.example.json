@@ -1,40 +1,21 @@
 {
   "id": "root",
   "version": "0.0.1",
-  "type": "ShellPage",
-  "attrs": {
-    "title": "\"Application shell\"",
-    "[defaultRoute]": "\"dashboard\""
-  },
+  "type": "PageExample",
   "children": [
     {
-      "id": "shellHeader",
-      "type": "header",
-      "attrs": {
-        "role": "\"banner\""
-      }
-    },
-    {
-      "id": "shellNav",
-      "type": "Navigation",
-      "attrs": {
-        "[ariaLabel]": "\"Primary\"",
-        "[for]": "\"appRouting\""
-      }
-    },
-    {
-      "id": "shellOutlet",
-      "type": "RouteOutlet",
-      "attrs": {
-        "[for]": "\"appRouting\""
-      }
-    },
-    {
-      "id": "shellFooter",
-      "type": "footer",
-      "attrs": {
-        "role": "\"contentinfo\""
-      }
+      "id": "shellPage",
+      "type": "ShellPage",
+      "children": [
+        {
+          "id": "shellPageRouting",
+          "type": "Routing"
+        },
+        {
+          "id": "shellPageNavigation",
+          "type": "Navigation"
+        }
+      ]
     }
   ]
 }

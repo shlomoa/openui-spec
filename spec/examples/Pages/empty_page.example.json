@@ -1,18 +1,11 @@
 {
   "id": "root",
   "version": "0.0.1",
-  "type": "EmptyPage",
-  "attrs": {
-    "title": "\"Not found\""
-  },
+  "type": "PageExample",
   "children": [
     {
-      "id": "emptyState",
-      "type": "EmptyState",
-      "attrs": {
-        "[icon]": "\"inbox\"",
-        "[message]": "\"Nothing to show here.\""
-      }
+      "id": "emptyPage",
+      "type": "EmptyPage"
     }
   ]
 }

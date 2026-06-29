@@ -116,6 +116,40 @@ class ScopeToJsonConverterTest(unittest.TestCase):
             self.assertEqual(document["version"], "9.8.7")
             self.assertEqual(document["children"][0]["id"], "scopes")
 
+    def test_missing_object_link_raises_value_error(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            scopes_dir = Path(temporary_directory)
+            (scopes_dir / "scope.md").write_text(
+                "# Temporary scopes\n"
+                "\n"
+                "Temporary scopes.\n"
+                "\n"
+                "## Objects\n"
+                "\n"
+                "- [Missing](missing.scope.md): missing child.\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "missing linked scope object"):
+                build_scope_tree(scopes_dir)
+
+    def test_malformed_object_link_raises_value_error(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            scopes_dir = Path(temporary_directory)
+            (scopes_dir / "scope.md").write_text(
+                "# Temporary scopes\n"
+                "\n"
+                "Temporary scopes.\n"
+                "\n"
+                "## Objects\n"
+                "\n"
+                "- [Missing](missing.scope.md) missing colon.\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "malformed Objects line"):
+                build_scope_tree(scopes_dir)
+
     def test_every_leaf_scope_parses(self) -> None:
         for path in sorted(SCOPES_DIR.rglob("*.scope.md")):
             if path.name == "template.scope.md":
@@ -177,6 +211,74 @@ class ScopeToJsonConverterTest(unittest.TestCase):
             )
 
             with self.assertRaisesRegex(ValueError, "must use Produces or Behaves"):
+                parse_leaf_scope(invalid_scope, scopes_dir=scopes_dir)
+
+    def test_malformed_identity_section_raises_value_error(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            scopes_dir = Path(temporary_directory)
+            invalid_scope = scopes_dir / "invalid.scope.md"
+            invalid_scope.write_text(
+                "# Invalid\n"
+                "\n"
+                "## Identity\n"
+                "\n"
+                "- id: invalid · status: draft\n"
+                "\n"
+                "## Purpose\n"
+                "\n"
+                "Invalid test scope.\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "malformed Identity line"):
+                parse_leaf_scope(invalid_scope, scopes_dir=scopes_dir)
+
+    def test_malformed_attribute_line_raises_value_error(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            scopes_dir = Path(temporary_directory)
+            invalid_scope = scopes_dir / "invalid.scope.md"
+            invalid_scope.write_text(
+                "# Invalid\n"
+                "\n"
+                "## Identity\n"
+                "\n"
+                "- id: invalid · type: Invalid · status: draft\n"
+                "\n"
+                "## Purpose\n"
+                "\n"
+                "Invalid test scope.\n"
+                "\n"
+                "## Attributes\n"
+                "\n"
+                "- [open] — Uses — missing backticks must not be ignored.\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "malformed Attributes line"):
+                parse_leaf_scope(invalid_scope, scopes_dir=scopes_dir)
+
+    def test_malformed_child_model_line_raises_value_error(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            scopes_dir = Path(temporary_directory)
+            invalid_scope = scopes_dir / "invalid.scope.md"
+            invalid_scope.write_text(
+                "# Invalid\n"
+                "\n"
+                "## Identity\n"
+                "\n"
+                "- id: invalid · type: Invalid · status: draft\n"
+                "\n"
+                "## Purpose\n"
+                "\n"
+                "Invalid test scope.\n"
+                "\n"
+                "## Child model\n"
+                "\n"
+                "- child — section — many — invalid multiplicity must not be ignored.\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "malformed Child model line"):
                 parse_leaf_scope(invalid_scope, scopes_dir=scopes_dir)
 
     def _find_by_id(self, node: dict[str, object], node_id: str) -> dict[str, object] | None:

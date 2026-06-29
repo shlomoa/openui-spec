@@ -1,91 +1,11 @@
 {
   "id": "root",
   "version": "0.0.1",
-  "type": "DashboardPage",
-  "attrs": {
-    "title": "\"Sales dashboard\""
-  },
+  "type": "PageExample",
   "children": [
     {
-      "id": "pageHeading",
-      "type": "header",
-      "attrs": {
-        "role": "\"heading\"",
-        "text": "\"Sales dashboard\""
-      }
-    },
-    {
-      "id": "dashboardGrid",
-      "type": "Grid",
-      "attrs": {
-        "[columns]": "12",
-        "[gap]": "\"16px\"",
-        "[responsive]": "true"
-      },
-      "children": [
-        {
-          "id": "revenueCard",
-          "type": "Card",
-          "attrs": {
-            "[colSpan]": "4",
-            "[title]": "\"Revenue\""
-          },
-          "children": [
-            {
-              "id": "revenueMetric",
-              "type": "Metric",
-              "attrs": {
-                "[value]": "\"$1.2M\"",
-                "[trend]": "\"+8%\""
-              }
-            },
-            {
-              "id": "revenueRefresh",
-              "type": "CardAction",
-              "attrs": {
-                "[label]": "\"Refresh\"",
-                "[icon]": "\"refresh\"",
-                "(click)": "refresh('revenue')"
-              }
-            }
-          ]
-        },
-        {
-          "id": "ordersCard",
-          "type": "Card",
-          "attrs": {
-            "[colSpan]": "4",
-            "[title]": "\"Orders\""
-          },
-          "children": [
-            {
-              "id": "ordersMetric",
-              "type": "Metric",
-              "attrs": {
-                "[value]": "\"3,402\""
-              }
-            }
-          ]
-        },
-        {
-          "id": "trendCard",
-          "type": "Card",
-          "attrs": {
-            "[colSpan]": "8",
-            "[title]": "\"Trend\""
-          },
-          "children": [
-            {
-              "id": "trendChart",
-              "type": "Chart",
-              "attrs": {
-                "[chartType]": "\"line\"",
-                "[series]": "trendSeries"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "dashboardPage",
+      "type": "DashboardPage"
     }
   ]
 }
