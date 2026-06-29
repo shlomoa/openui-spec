@@ -24,14 +24,35 @@ class GitHubActionsBuildWorkflowTest(unittest.TestCase):
 
     def test_build_workflow_installs_python_validation_tools(self):
         self.assertIn(
-            "python -m pip install pre-commit==4.6.0 -r requirements-test.txt",
+            "python -m pip install pre-commit==4.6.0 -r requirements-test.txt "
+            "-r requirements-docs.txt",
             self.workflow,
         )
 
     def test_build_workflow_runs_lint_checks(self):
         self.assertIn("pre-commit run --all-files", self.workflow)
 
+    def test_build_workflow_runs_documentation_checks(self):
+        self.assertIn("git diff --check", self.workflow)
+        self.assertIn("python -m mkdocs build --strict", self.workflow)
+
+    def test_build_workflow_runs_angular_generator_checks(self):
+        self.assertIn("generators/angular/generator/package-lock.json", self.workflow)
+        self.assertIn(
+            "working-directory: generators/angular/generator\n        run: npm ci",
+            self.workflow,
+        )
+        self.assertIn(
+            "working-directory: generators/angular/generator\n        run: npm run build",
+            self.workflow,
+        )
+        self.assertIn(
+            "working-directory: generators/angular/generator\n        run: npm test",
+            self.workflow,
+        )
+
     def test_build_workflow_runs_angular_examples_checks(self):
+        self.assertIn("generators/angular/generated-examples/package-lock.json", self.workflow)
         self.assertIn("working-directory: generators/angular/generated-examples", self.workflow)
         self.assertIn("npm ci", self.workflow)
         self.assertIn("npm run format:check", self.workflow)

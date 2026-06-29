@@ -41,7 +41,7 @@ discovered by `pytest`.
 | `test_dialog_scope_contract.py` | `DialogScopeContractTest`        | `Widgets/dialog.scope.md` fills every template section and documents its attribute contract.                                                                                                                                                          |
 | `test_table_family_contract.py` | `TableFamilyContractTest`        | The `Controls/Table` family (`table` / `tr` / `th` / `td`) carries required sections and identity, cell tags document attributes, and container tags declare child types.                                                                             |
 | `test_readthedocs_config.py`    | `ReadTheDocsConfigTest`          | Read the Docs builds via the mkdocs configuration and the mkdocs nav points only to existing spec docs.                                                                                                                                               |
-| `test_github_actions_build.py`  | `GitHubActionsBuildWorkflowTest` | `build.yml` runs on code-review events, runs repository checks, installs Python validation tools, runs lint and Angular-examples checks, and pins its actions.                                                                                        |
+| `test_github_actions_build.py`  | `GitHubActionsBuildWorkflowTest` | `build.yml` runs on code-review events, installs Python validation tools, runs repository, documentation, Angular-generator, and Angular-examples checks, and pins its actions.                                                                       |
 
 The worked example documents under `spec/examples/**` (31 schema-shaped OpenUI
 documents, one per scope plus composite `scope.example.json` parents) are
@@ -118,11 +118,12 @@ app presents — they do not re-run the generator.
 
 ## CI gate (`.github/workflows/build.yml`)
 
-`build.yml` runs the three layers on code-review events. `test_github_actions_build.py`
-asserts the workflow keeps doing so: repository checks, Python validation tooling,
-lint, Angular-examples checks, and pinned action versions. Changing the local
-test commands above should be reflected in the workflow and will be caught by
-that contract test if it is not.
+`build.yml` runs the three layers and documentation validation on code-review
+events. `test_github_actions_build.py` asserts the workflow keeps doing so:
+repository checks, Python validation tooling, lint/format checks, strict MkDocs
+builds, Angular-generator checks, Angular-examples checks, and pinned action
+versions. Changing the local test commands above should be reflected in the
+workflow and will be caught by that contract test if it is not.
 
 ## Conventions
 
