@@ -109,13 +109,17 @@ describe('DocumentationItems', () => {
     ]);
     expect(component?.api.points.join(' ')).toContain('hidden state stays out of generated APIs');
 
-    const publicExample = component?.examples.find((example) => example.id === 'state-public-defaults');
+    const publicExample = component?.examples.find(
+      (example) => example.id === 'state-public-defaults',
+    );
     expect(publicExample?.code).toContain("readonly text = input('Submit order')");
     expect(publicExample?.code).toContain('readonly enabled = input(true)');
     expect(publicExample?.code).toContain("readonly type = input<ButtonType>('Default')");
     expect(publicExample?.code).not.toContain('_lastMeasuredWidth');
 
-    const derivedExample = component?.examples.find((example) => example.id === 'state-derived-validation');
+    const derivedExample = component?.examples.find(
+      (example) => example.id === 'state-derived-validation',
+    );
     expect(derivedExample?.code).toContain('computed<ValueState>');
     expect(derivedExample?.code).toContain("? 'Error' : this.valueState()");
     expect(derivedExample?.code).not.toContain('_lastMeasuredWidth');
