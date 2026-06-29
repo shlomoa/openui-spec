@@ -6,6 +6,8 @@ repos:
     hooks:
       - id: check-added-large-files
       - id: check-json
+        # TypeScript tsconfig files are JSONC and may contain comments.
+        exclude: '(^|/)tsconfig(?:\.[^/]+)?\.json$'
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
