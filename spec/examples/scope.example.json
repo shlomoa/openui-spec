@@ -78,40 +78,7 @@
     },
     {
       "id": "dashboardPage",
-      "type": "DashboardPage",
-      "attrs": {
-        "title": "\"Dashboard\""
-      },
-      "children": [
-        {
-          "id": "dashboardGrid",
-          "type": "Grid",
-          "attrs": {
-            "[columns]": "12",
-            "[responsive]": "true"
-          },
-          "children": [
-            {
-              "id": "kpiCard",
-              "type": "Card",
-              "attrs": {
-                "[colSpan]": "4",
-                "[title]": "\"Revenue\""
-              },
-              "children": [
-                {
-                  "id": "kpiChart",
-                  "type": "Chart",
-                  "attrs": {
-                    "[chartType]": "\"line\"",
-                    "[series]": "revenueSeries"
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      "type": "DashboardPage"
     },
     {
       "id": "ordersReport",

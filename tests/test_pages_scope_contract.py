@@ -8,6 +8,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SCOPES_DIR = REPO_ROOT / "spec" / "scopes"
 PAGES_DIR = SCOPES_DIR / "Pages"
 PAGE_EXAMPLES_DIR = REPO_ROOT / "spec" / "examples" / "Pages"
+ROOT_SCOPE_EXAMPLE = REPO_ROOT / "spec" / "examples" / "scope.example.json"
 
 PAGE_LEAVES = (
     PAGES_DIR / "dashboard.scope.md",
@@ -106,11 +107,23 @@ class PagesScopeContractTest(unittest.TestCase):
             ],
         )
 
+    def test_root_composite_example_uses_current_dashboard_contract(self) -> None:
+        document = json.loads(ROOT_SCOPE_EXAMPLE.read_text(encoding="utf-8"))
+        dashboard = self._find_child(document, "dashboardPage")
+
+        self.assertEqual(dashboard, {"id": "dashboardPage", "type": "DashboardPage"})
+
     def _example_child(self, file_name: str) -> dict[str, object]:
         example_text = (PAGE_EXAMPLES_DIR / file_name).read_text(encoding="utf-8")
         document = json.loads(example_text)
         self.assertEqual(len(document["children"]), 1)
         return document["children"][0]
+
+    def _find_child(self, node: dict[str, object], child_id: str) -> dict[str, object]:
+        for child in node.get("children", []):
+            if child["id"] == child_id:
+                return child
+        self.fail(f"missing child {child_id}")
 
 
 if __name__ == "__main__":
