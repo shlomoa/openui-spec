@@ -24,7 +24,7 @@ CHILD_RE = re.compile(
     r"(?P<multiplicity>1|0\.\.1|0\.\.n|1\.\.n)\s+—\s+.+$"
 )
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
-OBJECT_LINK_RE = re.compile(r"^-\s+\[[^\]]+\]\((?P<link>[^)]+)\):")
+OBJECT_LINK_RE = re.compile(r"^-\s+\[[^\]]+\]\((?P<link>[^)]+)\):.*$")
 
 
 @dataclass(frozen=True)
@@ -217,11 +217,15 @@ def _ordered_children(path: Path, text: str) -> list[Path]:
     for line in _sections(text).get("Objects", []):
         match = OBJECT_LINK_RE.fullmatch(line)
         if not match:
+            if line.strip().startswith("-"):
+                raise ValueError(f"{path}: malformed Objects line: {line}")
             continue
         target = (path / match.group("link")).resolve()
         if target.name == "scope.md":
             target = target.parent
-        if target.exists() and target not in seen:
+        if not target.exists():
+            raise ValueError(f"{path}: missing linked scope object: {match.group('link')}")
+        if target not in seen:
             children.append(target)
             seen.add(target)
 
@@ -257,12 +261,17 @@ def _leading_prose(text: str) -> str:
 
 
 def _identity(sections: dict[str, list[str]], path: Path) -> dict[str, str]:
+    if "Identity" not in sections:
+        leaf_id = _leaf_id_from_path(path)
+        return {"id": leaf_id, "type": _pascal_case(leaf_id), "status": "draft"}
+
     for line in sections.get("Identity", []):
         match = IDENTITY_RE.fullmatch(line)
         if match:
             return match.groupdict()
-    leaf_id = _leaf_id_from_path(path)
-    return {"id": leaf_id, "type": _pascal_case(leaf_id), "status": "draft"}
+        if line.strip().startswith("-"):
+            raise ValueError(f"{path}: malformed Identity line: {line}")
+    raise ValueError(f"{path}: missing valid Identity line")
 
 
 def _prose(lines: list[str]) -> str:
@@ -288,6 +297,8 @@ def _attributes(lines: list[str], path: Path) -> dict[str, None]:
     for line in lines:
         match = ATTRIBUTE_RE.fullmatch(line)
         if not match:
+            if line.strip().startswith("-"):
+                raise ValueError(f"{path}: malformed Attributes line: {line}")
             continue
         key = match.group("key")
         category = match.group("category")
@@ -304,6 +315,8 @@ def _children(lines: list[str], path: Path, scope_id: str) -> list[dict[str, str
     for line in lines:
         match = CHILD_RE.fullmatch(line)
         if not match:
+            if line.strip().startswith("-"):
+                raise ValueError(f"{path}: malformed Child model line: {line}")
             continue
         children.append(
             {
