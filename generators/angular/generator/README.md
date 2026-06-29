@@ -19,18 +19,8 @@ surfaces, requirement summaries, navigation, forms, and feedback.
 
 ## Incremental generation
 
-The generator supports incremental operation: given a JSON specification and an
-existing workspace, it reconciles the workspace to match the specification rather
-than regenerating from scratch every time.
-
-### Reconciliation scenarios
-
-| JSON | Workspace | Action       | Details                                             |
-| :--- | :-------- | :----------- | :-------------------------------------------------- |
-| Yes  | No        | Add          | Generate the component and wire it to its parent    |
-| No   | Yes       | Delete       | Remove the component and unwire parent references   |
-| Yes  | Yes       | Match        | No action — content including children is identical |
-| Yes  | Yes       | Not matching | Fix non-matching parts                              |
+The generator supports incremental operation as defined in
+[spec/README.md § Incremental generation](../../../spec/README.md#incremental-generation).
 
 ### CLI usage for incremental generation
 

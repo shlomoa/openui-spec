@@ -21,41 +21,23 @@ Example is in generators\angular\generator\tests\fixtures\example_incremental
   component already present, plus the `app-file-select.example.json` specification.
 - output_app-file-select contains the expected workspace after incremental generation:
   both `app-file-select` (added) and `app-file-upload` (preserved) are present.
-- This demonstrates the incremental reconciliation algorithm:
+- This demonstrates the incremental reconciliation algorithm (see
+  [spec/README.md § Incremental generation](../../../../../spec/README.md#incremental-generation)):
   - Existing components not in the JSON diff are preserved (Match).
   - New components described in the JSON are added (Add).
 
 ## Incremental generation scenarios
 
-The generator supports four reconciliation scenarios:
+The reconciliation algorithm is defined in
+[spec/README.md § Incremental generation](../../../../../spec/README.md#incremental-generation).
+The following table maps scenarios to test fixtures:
 
-| JSON | Workspace | Scenario     | Test fixture                                            |
-| :--- | :-------- | :----------- | :------------------------------------------------------ |
-| Yes  | No        | Add          | `example_from_scratch/` (workspace starts empty)        |
-| No   | Yes       | Delete       | (future: remove a component from JSON, verify removal)  |
-| Yes  | Yes       | Match        | (re-run on same input, verify no changes)               |
-| Yes  | Yes       | Not matching | `example_incremental/` (workspace has existing content) |
-
-### Add scenario
-
-- The generator creates new component files and wires them to the parent.
-- Demonstrated by `example_from_scratch/`: empty workspace → full application.
-
-### Incremental (Add to existing) scenario
-
-- The generator adds new component while preserving existing workspace content.
-- Demonstrated by `example_incremental/`: workspace with `app-file-upload` →
-  workspace with both `app-file-upload` and `app-file-select`.
-
-### Delete scenario (future)
-
-- Removing a node from the JSON specification causes the generator to remove
-  the corresponding component files and unwire parent references.
-
-### Match scenario (future)
-
-- Re-running the generator with an unchanged JSON specification produces no
-  filesystem changes in the output workspace.
+| Scenario     | Test fixture                                            |
+| :----------- | :------------------------------------------------------ |
+| Add          | `example_from_scratch/` (workspace starts empty)        |
+| Delete       | (future: remove a component from JSON, verify removal)  |
+| Match        | (re-run on same input, verify no changes)               |
+| Not matching | `example_incremental/` (workspace has existing content) |
 
 ## Execution task list
 

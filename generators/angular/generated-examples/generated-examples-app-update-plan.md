@@ -9,22 +9,10 @@ not regenerate them or invent generator behavior.
 
 ## Incremental generation support
 
-The generator now supports incremental operation. The generated-examples app
-documents both generation modes:
-
-- **From scratch** — generating a complete workspace from a JSON specification
-  when the output directory is empty.
-- **Incremental** — reconciling an existing workspace to match an updated JSON
-  specification, adding new components, removing deleted ones, and modifying
-  changed attributes while preserving unaffected content.
-
-The test fixtures under `generators/angular/generator/tests/fixtures/` provide
-concrete examples of both modes:
-
-- `example_from_scratch/` — demonstrates full generation from an empty workspace.
-- `example_incremental/` — demonstrates adding `app-file-select` to an existing
-  workspace that already contains `app-file-upload`.
-- `example_backup/` — baseline workspace state for reference.
+The generator supports incremental operation as defined in
+[spec/README.md § Incremental generation](../../../spec/README.md#incremental-generation).
+The test fixtures under `generators/angular/generator/tests/fixtures/` demonstrate
+both generation modes (from-scratch and incremental reconciliation).
 
 ## Steps
 

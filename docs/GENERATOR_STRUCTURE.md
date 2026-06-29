@@ -233,11 +233,11 @@ CLI, and Angular build package version `22.0.2` with TypeScript `6.0.3`.
 
 ## Incremental generation
 
-The generator supports incremental generation: given a JSON specification and an
-existing workspace, it reconciles the workspace to match the specification rather
-than regenerating from scratch every time.
+The generator supports incremental operation as defined in
+[spec/README.md § Incremental generation](../spec/README.md#incremental-generation).
 
-### Pipeline extension
+The generator extends the base pipeline to compare IR nodes with workspace
+manifestations before emitting changes:
 
 ```text
 input.json + existing workspace
@@ -254,25 +254,6 @@ apply changes to workspace
   ↓
 build / test / verify
 ```
-
-### Reconciliation algorithm
-
-The JSON tree is traversed parent to child starting at the root:
-
-| JSON | Workspace | Action       | Details                                                           |
-| :--- | :-------- | :----------- | :---------------------------------------------------------------- |
-| Yes  | No        | Add          | Generate the object and wire it to its parent                     |
-| No   | Yes       | Delete       | Remove the object and its parent references                       |
-| Yes  | Yes       | Match        | No action — content including children is identical               |
-| Yes  | Yes       | Not matching | Fix non-matching parts (attribute or child added/removed/changed) |
-
-- **Add**: the generator creates the component files and wires imports/routing.
-- **Modify**: simple changes (e.g. a rename) are applied in-place; complex
-  changes delete and re-add the node.
-- **Delete**: component files are removed and parent references are unwired.
-- **Match**: no filesystem changes.
-
-Generation from scratch is an incremental run where the workspace is empty.
 
 ### Test fixtures
 

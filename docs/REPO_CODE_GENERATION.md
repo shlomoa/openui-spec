@@ -109,30 +109,10 @@ and IR construction.
 
 ## Incremental generation
 
-The generator supports incremental operation: given a JSON specification and an
-existing workspace, it reconciles the workspace contents to match the
-specification rather than regenerating from scratch.
+The generator supports incremental operation as defined in
+[spec/README.md § Incremental generation](../spec/README.md#incremental-generation).
 
-### Reconciliation algorithm
-
-The JSON tree is traversed parent to child starting at the root. For each node:
-
-| JSON | Workspace | Action       | Details                                             |
-| :--- | :-------- | :----------- | :-------------------------------------------------- |
-| Yes  | No        | Add          | Generate the object and wire it to its parent       |
-| No   | Yes       | Delete       | Remove the object and unwire parent references      |
-| Yes  | Yes       | Match        | No action — content including children is identical |
-| Yes  | Yes       | Not matching | Fix non-matching parts                              |
-
-- **Add**: emit component files, update imports, routing, and parent templates.
-- **Modify**: apply in-place for simple changes (rename); delete+add for complex.
-- **Delete**: remove component files, imports, routes, and parent references.
-- **Match**: skip — no filesystem changes needed.
-
-Generation from scratch is the special case where the workspace starts empty.
-Deletion is the special case where objects are removed from the JSON file.
-
-### Extended pipeline
+The Angular generator extends the base pipeline for incremental reconciliation:
 
 ```text
 input.json + existing workspace

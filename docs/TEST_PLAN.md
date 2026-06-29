@@ -145,8 +145,10 @@ that contract test if it is not.
 
 ## Incremental generation test strategy
 
-Incremental generation introduces workspace reconciliation scenarios that extend
-the existing Layer 2 test surface. The test fixtures under
+Incremental generation (defined in
+[spec/README.md § Incremental generation](../spec/README.md#incremental-generation))
+introduces workspace reconciliation scenarios that extend the existing Layer 2
+test surface. The test fixtures under
 `generators/angular/generator/tests/fixtures/` capture the expected behavior:
 
 ### Fixture layout

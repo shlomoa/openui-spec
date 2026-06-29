@@ -29,19 +29,10 @@ document to an app entry one-to-one is tracked in
 
 ## Incremental generation
 
-The Angular generator supports incremental operation: given a JSON specification
-and an existing workspace, it reconciles the workspace to match the specification.
-This app documents both generation modes through the test fixtures in
-`generators/angular/generator/tests/fixtures/`:
-
-- **From scratch** (`example_from_scratch/`) — full workspace generated from JSON
-  when the output directory is empty.
-- **Incremental** (`example_incremental/`) — existing workspace is reconciled to
-  add, modify, or remove components based on JSON specification changes.
-
-The reconciliation algorithm traverses the JSON tree and compares each node with
-the workspace manifestation, determining per-node actions: Add, Delete, Modify,
-or Match (no-op).
+The Angular generator supports incremental operation as defined in
+[spec/README.md § Incremental generation](../../../spec/README.md#incremental-generation).
+The test fixtures in `generators/angular/generator/tests/fixtures/` demonstrate
+both generation modes (from-scratch and incremental reconciliation).
 
 ## Development server
 
