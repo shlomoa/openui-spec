@@ -6,7 +6,7 @@ ReadTheDocs (built from `spec/`). For how to contribute, see [CONTRIBUTING.md](.
 ## Developer docs
 
 - [Requirements and goals](REQUIREMENTS.md)
-- [Spec artifacts: grammar vs. catalog](SPEC_ARTIFACTS.md) — how `openui.schema.json` and `openui.json` differ
+- [Spec artifacts: grammar vs. catalog](../spec/README.md#specification-artifacts-grammar-vs-catalog) — how `openui.schema.json` and `openui.json` differ
 - Angular generator: [structure](GENERATOR_STRUCTURE.md) and [code-generation starting point](REPO_CODE_GENERATION.md)
 - [Test plan](TEST_PLAN.md) — the spec-contract, generator, and examples-app test suites and how to run them
 - Upstream derivation / provenance: [origin/TRAVERSAL_REPORT.md](../origin/TRAVERSAL_REPORT.md)

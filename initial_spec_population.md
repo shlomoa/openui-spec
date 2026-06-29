@@ -31,91 +31,12 @@ contracts. The generated `openui.json` represents each contract as a typed
 instance child under the metadata-only scope node, per the serialization rule in
 `spec/scopes/scope.md`.
 
-### Step 1 — Define the shared leaf-scope template
-
-There is exactly one shared leaf-scope template, and it is the single source of
-truth for how every leaf `*.scope.md` is structured. Define it once in
-`spec/scopes/scope.md` with fixed sections (Purpose; Attributes as Uses
-`[value]` / Produces `(selectionChange)` / Behaves `(click)`; Child model;
-Accessibility; Validation notes), derived by reference — not by copy — from the
-`attrs` categories in `spec/README.md` and the `openui.schema.json` element
-shape.
-
-Acceptance criteria:
-
-- The template is defined once in `spec/scopes/scope.md`; no other file restates
-  its section list or attribute vocabulary.
-- Each section references its single source (a `spec/README.md` `attrs` category
-  or an `openui.schema.json` field) rather than redefining it; the template
-  introduces no new concept.
-- Leaf files reference the template instead of duplicating its structure.
-
-Test: `tests/test_scope_template.py` asserts the template section set is declared
-only in `spec/scopes/scope.md` (no other spec file restates it) and that its
-attribute vocabulary matches the Uses/Produces/Behaves categories in
-`spec/README.md`.
-
-### Step 2 — Register approved source evidence per leaf
-
-For each leaf `*.scope.md`, record the supporting source (a requirement, a
-`spec/README.md` rule, an explicit decision, an HTML standard primitive such as
-`input` or `table`, or an external framework implementation example such as
-Angular Material) in a single evidence register file, `spec/scopes/evidence.md` —
-the one source of truth for scope-to-source traceability, kept beside `scope.md`
-and the leaves. When a leaf has no approved
-source, request evidence from the project owner before it is enriched — leaves
-are never marked deferred and never enriched without supplied evidence. Add no
-enrichment content in this step.
-
-Example evidence entries:
-
-| Leaf scope                                  | Source                                              | Citation                                                                         | Authorizes                                                                                                                              |
-| ------------------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `scopes/Behaviors/drag_and_drop.scope.md`   | `spec/README.md` scope table                        | "Move elements within a page, view, container, or widget."                       | Purpose; Child model = applies to page, view, container, and widget scopes. Specific attribute keys require an explicit owner decision. |
-| `scopes/Widgets/date_time_pickers.scope.md` | Angular Material reference (`mat-date-range-input`) | `matStartDate` / `matEndDate` inputs and the `(dateChange)` output               | Attributes, recorded technology-independently with the Angular Material binding shown only as a reference pattern                       |
-| `scopes/Controls/native.scope.md`           | HTML primitive (`input`)                            | Standard `input` element attributes (`type`, `value`, `placeholder`, `disabled`) | Attributes, drawn from the HTML standard and recorded technology-independently                                                          |
-
-Acceptance criteria:
-
-- All evidence lives in the single register file `spec/scopes/evidence.md`; it is
-  not scattered across leaves, and is wired into `mkdocs.yml` nav and the
-  expected spec-markdown set.
-- Every leaf under `spec/scopes/**` has exactly one evidence entry; none is
-  marked deferred.
-- Each entry cites a concrete source (requirement, `spec/README.md` rule,
-  recorded decision, HTML standard primitive, or external framework example) and
-  states what it authorizes.
-- Framework-sourced evidence (e.g., Angular Material) is marked as a reference
-  pattern only; the authorized content stays technology-independent, per the
-  global invariants.
-- The register references no scope that is absent from `spec/scopes/**`.
-
-Test: a contract test asserts the evidence register and the `spec/scopes/**` leaf
-set are in exact one-to-one correspondence, and that every entry has a non-empty
-source citation.
-
-### Step 3 — Enrich one pilot leaf end-to-end
-
-Fully populate the template for one approved leaf in its `*.scope.md` prose — the
-authored contract — and set the reference pattern. `openui.json` is not
-hand-edited; it is generated from the prose.
-
-Acceptance criteria:
-
-- The pilot leaf fills every template section from registered evidence only.
-- The pilot leaf's Attributes and Child model document the contract (Uses /
-  Produces / Behaves keys and child types) from neutral evidence; no contract is
-  hand-written into `openui.json`.
-
-Test: a focused contract test asserts the pilot leaf contains all template
-sections and documents the attribute contract.
-
-### Step 4 — Roll out by top-level group in approved batches
+### Step 1 — Roll out by top-level group in approved batches
 
 Enrich leaves group by group, ordered by evidence availability (best-sourced
 first, most abstract last). Each sub-step below is one batch: enrich every leaf in
-the group (leaf template + `openui.json` instance node + register update), then
-approve and validate before starting the next sub-step.
+the group from the registered evidence, regenerate `openui.json`, then approve
+and validate before starting the next sub-step.
 
 Per-batch acceptance criteria (apply to every sub-step):
 
@@ -126,43 +47,27 @@ Per-batch acceptance criteria (apply to every sub-step):
 - Groups not yet started remain concise and are not partially enriched.
 
 Per-batch test: a parametrized group test marks the group `complete`; every leaf
-in a `complete` group must pass the Step 3 contract assertions, and `pending`
-groups are skipped.
+in a `complete` group must pass the enriched-leaf contract assertions, and
+`pending` groups are skipped.
 
 Sub-steps (batches):
 
-- **4.1 Controls** — `native`. HTML `input`; native presentation contract to
+- **1.1 Controls** — `native`. HTML `input`; native presentation contract to
   confirm with the owner.
-- **4.2 Widgets** — `charts`, `tables`, `lists`, `date_time_pickers`, `stepper`
+- **1.2 Widgets** — `charts`, `tables`, `lists`, `date_time_pickers`, `stepper`
   (`dialog` already piloted). HTML `table` / `ul` / `li`; Angular Material
   reference for pickers, stepper, and charts.
-- **4.3 Containers** — `grid`, `expandable_panels`, `tabs`. HTML
+- **1.3 Containers** — `grid`, `expandable_panels`, `tabs`. HTML
   `details`/`summary`; ARIA tablist pattern.
-- **4.4 Views** — `reports`, `forms`. HTML form controls and tabular data.
-- **4.5 Behaviors** — `drag_and_drop`, `resizable`, `collapsible`. HTML
+- **1.4 Views** — `reports`, `forms`. HTML form controls and tabular data.
+- **1.5 Behaviors** — `drag_and_drop`, `resizable`, `collapsible`. HTML
   drag-and-drop; owner decisions likely.
-- **4.6 Pages** — `dashboard`, `shell_page`, `empty_page`. Layout composition;
+- **1.6 Pages** — `dashboard`, `shell_page`, `empty_page`. Layout composition;
   some abstract.
-- **4.7 Application** — `favicon` (HTML `link rel="icon"`), `index_html` (HTML
+- **1.7 Application** — `favicon` (HTML `link rel="icon"`), `index_html` (HTML
   document head); `routing`, `navigation`, `tool_bars` require owner decisions.
 
-### Step 5 — Regenerate `openui.json` from the enriched prose
-
-`openui.json` is a derived artifact generated from the prose scopes; it is not
-hand-edited for contracts. Once the prose→`openui.json` generator exists,
-regenerate it so every enriched leaf's contract appears as its instance node.
-
-Acceptance criteria:
-
-- `openui.json` is produced from the prose, not hand-authored; the generated tree
-  validates against `openui.schema.json` with no scope drift.
-- Until the generator exists, `openui.json` carries scope metadata only and is not
-  hand-edited with contracts.
-
-Test: extend `tests/test_openui_spec_contract.py` (with the generator) to assert
-the generated `openui.json` matches the prose contracts.
-
-### Step 6 — Extend focused tests with each batch
+### Step 2 — Extend focused tests with each batch
 
 Add at least one public-contract assertion per enriched scope.
 
@@ -171,10 +76,10 @@ Acceptance criteria:
 - Every enriched leaf is covered by at least one contract assertion.
 - Spec tests assert no technology-specific detail.
 
-Test: a coverage-guard test fails if an enriched leaf (a Step 4 `complete` group)
+Test: a coverage-guard test fails if an enriched leaf (a Step 1 `complete` group)
 has no associated contract assertion.
 
-### Step 7 — Full validation and review
+### Step 3 — Full validation and review
 
 Run the complete suite and review the enriched set.
 
