@@ -231,6 +231,64 @@ Project-level package versions are currently pinned by the emitter. As of this
 revision, generated apps use Angular, Angular Material, Angular CDK, Angular
 CLI, and Angular build package version `22.0.2` with TypeScript `6.0.3`.
 
+## Incremental generation
+
+The generator supports incremental generation: given a JSON specification and an
+existing workspace, it reconciles the workspace to match the specification rather
+than regenerating from scratch every time.
+
+### Pipeline extension
+
+```text
+input.json + existing workspace
+  ↓
+validate against the specification
+  ↓
+build implementation-independent UI IR
+  ↓
+compare IR nodes with workspace manifestations
+  ↓
+determine per-node action (Add / Delete / Modify / Match)
+  ↓
+apply changes to workspace
+  ↓
+build / test / verify
+```
+
+### Reconciliation algorithm
+
+The JSON tree is traversed parent to child starting at the root:
+
+| JSON | Workspace | Action       | Details                                                           |
+|:-----|:----------|:-------------|:------------------------------------------------------------------|
+| Yes  | No        | Add          | Generate the object and wire it to its parent                     |
+| No   | Yes       | Delete       | Remove the object and its parent references                       |
+| Yes  | Yes       | Match        | No action — content including children is identical               |
+| Yes  | Yes       | Not matching | Fix non-matching parts (attribute or child added/removed/changed) |
+
+- **Add**: the generator creates the component files and wires imports/routing.
+- **Modify**: simple changes (e.g. a rename) are applied in-place; complex
+  changes delete and re-add the node.
+- **Delete**: component files are removed and parent references are unwired.
+- **Match**: no filesystem changes.
+
+Generation from scratch is an incremental run where the workspace is empty.
+
+### Test fixtures
+
+The generator test fixtures demonstrate both scenarios:
+
+```text
+generators/angular/generator/tests/fixtures/
+├─ example_from_scratch/       generation into an empty workspace
+│  ├─ input_app-file-select/   input JSON only
+│  └─ output_app-file-select/  expected full workspace after generation
+├─ example_incremental/        generation into an existing workspace
+│  ├─ input_app-file-select/   existing workspace with app-file-upload
+│  └─ output_app-file-select/  workspace after adding app-file-select
+└─ example_backup/             baseline workspace before any generation
+```
+
 ## CLI contract
 
 The CLI is intentionally small:

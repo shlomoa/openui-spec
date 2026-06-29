@@ -107,6 +107,53 @@ The native OpenUI document model is the only supported generator input shape.
 Downstream generators must consume it directly through validation, extraction,
 and IR construction.
 
+## Incremental generation
+
+The generator supports incremental operation: given a JSON specification and an
+existing workspace, it reconciles the workspace contents to match the
+specification rather than regenerating from scratch.
+
+### Reconciliation algorithm
+
+The JSON tree is traversed parent to child starting at the root. For each node:
+
+| JSON | Workspace | Action       | Details                                              |
+|:-----|:----------|:-------------|:-----------------------------------------------------|
+| Yes  | No        | Add          | Generate the object and wire it to its parent        |
+| No   | Yes       | Delete       | Remove the object and unwire parent references       |
+| Yes  | Yes       | Match        | No action — content including children is identical  |
+| Yes  | Yes       | Not matching | Fix non-matching parts                               |
+
+- **Add**: emit component files, update imports, routing, and parent templates.
+- **Modify**: apply in-place for simple changes (rename); delete+add for complex.
+- **Delete**: remove component files, imports, routes, and parent references.
+- **Match**: skip — no filesystem changes needed.
+
+Generation from scratch is the special case where the workspace starts empty.
+Deletion is the special case where objects are removed from the JSON file.
+
+### Extended pipeline
+
+```text
+input.json + existing workspace
+  → validate against the specification (openui.json + openui.schema.json + spec/**/*.md)
+  → build implementation-independent UI IR
+  → compare IR nodes with workspace manifestations
+  → determine per-node action (Add / Delete / Modify / Match)
+  → apply changes to Angular project workspace
+  → build / test / verify
+```
+
+### Test fixtures
+
+The committed test fixtures under `generators/angular/generator/tests/fixtures/`
+demonstrate both generation modes:
+
+- `example_from_scratch/` — empty workspace receives the full generated output.
+- `example_incremental/` — existing workspace (with `app-file-upload`) is
+  reconciled to also include `app-file-select`.
+- `example_backup/` — baseline workspace state before any generation runs.
+
 ## Existing generator entry points
 
 Use these implemented modules as the starting architecture:
