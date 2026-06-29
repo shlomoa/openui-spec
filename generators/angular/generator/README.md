@@ -17,6 +17,34 @@ supported by this repository. The current emitter pins Angular and Angular
 Material packages to `22.0.2` and prefers Material primitives for shells, page
 surfaces, requirement summaries, navigation, forms, and feedback.
 
+## Incremental generation
+
+The generator supports incremental operation as defined in
+[spec/README.md § Incremental generation](../../../spec/README.md#incremental-generation).
+
+### CLI usage for incremental generation
+
+```bash
+# Generate into an empty workspace (from scratch)
+node dist/src/cli/main.js generate --spec input.json --out ./my-app
+
+# Generate into an existing workspace (incremental)
+node dist/src/cli/main.js generate --spec updated-input.json --out ./my-app
+```
+
+The `--out` directory may already contain a previously generated workspace. The
+generator compares the specification tree against the existing workspace files
+and applies only the necessary changes (add, modify, or delete).
+
+### Test fixtures
+
+Test fixtures demonstrating both modes are committed under `tests/fixtures/`:
+
+- `example_from_scratch/` — input JSON generates a complete workspace from nothing.
+- `example_incremental/` — input JSON adds `app-file-select` to a workspace
+  that already contains `app-file-upload`.
+- `example_backup/` — baseline workspace state before any generation.
+
 ## Dashboard reference implementation pattern
 
 The Angular Material Dashboard schematic is a useful reference pattern for the

@@ -7,6 +7,15 @@ OpenUI document, mirroring the `spec/examples/**` hierarchy one-to-one. The
 example JSON documents are the source of truth — the app documents them, it does
 not regenerate them or invent generator behavior.
 
+## Incremental generation support
+
+The generator supports incremental operation as defined in
+[spec/README.md § Incremental generation](../../../spec/README.md#incremental-generation).
+The test fixtures under `generators/angular/generator/tests/fixtures/` demonstrate
+both generation modes (from-scratch and incremental reconciliation).
+
+## Steps
+
 1. **Protect current workspace state**
    - Check `git status`.
    - Identify and preserve unrelated staged/uncommitted changes, especially current mkdocs.yml / requirements-test.txt changes if still present.

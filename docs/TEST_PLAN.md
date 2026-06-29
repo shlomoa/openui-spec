@@ -142,3 +142,45 @@ that contract test if it is not.
   but not yet individually parsed against `openui.schema.json`. Adding a contract
   test that loads each `*.example.json` and validates it against the schema would
   close the loop between the examples and the catalog grammar.
+
+## Incremental generation test strategy
+
+Incremental generation (defined in
+[spec/README.md § Incremental generation](../spec/README.md#incremental-generation))
+introduces workspace reconciliation scenarios that extend the existing Layer 2
+test surface. The test fixtures under
+`generators/angular/generator/tests/fixtures/` capture the expected behavior:
+
+### Fixture layout
+
+```text
+generators/angular/generator/tests/fixtures/
+├─ example_from_scratch/         generation into an empty workspace
+│  ├─ input_app-file-select/     JSON specification (input only)
+│  └─ output_app-file-select/    expected full workspace after generation
+├─ example_incremental/          generation into an existing workspace
+│  ├─ input_app-file-select/     existing workspace with app-file-upload only
+│  └─ output_app-file-select/    workspace after app-file-select is added
+└─ example_backup/               baseline workspace state before generation
+```
+
+### Scenarios to test
+
+| Scenario     | Fixture                | What is verified                                             |
+| :----------- | :--------------------- | :----------------------------------------------------------- |
+| From scratch | `example_from_scratch` | Empty workspace → full generated output                      |
+| Incremental  | `example_incremental`  | Existing workspace → new component added, existing preserved |
+| Match        | (same-state input)     | Re-running on matching workspace produces no changes         |
+| Delete       | (future fixture)       | Removing a node from JSON removes the generated files        |
+
+### Expected test assertions
+
+- **Add**: new component files exist in the output workspace; parent references
+  (imports, routes) include the new component.
+- **Delete**: component files are absent from output; parent references no longer
+  reference the deleted component.
+- **Modify**: renamed or changed attributes produce updated file contents.
+- **Match**: workspace files remain byte-identical when the specification has not
+  changed.
+- **Existing content preserved**: components not mentioned in the diff remain
+  unchanged (e.g. `app-file-upload` stays intact in the incremental example).

@@ -3,7 +3,7 @@
 An input workspace is an Angular Material app workspace.
 These test cases will be used to demonstrate the impact (outcome) of running the generator.
 
-## Example
+## Example — From scratch
 
 Example is in generators\angular\generator\tests\fixtures\example_from_scratch
 
@@ -12,6 +12,32 @@ Example is in generators\angular\generator\tests\fixtures\example_from_scratch
 - This is an example:
   - do not assume it represents all possible cases.
   - it assumes the spec for all the tags exists and is implemented in the generator.
+
+## Example — Incremental
+
+Example is in generators\angular\generator\tests\fixtures\example_incremental
+
+- input_app-file-select folder contains an existing workspace with `app-file-upload`
+  component already present, plus the `app-file-select.example.json` specification.
+- output_app-file-select contains the expected workspace after incremental generation:
+  both `app-file-select` (added) and `app-file-upload` (preserved) are present.
+- This demonstrates the incremental reconciliation algorithm (see
+  [spec/README.md § Incremental generation](../../../../../spec/README.md#incremental-generation)):
+  - Existing components not in the JSON diff are preserved (Match).
+  - New components described in the JSON are added (Add).
+
+## Incremental generation scenarios
+
+The reconciliation algorithm is defined in
+[spec/README.md § Incremental generation](../../../../../spec/README.md#incremental-generation).
+The following table maps scenarios to test fixtures:
+
+| Scenario     | Test fixture                                            |
+| :----------- | :------------------------------------------------------ |
+| Add          | `example_from_scratch/` (workspace starts empty)        |
+| Delete       | (future: remove a component from JSON, verify removal)  |
+| Match        | (re-run on same input, verify no changes)               |
+| Not matching | `example_incremental/` (workspace has existing content) |
 
 ## Execution task list
 

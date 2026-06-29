@@ -231,6 +231,45 @@ Project-level package versions are currently pinned by the emitter. As of this
 revision, generated apps use Angular, Angular Material, Angular CDK, Angular
 CLI, and Angular build package version `22.0.2` with TypeScript `6.0.3`.
 
+## Incremental generation
+
+The generator supports incremental operation as defined in
+[spec/README.md § Incremental generation](../spec/README.md#incremental-generation).
+
+The generator extends the base pipeline to compare IR nodes with workspace
+manifestations before emitting changes:
+
+```text
+input.json + existing workspace
+  ↓
+validate against the specification
+  ↓
+build implementation-independent UI IR
+  ↓
+compare IR nodes with workspace manifestations
+  ↓
+determine per-node action (Add / Delete / Modify / Match)
+  ↓
+apply changes to workspace
+  ↓
+build / test / verify
+```
+
+### Test fixtures
+
+The generator test fixtures demonstrate both scenarios:
+
+```text
+generators/angular/generator/tests/fixtures/
+├─ example_from_scratch/       generation into an empty workspace
+│  ├─ input_app-file-select/   input JSON only
+│  └─ output_app-file-select/  expected full workspace after generation
+├─ example_incremental/        generation into an existing workspace
+│  ├─ input_app-file-select/   existing workspace with app-file-upload
+│  └─ output_app-file-select/  workspace after adding app-file-select
+└─ example_backup/             baseline workspace before any generation
+```
+
 ## CLI contract
 
 The CLI is intentionally small:

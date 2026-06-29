@@ -346,6 +346,37 @@ the `scopes` tree: a `<object>.example.json` for each leaf scope and a composite
 
 ---
 
+## Incremental generation
+
+Generation is usually incremental: given a JSON specification file and an existing
+workspace, the generator reconciles the workspace to match the specification
+rather than regenerating from scratch every time.
+
+### Scenarios
+
+| JSON | Workspace | Scenario     | Details                                                                                     |
+| :--- | :-------- | :----------- | :------------------------------------------------------------------------------------------ |
+| Yes  | No        | Add          | Implement the object as a child of the current parent and wire it in                        |
+| No   | Yes       | Delete       | Delete the object and the reference from parent                                             |
+| Yes  | Yes       | Match        | Do nothing — the node content including children is identical                               |
+| Yes  | Yes       | Not matching | Fix those non-matching parts (attribute added/removed/changed, child added/removed/changed) |
+
+### Algorithm
+
+The JSON is traversed parent (node) to child (node) starting at the root.
+Having no root is an invalid case.
+
+1. First node is defined to be the root.
+2. Compare each JSON node with the manifestation in the workspace:
+   - **Add** — the generator generates the object as defined.
+   - **Modify** — either make the modification if simple (e.g. a rename), or
+     delete and re-add.
+   - **Delete** — remove the part and the references to it.
+   - **Match** — do nothing.
+
+Generation from scratch is the special case where the workspace is empty.
+Deletion is the special case where objects are removed from the JSON file.
+
 ## How to read this spec
 
 The specification defines **what** a compliant Web UI implementation must provide, without saying **how** it is implemented. For example:

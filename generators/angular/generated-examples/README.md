@@ -27,6 +27,13 @@ regenerate them. The planned restructure that maps each `spec/examples/**`
 document to an app entry one-to-one is tracked in
 [generated-examples-app-update-plan.md](generated-examples-app-update-plan.md).
 
+## Incremental generation
+
+The Angular generator supports incremental operation as defined in
+[spec/README.md § Incremental generation](../../../spec/README.md#incremental-generation).
+The test fixtures in `generators/angular/generator/tests/fixtures/` demonstrate
+both generation modes (from-scratch and incremental reconciliation).
+
 ## Development server
 
 ```bash
