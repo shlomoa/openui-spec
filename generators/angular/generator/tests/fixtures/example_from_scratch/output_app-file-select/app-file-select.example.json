@@ -1,0 +1,273 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ApplicationExample",
+  "attrs": {
+    "title": "App file select example",
+    "sourceRoot": "generators/angular/generator/tests/fixtures/app-file-select",
+    "description": "OpenUI representation of the HTML templates in the app-file-select Angular fixture."
+  },
+  "children": [
+    {
+      "id": "indexHtml",
+      "type": "html",
+      "attrs": {
+        "sourceFile": "src/index.html",
+        "lang": "en",
+        "doctype": "html"
+      },
+      "children": [
+        {
+          "id": "head",
+          "type": "head",
+          "children": [
+            {
+              "id": "title",
+              "type": "title",
+              "attrs": {
+                "text": "My app"
+              }
+            },
+            {
+              "id": "charsetMeta",
+              "type": "meta",
+              "attrs": {
+                "charset": "UTF-8"
+              }
+            },
+            {
+              "id": "baseHref",
+              "type": "base",
+              "attrs": {
+                "href": "/"
+              }
+            },
+            {
+              "id": "openGraphImage",
+              "type": "meta",
+              "attrs": {
+                "property": "og:image",
+                "content": "https://bolt.new/static/og_default.png"
+              }
+            },
+            {
+              "id": "twitterCard",
+              "type": "meta",
+              "attrs": {
+                "name": "twitter:card",
+                "content": "summary_large_image"
+              }
+            },
+            {
+              "id": "twitterImage",
+              "type": "meta",
+              "attrs": {
+                "name": "twitter:image",
+                "content": "https://bolt.new/static/og_default.png"
+              }
+            },
+            {
+              "id": "materialIconsStylesheet",
+              "type": "link",
+              "attrs": {
+                "href": "https://fonts.googleapis.com/icon?family=Material+Icons",
+                "rel": "stylesheet"
+              }
+            }
+          ]
+        },
+        {
+          "id": "body",
+          "type": "body",
+          "children": [
+            {
+              "id": "appRoot",
+              "type": "app-root",
+              "attrs": {
+                "text": "Loading..."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "appFileSelectTemplate",
+      "type": "ComponentTemplate",
+      "attrs": {
+        "sourceFile": "src/components/app-file-select/app-file-select.component.html",
+        "selector": "app-file-select"
+      },
+      "children": [
+        {
+          "id": "selectFileContainer",
+          "type": "div",
+          "attrs": {
+            "class": "select-file-container"
+          },
+          "children": [
+            {
+              "id": "fileInput",
+              "type": "input",
+              "attrs": {
+                "#fileInput": "",
+                "type": "file",
+                "(change)": "onFileSelected($event)",
+                "style": "display: none"
+              }
+            },
+            {
+              "id": "selectButton",
+              "type": "button",
+              "attrs": {
+                "mat-raised-button": "",
+                "color": "primary",
+                "(click)": "fileInput.click()",
+                "class": "select-button"
+              },
+              "children": [
+                {
+                  "id": "attachFileIcon",
+                  "type": "mat-icon",
+                  "attrs": {
+                    "text": "attach_file"
+                  }
+                },
+                {
+                  "id": "selectFileText",
+                  "type": "span",
+                  "attrs": {
+                    "text": "Select File"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "selectedFileIf",
+              "type": "AngularIf",
+              "attrs": {
+                "condition": "selectedFile()"
+              },
+              "children": [
+                {
+                  "id": "fileInfo",
+                  "type": "div",
+                  "attrs": {
+                    "class": "file-info"
+                  },
+                  "children": [
+                    {
+                      "id": "fileIcon",
+                      "type": "mat-icon",
+                      "attrs": {
+                        "class": "file-icon",
+                        "text": "description"
+                      }
+                    },
+                    {
+                      "id": "fileName",
+                      "type": "span",
+                      "attrs": {
+                        "class": "file-name",
+                        "text": "{{ selectedFile()?.name }}"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "selectedFileElse",
+                  "type": "AngularElse",
+                  "children": [
+                    {
+                      "id": "noFile",
+                      "type": "div",
+                      "attrs": {
+                        "class": "no-file",
+                        "text": "No file selected"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "appFileUploadTemplate",
+      "type": "ComponentTemplate",
+      "attrs": {
+        "sourceFile": "src/components/app-file-upload/app-file-upload.component.html",
+        "selector": "app-file-upload"
+      },
+      "children": [
+        {
+          "id": "uploadCard",
+          "type": "mat-card",
+          "attrs": {
+            "class": "upload-card"
+          },
+          "children": [
+            {
+              "id": "cardHeader",
+              "type": "mat-card-header",
+              "children": [
+                {
+                  "id": "cardTitle",
+                  "type": "mat-card-title",
+                  "attrs": {
+                    "text": "File Upload"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "cardContent",
+              "type": "mat-card-content",
+              "children": [
+                {
+                  "id": "appFileSelect",
+                  "type": "app-file-select"
+                }
+              ]
+            },
+            {
+              "id": "cardActions",
+              "type": "mat-card-actions",
+              "children": [
+                {
+                  "id": "uploadButton",
+                  "type": "button",
+                  "attrs": {
+                    "mat-raised-button": "",
+                    "color": "accent",
+                    "(click)": "uploadFile()",
+                    "[disabled]": "!selectedFile()",
+                    "class": "upload-button"
+                  },
+                  "children": [
+                    {
+                      "id": "cloudUploadIcon",
+                      "type": "mat-icon",
+                      "attrs": {
+                        "text": "cloud_upload"
+                      }
+                    },
+                    {
+                      "id": "uploadText",
+                      "type": "span",
+                      "attrs": {
+                        "text": "Upload"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

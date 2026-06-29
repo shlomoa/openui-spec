@@ -1,0 +1,28 @@
+
+<div class="select-file-container">
+    <input
+        #fileInput
+        type="file"
+        (change)="onFileSelected($event)"
+        style="display: none"
+    />
+
+    <button
+        mat-raised-button
+        color="primary"
+        (click)="fileInput.click()"
+        class="select-button"
+        >
+        <mat-icon>attach_file</mat-icon>
+        Select File
+    </button>
+
+    @if (selectedFile()) {
+        <div class="file-info">
+            <mat-icon class="file-icon">description</mat-icon>
+            <span class="file-name">{{ selectedFile()?.name }}</span>
+        </div>
+    } @else {
+        <div class="no-file">No file selected</div>
+    }
+</div>

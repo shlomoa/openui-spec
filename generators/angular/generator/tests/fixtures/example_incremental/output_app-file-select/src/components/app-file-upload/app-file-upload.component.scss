@@ -1,0 +1,52 @@
+.upload-card {
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+.select-button {
+  width: fit-content;
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.file-icon {
+  color: #666;
+}
+
+.file-name {
+  flex: 1;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-size {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.no-file {
+  color: #999;
+  font-style: italic;
+  padding: 1rem;
+}
+
+.upload-button {
+  width: 100%;
+}
+
+mat-card-actions {
+  padding: 1rem;
+}
+
+mat-icon {
+  margin-right: 0.5rem;
+}
