@@ -6,12 +6,12 @@ These test cases will be used to demonstrate the impact (outcome) of running the
 ## Example
 
 Example is in generators\angular\generator\tests\fixtures\example_from_scratch
+
 - input_app-file-select folder contains the app-file-select.example.json file only.
 - output_app-file-select contains the expected generated output given the json file.
 - This is an example:
   - do not assume it represents all possible cases.
   - it assumes the spec for all the tags exists and is implemented in the generator.
-
 
 ## Execution task list
 
@@ -36,7 +36,7 @@ Example is in generators\angular\generator\tests\fixtures\example_from_scratch
 
 4. **Copy each example JSON into its input fixture**
    - Copy the source example JSON to:
-     `generators/angular/generator/tests/fixtures/input_<object_name>/<object_name>.example.json`	 
+     `generators/angular/generator/tests/fixtures/input_<object_name>/<object_name>.example.json`
    - Preserve the original filename.
    - Keep the original `spec/examples/**/*.example.json` files in place because they
      are specification documentation examples.
@@ -48,7 +48,7 @@ Example is in generators\angular\generator\tests\fixtures\example_from_scratch
      - Document the following process in a scaffold_generation.md file
      - Generate the baseline workspace using npm commands
      - Add additional structure and content using ng commands.
-     - Wire everything correctly. 
+     - Wire everything correctly.
 
 6. **Create output fixture placeholders**
    - copy content from the input folder to the output, for example:
