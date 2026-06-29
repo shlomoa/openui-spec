@@ -2,58 +2,28 @@
   "id": "root",
   "version": "0.0.1",
   "type": "Pages",
-  "attrs": {
-    "title": "\"Pages example\""
-  },
   "children": [
     {
       "id": "appShell",
       "type": "ShellPage",
-      "attrs": {
-        "title": "\"Shell\"",
-        "[defaultRoute]": "\"dashboard\""
-      },
       "children": [
         {
-          "id": "shellOutlet",
-          "type": "RouteOutlet",
-          "attrs": {
-            "[for]": "\"appRouting\""
-          }
+          "id": "appShellRouting",
+          "type": "Routing"
+        },
+        {
+          "id": "appShellNavigation",
+          "type": "Navigation"
         }
       ]
     },
     {
       "id": "homeDashboard",
-      "type": "DashboardPage",
-      "attrs": {
-        "title": "\"Home\""
-      },
-      "children": [
-        {
-          "id": "welcomeCard",
-          "type": "Card",
-          "attrs": {
-            "[title]": "\"Welcome\""
-          }
-        }
-      ]
+      "type": "DashboardPage"
     },
     {
       "id": "notFound",
-      "type": "EmptyPage",
-      "attrs": {
-        "title": "\"Not found\""
-      },
-      "children": [
-        {
-          "id": "notFoundState",
-          "type": "EmptyState",
-          "attrs": {
-            "[message]": "\"Page not found.\""
-          }
-        }
-      ]
+      "type": "EmptyPage"
     }
   ]
 }

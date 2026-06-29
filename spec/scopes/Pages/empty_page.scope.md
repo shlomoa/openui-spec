@@ -1,15 +1,26 @@
 # Empty page
 
+This leaf follows the [leaf scope template](../template.scope.md). Its contract is
+drawn from the `spec/README.md` scope rule, recorded technology-independently.
+
+## Identity
+
+- id: emptyPage · type: EmptyPage · status: draft
+
+## Purpose
+
 A page with no content and no routing or navigation.
 
-## Scope
+## Accessibility
 
-An empty page definition may describe:
+- Exposes enough label or status context for users to understand that the page is
+  intentionally empty.
+- Does not introduce navigation or routed-content expectations.
 
-- page identity,
-- title or display label,
-- intentionally empty content region,
-- optional placeholder or empty-state message, and
-- absence of routing and navigation bindings.
+## Validation notes
 
-The specification does not require a specific blank page component, route configuration, or generated file layout.
+- `id` is a camelCase identifier and `type` is a valid type per
+  `openui.schema.json`.
+- The empty page owns no child entries. Placeholder content, empty-state widgets,
+  routing, and navigation require an explicit owner decision before they are
+  added as contract entries.

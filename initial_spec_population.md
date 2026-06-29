@@ -31,17 +31,21 @@ contracts. The generated `openui.json` represents each contract as a typed
 instance child under the metadata-only scope node, per the serialization rule in
 `spec/scopes/scope.md`.
 
-### Step 1 — Finish Application and Pages rollout
+### Step 1 — Finish Application rollout
 
-The Controls, Widgets, Containers, Views, and Behaviors batches have been rolled
-out from registered evidence. Finish the remaining legacy leaves in Application
-and Pages, regenerate `openui.json`, then approve and validate before moving on.
+The Controls, Widgets, Containers, Views, Behaviors, and Pages batches have been
+rolled out from registered evidence. Finish the remaining legacy leaves in
+Application, regenerate `openui.json`, then approve and validate before moving
+on.
 
 Per-batch acceptance criteria (apply to every sub-step):
 
-- Every leaf in the group fills all template sections from registered evidence.
-- Each leaf's `*.scope.md` prose documents its attribute keys (Uses / Produces /
-  Behaves) and child model, per the leaf template; `openui.json` is not
+- Every leaf in the group follows the shared leaf template from registered
+  evidence: required sections are present, while `Attributes` and `Child model`
+  are included only when they contain evidence-backed contract entries.
+- Each leaf's `*.scope.md` prose documents evidence-backed attribute keys (Uses /
+  Produces / Behaves) and child model entries, per the leaf template. Do not add
+  empty placeholder sections just to satisfy the template; `openui.json` is not
   hand-edited for contracts.
 - Scope families not yet updated remain concise and are not partially enriched.
 
@@ -51,9 +55,7 @@ in a `complete` group must pass the enriched-leaf contract assertions, and
 
 Remaining batches:
 
-- **1.1 Pages** — `dashboard`, `shell_page`, `empty_page`. Layout composition;
-  some abstract.
-- **1.2 Application** — `favicon` (HTML `link rel="icon"`), `index_html` (HTML
+- **1.1 Application** — `favicon` (HTML `link rel="icon"`), `index_html` (HTML
   document head); `routing`, `navigation`, `tool_bars` require owner decisions.
 
 ### Step 2 — Extend focused tests with each batch

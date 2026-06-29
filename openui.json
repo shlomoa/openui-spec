@@ -438,14 +438,14 @@
               "type": "Dashboard",
               "attrs": {
                 "title": "Dashboard",
-                "purpose": "The Dashboard page gives users a quick, scannable overview of important application information. It is intended for summary cards, status indicators, high-level metrics, shortcuts, and other compact content that helps users decide where to go next.",
+                "purpose": "A predefined page layout that presents overview metrics and summary content for quick scanning.",
                 "scopeDocument": "scopes/Pages/dashboard.scope.md",
                 "status": "draft"
               },
               "children": [
                 {
                   "id": "dashboardInstance",
-                  "type": "Dashboard"
+                  "type": "DashboardPage"
                 }
               ]
             },
@@ -470,14 +470,24 @@
               "type": "ShellPage",
               "attrs": {
                 "title": "Shell page",
-                "purpose": "A page with no content with routing and navigation.",
+                "purpose": "A page shell with no business-object content that connects application routing and navigation.",
                 "scopeDocument": "scopes/Pages/shell_page.scope.md",
                 "status": "draft"
               },
               "children": [
                 {
                   "id": "shellPageInstance",
-                  "type": "ShellPage"
+                  "type": "ShellPage",
+                  "children": [
+                    {
+                      "id": "shellPageRouting",
+                      "type": "Routing"
+                    },
+                    {
+                      "id": "shellPageNavigation",
+                      "type": "Navigation"
+                    }
+                  ]
                 }
               ]
             }

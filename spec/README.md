@@ -13,8 +13,9 @@ repository-root `openui.json`. They are easy to confuse — both are JSON about
 OpenUI — but they sit at **different levels of abstraction**.
 
 For the authoritative input/context/output contract, see
-[`docs/REQUIREMENTS.md`](../docs/REQUIREMENTS.md) §1. This section is the
-explanatory companion; it does not redefine the contract.
+[`docs/REQUIREMENTS.md`](https://github.com/shlomoa/openui5-spec/blob/main/docs/REQUIREMENTS.md)
+§1. This section is the explanatory companion; it does not redefine the
+contract.
 
 ### TL;DR
 
