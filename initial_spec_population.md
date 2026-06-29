@@ -31,12 +31,11 @@ contracts. The generated `openui.json` represents each contract as a typed
 instance child under the metadata-only scope node, per the serialization rule in
 `spec/scopes/scope.md`.
 
-### Step 1 — Roll out by top-level group in approved batches
+### Step 1 — Finish Application and Pages rollout
 
-Enrich leaves group by group, ordered by evidence availability (best-sourced
-first, most abstract last). Each sub-step below is one batch: enrich every leaf in
-the group from the registered evidence, regenerate `openui.json`, then approve
-and validate before starting the next sub-step.
+The Controls, Widgets, Containers, Views, and Behaviors batches have been rolled
+out from registered evidence. Finish the remaining legacy leaves in Application
+and Pages, regenerate `openui.json`, then approve and validate before moving on.
 
 Per-batch acceptance criteria (apply to every sub-step):
 
@@ -44,27 +43,17 @@ Per-batch acceptance criteria (apply to every sub-step):
 - Each leaf's `*.scope.md` prose documents its attribute keys (Uses / Produces /
   Behaves) and child model, per the leaf template; `openui.json` is not
   hand-edited for contracts.
-- Groups not yet started remain concise and are not partially enriched.
+- Scope families not yet updated remain concise and are not partially enriched.
 
 Per-batch test: a parametrized group test marks the group `complete`; every leaf
 in a `complete` group must pass the enriched-leaf contract assertions, and
 `pending` groups are skipped.
 
-Sub-steps (batches):
+Remaining batches:
 
-- **1.1 Controls** — `native`. HTML `input`; native presentation contract to
-  confirm with the owner.
-- **1.2 Widgets** — `charts`, `tables`, `lists`, `date_time_pickers`, `stepper`
-  (`dialog` already piloted). HTML `table` / `ul` / `li`; Angular Material
-  reference for pickers, stepper, and charts.
-- **1.3 Containers** — `grid`, `expandable_panels`, `tabs`. HTML
-  `details`/`summary`; ARIA tablist pattern.
-- **1.4 Views** — `reports`, `forms`. HTML form controls and tabular data.
-- **1.5 Behaviors** — `drag_and_drop`, `resizable`, `collapsible`. HTML
-  drag-and-drop; owner decisions likely.
-- **1.6 Pages** — `dashboard`, `shell_page`, `empty_page`. Layout composition;
+- **1.1 Pages** — `dashboard`, `shell_page`, `empty_page`. Layout composition;
   some abstract.
-- **1.7 Application** — `favicon` (HTML `link rel="icon"`), `index_html` (HTML
+- **1.2 Application** — `favicon` (HTML `link rel="icon"`), `index_html` (HTML
   document head); `routing`, `navigation`, `tool_bars` require owner decisions.
 
 ### Step 2 — Extend focused tests with each batch
