@@ -164,12 +164,12 @@ generators/angular/generator/tests/fixtures/
 
 ### Scenarios to test
 
-| Scenario     | Fixture               | What is verified                                       |
-|:-------------|:----------------------|:-------------------------------------------------------|
-| From scratch | `example_from_scratch`| Empty workspace → full generated output                |
-| Incremental  | `example_incremental` | Existing workspace → new component added, existing preserved |
-| Match        | (same-state input)    | Re-running on matching workspace produces no changes   |
-| Delete       | (future fixture)      | Removing a node from JSON removes the generated files  |
+| Scenario     | Fixture                | What is verified                                             |
+| :----------- | :--------------------- | :----------------------------------------------------------- |
+| From scratch | `example_from_scratch` | Empty workspace → full generated output                      |
+| Incremental  | `example_incremental`  | Existing workspace → new component added, existing preserved |
+| Match        | (same-state input)     | Re-running on matching workspace produces no changes         |
+| Delete       | (future fixture)       | Removing a node from JSON removes the generated files        |
 
 ### Expected test assertions
 

@@ -260,7 +260,7 @@ build / test / verify
 The JSON tree is traversed parent to child starting at the root:
 
 | JSON | Workspace | Action       | Details                                                           |
-|:-----|:----------|:-------------|:------------------------------------------------------------------|
+| :--- | :-------- | :----------- | :---------------------------------------------------------------- |
 | Yes  | No        | Add          | Generate the object and wire it to its parent                     |
 | No   | Yes       | Delete       | Remove the object and its parent references                       |
 | Yes  | Yes       | Match        | No action — content including children is identical               |

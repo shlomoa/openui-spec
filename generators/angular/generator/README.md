@@ -25,12 +25,12 @@ than regenerating from scratch every time.
 
 ### Reconciliation scenarios
 
-| JSON | Workspace | Action       | Details                                              |
-|:-----|:----------|:-------------|:-----------------------------------------------------|
-| Yes  | No        | Add          | Generate the component and wire it to its parent     |
-| No   | Yes       | Delete       | Remove the component and unwire parent references    |
-| Yes  | Yes       | Match        | No action — content including children is identical  |
-| Yes  | Yes       | Not matching | Fix non-matching parts                               |
+| JSON | Workspace | Action       | Details                                             |
+| :--- | :-------- | :----------- | :-------------------------------------------------- |
+| Yes  | No        | Add          | Generate the component and wire it to its parent    |
+| No   | Yes       | Delete       | Remove the component and unwire parent references   |
+| Yes  | Yes       | Match        | No action — content including children is identical |
+| Yes  | Yes       | Not matching | Fix non-matching parts                              |
 
 ### CLI usage for incremental generation
 

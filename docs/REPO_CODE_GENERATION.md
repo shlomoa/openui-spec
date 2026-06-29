@@ -117,12 +117,12 @@ specification rather than regenerating from scratch.
 
 The JSON tree is traversed parent to child starting at the root. For each node:
 
-| JSON | Workspace | Action       | Details                                              |
-|:-----|:----------|:-------------|:-----------------------------------------------------|
-| Yes  | No        | Add          | Generate the object and wire it to its parent        |
-| No   | Yes       | Delete       | Remove the object and unwire parent references       |
-| Yes  | Yes       | Match        | No action — content including children is identical  |
-| Yes  | Yes       | Not matching | Fix non-matching parts                               |
+| JSON | Workspace | Action       | Details                                             |
+| :--- | :-------- | :----------- | :-------------------------------------------------- |
+| Yes  | No        | Add          | Generate the object and wire it to its parent       |
+| No   | Yes       | Delete       | Remove the object and unwire parent references      |
+| Yes  | Yes       | Match        | No action — content including children is identical |
+| Yes  | Yes       | Not matching | Fix non-matching parts                              |
 
 - **Add**: emit component files, update imports, routing, and parent templates.
 - **Modify**: apply in-place for simple changes (rename); delete+add for complex.

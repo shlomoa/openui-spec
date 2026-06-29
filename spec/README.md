@@ -354,11 +354,11 @@ rather than regenerating from scratch every time.
 
 ### Scenarios
 
-| JSON | Workspace | Scenario     | Details                                                                 |
-|:-----|:----------|:-------------|:------------------------------------------------------------------------|
-| Yes  | No        | Add          | Implement the object as a child of the current parent and wire it in    |
-| No   | Yes       | Delete       | Delete the object and the reference from parent                         |
-| Yes  | Yes       | Match        | Do nothing — the node content including children is identical           |
+| JSON | Workspace | Scenario     | Details                                                                                     |
+| :--- | :-------- | :----------- | :------------------------------------------------------------------------------------------ |
+| Yes  | No        | Add          | Implement the object as a child of the current parent and wire it in                        |
+| No   | Yes       | Delete       | Delete the object and the reference from parent                                             |
+| Yes  | Yes       | Match        | Do nothing — the node content including children is identical                               |
 | Yes  | Yes       | Not matching | Fix those non-matching parts (attribute added/removed/changed, child added/removed/changed) |
 
 ### Algorithm

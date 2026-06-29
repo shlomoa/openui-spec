@@ -16,6 +16,7 @@ Example is in generators\angular\generator\tests\fixtures\example_from_scratch
 ## Example — Incremental
 
 Example is in generators\angular\generator\tests\fixtures\example_incremental
+
 - input_app-file-select folder contains an existing workspace with `app-file-upload`
   component already present, plus the `app-file-select.example.json` specification.
 - output_app-file-select contains the expected workspace after incremental generation:
@@ -28,30 +29,33 @@ Example is in generators\angular\generator\tests\fixtures\example_incremental
 
 The generator supports four reconciliation scenarios:
 
-| JSON | Workspace | Scenario     | Test fixture                                                 |
-|:-----|:----------|:-------------|:-------------------------------------------------------------|
-| Yes  | No        | Add          | `example_from_scratch/` (workspace starts empty)             |
-| No   | Yes       | Delete       | (future: remove a component from JSON, verify removal)       |
-| Yes  | Yes       | Match        | (re-run on same input, verify no changes)                    |
-| Yes  | Yes       | Not matching | `example_incremental/` (workspace has existing content)      |
+| JSON | Workspace | Scenario     | Test fixture                                            |
+| :--- | :-------- | :----------- | :------------------------------------------------------ |
+| Yes  | No        | Add          | `example_from_scratch/` (workspace starts empty)        |
+| No   | Yes       | Delete       | (future: remove a component from JSON, verify removal)  |
+| Yes  | Yes       | Match        | (re-run on same input, verify no changes)               |
+| Yes  | Yes       | Not matching | `example_incremental/` (workspace has existing content) |
 
 ### Add scenario
+
 - The generator creates new component files and wires them to the parent.
 - Demonstrated by `example_from_scratch/`: empty workspace → full application.
 
 ### Incremental (Add to existing) scenario
+
 - The generator adds new component while preserving existing workspace content.
 - Demonstrated by `example_incremental/`: workspace with `app-file-upload` →
   workspace with both `app-file-upload` and `app-file-select`.
 
 ### Delete scenario (future)
+
 - Removing a node from the JSON specification causes the generator to remove
   the corresponding component files and unwire parent references.
 
 ### Match scenario (future)
+
 - Re-running the generator with an unchanged JSON specification produces no
   filesystem changes in the output workspace.
-
 
 ## Execution task list
 
