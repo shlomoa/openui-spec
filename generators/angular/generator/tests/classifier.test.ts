@@ -22,6 +22,14 @@ const INCREMENTAL_FIXTURE = path.join(
 );
 const SPEC_FILE = path.join(INCREMENTAL_FIXTURE, "app-file-select.example.json");
 const FULL_GENERATOR_FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "minimal-openui.json");
+const DIALOG_FIXTURE = path.join(
+  ANGULAR_GENERATOR_ROOT,
+  "tests",
+  "fixtures",
+  "dialog",
+  "input_dialog",
+  "dialog.example.json",
+);
 
 async function loadIndex(): Promise<ReturnType<typeof buildSpecManifestationIndex>> {
   const document = JSON.parse(await readFile(SPEC_FILE, "utf8")) as OpenUiDocument;
@@ -153,4 +161,50 @@ test("classifies every generated full-output page and application file", async (
   assert.ok(applicationFiles.includes("package.json"));
   assert.ok(applicationFiles.includes("src/app/app.routes.ts"));
   assert.ok(applicationFiles.includes("src/main.ts"));
+});
+
+test("classifies concrete dialog page and component files without scopeDocument", async () => {
+  const document = JSON.parse(await readFile(DIALOG_FIXTURE, "utf8")) as OpenUiDocument;
+  const index = buildSpecManifestationIndex(document);
+  const emittedFiles = await emitAngularFilesFromInput(DIALOG_FIXTURE);
+  const classifiedDialogFiles = new Set<string>();
+
+  for (const file of emittedFiles) {
+    const classification = classifyWorkspacePath(file.path, index);
+
+    if (/^src\/app\/pages\/dialog\/dialog\.page\.(ts|html|scss)$/.test(file.path)) {
+      assert.equal(classification.kind, "page", `Expected ${file.path} to classify as the concrete dialog page.`);
+      assert.equal(classification.nodeId, "confirmDialog");
+      assert.equal(classification.nodeType, "Dialog");
+      assert.equal(classification.route, "dialog");
+      assert.equal(classification.selector, "openui-dialog");
+      assert.equal(classification.sourceFile, undefined);
+      classifiedDialogFiles.add(file.path);
+      continue;
+    }
+
+    if (/^src\/components\/app-confirm-dialog\/app-confirm-dialog\.component\.(ts|html|scss)$/.test(file.path)) {
+      assert.equal(classification.kind, "component", `Expected ${file.path} to classify as the concrete dialog component.`);
+      assert.equal(classification.nodeId, "confirmDialog");
+      assert.equal(classification.nodeType, "Dialog");
+      assert.equal(classification.selector, "app-confirm-dialog");
+      assert.equal(classification.sourceFile, undefined);
+      classifiedDialogFiles.add(file.path);
+      continue;
+    }
+
+    assert.equal(classification.kind, "application", `Expected ${file.path} to classify as application-level output.`);
+  }
+
+  assert.deepEqual(
+    [...classifiedDialogFiles].sort(),
+    [
+      "src/app/pages/dialog/dialog.page.html",
+      "src/app/pages/dialog/dialog.page.scss",
+      "src/app/pages/dialog/dialog.page.ts",
+      "src/components/app-confirm-dialog/app-confirm-dialog.component.html",
+      "src/components/app-confirm-dialog/app-confirm-dialog.component.scss",
+      "src/components/app-confirm-dialog/app-confirm-dialog.component.ts",
+    ],
+  );
 });

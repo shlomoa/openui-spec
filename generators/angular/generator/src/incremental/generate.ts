@@ -12,7 +12,9 @@ import { readWorkspaceIndex } from "./workspace-index";
 
 /**
  * Emits the Angular project files for a validated OpenUI input document using
- * the scope-tree pipeline (load → validate → build IR → map → emit).
+ * the shared generation pipeline (load → validate → build IR → map → emit).
+ * Catalog scope-tree fixtures and concrete input examples both flow through
+ * this path after validation selects the appropriate input mode.
  */
 export async function emitAngularFilesFromInput(inputPath: string): Promise<GeneratedFile[]> {
   const input = await loadOpenUiDocument(inputPath);

@@ -27,6 +27,40 @@ const DIALOG_FIXTURE = path.join(
   "input_dialog",
   "dialog.example.json",
 );
+const REPRESENTATIVE_CONCRETE_FIXTURES = [
+  {
+    name: "charts",
+    route: "chart",
+    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "charts", "input_charts", "charts.example.json"),
+  },
+  {
+    name: "lists",
+    route: "list",
+    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "lists", "input_lists", "lists.example.json"),
+  },
+  {
+    name: "tables",
+    route: "table",
+    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "tables", "input_tables", "tables.example.json"),
+  },
+  {
+    name: "stepper",
+    route: "stepper",
+    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "stepper", "input_stepper", "stepper.example.json"),
+  },
+  {
+    name: "date/time pickers",
+    route: "mat-datetime-picker",
+    fixture: path.join(
+      ANGULAR_GENERATOR_ROOT,
+      "tests",
+      "fixtures",
+      "date_time_pickers",
+      "input_date_time_pickers",
+      "date_time_pickers.example.json",
+    ),
+  },
+] as const;
 const TEST_OUTPUT_ROOT = path.join(REPOSITORY_ROOT, "tmp");
 const TEST_OUTPUT_PREFIX = path.join(TEST_OUTPUT_ROOT, "openui-angular-generator-");
 
@@ -155,6 +189,29 @@ test("generates Angular Material dialog output from the concrete dialog fixture"
     await cleanupTestOutput(outDir);
   }
 });
+
+for (const fixtureCase of REPRESENTATIVE_CONCRETE_FIXTURES) {
+  test(`validates and generates the concrete ${fixtureCase.name} fixture`, async () => {
+    const fixture = JSON.parse(await readFile(fixtureCase.fixture, "utf8"));
+    const catalog = createCatalogIndex(JSON.parse(await readFile(CATALOG_FIXTURE, "utf8")));
+    assertNoScopeDocumentAttrs(fixture);
+    assert.doesNotThrow(() => validateOpenUiSpec(fixture, { catalog }));
+
+    const outDir = await createTestOutputDirectory();
+    try {
+      await run(["generate", "--input", fixtureCase.fixture, "--out", outDir]);
+
+      await assert.doesNotReject(
+        readFile(path.join(outDir, "src", "app", "pages", fixtureCase.route, `${fixtureCase.route}.page.ts`), "utf8"),
+        `${fixtureCase.name} should generate a concrete routed page.`,
+      );
+      const routes = await readFile(path.join(outDir, "src/app/app.routes.ts"), "utf8");
+      assert.match(routes, new RegExp(`path: '${fixtureCase.route}'`));
+    } finally {
+      await cleanupTestOutput(outDir);
+    }
+  });
+}
 
 test("builds the UI model from canonical scope-tree OpenUI nodes", async () => {
   const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));

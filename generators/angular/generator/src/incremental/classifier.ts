@@ -165,7 +165,11 @@ function toComponentManifestation(node: OpenUiElement): SpecManifestation | unde
 }
 
 function collectPageManifestations(document: OpenUiDocument): SpecManifestation[] {
-  return [...collectScopedNodePageManifestations(document), ...collectExplicitPageScopeManifestations(document)];
+  return [
+    ...collectScopedNodePageManifestations(document),
+    ...collectExplicitPageScopeManifestations(document),
+    ...collectConcreteInputPageManifestations(document),
+  ];
 }
 
 function collectScopedNodePageManifestations(document: OpenUiDocument): SpecManifestation[] {
@@ -198,6 +202,41 @@ function collectExplicitPageScopeManifestations(document: OpenUiDocument): SpecM
   });
 }
 
+function collectConcreteInputPageManifestations(document: OpenUiDocument): SpecManifestation[] {
+  if (extractOpenUiScopeNodes(document).length > 0 || findElementsByType(document, "ComponentTemplate").length > 0) {
+    return [];
+  }
+
+  const firstConcreteChild = document.children?.[0];
+  if (!firstConcreteChild) {
+    return [];
+  }
+
+  const route = normalizeRoute(lowerFirst(firstConcreteChild.type));
+  return [
+    {
+      kind: "page",
+      nodeId: firstConcreteChild.id,
+      nodeType: firstConcreteChild.type,
+      selector: `openui-${route}`,
+      route,
+      directory: normalizeWorkspacePath(pageDirectory(route)),
+    },
+    ...findElementsByType(document, "Dialog").map(toConcreteDialogComponentManifestation),
+  ];
+}
+
+function toConcreteDialogComponentManifestation(node: OpenUiElement): SpecManifestation {
+  const selector = `app-${normalizeRoute(node.id)}`;
+  return {
+    kind: "component",
+    nodeId: node.id,
+    nodeType: node.type,
+    selector,
+    directory: `src/components/${selector}`,
+  };
+}
+
 function matchSelectorFromComponentFile(
   normalizedPath: string,
   index: SpecManifestationIndex,
@@ -216,4 +255,8 @@ function isApplicationArtifact(normalizedPath: string, directory: string): boole
 
 function normalizeWorkspacePath(value: string): string {
   return value.replace(/\\/g, "/").replace(/\/+$/, "");
+}
+
+function lowerFirst(value: string): string {
+  return value.charAt(0).toLowerCase() + value.slice(1);
 }

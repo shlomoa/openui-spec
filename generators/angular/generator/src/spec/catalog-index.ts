@@ -36,9 +36,24 @@ const CONCRETE_EXAMPLE_ROOT_TYPES = new Set([
   "WidgetExample",
 ]);
 
+const CONCRETE_FIXTURE_TYPE_ALIASES: Readonly<Record<string, string>> = {
+  Column: "table",
+  DateTimePicker: "DateTimePicker",
+  EmptyState: "html",
+  List: "ul",
+  ListItem: "li",
+  LoadMore: "button",
+  Pagination: "table",
+  Step: "step",
+  "mat-datetime-picker": "DateTimePicker",
+};
+
+const NATIVE_ALIAS_TARGETS = new Set(["button"]);
+
 export function createCatalogIndex(catalog: OpenUiDocument): OpenUiCatalogIndex {
   const index = new OpenUiCatalogIndex();
   visitCatalogNode(catalog, "root", index);
+  addConcreteFixtureAliases(index);
   return index;
 }
 
@@ -71,6 +86,17 @@ function aliasFromId(id: string): string | undefined {
   }
 
   return id.charAt(0).toUpperCase() + id.slice(1);
+}
+
+function addConcreteFixtureAliases(index: OpenUiCatalogIndex): void {
+  for (const [alias, catalogType] of Object.entries(CONCRETE_FIXTURE_TYPE_ALIASES)) {
+    const entries = index.entriesForType(catalogType);
+    if (entries.length > 0 && !index.hasType(alias)) {
+      entries.forEach((entry) => index.add(alias, entry));
+    } else if (NATIVE_ALIAS_TARGETS.has(catalogType) && !index.hasType(alias)) {
+      index.add(alias, { id: alias, type: catalogType, path: `native:${catalogType}` });
+    }
+  }
 }
 
 async function findUp(fileName: string, anchorPath: string): Promise<string> {
