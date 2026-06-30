@@ -503,6 +503,101 @@ test("complex modification — changing a child attribute rewrites only affected
   }
 });
 
+test("validation failure is atomic — invalid root leaves existing workspace untouched", async () => {
+  const tempRoot = await createTestOutputDirectory();
+  try {
+    const outDir = path.join(tempRoot, "workspace");
+    const validInput = await writeJsonFile(
+      path.join(tempRoot, "inputs", "application-routing-navigation.json"),
+      await applicationOnlyInput(["routing", "navigation"]),
+    );
+    const invalidInput = await writeJsonFile(path.join(tempRoot, "inputs", "no-root.json"), {
+      version: "0.0.1",
+      id: "notRoot",
+      type: "html",
+      children: [],
+    });
+
+    await generateIncrementally(validInput, outDir);
+    const initialEmittedPaths = (await emitAngularFilesFromInput(validInput)).map((file) => file.path).sort();
+    const workspaceBefore = new Map(
+      await Promise.all(
+        initialEmittedPaths.map(async (relativePath) => [
+          relativePath,
+          {
+            content: await readFile(path.join(outDir, relativePath), "utf8"),
+            mtime: await fileModifiedTime(path.join(outDir, relativePath)),
+          },
+        ] as const),
+      ),
+    );
+
+    await assert.rejects(
+      generateIncrementally(invalidInput, outDir),
+      /root\.id: Root id must be exactly "root"\./,
+    );
+
+    for (const relativePath of initialEmittedPaths) {
+      const before = workspaceBefore.get(relativePath);
+      assert.ok(before, `Expected ${relativePath} in the pre-failure workspace snapshot.`);
+      assert.equal(await readFile(path.join(outDir, relativePath), "utf8"), before.content);
+      assert.equal(
+        await fileModifiedTime(path.join(outDir, relativePath)),
+        before.mtime,
+        `Validation failure must not rewrite ${relativePath}.`,
+      );
+    }
+  } finally {
+    await cleanupTestOutput(tempRoot);
+  }
+});
+
+test("workspace indexing ignores non-contract directories during incremental generation", async () => {
+  const outDir = await createTestOutputDirectory();
+  try {
+    const ignoredSentinels = [
+      "node_modules/example-package/index.js",
+      "dist/browser/main.js",
+      ".git/HEAD",
+      ".angular/cache/build-cache.bin",
+    ];
+    for (const relativePath of ignoredSentinels) {
+      const absolutePath = path.join(outDir, relativePath);
+      await mkdir(path.dirname(absolutePath), { recursive: true });
+      await writeFile(absolutePath, `ignored workspace artifact: ${relativePath}\n`, "utf8");
+    }
+
+    const seededWorkspace = await readWorkspaceIndex(outDir);
+    assert.equal(isEmptyWorkspace(seededWorkspace), true, "Ignored directories must not make the workspace non-empty.");
+    for (const ignoredPath of ignoredSentinels) {
+      assert.equal(seededWorkspace.files.has(ignoredPath), false, `Expected ${ignoredPath} to be ignored by the index.`);
+    }
+
+    const emittedPaths = (await emitAngularFilesFromInput(FIXTURE)).map((file) => file.path).sort();
+    const generatedResult = await generateIncrementally(FIXTURE, outDir);
+
+    assert.deepEqual([...generatedResult.added].sort(), emittedPaths);
+    assert.equal(generatedResult.modified.length, 0);
+    assert.equal(generatedResult.deleted.length, 0);
+    assert.equal(generatedResult.matched.length, 0);
+
+    const noOpResult = await generateIncrementally(FIXTURE, outDir);
+    assert.equal(noOpResult.added.length, 0);
+    assert.equal(noOpResult.modified.length, 0);
+    assert.equal(noOpResult.deleted.length, 0);
+    assert.deepEqual([...noOpResult.matched].sort(), emittedPaths);
+
+    for (const ignoredPath of ignoredSentinels) {
+      const ignoredContent = await readFile(path.join(outDir, ignoredPath), "utf8");
+      assert.equal(ignoredContent, `ignored workspace artifact: ${ignoredPath}\n`);
+      assert.equal(generatedResult.deleted.includes(ignoredPath), false, `Initial generation must not delete ${ignoredPath}.`);
+      assert.equal(noOpResult.deleted.includes(ignoredPath), false, `No-op generation must not delete ${ignoredPath}.`);
+    }
+  } finally {
+    await cleanupTestOutput(outDir);
+  }
+});
+
 test("deletes workspace files that the specification no longer emits", async () => {
   const outDir = await createTestOutputDirectory();
   try {

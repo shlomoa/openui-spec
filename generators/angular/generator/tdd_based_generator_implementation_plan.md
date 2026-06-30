@@ -60,17 +60,19 @@ Recommended test cases:
    - Expect unaffected siblings matched and timestamps unchanged.
    - Covered by `tests/incremental.test.ts`: `complex modification — changing a child attribute rewrites only affected generated content`.
 
-1.8. **Validation failure is atomic**
+1.8. ✅ **Validation failure is atomic**
    - Generate valid workspace.
    - Run with invalid JSON/no root.
    - Expect validation error.
    - Assert existing workspace is unchanged.
    - This protects the “Having no root is invalid” issue requirement.
+   - Covered by `tests/incremental.test.ts`: `validation failure is atomic — invalid root leaves existing workspace untouched`.
 
-1.9. **Workspace indexing ignores non-contract directories**
+1.9. ✅ **Workspace indexing ignores non-contract directories**
    - Seed `node_modules`, `dist`, `.git`, `.angular`.
    - Generate incrementally.
    - Assert those directories are neither deleted nor considered part of the plan.
+   - Covered by `tests/incremental.test.ts`: `workspace indexing ignores non-contract directories during incremental generation`.
 
 1.10. **Comparator/reconciler coverage for full output**
    - Build the desired emitted-file set for an input JSON.
