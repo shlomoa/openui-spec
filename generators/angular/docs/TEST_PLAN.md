@@ -142,3 +142,21 @@ generators/angular/generator/tests/fixtures/
   changed.
 - **Unaffected content preserved**: files that already match the desired output
   remain byte-identical and are not rewritten.
+
+### Specification-driven validation matrix
+
+The reconciler is the layer that compares each spec node against its
+manifestation in the workspace, so the per-scenario validation cases below are
+exercised in `tests/reconcile.test.ts` by varying the JSON specification itself
+between reconciliations rather than by mutating files on disk. Each case proves
+the planner reaches the documented Add / Delete / Modify / Match decision for a
+genuine specification change.
+
+| Category     | Specification change                                | Expected plan                                                                       | Test                                                                          |
+| :----------- | :-------------------------------------------------- | :---------------------------------------------------------------------------------- | :---------------------------------------------------------------------------- |
+| Addition     | Empty workspace, full specification                 | Every emitted file is an Add                                                         | `an empty workspace yields an all-add plan (generation from scratch)`         |
+| Addition     | Workspace missing a child the specification declares | The new child is added; the parent that references it is rewired (Modify)           | `reconciles incremental workspace: adds new component, rewires and matches the parent` |
+| Removal      | Specification is empty                              | Every previously generated file is a Delete                                         | `removal — an empty JSON deletes every previously generated component`        |
+| Removal      | One child removed from the specification             | The dropped child's files are Deletes; the parent is rewired to drop the reference  | `removal — dropping one child from the JSON deletes it and rewires the parent` |
+| Modification | Simple child change (selector/name only)            | The renamed child is Added under the new name and the old name's files are Deletes  | `modification — a simple child rename is reconciled as delete-old plus add-new` |
+| Modification | Complex child change (a descendant changes type)     | Only the affected file is a Modify; unrelated siblings stay Match                   | `modification — a complex child type change rewrites only the affected file`   |
