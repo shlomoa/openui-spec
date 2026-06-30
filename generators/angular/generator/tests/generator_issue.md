@@ -1,233 +1,170 @@
-## Artifact-role source of truth
-
-The artifact-role contract must remain defined once in
-[`spec/README.md`](../../../../spec/README.md), especially the section
-**Specification artifacts: grammar vs. catalog**.
-
-That source of truth defines the roles as:
-
-- `spec/openui.schema.json` — the grammar for OpenUI document shape.
-- `openui.json` — the generated catalog/vocabulary of OpenUI objects, including
-  prose traceability such as `attrs.scopeDocument`.
-- `input.json` — a concrete UI/app document that uses catalog vocabulary and is
-  generated into a target workspace.
-
-`docs/REQUIREMENTS.md` and `generators/angular/docs/GENERATION.md` should both
-reference this contract. They should document the required behavior and
-validation expectations, not normalize the current implementation limitation as
-an alternate generator contract.
-
-## Required generator contract
-
-The Angular generator requirement is to materialize a concrete OpenUI UI/app
-description into an existing Angular workspace.
-
-For generator input, that means:
-
-- accept concrete `input.json` documents that satisfy the OpenUI grammar,
-- interpret node `type`, `attrs`, and `children` against the catalog in
-  `openui.json`,
-- generate Angular Material output that implements the concrete app description,
-- reconcile that output incrementally with the target Angular workspace, and
-- avoid requiring catalog-only traceability fields on concrete app nodes.
-
-PR #109 populated the dialog output fixture and documented a generator run in
-`tests/fixtures/dialog/output_dialog/output_generation.md`.
-
-The dialog fixture JSON is a concrete app/example document:
-
-```text
-type: "WidgetExample"
-children: Dialog, DialogTitle, DialogContent, DialogActions, button
-```
-
-That shape is consistent with the required `input.json` role from the
-artifact-role SSOT: it describes the app/widget instance to build using catalog
-vocabulary.
-
-Therefore the generator should be able to validate, interpret, and generate the
-dialog fixture without requiring `attrs.scopeDocument` on the concrete app nodes.
-
-## Current non-compliance
-
-The current Angular generator implementation does not yet follow that complete
-`input.json` flow. It still implements a scope-tree/catalog-oriented slice:
-
-- `validateOpenUiSpec()` calls `extractOpenUiScopeNodes()`.
-- `extractOpenUiScopeNodes()` treats only nodes with `attrs.scopeDocument` as
-  generator-relevant scoped nodes.
-- `buildUiModel()` builds pages from those extracted scoped nodes.
-- The Angular mapper/emitter then produces routed page output from that page IR.
-
-As a result, when `dialog.example.json` is used as generator input, validation
-fails with:
-
-```text
-root.children: Expected at least one scoped OpenUI node with attrs.scopeDocument.
-```
-
-That diagnostic describes the current implementation expectation, not the
-required `input.json` contract.
-
-## Required fix
-
-The generator must remove the stale input-model assumption that scoped catalog
-nodes with `attrs.scopeDocument` are the only effective generation input.
-
-In the SSOT model, `attrs.scopeDocument` is catalog traceability metadata for
-`openui.json`, not a field that concrete app/example nodes must carry.
-
-Therefore the fix is not to add `attrs.scopeDocument` to `dialog.example.json`.
-Doing so would blur the boundary between:
-
-- catalog entries that define available objects and link back to prose, and
-- concrete app documents that request an implementation of those objects.
-
-The required generator behavior is:
-
-> The Angular generator must consume concrete `input.json` app/example documents
-> such as the dialog `WidgetExample`, validate them against the grammar and
-> catalog, and generate the corresponding Angular Material workspace changes.
-
-PR #109 exposed this gap because the expected Angular Material output exists and
-the app-level validation tests describe the desired behavior, but the generator
-did not produce that output.
-
-The same requirement likely applies to other concrete `WidgetExample` fixtures
-too, including charts, lists, tables, stepper, and date/time pickers.
-
-## Documents using the term scope-tree behavior
-
-I found these source Markdown documents describing or referencing the scope-tree behavior. I’m excluding generated site output and JSON data files like openui.json / minimal-openui.json.
-
-| File                                       | What it describes                                                                                                                                                                                                                                                    | Keep / fix?                                                                                                                         |
-| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| README.md                                  | Legitimate SSOT description of openui.json as the generated catalog tree with scope nodes carrying `attrs.scopeDocument`.                                                                                                                                            | **Keep.** This is correct for catalog behavior.                                                                                     |
-| scope.md                                   | Explains generated openui.json scope node + instance representation. Scope nodes carry `scopeDocument`; instance nodes do not.                                                                                                                                       | **Keep.** Correct catalog-generation detail.                                                                                        |
-| template.scope.md                          | Explains that `scopeDocument` is derived from the source file path, not authored in each scope file.                                                                                                                                                                 | **Keep.** Correct source-to-catalog rule.                                                                                           |
-| REQUIREMENTS.md                            | Says generated catalog links back to prose through `attrs.scopeDocument`.                                                                                                                                                                                            | **Keep.** Correct, and already referential to README.md.                                                                            |
-| GENERATION.md                              | Describes current generator consuming minimal-openui.json scope-tree shape; mentions catalog fixtures must use scope-tree shape; says openui-sections.ts extracts scoped nodes with `attrs.scopeDocument`; incremental classifier maps scoped nodes to routed pages. | **Fix.** This is the main place where implementation status can be mistaken for generator contract.                                 |
-| TEST_PLAN.md                               | Describes generator tests around canonical scope-tree OpenUI nodes and minimal-openui.json.                                                                                                                                                                          | **Fix / reframe.** Should say these are legacy/current coverage or catalog-slice coverage, not the full required `input.json` path. |
-| tdd_based_generator_implementation_plan.md | Mentions validating non-empty trees with no scoped nodes and classifying routed pages from scoped OpenUI nodes with `attrs.scopeDocument`.                                                                                                                           | **Fix or archive.** This is stale planning language if it implies current requirements.                                             |
-| output_generation.md                       | Documents PR #109 failure and says generator consumes “canonical scope-tree grammar” while widget grammar is not implemented.                                                                                                                                        | **Fix wording.** Good as a failure record, but should call it stale implementation/non-compliance, not a second grammar contract.   |
-| generator_issue.md                         | The working analysis document we updated; describes scope-tree behavior as current non-compliance.                                                                                                                                                                   | **Keep as temporary analysis**, or later replace with actual issue/implementation docs.                                             |
-| spec-json-generator-developer.agent.md     | Mentions keeping scope IDs aligned with the scope tree described in README.md.                                                                                                                                                                                       | **Keep.** It concerns spec JSON/catalog generation, not Angular generator input.                                                    |
-
-### The main problematic documents
-
-If the goal is to remove documentation inconsistency, prioritize these:
-
-1. GENERATION.md
-2. TEST_PLAN.md
-3. tdd_based_generator_implementation_plan.md
-4. output_generation.md
-
-Those are the docs most likely to make the scope-tree implementation look like the generator contract.
-
-### Legitimate scope-tree docs
-
-These should **not** be removed, because they describe the catalog model correctly:
-
-- README.md
-- scope.md
-- template.scope.md
-- REQUIREMENTS.md
-
-The distinction is:
-
-- **Correct:** scope-tree / `attrs.scopeDocument` describes openui.json catalog traceability.
-- **Incorrect:** scope-tree / `attrs.scopeDocument` is required for concrete generator `input.json`.
-
-### Also relevant non-doc references
-
-Not Markdown docs, but they reinforce the same current behavior:
-
-- validate-spec.ts
-  - Emits `Expected at least one scoped OpenUI node with attrs.scopeDocument.`
-- openui-sections.ts
-  - Extracts only nodes with `scopeDocument`.
-- generate.ts
-  - Has a comment referring to the `scope-tree pipeline`.
-- generator.test.ts
-  - Test names mention “canonical scope-tree OpenUI”.
-
-Those will need code/test updates when the generator is fixed.
-
-## Documentation consistency fix plan
-
-Fix the inconsistency by editing only the documents that currently make the
-scope-tree implementation look like the generator input contract. Do not create
-a new SSOT; all artifact-role wording must point back to
-`spec/README.md` → **Specification artifacts: grammar vs. catalog**.
-
-### 1. Rewrite `generators/angular/docs/GENERATION.md`
-
-Make `GENERATION.md` describe the required generator contract and architecture,
-not the stale scope-tree implementation as a contract.
-
-Required edits:
-
-- Replace wording that says or implies the generator input is the scope-tree
-  fixture shape.
-- Add/keep a single reference to `spec/README.md` for artifact roles instead of
-  restating those roles in Angular-specific language.
-- State the required generator flow:
-  `input.json` → grammar validation → catalog validation → UI IR → Angular model
-  → generated files → incremental reconciliation.
-- State that catalog/scope-tree fixtures are catalog fixtures only; they are not
-  the generator input contract.
-- State acceptance criteria: concrete fixtures such as `dialog.example.json`
-  must generate and reconcile without adding `attrs.scopeDocument` to concrete
-  app nodes.
-
-Required wording principle:
-
-- Good: “Catalog fixtures use scope nodes with `attrs.scopeDocument` as defined
-  by `spec/README.md`.”
-- Bad: “Generator input must contain scoped nodes with `attrs.scopeDocument`.”
-
-### 2. Rewrite `generators/angular/docs/TEST_PLAN.md`
-
-Make the test plan distinguish existing catalog/scope-tree regression coverage
-from required concrete `input.json` acceptance coverage.
-
-Required edits:
-
-- Rename or reframe the `minimal-openui.json` tests as catalog/scope-tree
-  regression coverage.
-- Add a concrete input acceptance-test category for fixtures such as
-  `dialog.example.json`.
-- State that scope-tree tests do not define the generator input contract.
-- State that concrete `input.json` fixtures must not need `attrs.scopeDocument`
-  on app nodes.
-
-### 3. Verify documentation consistency
-
-After the edits, verify the documentation with search/review:
-
-- Only `spec/README.md` defines the artifact roles.
-- `docs/REQUIREMENTS.md` references the SSOT instead of redefining it.
-- `generators/angular/docs/GENERATION.md` references the SSOT for the required
-  input contract.
-- No Angular generator doc states or implies that concrete `input.json` nodes
-  must carry `attrs.scopeDocument`.
-- Scope-tree language appears only in catalog, fixture, legacy implementation,
-  or regression-test contexts.
-- `output_generation.md` still preserves the PR #109 generator command and
-  failure message as evidence; do not edit it only to hide the failure.
-
-Suggested verification searches:
-
-- Search Angular docs for `scope-tree`, `scoped OpenUI`, and `scopeDocument`.
-- Search for the phrase `Generator input must contain scoped` or equivalent
-  wording.
-- Search for `dialog.example.json` references and confirm they describe a
-  concrete `input.json` acceptance fixture.
-
-### 4. Validate the documentation edit
-
-Run validation after the edits:
-
-- `git diff --check`
-- repository Markdown/link checks if configured
-- repository pre-commit checks when practical
+## Actionable generator fix plan
+
+1. **Add executable input-contract assertions for concrete fixtures.**
+
+   - Edit `tests/generator.test.ts` or a shared test helper used by that file.
+   - Add a recursive assertion helper that walks a concrete fixture and fails if
+     any app/example node contains `attrs.scopeDocument`.
+   - Apply the helper to
+     `tests/fixtures/dialog/input_dialog/dialog.example.json` before adding the
+     dialog validation/generation acceptance tests.
+   - Assert that the fixture root is a concrete app/example document, such as
+     `WidgetExample`, rather than an `openui.json` catalog scope node.
+   - Document the assertion source with a short test comment pointing to
+     [`spec/README.md`](../../../../spec/README.md), section
+     **Specification artifacts: grammar vs. catalog**.
+   - Expected result: attempts to “fix” the dialog failure by adding
+     `attrs.scopeDocument` to concrete app nodes fail immediately in tests.
+
+2. **Add a failing concrete-input acceptance test for the dialog fixture.**
+
+   - Edit `tests/generator.test.ts`.
+   - Add a fixture constant for
+     `tests/fixtures/dialog/input_dialog/dialog.example.json`.
+   - Add a test proving `validateOpenUiSpec()` accepts that fixture without
+     `attrs.scopeDocument` on `WidgetExample`, `Dialog`, `DialogTitle`,
+     `DialogContent`, `DialogActions`, or `button` nodes.
+   - Add a generation test using `run(["generate", "--input", DIALOG_FIXTURE,
+"--out", outDir])`.
+   - Assert the generated output contains the expected dialog Angular Material
+     surface, including `MatDialogModule` / dialog markup or whichever generated
+     files are already represented in
+     `tests/fixtures/dialog/output_dialog/`.
+   - Expected initial result: the test fails with the current diagnostic:
+
+     ```text
+     root.children: Expected at least one scoped OpenUI node with attrs.scopeDocument.
+     ```
+
+3. **Split structural validation from catalog/scope-tree validation.**
+
+   - Edit `src/validation/validate-spec.ts`.
+   - Keep `validateElement()` as the generic OpenUI grammar/shape validator for
+     both catalog and concrete inputs.
+   - Stop calling `validateScopeCoverage()` unconditionally from
+     `validateOpenUiSpec()`.
+   - Either:
+     - introduce `validateOpenUiCatalog()` for catalog fixtures that must contain
+       scoped nodes with unique `attrs.scopeDocument`, or
+     - gate `validateScopeCoverage()` behind an explicit validation mode such as
+       `"catalog"`.
+   - Update existing catalog tests to call the catalog validation path where
+     they intentionally assert duplicate or missing `attrs.scopeDocument`.
+   - Concrete-input validation must allow non-empty documents with no scoped
+     nodes when the nodes are valid OpenUI elements.
+
+4. **Introduce catalog lookup for concrete app nodes.**
+
+   - Add a small catalog index module near `src/spec/`, for example
+     `src/spec/catalog-index.ts`.
+   - Index the generated catalog by OpenUI `type` and any stable aliases needed
+     by current fixtures.
+   - Use the repository root `openui.json` as the default catalog source for CLI
+     generation unless a future option supplies a different catalog path.
+   - Validate concrete input nodes against this catalog after grammar validation:
+     - known OpenUI component/control/container/widget types should resolve,
+     - native HTML tags such as `button` should continue to be allowed, and
+     - unknown non-native types should produce diagnostics that identify the
+       failing node path and type.
+
+5. **Replace scope-only IR construction with concrete-input IR construction.**
+
+   - Edit `src/ir/build-ir.ts`.
+   - Keep the existing scope-node path available for catalog regression tests,
+     but do not make it the only generation path.
+   - Add a concrete-input builder that turns a concrete root such as
+     `WidgetExample` into at least one `UiPage`.
+   - For the dialog fixture, derive a deterministic page model from the concrete
+     document:
+     - page id from the root or fixture intent, for example `dialog`,
+     - route `dialog`,
+     - title from `root.attrs.title` after normalizing quotes, and
+     - features/component hints from the resolved catalog entries for `Dialog`,
+       `DialogTitle`, `DialogContent`, `DialogActions`, and `button`.
+   - Preserve existing catalog-driven page generation for
+     `tests/fixtures/minimal-openui.json` so current catalog regression coverage
+     remains useful.
+
+6. **Teach the Angular mapper/emitter to materialize concrete dialog nodes.**
+
+   - Edit `src/targets/angular/map-to-angular.ts` and related emitters only as
+     needed.
+   - Map concrete `Dialog` trees to Angular Material dialog primitives instead
+     of relying only on scope-derived feature strings.
+   - Ensure generated TypeScript imports the required Angular Material modules
+     and any Angular primitives needed by the emitted dialog template.
+   - Ensure generated HTML preserves the concrete fixture semantics:
+     - title text `Delete item?`,
+     - content text `This action cannot be undone.`,
+     - cancel and delete actions, and
+     - event/property bindings represented in fixture attrs where supported.
+
+7. **Update incremental ownership/classification for concrete inputs.**
+
+   - Edit `src/incremental/classifier.ts`.
+   - Keep catalog scoped-node page manifestations for catalog regression tests.
+   - Add concrete-input page/component manifestations that do not depend on
+     `attrs.scopeDocument`.
+   - Ensure `buildSpecManifestationIndex(dialogFixture)` classifies emitted
+     dialog files as `page` or `component` with `nodeId` / `nodeType` from the
+     concrete app node that owns them.
+   - Update comments in `src/incremental/generate.ts` so the pipeline is no
+     longer described as scope-tree-only.
+
+8. **Broaden concrete fixture coverage after dialog passes.**
+
+   - Add parameterized acceptance tests for representative existing concrete
+     fixtures under `tests/fixtures/*/input_*/*.example.json`.
+   - Start with fixtures that were called out by the original failure analysis:
+     - charts,
+     - lists,
+     - tables,
+     - stepper,
+     - date/time pickers.
+   - Each fixture must validate and generate without adding
+     `attrs.scopeDocument` to concrete app/example nodes.
+   - Keep failures actionable by asserting which fixture failed and whether the
+     failure happened during grammar validation, catalog resolution, IR building,
+     Angular mapping, or reconciliation.
+
+9. **Preserve catalog regression tests separately.**
+
+   - Keep `tests/fixtures/minimal-openui.json` tests, but name them as catalog or
+     scope-tree regression coverage.
+   - Ensure duplicate `attrs.scopeDocument` detection still runs against catalog
+     fixtures.
+   - Do not let catalog tests redefine the concrete `input.json` contract.
+
+10. **Refresh expected dialog output only after the generator produces it.**
+
+    - Do not hide the recorded failure in
+      `tests/fixtures/dialog/output_dialog/output_generation.md` while the
+      generator is still failing.
+    - After the dialog acceptance test passes, regenerate the dialog output
+      fixture from the generator.
+    - Compare generated files with `tests/fixtures/dialog/output_dialog/` and
+      update expected output only for real generator output changes.
+    - Replace the failure note with a successful command transcript only when
+      the command actually succeeds.
+
+11. **Run validation gates after each implementation slice.**
+
+    - From `generators/angular/generator`, run the generator test suite with
+      `npm test`.
+    - From the repository root, run `git diff --check`.
+    - From the repository root, run `.\.venv\Scripts\pre-commit run --all-files`.
+    - If generated examples are touched, run the generated-examples validation
+      documented in `generators/angular/docs/TEST_PLAN.md`.
+
+12. **Completion criteria.**
+
+    - `dialog.example.json` validates as a concrete `input.json` document with no
+      `attrs.scopeDocument` added to app/example nodes.
+    - The dialog fixture generates Angular Material output matching the expected
+      dialog workspace fixture.
+    - Existing `minimal-openui.json` catalog/scope-tree regression tests still
+      pass.
+    - Incremental reconciliation classifies generated dialog artifacts without
+      requiring catalog traceability metadata on concrete input nodes.
+    - Documentation continues to point artifact-role definitions back to
+      `spec/README.md` instead of creating another generator-specific contract.
