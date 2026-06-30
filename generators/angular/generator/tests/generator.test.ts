@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdir, mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile } from "node:fs/promises";
 import path from "node:path";
 import { test } from "node:test";
 
@@ -9,6 +9,7 @@ import { run } from "../src/cli/main";
 import type { OpenUiElement } from "../src/spec/openui-spec.types";
 import { SpecValidationError } from "../src/validation/diagnostics";
 import { validateOpenUiSpec } from "../src/validation/validate-spec";
+import { cleanupTestOutput } from "./test-output";
 
 const ANGULAR_GENERATOR_ROOT =
   path.basename(path.dirname(__dirname)) === "dist"
@@ -157,7 +158,7 @@ test("generates an Angular Material standalone app from canonical scope-tree Ope
     assert.match(i18nService, /activeLocale: 'en'/);
     assert.match(i18nService, /messageBundles: \{ en: \{\} \}/);
   } finally {
-    await rm(outDir, { recursive: true, force: true });
+    await cleanupTestOutput(outDir);
   }
 });
 
@@ -211,7 +212,7 @@ test("generates scope-specific Angular Material details from the canonical tree"
     assert.match(controlsTemplate, /aria-label="Component metadata contract"/);
     assert.match(controlsTemplate, /Native: Browser and framework-provided native controls/);
   } finally {
-    await rm(outDir, { recursive: true, force: true });
+    await cleanupTestOutput(outDir);
   }
 });
 

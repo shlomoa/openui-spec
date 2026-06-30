@@ -47,6 +47,13 @@ Test fixtures demonstrating both modes are committed under `tests/fixtures/`:
   that already contains `app-file-upload`.
 - `example_backup/` — baseline workspace state before any generation.
 
+### Keeping generated test output
+
+Generator tests normally write temporary output under the repository-local `tmp/`
+directory and remove it in each test's cleanup step. To inspect generated files
+after a run, set `OPENUI_KEEP_TEST_OUTPUT=1` before running `npm run test`. The
+test output logs each preserved directory path.
+
 ## Dashboard reference implementation pattern
 
 The Angular Material Dashboard schematic is a useful reference pattern for the

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { test } from "node:test";
 
@@ -8,6 +8,7 @@ import { reconcileGeneratedFiles } from "../src/incremental/reconcile";
 import { readWorkspaceIndex } from "../src/incremental/workspace-index";
 import type { GeneratedFile } from "../src/writers/file-writer";
 import type { OpenUiDocument, OpenUiElement } from "../src/spec/openui-spec.types";
+import { cleanupTestOutput } from "./test-output";
 
 const ANGULAR_GENERATOR_ROOT =
   path.basename(path.dirname(__dirname)) === "dist"
@@ -146,7 +147,7 @@ test("an empty workspace yields an all-add plan (generation from scratch)", asyn
     assert.ok(plan.reconciled.every((entry) => entry.action === "add"));
     assert.equal(plan.toWrite.length, files.length);
   } finally {
-    await rm(emptyWorkspace, { recursive: true, force: true });
+    await cleanupTestOutput(emptyWorkspace);
   }
 });
 
@@ -173,7 +174,7 @@ test("a changed existing file is reconciled as modify", async () => {
     assert.equal(actionFor(plan, target), "modify");
     assert.ok(plan.toWrite.some((file) => file.path === target));
   } finally {
-    await rm(workspace, { recursive: true, force: true });
+    await cleanupTestOutput(workspace);
   }
 });
 
@@ -204,7 +205,7 @@ test("removal — an empty JSON deletes every previously generated component", a
     const selectDeletion = deletionFor(plan, componentFile("app-file-select", "ts"));
     assert.equal(selectDeletion?.classification.kind, "unknown");
   } finally {
-    await rm(workspace, { recursive: true, force: true });
+    await cleanupTestOutput(workspace);
   }
 });
 
@@ -250,7 +251,7 @@ test("removal — dropping one child from the JSON deletes it and rewires the pa
     const writtenParent = plan.toWrite.find((file) => file.path === componentFile("app-file-upload", "ts"));
     assert.ok(writtenParent && !writtenParent.content.includes("AppFileSelectComponent"));
   } finally {
-    await rm(workspace, { recursive: true, force: true });
+    await cleanupTestOutput(workspace);
   }
 });
 
@@ -299,7 +300,7 @@ test("modification — a simple child rename is reconciled as delete-old plus ad
       assert.ok(deletionFor(plan, oldFile), `Expected ${oldFile} to be deleted after the rename.`);
     }
   } finally {
-    await rm(workspace, { recursive: true, force: true });
+    await cleanupTestOutput(workspace);
   }
 });
 
@@ -335,6 +336,6 @@ test("modification — a complex child type change rewrites only the affected fi
     );
     assert.equal(plan.toDelete.length, 0);
   } finally {
-    await rm(workspace, { recursive: true, force: true });
+    await cleanupTestOutput(workspace);
   }
 });

@@ -93,6 +93,9 @@ contract test if it is not.
   the git-ignored repository `tmp/`, never to `%TEMP%`, `/tmp`, or
   `os.tmpdir()`. This keeps generated artifacts out of the working tree and off
   the OS temp paths the repository instructions disallow.
+- **Inspectable generated output.** Set `OPENUI_KEEP_TEST_OUTPUT=1` before
+  running generator tests to preserve temporary output under `tmp/`; the test
+  run logs each kept directory path.
 - **Golden source is authoritative.** Generator tests consume derived artifacts
   and must not redefine the prose spec, scopes, schema, or catalog contract.
 - **Committed fixtures are expectations, not generated examples.** Fixture trees
