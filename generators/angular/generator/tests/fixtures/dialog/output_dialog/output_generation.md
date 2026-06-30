@@ -47,30 +47,48 @@ example JSON. They are wired with the same Angular unit-test setup used by the
 
 ## 5.3 Run the generator
 
-Run the generator against the example JSON, writing into this output workspace:
+Run the generator against the concrete input example JSON, writing into a clean
+temporary workspace before copying generator-owned fixture artifacts:
 
 ```bash
 cd generators/angular/generator
 npm run build
 node dist/src/cli/main.js generate \
-  --input tests/fixtures/dialog/output_dialog/dialog.example.json \
-  --out tests/fixtures/dialog/output_dialog
+  --input tests/fixtures/dialog/input_dialog/dialog.example.json \
+  --out ../../../tmp/dialog-regenerated-step10
 ```
 
-**Result (reported, not fixed):** the run currently fails with
+**Result:** the command now succeeds. It emits the following generated files:
 
 ```text
-root.children: Expected at least one scoped OpenUI node with attrs.scopeDocument.
+angular.json
+package.json
+src/app/app.component.ts
+src/app/app.routes.ts
+src/app/openui-i18n.service.ts
+src/app/pages/dialog/dialog.page.html
+src/app/pages/dialog/dialog.page.scss
+src/app/pages/dialog/dialog.page.ts
+src/components/app-confirm-dialog/app-confirm-dialog.component.html
+src/components/app-confirm-dialog/app-confirm-dialog.component.scss
+src/components/app-confirm-dialog/app-confirm-dialog.component.ts
+src/index.html
+src/main.ts
+src/styles.scss
+tsconfig.json
 ```
 
-`dialog.example.json` is authored in the `WidgetExample` / `Dialog` grammar
-(`Dialog`, `DialogTitle`, `DialogContent`, `DialogActions`, `button`), whereas
-the generator's emission pipeline (`buildUiModel` → `mapToAngular` → emit) only
-consumes the canonical scope-tree grammar (nodes carrying
-`attrs.scopeDocument`). The widget grammar is therefore not yet implemented in
-the generator, so the output workspace remains the Step 5.1 copy of the input
-workspace (the expected Match result). Per the Step 5 validation note, this
-gap is reported and left unfixed.
+The earlier failure
+`root.children: Expected at least one scoped OpenUI node with attrs.scopeDocument.`
+is resolved for the dialog fixture. The generator now accepts the concrete
+`WidgetExample` / `Dialog` input without adding catalog traceability metadata to
+app nodes.
+
+This fixture still keeps its validation harness files (`package.json`,
+`package-lock.json`, `tsconfig.spec.json`, and the component spec) separate from
+the raw generator scaffold so dependency and test-tool choices remain explicit.
+Only generator-owned dialog component artifacts are refreshed from the successful
+generation output.
 
 ## 5.4 Run the generator validation
 

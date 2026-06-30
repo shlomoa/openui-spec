@@ -213,7 +213,7 @@ for (const fixtureCase of REPRESENTATIVE_CONCRETE_FIXTURES) {
   });
 }
 
-test("builds the UI model from canonical scope-tree OpenUI nodes", async () => {
+test("builds the UI model from catalog scope-tree regression nodes", async () => {
   const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));
 
   const uiModel = buildUiModel(fixture);
@@ -275,7 +275,7 @@ test("builds the UI model from canonical scope-tree OpenUI nodes", async () => {
   assert.equal(dialog.sourceDocument, "scopes/Widgets/dialog.scope.md");
 });
 
-test("generates an Angular Material standalone app from canonical scope-tree OpenUI", async () => {
+test("generates an Angular Material standalone app from catalog scope-tree regression OpenUI", async () => {
   const outDir = await createTestOutputDirectory();
   try {
     await run(["generate", "--input", FIXTURE, "--out", outDir]);
@@ -329,7 +329,7 @@ test("generates an Angular Material standalone app from canonical scope-tree Ope
   }
 });
 
-test("generates scope-specific Angular Material details from the canonical tree", async () => {
+test("generates scope-specific Angular Material details from the catalog regression tree", async () => {
   const outDir = await createTestOutputDirectory();
   try {
     await run(["generate", "--input", FIXTURE, "--out", outDir]);
@@ -383,7 +383,7 @@ test("generates scope-specific Angular Material details from the canonical tree"
   }
 });
 
-test("validates canonical root values, attrs, and scoped document uniqueness", async () => {
+test("validates catalog root values, attrs, and scoped document uniqueness", async () => {
   const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));
   const scopes = (fixture.children as OpenUiElement[])[0];
   const firstScope = firstChild(scopes, "Expected at least one scoped child.");

@@ -1,23 +1,18 @@
 import { Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-confirm-dialog',
   standalone: true,
-  imports: [
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatButtonModule,
-  ],
+  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatButtonModule],
   templateUrl: './app-confirm-dialog.component.html',
-  styleUrls: ['./app-confirm-dialog.component.scss']
+  styleUrl: './app-confirm-dialog.component.scss',
 })
 export class AppConfirmDialogComponent {
   private readonly dialogRef = inject(MatDialogRef<AppConfirmDialogComponent>);
