@@ -8,22 +8,29 @@
   "children": [
     {
       "id": "appHost",
-      "type": "IndexHtml",
+      "type": "html",
       "attrs": {
         "[lang]": "\"en\"",
-        "[title]": "\"OpenUI Demo\"",
-        "[mount]": "\"app-root\""
+        "[dir]": "\"ltr\""
       },
       "children": [
         {
-          "id": "appFavicon",
-          "type": "Favicon",
-          "attrs": {
-            "rel": "\"icon\"",
-            "href": "\"/favicon.ico\""
-          }
+          "id": "documentHead",
+          "type": "head"
+        },
+        {
+          "id": "documentBody",
+          "type": "body"
         }
       ]
+    },
+    {
+      "id": "appFavicon",
+      "type": "link",
+      "attrs": {
+        "[rel]": "\"icon\"",
+        "[href]": "\"/favicon.ico\""
+      }
     },
     {
       "id": "appRouting",
@@ -34,11 +41,7 @@
       "children": [
         {
           "id": "homeRoute",
-          "type": "Route",
-          "attrs": {
-            "[path]": "\"home\"",
-            "[target]": "\"homePage\""
-          }
+          "type": "Route"
         }
       ]
     },
@@ -51,29 +54,23 @@
       "children": [
         {
           "id": "navHome",
-          "type": "NavItem",
-          "attrs": {
-            "[label]": "\"Home\"",
-            "[target]": "\"home\""
-          }
+          "type": "NavItem"
         }
       ]
     },
     {
       "id": "appToolbar",
       "type": "ToolBar",
-      "attrs": {
-        "[placement]": "\"top\""
-      },
       "children": [
         {
-          "id": "helpAction",
-          "type": "ToolAction",
-          "attrs": {
-            "[label]": "\"Help\"",
-            "[icon]": "\"help\"",
-            "(click)": "openHelp()"
-          }
+          "id": "toolbarRow",
+          "type": "ToolBarRow",
+          "children": [
+            {
+              "id": "helpAction",
+              "type": "ToolAction"
+            }
+          ]
         }
       ]
     }

@@ -31,34 +31,7 @@ contracts. The generated `openui.json` represents each contract as a typed
 instance child under the metadata-only scope node, per the serialization rule in
 `spec/scopes/scope.md`.
 
-### Step 1 — Finish Application rollout
-
-The Controls, Widgets, Containers, Views, Behaviors, and Pages batches have been
-rolled out from registered evidence. Finish the remaining legacy leaves in
-Application, regenerate `openui.json`, then approve and validate before moving
-on.
-
-Per-batch acceptance criteria (apply to every sub-step):
-
-- Every leaf in the group follows the shared leaf template from registered
-  evidence: required sections are present, while `Attributes` and `Child model`
-  are included only when they contain evidence-backed contract entries.
-- Each leaf's `*.scope.md` prose documents evidence-backed attribute keys (Uses /
-  Produces / Behaves) and child model entries, per the leaf template. Do not add
-  empty placeholder sections just to satisfy the template; `openui.json` is not
-  hand-edited for contracts.
-- Scope families not yet updated remain concise and are not partially enriched.
-
-Per-batch test: a parametrized group test marks the group `complete`; every leaf
-in a `complete` group must pass the enriched-leaf contract assertions, and
-`pending` groups are skipped.
-
-Remaining batches:
-
-- **1.1 Application** — `favicon` (HTML `link rel="icon"`), `index_html` (HTML
-  document head); `routing`, `navigation`, `tool_bars` require owner decisions.
-
-### Step 2 — Extend focused tests with each batch
+### Step 1 — Extend focused tests with each batch
 
 Add at least one public-contract assertion per enriched scope.
 
@@ -70,7 +43,7 @@ Acceptance criteria:
 Test: a coverage-guard test fails if an enriched leaf (a Step 1 `complete` group)
 has no associated contract assertion.
 
-### Step 3 — Full validation and review
+### Step 2 — Full validation and review
 
 Run the complete suite and review the enriched set.
 
