@@ -135,7 +135,7 @@ The following table maps scenarios to test fixtures:
 ### Step 8 - validate generator, and generated workspaces for all examples
 
 8.1. **Run the generator**
-   - run generator in `generators/angular/generator/tests/fixtures/dialog/output_dialog/`
+   - run generator in `generators/angular/generator/tests/fixtures/<object_name>/output_<object_name>/`
   
 8.2. **Run the generator validation**
    - Run generator validation tests
