@@ -4,6 +4,9 @@ import path from "node:path";
 import { test } from "node:test";
 
 import { buildSpecManifestationIndex, classifyWorkspacePath } from "../src/incremental/classifier";
+import { emitAngularFilesFromInput } from "../src/incremental/generate";
+import { normalizeRoute } from "../src/ir/normalize-spec";
+import { extractOpenUiScopeNodes } from "../src/spec/openui-sections";
 import type { OpenUiDocument } from "../src/spec/openui-spec.types";
 
 const ANGULAR_GENERATOR_ROOT =
@@ -18,6 +21,7 @@ const INCREMENTAL_FIXTURE = path.join(
   "output_app-file-select",
 );
 const SPEC_FILE = path.join(INCREMENTAL_FIXTURE, "app-file-select.example.json");
+const FULL_GENERATOR_FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "minimal-openui.json");
 
 async function loadIndex(): Promise<ReturnType<typeof buildSpecManifestationIndex>> {
   const document = JSON.parse(await readFile(SPEC_FILE, "utf8")) as OpenUiDocument;
@@ -90,7 +94,7 @@ test("reports unknown for unmatched workspace artifacts", async () => {
   assert.equal(classifyWorkspacePath("src/components/file-upload", index).kind, "unknown");
 });
 
-test("classifies every generated component folder in the fixture workspace", async () => {
+test("classifies every generated component folder and file in the fixture workspace", async () => {
   const index = await loadIndex();
   const componentsDir = path.join(INCREMENTAL_FIXTURE, "src", "components");
   const entries = await readdir(componentsDir, { withFileTypes: true });
@@ -100,6 +104,12 @@ test("classifies every generated component folder in the fixture workspace", asy
     const classification = classifyWorkspacePath(`src/components/${folder}`, index);
     assert.equal(classification.kind, "component", `Expected ${folder} to classify as a component.`);
     assert.equal(classification.selector, folder);
+
+    for (const extension of ["ts", "html", "scss"] as const) {
+      const fileClassification = classifyWorkspacePath(`src/components/${folder}/${folder}.component.${extension}`, index);
+      assert.equal(fileClassification.kind, "component", `Expected ${folder}.${extension} to classify as a component.`);
+      assert.equal(fileClassification.selector, folder);
+    }
   }
 });
 
@@ -107,4 +117,40 @@ test("normalizes Windows-style workspace separators", async () => {
   const index = await loadIndex();
   const windowsStyle = classifyWorkspacePath("src\\components\\app-file-select", index);
   assert.equal(windowsStyle.nodeId, "appFileSelectTemplate");
+});
+
+test("classifies every generated full-output page and application file", async () => {
+  const document = JSON.parse(await readFile(FULL_GENERATOR_FIXTURE, "utf8")) as OpenUiDocument;
+  const index = buildSpecManifestationIndex(document);
+  const emittedFiles = await emitAngularFilesFromInput(FULL_GENERATOR_FIXTURE);
+  const scopesByRoute = new Map(extractOpenUiScopeNodes(document).map((scope) => [normalizeRoute(scope.id), scope]));
+  const classifiedPageFiles = new Set<string>();
+  const applicationFiles: string[] = [];
+
+  for (const file of emittedFiles) {
+    const pageMatch = /^src\/app\/pages\/([^/]+)\/\1\.page\.(ts|html|scss)$/.exec(file.path);
+    const classification = classifyWorkspacePath(file.path, index);
+
+    if (pageMatch) {
+      const route = pageMatch[1];
+      const scope = scopesByRoute.get(route);
+      assert.ok(scope, `Expected ${file.path} to correspond to a scoped OpenUI node.`);
+      assert.equal(classification.kind, "page", `Expected ${file.path} to classify as a page.`);
+      assert.equal(classification.nodeId, scope.id);
+      assert.equal(classification.nodeType, scope.type);
+      assert.equal(classification.route, route);
+      assert.equal(classification.selector, `openui-${route}`);
+      assert.equal(classification.sourceFile, scope.document);
+      classifiedPageFiles.add(file.path);
+      continue;
+    }
+
+    assert.equal(classification.kind, "application", `Expected ${file.path} to classify as application-level output.`);
+    applicationFiles.push(file.path);
+  }
+
+  assert.equal(classifiedPageFiles.size, scopesByRoute.size * 3, "Each generated scope page should emit ts/html/scss files.");
+  assert.ok(applicationFiles.includes("package.json"));
+  assert.ok(applicationFiles.includes("src/app/app.routes.ts"));
+  assert.ok(applicationFiles.includes("src/main.ts"));
 });

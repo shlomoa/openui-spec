@@ -1,6 +1,6 @@
 import path from "node:path";
 
-import { childrenOfType, findElementsByType, stringAttr } from "../spec/openui-sections";
+import { childrenOfType, extractOpenUiScopeNodes, findElementsByType, stringAttr } from "../spec/openui-sections";
 import type { OpenUiDocument, OpenUiElement } from "../spec/openui-spec.types";
 import { normalizeRoute } from "../ir/normalize-spec";
 import { pageDirectory } from "../targets/angular/angular-paths";
@@ -41,6 +41,26 @@ interface SpecManifestation {
   directory: string;
   sourceFile?: string;
 }
+
+const APPLICATION_ARTIFACTS: ReadonlySet<string> = new Set([
+  ".",
+  "",
+  "angular.json",
+  "package.json",
+  "tsconfig.json",
+  "src",
+  "src/app",
+  "src/app/app.component.ts",
+  "src/app/app.routes.ts",
+  "src/app/application-structure.model.ts",
+  "src/app/openui-extension.model.ts",
+  "src/app/openui-extension-samples.ts",
+  "src/app/openui-i18n.service.ts",
+  "src/app/openui-workspace-outlet.component.ts",
+  "src/index.html",
+  "src/main.ts",
+  "src/styles.scss",
+]);
 
 /**
  * Index of every workspace manifestation declared by an `input.json` spec.
@@ -104,7 +124,7 @@ export function classifyWorkspacePath(relativePath: string, index: SpecManifesta
     return toClassification(directMatch);
   }
 
-  if (directory === "src" || directory === "." || directory === "") {
+  if (isApplicationArtifact(normalized, directory)) {
     return { kind: "application" };
   }
 
@@ -145,6 +165,25 @@ function toComponentManifestation(node: OpenUiElement): SpecManifestation | unde
 }
 
 function collectPageManifestations(document: OpenUiDocument): SpecManifestation[] {
+  return [...collectScopedNodePageManifestations(document), ...collectExplicitPageScopeManifestations(document)];
+}
+
+function collectScopedNodePageManifestations(document: OpenUiDocument): SpecManifestation[] {
+  return extractOpenUiScopeNodes(document).map((scope) => {
+    const route = normalizeRoute(scope.id);
+    return {
+      kind: "page",
+      nodeId: scope.id,
+      nodeType: scope.type,
+      selector: `openui-${route}`,
+      route,
+      directory: normalizeWorkspacePath(pageDirectory(route)),
+      sourceFile: scope.document,
+    };
+  });
+}
+
+function collectExplicitPageScopeManifestations(document: OpenUiDocument): SpecManifestation[] {
   return childrenOfType(document, "PageScope").map((node): SpecManifestation => {
     const route = stringAttr(node, "route") ?? normalizeRoute(node.id);
     return {
@@ -169,6 +208,10 @@ function matchSelectorFromComponentFile(
     return undefined;
   }
   return index.matchSelector(selector);
+}
+
+function isApplicationArtifact(normalizedPath: string, directory: string): boolean {
+  return APPLICATION_ARTIFACTS.has(normalizedPath) || APPLICATION_ARTIFACTS.has(directory);
 }
 
 function normalizeWorkspacePath(value: string): string {

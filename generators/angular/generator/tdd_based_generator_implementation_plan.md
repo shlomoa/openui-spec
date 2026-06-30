@@ -74,17 +74,21 @@ Recommended test cases:
    - Assert those directories are neither deleted nor considered part of the plan.
    - Covered by `tests/incremental.test.ts`: `workspace indexing ignores non-contract directories during incremental generation`.
 
-1.10. **Comparator/reconciler coverage for full output**
+1.10. ✅ **Comparator/reconciler coverage for full output**
    - Build the desired emitted-file set for an input JSON.
    - Index an existing workspace generated from a different input JSON.
    - Run the comparator/reconciler directly, without applying the plan.
    - Assert the plan classifies Add / Match / Modify / Delete decisions correctly and attributes each decision to classifier output.
    - This proves the comparator required by issue #97 is useful independently of the apply layer.
+   - Covered by `tests/incremental.test.ts`: `comparator/reconciler coverage — plans full-output add match modify delete without applying`.
+   - Green step: classify full-generator routed pages from scoped OpenUI nodes with `attrs.scopeDocument`, while preserving explicit `PageScope` support.
 
-1.11. **Classifier coverage for full output**
+1.11. ✅ **Classifier coverage for full output**
    - For every generated page/component file, assert classification is expected.
    - For project-level files, assert `application` or documented behavior.
    - This proves the classifier is actually useful for the full generator, not just isolated fixtures.
+   - Covered by `tests/classifier.test.ts`: `classifies every generated full-output page and application file` and `classifies every generated component folder and file in the fixture workspace`.
+   - Green step: classify known generator-owned project files as `application` artifacts instead of `unknown`.
 
 ## 2. Run tests and confirm red-or-covered state
 

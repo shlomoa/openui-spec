@@ -598,6 +598,98 @@ test("workspace indexing ignores non-contract directories during incremental gen
   }
 });
 
+test("comparator/reconciler coverage — plans full-output add match modify delete without applying", async () => {
+  const tempRoot = await createTestOutputDirectory();
+  try {
+    const outDir = path.join(tempRoot, "workspace");
+    const initialSpec = await applicationOnlyInput(["routing"]);
+    const application = initialSpec.children?.[0]?.children?.[0];
+    assert.ok(application, "Expected generated test spec to include the Application scope.");
+    const routing = application.children?.find((child) => child.id === "routing");
+    assert.ok(routing, "Expected Application scope to include routing.");
+
+    const fullSpec = await applicationOnlyInput(["routing", "navigation"]);
+    const fullApplication = fullSpec.children?.[0]?.children?.[0];
+    assert.ok(fullApplication, "Expected full test spec to include the Application scope.");
+    const navigation = fullApplication.children?.find((child) => child.id === "navigation");
+    assert.ok(navigation, "Expected full Application scope to include navigation.");
+
+    const updatedRouting: OpenUiElement = {
+      ...routing,
+      attrs: {
+        ...routing.attrs,
+        purpose: "Route declarations and navigation targets with comparator-focused coverage.",
+      },
+    };
+
+    const initialInput = await writeJsonFile(
+      path.join(tempRoot, "inputs", "application-routing.json"),
+      initialSpec,
+    );
+    const updatedInput = await writeJsonFile(
+      path.join(tempRoot, "inputs", "application-routing-navigation-updated.json"),
+      await applicationInputWithChildren([updatedRouting, navigation]),
+    );
+
+    await generateIncrementally(initialInput, outDir);
+    const staleRoutingArtifact = "src/app/pages/routing/routing.debug.ts";
+    await writeFile(path.join(outDir, staleRoutingArtifact), "// stale generated debug artifact\n", "utf8");
+    const routesMtimeBeforePlan = await fileModifiedTime(path.join(outDir, "src/app/app.routes.ts"));
+
+    const plan = await planAgainstWorkspace(updatedInput, outDir);
+
+    const actionFor = (relativePath: string) => {
+      const entry = plan.reconciled.find((candidate) => candidate.file.path === relativePath);
+      assert.ok(entry, `Expected reconciled entry for ${relativePath}.`);
+      return entry;
+    };
+    const deletionFor = (relativePath: string) => {
+      const entry = plan.toDelete.find((candidate) => candidate.path === relativePath);
+      assert.ok(entry, `Expected deletion entry for ${relativePath}.`);
+      return entry;
+    };
+
+    const navigationTs = actionFor("src/app/pages/navigation/navigation.page.ts");
+    assert.equal(navigationTs.action, "add");
+    assert.equal(navigationTs.classification.kind, "page");
+    assert.equal(navigationTs.classification.nodeId, "navigation");
+    assert.equal(navigationTs.classification.route, "navigation");
+
+    const routingHtml = actionFor("src/app/pages/routing/routing.page.html");
+    assert.equal(routingHtml.action, "modify");
+    assert.equal(routingHtml.classification.kind, "page");
+    assert.equal(routingHtml.classification.nodeId, "routing");
+
+    const routingTs = actionFor("src/app/pages/routing/routing.page.ts");
+    assert.equal(routingTs.action, "match");
+    assert.equal(routingTs.classification.kind, "page");
+    assert.equal(routingTs.classification.nodeId, "routing");
+
+    const staleDeletion = deletionFor(staleRoutingArtifact);
+    assert.equal(staleDeletion.action, "delete");
+    assert.equal(staleDeletion.classification.kind, "page");
+    assert.equal(staleDeletion.classification.nodeId, "routing");
+    assert.equal(staleDeletion.classification.route, "routing");
+
+    assert.ok(plan.toWrite.some((file) => file.path === "src/app/pages/navigation/navigation.page.ts"));
+    assert.ok(plan.toWrite.some((file) => file.path === "src/app/pages/routing/routing.page.html"));
+    assert.equal(plan.toWrite.some((file) => file.path === "src/app/pages/routing/routing.page.ts"), false);
+
+    await assert.rejects(
+      stat(path.join(outDir, "src/app/pages/navigation/navigation.page.ts")),
+      "Planning must not apply newly added files.",
+    );
+    await assert.doesNotReject(stat(path.join(outDir, staleRoutingArtifact)), "Planning must not delete stale files.");
+    assert.equal(
+      await fileModifiedTime(path.join(outDir, "src/app/app.routes.ts")),
+      routesMtimeBeforePlan,
+      "Planning must not rewrite modified files.",
+    );
+  } finally {
+    await cleanupTestOutput(tempRoot);
+  }
+});
+
 test("deletes workspace files that the specification no longer emits", async () => {
   const outDir = await createTestOutputDirectory();
   try {
