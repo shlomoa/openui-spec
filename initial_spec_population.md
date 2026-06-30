@@ -31,19 +31,7 @@ contracts. The generated `openui.json` represents each contract as a typed
 instance child under the metadata-only scope node, per the serialization rule in
 `spec/scopes/scope.md`.
 
-### Step 1 — Extend focused tests with each batch
-
-Add at least one public-contract assertion per enriched scope.
-
-Acceptance criteria:
-
-- Every enriched leaf is covered by at least one contract assertion.
-- Spec tests assert no technology-specific detail.
-
-Test: a coverage-guard test fails if an enriched leaf (a Step 1 `complete` group)
-has no associated contract assertion.
-
-### Step 2 — Full validation and review
+### Step 1 — Full validation and review
 
 Run the complete suite and review the enriched set.
 
