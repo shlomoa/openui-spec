@@ -64,9 +64,6 @@ function validateElement(
   if (isRoot && value.id !== "root") {
     diagnostics.push({ path: `${path}.id`, message: 'Root id must be exactly "root".' });
   }
-  if (isRoot && value.type !== "html") {
-    diagnostics.push({ path: `${path}.type`, message: 'Root type must be exactly "html".' });
-  }
 
   if (typeof value.id !== "string") {
     diagnostics.push({ path: `${path}.id`, message: "Element id is required." });

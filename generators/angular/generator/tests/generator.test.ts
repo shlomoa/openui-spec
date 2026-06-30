@@ -251,3 +251,10 @@ test("validates canonical root values, attrs, and scoped document uniqueness", a
     },
   );
 });
+
+test("allows any valid OpenUI type at the document root", async () => {
+  const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));
+  fixture.type = "ApplicationRoot";
+
+  assert.doesNotThrow(() => validateOpenUiSpec(fixture));
+});

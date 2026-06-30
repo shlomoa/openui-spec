@@ -9,7 +9,6 @@ export interface OpenUiElement {
 
 export interface OpenUiDocument extends OpenUiElement {
   id: "root";
-  type: "html";
   version: "0.0.1";
 }
 
