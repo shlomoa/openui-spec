@@ -3,6 +3,7 @@ export interface AngularProjectModel {
   packageName: string;
   version: string;
   pages: AngularPageModel[];
+  dialogComponents: AngularDialogComponentModel[];
   themeTokens: Array<{ name: string; value: string }>;
   applicationStructure?: AngularApplicationStructureModel;
   extensionModel?: AngularExtensionModel;
@@ -98,4 +99,20 @@ export interface AngularPageModel {
   members: string[];
   template: string;
   styles: string;
+}
+
+export interface AngularDialogComponentModel {
+  selector: string;
+  className: string;
+  directoryName: string;
+  fileName: string;
+  title: string;
+  content: string;
+  actions: AngularDialogActionModel[];
+}
+
+export interface AngularDialogActionModel {
+  text: string;
+  result: string;
+  emphasis: "default" | "warn";
 }

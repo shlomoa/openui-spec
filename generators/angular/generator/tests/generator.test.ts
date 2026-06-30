@@ -98,36 +98,63 @@ test("rejects unknown non-native concrete input types during catalog validation"
   );
 });
 
-test(
-  "generates Angular Material dialog output from the concrete dialog fixture",
-  { todo: "Requires concrete-input IR and Angular dialog emission from Steps 5 and 6." },
-  async () => {
-    const outDir = await createTestOutputDirectory();
-    try {
-      await run(["generate", "--input", DIALOG_FIXTURE, "--out", outDir]);
+test("builds a concrete dialog UI model from the dialog fixture", async () => {
+  const fixture = JSON.parse(await readFile(DIALOG_FIXTURE, "utf8"));
 
-      const component = await readFile(
-        path.join(outDir, "src/components/app-confirm-dialog/app-confirm-dialog.component.ts"),
-        "utf8",
-      );
-      assert.match(component, /MatDialogTitle/);
-      assert.match(component, /MatDialogContent/);
-      assert.match(component, /MatDialogActions/);
-      assert.match(component, /MatButtonModule/);
+  const uiModel = buildUiModel(fixture);
 
-      const template = await readFile(
-        path.join(outDir, "src/components/app-confirm-dialog/app-confirm-dialog.component.html"),
-        "utf8",
-      );
-      assert.match(template, /Delete item\?/);
-      assert.match(template, /This action cannot be undone\./);
-      assert.match(template, /close\('cancel'\)/);
-      assert.match(template, /close\('confirm'\)/);
-    } finally {
-      await cleanupTestOutput(outDir);
-    }
-  },
-);
+  assert.equal(uiModel.name, "Dialog example");
+  assert.deepEqual(
+    uiModel.pages.map((page) => page.id),
+    ["dialog"],
+  );
+  const dialogPage = pageById(uiModel.pages, "dialog");
+  assert.equal(dialogPage.route, "dialog");
+  assert.equal(dialogPage.title, "Dialog example");
+  assert.deepEqual(dialogPage.features, ["component"]);
+
+  const dialogComponent = uiModel.dialogComponents?.[0];
+  assert.ok(dialogComponent, "Expected concrete dialog IR to include a dialog component.");
+  assert.equal(dialogComponent.selector, "app-confirm-dialog");
+  assert.equal(dialogComponent.className, "AppConfirmDialogComponent");
+  assert.equal(dialogComponent.title, "Delete item?");
+  assert.equal(dialogComponent.content, "This action cannot be undone.");
+  assert.deepEqual(
+    dialogComponent.actions.map((action) => [action.text, action.result, action.emphasis]),
+    [
+      ["Cancel", "cancel", "default"],
+      ["Delete", "confirm", "warn"],
+    ],
+  );
+});
+
+test("generates Angular Material dialog output from the concrete dialog fixture", async () => {
+  const outDir = await createTestOutputDirectory();
+  try {
+    await run(["generate", "--input", DIALOG_FIXTURE, "--out", outDir]);
+
+    const component = await readFile(
+      path.join(outDir, "src/components/app-confirm-dialog/app-confirm-dialog.component.ts"),
+      "utf8",
+    );
+    assert.match(component, /MatDialogTitle/);
+    assert.match(component, /MatDialogContent/);
+    assert.match(component, /MatDialogActions/);
+    assert.match(component, /MatButtonModule/);
+    assert.match(component, /MatDialogRef<AppConfirmDialogComponent>/);
+
+    const template = await readFile(
+      path.join(outDir, "src/components/app-confirm-dialog/app-confirm-dialog.component.html"),
+      "utf8",
+    );
+    assert.match(template, /<h2 mat-dialog-title>Delete item\?<\/h2>/);
+    assert.match(template, /This action cannot be undone\./);
+    assert.match(template, /<button mat-button \(click\)="close\('cancel'\)">Cancel<\/button>/);
+    assert.match(template, /<button mat-raised-button color="warn" \(click\)="close\('confirm'\)">Delete<\/button>/);
+  } finally {
+    await cleanupTestOutput(outDir);
+  }
+});
 
 test("builds the UI model from canonical scope-tree OpenUI nodes", async () => {
   const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));

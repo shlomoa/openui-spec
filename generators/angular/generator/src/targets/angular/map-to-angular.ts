@@ -1,6 +1,7 @@
-import type { UiApplication, UiPage } from "../../ir/ui-model";
+import type { UiApplication, UiDialogComponent, UiPage } from "../../ir/ui-model";
 import type {
   AngularApplicationStructureModel,
+  AngularDialogComponentModel,
   AngularInternationalizationModel,
   AngularPageModel,
   AngularProjectModel,
@@ -17,6 +18,7 @@ export function mapToAngularProject(uiModel: UiApplication): AngularProjectModel
     packageName: toPackageName(uiModel.name),
     version: uiModel.version,
     pages,
+    dialogComponents: (uiModel.dialogComponents ?? []).map(mapDialogComponent),
     themeTokens: uiModel.themeTokens,
     applicationStructure: uiModel.pages.some((page) => page.features.includes("application-structure"))
       ? buildApplicationStructure(pages)
@@ -24,6 +26,22 @@ export function mapToAngularProject(uiModel: UiApplication): AngularProjectModel
     internationalization: uiModel.pages.some((page) => page.features.includes("internationalization"))
       ? buildInternationalizationModel()
       : undefined,
+  };
+}
+
+function mapDialogComponent(component: UiDialogComponent): AngularDialogComponentModel {
+  return {
+    selector: component.selector,
+    className: component.className,
+    directoryName: component.directoryName,
+    fileName: component.fileName,
+    title: component.title,
+    content: component.content,
+    actions: component.actions.map((action) => ({
+      text: action.text,
+      result: action.result,
+      emphasis: action.emphasis,
+    })),
   };
 }
 

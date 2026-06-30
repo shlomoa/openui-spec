@@ -23,6 +23,7 @@ export interface UiApplication {
   name: string;
   version: string;
   pages: UiPage[];
+  dialogComponents?: UiDialogComponent[];
   themeTokens: UiThemeToken[];
 }
 
@@ -46,4 +47,22 @@ export interface UiFormalDefinition {
 export interface UiThemeToken {
   name: string;
   value: string;
+}
+
+export interface UiDialogComponent {
+  id: string;
+  selector: string;
+  className: string;
+  directoryName: string;
+  fileName: string;
+  title: string;
+  content: string;
+  actions: UiDialogAction[];
+}
+
+export interface UiDialogAction {
+  id: string;
+  text: string;
+  result: string;
+  emphasis: "default" | "warn";
 }
