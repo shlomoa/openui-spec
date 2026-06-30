@@ -29,7 +29,9 @@ Angular TypeScript generator that applies the specification to an existing Angul
 - `generators/angular/generator/` - Angular TypeScript generator implementation.
 - `generators/angular/docs/GENERATOR_STRUCTURE.md` - Angular generator architecture and
   implementation details.
-- `docs/TEST_PLAN.md` - Test suites and validation strategy.
+- `generators/angular/docs/TEST_PLAN.md` - Angular generator and generated-examples
+  validation strategy.
+- `docs/TEST_PLAN.md` - Spec-contract and repository CI validation strategy.
 
 ## Repository-specific rules
 
@@ -50,4 +52,4 @@ Angular TypeScript generator that applies the specification to an existing Angul
   `CONTRIBUTING.md`.
 - Generator changes should follow the pipeline in
   `generators/angular/docs/GENERATOR_STRUCTURE.md` and the validation plan in
-  `docs/TEST_PLAN.md`.
+  `generators/angular/docs/TEST_PLAN.md`.

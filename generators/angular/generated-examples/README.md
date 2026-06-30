@@ -54,5 +54,5 @@ npm run build
 Use `npm run format` to apply Prettier formatting.
 
 These checks cover this app's vitest specs (data model, navigation, and the
-component-viewer tabs). For the repository-wide test strategy — spec-contract,
-generator, and examples-app suites — see the [test plan](../../../docs/TEST_PLAN.md).
+component-viewer tabs). For the Angular generator and examples-app test strategy,
+see the [Angular generator test plan](../docs/TEST_PLAN.md).
