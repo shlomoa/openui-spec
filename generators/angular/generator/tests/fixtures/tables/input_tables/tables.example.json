@@ -1,0 +1,66 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "WidgetExample",
+  "attrs": {
+    "title": "\"Table example\""
+  },
+  "children": [
+    {
+      "id": "ordersTable",
+      "type": "table",
+      "attrs": {
+        "[data]": "orders",
+        "[selection]": "\"multiple\"",
+        "[loading]": "isLoading",
+        "[error]": "loadError",
+        "(selectionChange)": "onSelect($event)"
+      },
+      "children": [
+        {
+          "id": "colId",
+          "type": "Column",
+          "attrs": {
+            "[field]": "\"id\"",
+            "[header]": "\"Order\"",
+            "[sortable]": "true"
+          }
+        },
+        {
+          "id": "colCustomer",
+          "type": "Column",
+          "attrs": {
+            "[field]": "\"customer\"",
+            "[header]": "\"Customer\"",
+            "[filterable]": "true"
+          }
+        },
+        {
+          "id": "colTotal",
+          "type": "Column",
+          "attrs": {
+            "[field]": "\"total\"",
+            "[header]": "\"Total\"",
+            "[sortable]": "true"
+          }
+        },
+        {
+          "id": "ordersPaging",
+          "type": "Pagination",
+          "attrs": {
+            "[pageSize]": "20",
+            "[total]": "orderCount",
+            "(pageChange)": "onPage($event)"
+          }
+        },
+        {
+          "id": "ordersEmpty",
+          "type": "EmptyState",
+          "attrs": {
+            "[message]": "\"No orders found.\""
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "html",
+  "attrs": {
+    "[lang]": "\"en\"",
+    "[dir]": "\"ltr\""
+  },
+  "children": [
+    {
+      "id": "documentHead",
+      "type": "head"
+    },
+    {
+      "id": "documentBody",
+      "type": "body"
+    }
+  ]
+}

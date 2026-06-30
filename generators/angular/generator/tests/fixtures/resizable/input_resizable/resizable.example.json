@@ -1,0 +1,33 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "BehaviorExample",
+  "attrs": {
+    "title": "\"Resizable example\""
+  },
+  "children": [
+    {
+      "id": "resizablePanel",
+      "type": "Resizable",
+      "attrs": {
+        "[handles]": "\"right bottom\"",
+        "[minSize]": "\"200x120\"",
+        "[maxSize]": "\"800x600\"",
+        "[defaultSize]": "\"400x300\"",
+        "[ariaLabel]": "\"Resize panel\"",
+        "(resizeStart)": "onResizeStart($event)",
+        "(resize)": "onResize($event)",
+        "(resizeEnd)": "onResizeEnd($event)"
+      },
+      "children": [
+        {
+          "id": "resizableContent",
+          "type": "div",
+          "attrs": {
+            "text": "\"Resizable content region\""
+          }
+        }
+      ]
+    }
+  ]
+}

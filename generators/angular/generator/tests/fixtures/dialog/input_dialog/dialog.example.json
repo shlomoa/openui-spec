@@ -1,0 +1,59 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "WidgetExample",
+  "attrs": {
+    "title": "\"Dialog example\""
+  },
+  "children": [
+    {
+      "id": "confirmDialog",
+      "type": "Dialog",
+      "attrs": {
+        "[modal]": "true",
+        "[open]": "isOpen",
+        "[ariaLabel]": "\"Confirm deletion\"",
+        "[restoreFocus]": "true",
+        "(close)": "onClose($event)"
+      },
+      "children": [
+        {
+          "id": "dialogTitle",
+          "type": "DialogTitle",
+          "attrs": {
+            "text": "\"Delete item?\""
+          }
+        },
+        {
+          "id": "dialogContent",
+          "type": "DialogContent",
+          "attrs": {
+            "text": "\"This action cannot be undone.\""
+          }
+        },
+        {
+          "id": "dialogActions",
+          "type": "DialogActions",
+          "children": [
+            {
+              "id": "cancelDialog",
+              "type": "button",
+              "attrs": {
+                "text": "\"Cancel\"",
+                "(click)": "close('cancel')"
+              }
+            },
+            {
+              "id": "confirmDelete",
+              "type": "button",
+              "attrs": {
+                "text": "\"Delete\"",
+                "(click)": "close('confirm')"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "WidgetExample",
+  "attrs": {
+    "title": "\"Chart example\""
+  },
+  "children": [
+    {
+      "id": "revenueChart",
+      "type": "Chart",
+      "attrs": {
+        "[chartType]": "\"bar\"",
+        "[series]": "revenueSeries",
+        "[xAxis]": "\"month\"",
+        "[yAxis]": "\"revenue\"",
+        "[legend]": "true",
+        "[tooltip]": "true",
+        "[loading]": "isLoading",
+        "[error]": "loadError",
+        "[ariaLabel]": "\"Monthly revenue bar chart\""
+      },
+      "children": [
+        {
+          "id": "chartEmpty",
+          "type": "EmptyState",
+          "attrs": {
+            "[message]": "\"No data to chart.\""
+          }
+        }
+      ]
+    }
+  ]
+}

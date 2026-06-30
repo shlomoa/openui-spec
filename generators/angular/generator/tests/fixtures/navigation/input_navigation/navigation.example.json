@@ -1,0 +1,41 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Application",
+  "attrs": {
+    "title": "\"Navigation example\""
+  },
+  "children": [
+    {
+      "id": "primaryNav",
+      "type": "Navigation",
+      "attrs": {
+        "[ariaLabel]": "\"Primary\""
+      },
+      "children": [
+        {
+          "id": "navHome",
+          "type": "NavItem"
+        },
+        {
+          "id": "navReportsGroup",
+          "type": "NavGroup",
+          "children": [
+            {
+              "id": "navSalesReport",
+              "type": "NavItem"
+            },
+            {
+              "id": "navAuditReport",
+              "type": "NavItem"
+            }
+          ]
+        },
+        {
+          "id": "navAdmin",
+          "type": "NavItem"
+        }
+      ]
+    }
+  ]
+}

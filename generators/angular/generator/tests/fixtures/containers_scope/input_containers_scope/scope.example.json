@@ -1,0 +1,62 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Containers",
+  "attrs": {
+    "title": "\"Containers example\""
+  },
+  "children": [
+    {
+      "id": "layoutGrid",
+      "type": "Grid",
+      "attrs": {
+        "[columns]": "12",
+        "[responsive]": "true"
+      },
+      "children": [
+        {
+          "id": "mainItem",
+          "type": "GridItem",
+          "attrs": {
+            "[colSpan]": "8"
+          },
+          "children": [
+            {
+              "id": "detailTabs",
+              "type": "TabGroup",
+              "attrs": {
+                "[selectedIndex]": "0"
+              },
+              "children": [
+                {
+                  "id": "overviewTab",
+                  "type": "Tab",
+                  "attrs": {
+                    "[label]": "\"Overview\""
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sideItem",
+          "type": "GridItem",
+          "attrs": {
+            "[colSpan]": "4"
+          },
+          "children": [
+            {
+              "id": "filtersPanel",
+              "type": "ExpandablePanel",
+              "attrs": {
+                "[heading]": "\"Filters\"",
+                "[expanded]": "true"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

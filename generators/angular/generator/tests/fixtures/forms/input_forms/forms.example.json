@@ -1,0 +1,52 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "FormView",
+  "attrs": {
+    "title": "\"Customer form\"",
+    "[dirty]": "form.dirty",
+    "[loading]": "isSaving",
+    "[error]": "saveError",
+    "(submit)": "onSubmit(form.value)"
+  },
+  "children": [
+    {
+      "id": "nameField",
+      "type": "Field",
+      "attrs": {
+        "[label]": "\"Name\"",
+        "[required]": "true",
+        "[maxLength]": "80",
+        "[value]": "form.name",
+        "(valueChange)": "onChange('name', $event)"
+      }
+    },
+    {
+      "id": "emailField",
+      "type": "Field",
+      "attrs": {
+        "[label]": "\"Email\"",
+        "[required]": "true",
+        "[pattern]": "\"^.+@.+$\"",
+        "[error]": "\"Enter a valid email\""
+      }
+    },
+    {
+      "id": "submitButton",
+      "type": "button",
+      "attrs": {
+        "[disabled]": "form.invalid",
+        "text": "\"Save\"",
+        "(click)": "onSubmit(form.value)"
+      }
+    },
+    {
+      "id": "cancelButton",
+      "type": "button",
+      "attrs": {
+        "text": "\"Cancel\"",
+        "(click)": "onReset()"
+      }
+    }
+  ]
+}

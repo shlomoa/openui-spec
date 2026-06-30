@@ -1,0 +1,48 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "WidgetExample",
+  "attrs": {
+    "title": "\"List example\""
+  },
+  "children": [
+    {
+      "id": "taskList",
+      "type": "List",
+      "attrs": {
+        "[items]": "tasks",
+        "[sort]": "\"dueDate asc\"",
+        "[filter]": "searchTerm",
+        "[selection]": "\"single\"",
+        "[loading]": "isLoading",
+        "[error]": "loadError",
+        "(selectionChange)": "onSelect($event)"
+      },
+      "children": [
+        {
+          "id": "taskItem",
+          "type": "ListItem",
+          "attrs": {
+            "[label]": "item.title",
+            "[description]": "item.due"
+          }
+        },
+        {
+          "id": "listMore",
+          "type": "LoadMore",
+          "attrs": {
+            "[hasMore]": "hasMore",
+            "(loadMore)": "onLoadMore()"
+          }
+        },
+        {
+          "id": "listEmpty",
+          "type": "EmptyState",
+          "attrs": {
+            "[message]": "\"No tasks.\""
+          }
+        }
+      ]
+    }
+  ]
+}

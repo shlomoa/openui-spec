@@ -1,0 +1,78 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Application",
+  "attrs": {
+    "title": "\"Application bootstrap example\""
+  },
+  "children": [
+    {
+      "id": "appHost",
+      "type": "html",
+      "attrs": {
+        "[lang]": "\"en\"",
+        "[dir]": "\"ltr\""
+      },
+      "children": [
+        {
+          "id": "documentHead",
+          "type": "head"
+        },
+        {
+          "id": "documentBody",
+          "type": "body"
+        }
+      ]
+    },
+    {
+      "id": "appFavicon",
+      "type": "link",
+      "attrs": {
+        "[rel]": "\"icon\"",
+        "[href]": "\"/favicon.ico\""
+      }
+    },
+    {
+      "id": "appRouting",
+      "type": "Routing",
+      "attrs": {
+        "[defaultRoute]": "\"home\""
+      },
+      "children": [
+        {
+          "id": "homeRoute",
+          "type": "Route"
+        }
+      ]
+    },
+    {
+      "id": "appNavigation",
+      "type": "Navigation",
+      "attrs": {
+        "[ariaLabel]": "\"Primary\""
+      },
+      "children": [
+        {
+          "id": "navHome",
+          "type": "NavItem"
+        }
+      ]
+    },
+    {
+      "id": "appToolbar",
+      "type": "ToolBar",
+      "children": [
+        {
+          "id": "toolbarRow",
+          "type": "ToolBarRow",
+          "children": [
+            {
+              "id": "helpAction",
+              "type": "ToolAction"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
