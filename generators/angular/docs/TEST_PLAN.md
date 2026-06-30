@@ -123,13 +123,13 @@ generators/angular/generator/tests/fixtures/
 
 ### Scenarios to test
 
-| Scenario     | Fixture                | What is verified                                             |
-| :----------- | :--------------------- | :----------------------------------------------------------- |
-| From scratch | `example_from_scratch` | Empty workspace → full generated output                      |
+| Scenario     | Fixture                | What is verified                                                        |
+| :----------- | :--------------------- | :---------------------------------------------------------------------- |
+| From scratch | `example_from_scratch` | Empty workspace → full generated output                                 |
 | Incremental  | `example_incremental`  | Existing workspace → new component added, affected parent files rewired |
-| Match        | (same-state input)     | Re-running on matching workspace produces no changes         |
-| Delete       | runtime temp workspace | Files no longer emitted by the current input are removed     |
-| Modify       | runtime temp workspace | Drifted generated files are rewritten, matched siblings stay untouched |
+| Match        | (same-state input)     | Re-running on matching workspace produces no changes                    |
+| Delete       | runtime temp workspace | Files no longer emitted by the current input are removed                |
+| Modify       | runtime temp workspace | Drifted generated files are rewritten, matched siblings stay untouched  |
 
 ### Expected test assertions
 
