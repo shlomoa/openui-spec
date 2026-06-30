@@ -6,9 +6,10 @@ import { test } from "node:test";
 import { buildUiModel } from "../src/ir/build-ir";
 import type { UiPage } from "../src/ir/ui-model";
 import { run } from "../src/cli/main";
+import { createCatalogIndex } from "../src/spec/catalog-index";
 import type { OpenUiElement } from "../src/spec/openui-spec.types";
 import { SpecValidationError } from "../src/validation/diagnostics";
-import { validateOpenUiSpec } from "../src/validation/validate-spec";
+import { validateOpenUiCatalog, validateOpenUiSpec } from "../src/validation/validate-spec";
 import { cleanupTestOutput } from "./test-output";
 
 const ANGULAR_GENERATOR_ROOT =
@@ -16,7 +17,16 @@ const ANGULAR_GENERATOR_ROOT =
     ? path.resolve(__dirname, "..", "..")
     : path.resolve(__dirname, "..");
 const REPOSITORY_ROOT = path.resolve(ANGULAR_GENERATOR_ROOT, "..", "..", "..");
+const CATALOG_FIXTURE = path.join(REPOSITORY_ROOT, "openui.json");
 const FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "minimal-openui.json");
+const DIALOG_FIXTURE = path.join(
+  ANGULAR_GENERATOR_ROOT,
+  "tests",
+  "fixtures",
+  "dialog",
+  "input_dialog",
+  "dialog.example.json",
+);
 const TEST_OUTPUT_ROOT = path.join(REPOSITORY_ROOT, "tmp");
 const TEST_OUTPUT_PREFIX = path.join(TEST_OUTPUT_ROOT, "openui-angular-generator-");
 
@@ -41,10 +51,54 @@ function firstChild(node: OpenUiElement, message: string): OpenUiElement {
   return child;
 }
 
+function assertNoScopeDocumentAttrs(node: OpenUiElement, nodePath = "root"): void {
+  assert.equal(
+    node.attrs?.scopeDocument,
+    undefined,
+    `${nodePath} must not carry attrs.scopeDocument in concrete input fixtures.`,
+  );
+
+  (node.children ?? []).forEach((child, index) => assertNoScopeDocumentAttrs(child, `${nodePath}.children[${index}]`));
+}
+
 function specValidationMessage(error: unknown): string {
   assert.ok(error instanceof SpecValidationError);
   return error.message;
 }
+
+test("treats the dialog fixture as concrete input without catalog traceability attrs", async () => {
+  const fixture = JSON.parse(await readFile(DIALOG_FIXTURE, "utf8"));
+
+  // Artifact roles are defined by spec/README.md, section
+  // "Specification artifacts: grammar vs. catalog": concrete input nodes do not
+  // carry generated catalog traceability such as attrs.scopeDocument.
+  assert.equal(fixture.type, "WidgetExample");
+  assertNoScopeDocumentAttrs(fixture);
+});
+
+test("validates the dialog fixture as concrete input against the OpenUI catalog", async () => {
+  const fixture = JSON.parse(await readFile(DIALOG_FIXTURE, "utf8"));
+  const catalog = createCatalogIndex(JSON.parse(await readFile(CATALOG_FIXTURE, "utf8")));
+
+  assert.doesNotThrow(() => validateOpenUiSpec(fixture, { catalog }));
+  await assert.doesNotReject(() => run(["validate", "--input", DIALOG_FIXTURE]));
+});
+
+test("rejects unknown non-native concrete input types during catalog validation", async () => {
+  const fixture = JSON.parse(await readFile(DIALOG_FIXTURE, "utf8"));
+  const catalog = createCatalogIndex(JSON.parse(await readFile(CATALOG_FIXTURE, "utf8")));
+  fixture.children[0].type = "MissingWidget";
+
+  assert.throws(
+    () => validateOpenUiSpec(fixture, { catalog }),
+    (error: unknown) => {
+      assert.match(specValidationMessage(error), /root\.children\[0\]\.type: Unknown OpenUI type 'MissingWidget'\./);
+      return true;
+    },
+  );
+});
+
+test.todo("generates Angular Material dialog output from the concrete dialog fixture");
 
 test("builds the UI model from canonical scope-tree OpenUI nodes", async () => {
   const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));
@@ -228,7 +282,7 @@ test("validates canonical root values, attrs, and scoped document uniqueness", a
   };
 
   assert.throws(
-    () => validateOpenUiSpec(fixture),
+    () => validateOpenUiCatalog(fixture),
     (error: unknown) => {
       assert.match(specValidationMessage(error), /Attribute values must be strings or null/);
       return true;
@@ -245,7 +299,7 @@ test("validates canonical root values, attrs, and scoped document uniqueness", a
   };
 
   assert.throws(
-    () => validateOpenUiSpec(duplicateFixture),
+    () => validateOpenUiCatalog(duplicateFixture),
     (error: unknown) => {
       assert.match(specValidationMessage(error), /Duplicate scope document 'scopes\/Controls\/scope\.md'/);
       return true;

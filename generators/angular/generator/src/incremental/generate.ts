@@ -1,4 +1,5 @@
 import { buildUiModel } from "../ir/build-ir";
+import { loadDefaultOpenUiCatalog } from "../spec/catalog-index";
 import { loadOpenUiDocument } from "../spec/load-spec";
 import { emitAngularProject } from "../targets/angular/emit-angular-project";
 import { mapToAngularProject } from "../targets/angular/map-to-angular";
@@ -15,7 +16,8 @@ import { readWorkspaceIndex } from "./workspace-index";
  */
 export async function emitAngularFilesFromInput(inputPath: string): Promise<GeneratedFile[]> {
   const input = await loadOpenUiDocument(inputPath);
-  validateOpenUiSpec(input);
+  const catalog = await loadDefaultOpenUiCatalog(inputPath);
+  validateOpenUiSpec(input, { catalog });
   const uiModel = buildUiModel(input);
   const angularProject = mapToAngularProject(uiModel);
   return emitAngularProject(angularProject);
@@ -35,7 +37,8 @@ export async function emitAngularFilesFromInput(inputPath: string): Promise<Gene
  */
 export async function generateIncrementally(inputPath: string, outDirectory: string): Promise<ApplyResult> {
   const input = await loadOpenUiDocument(inputPath);
-  validateOpenUiSpec(input);
+  const catalog = await loadDefaultOpenUiCatalog(inputPath);
+  validateOpenUiSpec(input, { catalog });
 
   const uiModel = buildUiModel(input);
   const angularProject = mapToAngularProject(uiModel);

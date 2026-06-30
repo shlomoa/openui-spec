@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { loadDefaultOpenUiCatalog } from "../spec/catalog-index";
 import { loadOpenUiDocument } from "../spec/load-spec";
 import { validateOpenUiSpec } from "../validation/validate-spec";
 import { generateIncrementally } from "../incremental/generate";
@@ -12,7 +13,8 @@ interface CliOptions {
 export async function run(argv: string[] = process.argv.slice(2)): Promise<void> {
   const options = parseArgs(argv);
   const input = await loadOpenUiDocument(options.inputPath);
-  validateOpenUiSpec(input);
+  const catalog = await loadDefaultOpenUiCatalog(options.inputPath);
+  validateOpenUiSpec(input, { catalog });
 
   if (options.command === "validate") {
     return;
