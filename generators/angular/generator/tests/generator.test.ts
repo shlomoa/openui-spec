@@ -98,7 +98,36 @@ test("rejects unknown non-native concrete input types during catalog validation"
   );
 });
 
-test.todo("generates Angular Material dialog output from the concrete dialog fixture");
+test(
+  "generates Angular Material dialog output from the concrete dialog fixture",
+  { todo: "Requires concrete-input IR and Angular dialog emission from Steps 5 and 6." },
+  async () => {
+    const outDir = await createTestOutputDirectory();
+    try {
+      await run(["generate", "--input", DIALOG_FIXTURE, "--out", outDir]);
+
+      const component = await readFile(
+        path.join(outDir, "src/components/app-confirm-dialog/app-confirm-dialog.component.ts"),
+        "utf8",
+      );
+      assert.match(component, /MatDialogTitle/);
+      assert.match(component, /MatDialogContent/);
+      assert.match(component, /MatDialogActions/);
+      assert.match(component, /MatButtonModule/);
+
+      const template = await readFile(
+        path.join(outDir, "src/components/app-confirm-dialog/app-confirm-dialog.component.html"),
+        "utf8",
+      );
+      assert.match(template, /Delete item\?/);
+      assert.match(template, /This action cannot be undone\./);
+      assert.match(template, /close\('cancel'\)/);
+      assert.match(template, /close\('confirm'\)/);
+    } finally {
+      await cleanupTestOutput(outDir);
+    }
+  },
+);
 
 test("builds the UI model from canonical scope-tree OpenUI nodes", async () => {
   const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));

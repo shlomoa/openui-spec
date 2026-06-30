@@ -3,7 +3,7 @@ import { loadDefaultOpenUiCatalog } from "../spec/catalog-index";
 import { loadOpenUiDocument } from "../spec/load-spec";
 import { emitAngularProject } from "../targets/angular/emit-angular-project";
 import { mapToAngularProject } from "../targets/angular/map-to-angular";
-import { validateOpenUiSpec } from "../validation/validate-spec";
+import { validateOpenUiGeneratorInput } from "../validation/validate-spec";
 import type { GeneratedFile } from "../writers/file-writer";
 import { applyIncrementalPlan, type ApplyResult } from "./apply";
 import { buildSpecManifestationIndex } from "./classifier";
@@ -17,7 +17,7 @@ import { readWorkspaceIndex } from "./workspace-index";
 export async function emitAngularFilesFromInput(inputPath: string): Promise<GeneratedFile[]> {
   const input = await loadOpenUiDocument(inputPath);
   const catalog = await loadDefaultOpenUiCatalog(inputPath);
-  validateOpenUiSpec(input, { catalog });
+  validateOpenUiGeneratorInput(input, catalog);
   const uiModel = buildUiModel(input);
   const angularProject = mapToAngularProject(uiModel);
   return emitAngularProject(angularProject);
@@ -38,7 +38,7 @@ export async function emitAngularFilesFromInput(inputPath: string): Promise<Gene
 export async function generateIncrementally(inputPath: string, outDirectory: string): Promise<ApplyResult> {
   const input = await loadOpenUiDocument(inputPath);
   const catalog = await loadDefaultOpenUiCatalog(inputPath);
-  validateOpenUiSpec(input, { catalog });
+  validateOpenUiGeneratorInput(input, catalog);
 
   const uiModel = buildUiModel(input);
   const angularProject = mapToAngularProject(uiModel);

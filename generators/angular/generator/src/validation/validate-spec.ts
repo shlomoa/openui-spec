@@ -4,7 +4,7 @@ import {
   OpenUiCatalogIndex,
 } from "../spec/catalog-index";
 import { extractOpenUiScopeNodes } from "../spec/openui-sections";
-import type { OpenUiDocument } from "../spec/openui-spec.types";
+import type { OpenUiDocument, OpenUiElement } from "../spec/openui-spec.types";
 import { type Diagnostic, SpecValidationError } from "./diagnostics";
 
 export interface ValidateOpenUiSpecOptions {
@@ -52,6 +52,18 @@ export function validateOpenUiSpec(document: OpenUiDocument, options: ValidateOp
 
 export function validateOpenUiCatalog(document: OpenUiDocument): void {
   validateOpenUiSpec(document, { mode: "catalog" });
+}
+
+export function validateOpenUiGeneratorInput(
+  document: OpenUiDocument,
+  catalog: OpenUiCatalogIndex | OpenUiDocument,
+): void {
+  if (extractOpenUiScopeNodes(document).length > 0) {
+    validateOpenUiCatalog(document);
+    return;
+  }
+
+  validateOpenUiSpec(document, { catalog });
 }
 
 function validateElement(
@@ -161,7 +173,7 @@ function validateCatalogReferences(
 }
 
 function validateCatalogReference(
-  node: OpenUiDocument,
+  node: OpenUiElement,
   path: string,
   isRoot: boolean,
   catalog: OpenUiCatalogIndex,
