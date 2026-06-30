@@ -48,13 +48,13 @@ The following table maps scenarios to test fixtures:
 - folder under:
   `generators/angular/generator/tests/fixtures/`
 
-1.2. **Inventory source example JSON files**
+  1.2. **Inventory source example JSON files**
 
 - Find every `spec/examples/**/*.example.json` file.
 - Treat these files as the source examples for Angular generator test fixtures.
 - Do not include mirrored `site/examples` files.
 
-1.3. **Create one fixture workspace pair per example discovered during inventory**
+  1.3. **Create one fixture workspace pair per example discovered during inventory**
 
 - For each `<object_name>.example.json`, create:
   - a folder named `<object_name>`
@@ -111,16 +111,16 @@ The following table maps scenarios to test fixtures:
 - copy content from the input folder to the output, for example:
   copy `generators/angular/generator/tests/fixtures/dialog/input_dialog/*` `generators/angular/generator/tests/fixtures/dialog/output_dialog/`
 
-5.2. **Add app validation tests**
+  5.2. **Add app validation tests**
 
 - Add validation tests to the output fixture workspace.
 - These tests should validate that the generator produced the expected results.
 
-5.3. **Run the generator**
+  5.3. **Run the generator**
 
 - In the output folder run the generator given using the input example JSON as input.
 
-5.4. **Run the generator validation** - Run the generator validation tests
+  5.4. **Run the generator validation** - Run the generator validation tests
 
 ### Step 6 - Populate all output fixture workspaces
 
@@ -129,7 +129,7 @@ The following table maps scenarios to test fixtures:
 - copy content from the input folder to the output, for example:
   copy `generators/angular/generator/tests/fixtures/<object_name>/input_<object_name>/*` `generators/angular/generator/tests/fixtures/<object_name>/output_<object_name>/`
 
-6.2. **Add app validation tests**
+  6.2. **Add app validation tests**
 
 - Add validation tests to the output fixture workspace.
 - These tests should validate that the generator produced the expected results.
@@ -140,7 +140,7 @@ The following table maps scenarios to test fixtures:
 
 - run generator in `generators/angular/generator/tests/fixtures/dialog/output_dialog/`
 
-7.2. **Run the generator validation**
+  7.2. **Run the generator validation**
 
 - Run generator validation tests
 
@@ -150,7 +150,7 @@ The following table maps scenarios to test fixtures:
 
 - run generator in `generators/angular/generator/tests/fixtures/<object_name>/output_<object_name>/`
 
-8.2. **Run the generator validation**
+  8.2. **Run the generator validation**
 
 - Run generator validation tests
 
