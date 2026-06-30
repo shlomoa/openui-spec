@@ -4,7 +4,7 @@ This repository contains a technology-independent specification for a Web UI fra
 
 ## Where to go
 
-- **Using the specification** — read the published docs on ReadTheDocs: <https://angular-django2.readthedocs.io/>
+- **Using the specification** — read the published docs on ReadTheDocs: <https://openui5-spec.readthedocs.io/>
 - **Contributing / developing** — start at the developer hub: [docs/README.md](docs/README.md)
 
 ## Repository map

@@ -1,12 +1,7 @@
 #!/usr/bin/env node
 import { loadOpenUiSpec } from "../spec/load-spec";
-import { buildUiModel } from "../ir/build-ir";
-import { mapToAngularProject } from "../targets/angular/map-to-angular";
-import { emitAngularProject } from "../targets/angular/emit-angular-project";
 import { validateOpenUiSpec } from "../validation/validate-spec";
-import { writeGeneratedFiles } from "../writers/file-writer";
-import { buildSpecManifestationIndex } from "../incremental/classifier";
-import { reconcileGeneratedFiles } from "../incremental/reconcile";
+import { generateIncrementally } from "../incremental/generate";
 
 interface CliOptions {
   command: "generate" | "validate";
@@ -27,14 +22,7 @@ export async function run(argv: string[] = process.argv.slice(2)): Promise<void>
     throw new Error("Missing required --out option for generate.");
   }
 
-  const uiModel = buildUiModel(spec);
-  const angularProject = mapToAngularProject(uiModel);
-  const generatedFiles = emitAngularProject(angularProject);
-
-  const manifestationIndex = buildSpecManifestationIndex(spec);
-  const plan = await reconcileGeneratedFiles(options.outPath, generatedFiles, manifestationIndex);
-
-  await writeGeneratedFiles(options.outPath, plan.toWrite);
+  await generateIncrementally(options.specPath, options.outPath);
 }
 
 function parseArgs(argv: string[]): CliOptions {
