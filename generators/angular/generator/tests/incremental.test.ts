@@ -67,6 +67,17 @@ async function applicationOnlyInput(applicationChildIds: string[]): Promise<Open
     return child;
   });
 
+  return applicationInputWithChildren(selectedChildren);
+}
+
+async function applicationInputWithChildren(applicationChildren: OpenUiElement[]): Promise<OpenUiDocument> {
+  const fixture = JSON.parse(await readFile(FIXTURE, "utf8")) as OpenUiDocument;
+  const scopes = fixture.children?.[0];
+  assert.ok(scopes, "Expected fixture to include a Scopes root child.");
+
+  const application = scopes.children?.find((child) => child.id === "application");
+  assert.ok(application, "Expected fixture to include the Application scope.");
+
   return {
     ...fixture,
     children: [
@@ -75,11 +86,19 @@ async function applicationOnlyInput(applicationChildIds: string[]): Promise<Open
         children: [
           {
             ...application,
-            children: selectedChildren,
+            children: applicationChildren,
           },
         ],
       },
     ],
+  };
+}
+
+async function emptyRootInput(): Promise<OpenUiDocument> {
+  const fixture = JSON.parse(await readFile(FIXTURE, "utf8")) as OpenUiDocument;
+  return {
+    ...fixture,
+    children: [],
   };
 }
 
@@ -266,6 +285,216 @@ test("incremental delete — removes a child and rewires generated parent files"
     assert.ok(updatedResult.matched.includes("package.json"), "Unrelated project files should match.");
     assert.ok(updatedResult.matched.includes("src/app/pages/routing/routing.page.ts"), "Remaining sibling page should match.");
     for (const matchedPath of ["package.json", "src/app/pages/routing/routing.page.ts"] as const) {
+      const mtimeAfter = await fileModifiedTime(path.join(outDir, matchedPath));
+      assert.equal(mtimeAfter, initialMtimes.get(matchedPath), `Matched file ${matchedPath} must not be rewritten.`);
+    }
+  } finally {
+    await cleanupTestOutput(tempRoot);
+  }
+});
+
+test("incremental delete — empty JSON removes every previously generated child page", async () => {
+  const tempRoot = await createTestOutputDirectory();
+  try {
+    const outDir = path.join(tempRoot, "workspace");
+    const initialInput = await writeJsonFile(
+      path.join(tempRoot, "inputs", "application-routing-navigation.json"),
+      await applicationOnlyInput(["routing", "navigation"]),
+    );
+    const emptyInput = await writeJsonFile(path.join(tempRoot, "inputs", "empty-root.json"), await emptyRootInput());
+
+    const initialResult = await generateIncrementally(initialInput, outDir);
+    assert.ok(initialResult.added.includes("src/app/pages/application/application.page.ts"));
+    assert.ok(initialResult.added.includes("src/app/pages/routing/routing.page.ts"));
+    assert.ok(initialResult.added.includes("src/app/pages/navigation/navigation.page.ts"));
+
+    const emptyResult = await generateIncrementally(emptyInput, outDir);
+
+    const deletedPageFiles = ["application", "routing", "navigation"].flatMap((route) => [
+      `src/app/pages/${route}/${route}.page.ts`,
+      `src/app/pages/${route}/${route}.page.html`,
+      `src/app/pages/${route}/${route}.page.scss`,
+    ]);
+    assert.equal(emptyResult.added.length, 0);
+    assert.deepEqual(
+      [...emptyResult.deleted].sort(),
+      [...deletedPageFiles, "src/app/application-structure.model.ts"].sort(),
+    );
+
+    for (const deletedPath of deletedPageFiles) {
+      await assert.rejects(stat(path.join(outDir, deletedPath)), `Expected ${deletedPath} to be deleted.`);
+    }
+    await assert.rejects(stat(path.join(outDir, "src/app/application-structure.model.ts")));
+    await assert.rejects(stat(path.join(outDir, "src/app/pages")), "Empty pages directory should be pruned.");
+
+    const routes = await readFile(path.join(outDir, "src/app/app.routes.ts"), "utf8");
+    assert.doesNotMatch(routes, /path: 'application'/);
+    assert.doesNotMatch(routes, /path: 'routing'/);
+    assert.doesNotMatch(routes, /path: 'navigation'/);
+    assert.match(routes, /redirectTo: ''/);
+
+    const appComponent = await readFile(path.join(outDir, "src/app/app.component.ts"), "utf8");
+    assert.doesNotMatch(appComponent, /APPLICATION_STRUCTURE/);
+    assert.doesNotMatch(appComponent, /routerLink="\/application"/);
+    assert.doesNotMatch(appComponent, /routerLink="\/routing"/);
+    assert.doesNotMatch(appComponent, /routerLink="\/navigation"/);
+
+    assert.ok(emptyResult.matched.includes("package.json"), "Unrelated project files should match.");
+    assert.ok(emptyResult.modified.includes("src/app/app.routes.ts"), "Routes should be rewired for an empty page set.");
+    assert.ok(emptyResult.modified.includes("src/app/app.component.ts"), "Shell navigation should be rewired for an empty page set.");
+  } finally {
+    await cleanupTestOutput(tempRoot);
+  }
+});
+
+test("simple modification — renaming a child deletes the old route, adds the new route, and rewires parents", async () => {
+  const tempRoot = await createTestOutputDirectory();
+  try {
+    const outDir = path.join(tempRoot, "workspace");
+    const initialSpec = await applicationOnlyInput(["routing", "navigation"]);
+    const application = initialSpec.children?.[0]?.children?.[0];
+    assert.ok(application, "Expected generated test spec to include the Application scope.");
+    const routing = application.children?.find((child) => child.id === "routing");
+    const navigation = application.children?.find((child) => child.id === "navigation");
+    assert.ok(routing, "Expected Application scope to include routing.");
+    assert.ok(navigation, "Expected Application scope to include navigation.");
+
+    const renamedNavigation: OpenUiElement = {
+      ...navigation,
+      id: "siteNavigation",
+      attrs: {
+        ...navigation.attrs,
+        title: "Site navigation",
+      },
+    };
+
+    const initialInput = await writeJsonFile(path.join(tempRoot, "inputs", "application-navigation.json"), initialSpec);
+    const renamedInput = await writeJsonFile(
+      path.join(tempRoot, "inputs", "application-site-navigation.json"),
+      await applicationInputWithChildren([routing, renamedNavigation]),
+    );
+
+    const initialResult = await generateIncrementally(initialInput, outDir);
+    assert.ok(initialResult.added.includes("src/app/pages/navigation/navigation.page.ts"));
+    assert.equal(initialResult.modified.length, 0);
+    assert.equal(initialResult.deleted.length, 0);
+
+    const initialEmittedPaths = (await emitAngularFilesFromInput(initialInput)).map((file) => file.path).sort();
+    const initialMtimes = await fileModifiedTimes(outDir, initialEmittedPaths);
+
+    const renamedResult = await generateIncrementally(renamedInput, outDir);
+
+    const oldNavigationFiles = [
+      "src/app/pages/navigation/navigation.page.ts",
+      "src/app/pages/navigation/navigation.page.html",
+      "src/app/pages/navigation/navigation.page.scss",
+    ];
+    const newSiteNavigationFiles = [
+      "src/app/pages/site-navigation/site-navigation.page.ts",
+      "src/app/pages/site-navigation/site-navigation.page.html",
+      "src/app/pages/site-navigation/site-navigation.page.scss",
+    ];
+    assert.deepEqual([...renamedResult.deleted].sort(), oldNavigationFiles.sort());
+    assert.deepEqual([...renamedResult.added].sort(), newSiteNavigationFiles.sort());
+
+    for (const oldPath of oldNavigationFiles) {
+      await assert.rejects(stat(path.join(outDir, oldPath)), `Expected ${oldPath} to be deleted after rename.`);
+    }
+    await assert.rejects(stat(path.join(outDir, "src/app/pages/navigation")));
+    for (const newPath of newSiteNavigationFiles) {
+      await assert.doesNotReject(readFile(path.join(outDir, newPath), "utf8"));
+    }
+
+    const modifiedForRewiring = [
+      "src/app/app.component.ts",
+      "src/app/app.routes.ts",
+      "src/app/application-structure.model.ts",
+      "src/app/pages/application/application.page.html",
+    ];
+    assert.deepEqual([...renamedResult.modified].sort(), modifiedForRewiring.sort());
+
+    const routes = await readFile(path.join(outDir, "src/app/app.routes.ts"), "utf8");
+    assert.doesNotMatch(routes, /path: 'navigation'/);
+    assert.match(routes, /path: 'site-navigation'/);
+    const appComponent = await readFile(path.join(outDir, "src/app/app.component.ts"), "utf8");
+    assert.doesNotMatch(appComponent, /routerLink="\/navigation"/);
+    assert.match(appComponent, /routerLink="\/site-navigation"/);
+    assert.match(appComponent, />Site navigation<\/a>/);
+    const applicationPage = await readFile(path.join(outDir, "src/app/pages/application/application.page.html"), "utf8");
+    assert.doesNotMatch(applicationPage, /Navigation: User-facing navigation structures that expose routes, pages, and views\./);
+    assert.match(applicationPage, /Site navigation: User-facing navigation structures that expose routes, pages, and views\./);
+
+    assert.ok(renamedResult.matched.includes("package.json"), "Unrelated project files should match.");
+    assert.ok(renamedResult.matched.includes("src/app/pages/routing/routing.page.ts"), "Unchanged sibling page should match.");
+    for (const matchedPath of ["package.json", "src/app/pages/routing/routing.page.ts"] as const) {
+      const mtimeAfter = await fileModifiedTime(path.join(outDir, matchedPath));
+      assert.equal(mtimeAfter, initialMtimes.get(matchedPath), `Matched file ${matchedPath} must not be rewritten.`);
+    }
+  } finally {
+    await cleanupTestOutput(tempRoot);
+  }
+});
+
+test("complex modification — changing a child attribute rewrites only affected generated content", async () => {
+  const tempRoot = await createTestOutputDirectory();
+  try {
+    const outDir = path.join(tempRoot, "workspace");
+    const initialSpec = await applicationOnlyInput(["routing", "navigation"]);
+    const application = initialSpec.children?.[0]?.children?.[0];
+    assert.ok(application, "Expected generated test spec to include the Application scope.");
+    const routing = application.children?.find((child) => child.id === "routing");
+    const navigation = application.children?.find((child) => child.id === "navigation");
+    assert.ok(routing, "Expected Application scope to include routing.");
+    assert.ok(navigation, "Expected Application scope to include navigation.");
+
+    const updatedPurpose = "User-facing navigation structures with a revised incremental-generation summary.";
+    const updatedNavigation: OpenUiElement = {
+      ...navigation,
+      attrs: {
+        ...navigation.attrs,
+        purpose: updatedPurpose,
+      },
+    };
+
+    const initialInput = await writeJsonFile(path.join(tempRoot, "inputs", "application-navigation.json"), initialSpec);
+    const updatedInput = await writeJsonFile(
+      path.join(tempRoot, "inputs", "application-navigation-updated-purpose.json"),
+      await applicationInputWithChildren([routing, updatedNavigation]),
+    );
+
+    const initialResult = await generateIncrementally(initialInput, outDir);
+    assert.ok(initialResult.added.includes("src/app/pages/navigation/navigation.page.html"));
+    assert.equal(initialResult.modified.length, 0);
+    assert.equal(initialResult.deleted.length, 0);
+
+    const initialEmittedPaths = (await emitAngularFilesFromInput(initialInput)).map((file) => file.path).sort();
+    const initialMtimes = await fileModifiedTimes(outDir, initialEmittedPaths);
+
+    const updatedResult = await generateIncrementally(updatedInput, outDir);
+
+    const modifiedForAttributeChange = [
+      "src/app/pages/application/application.page.html",
+      "src/app/pages/navigation/navigation.page.html",
+    ];
+    assert.equal(updatedResult.added.length, 0);
+    assert.equal(updatedResult.deleted.length, 0);
+    assert.deepEqual([...updatedResult.modified].sort(), modifiedForAttributeChange.sort());
+
+    const navigationPage = await readFile(path.join(outDir, "src/app/pages/navigation/navigation.page.html"), "utf8");
+    assert.ok(navigationPage.includes(updatedPurpose));
+    const applicationPage = await readFile(path.join(outDir, "src/app/pages/application/application.page.html"), "utf8");
+    assert.match(applicationPage, /Navigation: User-facing navigation structures with a revised incremental-generation summary\./);
+
+    for (const matchedPath of [
+      "package.json",
+      "src/app/app.routes.ts",
+      "src/app/app.component.ts",
+      "src/app/pages/routing/routing.page.ts",
+      "src/app/pages/routing/routing.page.html",
+      "src/app/pages/navigation/navigation.page.ts",
+      "src/app/pages/navigation/navigation.page.scss",
+    ] as const) {
+      assert.ok(updatedResult.matched.includes(matchedPath), `Expected ${matchedPath} to match.`);
       const mtimeAfter = await fileModifiedTime(path.join(outDir, matchedPath));
       assert.equal(mtimeAfter, initialMtimes.get(matchedPath), `Matched file ${matchedPath} must not be rewritten.`);
     }

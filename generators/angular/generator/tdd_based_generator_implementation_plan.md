@@ -39,22 +39,26 @@ Recommended test cases:
    - Expect emptied directories pruned.
    - Covered by `tests/incremental.test.ts`: `incremental delete — removes a child and rewires generated parent files`.
 
-1.5. **Incremental delete — empty JSON**
+1.5. ✅ **Incremental delete — empty JSON**
    - Start with generated workspace.
    - Run with valid root JSON containing no generated children.
    - Expect previously generated owned files removed.
    - Confirm no partial leftovers in component/page directories.
+   - Covered by `tests/incremental.test.ts`: `incremental delete — empty JSON removes every previously generated child page`.
+   - Green step: allow structurally valid empty root documents for incremental deletion while preserving validation for non-empty trees with no scoped nodes.
 
-1.6. **Simple modification / rename**
+1.6. ✅ **Simple modification / rename**
    - Change a child selector/route/name.
    - Expect old path deleted and new path added.
    - Expect parent references updated.
    - This matches the issue’s “simple rename” behavior.
+   - Covered by `tests/incremental.test.ts`: `simple modification — renaming a child deletes the old route, adds the new route, and rewires parents`.
 
-1.7. **Complex modification**
+1.7. ✅ **Complex modification**
    - Change a type/attribute/child shape that affects generated output content but not path.
    - Expect affected files modified.
    - Expect unaffected siblings matched and timestamps unchanged.
+   - Covered by `tests/incremental.test.ts`: `complex modification — changing a child attribute rewrites only affected generated content`.
 
 1.8. **Validation failure is atomic**
    - Generate valid workspace.
@@ -68,7 +72,14 @@ Recommended test cases:
    - Generate incrementally.
    - Assert those directories are neither deleted nor considered part of the plan.
 
-1.10. **Classifier coverage for full output**
+1.10. **Comparator/reconciler coverage for full output**
+   - Build the desired emitted-file set for an input JSON.
+   - Index an existing workspace generated from a different input JSON.
+   - Run the comparator/reconciler directly, without applying the plan.
+   - Assert the plan classifies Add / Match / Modify / Delete decisions correctly and attributes each decision to classifier output.
+   - This proves the comparator required by issue #97 is useful independently of the apply layer.
+
+1.11. **Classifier coverage for full output**
    - For every generated page/component file, assert classification is expected.
    - For project-level files, assert `application` or documented behavior.
    - This proves the classifier is actually useful for the full generator, not just isolated fixtures.
@@ -139,9 +150,10 @@ Keep `spec/README.md` as the SSOT for the incremental-generation algorithm; othe
 3. Add full-pipeline tests for **rename** and **complex content modification**.
 4. Add atomicity/validation test for invalid root/no root.
 5. Add workspace-index ignore test for generated-app build directories.
-6. Refactor helper code only after repeated setup becomes painful.
-7. Update generator docs/test plan if needed.
-8. Run full validation.
+6. Add explicit comparator/reconciler and classifier coverage tests for full output.
+7. Refactor helper code only after repeated setup becomes painful.
+8. Update generator docs/test plan if needed.
+9. Run full validation.
 
 ## Validation target
 

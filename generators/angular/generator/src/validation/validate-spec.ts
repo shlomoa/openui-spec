@@ -109,6 +109,10 @@ function validateElement(
 function validateScopeCoverage(document: OpenUiDocument, diagnostics: Diagnostic[]): void {
   const scopeNodes = extractOpenUiScopeNodes(document);
   if (scopeNodes.length === 0) {
+    if ((document.children ?? []).length === 0) {
+      return;
+    }
+
     diagnostics.push({ path: "root.children", message: "Expected at least one scoped OpenUI node with attrs.scopeDocument." });
     return;
   }

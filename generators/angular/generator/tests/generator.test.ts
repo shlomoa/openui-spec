@@ -259,3 +259,14 @@ test("allows any valid OpenUI type at the document root", async () => {
 
   assert.doesNotThrow(() => validateOpenUiSpec(fixture));
 });
+
+test("allows a valid empty root document for incremental deletion", () => {
+  assert.doesNotThrow(() =>
+    validateOpenUiSpec({
+      id: "root",
+      version: "0.0.1",
+      type: "html",
+      children: [],
+    }),
+  );
+});
