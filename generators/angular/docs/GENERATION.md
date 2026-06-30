@@ -212,14 +212,14 @@ specification layer.
 | `targets/angular/emit-utils.ts`          | Shared HTML and TypeScript string-escaping helpers for the emitters.                                                                                                                          |
 | `writers/file-writer.ts`                 | Defines the `GeneratedFile` record shape shared by the emitters and the incremental apply layer.                                                                                              |
 | `writers/safe-write.ts`                  | Prevents path traversal by refusing to write outside the requested output directory, and prunes directories emptied by deletions.                                                             |
-| `incremental/classifier.ts`              | Indexes an input document's component and page manifestations and classifies a workspace folder/file back to the spec node that owns it.                                                      |
+| `incremental/classifier.ts`              | Indexes an input document's component, scoped-page, and known application-level manifestations and classifies a workspace folder/file back to the spec node or application artifact that owns it. |
 | `incremental/workspace-index.ts`         | Reads an existing workspace into a path→content index, ignoring `node_modules`/`dist`/`.git`/`.angular`; a missing directory is an empty workspace.                                           |
 | `incremental/reconcile.ts`               | Classifies emitted files against the existing workspace and plans per-file Add / Match / Modify / Delete actions for the incremental generate flow.                                           |
 | `incremental/apply.ts`                   | Applies a reconciliation plan through the guarded writer: writes Add/Modify files, removes Delete files, and leaves Match files untouched.                                                    |
 | `incremental/generate.ts`                | Orchestrates the incremental pipeline: emit, index the workspace, reconcile, and apply, degrading to generation from scratch for an empty workspace.                                          |
-| `tests/classifier.test.ts`               | Verifies the incremental classifier maps fixture workspace artifacts back to their spec nodes.                                                                                                |
-| `tests/reconcile.test.ts`                | Verifies the reconciler's Add / Match / Modify decisions against the incremental fixtures, including parent re-wiring and from-scratch.                                                       |
-| `tests/incremental.test.ts`              | Verifies the end-to-end incremental flow over the scope-tree fixture: from-scratch Add, no-op Match, Delete with directory pruning, selective Modify, and out-of-tree write/delete rejection. |
+| `tests/classifier.test.ts`               | Verifies the incremental classifier maps generated component fixtures, full-output routed page files, and application-level project files to the expected ownership classification.             |
+| `tests/reconcile.test.ts`                | Verifies the reconciler's Add / Match / Modify / Delete decisions against the incremental fixtures, including parent re-wiring and from-scratch.                                               |
+| `tests/incremental.test.ts`              | Verifies the end-to-end incremental flow over the scope-tree fixture: from-scratch Add, no-op Match, Add/Delete/Modify changes, validation atomicity, ignored workspace dirs, full-output planning, and out-of-tree write/delete rejection. |
 | `tests/generator.test.ts`                | Verifies CLI generation, Angular Material dependencies, routes, feature-specific page output, and compliance validation diagnostics.                                                          |
 
 ## Core design rule
@@ -377,14 +377,22 @@ The reconciliation step is driven by the classifier in
 declared manifestation by its workspace footprint:
 
 - a `ComponentTemplate` node with `attrs.selector` owns
-  `src/components/<selector>/<selector>.component.{ts,html,scss}`, and
-- a page scope (route) owns `src/app/pages/<route>/<route>.page.{ts,html,scss}`.
+  `src/components/<selector>/<selector>.component.{ts,html,scss}`,
+- each scoped OpenUI node with `attrs.scopeDocument` owns the routed page files
+  emitted from that node,
+  `src/app/pages/<route>/<route>.page.{ts,html,scss}`,
+- explicit `PageScope` nodes remain supported for page-manifestation fixtures,
+  and
+- known generator-owned project files such as `package.json`, `angular.json`,
+  `tsconfig.json`, `src/main.ts`, `src/index.html`, `src/styles.scss`,
+  `src/app/app.component.ts`, `src/app/app.routes.ts`, and generated OpenUI
+  support models/services classify as application-level artifacts.
 
 `classifyWorkspacePath` then maps a workspace folder, file set, or single file
-back to the owning spec node (`id`, `type`, `selector`, `route`). Artifacts the
-spec does not own are reported as `unknown`, and the workspace `src` root is
-reported as `application`. That classification is what attributes each generated
-file to "the spec that generated this part".
+back to the owning spec node (`id`, `type`, `selector`, `route`) or application
+artifact. Artifacts the generator does not own are reported as `unknown`. That
+classification is what attributes each generated file to "the spec that
+generated this part".
 
 ### Workspace index
 

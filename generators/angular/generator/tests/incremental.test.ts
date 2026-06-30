@@ -102,6 +102,18 @@ async function emptyRootInput(): Promise<OpenUiDocument> {
   };
 }
 
+function applicationScope(document: OpenUiDocument): OpenUiElement {
+  const application = document.children?.[0]?.children?.[0];
+  assert.ok(application, "Expected generated test spec to include the Application scope.");
+  return application;
+}
+
+function applicationChild(document: OpenUiDocument, childId: string): OpenUiElement {
+  const child = applicationScope(document).children?.find((candidate) => candidate.id === childId);
+  assert.ok(child, `Expected Application scope to include ${childId}.`);
+  return child;
+}
+
 test("from scratch — generates every emitted file as Add into an empty workspace", async () => {
   const outDir = await createTestOutputDirectory();
   try {
@@ -352,12 +364,8 @@ test("simple modification — renaming a child deletes the old route, adds the n
   try {
     const outDir = path.join(tempRoot, "workspace");
     const initialSpec = await applicationOnlyInput(["routing", "navigation"]);
-    const application = initialSpec.children?.[0]?.children?.[0];
-    assert.ok(application, "Expected generated test spec to include the Application scope.");
-    const routing = application.children?.find((child) => child.id === "routing");
-    const navigation = application.children?.find((child) => child.id === "navigation");
-    assert.ok(routing, "Expected Application scope to include routing.");
-    assert.ok(navigation, "Expected Application scope to include navigation.");
+    const routing = applicationChild(initialSpec, "routing");
+    const navigation = applicationChild(initialSpec, "navigation");
 
     const renamedNavigation: OpenUiElement = {
       ...navigation,
@@ -440,12 +448,8 @@ test("complex modification — changing a child attribute rewrites only affected
   try {
     const outDir = path.join(tempRoot, "workspace");
     const initialSpec = await applicationOnlyInput(["routing", "navigation"]);
-    const application = initialSpec.children?.[0]?.children?.[0];
-    assert.ok(application, "Expected generated test spec to include the Application scope.");
-    const routing = application.children?.find((child) => child.id === "routing");
-    const navigation = application.children?.find((child) => child.id === "navigation");
-    assert.ok(routing, "Expected Application scope to include routing.");
-    assert.ok(navigation, "Expected Application scope to include navigation.");
+    const routing = applicationChild(initialSpec, "routing");
+    const navigation = applicationChild(initialSpec, "navigation");
 
     const updatedPurpose = "User-facing navigation structures with a revised incremental-generation summary.";
     const updatedNavigation: OpenUiElement = {
@@ -603,16 +607,10 @@ test("comparator/reconciler coverage — plans full-output add match modify dele
   try {
     const outDir = path.join(tempRoot, "workspace");
     const initialSpec = await applicationOnlyInput(["routing"]);
-    const application = initialSpec.children?.[0]?.children?.[0];
-    assert.ok(application, "Expected generated test spec to include the Application scope.");
-    const routing = application.children?.find((child) => child.id === "routing");
-    assert.ok(routing, "Expected Application scope to include routing.");
+    const routing = applicationChild(initialSpec, "routing");
 
     const fullSpec = await applicationOnlyInput(["routing", "navigation"]);
-    const fullApplication = fullSpec.children?.[0]?.children?.[0];
-    assert.ok(fullApplication, "Expected full test spec to include the Application scope.");
-    const navigation = fullApplication.children?.find((child) => child.id === "navigation");
-    assert.ok(navigation, "Expected full Application scope to include navigation.");
+    const navigation = applicationChild(fullSpec, "navigation");
 
     const updatedRouting: OpenUiElement = {
       ...routing,

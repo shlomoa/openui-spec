@@ -90,7 +90,7 @@ Recommended test cases:
    - Covered by `tests/classifier.test.ts`: `classifies every generated full-output page and application file` and `classifies every generated component folder and file in the fixture workspace`.
    - Green step: classify known generator-owned project files as `application` artifacts instead of `unknown`.
 
-## 2. Run tests and confirm red-or-covered state
+## 2. ✅ Run tests and confirm red-or-covered state
 
 For each new test or small group of tests:
 
@@ -98,6 +98,8 @@ For each new test or small group of tests:
 - If the new test fails, confirm it fails for the expected reason before implementing.
 - If the new test passes immediately, mark the scenario as already implemented and covered.
 - Avoid implementation changes until a failing acceptance test proves a gap. Tiny red bar first when the gap exists; otherwise keep the green bar as regression coverage.
+
+Status: generator suite is green after the issue-level acceptance coverage (`39 passed / 0 failed`). The explicit comparator/classifier coverage exposed classifier gaps and drove the green steps recorded in 1.10 and 1.11.
 
 Validation command:
 
@@ -107,7 +109,7 @@ npm run test
 Pop-Location
 ```
 
-## 3. Implement only the smallest green step
+## 3. ✅ Implement only the smallest green step
 
 Implementation should stay inside the existing pipeline unless a test proves a gap:
 
@@ -127,7 +129,9 @@ A useful refactor, if tests need plan inspection repeatedly, would be a small pu
 
 Then `generateIncrementally` can call that helper and apply the result. This keeps tests precise without duplicating the load/validate/emit/index/reconcile sequence.
 
-## 4. Refactor after green
+Status: implementation changes stayed in the existing validation/incremental pipeline. No second comparator abstraction was added.
+
+## 4. ✅ Refactor after green
 
 After each green test group:
 
@@ -137,7 +141,9 @@ After each green test group:
 - Keep temp output under repo-local `tmp`, matching existing test conventions.
 - Preserve cross-platform path behavior; assert POSIX-style generated paths but use `path.join` for actual filesystem access.
 
-## 5. Update docs only after behavior is stable
+Status: repeated Application-scope test lookup code was folded into small local helpers while preserving repo-local `tmp` output and POSIX-style generated-path assertions.
+
+## 5. ✅ Update docs only after behavior is stable
 
 Once behavior is covered by tests, update docs only if the tests reveal behavior not already documented.
 
@@ -148,6 +154,8 @@ Likely docs to touch:
 - `generators/angular/generator/README.md`
 
 Keep `spec/README.md` as the SSOT for the incremental-generation algorithm; other docs should reference it rather than duplicate the scenario table.
+
+Status: Angular generator architecture, generator test plan, and generator README were updated for classifier/reconciler behavior without redefining `spec/README.md`.
 
 ## Suggested implementation order
 

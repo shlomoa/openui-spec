@@ -36,7 +36,18 @@ node dist/src/cli/main.js generate --input updated-input.json --out ./my-app
 
 The `--out` directory may already contain a previously generated workspace. The
 generator compares the specification tree against the existing workspace files
-and applies only the necessary changes (add, modify, or delete).
+and applies only the necessary changes:
+
+- **Add** files that the updated specification emits but the workspace lacks.
+- **Match** byte-identical files without rewriting them.
+- **Modify** generated files whose content changed.
+- **Delete** generated files the current specification no longer emits.
+
+Workspace indexing ignores non-contract directories (`node_modules`, `dist`,
+`.git`, `.angular`) so installed dependencies, build output, and VCS metadata are
+not planned for deletion. The reconciler classifies generated page/component
+files back to their owning OpenUI node and classifies known generator-owned
+project files as application-level artifacts.
 
 ### Test fixtures
 

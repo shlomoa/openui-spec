@@ -35,10 +35,13 @@ fixture:
 
 | Test                                                                          | Verifies                                                                                          |
 | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| classifies every generated full-output page and application file              | The classifier maps generated routed page files to scoped OpenUI nodes and project files to application-level ownership. |
+| classifies every generated component folder and file in the fixture workspace | Component-template fixture folders and generated component files classify back to their owning selectors. |
 | builds the UI model from canonical scope-tree OpenUI nodes                    | `buildUiModel` produces the expected `UiApplication` name, version, and ordered pages.            |
 | generates an Angular Material standalone app from canonical scope-tree OpenUI | The `generate` CLI emits the expected Angular project skeleton and Angular Material dependencies. |
 | generates scope-specific Angular Material details from the canonical tree     | Feature-specific page output (structure, layout, i18n, extension, etc.) is emitted per scope.     |
 | validates canonical root values, attrs, and scoped document uniqueness        | `validateOpenUiSpec` raises `SpecValidationError` for malformed root values and duplicate scopes. |
+| full-pipeline incremental acceptance scenarios                                | `generateIncrementally` covers from-scratch Add, no-op Match, incremental Add/Delete/Modify, validation atomicity, ignored workspace directories, and direct comparator planning. |
 
 Generator tests write output only to the repo-local, git-ignored `tmp/`
 directory (via `mkdtemp` under the repository root) — never to OS temp
@@ -126,13 +129,20 @@ generators/angular/generator/tests/fixtures/
 
 ### Scenarios to test
 
-| Scenario     | Fixture                | What is verified                                                        |
-| :----------- | :--------------------- | :---------------------------------------------------------------------- |
-| From scratch | `example_from_scratch` | Empty workspace → full generated output                                 |
-| Incremental  | `example_incremental`  | Existing workspace → new component added, affected parent files rewired |
-| Match        | (same-state input)     | Re-running on matching workspace produces no changes                    |
-| Delete       | runtime temp workspace | Files no longer emitted by the current input are removed                |
-| Modify       | runtime temp workspace | Drifted generated files are rewritten, matched siblings stay untouched  |
+| Scenario              | Fixture / setup        | What is verified                                                                 |
+| :-------------------- | :--------------------- | :------------------------------------------------------------------------------- |
+| From scratch          | `example_from_scratch` | Empty workspace → full generated output                                           |
+| Incremental           | `example_incremental`  | Existing workspace → new component added, affected parent files rewired           |
+| Match                 | same-state input       | Re-running on matching workspace produces no changes or timestamp churn           |
+| Add                   | runtime temp workspace | New scoped children add only their generated files plus required wiring changes   |
+| Delete one child      | runtime temp workspace | Removed scoped children delete generated files, prune empty dirs, and rewire refs |
+| Delete empty spec     | runtime temp workspace | Valid empty root removes previously generated owned child/page artifacts          |
+| Rename                | runtime temp workspace | Route/name changes delete the old path, add the new path, and update parents      |
+| Complex modification  | runtime temp workspace | Content-only spec changes modify affected files while siblings match              |
+| Validation atomicity  | runtime temp workspace | Invalid root/no-root input fails before touching the existing workspace           |
+| Ignored directories   | runtime temp workspace | `node_modules`, `dist`, `.git`, and `.angular` are neither indexed nor deleted    |
+| Comparator/reconciler | runtime temp workspace | Direct planning reports Add / Match / Modify / Delete and classifications without applying |
+| Classifier full output | emitted full output   | Generated page/component files and application files classify as documented       |
 
 ### Expected test assertions
 
@@ -145,6 +155,14 @@ generators/angular/generator/tests/fixtures/
   changed.
 - **Unaffected content preserved**: files that already match the desired output
   remain byte-identical and are not rewritten.
+- **Atomic validation**: malformed input stops before index/reconcile/apply and
+  leaves the existing workspace byte-identical.
+- **Classifier attribution**: generated page/component files classify to the
+  owning spec node, and known project-level generator files classify as
+  application artifacts.
+- **Comparator-only planning**: direct reconciler tests inspect the plan before
+  applying it so Add / Match / Modify / Delete decisions are observable without
+  mutating the workspace.
 
 ### Specification-driven validation matrix
 
