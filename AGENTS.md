@@ -27,7 +27,8 @@ Angular TypeScript generator that applies the specification to an existing Angul
 - `spec/scopes/` - Human-authored specification scope sources.
 - `openui.json` - Generated canonical machine-readable specification built from `spec/scopes/`.
 - `generators/angular/generator/` - Angular TypeScript generator implementation.
-- `docs/GENERATOR_STRUCTURE.md` - Angular generator architecture and implementation details.
+- `generators/angular/docs/GENERATOR_STRUCTURE.md` - Angular generator architecture and
+  implementation details.
 - `docs/TEST_PLAN.md` - Test suites and validation strategy.
 
 ## Repository-specific rules
@@ -47,5 +48,6 @@ Angular TypeScript generator that applies the specification to an existing Angul
 - Documentation-only changes should be checked for formatting and link consistency when practical.
 - Python/spec validation uses the repository-local virtual environment documented in
   `CONTRIBUTING.md`.
-- Generator changes should follow the pipeline in `docs/GENERATOR_STRUCTURE.md` and the validation
-  plan in `docs/TEST_PLAN.md`.
+- Generator changes should follow the pipeline in
+  `generators/angular/docs/GENERATOR_STRUCTURE.md` and the validation plan in
+  `docs/TEST_PLAN.md`.

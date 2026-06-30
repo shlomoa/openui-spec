@@ -26,8 +26,8 @@ The Angular generator's runtime input is an `input.json` UI description authored
 against the OpenUI specification; the specification itself — root `openui.json`
 (catalog), `spec/openui.schema.json` (grammar), and the `spec/**/*.md` prose — is
 the rule set the generator validates and interprets that input against. See
-[REQUIREMENTS.md](REQUIREMENTS.md) §1–§2 for the authoritative input, context, and
-output contract; this document does not redefine it.
+[REQUIREMENTS.md](../../../docs/REQUIREMENTS.md) §1–§2 for the authoritative
+input, context, and output contract; this document does not redefine it.
 
 `input.json` uses the native OpenUI grammar directly; no transitional input
 definitions or adapters are allowed. The required pipeline is:
@@ -49,7 +49,7 @@ build / test / verify
 ```
 
 For the initial golden-source population plan, see
-`initial_spec_population.md`.
+`../../../initial_spec_population.md`.
 
 ## Current package layout
 
@@ -164,8 +164,8 @@ same OpenUI input
 
 The generator's runtime input is an `input.json` document; the OpenUI
 specification is the rule set it is validated and interpreted against. See
-[REQUIREMENTS.md](REQUIREMENTS.md) §1–§2 for the authoritative definitions — this
-document does not redefine them. For the generator's purposes:
+[REQUIREMENTS.md](../../../docs/REQUIREMENTS.md) §1–§2 for the authoritative
+definitions — this document does not redefine them. For the generator's purposes:
 
 - **Catalog** — root `openui.json`. Its root `id` is `root` and `version` is
   required (its current value is tracked by the repository-root `SCHEMA_VERSION`
@@ -243,7 +243,7 @@ CLI, and Angular build package version `22.0.2` with TypeScript `6.0.3`.
 ## Incremental generation
 
 The generator supports incremental operation as defined in
-[spec/README.md § Incremental generation](../spec/README.md#incremental-generation).
+[spec/README.md § Incremental generation](../../../spec/README.md#incremental-generation).
 
 The generator extends the base pipeline to compare emitted files with workspace
 manifestations before writing changes. This reconciliation is the default

@@ -51,7 +51,7 @@ Implementation constraints:
   program; `openui.json` is data the generator consumes at runtime.
 - Implemented in folder `generators/angular/generator`.
 - Follows the structure and implementation details documented in
-  `docs/GENERATOR_STRUCTURE.md`.
+  `generators/angular/docs/GENERATOR_STRUCTURE.md`.
 
 ## 3. Generated examples application
 

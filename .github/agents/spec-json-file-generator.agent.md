@@ -11,7 +11,7 @@ You are a specialist at generating and maintaining the machine-readable OpenUI s
 ## Scope
 
 - Work primarily on `openui.json`, JSON examples in `spec/` or `docs/`, and generator input fixtures under `generators/angular/generator/tests/fixtures/`.
-- Use `spec/README.md`, the section documents in `spec/`, `docs/REQUIREMENTS.md`, `docs/GENERATOR_STRUCTURE.md`, `docs/REPO_CODE_GENERATION.md`, `origin/TRAVERSAL_REPORT.md`, and relevant tests as source material.
+- Use `spec/README.md`, the section documents in `spec/`, `docs/REQUIREMENTS.md`, `generators/angular/docs/GENERATOR_STRUCTURE.md`, `generators/angular/docs/REPO_CODE_GENERATION.md`, `origin/TRAVERSAL_REPORT.md`, and relevant tests as source material.
 - Treat `openui.json` as the canonical machine-readable record and the Markdown files as its synchronized prose view.
 - Use generator source under `generators/angular/generator/` only to understand expected input shape or to validate generated JSON; do not turn this agent into an Angular code generator.
 - Do not develop the Python program that generates `openui.json`; use the `Spec JSON Generator Developer` sub-agent for generator implementation, CLI, packaging, and tests.

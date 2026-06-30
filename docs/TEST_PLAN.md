@@ -16,7 +16,7 @@ Tests fall into three layers plus a CI gate:
 4. **CI build workflow** (`.github/workflows/build.yml`) — runs the layers above
    on every code-review event, and is itself asserted by a contract test.
 
-The layering mirrors the [golden-source boundary](GENERATOR_STRUCTURE.md#golden-source-boundary):
+The layering mirrors the [golden-source boundary](../generators/angular/docs/GENERATOR_STRUCTURE.md#golden-source-boundary):
 the spec is authoritative, the generator consumes it, and the examples app is a
 downstream illustration that is never treated as generator output.
 
