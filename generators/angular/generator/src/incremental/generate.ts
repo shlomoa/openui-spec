@@ -1,5 +1,5 @@
 import { buildUiModel } from "../ir/build-ir";
-import { loadOpenUiSpec } from "../spec/load-spec";
+import { loadOpenUiDocument } from "../spec/load-spec";
 import { emitAngularProject } from "../targets/angular/emit-angular-project";
 import { mapToAngularProject } from "../targets/angular/map-to-angular";
 import { validateOpenUiSpec } from "../validation/validate-spec";
@@ -10,13 +10,13 @@ import { reconcileGeneratedFiles } from "./reconcile";
 import { readWorkspaceIndex } from "./workspace-index";
 
 /**
- * Emits the Angular project files for a validated OpenUI specification using
+ * Emits the Angular project files for a validated OpenUI input document using
  * the scope-tree pipeline (load → validate → build IR → map → emit).
  */
-export async function emitAngularFilesFromSpec(specPath: string): Promise<GeneratedFile[]> {
-  const spec = await loadOpenUiSpec(specPath);
-  validateOpenUiSpec(spec);
-  const uiModel = buildUiModel(spec);
+export async function emitAngularFilesFromInput(inputPath: string): Promise<GeneratedFile[]> {
+  const input = await loadOpenUiDocument(inputPath);
+  validateOpenUiSpec(input);
+  const uiModel = buildUiModel(input);
   const angularProject = mapToAngularProject(uiModel);
   return emitAngularProject(angularProject);
 }
@@ -33,15 +33,15 @@ export async function emitAngularFilesFromSpec(specPath: string): Promise<Genera
  * but no longer emitted by the specification are deleted, and any directories
  * emptied by those deletions are pruned.
  */
-export async function generateIncrementally(specPath: string, outDirectory: string): Promise<ApplyResult> {
-  const spec = await loadOpenUiSpec(specPath);
-  validateOpenUiSpec(spec);
+export async function generateIncrementally(inputPath: string, outDirectory: string): Promise<ApplyResult> {
+  const input = await loadOpenUiDocument(inputPath);
+  validateOpenUiSpec(input);
 
-  const uiModel = buildUiModel(spec);
+  const uiModel = buildUiModel(input);
   const angularProject = mapToAngularProject(uiModel);
   const generatedFiles = emitAngularProject(angularProject);
 
-  const manifestationIndex = buildSpecManifestationIndex(spec);
+  const manifestationIndex = buildSpecManifestationIndex(input);
   const workspace = await readWorkspaceIndex(outDirectory);
   const plan = await reconcileGeneratedFiles(outDirectory, generatedFiles, manifestationIndex, workspace);
 

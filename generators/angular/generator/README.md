@@ -7,7 +7,7 @@ This package contains the initial Angular Material generator. The roles of
 ```bash
 npm install
 npm run build
-node dist/src/cli/main.js generate --spec ../../../openui.json --out /tmp/openui-angular-app
+node dist/src/cli/main.js generate --input input.json --out /tmp/openui-angular-app
 ```
 
 The generator follows the documented pipeline: load the specification, validate it,
@@ -28,10 +28,10 @@ The generator supports incremental operation as defined in
 
 ```bash
 # Generate into an empty workspace (from scratch)
-node dist/src/cli/main.js generate --spec input.json --out ./my-app
+node dist/src/cli/main.js generate --input input.json --out ./my-app
 
 # Generate into an existing workspace (incremental)
-node dist/src/cli/main.js generate --spec updated-input.json --out ./my-app
+node dist/src/cli/main.js generate --input updated-input.json --out ./my-app
 ```
 
 The `--out` directory may already contain a previously generated workspace. The

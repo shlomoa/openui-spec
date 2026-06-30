@@ -5,10 +5,10 @@ import { test } from "node:test";
 
 import { applyIncrementalPlan } from "../src/incremental/apply";
 import { buildSpecManifestationIndex } from "../src/incremental/classifier";
-import { emitAngularFilesFromSpec, generateIncrementally } from "../src/incremental/generate";
+import { emitAngularFilesFromInput, generateIncrementally } from "../src/incremental/generate";
 import { reconcileGeneratedFiles } from "../src/incremental/reconcile";
 import { isEmptyWorkspace, readWorkspaceIndex } from "../src/incremental/workspace-index";
-import { loadOpenUiSpec } from "../src/spec/load-spec";
+import { loadOpenUiDocument } from "../src/spec/load-spec";
 
 const ANGULAR_GENERATOR_ROOT =
   path.basename(path.dirname(__dirname)) === "dist"
@@ -28,10 +28,10 @@ async function fileModifiedTime(filePath: string): Promise<number> {
   return (await stat(filePath)).mtimeMs;
 }
 
-async function planAgainstWorkspace(specPath: string, outDirectory: string) {
-  const spec = await loadOpenUiSpec(specPath);
-  const index = buildSpecManifestationIndex(spec);
-  const generatedFiles = await emitAngularFilesFromSpec(specPath);
+async function planAgainstWorkspace(inputPath: string, outDirectory: string) {
+  const input = await loadOpenUiDocument(inputPath);
+  const index = buildSpecManifestationIndex(input);
+  const generatedFiles = await emitAngularFilesFromInput(inputPath);
   const workspace = await readWorkspaceIndex(outDirectory);
   return reconcileGeneratedFiles(outDirectory, generatedFiles, index, workspace);
 }

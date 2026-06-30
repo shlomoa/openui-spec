@@ -1,18 +1,18 @@
 #!/usr/bin/env node
-import { loadOpenUiSpec } from "../spec/load-spec";
+import { loadOpenUiDocument } from "../spec/load-spec";
 import { validateOpenUiSpec } from "../validation/validate-spec";
 import { generateIncrementally } from "../incremental/generate";
 
 interface CliOptions {
   command: "generate" | "validate";
-  specPath: string;
+  inputPath: string;
   outPath?: string;
 }
 
 export async function run(argv: string[] = process.argv.slice(2)): Promise<void> {
   const options = parseArgs(argv);
-  const spec = await loadOpenUiSpec(options.specPath);
-  validateOpenUiSpec(spec);
+  const input = await loadOpenUiDocument(options.inputPath);
+  validateOpenUiSpec(input);
 
   if (options.command === "validate") {
     return;
@@ -22,7 +22,7 @@ export async function run(argv: string[] = process.argv.slice(2)): Promise<void>
     throw new Error("Missing required --out option for generate.");
   }
 
-  await generateIncrementally(options.specPath, options.outPath);
+  await generateIncrementally(options.inputPath, options.outPath);
 }
 
 function parseArgs(argv: string[]): CliOptions {
@@ -46,14 +46,14 @@ function parseArgs(argv: string[]): CliOptions {
     throw new Error(`Unsupported target '${target}'.`);
   }
 
-  const specPath = values.get("--spec");
-  if (!specPath) {
-    throw new Error("Missing required --spec option.");
+  const inputPath = values.get("--input");
+  if (!inputPath) {
+    throw new Error("Missing required --input option.");
   }
 
   return {
     command,
-    specPath,
+    inputPath,
     outPath: values.get("--out"),
   };
 }

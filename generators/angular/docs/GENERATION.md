@@ -450,9 +450,12 @@ generators/angular/generator/tests/fixtures/
 The CLI is intentionally small:
 
 ```bash
-openui-angular-gen validate --spec <spec.json>
-openui-angular-gen generate --spec <spec.json> --out <output-directory>
+openui-angular-gen validate --input <input.json>
+openui-angular-gen generate --input <input.json> --out <output-directory>
 ```
+
+The generator implements the OpenUI grammar parser and Angular catalog mapping;
+`spec/openui.schema.json` and root `openui.json` are not CLI inputs.
 
 The source command implementation also accepts `--target angular`; `angular` is
 the default and only supported target.

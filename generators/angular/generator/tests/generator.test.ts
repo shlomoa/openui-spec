@@ -110,7 +110,7 @@ test("builds the UI model from canonical scope-tree OpenUI nodes", async () => {
 test("generates an Angular Material standalone app from canonical scope-tree OpenUI", async () => {
   const outDir = await createTestOutputDirectory();
   try {
-    await run(["generate", "--spec", FIXTURE, "--out", outDir]);
+    await run(["generate", "--input", FIXTURE, "--out", outDir]);
 
     const packageJson = JSON.parse(await readFile(path.join(outDir, "package.json"), "utf8")) as {
       dependencies: Record<string, string>;
@@ -164,7 +164,7 @@ test("generates an Angular Material standalone app from canonical scope-tree Ope
 test("generates scope-specific Angular Material details from the canonical tree", async () => {
   const outDir = await createTestOutputDirectory();
   try {
-    await run(["generate", "--spec", FIXTURE, "--out", outDir]);
+    await run(["generate", "--input", FIXTURE, "--out", outDir]);
 
     const applicationTemplate = await readFile(
       path.join(outDir, "src/app/pages/application/application.page.html"),
