@@ -5,6 +5,8 @@ import { mapToAngularProject } from "../targets/angular/map-to-angular";
 import { emitAngularProject } from "../targets/angular/emit-angular-project";
 import { validateOpenUiSpec } from "../validation/validate-spec";
 import { writeGeneratedFiles } from "../writers/file-writer";
+import { buildSpecManifestationIndex } from "../incremental/classifier";
+import { reconcileGeneratedFiles } from "../incremental/reconcile";
 
 interface CliOptions {
   command: "generate" | "validate";
@@ -27,7 +29,12 @@ export async function run(argv: string[] = process.argv.slice(2)): Promise<void>
 
   const uiModel = buildUiModel(spec);
   const angularProject = mapToAngularProject(uiModel);
-  await writeGeneratedFiles(options.outPath, emitAngularProject(angularProject));
+  const generatedFiles = emitAngularProject(angularProject);
+
+  const manifestationIndex = buildSpecManifestationIndex(spec);
+  const plan = await reconcileGeneratedFiles(options.outPath, generatedFiles, manifestationIndex);
+
+  await writeGeneratedFiles(options.outPath, plan.toWrite);
 }
 
 function parseArgs(argv: string[]): CliOptions {
