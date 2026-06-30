@@ -41,7 +41,16 @@
               "children": [
                 {
                   "id": "routingInstance",
-                  "type": "Routing"
+                  "type": "Routing",
+                  "attrs": {
+                    "[defaultRoute]": null
+                  },
+                  "children": [
+                    {
+                      "id": "routingRoute",
+                      "type": "Route"
+                    }
+                  ]
                 }
               ]
             },
@@ -57,7 +66,20 @@
               "children": [
                 {
                   "id": "navigationInstance",
-                  "type": "Navigation"
+                  "type": "Navigation",
+                  "attrs": {
+                    "[ariaLabel]": null
+                  },
+                  "children": [
+                    {
+                      "id": "navigationItem",
+                      "type": "NavItem"
+                    },
+                    {
+                      "id": "navigationGroup",
+                      "type": "NavGroup"
+                    }
+                  ]
                 }
               ]
             },
@@ -73,7 +95,17 @@
               "children": [
                 {
                   "id": "toolBarsInstance",
-                  "type": "ToolBars"
+                  "type": "ToolBar",
+                  "children": [
+                    {
+                      "id": "toolBarsToolBarRow",
+                      "type": "ToolBarRow"
+                    },
+                    {
+                      "id": "toolBarsToolAction",
+                      "type": "ToolAction"
+                    }
+                  ]
                 }
               ]
             },
@@ -89,7 +121,14 @@
               "children": [
                 {
                   "id": "faviconInstance",
-                  "type": "Favicon"
+                  "type": "link",
+                  "attrs": {
+                    "[rel]": null,
+                    "[href]": null,
+                    "[type]": null,
+                    "[sizes]": null,
+                    "[media]": null
+                  }
                 }
               ]
             },
@@ -105,7 +144,21 @@
               "children": [
                 {
                   "id": "indexHtmlInstance",
-                  "type": "IndexHtml"
+                  "type": "html",
+                  "attrs": {
+                    "[lang]": null,
+                    "[dir]": null
+                  },
+                  "children": [
+                    {
+                      "id": "indexHtmlDocumentHead",
+                      "type": "head"
+                    },
+                    {
+                      "id": "indexHtmlDocumentBody",
+                      "type": "body"
+                    }
+                  ]
                 }
               ]
             }

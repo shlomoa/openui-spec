@@ -2,11 +2,11 @@
 
 This document describes how repository-local OpenUI specification artifacts
 become generator input and, eventually, generated Angular files. It complements
-`GENERATOR_STRUCTURE.md`, which documents the implemented Angular generator
-package in `generators/angular/generator/`.
+[`GENERATOR_STRUCTURE.md`](GENERATOR_STRUCTURE.md), which documents the
+implemented Angular generator package in `generators/angular/generator/`.
 
 For the immediate spec-population sequence, see
-`../initial_spec_population.md`.
+`../../../initial_spec_population.md`.
 
 ## Golden source
 
@@ -110,7 +110,7 @@ and IR construction.
 ## Incremental generation
 
 The generator supports incremental operation as defined in
-[spec/README.md § Incremental generation](../spec/README.md#incremental-generation).
+[spec/README.md § Incremental generation](../../../spec/README.md#incremental-generation).
 
 The Angular generator extends the base pipeline for incremental reconciliation:
 

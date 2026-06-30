@@ -1,79 +1,78 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+
+import { classifyWorkspacePath, type Classification, type SpecManifestationIndex } from "./classifier";
 import type { GeneratedFile } from "../writers/file-writer";
-import type { WorkspaceIndex } from "./workspace-index";
 
 /**
- * Per-artifact reconciliation outcome, matching the scenarios defined in
- * spec/README.md § Incremental generation.
+ * Per-file action chosen by the incremental reconciler, following the
+ * Add / Match / Modify scenarios of
+ * [spec/README.md § Incremental generation](../../../../spec/README.md#incremental-generation).
  *
- * - `add` — the artifact is described by the specification but absent from the
- *   workspace, so it must be created.
- * - `modify` — the artifact exists but its content differs from the
- *   specification, so it must be updated.
- * - `match` — the artifact exists and already equals the specification, so no
- *   change is required.
- * - `delete` — the artifact exists in the workspace but is no longer described
- *   by the specification, so it must be removed.
+ * - `add`: the spec declares the file but the workspace does not have it yet.
+ * - `match`: the workspace already has the file with identical content.
+ * - `modify`: the workspace has the file but its content differs from the spec.
  */
-export type ReconciliationAction = "add" | "modify" | "match" | "delete";
+export type IncrementalAction = "add" | "match" | "modify";
 
-export interface ReconciliationEntry {
-  readonly path: string;
-  readonly action: ReconciliationAction;
-  /** Desired content for `add` and `modify`; undefined for `delete` and `match`. */
-  readonly content?: string;
+/** A single reconciled file: the generated output plus its chosen action. */
+export interface ReconciledFile {
+  file: GeneratedFile;
+  action: IncrementalAction;
+  classification: Classification;
 }
 
-export interface ReconciliationPlan {
-  readonly entries: readonly ReconciliationEntry[];
+/** Outcome of reconciling a spec's generated files against a workspace. */
+export interface IncrementalPlan {
+  reconciled: ReconciledFile[];
+  /** Files whose content must be written (`add` and `modify`). */
+  toWrite: GeneratedFile[];
 }
 
 /**
- * Compares the freshly emitted files against an existing workspace and
- * classifies every artifact into an {@link ReconciliationAction}.
+ * Reconcile the files a spec would generate against the current contents of an
+ * existing workspace, deciding per file whether it is an Add, a Match, or a
+ * Modify. Matched files are excluded from {@link IncrementalPlan.toWrite} so an
+ * incremental run only touches what actually changed; an empty workspace yields
+ * an all-Add plan (generation from scratch).
  *
- * Files present in both the specification output and the workspace are
- * compared by content: identical content yields `match`, differing content
- * yields `modify`. Files only in the specification output yield `add`; files
- * only in the workspace yield `delete`.
- *
- * Generation from scratch is the special case where the workspace is empty:
- * every emitted file is classified as `add`. Deletion is the special case
- * where the specification no longer emits a previously generated file.
+ * The classifier attributes each generated file to the spec node that owns it,
+ * which is what determines "what spec generated this part" for diagnostics and
+ * future Modify/Delete handling.
  */
-export function reconcile(generatedFiles: readonly GeneratedFile[], workspace: WorkspaceIndex): ReconciliationPlan {
-  const entries: ReconciliationEntry[] = [];
-  const generatedPaths = new Set<string>();
+export async function reconcileGeneratedFiles(
+  outDirectory: string,
+  files: GeneratedFile[],
+  index: SpecManifestationIndex,
+): Promise<IncrementalPlan> {
+  const reconciled = await Promise.all(
+    files.map(async (file): Promise<ReconciledFile> => {
+      const classification = classifyWorkspacePath(file.path, index);
+      const existing = await readExisting(outDirectory, file.path);
 
-  for (const file of generatedFiles) {
-    generatedPaths.add(file.path);
-    const existingContent = workspace.files.get(file.path);
-    if (existingContent === undefined) {
-      entries.push({ path: file.path, action: "add", content: file.content });
-      continue;
+      const action: IncrementalAction =
+        existing === undefined ? "add" : existing === file.content ? "match" : "modify";
+
+      return { file, action, classification };
+    }),
+  );
+
+  const toWrite = reconciled.filter((entry) => entry.action !== "match").map((entry) => entry.file);
+
+  return { reconciled, toWrite };
+}
+
+async function readExisting(outDirectory: string, relativePath: string): Promise<string | undefined> {
+  try {
+    return await readFile(path.resolve(outDirectory, relativePath), "utf8");
+  } catch (error) {
+    if (isFileNotFound(error)) {
+      return undefined;
     }
-
-    if (existingContent === file.content) {
-      entries.push({ path: file.path, action: "match" });
-      continue;
-    }
-
-    entries.push({ path: file.path, action: "modify", content: file.content });
+    throw error;
   }
-
-  for (const existingPath of workspace.files.keys()) {
-    if (!generatedPaths.has(existingPath)) {
-      entries.push({ path: existingPath, action: "delete" });
-    }
-  }
-
-  entries.sort((left, right) => left.path.localeCompare(right.path));
-  return { entries };
 }
 
-/**
- * Returns true when the plan contains no `add`, `modify`, or `delete`
- * entries, i.e. the workspace already matches the specification.
- */
-export function isNoOpPlan(plan: ReconciliationPlan): boolean {
-  return plan.entries.every((entry) => entry.action === "match");
+function isFileNotFound(error: unknown): boolean {
+  return typeof error === "object" && error !== null && (error as NodeJS.ErrnoException).code === "ENOENT";
 }

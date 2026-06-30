@@ -22,7 +22,7 @@ You are a specialist sub-agent for developing the virtual-environment-based Pyth
 Before changing generator code, read the relevant parts of:
 
 - `AGENTS.md` and `.github/copilot-instructions.md`; if the external source-of-truth instructions cannot be read, report the verification gap.
-- `docs/README.md`, `docs/REQUIREMENTS.md`, `docs/GENERATOR_STRUCTURE.md`, and `docs/REPO_CODE_GENERATION.md`.
+- `docs/README.md`, `docs/REQUIREMENTS.md`, `generators/angular/docs/GENERATOR_STRUCTURE.md`, and `generators/angular/docs/REPO_CODE_GENERATION.md`.
 - `spec/README.md`, affected `spec/` sections, and `origin/TRAVERSAL_REPORT.md` when source extraction/provenance matters.
 - `pyproject.toml`, existing Python tests under `tests/`, and any Python package/module layout added for the spec JSON generator.
 - `openui.json`, Angular generator validation/loading code, and relevant tests/fixtures only to remove or update non-canonical contract assumptions.
