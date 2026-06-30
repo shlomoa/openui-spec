@@ -1,28 +1,51 @@
 # AGENTS.md - AI Coding Assistant Guide
 
-This file provides guidance for AI coding assistants (Claude, Copilot, Cursor, etc.) when working with this repository.
+This file is the repository-wide source of truth for AI coding assistants (Copilot, Claude,
+Gemini, Cursor, and similar tools) working in this repository.
 
-## General rules
+## Instruction source of truth
 
-- Read [copilot instructions](.github/copilot-instructions.md) for general rules and definitions that apply to all interactions with the codebase and the user.
+- General operating rules are maintained in the external SSOT:
+  <https://github.com/shlomoa/shlomoa/blob/main/.github/copilot-instructions.md>.
+- Repository-specific AI guidance lives in this file.
+- Agent-specific files, such as `.github/copilot-instructions.md`, `CLAUDE.md`, and `GEMINI.md`,
+  should only contain bootstrap instructions or agent-specific deltas, then reference this file.
+- Do not duplicate common rules across agent files. If a rule applies to more than one agent, update
+  this file or the external general-instructions SSOT instead.
 
-## Repository specifics
+## Repository purpose
 
-### Project Overview
+OpenUI Spec is a technology-independent specification for describing web UI frameworks, plus an
+Angular TypeScript generator that applies the specification to an existing Angular workspace.
 
-This project goals is to create a standard specification for Web UI framework specification.
+## Key repository sources
 
-- TODO.md a working document for the project management and implementation of the specification and generator.
-- docs/REQUIREMENTS.md a working document for the project requirements and goals.
-- docs/README.md - Developer documentation hub, including the repository structure and the location of all relevant files for the project.
-- spec
+- `docs/README.md` - Developer documentation hub and entry point for repository structure,
+  validation, and implementation docs.
+- `docs/REQUIREMENTS.md` - Project requirements and goals.
+- `spec/README.md` - Specification entry point, including how to read the spec and the section index.
+- `spec/scopes/` - Human-authored specification scope sources.
+- `openui.json` - Generated canonical machine-readable specification built from `spec/scopes/`.
+- `generators/angular/generator/` - Angular TypeScript generator implementation.
+- `docs/GENERATOR_STRUCTURE.md` - Angular generator architecture and implementation details.
+- `docs/TEST_PLAN.md` - Test suites and validation strategy.
 
-- A folder containing all the documentation for the specification.
-- spec/README.md - Specification entry point: purpose, how to read the spec, and the section index.
+## Repository-specific rules
 
-- generators/angular/generator/
+- Treat `spec/` as the specification source of truth. Keep generated artifacts such as
+  `openui.json` aligned with the documented generation flow when the spec changes.
+- Keep common AI-agent guidance in `AGENTS.md`; keep agent-specific files thin and referential.
+- Before broad repository restructuring, provide an explicitly enumerated multi-step implementation
+  plan.
+- Use a repository-local Python virtual environment for Python package installation and validation;
+  do not install Python packages into the global environment.
+- Preserve cross-platform behavior for Windows, Linux, and macOS. Avoid hardcoded OS-specific roots
+  or temporary paths.
 
-- location of the Angular TypeScript generator implementation.
-- docs/GENERATOR_STRUCTURE.md - The structure and implementation details of the Angular TypeScript generator.
+## Validation
 
----
+- Documentation-only changes should be checked for formatting and link consistency when practical.
+- Python/spec validation uses the repository-local virtual environment documented in
+  `CONTRIBUTING.md`.
+- Generator changes should follow the pipeline in `docs/GENERATOR_STRUCTURE.md` and the validation
+  plan in `docs/TEST_PLAN.md`.
