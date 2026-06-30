@@ -1,10 +1,7 @@
 #!/usr/bin/env node
 import { loadOpenUiSpec } from "../spec/load-spec";
-import { buildUiModel } from "../ir/build-ir";
-import { mapToAngularProject } from "../targets/angular/map-to-angular";
-import { emitAngularProject } from "../targets/angular/emit-angular-project";
+import { generateIncrementally } from "../incremental/generate";
 import { validateOpenUiSpec } from "../validation/validate-spec";
-import { writeGeneratedFiles } from "../writers/file-writer";
 
 interface CliOptions {
   command: "generate" | "validate";
@@ -14,10 +11,10 @@ interface CliOptions {
 
 export async function run(argv: string[] = process.argv.slice(2)): Promise<void> {
   const options = parseArgs(argv);
-  const spec = await loadOpenUiSpec(options.specPath);
-  validateOpenUiSpec(spec);
 
   if (options.command === "validate") {
+    const spec = await loadOpenUiSpec(options.specPath);
+    validateOpenUiSpec(spec);
     return;
   }
 
@@ -25,9 +22,10 @@ export async function run(argv: string[] = process.argv.slice(2)): Promise<void>
     throw new Error("Missing required --out option for generate.");
   }
 
-  const uiModel = buildUiModel(spec);
-  const angularProject = mapToAngularProject(uiModel);
-  await writeGeneratedFiles(options.outPath, emitAngularProject(angularProject));
+  // Generation reconciles the specification against the existing workspace.
+  // An empty output directory degrades to generation from scratch; a populated
+  // one is reconciled incrementally (add, modify, match, delete).
+  await generateIncrementally(options.specPath, options.outPath);
 }
 
 function parseArgs(argv: string[]): CliOptions {
