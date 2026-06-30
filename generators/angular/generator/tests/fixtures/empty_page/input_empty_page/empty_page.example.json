@@ -1,0 +1,11 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "PageExample",
+  "children": [
+    {
+      "id": "emptyPage",
+      "type": "EmptyPage"
+    }
+  ]
+}

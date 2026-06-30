@@ -1,0 +1,31 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Application",
+  "attrs": {
+    "title": "\"Routing example\""
+  },
+  "children": [
+    {
+      "id": "appRouting",
+      "type": "Routing",
+      "attrs": {
+        "[defaultRoute]": "\"dashboard\""
+      },
+      "children": [
+        {
+          "id": "dashboardRoute",
+          "type": "Route"
+        },
+        {
+          "id": "reportRoute",
+          "type": "Route"
+        },
+        {
+          "id": "fallbackRoute",
+          "type": "Route"
+        }
+      ]
+    }
+  ]
+}

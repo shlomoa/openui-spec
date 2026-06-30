@@ -1,0 +1,57 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Views",
+  "attrs": {
+    "title": "\"Views example\""
+  },
+  "children": [
+    {
+      "id": "customerReport",
+      "type": "ReportView",
+      "attrs": {
+        "title": "\"Customers\"",
+        "[readOnly]": "true"
+      },
+      "children": [
+        {
+          "id": "customerTable",
+          "type": "table",
+          "attrs": {
+            "[data]": "customers"
+          },
+          "children": [
+            {
+              "id": "colName",
+              "type": "Column",
+              "attrs": {
+                "[field]": "\"name\"",
+                "[header]": "\"Name\"",
+                "[sortable]": "true"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "customerForm",
+      "type": "FormView",
+      "attrs": {
+        "title": "\"Edit customer\"",
+        "[dirty]": "form.dirty",
+        "(submit)": "onSubmit(form.value)"
+      },
+      "children": [
+        {
+          "id": "nameField",
+          "type": "Field",
+          "attrs": {
+            "[label]": "\"Name\"",
+            "[required]": "true"
+          }
+        }
+      ]
+    }
+  ]
+}

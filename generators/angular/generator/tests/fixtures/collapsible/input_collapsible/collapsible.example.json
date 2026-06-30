@@ -1,0 +1,40 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "BehaviorExample",
+  "attrs": {
+    "title": "\"Collapsible example\""
+  },
+  "children": [
+    {
+      "id": "collapsibleSection",
+      "type": "Collapsible",
+      "attrs": {
+        "[expanded]": "false",
+        "[defaultExpanded]": "false",
+        "(expandedChange)": "onToggle($event)"
+      },
+      "children": [
+        {
+          "id": "collapseTrigger",
+          "type": "button",
+          "attrs": {
+            "[ariaExpanded]": "isExpanded",
+            "[ariaControls]": "\"collapseContent\"",
+            "text": "\"Details\"",
+            "(click)": "toggle()"
+          }
+        },
+        {
+          "id": "collapseContent",
+          "type": "div",
+          "attrs": {
+            "role": "\"region\"",
+            "[hidden]": "!isExpanded",
+            "text": "\"Collapsible content\""
+          }
+        }
+      ]
+    }
+  ]
+}

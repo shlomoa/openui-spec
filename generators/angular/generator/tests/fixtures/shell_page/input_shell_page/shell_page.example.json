@@ -1,0 +1,21 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "PageExample",
+  "children": [
+    {
+      "id": "shellPage",
+      "type": "ShellPage",
+      "children": [
+        {
+          "id": "shellPageRouting",
+          "type": "Routing"
+        },
+        {
+          "id": "shellPageNavigation",
+          "type": "Navigation"
+        }
+      ]
+    }
+  ]
+}

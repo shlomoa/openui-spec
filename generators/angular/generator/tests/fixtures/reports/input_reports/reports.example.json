@@ -1,0 +1,66 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ReportView",
+  "attrs": {
+    "title": "\"Sales report\"",
+    "[readOnly]": "true",
+    "[loading]": "isLoading",
+    "[error]": "loadError"
+  },
+  "children": [
+    {
+      "id": "reportFilters",
+      "type": "FilterBar",
+      "attrs": {
+        "[fields]": "\"region,period\"",
+        "(filterChange)": "onFilter($event)"
+      }
+    },
+    {
+      "id": "reportTable",
+      "type": "table",
+      "attrs": {
+        "[data]": "rows",
+        "[sort]": "\"revenue desc\"",
+        "[groupBy]": "\"region\""
+      },
+      "children": [
+        {
+          "id": "colRegion",
+          "type": "Column",
+          "attrs": {
+            "[field]": "\"region\"",
+            "[header]": "\"Region\"",
+            "[sortable]": "true"
+          }
+        },
+        {
+          "id": "colRevenue",
+          "type": "Column",
+          "attrs": {
+            "[field]": "\"revenue\"",
+            "[header]": "\"Revenue\"",
+            "[sortable]": "true"
+          }
+        }
+      ]
+    },
+    {
+      "id": "reportPaging",
+      "type": "Pagination",
+      "attrs": {
+        "[pageSize]": "25",
+        "[total]": "rowCount",
+        "(pageChange)": "onPage($event)"
+      }
+    },
+    {
+      "id": "reportEmpty",
+      "type": "EmptyState",
+      "attrs": {
+        "[message]": "\"No data for the selected filters.\""
+      }
+    }
+  ]
+}

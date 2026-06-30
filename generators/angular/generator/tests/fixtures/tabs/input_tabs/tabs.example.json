@@ -1,0 +1,64 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ContainerExample",
+  "attrs": {
+    "title": "\"Tabs example\""
+  },
+  "children": [
+    {
+      "id": "detailTabs",
+      "type": "TabGroup",
+      "attrs": {
+        "[selectedIndex]": "0",
+        "[keyboardNavigation]": "true",
+        "(selectedTabChange)": "onTabChange($event)"
+      },
+      "children": [
+        {
+          "id": "overviewTab",
+          "type": "Tab",
+          "attrs": {
+            "[label]": "\"Overview\"",
+            "[order]": "1"
+          },
+          "children": [
+            {
+              "id": "overviewPanel",
+              "type": "TabPanel",
+              "attrs": {
+                "text": "\"Overview content\""
+              }
+            }
+          ]
+        },
+        {
+          "id": "historyTab",
+          "type": "Tab",
+          "attrs": {
+            "[label]": "\"History\"",
+            "[order]": "2"
+          },
+          "children": [
+            {
+              "id": "historyPanel",
+              "type": "TabPanel",
+              "attrs": {
+                "text": "\"History content\""
+              }
+            }
+          ]
+        },
+        {
+          "id": "auditTab",
+          "type": "Tab",
+          "attrs": {
+            "[label]": "\"Audit\"",
+            "[disabled]": "true",
+            "[order]": "3"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Application",
+  "children": [
+    {
+      "id": "appFavicon",
+      "type": "link",
+      "attrs": {
+        "[rel]": "\"icon\"",
+        "[href]": "\"/favicon.ico\"",
+        "[type]": "\"image/x-icon\""
+      }
+    }
+  ]
+}

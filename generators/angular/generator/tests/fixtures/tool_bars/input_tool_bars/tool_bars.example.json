@@ -1,0 +1,40 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Application",
+  "attrs": {
+    "title": "\"Tool bar example\""
+  },
+  "children": [
+    {
+      "id": "appToolbar",
+      "type": "ToolBar",
+      "children": [
+        {
+          "id": "primaryRow",
+          "type": "ToolBarRow",
+          "children": [
+            {
+              "id": "newAction",
+              "type": "ToolAction"
+            },
+            {
+              "id": "saveAction",
+              "type": "ToolAction"
+            }
+          ]
+        },
+        {
+          "id": "secondaryRow",
+          "type": "ToolBarRow",
+          "children": [
+            {
+              "id": "deleteAction",
+              "type": "ToolAction"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

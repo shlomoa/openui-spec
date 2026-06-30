@@ -1,0 +1,29 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Pages",
+  "children": [
+    {
+      "id": "appShell",
+      "type": "ShellPage",
+      "children": [
+        {
+          "id": "appShellRouting",
+          "type": "Routing"
+        },
+        {
+          "id": "appShellNavigation",
+          "type": "Navigation"
+        }
+      ]
+    },
+    {
+      "id": "homeDashboard",
+      "type": "DashboardPage"
+    },
+    {
+      "id": "notFound",
+      "type": "EmptyPage"
+    }
+  ]
+}
