@@ -14,7 +14,7 @@ Angular validation has two primary layers plus CI integration:
 3. **CI build workflow** (`.github/workflows/build.yml`) — runs these checks
    alongside repository validation on every code-review event.
 
-The layering mirrors the [golden-source boundary](GENERATOR_STRUCTURE.md#golden-source-boundary):
+The layering mirrors the [golden-source boundary](GENERATION.md#golden-source-boundary):
 the spec is authoritative, the generator consumes it, and the examples app is a
 downstream illustration that is never treated as generator output.
 

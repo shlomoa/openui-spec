@@ -15,7 +15,7 @@ Root tests fall into two layers plus CI integration:
    and Angular validation on every code-review event, and is itself asserted by a
    contract test.
 
-The layering mirrors the [golden-source boundary](../generators/angular/docs/GENERATOR_STRUCTURE.md#golden-source-boundary):
+The layering mirrors the [golden-source boundary](../generators/angular/docs/GENERATION.md#golden-source-boundary):
 the spec is authoritative, and downstream generators consume it rather than
 redefining it.
 

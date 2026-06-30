@@ -1,4 +1,9 @@
-# Angular Generator Structure
+# Angular Generation
+
+This document describes how repository-local OpenUI specification artifacts become
+Angular generator input and, eventually, generated Angular files. It is the
+single source of truth for the Angular generator architecture, code-generation
+pipeline, implementation guardrails, and validation commands.
 
 The Angular generator lives in `generators/angular/generator/`. Keep it structured
 as a **compiler pipeline**, not as a template script.
@@ -7,8 +12,8 @@ as a **compiler pipeline**, not as a template script.
 
 The golden source for the OpenUI specification is the hand-authored prose:
 
-- `spec/README.md` for the entry point and format rules, and
-- the `spec/scopes/**` Markdown scopes (authoritative for each object's contract).
+- `spec/README.md` for the entry point and JSON format rules, and
+- the `spec/scopes/**` Markdown scopes, authoritative for each object's contract.
 
 Root `openui.json` is **generated** from that prose. It — together with generator
 fixtures, generated examples, and Angular target models — is a derived artifact
@@ -21,6 +26,52 @@ catalog with:
 ```powershell
 ./.venv/Scripts/python -m spec.to_json --spec-dir spec --output openui.json
 ```
+
+The generated catalog keeps `attrs.scopeDocument` values relative to `spec/`, for
+example `scopes/Widgets/dialog.scope.md`, so tests and tooling can resolve them
+as `spec/<scopeDocument>`.
+
+## Current status
+
+The repository has an initial Angular Material generator:
+
+```text
+generators/angular/generator/
+├─ src/cli/main.ts
+├─ src/spec/
+├─ src/validation/
+├─ src/ir/
+├─ src/targets/angular/
+├─ src/writers/
+├─ src/incremental/
+└─ tests/
+```
+
+The implemented generator consumes the native OpenUI scope-tree shape in
+`generators/angular/generator/tests/fixtures/minimal-openui.json`, validates it,
+builds a UI IR, maps it to an Angular project model, and emits a standalone
+Angular Material application skeleton.
+
+The repository also has a Python scope catalog converter in `spec/to_json/`:
+
+```text
+spec/to_json/
+├─ __init__.py
+├─ __main__.py
+└─ converter.py
+```
+
+The converter parses `spec/scopes/**/*.scope.md` and parent `scope.md` files into
+the native OpenUI `id` / `type` / `attrs` / `children` tree. Leaf scope nodes are
+metadata-only and contain one generated `<scopeId>Instance` child that carries the
+object contract attributes and child model. Child-model ids are scoped by the
+owning leaf when needed, so generated ids remain globally unique.
+
+Future code-generation work should extend this pipeline directly from native
+OpenUI nodes into the existing IR. Transitional input definitions and adapters
+are not allowed.
+
+## Generation pipeline
 
 The Angular generator's runtime input is an `input.json` UI description authored
 against the OpenUI specification; the specification itself — root `openui.json`
@@ -48,8 +99,57 @@ write safely
 build / test / verify
 ```
 
-For the initial golden-source population plan, see
-`../../../initial_spec_population.md`.
+The parser must not feed Angular emitters directly. It should produce explicit
+intermediate models:
+
+```text
+spec/README.md + spec/**/*.md + openui.json
+  → golden-source validation
+  → native OpenUI document model
+  → UiApplication IR
+  → AngularProjectModel
+  → GeneratedFile[]
+```
+
+The native OpenUI document model is the only supported generator input shape.
+Downstream generators must consume it directly through validation, extraction,
+and IR construction.
+
+## Specification and input
+
+For the generator's purposes:
+
+- **Catalog** — root `openui.json`. Its root `id` is `root` and `version` is
+  required. The current version is tracked by the repository-root
+  `SCHEMA_VERSION` file. The root `type` follows the general type rules and is
+  not pinned. See `spec/README.md` and `openui.schema.json` for the authoritative
+  root contract.
+
+  Scope coverage is represented by native OpenUI nodes whose
+  `attrs.scopeDocument` values are relative to `spec/`, for example
+  `scopes/Widgets/dialog.scope.md`. Scope nodes are metadata-only; each scope's
+  object contract is carried by a single typed instance child
+  (`<scopeId>Instance`) that has no `scopeDocument`. Generated child-model ids are
+  scoped by the owning leaf when needed so ids stay globally unique. See
+  `spec/scopes/scope.md` for the serialization rule.
+
+- **Input** — an `input.json` authored against the catalog: a well-formed OpenUI
+  document per `openui.schema.json` whose every `type` is a real catalog object
+  used in a legal place.
+
+Test fixtures that stand in for the catalog must use this scope-tree shape;
+fixtures that stand in for `input.json` must be valid input documents.
+
+The native parser and catalog converter should read or verify:
+
+- document `version`, `id`, `type`, `attrs`, and `children`,
+- scope and leaf-node identity,
+- `attrs.scopeDocument` traceability,
+- generated `<scopeId>Instance` nodes for leaf object contracts,
+- `Pages` as the canonical page scope name,
+- current status values such as `draft`,
+- parent/child relationships, and
+- validation constraints documented in the spec.
 
 ## Current package layout
 
@@ -104,14 +204,7 @@ generators/angular/
 ```
 
 The catalog converter is outside the Angular package because it belongs to the
-specification layer:
-
-```text
-spec/to_json/
-├─ __init__.py
-├─ __main__.py
-└─ converter.py
-```
+specification layer.
 
 ## Module responsibilities
 
@@ -122,8 +215,10 @@ spec/to_json/
 | `spec/openui-spec.types.ts`              | Defines the native OpenUI `id` / `type` / `attrs` / `children` input contract.                                                                                                                |
 | `spec/openui-sections.ts`                | Extracts scoped OpenUI nodes that carry `attrs.scopeDocument` traceability from the canonical scope tree.                                                                                     |
 | `validation/validate-spec.ts`            | Fails early for malformed OpenUI node data and compliance-rule synchronization gaps.                                                                                                          |
+| `validation/diagnostics.ts`              | Defines validation diagnostic and error reporting types.                                                                                                                                      |
 | `ir/normalize-spec.ts`                   | Converts native scope IDs into routes, summaries, and feature flags.                                                                                                                          |
 | `ir/build-ir.ts`                         | Builds the implementation-independent `UiApplication` model.                                                                                                                                  |
+| `ir/ui-model.ts`                         | Defines implementation-independent application, page, and feature model types.                                                                                                                |
 | `targets/angular/angular-model.ts`       | Defines Angular-specific project, page, application-structure, internationalization, and extension model types.                                                                               |
 | `targets/angular/map-to-angular.ts`      | Maps `UiApplication` pages and features into an `AngularProjectModel`.                                                                                                                        |
 | `targets/angular/emit-*.ts`              | Emits Angular project files, routes, global theme styles, optional project-level support files, and standalone page component triplets.                                                       |
@@ -134,7 +229,7 @@ spec/to_json/
 | `writers/file-writer.ts`                 | Defines the `GeneratedFile` record shape shared by the emitters and the incremental apply layer.                                                                                              |
 | `writers/safe-write.ts`                  | Prevents path traversal by refusing to write outside the requested output directory, and prunes directories emptied by deletions.                                                             |
 | `incremental/classifier.ts`              | Indexes an input document's component and page manifestations and classifies a workspace folder/file back to the spec node that owns it.                                                      |
-| `incremental/workspace-index.ts`         | Reads an existing workspace into a path→content index (ignoring `node_modules`/`dist`/`.git`/`.angular`); a missing directory is an empty workspace.                                          |
+| `incremental/workspace-index.ts`         | Reads an existing workspace into a path→content index, ignoring `node_modules`/`dist`/`.git`/`.angular`; a missing directory is an empty workspace.                                           |
 | `incremental/reconcile.ts`               | Classifies emitted files against the existing workspace and plans per-file Add / Match / Modify / Delete actions for the incremental generate flow.                                           |
 | `incremental/apply.ts`                   | Applies a reconciliation plan through the guarded writer: writes Add/Modify files, removes Delete files, and leaves Match files untouched.                                                    |
 | `incremental/generate.ts`                | Orchestrates the incremental pipeline: emit, index the workspace, reconcile, and apply, degrading to generation from scratch for an empty workspace.                                          |
@@ -145,7 +240,7 @@ spec/to_json/
 
 ## Core design rule
 
-Do **not** generate Angular directly from raw `input.json` nodes.
+Do **not** generate Angular directly from raw `input.json` or `openui.json` nodes.
 
 Use explicit model boundaries:
 
@@ -168,31 +263,29 @@ same OpenUI input
    └─ Web Components
 ```
 
-## Specification and input
+Separate these concerns:
 
-The generator's runtime input is an `input.json` document; the OpenUI
-specification is the rule set it is validated and interpreted against. See
-[REQUIREMENTS.md](../../../docs/REQUIREMENTS.md) §1–§2 for the authoritative
-definitions — this document does not redefine them. For the generator's purposes:
+```text
+WHAT to build            → input.json (validated against the catalog) + UI IR
+HOW Angular sees it      → Angular project/page model
+HOW files look           → emitters
+WHERE files are written  → writer
+```
 
-- **Catalog** — root `openui.json`. Its root `id` is `root` and `version` is
-  required (its current value is tracked by the repository-root `SCHEMA_VERSION`
-  file); the root `type` follows the general type rules and is not pinned. See
-  `spec/README.md` and `openui.schema.json` for the authoritative root contract.
+Avoid shortcuts that collapse these layers. For example, do not add a new
+OpenUI concept by string-building Angular output directly from raw source JSON.
+Instead:
 
-  Scope coverage is represented by native OpenUI nodes whose `attrs.scopeDocument`
-  values are relative to `spec/`, for example `scopes/Widgets/dialog.scope.md`.
-  Scope nodes are metadata-only; each scope's object contract is carried by a
-  single typed instance child (`<scopeId>Instance`) that has no `scopeDocument`.
-  Generated child-model ids are scoped by the owning leaf when needed so ids stay
-  globally unique. See `spec/scopes/scope.md` for the serialization rule.
+1. Update the golden source in `spec/README.md` and `spec/`.
+2. Regenerate `openui.json` with `python -m spec.to_json`.
+3. Validate the golden source, generated catalog, and schema constraints.
+4. Adapt the native OpenUI source into the generator model or IR.
+5. Map the IR into Angular model fields.
+6. Emit files from the Angular model.
+7. Add tests that verify generated TypeScript, HTML, SCSS, and diagnostics.
 
-- **Input** — an `input.json` authored against the catalog: a well-formed OpenUI
-  document (per `openui.schema.json`) whose every `type` is a real catalog object
-  used in a legal place.
-
-Test fixtures that stand in for the catalog must use this scope-tree shape;
-fixtures that stand in for `input.json` must be valid input documents.
+This distinction keeps the generator maintainable as the OpenUI specification
+grows.
 
 ## Generator-specific scope-to-feature mapping
 
@@ -245,8 +338,23 @@ generated-angular-app/
 ```
 
 Project-level package versions are currently pinned by the emitter. As of this
-revision, generated apps use Angular, Angular Material, Angular CDK, Angular
-CLI, and Angular build package version `22.0.2` with TypeScript `6.0.3`.
+revision, generated apps use Angular, Angular Material, Angular CDK, Angular CLI,
+and Angular build package version `22.0.2` with TypeScript `6.0.3`.
+
+## HTML, JS, and CSS output interpretation
+
+If an issue asks for generated HTML, JS, and CSS, the Angular generator
+equivalent is:
+
+| Requested artifact | Angular generator artifact                                                               |
+| ------------------ | ---------------------------------------------------------------------------------------- |
+| HTML               | Standalone component template: `<route>.page.html`                                       |
+| JS                 | TypeScript source compiled to JavaScript: `<route>.page.ts`, `main.ts`, routes, services |
+| CSS                | SCSS/CSS source: `<route>.page.scss`, `src/styles.scss`                                  |
+
+The generator should continue emitting TypeScript rather than handwritten
+JavaScript because Angular source is TypeScript-first and the package already
+compiles generated apps through Angular tooling.
 
 ## Incremental generation
 
@@ -300,8 +408,8 @@ file to "the spec that generated this part".
 `WorkspaceIndex`: a map from each workspace-relative POSIX path to its current
 content. Installed packages and build output (`node_modules`, `dist`, `.git`,
 `.angular`) are ignored, and a missing directory yields an empty index — the
-generation-from-scratch case. Indexing the whole workspace (rather than only the
-files the spec emits) is what lets the reconciler detect files that should be
+generation-from-scratch case. Indexing the whole workspace, rather than only the
+files the spec emits, is what lets the reconciler detect files that should be
 deleted.
 
 ### Reconciler
@@ -365,6 +473,26 @@ openui-angular-gen generate --spec <spec.json> --out <output-directory>
 The source command implementation also accepts `--target angular`; `angular` is
 the default and only supported target.
 
+## Recommended next implementation slice
+
+The smallest useful golden-source-to-generator slice is:
+
+1. Keep regenerating `openui.json` from `spec/to_json` after scope changes.
+2. Keep `spec/openui.schema.json` synchronized with the native `version` / `id` /
+   `type` / `attrs` / `children` shape.
+3. Keep Python validation that checks `openui.json`, schema rules, scope document
+   paths, converter behavior, and MkDocs navigation.
+4. Map at least one native scope/page node directly into `UiApplication`.
+5. Generate one Angular Material page/component triplet from that IR model:
+   - `.page.ts` for behavior and typed state,
+   - `.page.html` for Material-backed template structure,
+   - `.page.scss` for token-backed styling.
+6. Add tests that assert parser output, native extraction behavior, diagnostics,
+   and generated Angular files.
+
+This keeps the work small while connecting the golden source to the existing
+Angular generator pipeline.
+
 ## Validation and tests
 
 Run generator package validation from `generators/angular/generator/`:
@@ -396,28 +524,29 @@ Run repository Python and documentation validation through the local `.venv`:
 git diff --check
 ```
 
-## Implementation principles
+## Guardrails
 
-Separate these concerns:
+- Do not treat generator fixtures or root `openui.json` as hand-authored source.
+- Do not hand-edit generated catalog changes; update scope prose or converter
+  logic, then rerun `python -m spec.to_json`.
+- Do not generate Angular files directly from raw `openui.json` or `input.json`
+  nodes.
+- Do not bypass the golden source → native extraction → IR → Angular model → files
+  separation.
+- Do not write generated files outside the selected output directory; use the
+  existing safe writer.
+- Do not add a new target before the Angular pipeline has golden-source-backed
+  fixtures and validation tests.
 
-```text
-WHAT to build            → input.json (validated against the catalog) + UI IR
-HOW Angular sees it      → Angular project/page model
-HOW files look           → emitters
-WHERE files are written  → writer
-```
+## Final conclusion
 
-Avoid shortcuts that collapse these layers. For example, do not add a new
-OpenUI concept by string-building Angular output directly from raw source JSON.
-Instead:
-
-1. Update the golden source in `spec/README.md` and `spec/`.
-2. Regenerate `openui.json` with `python -m spec.to_json`.
-3. Validate the golden source, generated catalog, and schema constraints.
-4. Adapt the native OpenUI source into the generator model or IR.
-5. Map the IR into Angular model fields.
-6. Emit files from the Angular model.
-7. Add tests that verify generated TypeScript, HTML, SCSS, and diagnostics.
-
-This distinction keeps the generator maintainable as the OpenUI specification
-grows.
+- **Golden source:** `spec/README.md` and Markdown under `spec/`; root
+  `openui.json` is generated from that source.
+- **Immediate parser starting point:** native OpenUI `id` / `type` / `attrs` /
+  `children` records from `openui.json` plus scope-document traceability.
+- **Generator bridge:** direct native OpenUI extraction into `UiApplication`.
+- **Generator starting point:** the existing Angular IR-to-emitter pipeline in
+  `generators/angular/generator/`.
+- **Next practical output:** golden-source-backed generation of one Angular
+  Material component/page triplet with tests for parsed metadata, diagnostics,
+  and emitted TypeScript/HTML/SCSS.

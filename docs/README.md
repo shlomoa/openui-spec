@@ -9,8 +9,7 @@ is published on ReadTheDocs (built from `spec/`). For how to contribute, see
 - [Requirements and goals](REQUIREMENTS.md)
 - [Spec artifacts: grammar vs. catalog](../spec/README.md#specification-artifacts-grammar-vs-catalog)
   — how `openui.schema.json` and `openui.json` differ
-- Angular generator: [structure](../generators/angular/docs/GENERATOR_STRUCTURE.md),
-  [code-generation starting point](../generators/angular/docs/REPO_CODE_GENERATION.md),
+- Angular generator: [generation architecture and flow](../generators/angular/docs/GENERATION.md)
   and [test plan](../generators/angular/docs/TEST_PLAN.md)
 - [Test plan](TEST_PLAN.md) — the spec-contract and repository CI validation
   suites and how to run them
