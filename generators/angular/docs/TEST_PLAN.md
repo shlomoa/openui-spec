@@ -95,16 +95,18 @@ contract test if it is not.
   the OS temp paths the repository instructions disallow.
 - **Golden source is authoritative.** Generator tests consume derived artifacts
   and must not redefine the prose spec, scopes, schema, or catalog contract.
-- **No committed generator output workspaces.** Only input fixtures are committed;
-  generated application workspaces are produced during test runs and discarded.
+- **Committed fixtures are expectations, not generated examples.** Fixture trees
+  may include both input workspaces/specifications and expected output
+  workspaces. Tests copy or compare those fixtures, but transient generator runs
+  still write only under the repo-local, git-ignored `tmp/` directory.
 
 ## Incremental generation test strategy
 
 Incremental generation (defined in
 [spec/README.md § Incremental generation](../../../spec/README.md#incremental-generation))
-introduces workspace reconciliation scenarios that extend the existing generator
-test surface. The test fixtures under
-`generators/angular/generator/tests/fixtures/` capture the expected behavior:
+is covered by both committed input/expected-output fixtures and runtime
+workspace mutations under `tmp/`. The fixtures under
+`generators/angular/generator/tests/fixtures/` capture reusable baseline states:
 
 ### Fixture layout
 
@@ -124,9 +126,10 @@ generators/angular/generator/tests/fixtures/
 | Scenario     | Fixture                | What is verified                                             |
 | :----------- | :--------------------- | :----------------------------------------------------------- |
 | From scratch | `example_from_scratch` | Empty workspace → full generated output                      |
-| Incremental  | `example_incremental`  | Existing workspace → new component added, existing preserved |
+| Incremental  | `example_incremental`  | Existing workspace → new component added, affected parent files rewired |
 | Match        | (same-state input)     | Re-running on matching workspace produces no changes         |
-| Delete       | (future fixture)       | Removing a node from JSON removes the generated files        |
+| Delete       | runtime temp workspace | Files no longer emitted by the current input are removed     |
+| Modify       | runtime temp workspace | Drifted generated files are rewritten, matched siblings stay untouched |
 
 ### Expected test assertions
 
@@ -137,5 +140,5 @@ generators/angular/generator/tests/fixtures/
 - **Modify**: renamed or changed attributes produce updated file contents.
 - **Match**: workspace files remain byte-identical when the specification has not
   changed.
-- **Existing content preserved**: components not mentioned in the diff remain
-  unchanged (e.g. `app-file-upload` stays intact in the incremental example).
+- **Unaffected content preserved**: files that already match the desired output
+  remain byte-identical and are not rewritten.

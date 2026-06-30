@@ -2,7 +2,7 @@
 
 ## Verdict
 
-Mostly **clear and directionally aligned**, but **not fully aligned yet**. The generator docs consistently explain the golden-source boundary — `spec/**/*.md` → generated openui.json catalog → generator consumption — which matches the spec. One stale-reference cleanup has been completed; the remaining items below still need clarification or alignment before treating the docs as authoritative.
+Mostly **clear and directionally aligned**, but **not fully aligned yet**. The generator docs consistently explain the golden-source boundary — `spec/**/*.md` → generated openui.json catalog → generator consumption — which matches the spec. Completed cleanups are tracked below; the active gaps still need clarification or alignment before treating the docs as authoritative.
 
 ## What is clear
 
@@ -13,46 +13,8 @@ Mostly **clear and directionally aligned**, but **not fully aligned yet**. The g
 
 ## Alignment gaps
 
-### 2. Resolved: `Pages` is the canonical page scope name
-
-The canonical openui.json currently has:
-
-- `id: "pages"`
-- `type: "Pages"`
-- `scopeDocument: "scopes/Pages/scope.md"`
-
-The drift was caused by duplicating the page-scope identity outside the
-specification source of truth. The entire solution now uses the canonical spec
-name:
-
-- `pages`
-- `Pages`
-
-Spec evidence:
-
-- scope.md title is `# Pages`
-- openui.json page-related scope node is `("pages", "Pages", "scopes/Pages/scope.md")`
-
-Previously affected locations:
-
-- minimal-openui.json
-- normalize-spec.ts
-- generator.test.ts
-- spec-json-generator-developer.agent.md
-
-**Status:** completed. The fixture, feature map, generator tests, and agent
-guidance now use `pages` / `Pages`; a repository grep found no remaining legacy
-page-scope identifier references.
-
-### 3. Resolved: missing `initial_spec_population.md` references
-
-Previously, the split generator docs referenced:
-
-- `../../../initial_spec_population.md`
-
-That file does not exist in the repository.
-
-**Status:** completed. The broken references were removed before the generator docs were consolidated into `generators/angular/docs/GENERATION.md`. A follow-up grep found no remaining `initial_spec_population.md` references under `generators/angular/docs/*.md`.
+Active gaps are 4 and 6. Gap 5 is kept here as a resolved historical item so
+the cleanup trail remains visible.
 
 ### 4. Existing-workspace requirement needs sharper boundaries
 
@@ -67,17 +29,6 @@ Those can coexist, but the docs do not define the boundary clearly:
 - Which files are owned by OpenUI, and which existing files must be preserved?
 
 **Recommendation:** add an explicit “workspace ownership contract” section.
-
-### 5. Incremental generation test-plan wording is stale
-
-TEST_PLAN.md says:
-
-- “No committed generator output workspaces. Only input fixtures are committed…”
-- Delete scenario uses a “future fixture”
-
-But the fixture tree contains committed `output_app-file-select` directories, and incremental.test.ts already covers deletion behavior.
-
-**Recommendation:** update the test plan wording to match the actual fixture/test strategy.
 
 ### 6. Validation “against `spec/**/*.md`” is too broad as written
 
@@ -112,7 +63,6 @@ Not aligned or unclear:
 
 - CLI option naming still collapses `input.json` and catalog/spec roles
 - current generator behavior vs “existing workspace conventions” requirement
-- stale incremental test-plan wording
 
 ## One extra implementation-adjacent note
 
@@ -122,7 +72,6 @@ The docs correctly state that root `type` is **not pinned** by the spec. However
 
 1. Align the generator CLI naming with the artifact roles (`--input`, `--catalog`, and optionally `--schema`).
 2. Add a short workspace ownership contract.
-3. Refresh TEST_PLAN.md to match actual fixtures/tests.
 
 ## Completed cleanup
 
@@ -130,4 +79,5 @@ The docs correctly state that root `type` is **not pinned** by the spec. However
 - Consolidated the split generator architecture/code-generation docs into `generators/angular/docs/GENERATION.md`.
 - Centralized the `input.json` / grammar / catalog file-role definitions in `spec/README.md` and replaced duplicates with references.
 - Replaced duplicated legacy page-scope definitions with the canonical `pages` / `Pages` scope identity from `spec/README.md` and `openui.json`.
+- Refreshed `generators/angular/docs/TEST_PLAN.md` so incremental fixture/test wording matches the committed expected-output fixtures and current add/match/delete/modify coverage.
 - Verified with `git diff --check` and a targeted grep over `generators/angular/docs/*.md`.
