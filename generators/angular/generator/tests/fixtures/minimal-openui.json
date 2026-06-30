@@ -124,11 +124,11 @@
           ]
         },
         {
-          "id": "predefinedPages",
-          "type": "PredefinedPages",
+          "id": "pages",
+          "type": "Pages",
           "attrs": {
             "title": "Pages",
-            "purpose": "Predefined page layouts and navigation destinations.",
+            "purpose": "Predefined page-level layouts and page shells.",
             "scopeDocument": "scopes/Pages/scope.md",
             "status": "draft"
           },

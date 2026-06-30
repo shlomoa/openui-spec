@@ -65,7 +65,7 @@ test("builds the UI model from canonical scope-tree OpenUI nodes", async () => {
       "dragAndDrop",
       "resizable",
       "collapsible",
-      "predefinedPages",
+      "pages",
       "dashboard",
       "shellPage",
       "emptyPage",
@@ -97,8 +97,8 @@ test("builds the UI model from canonical scope-tree OpenUI nodes", async () => {
   assert.equal(dragAndDrop.route, "drag-and-drop");
   assert.deepEqual(dragAndDrop.features, ["interaction", "layout"]);
 
-  const predefinedPages = pageById(uiModel.pages, "predefinedPages");
-  assert.deepEqual(predefinedPages.features, ["navigation"]);
+  const pages = pageById(uiModel.pages, "pages");
+  assert.deepEqual(pages.features, ["navigation"]);
 
   const forms = pageById(uiModel.pages, "forms");
   assert.deepEqual(forms.features, ["form", "data-binding"]);

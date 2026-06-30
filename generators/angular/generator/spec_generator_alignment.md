@@ -13,29 +13,7 @@ Mostly **clear and directionally aligned**, but **not fully aligned yet**. The g
 
 ## Alignment gaps
 
-### 1. `input.json` vs `--spec <spec.json>` is ambiguous
-
-REQUIREMENTS.md says the Angular generator input is:
-
-- `input.json` — a concrete UI authored against the spec
-- openui.json + openui.schema.json — the rule set/catalog
-
-But `GENERATION.md` documents the CLI as:
-
-- `openui-angular-gen validate --spec <spec.json>`
-- `openui-angular-gen generate --spec <spec.json> --out <output-directory>`
-
-The current implementation also loads one document via `--spec` and extracts scope nodes with `attrs.scopeDocument`, which is catalog/spec-like, not concrete-app-like.
-
-**Recommendation:** clarify whether the current generator consumes the catalog as a temporary implementation slice, or change the documented CLI contract to separate:
-
-- `--input <input.json>`
-- `--catalog <openui.json>`
-- maybe `--schema <spec/openui.schema.json>`
-
-Right now the docs mix target design and current behavior.
-
-### 2. `Pages` / `PredefinedPages` is out of sync with the canonical spec
+### 2. Resolved: `Pages` is the canonical page scope name
 
 The canonical openui.json currently has:
 
@@ -43,23 +21,28 @@ The canonical openui.json currently has:
 - `type: "Pages"`
 - `scopeDocument: "scopes/Pages/scope.md"`
 
-But generator docs and fixtures still reference:
+The drift was caused by duplicating the page-scope identity outside the
+specification source of truth. The entire solution now uses the canonical spec
+name:
 
-- `predefinedPages`
-- `PredefinedPages`
+- `pages`
+- `Pages`
 
 Spec evidence:
 
 - scope.md title is `# Pages`
 - openui.json page-related scope node is `("pages", "Pages", "scopes/Pages/scope.md")`
 
-Remaining drift locations found:
+Previously affected locations:
 
 - minimal-openui.json
 - normalize-spec.ts
 - generator.test.ts
+- spec-json-generator-developer.agent.md
 
-**Recommendation:** update generator docs and fixtures/code to use `pages` / `Pages`, unless the spec is intentionally being renamed back to `PredefinedPages`.
+**Status:** completed. The fixture, feature map, generator tests, and agent
+guidance now use `pages` / `Pages`; a repository grep found no remaining legacy
+page-scope identifier references.
 
 ### 3. Resolved: missing `initial_spec_population.md` references
 
@@ -127,8 +110,7 @@ Aligned:
 
 Not aligned or unclear:
 
-- `input.json` vs `spec.json` generator input contract
-- `PredefinedPages` vs canonical `Pages`
+- CLI option naming still collapses `input.json` and catalog/spec roles
 - current generator behavior vs “existing workspace conventions” requirement
 - stale incremental test-plan wording
 
@@ -138,13 +120,14 @@ The docs correctly state that root `type` is **not pinned** by the spec. However
 
 ## Recommended next cleanup order
 
-1. Decide and document the generator CLI/input contract: concrete app `input.json` vs catalog/spec document.
-2. Replace `predefinedPages` / `PredefinedPages` with canonical `pages` / `Pages`, or intentionally update the spec if the old name is desired.
-3. Add a short workspace ownership contract.
-4. Refresh TEST_PLAN.md to match actual fixtures/tests.
+1. Align the generator CLI naming with the artifact roles (`--input`, `--catalog`, and optionally `--schema`).
+2. Add a short workspace ownership contract.
+3. Refresh TEST_PLAN.md to match actual fixtures/tests.
 
 ## Completed cleanup
 
 - Removed the broken `initial_spec_population.md` references from the legacy split generator docs.
 - Consolidated the split generator architecture/code-generation docs into `generators/angular/docs/GENERATION.md`.
+- Centralized the `input.json` / grammar / catalog file-role definitions in `spec/README.md` and replaced duplicates with references.
+- Replaced duplicated legacy page-scope definitions with the canonical `pages` / `Pages` scope identity from `spec/README.md` and `openui.json`.
 - Verified with `git diff --check` and a targeted grep over `generators/angular/docs/*.md`.

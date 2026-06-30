@@ -73,12 +73,12 @@ are not allowed.
 
 ## Generation pipeline
 
-The Angular generator's runtime input is an `input.json` UI description authored
-against the OpenUI specification; the specification itself — root `openui.json`
-(catalog), `spec/openui.schema.json` (grammar), and the `spec/**/*.md` prose — is
-the rule set the generator validates and interprets that input against. See
-[REQUIREMENTS.md](../../../docs/REQUIREMENTS.md) §1–§2 for the authoritative
-input, context, and output contract; this document does not redefine it.
+The roles of `input.json`, `spec/openui.schema.json`, and root `openui.json` are
+defined once in
+[`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
+The Angular generator consumes those artifacts according to the input, context,
+and output contract in [REQUIREMENTS.md](../../../docs/REQUIREMENTS.md) §2; this
+document does not redefine either contract.
 
 `input.json` uses the native OpenUI grammar directly; no transitional input
 definitions or adapters are allowed. The required pipeline is:
@@ -86,7 +86,7 @@ definitions or adapters are allowed. The required pipeline is:
 ```text
 input.json
   ↓
-validate against the specification (openui.json + openui.schema.json + spec/**/*.md)
+validate against the OpenUI grammar and catalog
   ↓
 build implementation-independent UI IR
   ↓
@@ -117,25 +117,9 @@ and IR construction.
 
 ## Specification and input
 
-For the generator's purposes:
-
-- **Catalog** — root `openui.json`. Its root `id` is `root` and `version` is
-  required. The current version is tracked by the repository-root
-  `SCHEMA_VERSION` file. The root `type` follows the general type rules and is
-  not pinned. See `spec/README.md` and `openui.schema.json` for the authoritative
-  root contract.
-
-  Scope coverage is represented by native OpenUI nodes whose
-  `attrs.scopeDocument` values are relative to `spec/`, for example
-  `scopes/Widgets/dialog.scope.md`. Scope nodes are metadata-only; each scope's
-  object contract is carried by a single typed instance child
-  (`<scopeId>Instance`) that has no `scopeDocument`. Generated child-model ids are
-  scoped by the owning leaf when needed so ids stay globally unique. See
-  `spec/scopes/scope.md` for the serialization rule.
-
-- **Input** — an `input.json` authored against the catalog: a well-formed OpenUI
-  document per `openui.schema.json` whose every `type` is a real catalog object
-  used in a legal place.
+Do not duplicate the OpenUI artifact role definitions here. Use the canonical
+definition in
+[`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
 
 Test fixtures that stand in for the catalog must use this scope-tree shape;
 fixtures that stand in for `input.json` must be valid input documents.

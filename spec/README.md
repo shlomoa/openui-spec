@@ -8,14 +8,11 @@ It serves application developers, designers and UX owners, framework maintainers
 
 ## Specification artifacts: grammar vs. catalog
 
-This section explains the difference between `spec/openui.schema.json` and the
-repository-root `openui.json`. They are easy to confuse — both are JSON about
-OpenUI — but they sit at **different levels of abstraction**.
-
-For the authoritative input/context/output contract, see
-[`docs/REQUIREMENTS.md`](https://github.com/shlomoa/openui5-spec/blob/main/docs/REQUIREMENTS.md)
-§1. This section is the explanatory companion; it does not redefine the
-contract.
+This section is the repository source of truth for the roles of `input.json`,
+`spec/openui.schema.json`, and repository-root `openui.json`. Other documents
+should reference this section instead of redefining those roles. The files are
+easy to confuse — they are all JSON or JSON-related OpenUI artifacts — but they
+sit at **different levels of abstraction**.
 
 ### TL;DR
 
@@ -23,6 +20,8 @@ contract.
   _shape_ of any OpenUI document.
 - `openui.json` is a **document written in that grammar** whose _content_ is the
   specification's object **catalog**.
+- `input.json` is a **concrete UI/app document** that conforms to the grammar and
+  uses object vocabulary from the catalog.
 
 `openui.json` is to `openui.schema.json` as an XML file is to its XSD, or a
 `package.json` to its JSON Schema.
@@ -79,9 +78,10 @@ openui.json          ← the spec's catalog of available objects (vocabulary)
 
 ### Where `input.json` fits
 
-A generator `input.json` (a concrete UI, e.g. a dashboard with three charts)
-conforms to the **same grammar** as `openui.json`. The two are distinguished by
-_role_, not by _shape_:
+A generator `input.json` is a concrete UI/app document, e.g. a dashboard with
+three charts. It conforms to the **same grammar** as `openui.json` and uses
+object vocabulary from the `openui.json` catalog. The two documents are
+distinguished by _role_, not by _shape_:
 
 ```text
 openui.schema.json   ← grammar
@@ -99,6 +99,14 @@ openui.json   input.json
 
 The grammar alone cannot tell whether `input.json` uses a _real_ object in a
 _legal place_ — that check is against the **catalog**, not the schema.
+
+Generators use the three files together:
+
+- validate `input.json` against the grammar defined by
+  `spec/openui.schema.json`,
+- validate and interpret `input.json` content against the object catalog defined
+  by `openui.json`, and
+- generate target-framework output from the validated `input.json`.
 
 ## Spec folder structure
 
