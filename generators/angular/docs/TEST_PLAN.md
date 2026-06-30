@@ -15,8 +15,10 @@ Angular validation has two primary layers plus CI integration:
    alongside repository validation on every code-review event.
 
 The layering mirrors the [golden-source boundary](GENERATION.md#golden-source-boundary):
-the spec is authoritative, the generator consumes it, and the examples app is a
-downstream illustration that is never treated as generator output.
+the spec is authoritative, the generator consumes concrete `input.json` app
+documents validated against the grammar and catalog defined by the SSOT, and the
+examples app is a downstream illustration that is never treated as generator
+output.
 
 ## Layer 1 — Angular generator tests (`generators/angular/generator/`, node:test)
 
@@ -29,19 +31,37 @@ Pop-Location
 ```
 
 `npm run test` compiles TypeScript first and then runs the Node test suite from
-`dist/tests/*.test.js`. The suite (`tests/generator.test.ts`) drives the full
-pipeline against the committed `tests/fixtures/minimal-openui.json` catalog
-fixture:
+`dist/tests/*.test.js`. Existing tests include catalog/scope-tree regression
+coverage against the committed `tests/fixtures/minimal-openui.json` catalog
+fixture. Those tests protect the current catalog-driven page-generation slice;
+they do not define the full generator input contract.
+
+The generator input contract is the concrete `input.json` role defined in
+[`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
+Concrete input fixtures must validate against the grammar and catalog without
+requiring catalog traceability fields such as `attrs.scopeDocument` on app nodes.
+
+Current catalog/scope-tree regression coverage:
 
 | Test                                                                          | Verifies                                                                                                                                                                          |
 | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| classifies every generated full-output page and application file              | The classifier maps generated routed page files to scoped OpenUI nodes and project files to application-level ownership.                                                          |
+| classifies every generated full-output page and application file              | The classifier maps generated routed page files to catalog scoped OpenUI nodes and project files to application-level ownership.                                                  |
 | classifies every generated component folder and file in the fixture workspace | Component-template fixture folders and generated component files classify back to their owning selectors.                                                                         |
-| builds the UI model from canonical scope-tree OpenUI nodes                    | `buildUiModel` produces the expected `UiApplication` name, version, and ordered pages.                                                                                            |
-| generates an Angular Material standalone app from canonical scope-tree OpenUI | The `generate` CLI emits the expected Angular project skeleton and Angular Material dependencies.                                                                                 |
-| generates scope-specific Angular Material details from the canonical tree     | Feature-specific page output (structure, layout, i18n, extension, etc.) is emitted per scope.                                                                                     |
+| builds the UI model from catalog scope-tree OpenUI nodes                      | `buildUiModel` produces the expected `UiApplication` name, version, and ordered pages for catalog regression coverage.                                                            |
+| generates an Angular Material standalone app from catalog scope-tree OpenUI   | The `generate` CLI emits the expected Angular project skeleton and Angular Material dependencies for catalog regression coverage.                                                 |
+| generates scope-specific Angular Material details from the catalog tree       | Feature-specific page output (structure, layout, i18n, extension, etc.) is emitted per catalog scope.                                                                             |
 | validates canonical root values, attrs, and scoped document uniqueness        | `validateOpenUiSpec` raises `SpecValidationError` for malformed root values and duplicate scopes.                                                                                 |
 | full-pipeline incremental acceptance scenarios                                | `generateIncrementally` covers from-scratch Add, no-op Match, incremental Add/Delete/Modify, validation atomicity, ignored workspace directories, and direct comparator planning. |
+
+Required concrete `input.json` acceptance coverage:
+
+| Acceptance target                                                    | Must verify                                                                                                                                                  |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| validates concrete app fixtures against grammar and catalog          | Concrete fixtures such as `dialog.example.json` are accepted without adding `attrs.scopeDocument` to app nodes.                                              |
+| builds IR from concrete app documents                                | The IR represents concrete widgets/components, their attributes, child regions, behavior, and source input identity.                                         |
+| maps concrete widgets to Angular Material                            | Dialog-like fixtures map to Angular Material components, templates, styles, host wiring, and required imports.                                               |
+| reconciles concrete generated output incrementally                   | Re-running generation against an already matching output workspace produces Match/no-op behavior without timestamp churn.                                    |
+| preserves evidence for unsupported paths until implementation exists | Fixture notes such as `output_generation.md` keep observed failure commands/messages until the corresponding generator support is implemented and validated. |
 
 Generator tests write output only to the repo-local, git-ignored `tmp/`
 directory (via `mkdtemp` under the repository root) — never to OS temp
@@ -134,8 +154,8 @@ generators/angular/generator/tests/fixtures/
 | From scratch           | `example_from_scratch` | Empty workspace → full generated output                                                    |
 | Incremental            | `example_incremental`  | Existing workspace → new component added, affected parent files rewired                    |
 | Match                  | same-state input       | Re-running on matching workspace produces no changes or timestamp churn                    |
-| Add                    | runtime temp workspace | New scoped children add only their generated files plus required wiring changes            |
-| Delete one child       | runtime temp workspace | Removed scoped children delete generated files, prune empty dirs, and rewire refs          |
+| Add                    | runtime temp workspace | New input children add only their generated files plus required wiring changes             |
+| Delete one child       | runtime temp workspace | Removed input children delete generated files, prune empty dirs, and rewire refs           |
 | Delete empty spec      | runtime temp workspace | Valid empty root removes previously generated owned child/page artifacts                   |
 | Rename                 | runtime temp workspace | Route/name changes delete the old path, add the new path, and update parents               |
 | Complex modification   | runtime temp workspace | Content-only spec changes modify affected files while siblings match                       |
