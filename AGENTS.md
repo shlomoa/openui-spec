@@ -4,7 +4,7 @@ This file provides guidance for AI coding assistants (Claude, Copilot, Cursor, e
 
 ## General rules
 
-- Read .github/copilot-instructions.md for general rules and definitions that apply to all interactions with the codebase and the user.
+- Read [copilot instructions](.github/copilot-instructions.md) for general rules and definitions that apply to all interactions with the codebase and the user.
 
 ## Repository specifics
 

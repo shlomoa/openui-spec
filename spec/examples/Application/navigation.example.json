@@ -10,55 +10,30 @@
       "id": "primaryNav",
       "type": "Navigation",
       "attrs": {
-        "[ariaLabel]": "\"Primary\"",
-        "(navItemSelect)": "onNavSelect($event)"
+        "[ariaLabel]": "\"Primary\""
       },
       "children": [
         {
           "id": "navHome",
-          "type": "NavItem",
-          "attrs": {
-            "[label]": "\"Home\"",
-            "[icon]": "\"home\"",
-            "[target]": "\"dashboard\"",
-            "[selected]": "true"
-          }
+          "type": "NavItem"
         },
         {
           "id": "navReportsGroup",
           "type": "NavGroup",
-          "attrs": {
-            "[label]": "\"Reports\"",
-            "[icon]": "\"insights\""
-          },
           "children": [
             {
               "id": "navSalesReport",
-              "type": "NavItem",
-              "attrs": {
-                "[label]": "\"Sales\"",
-                "[target]": "\"reports/sales\""
-              }
+              "type": "NavItem"
             },
             {
               "id": "navAuditReport",
-              "type": "NavItem",
-              "attrs": {
-                "[label]": "\"Audit\"",
-                "[target]": "\"reports/audit\"",
-                "[disabled]": "true"
-              }
+              "type": "NavItem"
             }
           ]
         },
         {
           "id": "navAdmin",
-          "type": "NavItem",
-          "attrs": {
-            "[label]": "\"Admin\"",
-            "[target]": "\"admin\"",
-            "[hidden]": "true"
-          }
+          "type": "NavItem"
         }
       ]
     }

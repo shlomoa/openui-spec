@@ -9,55 +9,28 @@
     {
       "id": "appToolbar",
       "type": "ToolBar",
-      "attrs": {
-        "[placement]": "\"top\"",
-        "[overflow]": "\"menu\""
-      },
       "children": [
         {
-          "id": "primaryActions",
-          "type": "ToolGroup",
-          "attrs": {
-            "[order]": "1"
-          },
+          "id": "primaryRow",
+          "type": "ToolBarRow",
           "children": [
             {
               "id": "newAction",
-              "type": "ToolAction",
-              "attrs": {
-                "[label]": "\"New\"",
-                "[icon]": "\"add\"",
-                "(click)": "onNew()"
-              }
+              "type": "ToolAction"
             },
             {
               "id": "saveAction",
-              "type": "ToolAction",
-              "attrs": {
-                "[label]": "\"Save\"",
-                "[icon]": "\"save\"",
-                "[disabled]": "isPristine",
-                "(click)": "onSave()"
-              }
+              "type": "ToolAction"
             }
           ]
         },
         {
-          "id": "secondaryActions",
-          "type": "ToolGroup",
-          "attrs": {
-            "[order]": "2"
-          },
+          "id": "secondaryRow",
+          "type": "ToolBarRow",
           "children": [
             {
               "id": "deleteAction",
-              "type": "ToolAction",
-              "attrs": {
-                "[label]": "\"Delete\"",
-                "[icon]": "\"delete\"",
-                "[hidden]": "!canDelete",
-                "(click)": "onDelete()"
-              }
+              "type": "ToolAction"
             }
           ]
         }

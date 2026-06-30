@@ -1,48 +1,15 @@
 {
   "id": "root",
   "version": "0.0.1",
-  "type": "Favicon",
-  "attrs": {
-    "rel": "\"icon\"",
-    "type": "\"image/x-icon\"",
-    "href": "\"/favicon.ico\""
-  },
+  "type": "Application",
   "children": [
     {
-      "id": "svgIcon",
-      "type": "IconVariant",
+      "id": "appFavicon",
+      "type": "link",
       "attrs": {
-        "rel": "\"icon\"",
-        "type": "\"image/svg+xml\"",
-        "href": "\"/icons/icon.svg\""
-      }
-    },
-    {
-      "id": "png32",
-      "type": "IconVariant",
-      "attrs": {
-        "rel": "\"icon\"",
-        "type": "\"image/png\"",
-        "sizes": "\"32x32\"",
-        "href": "\"/icons/icon-32.png\""
-      }
-    },
-    {
-      "id": "darkIcon",
-      "type": "IconVariant",
-      "attrs": {
-        "rel": "\"icon\"",
-        "media": "\"(prefers-color-scheme: dark)\"",
-        "href": "\"/icons/icon-dark.svg\""
-      }
-    },
-    {
-      "id": "appleTouch",
-      "type": "IconVariant",
-      "attrs": {
-        "rel": "\"apple-touch-icon\"",
-        "sizes": "\"180x180\"",
-        "href": "\"/icons/apple-touch-icon.png\""
+        "[rel]": "\"icon\"",
+        "[href]": "\"/favicon.ico\"",
+        "[type]": "\"image/x-icon\""
       }
     }
   ]
