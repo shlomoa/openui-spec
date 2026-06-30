@@ -11,84 +11,95 @@ Because parts of incremental generation may already be implemented, each new tes
 Recommended test cases:
 
 1.1. ✅ **From scratch**
-   - Empty workspace + non-empty JSON.
-   - Expect all emitted files to be added.
-   - Assert key project files exist: `package.json`, `src/app/app.routes.ts`, page/component files.
-   - Covered by `tests/incremental.test.ts`: `from scratch — generates every emitted file as Add into an empty workspace`.
 
-1.2. ✅ **No-op match**
-   - Generate once, then generate again with identical JSON.
-   - Expect no added/modified/deleted files.
-   - Assert matched files keep their previous `mtime`.
-   - Covered by `tests/incremental.test.ts`: `no-op match — re-running on an up-to-date workspace matches every emitted file`.
+- Empty workspace + non-empty JSON.
+- Expect all emitted files to be added.
+- Assert key project files exist: `package.json`, `src/app/app.routes.ts`, page/component files.
+- Covered by `tests/incremental.test.ts`: `from scratch — generates every emitted file as Add into an empty workspace`.
 
-1.3. ✅ **Incremental add**
-   - Start with input A containing one child.
-   - Generate.
-   - Run again with input B adding a child.
-   - Expect new child files added.
-   - Expect parent/router/reference files modified only where wiring changes.
-   - Expect unrelated files matched/not rewritten.
-   - Covered by `tests/incremental.test.ts`: `incremental add — adds a new child and rewires generated parent files`.
+  1.2. ✅ **No-op match**
 
-1.4. ✅ **Incremental delete — one child**
-   - Start with input containing two children/pages/components.
-   - Run again with one child removed.
-   - Expect removed child files deleted.
-   - Expect parent references/routes/templates no longer mention the removed child.
-   - Expect emptied directories pruned.
-   - Covered by `tests/incremental.test.ts`: `incremental delete — removes a child and rewires generated parent files`.
+- Generate once, then generate again with identical JSON.
+- Expect no added/modified/deleted files.
+- Assert matched files keep their previous `mtime`.
+- Covered by `tests/incremental.test.ts`: `no-op match — re-running on an up-to-date workspace matches every emitted file`.
 
-1.5. ✅ **Incremental delete — empty JSON**
-   - Start with generated workspace.
-   - Run with valid root JSON containing no generated children.
-   - Expect previously generated owned files removed.
-   - Confirm no partial leftovers in component/page directories.
-   - Covered by `tests/incremental.test.ts`: `incremental delete — empty JSON removes every previously generated child page`.
-   - Green step: allow structurally valid empty root documents for incremental deletion while preserving validation for non-empty trees with no scoped nodes.
+  1.3. ✅ **Incremental add**
 
-1.6. ✅ **Simple modification / rename**
-   - Change a child selector/route/name.
-   - Expect old path deleted and new path added.
-   - Expect parent references updated.
-   - This matches the issue’s “simple rename” behavior.
-   - Covered by `tests/incremental.test.ts`: `simple modification — renaming a child deletes the old route, adds the new route, and rewires parents`.
+- Start with input A containing one child.
+- Generate.
+- Run again with input B adding a child.
+- Expect new child files added.
+- Expect parent/router/reference files modified only where wiring changes.
+- Expect unrelated files matched/not rewritten.
+- Covered by `tests/incremental.test.ts`: `incremental add — adds a new child and rewires generated parent files`.
 
-1.7. ✅ **Complex modification**
-   - Change a type/attribute/child shape that affects generated output content but not path.
-   - Expect affected files modified.
-   - Expect unaffected siblings matched and timestamps unchanged.
-   - Covered by `tests/incremental.test.ts`: `complex modification — changing a child attribute rewrites only affected generated content`.
+  1.4. ✅ **Incremental delete — one child**
 
-1.8. ✅ **Validation failure is atomic**
-   - Generate valid workspace.
-   - Run with invalid JSON/no root.
-   - Expect validation error.
-   - Assert existing workspace is unchanged.
-   - This protects the “Having no root is invalid” issue requirement.
-   - Covered by `tests/incremental.test.ts`: `validation failure is atomic — invalid root leaves existing workspace untouched`.
+- Start with input containing two children/pages/components.
+- Run again with one child removed.
+- Expect removed child files deleted.
+- Expect parent references/routes/templates no longer mention the removed child.
+- Expect emptied directories pruned.
+- Covered by `tests/incremental.test.ts`: `incremental delete — removes a child and rewires generated parent files`.
 
-1.9. ✅ **Workspace indexing ignores non-contract directories**
-   - Seed `node_modules`, `dist`, `.git`, `.angular`.
-   - Generate incrementally.
-   - Assert those directories are neither deleted nor considered part of the plan.
-   - Covered by `tests/incremental.test.ts`: `workspace indexing ignores non-contract directories during incremental generation`.
+  1.5. ✅ **Incremental delete — empty JSON**
 
-1.10. ✅ **Comparator/reconciler coverage for full output**
-   - Build the desired emitted-file set for an input JSON.
-   - Index an existing workspace generated from a different input JSON.
-   - Run the comparator/reconciler directly, without applying the plan.
-   - Assert the plan classifies Add / Match / Modify / Delete decisions correctly and attributes each decision to classifier output.
-   - This proves the comparator required by issue #97 is useful independently of the apply layer.
-   - Covered by `tests/incremental.test.ts`: `comparator/reconciler coverage — plans full-output add match modify delete without applying`.
-   - Green step: classify full-generator routed pages from scoped OpenUI nodes with `attrs.scopeDocument`, while preserving explicit `PageScope` support.
+- Start with generated workspace.
+- Run with valid root JSON containing no generated children.
+- Expect previously generated owned files removed.
+- Confirm no partial leftovers in component/page directories.
+- Covered by `tests/incremental.test.ts`: `incremental delete — empty JSON removes every previously generated child page`.
+- Green step: allow structurally valid empty root documents for incremental deletion while preserving validation for non-empty trees with no scoped nodes.
 
-1.11. ✅ **Classifier coverage for full output**
-   - For every generated page/component file, assert classification is expected.
-   - For project-level files, assert `application` or documented behavior.
-   - This proves the classifier is actually useful for the full generator, not just isolated fixtures.
-   - Covered by `tests/classifier.test.ts`: `classifies every generated full-output page and application file` and `classifies every generated component folder and file in the fixture workspace`.
-   - Green step: classify known generator-owned project files as `application` artifacts instead of `unknown`.
+  1.6. ✅ **Simple modification / rename**
+
+- Change a child selector/route/name.
+- Expect old path deleted and new path added.
+- Expect parent references updated.
+- This matches the issue’s “simple rename” behavior.
+- Covered by `tests/incremental.test.ts`: `simple modification — renaming a child deletes the old route, adds the new route, and rewires parents`.
+
+  1.7. ✅ **Complex modification**
+
+- Change a type/attribute/child shape that affects generated output content but not path.
+- Expect affected files modified.
+- Expect unaffected siblings matched and timestamps unchanged.
+- Covered by `tests/incremental.test.ts`: `complex modification — changing a child attribute rewrites only affected generated content`.
+
+  1.8. ✅ **Validation failure is atomic**
+
+- Generate valid workspace.
+- Run with invalid JSON/no root.
+- Expect validation error.
+- Assert existing workspace is unchanged.
+- This protects the “Having no root is invalid” issue requirement.
+- Covered by `tests/incremental.test.ts`: `validation failure is atomic — invalid root leaves existing workspace untouched`.
+
+  1.9. ✅ **Workspace indexing ignores non-contract directories**
+
+- Seed `node_modules`, `dist`, `.git`, `.angular`.
+- Generate incrementally.
+- Assert those directories are neither deleted nor considered part of the plan.
+- Covered by `tests/incremental.test.ts`: `workspace indexing ignores non-contract directories during incremental generation`.
+
+  1.10. ✅ **Comparator/reconciler coverage for full output**
+
+- Build the desired emitted-file set for an input JSON.
+- Index an existing workspace generated from a different input JSON.
+- Run the comparator/reconciler directly, without applying the plan.
+- Assert the plan classifies Add / Match / Modify / Delete decisions correctly and attributes each decision to classifier output.
+- This proves the comparator required by issue #97 is useful independently of the apply layer.
+- Covered by `tests/incremental.test.ts`: `comparator/reconciler coverage — plans full-output add match modify delete without applying`.
+- Green step: classify full-generator routed pages from scoped OpenUI nodes with `attrs.scopeDocument`, while preserving explicit `PageScope` support.
+
+  1.11. ✅ **Classifier coverage for full output**
+
+- For every generated page/component file, assert classification is expected.
+- For project-level files, assert `application` or documented behavior.
+- This proves the classifier is actually useful for the full generator, not just isolated fixtures.
+- Covered by `tests/classifier.test.ts`: `classifies every generated full-output page and application file` and `classifies every generated component folder and file in the fixture workspace`.
+- Green step: classify known generator-owned project files as `application` artifacts instead of `unknown`.
 
 ## 2. ✅ Run tests and confirm red-or-covered state
 
