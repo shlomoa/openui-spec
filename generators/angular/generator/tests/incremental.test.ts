@@ -142,7 +142,8 @@ test("from scratch — generates every emitted file as Add into an empty workspa
     }
 
     const packageJson = await readFile(path.join(outDir, "package.json"), "utf8");
-    assert.match(packageJson, /"@angular\/material": "22\.0\.2"/);
+    assert.match(packageJson, /"@angular\/material": "\^22\.0\.2"/);
+    assert.match(packageJson, /"@angular\/compiler-cli": "\^22\.0\.0"/);
   } finally {
     await cleanupTestOutput(outDir);
   }

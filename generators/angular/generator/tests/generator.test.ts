@@ -283,13 +283,13 @@ test("generates an Angular Material standalone app from catalog scope-tree regre
     const packageJson = JSON.parse(await readFile(path.join(outDir, "package.json"), "utf8")) as {
       dependencies: Record<string, string>;
       devDependencies: Record<string, string>;
-      overrides: Record<string, string>;
+      overrides?: Record<string, string>;
     };
-    assert.equal(packageJson.dependencies["@angular/material"], "22.0.2");
-    assert.equal(packageJson.dependencies["@angular/core"], "22.0.2");
-    assert.equal(packageJson.devDependencies["@angular/build"], "22.0.2");
-    assert.equal(packageJson.overrides.esbuild, "0.28.1");
-    assert.equal(packageJson.overrides.vite, "7.3.5");
+    assert.equal(packageJson.dependencies["@angular/material"], "^22.0.2");
+    assert.equal(packageJson.dependencies["@angular/core"], "^22.0.0");
+    assert.equal(packageJson.devDependencies["@angular/build"], "^22.0.3");
+    assert.equal(packageJson.devDependencies["@angular/compiler-cli"], "^22.0.0");
+    assert.equal(packageJson.overrides, undefined);
 
     const indexHtml = await readFile(path.join(outDir, "src/index.html"), "utf8");
     assert.match(indexHtml, /<openui-root><\/openui-root>/);
