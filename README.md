@@ -5,7 +5,7 @@ This repository contains a technology-independent specification for a Web UI fra
 ## Where to go
 
 - **Using the specification** — read the published docs on ReadTheDocs: <https://openui5-spec.readthedocs.io/>
-- **Contributing / developing** — start at the developer hub: [docs/README.md](docs/README.md)
+- **Contributing / developing** — start with the [developer docs](#developer-docs).
 
 ## Repository map
 
@@ -14,9 +14,25 @@ This repository contains a technology-independent specification for a Web UI fra
 | [`spec/`](spec/)                                                 | The specification source of truth — prose scope documents and the ReadTheDocs source; start at [`spec/README.md`](spec/README.md). |
 | [`openui.json`](openui.json)                                     | Generated canonical machine-readable specification, built from `spec/scopes/`.                                                     |
 | [`generators/angular/generator/`](generators/angular/generator/) | Angular Material generator (TypeScript npm package).                                                                               |
-| [`docs/`](docs/)                                                 | Developer documentation hub — [`docs/README.md`](docs/README.md).                                                                  |
+| [`docs/`](docs/)                                                 | Repository requirements and root validation strategy.                                                                               |
 | [`origin/`](origin/)                                             | Upstream-derivation / provenance (e.g. the traversal report).                                                                      |
 | `AGENTS.md` / `CLAUDE.md` / `GEMINI.md`                          | AI coding-assistant guides.                                                                                                        |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md)                             | How to contribute.                                                                                                                 |
 
-Local validation and build steps live in the [developer hub](docs/README.md).
+## Developer docs
+
+Contributor and developer entry points for this repository:
+
+- [Contributing guide](CONTRIBUTING.md) — local setup and validation basics.
+- [Requirements and goals](docs/REQUIREMENTS.md).
+- [Spec artifacts: grammar vs. catalog](spec/README.md#specification-artifacts-grammar-vs-catalog)
+	— how `openui.schema.json` and `openui.json` differ.
+- Angular generator: [generation architecture, flow, and validation](generators/angular/generator/docs/GENERATION.md)
+	and [AMCG TDD workflow](generators/angular/generator/docs/TDD.md).
+- [Root validation test plan](docs/TEST_PLAN.md) — spec-contract and repository
+	CI validation suites and how to run them.
+- [Root Python test-suite plan](tests/TEST_PLAN.md) — implemented Python test
+	modules under `tests/` and their local run command.
+- Upstream derivation / provenance: [origin/TRAVERSAL_REPORT.md](origin/TRAVERSAL_REPORT.md).
+- AI-agent guides: [AGENTS.md](AGENTS.md), [CLAUDE.md](CLAUDE.md), [GEMINI.md](GEMINI.md),
+	and [copilot-instructions.md](.github/copilot-instructions.md).

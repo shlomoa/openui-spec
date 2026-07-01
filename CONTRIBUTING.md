@@ -1,6 +1,6 @@
 # Contributing
 
-For repository structure, requirements, local validation, and other developer docs, see the [developer hub](docs/README.md).
+For repository structure, requirements, local validation, and other developer docs, see the [developer docs](README.md#developer-docs).
 
 ## Angular Material generator
 
@@ -19,7 +19,7 @@ node dist/src/cli/main.js generate --input tests/fixtures/minimal-openui.json --
 
 The direct `node dist/src/cli/main.js` commands require `npm run build` to complete successfully first so the `dist` output exists. Re-run the build after changing generator source files.
 
-The generated app includes Angular routing, a Material shell and navigation, global theme styles, and per-section pages for the specification areas currently mapped by the generator. Keep generator changes aligned with the compiler-style pipeline documented in `generators/angular/docs/GENERATION.md`: load, validate, normalize, build the UI model, map to Angular, emit files, and verify.
+The generated app includes Angular routing, a Material shell and navigation, global theme styles, and per-section pages for the specification areas currently mapped by the generator. Keep generator changes aligned with the compiler-style pipeline documented in `generators/angular/generator/docs/GENERATION.md`: load, validate, normalize, build the UI model, map to Angular, emit files, and verify.
 
 ---
 

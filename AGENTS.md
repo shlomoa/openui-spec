@@ -20,17 +20,17 @@ Angular TypeScript generator that applies the specification to an existing Angul
 
 ## Key repository sources
 
-- `docs/README.md` - Developer documentation hub and entry point for repository structure,
+- `README.md` - Developer documentation hub and entry point for repository structure,
   validation, and implementation docs.
 - `docs/REQUIREMENTS.md` - Project requirements and goals.
 - `spec/README.md` - Specification entry point, including how to read the spec and the section index.
 - `spec/scopes/` - Human-authored specification scope sources.
 - `openui.json` - Generated canonical machine-readable specification built from `spec/scopes/`.
 - `generators/angular/generator/` - Angular TypeScript generator implementation.
-- `generators/angular/docs/GENERATION.md` - Angular generator architecture,
-  implementation details, and code-generation flow.
-- `generators/angular/docs/TEST_PLAN.md` - Angular generator and generated-examples
-  validation strategy.
+- `generators/angular/generator/docs/GENERATION.md` - Angular generator architecture,
+  implementation details, code-generation flow, and validation strategy.
+- `generators/angular/generator/docs/TDD.md` - Angular Material Code Generator
+  test-driven design-to-implementation workflow.
 - `docs/TEST_PLAN.md` - Spec-contract and repository CI validation strategy.
 
 ## Repository-specific rules
@@ -50,6 +50,5 @@ Angular TypeScript generator that applies the specification to an existing Angul
 - Documentation-only changes should be checked for formatting and link consistency when practical.
 - Python/spec validation uses the repository-local virtual environment documented in
   `CONTRIBUTING.md`.
-- Generator changes should follow the pipeline in
-  `generators/angular/docs/GENERATION.md` and the validation plan in
-  `generators/angular/docs/TEST_PLAN.md`.
+- Generator changes should follow the pipeline and validation strategy in
+  `generators/angular/generator/docs/GENERATION.md`.

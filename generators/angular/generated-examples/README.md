@@ -55,4 +55,4 @@ Use `npm run format` to apply Prettier formatting.
 
 These checks cover this app's vitest specs (data model, navigation, and the
 component-viewer tabs). For the Angular generator and examples-app test strategy,
-see the [Angular generator test plan](../docs/TEST_PLAN.md).
+see the [Angular generator validation strategy](../generator/docs/GENERATION.md#validation-and-test-strategy).

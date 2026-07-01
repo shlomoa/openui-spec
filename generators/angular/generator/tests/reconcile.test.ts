@@ -180,7 +180,7 @@ test("a changed existing file is reconciled as modify", async () => {
 
 // Issue-driven validation: the JSON specification itself drives each Add / Delete /
 // Modify scenario by genuinely differing from the workspace it reconciles against.
-// See spec/README.md § Incremental generation and docs/TEST_PLAN.md.
+// See spec/README.md § Incremental generation and generator/docs/GENERATION.md.
 
 test("removal — an empty JSON deletes every previously generated component", async () => {
   // JSON with no component templates: nothing is emitted, so every existing

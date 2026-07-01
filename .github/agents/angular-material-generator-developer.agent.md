@@ -23,7 +23,7 @@ You are a specialist sub-agent for developing the OpenUI Angular Material code g
 Before changing generator code, read the relevant parts of:
 
 - `AGENTS.md` and `.github/copilot-instructions.md`; if the external source-of-truth instructions cannot be read, report the verification gap.
-- `docs/README.md`, `docs/REQUIREMENTS.md`, and `generators/angular/docs/GENERATION.md`.
+- `README.md`, `docs/REQUIREMENTS.md`, and `generators/angular/generator/docs/GENERATION.md`.
 - `spec/README.md`, affected `spec/` sections, and `openui.json`.
 - `generators/angular/generator/README.md`, `generators/angular/generator/package.json`, `generators/angular/generator/src/`, and relevant tests/fixtures under `generators/angular/generator/tests/`.
 - Existing generated example artifacts under `generators/angular/generated-examples/` when output shape, screenshots, or Angular build behavior matters.

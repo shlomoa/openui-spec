@@ -14,6 +14,11 @@ The generator follows the documented pipeline: load the specification, validate 
 build an implementation-independent UI model, map that model to Angular concepts,
 and emit an Angular standalone application skeleton using Angular Material.
 
+## Design docs
+
+- [Generation architecture and validation strategy](docs/GENERATION.md)
+- [AMCG TDD guide](docs/TDD.md)
+
 Generated applications are expected to use the latest Angular Material package set
 supported by this repository. The current emitter pins Angular and Angular
 Material packages to `22.0.2` and prefers Material primitives for shells, page

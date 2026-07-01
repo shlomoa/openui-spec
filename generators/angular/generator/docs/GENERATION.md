@@ -1,39 +1,45 @@
 # Angular Generation
 
-This document describes the Angular generator architecture, code-generation
-pipeline, implementation guardrails, and validation commands. The roles of
-`input.json`, `spec/openui.schema.json`, and root `openui.json` are defined only
-in [`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
+This document is the single source of truth for the Angular Material Code
+Generator (AMCG) architecture, code-generation pipeline, implementation
+boundaries, validation strategy, and test conventions.
 
-The Angular generator lives in `generators/angular/generator/`. Keep it structured
-as a **compiler pipeline**, not as a template script.
+The roles of `input.json`, `spec/openui.schema.json`, and root `openui.json`
+are defined only in
+[`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
+This document explains how the Angular generator consumes those artifacts; it
+must not redefine their contract.
+
+The Angular generator lives in `generators/angular/generator/`. Keep it
+structured as a **compiler pipeline**, not as a template script.
 
 ## Golden source boundary
 
 The golden source for the OpenUI specification is the hand-authored prose:
 
 - `spec/README.md` for the entry point and JSON format rules, and
-- the `spec/scopes/**` Markdown scopes, authoritative for each object's contract.
+- the `spec/scopes/**` Markdown scopes, authoritative for each object's
+  contract.
 
-Root `openui.json` is **generated** from that prose. It — together with generator
-fixtures, generated examples, and Angular target models — is a derived artifact
-that must not replace or redefine the golden source.
+Root `openui.json` is **generated** from that prose. It — together with
+generator fixtures, generated examples, and Angular target models — is a derived
+artifact that must not replace or redefine the golden source.
 
-The repository-local converter for the generated catalog lives in `spec/to_json/`.
-After changing scope prose or converter-relevant structure, regenerate the root
-catalog with:
+The repository-local converter for the generated catalog lives in
+`spec/to_json/`. After changing scope prose or converter-relevant structure,
+regenerate the root catalog with:
 
 ```powershell
 ./.venv/Scripts/python -m spec.to_json --spec-dir spec --output openui.json
 ```
 
-The generated catalog keeps `attrs.scopeDocument` values relative to `spec/`, for
-example `scopes/Widgets/dialog.scope.md`, so tests and tooling can resolve them
-as `spec/<scopeDocument>`.
+The generated catalog keeps `attrs.scopeDocument` values relative to `spec/`,
+for example `scopes/Widgets/dialog.scope.md`, so tests and tooling can resolve
+them as `spec/<scopeDocument>`.
 
 ## Package overview
 
-The repository has an initial Angular Material generator:
+The repository has an Angular Material generator package:
 
 ```text
 generators/angular/generator/
@@ -44,7 +50,8 @@ generators/angular/generator/
 ├─ src/targets/angular/
 ├─ src/writers/
 ├─ src/incremental/
-└─ tests/
+├─ tests/
+└─ docs/
 ```
 
 The Angular generator is implemented as a TypeScript compiler-style pipeline. It
@@ -63,8 +70,8 @@ spec/to_json/
 
 The converter parses `spec/scopes/**/*.scope.md` and parent `scope.md` files into
 the native OpenUI `id` / `type` / `attrs` / `children` tree. Leaf scope nodes are
-metadata-only and contain one generated `<scopeId>Instance` child that carries the
-object contract attributes and child model. Child-model ids are scoped by the
+metadata-only and contain one generated `<scopeId>Instance` child that carries
+the object contract attributes and child model. Child-model ids are scoped by the
 owning leaf when needed, so generated ids remain globally unique.
 
 Code-generation work should extend this pipeline directly from the native OpenUI
@@ -75,10 +82,10 @@ Transitional input definitions and adapters are not allowed.
 
 The roles of `input.json`, `spec/openui.schema.json`, and root `openui.json` are
 defined once in
-[`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
+[`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
 The Angular generator consumes those artifacts according to the input, context,
-and output contract in [REQUIREMENTS.md](../../../docs/REQUIREMENTS.md) §2; this
-document does not redefine either contract.
+and output contract in [REQUIREMENTS.md](../../../../docs/REQUIREMENTS.md) §2;
+this document does not redefine either contract.
 
 `input.json` uses the native OpenUI grammar directly; no transitional input
 definitions or adapters are allowed. The required pipeline is:
@@ -120,7 +127,7 @@ through validation, extraction, and IR construction.
 
 Do not duplicate the OpenUI artifact role definitions here. Use the canonical
 definition in
-[`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
+[`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
 
 Test fixtures that stand in for the catalog must use the generated catalog
 scope-tree shape. Fixtures that stand in for `input.json` must be valid concrete
@@ -156,10 +163,14 @@ Concrete `input.json` validation should verify app documents against the catalog
 ```text
 generators/angular/
 ├─ generator/
+│  ├─ docs/
+│  │  ├─ GENERATION.md
+│  │  └─ TDD.md
 │  ├─ src/
 │  │  ├─ cli/
 │  │  │  └─ main.ts
 │  │  ├─ spec/
+│  │  │  ├─ catalog-index.ts
 │  │  │  ├─ openui-sections.ts
 │  │  │  ├─ openui-spec.types.ts
 │  │  │  └─ load-spec.ts
@@ -213,6 +224,7 @@ specification layer.
 | `cli/main.ts`                            | Parses `generate` and `validate` commands, loads and validates native OpenUI JSON, emits the project, and reconciles it incrementally into the workspace.                                                   |
 | `spec/load-spec.ts`                      | Reads JSON and parses it into the native OpenUI document type.                                                                                                                                              |
 | `spec/openui-spec.types.ts`              | Defines the native OpenUI `id` / `type` / `attrs` / `children` input contract.                                                                                                                              |
+| `spec/catalog-index.ts`                  | Builds catalog lookup structures used to validate concrete input nodes against the generated OpenUI catalog.                                                                                                |
 | `spec/openui-sections.ts`                | Provides catalog helpers for scoped OpenUI nodes that carry `attrs.scopeDocument` traceability in the generated catalog tree.                                                                               |
 | `validation/validate-spec.ts`            | Fails early for malformed OpenUI node data and compliance-rule synchronization gaps.                                                                                                                        |
 | `validation/diagnostics.ts`              | Defines validation diagnostic and error reporting types.                                                                                                                                                    |
@@ -272,9 +284,8 @@ HOW files look           → emitters
 WHERE files are written  → writer
 ```
 
-Avoid shortcuts that collapse these layers. For example, do not add a new
-OpenUI concept by string-building Angular output directly from raw source JSON.
-Instead:
+Avoid shortcuts that collapse these layers. For example, do not add a new OpenUI
+concept by string-building Angular output directly from raw source JSON. Instead:
 
 1. Update the golden source in `spec/README.md` and `spec/`.
 2. Regenerate `openui.json` with `python -m spec.to_json`.
@@ -359,7 +370,7 @@ compiles generated apps through Angular tooling.
 ## Incremental generation
 
 The generator supports incremental operation as defined in
-[spec/README.md § Incremental generation](../../../spec/README.md#incremental-generation).
+[spec/README.md § Incremental generation](../../../../spec/README.md#incremental-generation).
 
 The generator extends the base pipeline to compare emitted files with workspace
 manifestations before writing changes. This reconciliation is the default
@@ -389,9 +400,8 @@ build / test / verify
 ### Classifier
 
 The reconciliation step is driven by the classifier in
-`incremental/classifier.ts`. Given the generator's emitted model and source
-input identity, it indexes each declared manifestation by its workspace
-footprint:
+`incremental/classifier.ts`. Given the generator's emitted model and source input
+identity, it indexes each declared manifestation by its workspace footprint:
 
 - a `ComponentTemplate` node with `attrs.selector` owns
   `src/components/<selector>/<selector>.component.{ts,html,scss}`,
@@ -429,7 +439,8 @@ flow. `reconcileGeneratedFiles` takes the files the emitters produced for a spec
 classifies each one, and compares it against the existing workspace:
 
 - the workspace lacks the file → `add`,
-- the workspace has it byte-identical → `match` (skipped, so the run is a no-op),
+- the workspace has it byte-identical → `match` (skipped, so the run is a
+  no-op),
 - the workspace has it but the content differs → `modify`, and
 - a workspace file the spec no longer emits → `delete` (attributed, via the
   classifier, to the spec node that previously owned it).
@@ -502,13 +513,215 @@ contract end to end:
 6. Map that IR into Angular Material model fields and generated files.
 7. Reconcile the generated files into the dialog output workspace.
 8. Add tests that assert parser output, catalog validation, IR construction,
-   generated TypeScript/HTML/SCSS, diagnostics, and no-op Match behavior when the
-   output workspace already matches the input description.
+   generated TypeScript/HTML/SCSS, diagnostics, and no-op Match behavior when
+   the output workspace already matches the input description.
 
-This keeps the work small while connecting the SSOT-defined input contract to the
-existing Angular generator pipeline.
+This keeps the work small while connecting the SSOT-defined input contract to
+the existing Angular generator pipeline.
 
-## Validation and tests
+## Validation and test strategy
+
+This section is the canonical home for Angular generator and generated-examples
+validation details, including local commands, CI expectations, and conventions.
+
+Angular validation has two primary layers plus CI integration:
+
+1. **Angular generator tests** (`node:test`) — protect the generator pipeline
+   from input validation through Angular emission.
+2. **Generated-examples app tests** (`vitest`) — protect the documentation app
+   that showcases representative generator output.
+3. **CI build workflow** (`.github/workflows/build.yml`) — runs these checks
+   alongside repository validation on every code-review event.
+
+The layering mirrors the [golden-source boundary](#golden-source-boundary): the
+spec is authoritative, the generator consumes concrete `input.json` app
+documents validated against the grammar and catalog defined by the SSOT, and the
+examples app is a downstream illustration that is never treated as generator
+output.
+
+### Layer 1 — Angular generator tests (`generators/angular/generator/`, node:test)
+
+Run from the generator package:
+
+```powershell
+Push-Location generators/angular/generator
+npm run test
+Pop-Location
+```
+
+`npm run test` compiles TypeScript first and then runs the Node test suite from
+`dist/tests/*.test.js`. Existing tests include catalog/scope-tree regression
+coverage against the committed `tests/fixtures/minimal-openui.json` catalog
+fixture. Those tests protect the current catalog-driven page-generation slice;
+they do not define the full generator input contract.
+
+The generator input contract is the concrete `input.json` role defined in
+[`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
+Concrete input fixtures must validate against the grammar and catalog without
+requiring catalog traceability fields such as `attrs.scopeDocument` on app nodes.
+
+Current catalog/scope-tree regression coverage:
+
+| Test                                                                          | Verifies                                                                                                                                                                          |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| classifies every generated full-output page and application file              | The classifier maps generated routed page files to catalog scoped OpenUI nodes and project files to application-level ownership.                                                  |
+| classifies every generated component folder and file in the fixture workspace | Component-template fixture folders and generated component files classify back to their owning selectors.                                                                         |
+| builds the UI model from catalog scope-tree OpenUI nodes                      | `buildUiModel` produces the expected `UiApplication` name, version, and ordered pages for catalog regression coverage.                                                            |
+| generates an Angular Material standalone app from catalog scope-tree OpenUI   | The `generate` CLI emits the expected Angular project skeleton and Angular Material dependencies for catalog regression coverage.                                                 |
+| generates scope-specific Angular Material details from the catalog tree       | Feature-specific page output (structure, layout, i18n, extension, etc.) is emitted per catalog scope.                                                                             |
+| validates canonical root values, attrs, and scoped document uniqueness        | `validateOpenUiSpec` raises `SpecValidationError` for malformed root values and duplicate scopes.                                                                                 |
+| full-pipeline incremental acceptance scenarios                                | `generateIncrementally` covers from-scratch Add, no-op Match, incremental Add/Delete/Modify, validation atomicity, ignored workspace directories, and direct comparator planning. |
+
+Required concrete `input.json` acceptance coverage:
+
+| Acceptance target                                                    | Must verify                                                                                                                                                  |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| validates concrete app fixtures against grammar and catalog          | Concrete fixtures such as `dialog.example.json` are accepted without adding `attrs.scopeDocument` to app nodes.                                              |
+| builds IR from concrete app documents                                | The IR represents concrete widgets/components, their attributes, child regions, behavior, and source input identity.                                         |
+| maps concrete widgets to Angular Material                            | Dialog-like fixtures map to Angular Material components, templates, styles, host wiring, and required imports.                                               |
+| reconciles concrete generated output incrementally                   | Re-running generation against an already matching output workspace produces Match/no-op behavior without timestamp churn.                                    |
+| preserves evidence for unsupported paths until implementation exists | Fixture notes such as `output_generation.md` keep observed failure commands/messages until the corresponding generator support is implemented and validated. |
+
+Generator tests write output only to the repo-local, git-ignored `tmp/`
+directory (via `mkdtemp` under the repository root) — never to OS temp
+directories.
+
+### Layer 2 — Generated-examples app tests (`generators/angular/generated-examples/`, vitest)
+
+Run from the examples app:
+
+```powershell
+Push-Location generators/angular/generated-examples
+npm run format:check
+npm run lint
+npm test
+npm run build
+Pop-Location
+```
+
+`npm test` runs `ng test --watch=false` (vitest). The specs cover the
+documentation data model and the component-viewer routing/tabs:
+
+- `app.spec.ts` — the app boots, renders the toolbar title, and renders a sidenav
+  that lists components by category.
+- `documentation/documentation-items.spec.ts` — components group into categories,
+  every documented component is reachable by id, each provides more than one
+  example, API content is derived from a spec document and styling is present,
+  and specific specification sections (UI concept model, application structure,
+  layout system, state model, acceptance criteria) are documented with generated
+  examples.
+- `components/component-viewer/component-viewer.spec.ts` — the `/components`
+  landing lists components; a component renders API, Examples, and Styling tabs;
+  the API tab is sourced from the spec by default; and the per-concept Examples
+  previews (structure, layout, binding, interaction, accessibility, performance,
+  compliance, internationalization, reference, extension) render correctly.
+
+The app is documentation, not generator output, so these tests assert what the
+app presents — they do not re-run the generator.
+
+### CI integration (`.github/workflows/build.yml`)
+
+`build.yml` runs the Angular generator and generated-examples checks alongside
+repository Python and documentation validation on code-review events. The root
+contract test (`tests/test_github_actions_build.py`) asserts the workflow keeps
+running Angular-generator checks, Angular-examples checks, lint/format checks,
+strict MkDocs builds, and pinned action versions. Changing the local test
+commands above should be reflected in the workflow and will be caught by that
+contract test if it is not.
+
+### Test conventions
+
+- **Repo-local temporary output only.** Tests must write transient output under
+  the git-ignored repository `tmp/`, never to `%TEMP%`, `/tmp`, or `os.tmpdir()`.
+  This keeps generated artifacts out of the working tree and off the OS temp
+  paths the repository instructions disallow.
+- **Inspectable generated output.** Set `OPENUI_KEEP_TEST_OUTPUT=1` before
+  running generator tests to preserve temporary output under `tmp/`; the test
+  run logs each kept directory path.
+- **Golden source is authoritative.** Generator tests consume derived artifacts
+  and must not redefine the prose spec, scopes, schema, or catalog contract.
+- **Committed fixtures are expectations, not generated examples.** Fixture trees
+  may include both input workspaces/specifications and expected output
+  workspaces. Tests copy or compare those fixtures, but transient generator runs
+  still write only under the repo-local, git-ignored `tmp/` directory.
+
+### Incremental generation test strategy
+
+Incremental generation (defined in
+[spec/README.md § Incremental generation](../../../../spec/README.md#incremental-generation))
+is covered by both committed input/expected-output fixtures and runtime
+workspace mutations under `tmp/`. The fixtures under
+`generators/angular/generator/tests/fixtures/` capture reusable baseline states.
+
+#### Fixture layout
+
+```text
+generators/angular/generator/tests/fixtures/
+├─ example_from_scratch/         generation into an empty workspace
+│  ├─ input_app-file-select/     JSON specification (input only)
+│  └─ output_app-file-select/    expected full workspace after generation
+├─ example_incremental/          generation into an existing workspace
+│  ├─ input_app-file-select/     existing workspace with app-file-upload only
+│  └─ output_app-file-select/    workspace after app-file-select is added
+└─ example_backup/               baseline workspace state before generation
+```
+
+#### Scenarios to test
+
+| Scenario               | Fixture / setup        | What is verified                                                                           |
+| :--------------------- | :--------------------- | :----------------------------------------------------------------------------------------- |
+| From scratch           | `example_from_scratch` | Empty workspace → full generated output                                                    |
+| Incremental            | `example_incremental`  | Existing workspace → new component added, affected parent files rewired                    |
+| Match                  | same-state input       | Re-running on matching workspace produces no changes or timestamp churn                    |
+| Add                    | runtime temp workspace | New input children add only their generated files plus required wiring changes             |
+| Delete one child       | runtime temp workspace | Removed input children delete generated files, prune empty dirs, and rewire refs           |
+| Delete empty spec      | runtime temp workspace | Valid empty root removes previously generated owned child/page artifacts                   |
+| Rename                 | runtime temp workspace | Route/name changes delete the old path, add the new path, and update parents               |
+| Complex modification   | runtime temp workspace | Content-only spec changes modify affected files while siblings match                       |
+| Validation atomicity   | runtime temp workspace | Invalid root/no-root input fails before touching the existing workspace                    |
+| Ignored directories    | runtime temp workspace | `node_modules`, `dist`, `.git`, and `.angular` are neither indexed nor deleted             |
+| Comparator/reconciler  | runtime temp workspace | Direct planning reports Add / Match / Modify / Delete and classifications without applying |
+| Classifier full output | emitted full output    | Generated page/component files and application files classify as documented                |
+
+#### Expected test assertions
+
+- **Add**: new component files exist in the output workspace; parent references
+  (imports, routes) include the new component.
+- **Delete**: component files are absent from output; parent references no longer
+  reference the deleted component.
+- **Modify**: renamed or changed attributes produce updated file contents.
+- **Match**: workspace files remain byte-identical when the specification has not
+  changed.
+- **Unaffected content preserved**: files that already match the desired output
+  remain byte-identical and are not rewritten.
+- **Atomic validation**: malformed input stops before index/reconcile/apply and
+  leaves the existing workspace byte-identical.
+- **Classifier attribution**: generated page/component files classify to the
+  owning spec node, and known project-level generator files classify as
+  application artifacts.
+- **Comparator-only planning**: direct reconciler tests inspect the plan before
+  applying it so Add / Match / Modify / Delete decisions are observable without
+  mutating the workspace.
+
+#### Specification-driven validation matrix
+
+The reconciler is the layer that compares each spec node against its
+manifestation in the workspace, so the per-scenario validation cases below are
+exercised in `tests/reconcile.test.ts` by varying the JSON specification itself
+between reconciliations rather than by mutating files on disk. Each case proves
+the planner reaches the documented Add / Delete / Modify / Match decision for a
+genuine specification change.
+
+| Category     | Specification change                                 | Expected plan                                                                      | Test                                                                                   |
+| :----------- | :--------------------------------------------------- | :--------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------- |
+| Addition     | Empty workspace, full specification                  | Every emitted file is an Add                                                       | `an empty workspace yields an all-add plan (generation from scratch)`                  |
+| Addition     | Workspace missing a child the specification declares | The new child is added; the parent that references it is rewired (Modify)          | `reconciles incremental workspace: adds new component, rewires and matches the parent` |
+| Removal      | Specification is empty                               | Every previously generated file is a Delete                                        | `removal — an empty JSON deletes every previously generated component`                 |
+| Removal      | One child removed from the specification             | The dropped child's files are Deletes; the parent is rewired to drop the reference | `removal — dropping one child from the JSON deletes it and rewires the parent`         |
+| Modification | Simple child change (selector/name only)             | The renamed child is Added under the new name and the old name's files are Deletes | `modification — a simple child rename is reconciled as delete-old plus add-new`        |
+| Modification | Complex child change (a descendant changes type)     | Only the affected file is a Modify; unrelated siblings stay Match                  | `modification — a complex child type change rewrites only the affected file`           |
+
+## Validation commands
 
 Run generator package validation from `generators/angular/generator/`:
 
@@ -525,6 +738,8 @@ Validate generated example applications separately:
 
 ```powershell
 Push-Location generators/angular/generated-examples
+npm run format:check
+npm run lint
 npm run build
 npm run test
 Pop-Location
@@ -546,25 +761,9 @@ git diff --check
   logic, then rerun `python -m spec.to_json`.
 - Do not generate Angular files directly from raw `openui.json` or `input.json`
   nodes.
-- Do not bypass the golden source → native extraction → IR → Angular model → files
-  separation.
+- Do not bypass the golden source → native extraction → IR → Angular model →
+  files separation.
 - Do not write generated files outside the selected output directory; use the
   existing safe writer.
 - Do not add a new target before the Angular pipeline has golden-source-backed
   fixtures and validation tests.
-
-## Final conclusion
-
-- **Golden source:** `spec/README.md` and Markdown under `spec/`; root
-  `openui.json` is generated from that source.
-- **Generator input:** concrete `input.json` app documents using the native
-  OpenUI `id` / `type` / `attrs` / `children` shape and validated against the
-  catalog in `openui.json`.
-- **Generator bridge:** direct native OpenUI extraction into an
-  implementation-independent UI IR.
-- **Generator starting point:** the existing Angular IR-to-emitter pipeline in
-  `generators/angular/generator/`.
-- **Next practical output:** concrete `input.json` generation of one Angular
-  Material fixture, such as the dialog example, with tests for grammar/catalog
-  validation, IR construction, diagnostics, reconciliation, and emitted
-  TypeScript/HTML/SCSS.
