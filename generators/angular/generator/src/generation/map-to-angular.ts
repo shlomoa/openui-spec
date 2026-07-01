@@ -1,4 +1,4 @@
-import type { DataModelApplication, DataModelDialogComponent, DataModelPage } from "../../data-model/data-model";
+import type { DataModelApplication, DataModelDialogComponent, DataModelPage } from "../data-model/data-model";
 import type {
   AngularApplicationStructureModel,
   AngularDialogComponentModel,

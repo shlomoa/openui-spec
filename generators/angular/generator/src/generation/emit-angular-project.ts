@@ -1,4 +1,4 @@
-import type { GeneratedFile } from "../../writers/file-writer";
+import type { GeneratedFile } from "../writers/file-writer";
 import type { AngularDialogComponentModel, AngularProjectModel } from "./angular-model";
 import { escapeHtml, escapeTsString } from "./emit-utils";
 import { emitPageComponent } from "./emit-component";

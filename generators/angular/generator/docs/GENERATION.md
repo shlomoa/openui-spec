@@ -172,10 +172,10 @@ generators/angular/
 │  │  │  ├─ catalog-index.ts
 │  │  │  ├─ openui-sections.ts
 │  │  │  ├─ openui-spec.types.ts
-│  │  │  ├─ load-spec.ts
-│  │  │  └─ validate-spec.ts
+│  │  │  └─ load-spec.ts
 │  │  ├─ validation/
-│  │  │  └─ diagnostics.ts
+│  │  │  ├─ diagnostics.ts
+│  │  │  └─ validate-spec.ts
 │  │  ├─ ir/
 │  │  │  ├─ build-ir.ts
 │  │  │  ├─ normalize-spec.ts
@@ -225,7 +225,7 @@ specification layer.
 | `spec/openui-spec.types.ts`              | Defines the native OpenUI `id` / `type` / `attrs` / `children` input contract.                                                                                                                              |
 | `spec/catalog-index.ts`                  | Builds catalog lookup structures used to validate concrete input nodes against the generated OpenUI catalog.                                                                                                |
 | `spec/openui-sections.ts`                | Provides catalog helpers for scoped OpenUI nodes that carry `attrs.scopeDocument` traceability in the generated catalog tree.                                                                               |
-| `spec/validate-spec.ts`                  | Fails early for malformed OpenUI node data and compliance-rule synchronization gaps.                                                                                                                        |
+| `validation/validate-spec.ts`            | Fails early for malformed OpenUI node data and compliance-rule synchronization gaps.                                                                                                                        |
 | `validation/diagnostics.ts`              | Defines validation diagnostic and error reporting types.                                                                                                                                                    |
 | `ir/normalize-spec.ts`                   | Converts native scope IDs into routes, summaries, and feature flags.                                                                                                                                        |
 | `ir/build-ir.ts`                         | Builds the implementation-independent `UiApplication` model.                                                                                                                                                |

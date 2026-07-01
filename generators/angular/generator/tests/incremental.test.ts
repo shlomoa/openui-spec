@@ -3,11 +3,11 @@ import { mkdir, mkdtemp, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { test } from "node:test";
 
-import { applyIncrementalPlan } from "../src/incremental/apply";
-import { buildSpecManifestationIndex } from "../src/incremental/classifier";
-import { emitAngularFilesFromInput, generateIncrementally } from "../src/incremental/generate";
-import { reconcileGeneratedFiles } from "../src/incremental/reconcile";
-import { isEmptyWorkspace, readWorkspaceIndex } from "../src/incremental/workspace-index";
+import { applyIncrementalPlan } from "../src/generation/apply";
+import { buildSpecManifestationIndex } from "../src/generation/classifier";
+import { emitAngularFilesFromInput, generateIncrementally } from "../src/generation/generate";
+import { reconcileGeneratedFiles } from "../src/generation/reconcile";
+import { isEmptyWorkspace, readWorkspaceIndex } from "../src/generation/workspace-index";
 import { loadOpenUiDocument } from "../src/spec/load-spec";
 import type { OpenUiDocument, OpenUiElement } from "../src/spec/openui-spec.types";
 import { cleanupTestOutput } from "./test-output";

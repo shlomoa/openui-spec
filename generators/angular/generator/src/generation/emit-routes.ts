@@ -1,4 +1,4 @@
-import type { GeneratedFile } from "../../writers/file-writer";
+import type { GeneratedFile } from "../writers/file-writer";
 import type { AngularProjectModel } from "./angular-model";
 import { routedPageImportPath } from "./angular-paths";
 import { escapeTsString } from "./emit-utils";

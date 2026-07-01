@@ -1,4 +1,4 @@
-import type { GeneratedFile } from "../../writers/file-writer";
+import type { GeneratedFile } from "../writers/file-writer";
 import type { AngularPageModel } from "./angular-model";
 import { pageFilePath } from "./angular-paths";
 

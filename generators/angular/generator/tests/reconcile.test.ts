@@ -3,9 +3,9 @@ import { mkdtemp, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { test } from "node:test";
 
-import { buildSpecManifestationIndex } from "../src/incremental/classifier";
-import { reconcileGeneratedFiles } from "../src/incremental/reconcile";
-import { readWorkspaceIndex } from "../src/incremental/workspace-index";
+import { buildSpecManifestationIndex } from "../src/generation/classifier";
+import { reconcileGeneratedFiles } from "../src/generation/reconcile";
+import { readWorkspaceIndex } from "../src/generation/workspace-index";
 import type { GeneratedFile } from "../src/writers/file-writer";
 import type { OpenUiDocument, OpenUiElement } from "../src/spec/openui-spec.types";
 import { cleanupTestOutput } from "./test-output";

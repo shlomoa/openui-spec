@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { generateIncrementally } from "./incremental/generate";
+import { generateIncrementally } from "./generation/generate";
 import { loadDefaultOpenUiCatalog } from "./spec/catalog-index";
 import { loadOpenUiDocument } from "./spec/load-spec";
 import { validateOpenUiGeneratorInput } from "./spec/validate-spec";
