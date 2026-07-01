@@ -1,22 +1,28 @@
 #!/usr/bin/env node
 import { generateIncrementally } from "./generation/generate";
+import { configureLogging, DEFAULT_LEVEL, getLogger, LogLevel, parseLevelName } from "./logging/logger";
 import { loadDefaultOpenUiCatalog } from "./spec/catalog-index";
 import { loadOpenUiDocument } from "./spec/load-spec";
 import { validateOpenUiGeneratorInput } from "./spec/validate-spec";
 
-interface CliOptions {
+export interface CliOptions {
   command: "generate" | "validate";
   inputPath: string;
   outPath?: string;
+  logLevel: LogLevel;
 }
 
 export async function run(argv: string[] = process.argv.slice(2)): Promise<void> {
   const options = parseArgs(argv);
+  configureLogging({ level: options.logLevel });
+  const log = getLogger("amcg.main");
+  log.info(`Running '${options.command}' for input '${options.inputPath}'.`);
   const input = await loadOpenUiDocument(options.inputPath);
   const catalog = await loadDefaultOpenUiCatalog(options.inputPath);
   validateOpenUiGeneratorInput(input, catalog);
 
   if (options.command === "validate") {
+    log.info("Validation succeeded.");
     return;
   }
 
@@ -25,9 +31,10 @@ export async function run(argv: string[] = process.argv.slice(2)): Promise<void>
   }
 
   await generateIncrementally(options.inputPath, options.outPath);
+  log.info(`Generation completed into '${options.outPath}'.`);
 }
 
-function parseArgs(argv: string[]): CliOptions {
+export function parseArgs(argv: string[]): CliOptions {
   const [command, ...rest] = argv;
   if (command !== "generate" && command !== "validate") {
     throw new Error("Expected command 'generate' or 'validate'.");
@@ -53,16 +60,20 @@ function parseArgs(argv: string[]): CliOptions {
     throw new Error("Missing required --input option.");
   }
 
+  const logLevelValue = values.get("--log-level");
+  const logLevel = logLevelValue ? parseLevelName(logLevelValue) : DEFAULT_LEVEL;
+
   return {
     command,
     inputPath,
     outPath: values.get("--out"),
+    logLevel,
   };
 }
 
 if (require.main === module) {
   run().catch((error: unknown) => {
-    console.error(error instanceof Error ? error.message : String(error));
+    getLogger("amcg.main").critical(error instanceof Error ? error.message : String(error));
     process.exitCode = 1;
   });
 }

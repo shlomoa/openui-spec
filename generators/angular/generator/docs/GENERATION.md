@@ -520,23 +520,25 @@ the existing Angular generator pipeline.
 
 ## Validation and test strategy
 
-This section is the canonical home for Angular generator and generated-examples
-validation details, including local commands, CI expectations, and conventions.
+This section is the canonical home for Angular generator validation details,
+including local commands, CI expectations, and conventions. The generated
+examples app owns its app-specific validation details in
+[`generators/angular/generated-examples/README.md`](../../generated-examples/README.md#validation).
 
-Angular validation has two primary layers plus CI integration:
+Angular validation has one generator package layer plus CI integration:
 
 1. **Angular generator tests** (`node:test`) — protect the generator pipeline
    from input validation through Angular emission.
-2. **Generated-examples app tests** (`vitest`) — protect the documentation app
-   that showcases representative generator output.
-3. **CI build workflow** (`.github/workflows/build.yml`) — runs these checks
+2. **CI build workflow** (`.github/workflows/build.yml`) — runs these checks
    alongside repository validation on every code-review event.
 
 The layering mirrors the [golden-source boundary](#golden-source-boundary): the
 spec is authoritative, the generator consumes concrete `input.json` app
 documents validated against the grammar and catalog defined by the SSOT, and the
-examples app is a downstream illustration that is never treated as generator
-output.
+examples app is a downstream documentation app that is never treated as
+generator output. For generated-examples commands and vitest coverage, use the
+[generated examples README](../../generated-examples/README.md#validation) as
+the SSOT.
 
 ### Layer 1 — Angular generator tests (`generators/angular/generator/`, node:test)
 
@@ -585,39 +587,6 @@ Generator tests write output only to the repo-local, git-ignored `tmp/`
 directory (via `mkdtemp` under the repository root) — never to OS temp
 directories.
 
-### Layer 2 — Generated-examples app tests (`generators/angular/generated-examples/`, vitest)
-
-Run from the examples app:
-
-```powershell
-Push-Location generators/angular/generated-examples
-npm run format:check
-npm run lint
-npm test
-npm run build
-Pop-Location
-```
-
-`npm test` runs `ng test --watch=false` (vitest). The specs cover the
-documentation data model and the component-viewer routing/tabs:
-
-- `app.spec.ts` — the app boots, renders the toolbar title, and renders a sidenav
-  that lists components by category.
-- `documentation/documentation-items.spec.ts` — components group into categories,
-  every documented component is reachable by id, each provides more than one
-  example, API content is derived from a spec document and styling is present,
-  and specific specification sections (UI concept model, application structure,
-  layout system, state model, acceptance criteria) are documented with generated
-  examples.
-- `components/component-viewer/component-viewer.spec.ts` — the `/components`
-  landing lists components; a component renders API, Examples, and Styling tabs;
-  the API tab is sourced from the spec by default; and the per-concept Examples
-  previews (structure, layout, binding, interaction, accessibility, performance,
-  compliance, internationalization, reference, extension) render correctly.
-
-The app is documentation, not generator output, so these tests assert what the
-app presents — they do not re-run the generator.
-
 ### CI integration (`.github/workflows/build.yml`)
 
 `build.yml` runs the Angular generator and generated-examples checks alongside
@@ -625,8 +594,10 @@ repository Python and documentation validation on code-review events. The root
 contract test (`tests/test_github_actions_build.py`) asserts the workflow keeps
 running Angular-generator checks, Angular-examples checks, lint/format checks,
 strict MkDocs builds, and pinned action versions. Changing the local test
-commands above should be reflected in the workflow and will be caught by that
-contract test if it is not.
+commands here or in the
+[generated examples README](../../generated-examples/README.md#validation) should
+be reflected in the workflow and will be caught by that contract test if it is
+not.
 
 ### Test conventions
 
@@ -733,16 +704,9 @@ Pop-Location
 That script runs TypeScript compilation first and then the Node test suite from
 `dist/tests/*.test.js`.
 
-Validate generated example applications separately:
-
-```powershell
-Push-Location generators/angular/generated-examples
-npm run format:check
-npm run lint
-npm run build
-npm run test
-Pop-Location
-```
+Validate the generated-examples documentation app separately with the commands
+documented in
+[`generators/angular/generated-examples/README.md`](../../generated-examples/README.md#validation).
 
 Run repository Python and documentation validation through the local `.venv`:
 

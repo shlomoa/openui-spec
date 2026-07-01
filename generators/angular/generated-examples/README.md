@@ -15,7 +15,8 @@ Angular generator emits. The app is structured like the
 
 The previews intentionally use Angular Material components for the generated shell,
 page, table, form, navigation, and action controls so the sample app reflects the
-generator's expected output style.
+generator's expected output style. This app is documentation, not generator output:
+its tests assert what the app presents, but they do not re-run the generator.
 
 ## Example source
 
@@ -44,6 +45,8 @@ Open `http://localhost:4200/` to browse the generated component catalog.
 
 ## Validation
 
+Run from `generators/angular/generated-examples/`:
+
 ```bash
 npm run format:check
 npm run lint
@@ -53,6 +56,23 @@ npm run build
 
 Use `npm run format` to apply Prettier formatting.
 
-These checks cover this app's vitest specs (data model, navigation, and the
-component-viewer tabs). For the Angular generator and examples-app test strategy,
-see the [Angular generator validation strategy](../generator/docs/GENERATION.md#validation-and-test-strategy).
+`npm test` runs `ng test --watch=false` (vitest). The specs cover the
+documentation data model and the component-viewer routing/tabs:
+
+- `app.spec.ts` — the app boots, renders the toolbar title, and renders a sidenav
+  that lists components by category.
+- `documentation/documentation-items.spec.ts` — components group into categories,
+  every documented component is reachable by id, each provides more than one
+  example, API content is derived from a spec document and styling is present,
+  and specific specification sections (UI concept model, application structure,
+  layout system, state model, acceptance criteria) are documented with generated
+  examples.
+- `components/component-viewer/component-viewer.spec.ts` — the `/components`
+  landing lists components; a component renders API, Examples, and Styling tabs;
+  the API tab is sourced from the spec by default; and the per-concept Examples
+  previews (structure, layout, binding, interaction, accessibility, performance,
+  compliance, internationalization, reference, extension) render correctly.
+
+These app-specific checks are documented here as their SSOT. For the Angular
+generator architecture and generator package validation strategy, see
+[`generators/angular/generator/docs/GENERATION.md`](../generator/docs/GENERATION.md#validation-and-test-strategy).
