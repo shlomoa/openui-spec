@@ -1,23 +1,25 @@
-"""
-ebnf grammar check of the OpenUI specification
-"""
+"""Compile the OpenUI EBNF grammar with TatSu."""
 
-from tatsu import compile
-from tatsu.util import asjson
-OPENUI_EBNF = '../EBNF.txt'
+from __future__ import annotations
 
-def main() -> None:
-    OPENUI_GRAMMAR: str = ''
-    try:
-        OPENUI_GRAMMAR = open(OPENUI_EBNF, 'r').read()
-    except Exception as e:
-        print(f"Error reading grammar file : {e}")
-        return
-    try:
-        ast = compile(OPENUI_GRAMMAR)
-    except Exception as e:
-        print(f"Error parsing : {e}")
-        return
+import unittest
+from pathlib import Path
 
-if __name__ == '__main__':
-    main()
+import tatsu
+
+SPEC_DIR = Path(__file__).resolve().parents[1]
+OPENUI_EBNF = SPEC_DIR / "EBNF.txt"
+
+
+def compile_openui_grammar():
+    """Compile and return the OpenUI TatSu grammar model."""
+    return tatsu.compile(OPENUI_EBNF.read_text(encoding="utf-8"))
+
+
+class OpenUiEbnfParserTest(unittest.TestCase):
+    def test_openui_ebnf_compiles_with_tatsu(self) -> None:
+        compile_openui_grammar()
+
+
+if __name__ == "__main__":
+    unittest.main()

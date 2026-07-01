@@ -21,6 +21,10 @@ class GitHubActionsBuildWorkflowTest(unittest.TestCase):
             "python -m unittest discover -s tests -p 'test_*.py'",
             self.workflow,
         )
+        self.assertIn(
+            "python -m unittest discover -s spec/tests -p 'test_*.py'",
+            self.workflow,
+        )
 
     def test_build_workflow_installs_python_validation_tools(self):
         self.assertIn(
