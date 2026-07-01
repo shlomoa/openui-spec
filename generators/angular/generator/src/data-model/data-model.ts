@@ -1,4 +1,4 @@
-export type UiFeature =
+export type DataModelFeature =
   | "accessibility"
   | "acceptance"
   | "application-structure"
@@ -19,15 +19,15 @@ export type UiFeature =
   | "theme"
   | "ui-concept";
 
-export interface UiApplication {
+export interface DataModelApplication {
   name: string;
   version: string;
-  pages: UiPage[];
-  dialogComponents?: UiDialogComponent[];
-  themeTokens: UiThemeToken[];
+  pages: DataModelPage[];
+  dialogComponents?: DataModelDialogComponent[];
+  themeTokens: DataModelThemeToken[];
 }
 
-export interface UiPage {
+export interface DataModelPage {
   id: string;
   route: string;
   title: string;
@@ -35,21 +35,21 @@ export interface UiPage {
   sourceDocument?: string;
   requirements: string[];
   tags: string[];
-  formalDefinitions: UiFormalDefinition[];
-  features: UiFeature[];
+  formalDefinitions: DataModelFormalDefinition[];
+  features: DataModelFeature[];
 }
 
-export interface UiFormalDefinition {
+export interface DataModelFormalDefinition {
   term: string;
   definition: string;
 }
 
-export interface UiThemeToken {
+export interface DataModelThemeToken {
   name: string;
   value: string;
 }
 
-export interface UiDialogComponent {
+export interface DataModelDialogComponent {
   id: string;
   selector: string;
   className: string;
@@ -57,10 +57,10 @@ export interface UiDialogComponent {
   fileName: string;
   title: string;
   content: string;
-  actions: UiDialogAction[];
+  actions: DataModelDialogAction[];
 }
 
-export interface UiDialogAction {
+export interface DataModelDialogAction {
   id: string;
   text: string;
   result: string;

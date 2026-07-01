@@ -2,9 +2,9 @@ import {
   createCatalogIndex,
   isConcreteExampleRootType,
   OpenUiCatalogIndex,
-} from "../spec/catalog-index";
-import { extractOpenUiScopeNodes } from "../spec/openui-sections";
-import type { OpenUiDocument, OpenUiElement } from "../spec/openui-spec.types";
+} from "./catalog-index";
+import { extractOpenUiScopeNodes } from "./openui-sections";
+import type { OpenUiDocument, OpenUiElement } from "./openui-spec.types";
 import { type Diagnostic, SpecValidationError } from "./diagnostics";
 
 export interface ValidateOpenUiSpecOptions {

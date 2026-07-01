@@ -1,9 +1,15 @@
 import { childrenOfType, extractOpenUiScopeNodes, findElementsByType, stringAttr } from "../spec/openui-sections";
 import type { OpenUiDocument, OpenUiElement } from "../spec/openui-spec.types";
 import { normalizeFeatures, normalizeRoute, normalizeSummary } from "./normalize-spec";
-import type { UiApplication, UiDialogAction, UiDialogComponent, UiFeature, UiThemeToken } from "./ui-model";
+import type {
+  DataModelApplication,
+  DataModelDialogAction,
+  DataModelDialogComponent,
+  DataModelFeature,
+  DataModelThemeToken,
+} from "./data-model";
 
-export function buildUiModel(document: OpenUiDocument): UiApplication {
+export function buildDataModel(document: OpenUiDocument): DataModelApplication {
   const scopes = extractOpenUiScopeNodes(document);
   if (scopes.length === 0) {
     return buildConcreteInputModel(document);
@@ -27,7 +33,7 @@ export function buildUiModel(document: OpenUiDocument): UiApplication {
   };
 }
 
-function buildConcreteInputModel(document: OpenUiDocument): UiApplication {
+function buildConcreteInputModel(document: OpenUiDocument): DataModelApplication {
   const firstConcreteChild = document.children?.[0];
   const pageId = firstConcreteChild ? lowerFirst(firstConcreteChild.type) : document.id;
   const pageTitle = unquote(stringAttr(document, "title")) ?? titleFromName(pageId);
@@ -43,7 +49,7 @@ function buildConcreteInputModel(document: OpenUiDocument): UiApplication {
           requirements: concreteRequirements(firstConcreteChild),
           tags: [],
           formalDefinitions: [],
-          features: ["component"] as UiFeature[],
+          features: ["component"] as DataModelFeature[],
         },
       ]
     : [];
@@ -57,7 +63,7 @@ function buildConcreteInputModel(document: OpenUiDocument): UiApplication {
   };
 }
 
-function buildDialogComponent(dialog: OpenUiElement): UiDialogComponent {
+function buildDialogComponent(dialog: OpenUiElement): DataModelDialogComponent {
   const title = unquote(stringAttr(childrenOfType(dialog, "DialogTitle")[0] ?? dialog, "text")) ?? "Dialog";
   const content = unquote(stringAttr(childrenOfType(dialog, "DialogContent")[0] ?? dialog, "text")) ?? "";
   const actions = childrenOfType(dialog, "DialogActions").flatMap((actionsNode) =>
@@ -77,7 +83,7 @@ function buildDialogComponent(dialog: OpenUiElement): UiDialogComponent {
   };
 }
 
-function buildDialogAction(action: OpenUiElement): UiDialogAction {
+function buildDialogAction(action: OpenUiElement): DataModelDialogAction {
   const text = unquote(stringAttr(action, "text")) ?? titleFromName(action.id);
   const result = resultFromClick(stringAttr(action, "(click)")) ?? normalizeRoute(action.id);
   const lowerText = text.toLowerCase();
@@ -96,7 +102,7 @@ function concreteRequirements(node: OpenUiElement): string[] {
   ];
 }
 
-function defaultThemeTokens(): UiThemeToken[] {
+function defaultThemeTokens(): DataModelThemeToken[] {
   return [
     { name: "--openui-theme-primary", value: "#0a6ed1" },
     { name: "--openui-theme-surface", value: "#ffffff" },

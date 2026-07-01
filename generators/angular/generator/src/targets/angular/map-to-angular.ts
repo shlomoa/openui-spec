@@ -1,4 +1,4 @@
-import type { UiApplication, UiDialogComponent, UiPage } from "../../ir/ui-model";
+import type { DataModelApplication, DataModelDialogComponent, DataModelPage } from "../../data-model/data-model";
 import type {
   AngularApplicationStructureModel,
   AngularDialogComponentModel,
@@ -11,25 +11,25 @@ import { escapeHtml } from "./emit-utils";
 import { AngularImportCollector } from "./import-collector";
 import { toIndentedTypeScriptLiteral as toTypeScriptLiteral, toTypeScriptStringArray } from "./typescript-literals";
 
-export function mapToAngularProject(uiModel: UiApplication): AngularProjectModel {
-  const pages = uiModel.pages.map(mapPage);
+export function mapToAngularProject(dataModel: DataModelApplication): AngularProjectModel {
+  const pages = dataModel.pages.map(mapPage);
   return {
-    appName: uiModel.name,
-    packageName: toPackageName(uiModel.name),
-    version: uiModel.version,
+    appName: dataModel.name,
+    packageName: toPackageName(dataModel.name),
+    version: dataModel.version,
     pages,
-    dialogComponents: (uiModel.dialogComponents ?? []).map(mapDialogComponent),
-    themeTokens: uiModel.themeTokens,
-    applicationStructure: uiModel.pages.some((page) => page.features.includes("application-structure"))
+    dialogComponents: (dataModel.dialogComponents ?? []).map(mapDialogComponent),
+    themeTokens: dataModel.themeTokens,
+    applicationStructure: dataModel.pages.some((page) => page.features.includes("application-structure"))
       ? buildApplicationStructure(pages)
       : undefined,
-    internationalization: uiModel.pages.some((page) => page.features.includes("internationalization"))
+    internationalization: dataModel.pages.some((page) => page.features.includes("internationalization"))
       ? buildInternationalizationModel()
       : undefined,
   };
 }
 
-function mapDialogComponent(component: UiDialogComponent): AngularDialogComponentModel {
+function mapDialogComponent(component: DataModelDialogComponent): AngularDialogComponentModel {
   return {
     selector: component.selector,
     className: component.className,
@@ -45,7 +45,7 @@ function mapDialogComponent(component: UiDialogComponent): AngularDialogComponen
   };
 }
 
-function mapPage(page: UiPage): AngularPageModel {
+function mapPage(page: DataModelPage): AngularPageModel {
   const className = `${toPascalCase(page.route)}Page`;
   const imports = new Set(["CommonModule", "MatCardModule", "MatButtonModule", "MatListModule"]);
   const componentImports = new AngularImportCollector();
@@ -330,7 +330,7 @@ function mapPage(page: UiPage): AngularPageModel {
   };
 }
 
-function buildTemplate(page: UiPage): string {
+function buildTemplate(page: DataModelPage): string {
   const titleId = `${page.route}-title`;
   const requirementItems = page.requirements
     .slice(0, 4)
@@ -397,7 +397,7 @@ function buildTemplate(page: UiPage): string {
 `;
 }
 
-function buildStyles(page: UiPage): string {
+function buildStyles(page: DataModelPage): string {
   const themeStyles = page.features.includes("theme")
     ? "\n:host {\n  --openui-section-accent: var(--openui-theme-primary);\n}\n"
     : "";
@@ -460,7 +460,7 @@ function buildSecurityContracts(): {
   };
 }
 
-function buildSecurityTemplate(page: UiPage): string {
+function buildSecurityTemplate(page: DataModelPage): string {
   return `
     <section class="security-privacy-example" aria-label="Security and privacy UI materialization">
       <h2>Safe rendering and privacy gates</h2>
@@ -567,7 +567,7 @@ function buildSecurityStyles(): string {
 `;
 }
 
-function buildLazyDetailContract(page: UiPage): {
+function buildLazyDetailContract(page: DataModelPage): {
   catalog: string;
   routePath: string;
   angularRoute: string;
@@ -629,7 +629,7 @@ function buildVirtualizationBudgetContract(): {
   };
 }
 
-function buildPerformanceTemplate(page: UiPage): string {
+function buildPerformanceTemplate(page: DataModelPage): string {
   return `
     <section class="performance-requirements-example" aria-label="Performance requirements materialization">
       <h2>Eager discovery, lazy detail, and measurable budgets</h2>
@@ -755,7 +755,7 @@ function buildInternationalizationModel(): AngularInternationalizationModel {
   };
 }
 
-function buildInternationalizationTemplate(page: UiPage): string {
+function buildInternationalizationTemplate(page: DataModelPage): string {
   return `
     <section
       class="internationalization-example"
@@ -1033,7 +1033,7 @@ function buildDataBindingContracts(): Array<
   ];
 }
 
-function buildDataBindingTemplate(page: UiPage): string {
+function buildDataBindingTemplate(page: DataModelPage): string {
   return `
     <section class="data-binding-example" aria-label="Data binding model materialization">
       <h2>Bindable metadata projection</h2>
@@ -1113,7 +1113,7 @@ function buildActivationEventContract(): {
   };
 }
 
-function buildInteractionTemplate(page: UiPage): string {
+function buildInteractionTemplate(page: DataModelPage): string {
   return `
     <section class="interaction-model-example" aria-label="Interaction model materialization">
       <h2>Semantic activation event</h2>
@@ -1266,7 +1266,7 @@ function buildDerivedStateContract(): {
   };
 }
 
-function buildStateModelTemplate(page: UiPage): string {
+function buildStateModelTemplate(page: DataModelPage): string {
   return `
     <section class="state-model-example" aria-label="State model materialization">
       <h2>Public state inputs with declared defaults</h2>
@@ -1458,7 +1458,7 @@ function buildLayoutRegions(): Array<{
   ];
 }
 
-function buildLayoutTemplate(page: UiPage): string {
+function buildLayoutTemplate(page: DataModelPage): string {
   return `
     <section class="layout-system-example" aria-label="Layout system materialization">
       <h2>Metadata-backed composition regions</h2>
@@ -1708,7 +1708,7 @@ function buildApplicationStructureStyles(): string {
 `;
 }
 
-function buildComponentTemplate(page: UiPage): string {
+function buildComponentTemplate(page: DataModelPage): string {
   const contractItems = buildComponentContractItems(page)
     .map((item) => `          <mat-chip>${escapeHtml(item)}</mat-chip>`)
     .join("\n");
@@ -1748,7 +1748,7 @@ ${contractItems}
     </section>`;
 }
 
-function buildComponentContractItems(page: UiPage): string[] {
+function buildComponentContractItems(page: DataModelPage): string[] {
   return page.formalDefinitions
     .filter((definition) =>
       ["Component", "Property", "Aggregation", "Association", "Event"].includes(definition.term),

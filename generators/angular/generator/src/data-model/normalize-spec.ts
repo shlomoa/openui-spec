@@ -1,7 +1,7 @@
 import type { OpenUiScopeNode } from "../spec/openui-spec.types";
-import type { UiFeature } from "./ui-model";
+import type { DataModelFeature } from "./data-model";
 
-const SCOPE_FEATURES: Record<string, UiFeature[]> = {
+const SCOPE_FEATURES: Record<string, DataModelFeature[]> = {
   application: ["application-structure"],
   routing: ["navigation"],
   navigation: ["navigation"],
@@ -45,6 +45,6 @@ export function normalizeSummary(scope: OpenUiScopeNode): string {
   return scope.purpose ?? scope.requirements?.[0] ?? `Generated page for ${scope.title}.`;
 }
 
-export function normalizeFeatures(scope: OpenUiScopeNode): UiFeature[] {
+export function normalizeFeatures(scope: OpenUiScopeNode): DataModelFeature[] {
   return SCOPE_FEATURES[scope.id] ?? [];
 }

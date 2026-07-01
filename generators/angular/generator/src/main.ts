@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import { loadDefaultOpenUiCatalog } from "../spec/catalog-index";
-import { loadOpenUiDocument } from "../spec/load-spec";
-import { validateOpenUiGeneratorInput } from "../validation/validate-spec";
-import { generateIncrementally } from "../incremental/generate";
+import { generateIncrementally } from "./incremental/generate";
+import { loadDefaultOpenUiCatalog } from "./spec/catalog-index";
+import { loadOpenUiDocument } from "./spec/load-spec";
+import { validateOpenUiGeneratorInput } from "./spec/validate-spec";
 
 interface CliOptions {
   command: "generate" | "validate";

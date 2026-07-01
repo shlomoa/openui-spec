@@ -5,7 +5,7 @@ import { test } from "node:test";
 
 import { buildSpecManifestationIndex, classifyWorkspacePath } from "../src/incremental/classifier";
 import { emitAngularFilesFromInput } from "../src/incremental/generate";
-import { normalizeRoute } from "../src/ir/normalize-spec";
+import { normalizeRoute } from "../src/data-model/normalize-spec";
 import { extractOpenUiScopeNodes } from "../src/spec/openui-sections";
 import type { OpenUiDocument } from "../src/spec/openui-spec.types";
 

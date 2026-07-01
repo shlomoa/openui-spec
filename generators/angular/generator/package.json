@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Initial Angular Material generator for the OpenUI framework specification.",
   "bin": {
-    "openui-angular-gen": "dist/src/cli/main.js"
+    "openui-angular-gen": "dist/src/main.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

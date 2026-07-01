@@ -43,7 +43,7 @@ The repository has an Angular Material generator package:
 
 ```text
 generators/angular/generator/
-├─ src/cli/main.ts
+├─ src/main.ts
 ├─ src/spec/
 ├─ src/validation/
 ├─ src/ir/
@@ -167,16 +167,15 @@ generators/angular/
 │  │  ├─ GENERATION.md
 │  │  └─ TDD.md
 │  ├─ src/
-│  │  ├─ cli/
-│  │  │  └─ main.ts
+│  │  ├─ main.ts
 │  │  ├─ spec/
 │  │  │  ├─ catalog-index.ts
 │  │  │  ├─ openui-sections.ts
 │  │  │  ├─ openui-spec.types.ts
-│  │  │  └─ load-spec.ts
-│  │  ├─ validation/
-│  │  │  ├─ diagnostics.ts
+│  │  │  ├─ load-spec.ts
 │  │  │  └─ validate-spec.ts
+│  │  ├─ validation/
+│  │  │  └─ diagnostics.ts
 │  │  ├─ ir/
 │  │  │  ├─ build-ir.ts
 │  │  │  ├─ normalize-spec.ts
@@ -221,12 +220,12 @@ specification layer.
 
 | Module                                   | Current responsibility                                                                                                                                                                                      |
 | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `cli/main.ts`                            | Parses `generate` and `validate` commands, loads and validates native OpenUI JSON, emits the project, and reconciles it incrementally into the workspace.                                                   |
+| `main.ts`                                | Parses `generate` and `validate` commands, loads and validates native OpenUI JSON, emits the project, and reconciles it incrementally into the workspace.                                                   |
 | `spec/load-spec.ts`                      | Reads JSON and parses it into the native OpenUI document type.                                                                                                                                              |
 | `spec/openui-spec.types.ts`              | Defines the native OpenUI `id` / `type` / `attrs` / `children` input contract.                                                                                                                              |
 | `spec/catalog-index.ts`                  | Builds catalog lookup structures used to validate concrete input nodes against the generated OpenUI catalog.                                                                                                |
 | `spec/openui-sections.ts`                | Provides catalog helpers for scoped OpenUI nodes that carry `attrs.scopeDocument` traceability in the generated catalog tree.                                                                               |
-| `validation/validate-spec.ts`            | Fails early for malformed OpenUI node data and compliance-rule synchronization gaps.                                                                                                                        |
+| `spec/validate-spec.ts`                  | Fails early for malformed OpenUI node data and compliance-rule synchronization gaps.                                                                                                                        |
 | `validation/diagnostics.ts`              | Defines validation diagnostic and error reporting types.                                                                                                                                                    |
 | `ir/normalize-spec.ts`                   | Converts native scope IDs into routes, summaries, and feature flags.                                                                                                                                        |
 | `ir/build-ir.ts`                         | Builds the implementation-independent `UiApplication` model.                                                                                                                                                |
@@ -463,7 +462,7 @@ component or page folder prunes the emptied directory.
 
 `incremental/generate.ts` orchestrates the full pipeline
 (`generateIncrementally`): emit the Angular files, index the workspace,
-reconcile, and apply. The CLI (`cli/main.ts`) runs this flow after validating the
+reconcile, and apply. The CLI (`main.ts`) runs this flow after validating the
 spec, so `generate` adds and rewrites only what changed, removes artifacts the
 spec dropped, and degrades to generation from scratch for an empty workspace.
 

@@ -1,8 +1,8 @@
 import path from "node:path";
 
+import { normalizeRoute } from "../data-model/normalize-spec";
 import { childrenOfType, extractOpenUiScopeNodes, findElementsByType, stringAttr } from "../spec/openui-sections";
 import type { OpenUiDocument, OpenUiElement } from "../spec/openui-spec.types";
-import { normalizeRoute } from "../ir/normalize-spec";
 import { pageDirectory } from "../targets/angular/angular-paths";
 
 /**

@@ -1,9 +1,9 @@
-import { buildUiModel } from "../ir/build-ir";
+import { buildDataModel } from "../data-model/build-data-model";
 import { loadDefaultOpenUiCatalog } from "../spec/catalog-index";
 import { loadOpenUiDocument } from "../spec/load-spec";
+import { validateOpenUiGeneratorInput } from "../spec/validate-spec";
 import { emitAngularProject } from "../targets/angular/emit-angular-project";
 import { mapToAngularProject } from "../targets/angular/map-to-angular";
-import { validateOpenUiGeneratorInput } from "../validation/validate-spec";
 import type { GeneratedFile } from "../writers/file-writer";
 import { applyIncrementalPlan, type ApplyResult } from "./apply";
 import { buildSpecManifestationIndex } from "./classifier";
@@ -12,7 +12,7 @@ import { readWorkspaceIndex } from "./workspace-index";
 
 /**
  * Emits the Angular project files for a validated OpenUI input document using
- * the shared generation pipeline (load → validate → build IR → map → emit).
+ * the shared generation pipeline (load → validate → build data model → map → emit).
  * Catalog scope-tree fixtures and concrete input examples both flow through
  * this path after validation selects the appropriate input mode.
  */
@@ -20,8 +20,8 @@ export async function emitAngularFilesFromInput(inputPath: string): Promise<Gene
   const input = await loadOpenUiDocument(inputPath);
   const catalog = await loadDefaultOpenUiCatalog(inputPath);
   validateOpenUiGeneratorInput(input, catalog);
-  const uiModel = buildUiModel(input);
-  const angularProject = mapToAngularProject(uiModel);
+  const dataModel = buildDataModel(input);
+  const angularProject = mapToAngularProject(dataModel);
   return emitAngularProject(angularProject);
 }
 
@@ -42,8 +42,8 @@ export async function generateIncrementally(inputPath: string, outDirectory: str
   const catalog = await loadDefaultOpenUiCatalog(inputPath);
   validateOpenUiGeneratorInput(input, catalog);
 
-  const uiModel = buildUiModel(input);
-  const angularProject = mapToAngularProject(uiModel);
+  const dataModel = buildDataModel(input);
+  const angularProject = mapToAngularProject(dataModel);
   const generatedFiles = emitAngularProject(angularProject);
 
   const manifestationIndex = buildSpecManifestationIndex(input);

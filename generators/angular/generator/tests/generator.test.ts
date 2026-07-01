@@ -3,13 +3,13 @@ import { mkdir, mkdtemp, readFile } from "node:fs/promises";
 import path from "node:path";
 import { test } from "node:test";
 
-import { buildUiModel } from "../src/ir/build-ir";
-import type { UiPage } from "../src/ir/ui-model";
-import { run } from "../src/cli/main";
+import { buildDataModel } from "../src/data-model/build-data-model";
+import type { DataModelPage } from "../src/data-model/data-model";
+import { run } from "../src/main";
 import { createCatalogIndex } from "../src/spec/catalog-index";
 import type { OpenUiElement } from "../src/spec/openui-spec.types";
-import { SpecValidationError } from "../src/validation/diagnostics";
-import { validateOpenUiCatalog, validateOpenUiSpec } from "../src/validation/validate-spec";
+import { validateOpenUiCatalog, validateOpenUiSpec } from "../src/spec/validate-spec";
+import { SpecValidationError } from "../src/spec/diagnostics";
 import { cleanupTestOutput } from "./test-output";
 
 const ANGULAR_GENERATOR_ROOT =
@@ -69,7 +69,7 @@ async function createTestOutputDirectory(): Promise<string> {
   return mkdtemp(TEST_OUTPUT_PREFIX);
 }
 
-function pageById(pages: UiPage[], id: string): UiPage {
+function pageById(pages: DataModelPage[], id: string): DataModelPage {
   const page = pages.find((candidate) => candidate.id === id);
   if (!page) {
     throw new assert.AssertionError({ message: `Expected page '${id}' to exist.` });
@@ -132,23 +132,23 @@ test("rejects unknown non-native concrete input types during catalog validation"
   );
 });
 
-test("builds a concrete dialog UI model from the dialog fixture", async () => {
+test("builds a concrete dialog data model from the dialog fixture", async () => {
   const fixture = JSON.parse(await readFile(DIALOG_FIXTURE, "utf8"));
 
-  const uiModel = buildUiModel(fixture);
+  const dataModel = buildDataModel(fixture);
 
-  assert.equal(uiModel.name, "Dialog example");
+  assert.equal(dataModel.name, "Dialog example");
   assert.deepEqual(
-    uiModel.pages.map((page) => page.id),
+    dataModel.pages.map((page) => page.id),
     ["dialog"],
   );
-  const dialogPage = pageById(uiModel.pages, "dialog");
+  const dialogPage = pageById(dataModel.pages, "dialog");
   assert.equal(dialogPage.route, "dialog");
   assert.equal(dialogPage.title, "Dialog example");
   assert.deepEqual(dialogPage.features, ["component"]);
 
-  const dialogComponent = uiModel.dialogComponents?.[0];
-  assert.ok(dialogComponent, "Expected concrete dialog IR to include a dialog component.");
+  const dialogComponent = dataModel.dialogComponents?.[0];
+  assert.ok(dialogComponent, "Expected concrete dialog data model to include a dialog component.");
   assert.equal(dialogComponent.selector, "app-confirm-dialog");
   assert.equal(dialogComponent.className, "AppConfirmDialogComponent");
   assert.equal(dialogComponent.title, "Delete item?");
@@ -213,15 +213,15 @@ for (const fixtureCase of REPRESENTATIVE_CONCRETE_FIXTURES) {
   });
 }
 
-test("builds the UI model from catalog scope-tree regression nodes", async () => {
+test("builds the data model from catalog scope-tree regression nodes", async () => {
   const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));
 
-  const uiModel = buildUiModel(fixture);
+  const dataModel = buildDataModel(fixture);
 
-  assert.equal(uiModel.name, "OpenUI");
-  assert.equal(uiModel.version, "0.0.1");
+  assert.equal(dataModel.name, "OpenUI");
+  assert.equal(dataModel.version, "0.0.1");
   assert.deepEqual(
-    uiModel.pages.map((page) => page.id),
+    dataModel.pages.map((page) => page.id),
     [
       "application",
       "routing",
@@ -254,24 +254,24 @@ test("builds the UI model from catalog scope-tree regression nodes", async () =>
     ],
   );
 
-  const application = pageById(uiModel.pages, "application");
+  const application = pageById(dataModel.pages, "application");
   assert.equal(application.route, "application");
   assert.equal(application.title, "Application");
   assert.equal(application.sourceDocument, "scopes/Application/scope.md");
   assert.deepEqual(application.features, ["application-structure"]);
   assert.match(application.requirements[0], /Routing: Application-level route definitions/);
 
-  const dragAndDrop = pageById(uiModel.pages, "dragAndDrop");
+  const dragAndDrop = pageById(dataModel.pages, "dragAndDrop");
   assert.equal(dragAndDrop.route, "drag-and-drop");
   assert.deepEqual(dragAndDrop.features, ["interaction", "layout"]);
 
-  const pages = pageById(uiModel.pages, "pages");
+  const pages = pageById(dataModel.pages, "pages");
   assert.deepEqual(pages.features, ["navigation"]);
 
-  const forms = pageById(uiModel.pages, "forms");
+  const forms = pageById(dataModel.pages, "forms");
   assert.deepEqual(forms.features, ["form", "data-binding"]);
 
-  const dialog = pageById(uiModel.pages, "dialog");
+  const dialog = pageById(dataModel.pages, "dialog");
   assert.equal(dialog.sourceDocument, "scopes/Widgets/dialog.scope.md");
 });
 
