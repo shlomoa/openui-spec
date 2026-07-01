@@ -231,66 +231,12 @@ but the base JSON format does not execute them.
 
 ### EBNF notation
 
-```ebnf
-(* OpenUI specification in EBNF notation *)
+The EBNF blocks use `(* ... *)` for comments; comment text is explanatory and
+is not part of the grammar. Quoted punctuation terminals are literal: for
+example, `"-"` is a hyphen character where a production allows hyphenated
+names.
 
-openui-document = "{"
-  version-field ","
-  id-field ","
-  type-field ","
-  [ attrs-field "," ]
-  [ children-field [ "," ] ]
-"}" ;
-
-ui-element = "{"
-  id-field ","
-  type-field ","
-  [ attrs-field "," ]
-  [ children-field [ "," ] ]
-"}" ;
-
-version-field = '"version"' ":" version-value ;
-version-value = '"' version-string '"' ;
-version-string = digit+ "." digit+ "." digit+ ;
-
-id-field = '"id"' ":" id-value ;
-type-field = '"type"' ":" type-value ;
-attrs-field = '"attrs"' ":" "{" [ attribute-list ] "}" ;
-children-field = '"children"' ":" "[" [ ui-element-list ] "]" ;
-
-(* ID: camelCase alphanumeric string *)
-id-value = '"' lowercase-letter { id-char } '"' ;
-id-char = lowercase-letter | uppercase-letter | digit ;
-lowercase-letter = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" ;
-uppercase-letter = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" ;
-
-(* Type: html tags, kebab-case, or PascalCase *)
-type-value = '"' type-name '"' ;
-type-name = html-tag | kebab-case-name | pascal-case-name ;
-html-tag = "div" | "span" | "input" | "button" | "table" | ? other standard html elements ? ;
-kebab-case-name = lowercase-letter { lowercase-letter | digit | "-" } ;
-pascal-case-name = uppercase-letter { letter | digit } [ "-" lowercase-letter { lowercase-letter | digit } ] ;
-uppercase-letter = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" ;
-letter = lowercase-letter | uppercase-letter ;
-
-(* Attributes: key-value pairs. Attribute key syntax identifies input,
-   output, or behavior categories. Values are strings or null. *)
-attribute-list = attribute-pair { "," attribute-pair } [ "," ] ;
-attribute-pair = attr-key ":" attr-value ;
-attr-key = '"' characters '"' ;
-attr-value = string | null ;
-
-ui-element-list = ui-element { "," ui-element } [ "," ] ;
-
-string = '"' characters '"' ;
-null = "null" ;
-
-characters = { character } ;
-character = ? any unicode character except quotes and backslash ? | escaped-character ;
-escaped-character = "\" ( '"' | "\" | "/" | "b" | "f" | "n" | "r" | "t" | "u" hex hex hex hex ) ;
-hex = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "a" | "b" | "c" | "d" | "e" | "f" | "A" | "B" | "C" | "D" | "E" | "F" ;
-digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
-```
+The format itself is in [EBNF](./EBNF.txt)
 
 ### Syntax rules
 
@@ -347,49 +293,49 @@ re-list them.
    Accessibility, and Validation notes are free prose, matched as prose-line.
    "—" is U+2014 (em dash); "·" is U+00B7 (middot). *)
 
-leaf-scope          = title-heading
-                      { prose-line }
-                      identity-section
+leaf_scope          = title_heading
+                      { prose_line }
+                      identity_section
                       { section } ;
-section             = attributes-section | child-model-section | prose-section ;
+section             = attributes_section | child_model_section | prose_section ;
 
-title-heading       = "#" WS object-title NL ;
+title_heading       = "#" WS object_title NL ;
 
-identity-section    = "## Identity" NL { prose-line } identity-line ;
-identity-line       = "-" WS "id:" WS id-value WS "·" WS
-                            "type:" WS type-value WS "·" WS
-                            "status:" WS status-value NL ;
+identity_section    = "## Identity" NL { prose_line } identity_line ;
+identity_line       = "-" WS "id:" WS id_value WS "·" WS
+                            "type:" WS type_value WS "·" WS
+                            "status:" WS status_value NL ;
 
-attributes-section  = "## Attributes" NL { prose-line }
-                      attribute-line { attribute-line | prose-line } ;
-attribute-line      = "-" WS "`" attr-key "`" WS "—" WS
+attributes_section  = "## Attributes" NL { prose_line }
+                      attribute_line { attribute_line | prose_line } ;
+attribute_line      = "-" WS "`" attr_key "`" WS "—" WS
                             category WS "—" WS description NL ;
-attr-key            = uses-key | output-key ;
-uses-key            = "[" attr-name "]" ;        (* category MUST be "Uses" *)
-output-key          = "(" attr-name ")" ;        (* category MUST be "Produces" | "Behaves" *)
+attr_key            = uses_key | output_key ;
+uses_key            = "[" attr_name "]" ;        (* category MUST be "Uses" *)
+output_key          = "(" attr_name ")" ;        (* category MUST be "Produces" | "Behaves" *)
 category            = "Uses" | "Produces" | "Behaves" ;
 
-child-model-section = "## Child model" NL { prose-line }
-                      child-line { child-line | prose-line } ;
-child-line          = "-" WS child-id WS "—" WS
-                            child-type WS "—" WS
+child_model_section = "## Child model" NL { prose_line }
+                      child_line { child_line | prose_line } ;
+child_line          = "-" WS child_id WS "—" WS
+                            child_type WS "—" WS
                             multiplicity WS "—" WS description NL ;
 multiplicity        = "1" | "0..1" | "0..n" | "1..n" ;
 
-prose-section       = heading NL { prose-line } ;
+prose_section       = heading NL { prose_line } ;
 heading             = "##" WS { character } ;
 
 (* lexical — id/type/attr rules reuse the document grammar above *)
-id-value            = camel-case ;
-child-id            = camel-case ;
-type-value          = type-name ;                (* per the document type grammar *)
-child-type          = type-name ;
-status-value        = "draft" | "review" | "stable" ;
-attr-name           = letter { letter | digit } ;
-camel-case          = lowercase-letter { letter | digit } ;
-object-title        = { character } ;
+id_value            = camel_case ;
+child_id            = camel_case ;
+type_value          = type_name ;                (* per the document type grammar *)
+child_type          = type_name ;
+status_value        = "draft" | "review" | "stable" ;
+attr_name           = letter { letter | digit } ;
+camel_case          = lowercase_letter { letter | digit } ;
+object_title        = { character } ;
 description         = { character } ;             (* free prose; not interpreted *)
-prose-line          = ? any line that is not an identity / attribute / child line ? ;
+prose_line          = ? any line that is not an identity / attribute / child line ? ;
 WS                  = ( " " | "\t" ) { " " | "\t" } ;
 NL                  = ? line break ? ;
 ```

@@ -4,10 +4,10 @@ import path from "node:path";
 import { test } from "node:test";
 
 import { buildSpecManifestationIndex, classifyWorkspacePath } from "../src/generation/classifier";
-import { emitAngularFilesFromInput } from "../src/generation/generate";
 import { normalizeRoute } from "../src/data-model/normalize-spec";
 import { extractOpenUiScopeNodes } from "../src/spec/openui-sections";
 import type { OpenUiDocument } from "../src/spec/openui-spec.types";
+import { emitAngularFilesFromInput } from "./emit-angular-files";
 
 const ANGULAR_GENERATOR_ROOT =
   path.basename(path.dirname(__dirname)) === "dist"

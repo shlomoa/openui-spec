@@ -1,6 +1,8 @@
 import { buildDataModel } from "../data-model/build-data-model";
+import { getLogger } from "../logging/logger";
 import { loadDefaultOpenUiCatalog } from "../spec/catalog-index";
 import { loadOpenUiDocument } from "../spec/load-spec";
+import type { OpenUiDocument } from "../spec/openui-spec.types";
 import { validateOpenUiGeneratorInput } from "../spec/validate-spec";
 import { emitAngularProject } from "./emit-angular-project";
 import { mapToAngularProject } from "./map-to-angular";
@@ -10,19 +12,28 @@ import { buildSpecManifestationIndex } from "./classifier";
 import { reconcileGeneratedFiles } from "./reconcile";
 import { readWorkspaceIndex } from "./workspace-index";
 
+const log = getLogger("amcg.generate");
+
+export interface PreparedAngularGeneration {
+  input: OpenUiDocument;
+  generatedFiles: GeneratedFile[];
+}
+
 /**
- * Emits the Angular project files for a validated OpenUI input document using
- * the shared generation pipeline (load → validate → build data model → map → emit).
- * Catalog scope-tree fixtures and concrete input examples both flow through
- * this path after validation selects the appropriate input mode.
+ * Loads, validates, models, and emits the desired Angular files for an OpenUI
+ * input without reading or mutating an output workspace.
  */
-export async function emitAngularFilesFromInput(inputPath: string): Promise<GeneratedFile[]> {
+export async function prepareAngularGeneration(inputPath: string): Promise<PreparedAngularGeneration> {
   const input = await loadOpenUiDocument(inputPath);
   const catalog = await loadDefaultOpenUiCatalog(inputPath);
   validateOpenUiGeneratorInput(input, catalog);
+  log.debug(`Validated OpenUI input '${inputPath}'.`);
+
   const dataModel = buildDataModel(input);
   const angularProject = mapToAngularProject(dataModel);
-  return emitAngularProject(angularProject);
+  const generatedFiles = emitAngularProject(angularProject);
+
+  return { input, generatedFiles };
 }
 
 /**
@@ -37,18 +48,15 @@ export async function emitAngularFilesFromInput(inputPath: string): Promise<Gene
  * but no longer emitted by the specification are deleted, and any directories
  * emptied by those deletions are pruned.
  */
-export async function generateIncrementally(inputPath: string, outDirectory: string): Promise<ApplyResult> {
-  const input = await loadOpenUiDocument(inputPath);
-  const catalog = await loadDefaultOpenUiCatalog(inputPath);
-  validateOpenUiGeneratorInput(input, catalog);
-
-  const dataModel = buildDataModel(input);
-  const angularProject = mapToAngularProject(dataModel);
-  const generatedFiles = emitAngularProject(angularProject);
+export async function generate(inputPath: string, outDirectory: string): Promise<ApplyResult> {
+  const { input, generatedFiles } = await prepareAngularGeneration(inputPath);
+  log.info(`Emitted ${generatedFiles.length} file(s); reconciling against '${outDirectory}'.`);
 
   const manifestationIndex = buildSpecManifestationIndex(input);
   const workspace = await readWorkspaceIndex(outDirectory);
   const plan = await reconcileGeneratedFiles(outDirectory, generatedFiles, manifestationIndex, workspace);
 
-  return applyIncrementalPlan(outDirectory, plan);
+  const result = await applyIncrementalPlan(outDirectory, plan);
+  log.info(`Applied incremental plan for '${outDirectory}'.`);
+  return result;
 }

@@ -5,11 +5,12 @@ import { test } from "node:test";
 
 import { applyIncrementalPlan } from "../src/generation/apply";
 import { buildSpecManifestationIndex } from "../src/generation/classifier";
-import { emitAngularFilesFromInput, generateIncrementally } from "../src/generation/generate";
+import { generate } from "../src/generation/generate";
 import { reconcileGeneratedFiles } from "../src/generation/reconcile";
 import { isEmptyWorkspace, readWorkspaceIndex } from "../src/generation/workspace-index";
 import { loadOpenUiDocument } from "../src/spec/load-spec";
 import type { OpenUiDocument, OpenUiElement } from "../src/spec/openui-spec.types";
+import { emitAngularFilesFromInput } from "./emit-angular-files";
 import { cleanupTestOutput } from "./test-output";
 
 const ANGULAR_GENERATOR_ROOT =
@@ -122,7 +123,7 @@ test("from scratch — generates every emitted file as Add into an empty workspa
     const emptyWorkspace = await readWorkspaceIndex(outDir);
     assert.equal(isEmptyWorkspace(emptyWorkspace), true);
 
-    const result = await generateIncrementally(FIXTURE, outDir);
+    const result = await generate(FIXTURE, outDir);
 
     assert.deepEqual([...result.added].sort(), emittedPaths, "Every emitted file should be added from scratch.");
     assert.equal(result.modified.length, 0);
@@ -155,10 +156,10 @@ test("no-op match — re-running on an up-to-date workspace matches every emitte
     const emittedFiles = await emitAngularFilesFromInput(FIXTURE);
     const emittedPaths = emittedFiles.map((file) => file.path).sort();
 
-    await generateIncrementally(FIXTURE, outDir);
+    await generate(FIXTURE, outDir);
     const mtimesBefore = await fileModifiedTimes(outDir, emittedPaths);
 
-    const result = await generateIncrementally(FIXTURE, outDir);
+    const result = await generate(FIXTURE, outDir);
 
     assert.equal(result.added.length, 0);
     assert.equal(result.modified.length, 0);
@@ -187,7 +188,7 @@ test("incremental add — adds a new child and rewires generated parent files", 
       await applicationOnlyInput(["routing", "navigation"]),
     );
 
-    const initialResult = await generateIncrementally(initialInput, outDir);
+    const initialResult = await generate(initialInput, outDir);
     assert.ok(initialResult.added.includes("src/app/pages/routing/routing.page.ts"));
     assert.equal(initialResult.modified.length, 0);
     assert.equal(initialResult.deleted.length, 0);
@@ -195,7 +196,7 @@ test("incremental add — adds a new child and rewires generated parent files", 
     const initialEmittedPaths = (await emitAngularFilesFromInput(initialInput)).map((file) => file.path).sort();
     const initialMtimes = await fileModifiedTimes(outDir, initialEmittedPaths);
 
-    const updatedResult = await generateIncrementally(updatedInput, outDir);
+    const updatedResult = await generate(updatedInput, outDir);
 
     const addedNavigationFiles = [
       "src/app/pages/navigation/navigation.page.ts",
@@ -254,7 +255,7 @@ test("incremental delete — removes a child and rewires generated parent files"
       await applicationOnlyInput(["routing"]),
     );
 
-    const initialResult = await generateIncrementally(initialInput, outDir);
+    const initialResult = await generate(initialInput, outDir);
     assert.ok(initialResult.added.includes("src/app/pages/navigation/navigation.page.ts"));
     assert.equal(initialResult.modified.length, 0);
     assert.equal(initialResult.deleted.length, 0);
@@ -262,7 +263,7 @@ test("incremental delete — removes a child and rewires generated parent files"
     const initialEmittedPaths = (await emitAngularFilesFromInput(initialInput)).map((file) => file.path).sort();
     const initialMtimes = await fileModifiedTimes(outDir, initialEmittedPaths);
 
-    const updatedResult = await generateIncrementally(updatedInput, outDir);
+    const updatedResult = await generate(updatedInput, outDir);
 
     const removedNavigationFiles = [
       "src/app/pages/navigation/navigation.page.ts",
@@ -316,12 +317,12 @@ test("incremental delete — empty JSON removes every previously generated child
     );
     const emptyInput = await writeJsonFile(path.join(tempRoot, "inputs", "empty-root.json"), await emptyRootInput());
 
-    const initialResult = await generateIncrementally(initialInput, outDir);
+    const initialResult = await generate(initialInput, outDir);
     assert.ok(initialResult.added.includes("src/app/pages/application/application.page.ts"));
     assert.ok(initialResult.added.includes("src/app/pages/routing/routing.page.ts"));
     assert.ok(initialResult.added.includes("src/app/pages/navigation/navigation.page.ts"));
 
-    const emptyResult = await generateIncrementally(emptyInput, outDir);
+    const emptyResult = await generate(emptyInput, outDir);
 
     const deletedPageFiles = ["application", "routing", "navigation"].flatMap((route) => [
       `src/app/pages/${route}/${route}.page.ts`,
@@ -383,7 +384,7 @@ test("simple modification — renaming a child deletes the old route, adds the n
       await applicationInputWithChildren([routing, renamedNavigation]),
     );
 
-    const initialResult = await generateIncrementally(initialInput, outDir);
+    const initialResult = await generate(initialInput, outDir);
     assert.ok(initialResult.added.includes("src/app/pages/navigation/navigation.page.ts"));
     assert.equal(initialResult.modified.length, 0);
     assert.equal(initialResult.deleted.length, 0);
@@ -391,7 +392,7 @@ test("simple modification — renaming a child deletes the old route, adds the n
     const initialEmittedPaths = (await emitAngularFilesFromInput(initialInput)).map((file) => file.path).sort();
     const initialMtimes = await fileModifiedTimes(outDir, initialEmittedPaths);
 
-    const renamedResult = await generateIncrementally(renamedInput, outDir);
+    const renamedResult = await generate(renamedInput, outDir);
 
     const oldNavigationFiles = [
       "src/app/pages/navigation/navigation.page.ts",
@@ -467,7 +468,7 @@ test("complex modification — changing a child attribute rewrites only affected
       await applicationInputWithChildren([routing, updatedNavigation]),
     );
 
-    const initialResult = await generateIncrementally(initialInput, outDir);
+    const initialResult = await generate(initialInput, outDir);
     assert.ok(initialResult.added.includes("src/app/pages/navigation/navigation.page.html"));
     assert.equal(initialResult.modified.length, 0);
     assert.equal(initialResult.deleted.length, 0);
@@ -475,7 +476,7 @@ test("complex modification — changing a child attribute rewrites only affected
     const initialEmittedPaths = (await emitAngularFilesFromInput(initialInput)).map((file) => file.path).sort();
     const initialMtimes = await fileModifiedTimes(outDir, initialEmittedPaths);
 
-    const updatedResult = await generateIncrementally(updatedInput, outDir);
+    const updatedResult = await generate(updatedInput, outDir);
 
     const modifiedForAttributeChange = [
       "src/app/pages/application/application.page.html",
@@ -523,7 +524,7 @@ test("validation failure is atomic — invalid root leaves existing workspace un
       children: [],
     });
 
-    await generateIncrementally(validInput, outDir);
+    await generate(validInput, outDir);
     const initialEmittedPaths = (await emitAngularFilesFromInput(validInput)).map((file) => file.path).sort();
     const workspaceBefore = new Map(
       await Promise.all(
@@ -538,7 +539,7 @@ test("validation failure is atomic — invalid root leaves existing workspace un
     );
 
     await assert.rejects(
-      generateIncrementally(invalidInput, outDir),
+      generate(invalidInput, outDir),
       /root\.id: Root id must be exactly "root"\./,
     );
 
@@ -579,14 +580,14 @@ test("workspace indexing ignores non-contract directories during incremental gen
     }
 
     const emittedPaths = (await emitAngularFilesFromInput(FIXTURE)).map((file) => file.path).sort();
-    const generatedResult = await generateIncrementally(FIXTURE, outDir);
+    const generatedResult = await generate(FIXTURE, outDir);
 
     assert.deepEqual([...generatedResult.added].sort(), emittedPaths);
     assert.equal(generatedResult.modified.length, 0);
     assert.equal(generatedResult.deleted.length, 0);
     assert.equal(generatedResult.matched.length, 0);
 
-    const noOpResult = await generateIncrementally(FIXTURE, outDir);
+    const noOpResult = await generate(FIXTURE, outDir);
     assert.equal(noOpResult.added.length, 0);
     assert.equal(noOpResult.modified.length, 0);
     assert.equal(noOpResult.deleted.length, 0);
@@ -630,7 +631,7 @@ test("comparator/reconciler coverage — plans full-output add match modify dele
       await applicationInputWithChildren([updatedRouting, navigation]),
     );
 
-    await generateIncrementally(initialInput, outDir);
+    await generate(initialInput, outDir);
     const staleRoutingArtifact = "src/app/pages/routing/routing.debug.ts";
     await writeFile(path.join(outDir, staleRoutingArtifact), "// stale generated debug artifact\n", "utf8");
     const routesMtimeBeforePlan = await fileModifiedTime(path.join(outDir, "src/app/app.routes.ts"));
@@ -692,7 +693,7 @@ test("comparator/reconciler coverage — plans full-output add match modify dele
 test("deletes workspace files that the specification no longer emits", async () => {
   const outDir = await createTestOutputDirectory();
   try {
-    await generateIncrementally(FIXTURE, outDir);
+    await generate(FIXTURE, outDir);
 
     const straySource = "src/app/pages/removed-section/removed-section.page.ts";
     await mkdir(path.dirname(path.join(outDir, straySource)), { recursive: true });
@@ -720,7 +721,7 @@ test("deletes workspace files that the specification no longer emits", async () 
 test("modifies only the drifted file and leaves siblings matched", async () => {
   const outDir = await createTestOutputDirectory();
   try {
-    await generateIncrementally(FIXTURE, outDir);
+    await generate(FIXTURE, outDir);
 
     const routesPath = path.join(outDir, "src/app/app.routes.ts");
     const tsConfigPath = path.join(outDir, "tsconfig.json");

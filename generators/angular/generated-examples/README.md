@@ -17,6 +17,8 @@ The previews intentionally use Angular Material components for the generated she
 page, table, form, navigation, and action controls so the sample app reflects the
 generator's expected output style. This app is documentation, not generator output:
 its tests assert what the app presents, but they do not re-run the generator.
+It is a derived artifact and must not replace or redefine the hand-authored
+specification prose, scope documents, or framework-independent examples.
 
 ## Example source
 
@@ -76,3 +78,12 @@ documentation data model and the component-viewer routing/tabs:
 These app-specific checks are documented here as their SSOT. For the Angular
 generator architecture and generator package validation strategy, see
 [`generators/angular/generator/docs/GENERATION.md`](../generator/docs/GENERATION.md#validation-and-test-strategy).
+
+### CI integration
+
+`.github/workflows/build.yml` runs these generated-examples checks alongside the
+repository's other validation on code-review events. The root contract test
+(`tests/test_github_actions_build.py`) asserts the workflow keeps running the
+Angular examples checks, lint/format checks, strict MkDocs builds, and pinned
+action versions. Changing the local commands above should be reflected in the
+workflow and will be caught by that contract test if it is not.

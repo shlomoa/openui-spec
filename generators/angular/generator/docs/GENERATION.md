@@ -22,8 +22,8 @@ The golden source for the OpenUI specification is the hand-authored prose:
   contract.
 
 Root `openui.json` is **generated** from that prose. It — together with
-generator fixtures, generated examples, and Angular target models — is a derived
-artifact that must not replace or redefine the golden source.
+generator fixtures and Angular target models — is a derived artifact that must
+not replace or redefine the golden source.
 
 The repository-local converter for the generated catalog lives in
 `spec/to_json/`. After changing scope prose or converter-relevant structure,
@@ -210,7 +210,6 @@ generators/angular/
 │  │  └─ generator.test.ts
 │  ├─ package.json
 │  └─ tsconfig.json
-└─ generated-examples/
 ```
 
 The catalog converter is outside the Angular package because it belongs to the
@@ -461,7 +460,7 @@ single out-of-tree path aborts the whole apply. Deleting the last file in a
 component or page folder prunes the emptied directory.
 
 `incremental/generate.ts` orchestrates the full pipeline
-(`generateIncrementally`): emit the Angular files, index the workspace,
+(`generate`): emit the Angular files, index the workspace,
 reconcile, and apply. The CLI (`main.ts`) runs this flow after validating the
 spec, so `generate` adds and rewrites only what changed, removes artifacts the
 spec dropped, and degrades to generation from scratch for an empty workspace.
@@ -521,9 +520,7 @@ the existing Angular generator pipeline.
 ## Validation and test strategy
 
 This section is the canonical home for Angular generator validation details,
-including local commands, CI expectations, and conventions. The generated
-examples app owns its app-specific validation details in
-[`generators/angular/generated-examples/README.md`](../../generated-examples/README.md#validation).
+including local commands, CI expectations, and conventions.
 
 Angular validation has one generator package layer plus CI integration:
 
@@ -534,11 +531,7 @@ Angular validation has one generator package layer plus CI integration:
 
 The layering mirrors the [golden-source boundary](#golden-source-boundary): the
 spec is authoritative, the generator consumes concrete `input.json` app
-documents validated against the grammar and catalog defined by the SSOT, and the
-examples app is a downstream documentation app that is never treated as
-generator output. For generated-examples commands and vitest coverage, use the
-[generated examples README](../../generated-examples/README.md#validation) as
-the SSOT.
+documents validated against the grammar and catalog defined by the SSOT.
 
 ### Layer 1 — Angular generator tests (`generators/angular/generator/`, node:test)
 
@@ -571,7 +564,7 @@ Current catalog/scope-tree regression coverage:
 | generates an Angular Material standalone app from catalog scope-tree OpenUI   | The `generate` CLI emits the expected Angular project skeleton and Angular Material dependencies for catalog regression coverage.                                                 |
 | generates scope-specific Angular Material details from the catalog tree       | Feature-specific page output (structure, layout, i18n, extension, etc.) is emitted per catalog scope.                                                                             |
 | validates canonical root values, attrs, and scoped document uniqueness        | `validateOpenUiSpec` raises `SpecValidationError` for malformed root values and duplicate scopes.                                                                                 |
-| full-pipeline incremental acceptance scenarios                                | `generateIncrementally` covers from-scratch Add, no-op Match, incremental Add/Delete/Modify, validation atomicity, ignored workspace directories, and direct comparator planning. |
+| full-pipeline incremental acceptance scenarios                                | `generate` covers from-scratch Add, no-op Match, incremental Add/Delete/Modify, validation atomicity, ignored workspace directories, and direct comparator planning. |
 
 Required concrete `input.json` acceptance coverage:
 
@@ -589,15 +582,12 @@ directories.
 
 ### CI integration (`.github/workflows/build.yml`)
 
-`build.yml` runs the Angular generator and generated-examples checks alongside
-repository Python and documentation validation on code-review events. The root
-contract test (`tests/test_github_actions_build.py`) asserts the workflow keeps
-running Angular-generator checks, Angular-examples checks, lint/format checks,
-strict MkDocs builds, and pinned action versions. Changing the local test
-commands here or in the
-[generated examples README](../../generated-examples/README.md#validation) should
-be reflected in the workflow and will be caught by that contract test if it is
-not.
+`build.yml` runs Angular generator checks alongside repository Python and
+documentation validation on code-review events. The root contract test
+(`tests/test_github_actions_build.py`) asserts the workflow keeps running
+Angular-generator checks, lint/format checks, strict MkDocs builds, and pinned
+action versions. Changing the local generator test commands above should be
+reflected in the workflow and will be caught by that contract test if it is not.
 
 ### Test conventions
 
@@ -610,10 +600,10 @@ not.
   run logs each kept directory path.
 - **Golden source is authoritative.** Generator tests consume derived artifacts
   and must not redefine the prose spec, scopes, schema, or catalog contract.
-- **Committed fixtures are expectations, not generated examples.** Fixture trees
-  may include both input workspaces/specifications and expected output
-  workspaces. Tests copy or compare those fixtures, but transient generator runs
-  still write only under the repo-local, git-ignored `tmp/` directory.
+- **Committed fixtures are expectations.** Fixture trees may include both input
+  workspaces/specifications and expected output workspaces. Tests copy or
+  compare those fixtures, but transient generator runs still write only under
+  the repo-local, git-ignored `tmp/` directory.
 
 ### Incremental generation test strategy
 
@@ -703,10 +693,6 @@ Pop-Location
 
 That script runs TypeScript compilation first and then the Node test suite from
 `dist/tests/*.test.js`.
-
-Validate the generated-examples documentation app separately with the commands
-documented in
-[`generators/angular/generated-examples/README.md`](../../generated-examples/README.md#validation).
 
 Run repository Python and documentation validation through the local `.venv`:
 

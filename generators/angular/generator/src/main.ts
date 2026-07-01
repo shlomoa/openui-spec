@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { generateIncrementally } from "./generation/generate";
+import { generate } from "./generation/generate";
 import { configureLogging, DEFAULT_LEVEL, getLogger, LogLevel, parseLevelName } from "./logging/logger";
 import { loadDefaultOpenUiCatalog } from "./spec/catalog-index";
 import { loadOpenUiDocument } from "./spec/load-spec";
@@ -30,7 +30,7 @@ export async function run(argv: string[] = process.argv.slice(2)): Promise<void>
     throw new Error("Missing required --out option for generate.");
   }
 
-  await generateIncrementally(options.inputPath, options.outPath);
+  await generate(options.inputPath, options.outPath);
   log.info(`Generation completed into '${options.outPath}'.`);
 }
 
