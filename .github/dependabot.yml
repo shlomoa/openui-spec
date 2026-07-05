@@ -1,20 +1,22 @@
 version: 2
 updates:
-  - package-ecosystem: npm
+  - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: weekly
-      day: sunday
-      time: "10:00"
-      timezone: Etc/UTC
-    #reviewers:
-    #  - "RandomByte"
-    #  - "matz3"
-    #  - "flovogt"
-    #  - "codeworrior"
-    versioning-strategy: increase
-    labels:
-      - "in progress"
-      - "dependencies"
-    # We are only interested in security updates, so we disable all other updates via the following option:
-    open-pull-requests-limit: 0
+      interval: "monthly"
+      day: "monday"
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: "npm"
+    directory: "/generators/angular/generator"
+    schedule:
+      interval: "monthly"
+      day: "monday"
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: "npm"
+    directory: "generators/angular/generated-examples"
+    schedule:
+      interval: "monthly"
+      day: "monday"
+    open-pull-requests-limit: 10
