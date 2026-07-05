@@ -556,14 +556,14 @@ requiring catalog traceability fields such as `attrs.scopeDocument` on app nodes
 
 Current catalog/scope-tree regression coverage:
 
-| Test                                                                          | Verifies                                                                                                                                                                          |
-| ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| classifies every generated full-output page and application file              | The classifier maps generated routed page files to catalog scoped OpenUI nodes and project files to application-level ownership.                                                  |
-| classifies every generated component folder and file in the fixture workspace | Component-template fixture folders and generated component files classify back to their owning selectors.                                                                         |
-| builds the UI model from catalog scope-tree OpenUI nodes                      | `buildUiModel` produces the expected `UiApplication` name, version, and ordered pages for catalog regression coverage.                                                            |
-| generates an Angular Material standalone app from catalog scope-tree OpenUI   | The `generate` CLI emits the expected Angular project skeleton and Angular Material dependencies for catalog regression coverage.                                                 |
-| generates scope-specific Angular Material details from the catalog tree       | Feature-specific page output (structure, layout, i18n, extension, etc.) is emitted per catalog scope.                                                                             |
-| validates canonical root values, attrs, and scoped document uniqueness        | `validateOpenUiSpec` raises `SpecValidationError` for malformed root values and duplicate scopes.                                                                                 |
+| Test                                                                          | Verifies                                                                                                                                                             |
+| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| classifies every generated full-output page and application file              | The classifier maps generated routed page files to catalog scoped OpenUI nodes and project files to application-level ownership.                                     |
+| classifies every generated component folder and file in the fixture workspace | Component-template fixture folders and generated component files classify back to their owning selectors.                                                            |
+| builds the UI model from catalog scope-tree OpenUI nodes                      | `buildUiModel` produces the expected `UiApplication` name, version, and ordered pages for catalog regression coverage.                                               |
+| generates an Angular Material standalone app from catalog scope-tree OpenUI   | The `generate` CLI emits the expected Angular project skeleton and Angular Material dependencies for catalog regression coverage.                                    |
+| generates scope-specific Angular Material details from the catalog tree       | Feature-specific page output (structure, layout, i18n, extension, etc.) is emitted per catalog scope.                                                                |
+| validates canonical root values, attrs, and scoped document uniqueness        | `validateOpenUiSpec` raises `SpecValidationError` for malformed root values and duplicate scopes.                                                                    |
 | full-pipeline incremental acceptance scenarios                                | `generate` covers from-scratch Add, no-op Match, incremental Add/Delete/Modify, validation atomicity, ignored workspace directories, and direct comparator planning. |
 
 Required concrete `input.json` acceptance coverage:

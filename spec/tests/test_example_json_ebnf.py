@@ -57,11 +57,17 @@ def make_example_test(path: Path) -> Callable[[OpenUiExampleJsonEbnfTest], None]
 
 
 for test_index, example_path in enumerate(example_paths(), start=1):
-    setattr(OpenUiExampleJsonEbnfTest, example_test_name(test_index, example_path), make_example_test(example_path))
+    setattr(
+        OpenUiExampleJsonEbnfTest,
+        example_test_name(test_index, example_path),
+        make_example_test(example_path),
+    )
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Validate OpenUI JSON files against spec/EBNF.txt.")
+    parser = argparse.ArgumentParser(
+        description="Validate OpenUI JSON files against spec/EBNF.txt."
+    )
     parser.add_argument(
         "json_files",
         nargs="*",
