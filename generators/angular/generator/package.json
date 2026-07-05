@@ -1,5 +1,5 @@
 {
-  "name": "@openui5-spec/angular-generator",
+  "name": "@openui-spec/angular-generator",
   "version": "0.1.0",
   "description": "Initial Angular Material generator for the OpenUI framework specification.",
   "bin": {

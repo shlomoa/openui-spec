@@ -4,7 +4,7 @@ This repository contains a technology-independent specification for a Web UI fra
 
 ## Where to go
 
-- **Using the specification** — read the published docs on ReadTheDocs: <https://openui5-spec.readthedocs.io/>
+- **Using the specification** — read the published docs on ReadTheDocs: <https://openui-spec.readthedocs.io/>
 - **Contributing / developing** — start with the [developer docs](#developer-docs).
 
 ## Repository map

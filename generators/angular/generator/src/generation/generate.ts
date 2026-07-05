@@ -37,7 +37,7 @@ export async function prepareAngularGeneration(inputPath: string): Promise<Prepa
 }
 
 /**
- * Runs the incremental generation pipeline: emit the desired files, index the
+ * Runs the generation pipeline: emit the desired files, index the
  * existing workspace, reconcile the two (classifying every Add / Match /
  * Modify / Delete and attributing it to its owning spec node), and apply the
  * resulting plan.
