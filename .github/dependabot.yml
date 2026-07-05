@@ -4,19 +4,28 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
-      day: "monday"
     open-pull-requests-limit: 10
+    groups:
+      all-pip-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "npm"
     directory: "/generators/angular/generator"
     schedule:
       interval: "monthly"
-      day: "monday"
     open-pull-requests-limit: 10
+    groups:
+      all-npm-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "npm"
     directory: "generators/angular/generated-examples"
     schedule:
       interval: "monthly"
-      day: "monday"
     open-pull-requests-limit: 10
+    groups:
+      all-npm-dependencies:
+        patterns:
+          - "*"
