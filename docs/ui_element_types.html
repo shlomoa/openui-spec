@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Generic UI Elements and Interaction Definitions</title>
+<style>
+  :root{color-scheme:light;--ink:#182230;--muted:#526071;--line:#cbd5e1;--head:#eaf1f8;--accent:#2563eb}
+  *{box-sizing:border-box} body{margin:0;background:#f4f7fb;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{max-width:1500px;margin:0 auto;padding:28px} h1{margin:0 0 8px;font-size:28px} h1.part-title{margin-top:54px;padding-top:30px;border-top:2px solid var(--line)} h2{margin:34px 0 6px;font-size:22px}
+  .intro{margin:0 0 22px;color:var(--muted)} .category-description{margin:0 0 12px;color:var(--muted)}
+  .table-wrap{overflow:auto;background:white;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px #0f172a12}
+  table{width:100%;border-collapse:collapse;min-width:1050px} th,td{padding:12px;border-bottom:1px solid #dde4ec;vertical-align:middle}
+  th{position:sticky;top:0;z-index:1;background:var(--head);text-align:left;font-size:13px} tbody tr:hover{background:#f8fbff}
+  td:nth-child(1){width:190px;font-weight:650} td:nth-child(2){min-width:430px}
+  td:nth-child(3),td:nth-child(4),th:nth-child(3),th:nth-child(4){width:120px;text-align:center}
+  td:nth-child(5){width:250px}.yes{color:#166534;font-weight:700}.no{color:#7f1d1d;font-weight:700}
+  .preview{display:block;width:220px;height:92px;border:1px solid #cbd5e1;border-radius:8px;background:#f8fafc}
+  .none{color:#64748b;text-align:center}
+  .note{margin-top:16px;color:var(--muted);font-size:13px}
+  @media print{body{background:#fff}main{max-width:none;padding:8mm}.table-wrap{box-shadow:none;overflow:visible}th{position:static}tr{break-inside:avoid}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Generic UI Elements</h1>
+  <p class="intro">Framework-independent UI element terminology. Each element is classified by its primary purpose. “Device-dependent” means that the element inherently requires a particular hardware or host-platform capability, not merely that its layout adapts to a device.</p>
+  <div id="category-sections"></div>
+  <h1 class="part-title">UI interaction definitions</h1>
+  <p class="intro">Framework-independent definitions for the states, areas, gestures, and events through which users interact with UI elements. These are interaction concepts rather than UI elements.</p>
+  <div id="interaction-sections"></div>
+  <p class="note">The examples are rendered SVG illustrations, not text or Unicode stand-ins. A visible example is intentionally omitted when the interaction definition itself has no visual representation.</p>
+</main>
+<script>
+const data = [
+["Window","A top-level application or document area. The user moves, resizes, minimizes, maximizes, or closes it.","Yes","No","window"],
+["Screen / View","A complete application page or state. The user navigates to it and interacts with its contents.","Yes","No","screen"],
+["Panel","A bounded region grouping related content or controls. The user works with the items within it.","Yes","No","panel"],
+["Container","A layout object that holds and arranges child objects. It may have no direct interaction or visible boundary.","Sometimes","No","container"],
+["Card","A bounded unit of related information and actions. The user reads, selects, opens, or acts on it.","Yes","No","card"],
+["Form","Groups related fields and actions for entering, reviewing, validating, and submitting data.","Yes","No","form"],
+["Toolbar","A row or column of frequently used actions. The user activates its buttons or menus.","Yes","No","toolbar"],
+["Status bar","A region displaying state such as readiness, connectivity, or zoom. It is generally read-only.","Yes","No","status"],
+["Navigation bar","Provides access to primary application destinations. The user selects a destination.","Yes","No","nav"],
+["Sidebar","A vertical region beside the main content that groups navigation, tools, filters, or supporting information.","Yes","No","sidebar"],
+["Hamburger Menu","A compact menu trigger, usually shown as three horizontal lines. The user activates it to reveal navigation or commands.","Yes","No","hamburger"],
+["Tab","Selects one of several related content panels within the same context.","Yes","No","tabs"],
+["Tab Bar","A persistent row or column of tabs used to switch among peer views or primary destinations.","Yes","No","tabbar"],
+["Accordion","Organizes content into expandable sections. The user expands or collapses each heading.","Yes","No","accordion"],
+["Menu","Presents commands or destinations. The user opens it and selects an item.","Yes","No","menu"],
+["Dropdown Menu","A menu that opens below or beside its trigger and presents commands or navigation choices.","Yes","No","dropdownmenu"],
+["Context menu","Presents actions relevant to an object or location, commonly after right-click or long-press.","Yes","No","context"],
+["Breadcrumb","Shows the current position in a hierarchy. The user can select an ancestor to navigate upward.","Yes","No","breadcrumb"],
+["Button","Initiates an action when clicked, tapped, or activated by keyboard or assistive technology.","Yes","No","button"],
+["Icon button","Initiates an action represented primarily by an icon.","Yes","No","iconbutton"],
+["Link","Navigates to another location or resource when activated.","Yes","No","link"],
+["Label","Identifies or describes another UI object. The user normally reads it.","Yes","No","label"],
+["Text","Presents readable information without accepting input.","Yes","No","text"],
+["Image","Presents visual information. The user may view, select, zoom, drag, or open it.","Yes","No","image"],
+["Icon","A compact graphic that represents an object, action, status, or concept. The user interprets it visually; it is not inherently interactive.","Yes","No","icon"],
+["Avatar","Visually represents a person, organization, or agent and may be selectable.","Yes","No","avatar"],
+["Tag","Displays a keyword, classification, or attribute attached to content; it may also support selection or removal.","Yes","No","tag"],
+["Badge","Displays a compact status, category, or count associated with another object.","Yes","No","badge"],
+["Tooltip","Shows brief explanatory information when an object is hovered, focused, or touched.","Yes","No","tooltip"],
+["Popover","Shows contextual, potentially interactive content anchored to another object.","Yes","No","popover"],
+["Dialog","Temporarily requests information, confirmation, or a decision.","Yes","No","dialog"],
+["Alert","Presents important information requiring attention and possibly acknowledgment.","Yes","No","alert"],
+["Toast / Snackbar","Briefly reports an event or result without normally blocking other interaction.","Yes","No","toast"],
+["Modal overlay","Blocks interaction with the underlying view until the foreground task is completed or dismissed.","Yes","No","modal"],
+["Text field","Accepts a single line of typed, pasted, dictated, or programmatically entered text.","Yes","No","textfield"],
+["Text area","Accepts multiple lines of text and may support scrolling or resizing.","Yes","No","textarea"],
+["Password field","Accepts concealed text, usually for authentication, with an optional reveal action.","Yes","No","password"],
+["Search field","Accepts a query and may display suggestions or filters.","Yes","No","search"],
+["Checkbox","Controls an independent Boolean choice. The user checks or clears it.","Yes","No","checkbox"],
+["Radio button","Selects one value from a mutually exclusive group.","Yes","No","radio"],
+["Switch / Toggle","Changes an option immediately between two states, commonly on and off.","Yes","No","switch"],
+["Dropdown","Lets the user choose one value from a list that opens on demand; it is also commonly called a select or drop-down list.","Yes","No","select"],
+["List box","Displays choices persistently and supports selection of one or more items.","Yes","No","listbox"],
+["Combo box","Combines editable text with a selectable list of values or suggestions.","Yes","No","combo"],
+["Date picker","Accepts or selects a date, commonly through a calendar presentation.","Yes","No","date"],
+["Time picker","Accepts or selects a time, with presentation influenced by locale and platform.","Yes","No","time"],
+["Wheel picker","Lets the user select a value by scrolling one or more rotating columns and aligning the desired item with a selection indicator.","Yes","No","wheel"],
+["Color picker","Selects a color through swatches, sliders, or numeric values.","Yes","No","color"],
+["File picker","Selects files through operating-system or storage-provider facilities.","Yes","Yes","file"],
+["Slider","Selects a value or range by moving one or more handles along a track.","Yes","No","slider"],
+["Spin box / Stepper input","Selects a numeric value by typing or using increment and decrement actions.","Yes","No","stepper"],
+["Rating control","Selects an ordinal rating, commonly through stars or similar repeated marks.","Yes","No","rating"],
+["Progress bar","Shows the known completion proportion of an operation; generally read-only.","Yes","No","progress"],
+["Loader / Spinner","Shows that an operation is active when its exact progress is unknown.","Yes","No","spinner"],
+["Scrollbar","Indicates position in overflowed content and permits scrolling by dragging or selecting its track.","Yes","No","scrollbar"],
+["Separator / Divider","Visually separates groups of content or controls and normally has no direct interaction.","Yes","No","divider"],
+["Table / Data grid","Displays structured data in rows and columns. The user may sort, filter, select, resize, or edit.","Yes","No","table"],
+["List","Presents a sequence of similar items that can be read, selected, opened, reordered, or acted upon.","Yes","No","list"],
+["Tree view","Presents hierarchical data. The user expands, collapses, and selects nodes.","Yes","No","tree"],
+["Pagination control","Moves between discrete pages of content.","Yes","No","pagination"],
+["Carousel","Shows one or several items in a constrained viewport. The user moves or swipes between items.","Yes","No","carousel"],
+["Drag handle","Provides a grab target for moving or reordering an object.","Yes","No","drag"],
+["Resize handle","Provides a drag target for resizing an object or region.","Yes","No","resize"],
+["Canvas / Drawing area","Accepts free-form drawing or graphical manipulation through pointer, touch, stylus, or keyboard.","Yes","No","canvas"],
+["Map","Displays spatial information. The user pans, zooms, selects markers, or requests directions.","Yes","No","map"],
+["Media player","Presents audio or video with playback, seeking, volume, caption, and fullscreen operations.","Yes","No","media"],
+["Camera preview","Displays a live camera image and supports capture or camera-related actions.","Yes","Yes","camera"],
+["Microphone input","Captures audio after the user starts recording and grants permission.","Sometimes","Yes","microphone"],
+["Biometric prompt","Requests fingerprint, face, or another biometric method supported by the device.","Yes","Yes","biometric"],
+["Notification","Reports an event outside or alongside the main application view and may offer actions.","Yes","Yes","notification"],
+];
+const interactionData = [
+["Hover state","A temporary visual or behavioral state shown when a pointing device is positioned over an interactive element.","Yes","Yes","hover","Interaction states"],
+["Focus state","Identifies the element currently prepared to receive keyboard, switch-device, or assistive-technology input.","Yes","No","focus","Interaction states"],
+["Active / Pressed state","Indicates that an element is currently being activated, such as while a pointer button or key is held down.","Yes","No","pressed","Interaction states"],
+["Selected state","Indicates that an item, option, text range, or object is currently chosen.","Yes","No","selection","Interaction states"],
+["Disabled state","Indicates that an element is currently unavailable and cannot be activated or edited.","Yes","No","disabled","Interaction states"],
+["Touch target","The screen area that responds to touch for an interactive element. The user activates it by touching anywhere within that area.","Sometimes","Yes","touch-target","Interaction areas and constraints"],
+["Pointer hit area","The region in which pointer input is interpreted as targeting a particular element, including any invisible interaction padding.","Sometimes","Yes","hit-area","Interaction areas and constraints"],
+["Minimum target size","A usability and accessibility constraint defining the smallest acceptable interactive area for reliable activation.","No","Yes","","Interaction areas and constraints"],
+["Target spacing","A usability constraint defining sufficient separation between adjacent targets to reduce accidental activation.","Sometimes","Yes","target-spacing","Interaction areas and constraints"],
+["Tap","A brief touch and release on a target, normally used to activate or select it.","No","Yes","","Gestures"],
+["Double-tap","Two taps in quick succession, commonly used for zooming or invoking a secondary action.","No","Yes","","Gestures"],
+["Long-press","Touching and holding a target beyond a defined duration, often used to reveal contextual actions or begin selection.","No","Yes","","Gestures"],
+["Swipe","A quick directional touch movement used to navigate, reveal actions, dismiss content, or move between items.","No","Yes","","Gestures"],
+["Pinch","A two-touch gesture in which the distance between contact points changes, normally used to zoom.","No","Yes","","Gestures"],
+["Rotate","A two-touch turning gesture used to rotate an object or view.","No","Yes","","Gestures"],
+["Drag and drop","A compound interaction in which the user presses an object, moves it, and releases it over a valid destination.","Yes","No","drag-drop","Gestures"],
+["Pointer / mouse button press","Occurs when a pointer button is pressed. Left, right, middle, or auxiliary buttons may have different meanings.","No","Yes","","Input events"],
+["Pointer / mouse button release","Occurs when a pressed pointer button is released and may complete a click, selection, or drag operation.","No","Yes","","Input events"],
+["Click","A higher-level activation produced by pressing and releasing a pointer button on a target.","No","Yes","","Input events"],
+["Pointer move","Occurs when a mouse, pen, or other pointer changes position, with or without a button being pressed.","No","Yes","","Input events"],
+["Pointer enter / leave","Occurs when a pointer crosses into or out of an element’s hit area and commonly controls hover behavior.","No","Yes","","Input events"],
+["Wheel / scroll event","Occurs when a mouse wheel, trackpad, or equivalent control requests scrolling or another continuous adjustment.","No","Yes","","Input events"],
+["Touch start / move / end","Low-level events produced when touch contacts begin, move across the surface, or end.","No","Yes","","Input events"],
+["Key down","Occurs when a standard, modifier, navigation, function, or other keyboard key is pressed.","No","Yes","","Input events"],
+["Key up","Occurs when a previously pressed keyboard key is released.","No","Yes","","Input events"],
+["Modifier-key combination","Combines Ctrl, Alt, Shift, or Meta with another key or pointer action to alter its meaning.","No","Yes","","Input events"],
+["Standard character-key input","Produces letters, numbers, punctuation, or other text characters according to the active keyboard layout.","No","Yes","","Input events"],
+["Special-key input","Uses non-character keys such as Enter, Escape, Tab, arrows, Home, End, Delete, or function keys.","No","Yes","","Input events"],
+["Focus event","Occurs when an element gains or loses input focus.","No","No","","Input events"],
+["Input event","Occurs while the user changes the value of an editable element, commonly after each edit.","No","No","","Input events"],
+["Change event","Occurs when an element’s value or selection is committed or otherwise considered changed.","No","No","","Input events"]
+];
+const categoryGroups = {
+  "Input elements": new Set([
+    "Button","Icon button","Text field","Text area","Password field","Checkbox","Radio button",
+    "Switch / Toggle","Dropdown","List box","Combo box","Date picker","Time picker","Wheel picker",
+    "Color picker","File picker","Slider","Spin box / Stepper input","Rating control","Drag handle",
+    "Resize handle","Canvas / Drawing area","Microphone input","Biometric prompt"
+  ]),
+  "Navigational elements": new Set([
+    "Navigation bar","Hamburger Menu","Tab","Tab Bar","Menu","Dropdown Menu","Context menu","Breadcrumb","Link","Search field",
+    "Scrollbar","Tree view","Pagination control","Carousel","Map"
+  ]),
+  "Container elements": new Set([
+    "Window","Screen / View","Panel","Container","Card","Form","Toolbar","Sidebar","Accordion","Popover",
+    "Dialog","Modal overlay"
+  ])
+};
+function categoryOf(name){
+  for(const [category,names] of Object.entries(categoryGroups)) if(names.has(name)) return category;
+  return "Output elements";
+}
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function svg(kind){
+ const open=`<svg class="preview" viewBox="0 0 220 92" role="img" aria-label="${esc(kind)} example" xmlns="http://www.w3.org/2000/svg"><rect width="220" height="92" rx="8" fill="#f8fafc"/>`;
+ const end=`</svg>`, t=(x,y,s,z=11,c="#334155")=>`<text x="${x}" y="${y}" font-family="system-ui,sans-serif" font-size="${z}" fill="${c}">${esc(s)}</text>`;
+ const r=(x,y,w,h,f="#fff",st="#94a3b8",rx=4)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${f}" stroke="${st}"/>`;
+ const l=(x1,y1,x2,y2,c="#94a3b8",w=1)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}"/>`;
+ let b="";
+ if(["window","screen","panel","container","card"].includes(kind)){b=r(18,10,184,72,kind==="container"?"#eff6ff":"#fff"); if(kind==="window")b+=`<rect x="18" y="10" width="184" height="16" rx="4" fill="#dbeafe"/>`+`<circle cx="29" cy="18" r="3" fill="#ef4444"/><circle cx="39" cy="18" r="3" fill="#f59e0b"/><circle cx="49" cy="18" r="3" fill="#22c55e"/>`; if(kind==="screen")b+=`<rect x="18" y="10" width="184" height="14" rx="4" fill="#1e3a8a"/>`+r(28,33,42,38,"#e2e8f0")+r(78,33,114,38,"#fff"); if(kind==="panel")b+=r(29,21,162,49,"#eef2ff","#6366f1")+t(40,41,"Settings panel",12)+r(40,49,70,10,"#fff"); if(kind==="container")b+=r(35,27,58,38,"#fff")+r(103,27,82,38,"#fff")+t(38,20,"Container",10); if(kind==="card")b+=r(36,22,148,50,"#fff","#94a3b8",7)+`<circle cx="57" cy="42" r="11" fill="#bfdbfe"/>`+t(76,39,"Card title",12)+t(76,56,"Supporting text",9,"#64748b");}
+ else if(kind==="form")b=r(33,7,154,78,"#fff","#94a3b8",6)+t(45,23,"Contact form",11)+t(45,38,"Name",8)+r(80,28,93,14)+t(45,57,"Email",8)+r(80,47,93,14)+r(122,67,51,12,"#2563eb","#2563eb",3)+t(134,76,"Submit",7,"#fff");
+ else if(kind==="toolbar")b=r(18,28,184,36,"#e2e8f0")+r(29,36,24,20)+r(60,36,24,20)+r(91,36,24,20)+r(167,36,24,20)+t(36,50,"+",16);
+ else if(kind==="status")b=r(18,30,184,31,"#fff")+`<circle cx="34" cy="46" r="5" fill="#22c55e"/>`+t(45,50,"Ready")+t(161,50,"100%");
+ else if(kind==="nav")b=r(18,26,184,40,"#1e293b","#1e293b")+t(30,50,"Home",11,"#fff")+t(84,50,"Search",11,"#cbd5e1")+t(151,50,"Profile",11,"#cbd5e1");
+ else if(kind==="sidebar")b=r(20,9,180,74,"#fff")+`<rect x="20" y="9" width="61" height="74" rx="4" fill="#e2e8f0"/>`+t(32,29,"Home",10,"#1d4ed8")+t(32,48,"Projects",10)+t(32,67,"Settings",10)+r(94,20,92,10,"#dbeafe","#dbeafe")+r(94,39,76,7,"#e2e8f0","#e2e8f0");
+ else if(kind==="hamburger")b=r(76,15,68,62,"#fff","#64748b",7)+l(92,32,128,32,"#334155",4)+l(92,46,128,46,"#334155",4)+l(92,60,128,60,"#334155",4);
+ else if(kind==="tabs")b=r(20,20,180,55)+`<rect x="20" y="20" width="62" height="25" fill="#dbeafe" stroke="#2563eb"/>`+t(34,37,"General")+t(100,37,"Advanced")+l(30,58,187,58,"#cbd5e1",5);
+ else if(kind==="tabbar")b=r(18,24,184,45,"#fff")+`<rect x="18" y="24" width="61" height="45" fill="#dbeafe"/>`+t(35,43,"⌂",15,"#2563eb")+t(31,59,"Home",8,"#2563eb")+t(98,43,"⌕",15)+t(94,59,"Search",8)+t(161,43,"○",15)+t(157,59,"Profile",8);
+ else if(kind==="accordion")b=r(25,14,170,64)+`<rect x="25" y="14" width="170" height="21" fill="#dbeafe"/>`+t(35,29,"▾  Account")+t(39,51,"Expanded content",10)+l(25,59,195,59)+t(35,73,"›  Security");
+ else if(["menu","context"].includes(kind))b=r(kind==="menu"?45:75,10,110,72,"#fff","#64748b",5)+t(kind==="menu"?57:87,29,"Open")+t(kind==="menu"?57:87,49,"Rename")+t(kind==="menu"?57:87,69,"Delete",11,"#dc2626");
+ else if(kind==="dropdownmenu")b=r(24,9,78,25,"#fff","#64748b",5)+t(36,26,"Actions")+t(84,26,"▾")+r(66,39,126,47,"#fff","#64748b",5)+t(78,56,"Duplicate",10)+t(78,72,"Archive",10);
+ else if(kind==="breadcrumb")b=t(22,49,"Home",12,"#2563eb")+t(58,49,"›")+t(73,49,"Products",12,"#2563eb")+t(129,49,"›")+t(144,49,"Camera",12);
+ else if(kind==="button")b=r(66,27,88,38,"#2563eb","#1d4ed8",6)+t(91,51,"Save",13,"#fff");
+ else if(kind==="iconbutton")b=`<circle cx="110" cy="46" r="23" fill="#dbeafe" stroke="#2563eb"/><path d="M101 46h18M110 37v18" stroke="#2563eb" stroke-width="3"/>`;
+ else if(kind==="link")b=t(65,50,"Open details",14,"#2563eb")+l(65,53,150,53,"#2563eb");
+ else if(kind==="label")b=t(28,31,"Email address",11)+r(28,39,164,28);
+ else if(kind==="text")b=t(27,37,"Welcome to the application",14)+t(27,57,"Read-only information appears here.",10,"#64748b");
+ else if(kind==="image")b=r(48,13,124,66,"#dbeafe")+`<circle cx="142" cy="30" r="8" fill="#fbbf24"/><path d="M53 72l36-32 23 20 16-13 39 25z" fill="#60a5fa"/>`;
+ else if(kind==="icon")b=`<circle cx="110" cy="46" r="29" fill="#dbeafe"/><path d="M110 25l6 13 15 2-11 10 3 15-13-7-13 7 3-15-11-10 15-2z" fill="#2563eb"/>`;
+ else if(kind==="avatar")b=`<circle cx="110" cy="46" r="31" fill="#dbeafe" stroke="#2563eb"/><circle cx="110" cy="36" r="11" fill="#64748b"/><path d="M88 67c3-15 41-15 44 0" fill="#64748b"/>`;
+ else if(kind==="tag")b=r(53,29,114,34,"#e0e7ff","#6366f1",17)+t(72,51,"Accessibility",11,"#4338ca")+`<circle cx="151" cy="46" r="8" fill="#c7d2fe"/><path d="M148 43l6 6m0-6l-6 6" stroke="#4338ca"/>`;
+ else if(kind==="badge")b=r(44,30,120,32)+t(56,51,"Messages")+`<circle cx="169" cy="29" r="13" fill="#dc2626"/><text x="165" y="34" font-family="system-ui" font-size="12" fill="white">3</text>`;
+ else if(kind==="tooltip")b=r(42,44,42,25,"#fff")+t(54,61,"?")+r(72,12,112,27,"#1e293b","#1e293b",5)+t(84,30,"More information",10,"#fff")+`<path d="M94 39l8 8 4-8" fill="#1e293b"/>`;
+ else if(kind==="popover")b=r(24,54,63,24,"#2563eb","#2563eb")+t(39,70,"Details",10,"#fff")+r(75,10,126,54,"#fff","#64748b",6)+t(87,29,"Item details",11)+t(87,47,"Edit or remove",9,"#64748b")+`<path d="M75 48l-10 9 10 3" fill="#fff" stroke="#64748b"/>`;
+ else if(["dialog","modal"].includes(kind)){b=`<rect x="0" y="0" width="220" height="92" rx="8" fill="${kind==="modal"?"#334155":"#eef2f7"}" opacity="${kind==="modal"?".65":"1"}"/>`+r(45,16,130,62,"#fff","#64748b",7)+t(59,36,"Delete item?",13)+t(59,52,"This cannot be undone.",9,"#64748b")+r(106,58,56,14,"#2563eb","#2563eb",3)+t(121,69,"Confirm",8,"#fff");}
+ else if(kind==="alert")b=r(18,24,184,45,"#fff7ed","#f97316",6)+`<path d="M38 35l10 20H28z" fill="#f97316"/>`+t(58,45,"Operation failed",12)+t(58,59,"Try again.",9,"#64748b");
+ else if(kind==="toast")b=r(48,27,145,39,"#1e293b","#1e293b",6)+`<circle cx="66" cy="46" r="9" fill="#22c55e"/>`+t(62,50,"✓",10,"#fff")+t(82,51,"Changes saved",11,"#fff");
+ else if(["textfield","password","search","combo","select","file","date","time"].includes(kind)){const labels={textfield:"Shlomo",password:"••••••••",search:"Search…",combo:"Type or choose",select:"Israel",file:"Choose file",date:"26/07/2026",time:"20:30"};b=r(28,30,164,34,"#fff","#64748b",5)+t(41,52,labels[kind],12,kind==="search"?"#64748b":"#1e293b")+t(169,52,kind==="file"?"…":kind==="date"?"▦":kind==="time"?"◷":kind==="password"?"◉":kind==="search"?"⌕":"▾",12);}
+ else if(kind==="textarea")b=r(28,17,164,59)+t(40,37,"Meeting notes…",11,"#64748b")+t(40,53,"Multiple lines of text",10,"#64748b")+`<path d="M181 70l7-7m-7 2l3-3" stroke="#64748b"/>`;
+ else if(kind==="checkbox")b=r(36,33,22,22,"#2563eb","#2563eb",3)+`<path d="M41 44l5 5 9-12" fill="none" stroke="white" stroke-width="3"/>`+t(70,50,"Remember me",12);
+ else if(kind==="radio")b=`<circle cx="44" cy="37" r="10" fill="white" stroke="#2563eb" stroke-width="2"/><circle cx="44" cy="37" r="5" fill="#2563eb"/><circle cx="44" cy="62" r="10" fill="white" stroke="#94a3b8" stroke-width="2"/>`+t(62,41,"Option A")+t(62,66,"Option B");
+ else if(kind==="switch")b=t(32,51,"Notifications",12)+r(135,31,50,28,"#2563eb","#2563eb",14)+`<circle cx="171" cy="45" r="11" fill="white"/>`;
+ else if(kind==="listbox")b=r(53,10,114,72)+`<rect x="54" y="31" width="112" height="20" fill="#dbeafe"/>`+t(65,26,"Apple")+t(65,45,"Orange")+t(65,66,"Pear");
+ else if(kind==="wheel")b=`<rect x="50" y="8" width="120" height="76" rx="8" fill="#fff" stroke="#94a3b8"/><rect x="51" y="34" width="118" height="24" fill="#dbeafe"/>`+t(87,25,"09",11,"#94a3b8")+t(126,25,"29",11,"#94a3b8")+t(87,51,"10",14,"#1e293b")+t(126,51,"30",14,"#1e293b")+t(87,73,"11",11,"#94a3b8")+t(126,73,"31",11,"#94a3b8")+l(112,12,112,80,"#cbd5e1");
+ else if(kind==="color")b=[0,1,2,3,4].map((n)=>`<circle cx="${58+n*26}" cy="46" r="11" fill="${["#ef4444","#f59e0b","#22c55e","#3b82f6","#8b5cf6"][n]}" ${n===3?'stroke="#0f172a" stroke-width="3"':""}/>`).join("");
+ else if(kind==="slider")b=l(32,47,188,47,"#cbd5e1",7)+l(32,47,126,47,"#2563eb",7)+`<circle cx="126" cy="47" r="12" fill="#fff" stroke="#2563eb" stroke-width="3"/>`;
+ else if(kind==="stepper")b=r(52,28,116,36)+l(86,28,86,64)+l(134,28,134,64)+t(66,52,"−",18)+t(104,52,"10",12)+t(148,52,"+",18);
+ else if(kind==="rating")b=t(48,55,"★ ★ ★ ★ ☆",25,"#f59e0b");
+ else if(kind==="progress")b=r(27,34,166,23,"#e2e8f0","#cbd5e1",11)+`<rect x="28" y="35" width="116" height="21" rx="10" fill="#2563eb"/>`+t(96,51,"70%",10,"#fff");
+ else if(kind==="spinner")b=`<circle cx="110" cy="45" r="25" fill="none" stroke="#dbeafe" stroke-width="8"/><path d="M110 20a25 25 0 0 1 24 18" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round"/>`;
+ else if(kind==="scrollbar")b=r(75,10,70,72,"#fff")+`<rect x="135" y="13" width="7" height="66" rx="3" fill="#e2e8f0"/><rect x="135" y="29" width="7" height="25" rx="3" fill="#64748b"/>`+l(84,27,127,27)+l(84,40,127,40)+l(84,53,127,53)+l(84,66,127,66);
+ else if(kind==="divider")b=t(25,35,"Section one",11)+l(25,47,195,47,"#94a3b8",2)+t(25,66,"Section two",11);
+ else if(kind==="table"){b=r(19,11,182,70)+`<rect x="19" y="11" width="182" height="19" fill="#dbeafe"/>`;[70,145].forEach(x=>b+=l(x,11,x,81));[30,47,64].forEach(y=>b+=l(19,y,201,y));b+=t(28,25,"Name",9)+t(79,25,"Role",9)+t(153,25,"Status",9)+t(28,43,"Ana",9)+t(79,43,"Editor",9)+t(153,43,"Active",9,"#15803d");}
+ else if(kind==="list")b=[0,1,2].map(n=>`<circle cx="40" cy="${27+n*21}" r="4" fill="#2563eb"/>${l(53,27+n*21,181,27+n*21,"#94a3b8",5)}`).join("");
+ else if(kind==="tree")b=t(28,25,"▾  Projects",11)+l(39,31,39,69)+t(49,47,"▾  Website",11)+l(60,52,60,68)+t(70,68,"□  index.html",11);
+ else if(kind==="pagination")b=[1,2,3,4].map((n,i)=>r(48+i*32,31,25,28,n===2?"#2563eb":"#fff",n===2?"#2563eb":"#94a3b8",4)+t(57+i*32,50,String(n),11,n===2?"#fff":"#334155")).join("");
+ else if(kind==="carousel")b=r(21,14,178,64,"#e2e8f0")+r(42,20,136,52,"#bfdbfe","#60a5fa",6)+`<path d="M30 46l8-8m-8 8l8 8M190 46l-8-8m8 8l-8 8" stroke="#334155" stroke-width="3" fill="none"/>`+`<circle cx="102" cy="84" r="3" fill="#94a3b8"/><circle cx="112" cy="84" r="3" fill="#2563eb"/><circle cx="122" cy="84" r="3" fill="#94a3b8"/>`;
+ else if(kind==="drag")b=r(40,24,140,44)+[0,1,2].map(n=>`<circle cx="57" cy="${35+n*11}" r="2" fill="#64748b"/><circle cx="64" cy="${35+n*11}" r="2" fill="#64748b"/>`).join("")+t(80,51,"Drag to reorder",11);
+ else if(kind==="resize")b=r(42,14,136,64)+`<path d="M150 74l24-24m-13 24l13-13m-3 13l3-3" stroke="#2563eb" stroke-width="3"/>`;
+ else if(kind==="canvas")b=r(20,12,180,68,"#fff","#64748b")+`<path d="M40 62c17-37 32 20 49-14s35 27 53-11 30 13 43-7" fill="none" stroke="#8b5cf6" stroke-width="4" stroke-linecap="round"/>`;
+ else if(kind==="map")b=`<path d="M20 18l55-10 70 13 55-10v64l-55 10-70-13-55 10z" fill="#dcfce7" stroke="#94a3b8"/><path d="M75 8v64M145 21v64" stroke="#94a3b8"/><path d="M107 30c0-17 26-17 26 0 0 10-13 24-13 24s-13-14-13-24z" fill="#dc2626"/><circle cx="120" cy="30" r="5" fill="white"/>`;
+ else if(kind==="media")b=r(20,12,180,68,"#0f172a","#0f172a")+`<path d="M91 28l28 17-28 17z" fill="white"/>`+l(31,70,157,70,"#64748b",4)+l(31,70,90,70,"#ef4444",4)+`<circle cx="90" cy="70" r="5" fill="white"/>`+t(169,74,"▣",13,"#fff");
+ else if(kind==="camera")b=r(21,11,178,70,"#dbeafe","#64748b")+`<circle cx="110" cy="45" r="22" fill="#334155"/><circle cx="110" cy="45" r="14" fill="#60a5fa"/><circle cx="181" cy="21" r="5" fill="#ef4444"/>`;
+ else if(kind==="microphone")b=`<rect x="100" y="18" width="20" height="37" rx="10" fill="#2563eb"/><path d="M90 44c0 28 40 28 40 0M110 68v12M95 80h30" fill="none" stroke="#334155" stroke-width="4"/>`;
+ else if(kind==="biometric")b=`<path d="M76 65c-7-51 75-51 68 0M89 69c-8-34 50-34 42 1M102 72c-5-18 21-18 17 1" fill="none" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>`+t(73,84,"Touch sensor",10);
+ else if(kind==="notification")b=r(31,16,158,60,"#fff","#94a3b8",7)+`<circle cx="55" cy="46" r="17" fill="#dbeafe"/><path d="M55 34c-7 0-8 6-8 13l-4 6h24l-4-6c0-7-1-13-8-13z" fill="#2563eb"/>`+t(83,40,"New message",12)+t(83,57,"Open notification",9,"#64748b");
+ else if(kind==="focus")b=t(28,25,"Email",10)+r(27,32,166,34,"#fff","#2563eb",5)+`<rect x="23" y="28" width="174" height="42" rx="8" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="3 3"/>`;
+ else if(kind==="selection")b=t(24,35,"Select this highlighted text.",13)+`<rect x="59" y="22" width="100" height="18" fill="#93c5fd" opacity=".7"/>`+t(24,62,"Selection can also mark items.",10,"#64748b");
+ else if(kind==="hover")b=r(55,27,110,38,"#1d4ed8","#1e40af",6)+t(83,51,"Hovered",13,"#fff")+`<path d="M176 64l-9-25 22 13-9 3 7 12-6 4-7-12z" fill="#fff" stroke="#334155"/>`;
+ else if(kind==="pressed")b=r(62,31,96,34,"#1e40af","#172554",6)+t(87,53,"Pressed",12,"#fff")+`<path d="M110 67v10m-18-14l-7 7m43-7l7 7" stroke="#2563eb" stroke-width="3"/>`;
+ else if(kind==="disabled")b=r(58,29,104,36,"#e2e8f0","#cbd5e1",6)+t(83,52,"Disabled",12,"#94a3b8");
+ else if(kind==="touch-target")b=`<rect x="65" y="11" width="90" height="70" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2" stroke-dasharray="5 4"/>`+r(91,29,38,34,"#2563eb","#2563eb",6)+t(104,51,"+",16,"#fff")+t(161,49,"48 px",9,"#2563eb");
+ else if(kind==="hit-area")b=`<rect x="55" y="16" width="110" height="60" rx="8" fill="#dbeafe" opacity=".6" stroke="#2563eb" stroke-dasharray="4 3"/>`+r(87,30,46,32,"#fff","#64748b",5)+t(100,51,"Edit",10)+t(63,12,"Pointer hit area",9,"#2563eb");
+ else if(kind==="target-spacing")b=`<rect x="37" y="27" width="48" height="40" rx="6" fill="#dbeafe" stroke="#2563eb"/><rect x="135" y="27" width="48" height="40" rx="6" fill="#dbeafe" stroke="#2563eb"/>`+l(88,47,132,47,"#dc2626",2)+t(98,41,"gap",9,"#dc2626");
+ else if(kind==="drag-drop")b=r(24,25,65,42,"#dbeafe","#2563eb",6)+t(39,50,"Item",11)+r(139,17,58,58,"#dcfce7","#16a34a",6)+t(150,49,"Drop",10,"#166534")+`<path d="M91 46c17-21 29-21 44 0" fill="none" stroke="#2563eb" stroke-width="3" stroke-dasharray="5 4"/><path d="M128 39l8 7-9 5" fill="none" stroke="#2563eb" stroke-width="3"/>`;
+ return open+b+end;
+}
+const categories = [
+  ["Input elements","Collect data from users or allow users to trigger actions and change values."],
+  ["Output elements","Present information, results, feedback, progress, or system status to users."],
+  ["Navigational elements","Help users move between product areas, views, locations, or sections of content."],
+  ["Container elements","Group, structure, and organize related content or other UI elements."]
+];
+const tableHeader = `<thead><tr><th>Name</th><th>Description — how the user interfaces with it</th><th>Viewable?</th><th>Device-dependent?</th><th>Example image</th></tr></thead>`;
+document.getElementById("category-sections").innerHTML=categories.map(([category,description])=>{
+ const rows=data.filter(([name])=>categoryOf(name)===category).map(([n,d,v,dep,k])=>
+   `<tr><td>${esc(n)}</td><td>${esc(d)}</td><td class="${v==="No"?"no":"yes"}">${v}</td><td class="${dep==="Yes"?"yes":"no"}">${dep}</td><td>${k?svg(k):'<div class="none">Not applicable</div>'}</td></tr>`
+ ).join("");
+ return `<section><h2>${esc(category)}</h2><p class="category-description">${esc(description)}</p><div class="table-wrap"><table>${tableHeader}<tbody>${rows}</tbody></table></div></section>`;
+}).join("");
+const interactionCategories = [
+  ["Interaction states","Visual or behavioral conditions that communicate an element’s current availability, focus, activation, or selection."],
+  ["Interaction areas and constraints","Hit regions and usability rules that determine where and how reliably an interactive element can be targeted."],
+  ["Gestures","Meaningful movements or contact patterns performed by users and interpreted as higher-level interactions."],
+  ["Input events","Lower-level occurrences generated by pointer, touch, keyboard, focus, or value changes and used to implement interactions."]
+];
+document.getElementById("interaction-sections").innerHTML=interactionCategories.map(([category,description])=>{
+ const rows=interactionData.filter(row=>row[5]===category).map(([n,d,v,dep,k])=>
+   `<tr><td>${esc(n)}</td><td>${esc(d)}</td><td class="${v==="No"?"no":"yes"}">${v}</td><td class="${dep==="Yes"?"yes":"no"}">${dep}</td><td>${k?svg(k):'<div class="none">Not applicable</div>'}</td></tr>`
+ ).join("");
+ return `<section><h2>${esc(category)}</h2><p class="category-description">${esc(description)}</p><div class="table-wrap"><table>${tableHeader}<tbody>${rows}</tbody></table></div></section>`;
+}).join("");
+</script>
+</body>
+</html>
