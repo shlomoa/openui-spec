@@ -100,6 +100,62 @@ Group, structure, and organize related content or other UI elements.
 | Dialog | Temporarily requests information, confirmation, or a decision. | Yes | No | ![Dialog example](images/dialog.svg) |
 | Modal overlay | Blocks interaction with the underlying view until the foreground task is completed or dismissed. | Yes | No | ![Modal overlay example](images/modal-overlay.svg) |
 
+## Layout and structural UI elements/objects
+
+Concrete structural entities that organize, divide, position, or provide spatial context for other UI elements. They may be directly visible, visible only through their effect on child elements, or entirely implicit.
+
+| Name | Description — how the user interfaces with it | Viewable? | Device-dependent? | Example image |
+|---|---|:---:|:---:|---|
+| Grid | Organizes child elements along intersecting rows and columns. Users normally interact with the arranged content rather than with the grid itself. | Sometimes | No | ![Grid example](images/layout-grid.svg) |
+| Pane | A distinct content area within a window or view. Users work with the content in the pane and may scroll, focus, resize, or switch it. | Usually | No | ![Pane example](images/pane.svg) |
+| Rail | A narrow structural strip along an edge, commonly holding navigation, controls, status, or alignment references. Users interact with any controls placed on it. | Sometimes | No | ![Rail example](images/rail.svg) |
+| Stack | Arranges child elements sequentially on one axis, either vertically or horizontally. Users interact with the stacked children rather than the stack itself. | Sometimes | No | ![Stack example](images/stack.svg) |
+| Scaffold | Defines the top-level structure of a screen, including stable regions such as header, body, navigation, and action areas. Users experience its organization but rarely operate the scaffold directly. | Sometimes | No | ![Scaffold example](images/scaffold.svg) |
+| Region | A semantically or functionally distinct area of an interface, such as a header, main content area, complementary area, or footer. Users navigate to or interact with its contents. | Sometimes | No | ![Region example](images/region.svg) |
+| Splitter | A movable boundary between adjacent panes. Users drag it to redistribute the available space. | Yes | No | ![Splitter example](images/splitter.svg) |
+
+# UI layout mechanisms/definitions
+
+Framework-independent rules and relationships that determine how UI elements are positioned, sized, spaced, grouped, and adapted. These are layout concepts rather than UI elements; their example images illustrate their visible effects.
+
+## Layout rules and relationships
+
+Relationships and algorithms that transform available space and structural constraints into an arrangement of UI elements.
+
+| Name | Description — how the user interfaces with it | Viewable? | Device-dependent? | Example image |
+|---|---|:---:|:---:|---|
+| Containment | Defines which UI object owns, bounds, clips, or provides layout context for another object. Users experience the resulting grouping and boundary. | Through its effect | No | ![Containment example](images/containment.svg) |
+| Flow | Determines the sequential direction and placement of elements as space is consumed, such as horizontal, vertical, or document flow. | Through its effect | No | ![Flow example](images/flow.svg) |
+| Alignment | Positions elements relative to a shared edge, center line, baseline, track, or alignment subject. | Through its effect | No | ![Alignment example](images/alignment.svg) |
+| Anchoring | Keeps an element attached to a specified edge, corner, point, or related object when its layout context changes. | Through its effect | No | ![Anchoring example](images/anchoring.svg) |
+| Sizing | Determines element dimensions through fixed, intrinsic, proportional, minimum, maximum, or available-space constraints. | Through its effect | No | ![Sizing example](images/sizing.svg) |
+| Spacing | Defines internal padding, external margins, gaps, and distribution of empty space between elements. | Through its effect | No | ![Spacing example](images/spacing.svg) |
+| Wrapping | Moves items onto additional rows or columns when they do not fit on the current line or track. | Through its effect | No | ![Wrapping example](images/wrapping.svg) |
+| Responsive reflow | Rearranges, resizes, reveals, hides, or reprioritizes elements when available space or presentation conditions change. | Through its effect | No | ![Responsive reflow example](images/responsive-reflow.svg) |
+
+# UI presentation and style definitions
+
+Framework-independent rules that determine the visual presentation of UI elements without defining the elements themselves or where they are laid out. These definitions control how an interface communicates identity, hierarchy, emphasis, state, and change. Their example images illustrate the visible effect of each rule.
+
+## Visual appearance and presentation rules
+
+Visual properties and coordinated systems that determine how UI elements look and how their appearance changes.
+
+| Name | Description — how it affects the user’s experience | Viewable? | Device-dependent? | Example image |
+|---|---|:---:|:---:|---|
+| Color | Defines foreground, background, border, accent, and semantic colors. Users rely on the resulting contrast, emphasis, grouping, and meaning. | Through its effect | No | ![Color effect](images/style-color.svg) |
+| Typography | Defines font family, size, weight, line height, letter spacing, and text treatment. It affects readability, hierarchy, tone, and density. | Through its effect | No | ![Typography effect](images/style-typography.svg) |
+| Shape | Defines geometry, corner treatment, outlines, clipping, and silhouettes. It helps users distinguish roles, grouping, and affordances. | Through its effect | No | ![Shape effect](images/style-shape.svg) |
+| Border | Defines a boundary’s width, pattern, radius, and color. It separates, groups, emphasizes, or indicates the state of an element. | Through its effect | No | ![Border effect](images/style-border.svg) |
+| Shadow / Elevation | Uses shadows or tonal layering to communicate depth, overlap, prominence, or separation from a background. | Through its effect | No | ![Shadow and elevation effect](images/style-shadow-elevation.svg) |
+| Opacity | Defines the transparency of an element or layer. It can communicate de-emphasis, disabled state, layering, or gradual appearance. | Through its effect | No | ![Opacity effect](images/style-opacity.svg) |
+| Iconography | Defines the visual language of icons, including stroke, fill, size, optical weight, metaphor, and consistency. Users interpret actions and concepts through that language. | Through its effect | No | ![Iconography effect](images/style-iconography.svg) |
+| Spacing tokens | Defines a named, reusable scale of spacing values. The tokens produce consistent padding, margins, and gaps, while the resulting spacing remains a layout effect. | Through its effect | No | ![Spacing-token effect](images/style-spacing-tokens.svg) |
+| Visual states | Defines appearance changes for states such as hover, focus, pressed, selected, disabled, validation error, or success. It visually communicates the interaction state defined elsewhere in this taxonomy. | Through its effect | No | ![Visual-state effect](images/style-visual-states.svg) |
+| Theme | Defines a coordinated set of color, typography, shape, elevation, and related presentation values. Switching themes changes the visual system without changing the UI’s structure. | Through its effect | No | ![Theme effect](images/style-theme.svg) |
+| Animation / Transition | Defines how visual properties change over time between states or arrangements. It communicates continuity, causality, feedback, and spatial relationships. | Through its effect | Sometimes | ![Animation and transition effect](images/style-animation-transition.svg) |
+| Visibility | Defines whether and how an element is visually presented, including visible, hidden, collapsed, revealed, or visually concealed states. | Through its effect | No | ![Visibility effect](images/style-visibility.svg) |
+
 # UI interaction definitions
 
 Framework-independent definitions for the states, areas, gestures, and events through which users interact with UI elements. These are interaction concepts rather than UI elements.
