@@ -7,6 +7,9 @@ document (`id: "root"`, `version`, `type`, `children`) that exercises the
 attributes its scope describes, using Angular-Material-style `[uses]` and
 `(produces)` / `(behaves)` attribute keys for illustration only — the format is
 framework-independent.
+Vocabulary and aliases used by examples are defined in the
+[spec glossary](../README.md#glossary); examples demonstrate usage and should not
+redefine shared terms.
 
 The folder mirrors [`../scopes`](../scopes/scope.md): each leaf scope has a
 `<object>.example.json`, and each parent scope has a composite `scope.example.json`

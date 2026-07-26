@@ -10,6 +10,8 @@ The OpenUI specification is a technology-independent contract for Web UI
 frameworks. The roles of `input.json`, `spec/openui.schema.json`, and root
 `openui.json` are defined once in
 [`spec/README.md` § Specification artifacts: grammar vs. catalog](../spec/README.md#specification-artifacts-grammar-vs-catalog).
+Shared vocabulary, aliases, and cross-framework term meanings are defined once in
+[`spec/README.md` § Glossary](../spec/README.md#glossary).
 
 The hand-authored prose under `spec/scopes/` is the specification source of truth
 for each object's purpose, attributes, and child model. The generated catalog

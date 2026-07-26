@@ -15,7 +15,9 @@ Root tests fall into two layers plus CI integration:
 
 Root validation treats the spec as authoritative and validates the prose,
 schema, catalog, examples, and published docs without redefining their
-contracts.
+contracts. Shared terminology is defined in
+[`spec/README.md` § Glossary](../spec/README.md#glossary), so tests and docs
+should reference that vocabulary instead of duplicating definitions.
 
 ## Layer 1 — Spec contract tests (`tests/`, pytest)
 

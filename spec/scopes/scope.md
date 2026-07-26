@@ -1,6 +1,10 @@
 # Scopes
 
 The `scopes` folder is the hierarchical source for OpenUI scope objects. Each top-level folder is a scope, and each child object is either another scope folder or a snake_case `*.scope.md` leaf file.
+Shared vocabulary, aliases, and canonical meanings for terms such as object,
+element, control, widget, view, container, behavior, table, grid, and button are
+defined in the [spec glossary](../README.md#glossary). Scope files specialize
+those terms for concrete object contracts rather than redefining them.
 
 ## Top-level scopes
 

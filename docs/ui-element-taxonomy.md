@@ -2,6 +2,11 @@
 
 An **abstract UI element type** describes an element by its purpose and behavior, independent of framework, platform, visual style, or implementation technology.
 
+Canonical OpenUI vocabulary, aliases, and detailed term definitions live in
+[`spec/README.md` § Glossary](../spec/README.md#glossary). This taxonomy groups
+and compares terms by primary purpose; it should link to the glossary rather
+than introduce conflicting definitions.
+
 There is no universally standardized “complete” taxonomy. The following model aims to cover the element types used across web, desktop, mobile, touch, TV, embedded, voice-assisted, and mixed-interface applications.
 
 ```mermaid
