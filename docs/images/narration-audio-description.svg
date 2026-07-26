@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="140" viewBox="0 0 260 140" role="img" aria-labelledby="title desc">
+  <title id="title">Narration and audio description example</title>
+  <desc id="desc">A content card with a speaker emitting sound waves and a narration status label.</desc>
+  <rect width="260" height="140" rx="10" fill="#eef2f7"/>
+  <rect x="14" y="15" width="232" height="110" rx="8" fill="#fff" stroke="#94a3b8"/>
+  <rect x="28" y="30" width="76" height="59" rx="6" fill="#dbeafe"/>
+  <circle cx="52" cy="52" r="9" fill="#60a5fa"/>
+  <path d="M34 78l16-15 12 10 12-8 17 13z" fill="#2563eb"/>
+  <rect x="121" y="31" width="87" height="10" rx="3" fill="#cbd5e1"/>
+  <rect x="121" y="50" width="105" height="7" rx="3" fill="#e2e8f0"/>
+  <rect x="121" y="65" width="91" height="7" rx="3" fill="#e2e8f0"/>
+  <path d="M35 105h8l9-8v22l-9-8h-8z" fill="#1d4ed8"/>
+  <path d="M58 101c6 5 6 11 0 16M64 97c10 8 10 18 0 25" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/>
+  <rect x="87" y="99" width="130" height="20" rx="10" fill="#dbeafe"/>
+  <text x="101" y="113" fill="#1e3a8a" font-family="Arial,sans-serif" font-size="10" font-weight="700">Narration playing</text>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="140" viewBox="0 0 260 140" role="img" aria-labelledby="title desc">
+  <title id="title">Navigation drawer example</title>
+  <desc id="desc">An application view with an open left navigation drawer containing destinations.</desc>
+  <rect width="260" height="140" rx="10" fill="#eef2f7"/>
+  <rect x="8" y="8" width="244" height="124" rx="7" fill="#fff" stroke="#94a3b8"/>
+  <rect x="8" y="8" width="92" height="124" rx="7" fill="#172554"/>
+  <text x="23" y="31" fill="#fff" font-family="Arial,sans-serif" font-size="12" font-weight="700">MENU</text>
+  <rect x="17" y="43" width="74" height="25" rx="5" fill="#2563eb"/>
+  <circle cx="28" cy="55.5" r="4" fill="#fff"/>
+  <text x="39" y="60" fill="#fff" font-family="Arial,sans-serif" font-size="10">Home</text>
+  <circle cx="28" cy="82" r="4" fill="#93c5fd"/>
+  <text x="39" y="86" fill="#dbeafe" font-family="Arial,sans-serif" font-size="10">Projects</text>
+  <circle cx="28" cy="107" r="4" fill="#93c5fd"/>
+  <text x="39" y="111" fill="#dbeafe" font-family="Arial,sans-serif" font-size="10">Settings</text>
+  <rect x="116" y="27" width="112" height="13" rx="3" fill="#cbd5e1"/>
+  <rect x="116" y="51" width="86" height="8" rx="3" fill="#e2e8f0"/>
+  <rect x="116" y="68" width="112" height="48" rx="5" fill="#f1f5f9"/>
+</svg>

@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Generic UI Elements, Layout, Presentation, and Interaction Definitions</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+  <style type="text/css">:root {
+color-scheme: light;
+--ink: #182230;
+--muted: #526071;
+--line: #cbd5e1;
+--header: #eaf1f8;
+--surface: #ffffff;
+--background: #f4f7fb;
+}
+* { box-sizing: border-box; }
+body {
+max-width: 1500px;
+margin: 0 auto;
+padding: 28px;
+background: var(--background);
+color: var(--ink);
+font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+h1 {
+margin: 52px 0 8px;
+padding-top: 28px;
+border-top: 2px solid var(--line);
+font-size: 28px;
+}
+h1:first-of-type {
+margin-top: 0;
+padding-top: 0;
+border-top: 0;
+}
+h2 {
+margin: 34px 0 6px;
+font-size: 22px;
+}
+p {
+color: var(--muted);
+}
+table {
+display: table;
+width: 100%;
+min-width: 1050px;
+margin: 12px 0 26px;
+overflow: hidden;
+border: 1px solid var(--line);
+border-collapse: separate;
+border-spacing: 0;
+border-radius: 12px;
+background: var(--surface);
+box-shadow: 0 8px 24px #0f172a12;
+}
+thead {
+background: var(--header);
+}
+th,
+td {
+padding: 12px;
+border-right: 1px solid #dde4ec;
+border-bottom: 1px solid #dde4ec;
+text-align: left;
+vertical-align: middle;
+}
+th:last-child,
+td:last-child {
+border-right: 0;
+}
+tbody tr:last-child td {
+border-bottom: 0;
+}
+tbody tr:hover {
+background: #f8fbff;
+}
+th:nth-child(1),
+td:nth-child(1) {
+width: 190px;
+font-weight: 650;
+}
+th:nth-child(2),
+td:nth-child(2) {
+min-width: 430px;
+}
+th:nth-child(3),
+th:nth-child(4),
+td:nth-child(3),
+td:nth-child(4) {
+width: 120px;
+text-align: center;
+}
+th:nth-child(5),
+td:nth-child(5) {
+width: 250px;
+}
+td img {
+display: block;
+width: 220px;
+height: 92px;
+border: 1px solid var(--line);
+border-radius: 8px;
+background: #f8fafc;
+}
+em {
+color: var(--muted);
+}
+@media (max-width: 1100px) {
+body { overflow-x: auto; }
+}
+@media print {
+body {
+max-width: none;
+padding: 8mm;
+background: #fff;
+}
+table {
+box-shadow: none;
+}
+tr {
+break-inside: avoid;
+}
+}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Generic UI Elements, Layout, Presentation, and
+Interaction Definitions</h1>
+</header>
+<h1 id="generic-ui-elements">Generic UI Elements</h1>
+<p>Framework-independent UI element terminology. Each element is
+classified by its primary purpose. “Device-dependent” means that the
+element inherently requires a particular hardware or host-platform
+capability, not merely that its layout adapts to a device.</p>
+<h2 id="input-elements">Input elements</h2>
+<p>Collect data from users or allow users to trigger actions and change
+values.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description — how the user interfaces with it</th>
+<th style="text-align: center;">Viewable?</th>
+<th style="text-align: center;">Device-dependent?</th>
+<th>Example image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Button</td>
+<td>Initiates an action when clicked, tapped, or activated by keyboard
+or assistive technology.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImJ1dHRvbiBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iNjYiIHk9IjI3IiB3aWR0aD0iODgiIGhlaWdodD0iMzgiIHJ4PSI2IiBmaWxsPSIjMjU2M2ViIiBzdHJva2U9IiMxZDRlZDgiLz48dGV4dCB4PSI5MSIgeT0iNTEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZmlsbD0iI2ZmZiI+U2F2ZTwvdGV4dD48L3N2Zz4=" alt="Button example" /></td>
+</tr>
+<tr class="even">
+<td>Icon button</td>
+<td>Initiates an action represented primarily by an icon.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Imljb25idXR0b24gZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxjaXJjbGUgY3g9IjExMCIgY3k9IjQ2IiByPSIyMyIgZmlsbD0iI2RiZWFmZSIgc3Ryb2tlPSIjMjU2M2ViIi8+PHBhdGggZD0iTTEwMSA0NmgxOE0xMTAgMzd2MTgiIHN0cm9rZT0iIzI1NjNlYiIgc3Ryb2tlLXdpZHRoPSIzIi8+PC9zdmc+" alt="Icon button example" /></td>
+</tr>
+<tr class="odd">
+<td>Text field</td>
+<td>Accepts a single line of typed, pasted, dictated, or
+programmatically entered text.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRleHRmaWVsZCBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMjgiIHk9IjMwIiB3aWR0aD0iMTY0IiBoZWlnaHQ9IjM0IiByeD0iNSIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjNjQ3NDhiIi8+PHRleHQgeD0iNDEiIHk9IjUyIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMxZTI5M2IiPlNobG9tbzwvdGV4dD48dGV4dCB4PSIxNjkiIHk9IjUyIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMzMzQxNTUiPuKWvjwvdGV4dD48L3N2Zz4=" alt="Text field example" /></td>
+</tr>
+<tr class="even">
+<td>Text area</td>
+<td>Accepts multiple lines of text and may support scrolling or
+resizing.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRleHRhcmVhIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSIyOCIgeT0iMTciIHdpZHRoPSIxNjQiIGhlaWdodD0iNTkiIHJ4PSI0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM5NGEzYjgiLz48dGV4dCB4PSI0MCIgeT0iMzciIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzY0NzQ4YiI+TWVldGluZyBub3Rlc+KApjwvdGV4dD48dGV4dCB4PSI0MCIgeT0iNTMiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzY0NzQ4YiI+TXVsdGlwbGUgbGluZXMgb2YgdGV4dDwvdGV4dD48cGF0aCBkPSJNMTgxIDcwbDctN20tNyAybDMtMyIgc3Ryb2tlPSIjNjQ3NDhiIi8+PC9zdmc+" alt="Text area example" /></td>
+</tr>
+<tr class="odd">
+<td>Password field</td>
+<td>Accepts concealed text, usually for authentication, with an optional
+reveal action.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InBhc3N3b3JkIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSIyOCIgeT0iMzAiIHdpZHRoPSIxNjQiIGhlaWdodD0iMzQiIHJ4PSI1IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM2NDc0OGIiLz48dGV4dCB4PSI0MSIgeT0iNTIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzFlMjkzYiI+4oCi4oCi4oCi4oCi4oCi4oCi4oCi4oCiPC90ZXh0Pjx0ZXh0IHg9IjE2OSIgeT0iNTIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzMzNDE1NSI+4peJPC90ZXh0Pjwvc3ZnPg==" alt="Password field example" /></td>
+</tr>
+<tr class="even">
+<td>Checkbox</td>
+<td>Controls an independent Boolean choice. The user checks or clears
+it.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImNoZWNrYm94IGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSIzNiIgeT0iMzMiIHdpZHRoPSIyMiIgaGVpZ2h0PSIyMiIgcng9IjMiIGZpbGw9IiMyNTYzZWIiIHN0cm9rZT0iIzI1NjNlYiIvPjxwYXRoIGQ9Ik00MSA0NGw1IDUgOS0xMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHRleHQgeD0iNzAiIHk9IjUwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMzMzQxNTUiPlJlbWVtYmVyIG1lPC90ZXh0Pjwvc3ZnPg==" alt="Checkbox example" /></td>
+</tr>
+<tr class="odd">
+<td>Radio button</td>
+<td>Selects one value from a mutually exclusive group.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InJhZGlvIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48Y2lyY2xlIGN4PSI0NCIgY3k9IjM3IiByPSIxMCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzI1NjNlYiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iNDQiIGN5PSIzNyIgcj0iNSIgZmlsbD0iIzI1NjNlYiIvPjxjaXJjbGUgY3g9IjQ0IiBjeT0iNjIiIHI9IjEwIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjOTRhM2I4IiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI2MiIgeT0iNDEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzMzNDE1NSI+T3B0aW9uIEE8L3RleHQ+PHRleHQgeD0iNjIiIHk9IjY2IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMzMzQxNTUiPk9wdGlvbiBCPC90ZXh0Pjwvc3ZnPg==" alt="Radio button example" /></td>
+</tr>
+<tr class="even">
+<td>Switch / Toggle</td>
+<td>Changes an option immediately between two states, commonly on and
+off.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InN3aXRjaCBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHRleHQgeD0iMzIiIHk9IjUxIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMzMzQxNTUiPk5vdGlmaWNhdGlvbnM8L3RleHQ+PHJlY3QgeD0iMTM1IiB5PSIzMSIgd2lkdGg9IjUwIiBoZWlnaHQ9IjI4IiByeD0iMTQiIGZpbGw9IiMyNTYzZWIiIHN0cm9rZT0iIzI1NjNlYiIvPjxjaXJjbGUgY3g9IjE3MSIgY3k9IjQ1IiByPSIxMSIgZmlsbD0id2hpdGUiLz48L3N2Zz4=" alt="Switch / Toggle example" /></td>
+</tr>
+<tr class="odd">
+<td>Dropdown</td>
+<td>Lets the user choose one value from a list that opens on demand; it
+is also commonly called a select or drop-down list.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InNlbGVjdCBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMjgiIHk9IjMwIiB3aWR0aD0iMTY0IiBoZWlnaHQ9IjM0IiByeD0iNSIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjNjQ3NDhiIi8+PHRleHQgeD0iNDEiIHk9IjUyIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMxZTI5M2IiPklzcmFlbDwvdGV4dD48dGV4dCB4PSIxNjkiIHk9IjUyIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMzMzQxNTUiPuKWvjwvdGV4dD48L3N2Zz4=" alt="Dropdown example" /></td>
+</tr>
+<tr class="even">
+<td>List box</td>
+<td>Displays choices persistently and supports selection of one or more
+items.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Imxpc3Rib3ggZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjUzIiB5PSIxMCIgd2lkdGg9IjExNCIgaGVpZ2h0PSI3MiIgcng9IjQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzk0YTNiOCIvPjxyZWN0IHg9IjU0IiB5PSIzMSIgd2lkdGg9IjExMiIgaGVpZ2h0PSIyMCIgZmlsbD0iI2RiZWFmZSIvPjx0ZXh0IHg9IjY1IiB5PSIyNiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij5BcHBsZTwvdGV4dD48dGV4dCB4PSI2NSIgeT0iNDUiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzMzNDE1NSI+T3JhbmdlPC90ZXh0Pjx0ZXh0IHg9IjY1IiB5PSI2NiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij5QZWFyPC90ZXh0Pjwvc3ZnPg==" alt="List box example" /></td>
+</tr>
+<tr class="odd">
+<td>Combo box</td>
+<td>Combines editable text with a selectable list of values or
+suggestions.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImNvbWJvIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSIyOCIgeT0iMzAiIHdpZHRoPSIxNjQiIGhlaWdodD0iMzQiIHJ4PSI1IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM2NDc0OGIiLz48dGV4dCB4PSI0MSIgeT0iNTIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzFlMjkzYiI+VHlwZSBvciBjaG9vc2U8L3RleHQ+PHRleHQgeD0iMTY5IiB5PSI1MiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjMzM0MTU1Ij7ilr48L3RleHQ+PC9zdmc+" alt="Combo box example" /></td>
+</tr>
+<tr class="even">
+<td>Date picker</td>
+<td>Accepts or selects a date, commonly through a calendar
+presentation.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImRhdGUgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjI4IiB5PSIzMCIgd2lkdGg9IjE2NCIgaGVpZ2h0PSIzNCIgcng9IjUiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzY0NzQ4YiIvPjx0ZXh0IHg9IjQxIiB5PSI1MiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjMWUyOTNiIj4yNi8wNy8yMDI2PC90ZXh0Pjx0ZXh0IHg9IjE2OSIgeT0iNTIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzMzNDE1NSI+4pamPC90ZXh0Pjwvc3ZnPg==" alt="Date picker example" /></td>
+</tr>
+<tr class="odd">
+<td>Time picker</td>
+<td>Accepts or selects a time, with presentation influenced by locale
+and platform.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRpbWUgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjI4IiB5PSIzMCIgd2lkdGg9IjE2NCIgaGVpZ2h0PSIzNCIgcng9IjUiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzY0NzQ4YiIvPjx0ZXh0IHg9IjQxIiB5PSI1MiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjMWUyOTNiIj4yMDozMDwvdGV4dD48dGV4dCB4PSIxNjkiIHk9IjUyIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMzMzQxNTUiPuKXtzwvdGV4dD48L3N2Zz4=" alt="Time picker example" /></td>
+</tr>
+<tr class="even">
+<td>Wheel picker</td>
+<td>Lets the user select a value by scrolling one or more rotating
+columns and aligning the desired item with a selection indicator.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IndoZWVsIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSI1MCIgeT0iOCIgd2lkdGg9IjEyMCIgaGVpZ2h0PSI3NiIgcng9IjgiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzk0YTNiOCIvPjxyZWN0IHg9IjUxIiB5PSIzNCIgd2lkdGg9IjExOCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2RiZWFmZSIvPjx0ZXh0IHg9Ijg3IiB5PSIyNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjOTRhM2I4Ij4wOTwvdGV4dD48dGV4dCB4PSIxMjYiIHk9IjI1IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiM5NGEzYjgiPjI5PC90ZXh0Pjx0ZXh0IHg9Ijg3IiB5PSI1MSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMWUyOTNiIj4xMDwvdGV4dD48dGV4dCB4PSIxMjYiIHk9IjUxIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMxZTI5M2IiPjMwPC90ZXh0Pjx0ZXh0IHg9Ijg3IiB5PSI3MyIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjOTRhM2I4Ij4xMTwvdGV4dD48dGV4dCB4PSIxMjYiIHk9IjczIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiM5NGEzYjgiPjMxPC90ZXh0PjxsaW5lIHgxPSIxMTIiIHkxPSIxMiIgeDI9IjExMiIgeTI9IjgwIiBzdHJva2U9IiNjYmQ1ZTEiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg==" alt="Wheel picker example" /></td>
+</tr>
+<tr class="odd">
+<td>Color picker</td>
+<td>Selects a color through swatches, sliders, or numeric values.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImNvbG9yIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48Y2lyY2xlIGN4PSI1OCIgY3k9IjQ2IiByPSIxMSIgZmlsbD0iI2VmNDQ0NCIgLz48Y2lyY2xlIGN4PSI4NCIgY3k9IjQ2IiByPSIxMSIgZmlsbD0iI2Y1OWUwYiIgLz48Y2lyY2xlIGN4PSIxMTAiIGN5PSI0NiIgcj0iMTEiIGZpbGw9IiMyMmM1NWUiIC8+PGNpcmNsZSBjeD0iMTM2IiBjeT0iNDYiIHI9IjExIiBmaWxsPSIjM2I4MmY2IiBzdHJva2U9IiMwZjE3MmEiIHN0cm9rZS13aWR0aD0iMyIvPjxjaXJjbGUgY3g9IjE2MiIgY3k9IjQ2IiByPSIxMSIgZmlsbD0iIzhiNWNmNiIgLz48L3N2Zz4=" alt="Color picker example" /></td>
+</tr>
+<tr class="even">
+<td>File picker</td>
+<td>Selects files through operating-system or storage-provider
+facilities.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImZpbGUgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjI4IiB5PSIzMCIgd2lkdGg9IjE2NCIgaGVpZ2h0PSIzNCIgcng9IjUiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzY0NzQ4YiIvPjx0ZXh0IHg9IjQxIiB5PSI1MiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjMWUyOTNiIj5DaG9vc2UgZmlsZTwvdGV4dD48dGV4dCB4PSIxNjkiIHk9IjUyIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMzMzQxNTUiPuKApjwvdGV4dD48L3N2Zz4=" alt="File picker example" /></td>
+</tr>
+<tr class="odd">
+<td>Slider</td>
+<td>Selects a value or range by moving one or more handles along a
+track.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InNsaWRlciBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PGxpbmUgeDE9IjMyIiB5MT0iNDciIHgyPSIxODgiIHkyPSI0NyIgc3Ryb2tlPSIjY2JkNWUxIiBzdHJva2Utd2lkdGg9IjciLz48bGluZSB4MT0iMzIiIHkxPSI0NyIgeDI9IjEyNiIgeTI9IjQ3IiBzdHJva2U9IiMyNTYzZWIiIHN0cm9rZS13aWR0aD0iNyIvPjxjaXJjbGUgY3g9IjEyNiIgY3k9IjQ3IiByPSIxMiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=" alt="Slider example" /></td>
+</tr>
+<tr class="even">
+<td>Spin box / Stepper input</td>
+<td>Selects a numeric value by typing or using increment and decrement
+actions.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InN0ZXBwZXIgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjUyIiB5PSIyOCIgd2lkdGg9IjExNiIgaGVpZ2h0PSIzNiIgcng9IjQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzk0YTNiOCIvPjxsaW5lIHgxPSI4NiIgeTE9IjI4IiB4Mj0iODYiIHkyPSI2NCIgc3Ryb2tlPSIjOTRhM2I4IiBzdHJva2Utd2lkdGg9IjEiLz48bGluZSB4MT0iMTM0IiB5MT0iMjgiIHgyPSIxMzQiIHkyPSI2NCIgc3Ryb2tlPSIjOTRhM2I4IiBzdHJva2Utd2lkdGg9IjEiLz48dGV4dCB4PSI2NiIgeT0iNTIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzMzNDE1NSI+4oiSPC90ZXh0Pjx0ZXh0IHg9IjEwNCIgeT0iNTIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzMzNDE1NSI+MTA8L3RleHQ+PHRleHQgeD0iMTQ4IiB5PSI1MiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSIjMzM0MTU1Ij4rPC90ZXh0Pjwvc3ZnPg==" alt="Spin box / Stepper input example" /></td>
+</tr>
+<tr class="odd">
+<td>Rating control</td>
+<td>Selects an ordinal rating, commonly through stars or similar
+repeated marks.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InJhdGluZyBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHRleHQgeD0iNDgiIHk9IjU1IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjUiIGZpbGw9IiNmNTllMGIiPuKYhSDimIUg4piFIOKYhSDimIY8L3RleHQ+PC9zdmc+" alt="Rating control example" /></td>
+</tr>
+<tr class="even">
+<td>Drag handle</td>
+<td>Provides a grab target for moving or reordering an object.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImRyYWcgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjQwIiB5PSIyNCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI0NCIgcng9IjQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzk0YTNiOCIvPjxjaXJjbGUgY3g9IjU3IiBjeT0iMzUiIHI9IjIiIGZpbGw9IiM2NDc0OGIiLz48Y2lyY2xlIGN4PSI2NCIgY3k9IjM1IiByPSIyIiBmaWxsPSIjNjQ3NDhiIi8+PGNpcmNsZSBjeD0iNTciIGN5PSI0NiIgcj0iMiIgZmlsbD0iIzY0NzQ4YiIvPjxjaXJjbGUgY3g9IjY0IiBjeT0iNDYiIHI9IjIiIGZpbGw9IiM2NDc0OGIiLz48Y2lyY2xlIGN4PSI1NyIgY3k9IjU3IiByPSIyIiBmaWxsPSIjNjQ3NDhiIi8+PGNpcmNsZSBjeD0iNjQiIGN5PSI1NyIgcj0iMiIgZmlsbD0iIzY0NzQ4YiIvPjx0ZXh0IHg9IjgwIiB5PSI1MSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij5EcmFnIHRvIHJlb3JkZXI8L3RleHQ+PC9zdmc+" alt="Drag handle example" /></td>
+</tr>
+<tr class="odd">
+<td>Resize handle</td>
+<td>Provides a drag target for resizing an object or region.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InJlc2l6ZSBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iNDIiIHk9IjE0IiB3aWR0aD0iMTM2IiBoZWlnaHQ9IjY0IiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHBhdGggZD0iTTE1MCA3NGwyNC0yNG0tMTMgMjRsMTMtMTNtLTMgMTNsMy0zIiBzdHJva2U9IiMyNTYzZWIiIHN0cm9rZS13aWR0aD0iMyIvPjwvc3ZnPg==" alt="Resize handle example" /></td>
+</tr>
+<tr class="even">
+<td>Canvas / Drawing area</td>
+<td>Accepts free-form drawing or graphical manipulation through pointer,
+touch, stylus, or keyboard.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImNhbnZhcyBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMjAiIHk9IjEyIiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjY4IiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjNjQ3NDhiIi8+PHBhdGggZD0iTTQwIDYyYzE3LTM3IDMyIDIwIDQ5LTE0czM1IDI3IDUzLTExIDMwIDEzIDQzLTciIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzhiNWNmNiIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=" alt="Canvas / Drawing area example" /></td>
+</tr>
+<tr class="odd">
+<td>Microphone input</td>
+<td>Captures audio after the user starts recording and grants
+permission.</td>
+<td style="text-align: center;">Sometimes</td>
+<td style="text-align: center;">Yes</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Im1pY3JvcGhvbmUgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjEwMCIgeT0iMTgiIHdpZHRoPSIyMCIgaGVpZ2h0PSIzNyIgcng9IjEwIiBmaWxsPSIjMjU2M2ViIi8+PHBhdGggZD0iTTkwIDQ0YzAgMjggNDAgMjggNDAgME0xMTAgNjh2MTJNOTUgODBoMzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzNDE1NSIgc3Ryb2tlLXdpZHRoPSI0Ii8+PC9zdmc+" alt="Microphone input example" /></td>
+</tr>
+<tr class="even">
+<td>Biometric prompt</td>
+<td>Requests fingerprint, face, or another biometric method supported by
+the device.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImJpb21ldHJpYyBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHBhdGggZD0iTTc2IDY1Yy03LTUxIDc1LTUxIDY4IDBNODkgNjljLTgtMzQgNTAtMzQgNDIgMU0xMDIgNzJjLTUtMTggMjEtMTggMTcgMSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjx0ZXh0IHg9IjczIiB5PSI4NCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjMzM0MTU1Ij5Ub3VjaCBzZW5zb3I8L3RleHQ+PC9zdmc+" alt="Biometric prompt example" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="output-elements">Output elements</h2>
+<p>Present information, results, feedback, progress, or system status to
+users.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description — how the user interfaces with it</th>
+<th style="text-align: center;">Viewable?</th>
+<th style="text-align: center;">Device-dependent?</th>
+<th>Example image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Status bar</td>
+<td>A region displaying state such as readiness, connectivity, or zoom.
+It is generally read-only.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InN0YXR1cyBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMTgiIHk9IjMwIiB3aWR0aD0iMTg0IiBoZWlnaHQ9IjMxIiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PGNpcmNsZSBjeD0iMzQiIGN5PSI0NiIgcj0iNSIgZmlsbD0iIzIyYzU1ZSIvPjx0ZXh0IHg9IjQ1IiB5PSI1MCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij5SZWFkeTwvdGV4dD48dGV4dCB4PSIxNjEiIHk9IjUwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMzMzQxNTUiPjEwMCU8L3RleHQ+PC9zdmc+" alt="Status bar example" /></td>
+</tr>
+<tr class="even">
+<td>Label</td>
+<td>Identifies or describes another UI object. The user normally reads
+it.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImxhYmVsIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48dGV4dCB4PSIyOCIgeT0iMzEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzMzNDE1NSI+RW1haWwgYWRkcmVzczwvdGV4dD48cmVjdCB4PSIyOCIgeT0iMzkiIHdpZHRoPSIxNjQiIGhlaWdodD0iMjgiIHJ4PSI0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM5NGEzYjgiLz48L3N2Zz4=" alt="Label example" /></td>
+</tr>
+<tr class="odd">
+<td>Text</td>
+<td>Presents readable information without accepting input.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRleHQgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjx0ZXh0IHg9IjI3IiB5PSIzNyIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMzM0MTU1Ij5XZWxjb21lIHRvIHRoZSBhcHBsaWNhdGlvbjwvdGV4dD48dGV4dCB4PSIyNyIgeT0iNTciIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzY0NzQ4YiI+UmVhZC1vbmx5IGluZm9ybWF0aW9uIGFwcGVhcnMgaGVyZS48L3RleHQ+PC9zdmc+" alt="Text example" /></td>
+</tr>
+<tr class="even">
+<td>Image</td>
+<td>Presents visual information. The user may view, select, zoom, drag,
+or open it.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImltYWdlIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSI0OCIgeT0iMTMiIHdpZHRoPSIxMjQiIGhlaWdodD0iNjYiIHJ4PSI0IiBmaWxsPSIjZGJlYWZlIiBzdHJva2U9IiM5NGEzYjgiLz48Y2lyY2xlIGN4PSIxNDIiIGN5PSIzMCIgcj0iOCIgZmlsbD0iI2ZiYmYyNCIvPjxwYXRoIGQ9Ik01MyA3MmwzNi0zMiAyMyAyMCAxNi0xMyAzOSAyNXoiIGZpbGw9IiM2MGE1ZmEiLz48L3N2Zz4=" alt="Image example" /></td>
+</tr>
+<tr class="odd">
+<td>Icon</td>
+<td>A compact graphic that represents an object, action, status, or
+concept. The user interprets it visually; it is not inherently
+interactive.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Imljb24gZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxjaXJjbGUgY3g9IjExMCIgY3k9IjQ2IiByPSIyOSIgZmlsbD0iI2RiZWFmZSIvPjxwYXRoIGQ9Ik0xMTAgMjVsNiAxMyAxNSAyLTExIDEwIDMgMTUtMTMtNy0xMyA3IDMtMTUtMTEtMTAgMTUtMnoiIGZpbGw9IiMyNTYzZWIiLz48L3N2Zz4=" alt="Icon example" /></td>
+</tr>
+<tr class="even">
+<td>Avatar</td>
+<td>Visually represents a person, organization, or agent and may be
+selectable.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImF2YXRhciBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PGNpcmNsZSBjeD0iMTEwIiBjeT0iNDYiIHI9IjMxIiBmaWxsPSIjZGJlYWZlIiBzdHJva2U9IiMyNTYzZWIiLz48Y2lyY2xlIGN4PSIxMTAiIGN5PSIzNiIgcj0iMTEiIGZpbGw9IiM2NDc0OGIiLz48cGF0aCBkPSJNODggNjdjMy0xNSA0MS0xNSA0NCAwIiBmaWxsPSIjNjQ3NDhiIi8+PC9zdmc+" alt="Avatar example" /></td>
+</tr>
+<tr class="odd">
+<td>Tag</td>
+<td>Displays a keyword, classification, or attribute attached to
+content; it may also support selection or removal.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRhZyBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iNTMiIHk9IjI5IiB3aWR0aD0iMTE0IiBoZWlnaHQ9IjM0IiByeD0iMTciIGZpbGw9IiNlMGU3ZmYiIHN0cm9rZT0iIzYzNjZmMSIvPjx0ZXh0IHg9IjcyIiB5PSI1MSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjNDMzOGNhIj5BY2Nlc3NpYmlsaXR5PC90ZXh0PjxjaXJjbGUgY3g9IjE1MSIgY3k9IjQ2IiByPSI4IiBmaWxsPSIjYzdkMmZlIi8+PHBhdGggZD0iTTE0OCA0M2w2IDZtMC02bC02IDYiIHN0cm9rZT0iIzQzMzhjYSIvPjwvc3ZnPg==" alt="Tag example" /></td>
+</tr>
+<tr class="even">
+<td>Badge</td>
+<td>Displays a compact status, category, or count associated with
+another object.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImJhZGdlIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSI0NCIgeT0iMzAiIHdpZHRoPSIxMjAiIGhlaWdodD0iMzIiIHJ4PSI0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM5NGEzYjgiLz48dGV4dCB4PSI1NiIgeT0iNTEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzMzNDE1NSI+TWVzc2FnZXM8L3RleHQ+PGNpcmNsZSBjeD0iMTY5IiBjeT0iMjkiIHI9IjEzIiBmaWxsPSIjZGMyNjI2Ii8+PHRleHQgeD0iMTY1IiB5PSIzNCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSIgZm9udC1zaXplPSIxMiIgZmlsbD0id2hpdGUiPjM8L3RleHQ+PC9zdmc+" alt="Badge example" /></td>
+</tr>
+<tr class="odd">
+<td>Tooltip</td>
+<td>Shows brief explanatory information when an object is hovered,
+focused, or touched.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRvb2x0aXAgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjQyIiB5PSI0NCIgd2lkdGg9IjQyIiBoZWlnaHQ9IjI1IiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHRleHQgeD0iNTQiIHk9IjYxIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMzMzQxNTUiPj88L3RleHQ+PHJlY3QgeD0iNzIiIHk9IjEyIiB3aWR0aD0iMTEyIiBoZWlnaHQ9IjI3IiByeD0iNSIgZmlsbD0iIzFlMjkzYiIgc3Ryb2tlPSIjMWUyOTNiIi8+PHRleHQgeD0iODQiIHk9IjMwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiNmZmYiPk1vcmUgaW5mb3JtYXRpb248L3RleHQ+PHBhdGggZD0iTTk0IDM5bDggOCA0LTgiIGZpbGw9IiMxZTI5M2IiLz48L3N2Zz4=" alt="Tooltip example" /></td>
+</tr>
+<tr class="even">
+<td>Alert</td>
+<td>Presents important information requiring attention and possibly
+acknowledgment.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImFsZXJ0IGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSIxOCIgeT0iMjQiIHdpZHRoPSIxODQiIGhlaWdodD0iNDUiIHJ4PSI2IiBmaWxsPSIjZmZmN2VkIiBzdHJva2U9IiNmOTczMTYiLz48cGF0aCBkPSJNMzggMzVsMTAgMjBIMjh6IiBmaWxsPSIjZjk3MzE2Ii8+PHRleHQgeD0iNTgiIHk9IjQ1IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMzMzQxNTUiPk9wZXJhdGlvbiBmYWlsZWQ8L3RleHQ+PHRleHQgeD0iNTgiIHk9IjU5IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzY0NzQ4YiI+VHJ5IGFnYWluLjwvdGV4dD48L3N2Zz4=" alt="Alert example" /></td>
+</tr>
+<tr class="odd">
+<td>Toast / Snackbar</td>
+<td>Briefly reports an event or result without normally blocking other
+interaction.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRvYXN0IGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSI0OCIgeT0iMjciIHdpZHRoPSIxNDUiIGhlaWdodD0iMzkiIHJ4PSI2IiBmaWxsPSIjMWUyOTNiIiBzdHJva2U9IiMxZTI5M2IiLz48Y2lyY2xlIGN4PSI2NiIgY3k9IjQ2IiByPSI5IiBmaWxsPSIjMjJjNTVlIi8+PHRleHQgeD0iNjIiIHk9IjUwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiNmZmYiPuKckzwvdGV4dD48dGV4dCB4PSI4MiIgeT0iNTEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iI2ZmZiI+Q2hhbmdlcyBzYXZlZDwvdGV4dD48L3N2Zz4=" alt="Toast / Snackbar example" /></td>
+</tr>
+<tr class="even">
+<td>Progress bar</td>
+<td>Shows the known completion proportion of an operation; generally
+read-only.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InByb2dyZXNzIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSIyNyIgeT0iMzQiIHdpZHRoPSIxNjYiIGhlaWdodD0iMjMiIHJ4PSIxMSIgZmlsbD0iI2UyZThmMCIgc3Ryb2tlPSIjY2JkNWUxIi8+PHJlY3QgeD0iMjgiIHk9IjM1IiB3aWR0aD0iMTE2IiBoZWlnaHQ9IjIxIiByeD0iMTAiIGZpbGw9IiMyNTYzZWIiLz48dGV4dCB4PSI5NiIgeT0iNTEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iI2ZmZiI+NzAlPC90ZXh0Pjwvc3ZnPg==" alt="Progress bar example" /></td>
+</tr>
+<tr class="odd">
+<td>Loader / Spinner</td>
+<td>Shows that an operation is active when its exact progress is
+unknown.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InNwaW5uZXIgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxjaXJjbGUgY3g9IjExMCIgY3k9IjQ1IiByPSIyNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZGJlYWZlIiBzdHJva2Utd2lkdGg9IjgiLz48cGF0aCBkPSJNMTEwIDIwYTI1IDI1IDAgMCAxIDI0IDE4IiBmaWxsPSJub25lIiBzdHJva2U9IiMyNTYzZWIiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+" alt="Loader / Spinner example" /></td>
+</tr>
+<tr class="even">
+<td>Separator / Divider</td>
+<td>Visually separates groups of content or controls and normally has no
+direct interaction.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImRpdmlkZXIgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjx0ZXh0IHg9IjI1IiB5PSIzNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij5TZWN0aW9uIG9uZTwvdGV4dD48bGluZSB4MT0iMjUiIHkxPSI0NyIgeDI9IjE5NSIgeTI9IjQ3IiBzdHJva2U9IiM5NGEzYjgiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjI1IiB5PSI2NiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij5TZWN0aW9uIHR3bzwvdGV4dD48L3N2Zz4=" alt="Separator / Divider example" /></td>
+</tr>
+<tr class="odd">
+<td>Table / Data grid</td>
+<td>Displays structured data in rows and columns. The user may sort,
+filter, select, resize, or edit.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRhYmxlIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSIxOSIgeT0iMTEiIHdpZHRoPSIxODIiIGhlaWdodD0iNzAiIHJ4PSI0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM5NGEzYjgiLz48cmVjdCB4PSIxOSIgeT0iMTEiIHdpZHRoPSIxODIiIGhlaWdodD0iMTkiIGZpbGw9IiNkYmVhZmUiLz48bGluZSB4MT0iNzAiIHkxPSIxMSIgeDI9IjcwIiB5Mj0iODEiIHN0cm9rZT0iIzk0YTNiOCIgc3Ryb2tlLXdpZHRoPSIxIi8+PGxpbmUgeDE9IjE0NSIgeTE9IjExIiB4Mj0iMTQ1IiB5Mj0iODEiIHN0cm9rZT0iIzk0YTNiOCIgc3Ryb2tlLXdpZHRoPSIxIi8+PGxpbmUgeDE9IjE5IiB5MT0iMzAiIHgyPSIyMDEiIHkyPSIzMCIgc3Ryb2tlPSIjOTRhM2I4IiBzdHJva2Utd2lkdGg9IjEiLz48bGluZSB4MT0iMTkiIHkxPSI0NyIgeDI9IjIwMSIgeTI9IjQ3IiBzdHJva2U9IiM5NGEzYjgiIHN0cm9rZS13aWR0aD0iMSIvPjxsaW5lIHgxPSIxOSIgeTE9IjY0IiB4Mj0iMjAxIiB5Mj0iNjQiIHN0cm9rZT0iIzk0YTNiOCIgc3Ryb2tlLXdpZHRoPSIxIi8+PHRleHQgeD0iMjgiIHk9IjI1IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzMzNDE1NSI+TmFtZTwvdGV4dD48dGV4dCB4PSI3OSIgeT0iMjUiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSI5IiBmaWxsPSIjMzM0MTU1Ij5Sb2xlPC90ZXh0Pjx0ZXh0IHg9IjE1MyIgeT0iMjUiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSI5IiBmaWxsPSIjMzM0MTU1Ij5TdGF0dXM8L3RleHQ+PHRleHQgeD0iMjgiIHk9IjQzIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzMzNDE1NSI+QW5hPC90ZXh0Pjx0ZXh0IHg9Ijc5IiB5PSI0MyIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjkiIGZpbGw9IiMzMzQxNTUiPkVkaXRvcjwvdGV4dD48dGV4dCB4PSIxNTMiIHk9IjQzIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzE1ODAzZCI+QWN0aXZlPC90ZXh0Pjwvc3ZnPg==" alt="Table / Data grid example" /></td>
+</tr>
+<tr class="even">
+<td>List</td>
+<td>Presents a sequence of similar items that can be read, selected,
+opened, reordered, or acted upon.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Imxpc3QgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxjaXJjbGUgY3g9IjQwIiBjeT0iMjciIHI9IjQiIGZpbGw9IiMyNTYzZWIiLz48bGluZSB4MT0iNTMiIHkxPSIyNyIgeDI9IjE4MSIgeTI9IjI3IiBzdHJva2U9IiM5NGEzYjgiIHN0cm9rZS13aWR0aD0iNSIvPjxjaXJjbGUgY3g9IjQwIiBjeT0iNDgiIHI9IjQiIGZpbGw9IiMyNTYzZWIiLz48bGluZSB4MT0iNTMiIHkxPSI0OCIgeDI9IjE4MSIgeTI9IjQ4IiBzdHJva2U9IiM5NGEzYjgiIHN0cm9rZS13aWR0aD0iNSIvPjxjaXJjbGUgY3g9IjQwIiBjeT0iNjkiIHI9IjQiIGZpbGw9IiMyNTYzZWIiLz48bGluZSB4MT0iNTMiIHkxPSI2OSIgeDI9IjE4MSIgeTI9IjY5IiBzdHJva2U9IiM5NGEzYjgiIHN0cm9rZS13aWR0aD0iNSIvPjwvc3ZnPg==" alt="List example" /></td>
+</tr>
+<tr class="odd">
+<td>Media player</td>
+<td>Presents audio or video with playback, seeking, volume, caption, and
+fullscreen operations.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Im1lZGlhIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSIyMCIgeT0iMTIiIHdpZHRoPSIxODAiIGhlaWdodD0iNjgiIHJ4PSI0IiBmaWxsPSIjMGYxNzJhIiBzdHJva2U9IiMwZjE3MmEiLz48cGF0aCBkPSJNOTEgMjhsMjggMTctMjggMTd6IiBmaWxsPSJ3aGl0ZSIvPjxsaW5lIHgxPSIzMSIgeTE9IjcwIiB4Mj0iMTU3IiB5Mj0iNzAiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSI0Ii8+PGxpbmUgeDE9IjMxIiB5MT0iNzAiIHgyPSI5MCIgeTI9IjcwIiBzdHJva2U9IiNlZjQ0NDQiIHN0cm9rZS13aWR0aD0iNCIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iNzAiIHI9IjUiIGZpbGw9IndoaXRlIi8+PHRleHQgeD0iMTY5IiB5PSI3NCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmaWxsPSIjZmZmIj7ilqM8L3RleHQ+PC9zdmc+" alt="Media player example" /></td>
+</tr>
+<tr class="even">
+<td>Camera preview</td>
+<td>Displays a live camera image and supports capture or camera-related
+actions.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImNhbWVyYSBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMjEiIHk9IjExIiB3aWR0aD0iMTc4IiBoZWlnaHQ9IjcwIiByeD0iNCIgZmlsbD0iI2RiZWFmZSIgc3Ryb2tlPSIjNjQ3NDhiIi8+PGNpcmNsZSBjeD0iMTEwIiBjeT0iNDUiIHI9IjIyIiBmaWxsPSIjMzM0MTU1Ii8+PGNpcmNsZSBjeD0iMTEwIiBjeT0iNDUiIHI9IjE0IiBmaWxsPSIjNjBhNWZhIi8+PGNpcmNsZSBjeD0iMTgxIiBjeT0iMjEiIHI9IjUiIGZpbGw9IiNlZjQ0NDQiLz48L3N2Zz4=" alt="Camera preview example" /></td>
+</tr>
+<tr class="odd">
+<td>Notification</td>
+<td>Reports an event outside or alongside the main application view and
+may offer actions.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Im5vdGlmaWNhdGlvbiBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMzEiIHk9IjE2IiB3aWR0aD0iMTU4IiBoZWlnaHQ9IjYwIiByeD0iNyIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PGNpcmNsZSBjeD0iNTUiIGN5PSI0NiIgcj0iMTciIGZpbGw9IiNkYmVhZmUiLz48cGF0aCBkPSJNNTUgMzRjLTcgMC04IDYtOCAxM2wtNCA2aDI0bC00LTZjMC03LTEtMTMtOC0xM3oiIGZpbGw9IiMyNTYzZWIiLz48dGV4dCB4PSI4MyIgeT0iNDAiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzMzNDE1NSI+TmV3IG1lc3NhZ2U8L3RleHQ+PHRleHQgeD0iODMiIHk9IjU3IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzY0NzQ4YiI+T3BlbiBub3RpZmljYXRpb248L3RleHQ+PC9zdmc+" alt="Notification example" /></td>
+</tr>
+<tr class="even">
+<td>Narration / Audio Description</td>
+<td>Presents text, interface state, or visual information as spoken
+audio. The user listens to it and may use associated controls to start,
+pause, stop, or configure the narration.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iMTQwIiB2aWV3Qm94PSIwIDAgMjYwIDE0MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InRpdGxlIGRlc2MiPgogIDx0aXRsZSBpZD0idGl0bGUiPk5hcnJhdGlvbiBhbmQgYXVkaW8gZGVzY3JpcHRpb24gZXhhbXBsZTwvdGl0bGU+CiAgPGRlc2MgaWQ9ImRlc2MiPkEgY29udGVudCBjYXJkIHdpdGggYSBzcGVha2VyIGVtaXR0aW5nIHNvdW5kIHdhdmVzIGFuZCBhIG5hcnJhdGlvbiBzdGF0dXMgbGFiZWwuPC9kZXNjPgogIDxyZWN0IHdpZHRoPSIyNjAiIGhlaWdodD0iMTQwIiByeD0iMTAiIGZpbGw9IiNlZWYyZjciLz4KICA8cmVjdCB4PSIxNCIgeT0iMTUiIHdpZHRoPSIyMzIiIGhlaWdodD0iMTEwIiByeD0iOCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+CiAgPHJlY3QgeD0iMjgiIHk9IjMwIiB3aWR0aD0iNzYiIGhlaWdodD0iNTkiIHJ4PSI2IiBmaWxsPSIjZGJlYWZlIi8+CiAgPGNpcmNsZSBjeD0iNTIiIGN5PSI1MiIgcj0iOSIgZmlsbD0iIzYwYTVmYSIvPgogIDxwYXRoIGQ9Ik0zNCA3OGwxNi0xNSAxMiAxMCAxMi04IDE3IDEzeiIgZmlsbD0iIzI1NjNlYiIvPgogIDxyZWN0IHg9IjEyMSIgeT0iMzEiIHdpZHRoPSI4NyIgaGVpZ2h0PSIxMCIgcng9IjMiIGZpbGw9IiNjYmQ1ZTEiLz4KICA8cmVjdCB4PSIxMjEiIHk9IjUwIiB3aWR0aD0iMTA1IiBoZWlnaHQ9IjciIHJ4PSIzIiBmaWxsPSIjZTJlOGYwIi8+CiAgPHJlY3QgeD0iMTIxIiB5PSI2NSIgd2lkdGg9IjkxIiBoZWlnaHQ9IjciIHJ4PSIzIiBmaWxsPSIjZTJlOGYwIi8+CiAgPHBhdGggZD0iTTM1IDEwNWg4bDktOHYyMmwtOS04aC04eiIgZmlsbD0iIzFkNGVkOCIvPgogIDxwYXRoIGQ9Ik01OCAxMDFjNiA1IDYgMTEgMCAxNk02NCA5N2MxMCA4IDEwIDE4IDAgMjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzI1NjNlYiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8cmVjdCB4PSI4NyIgeT0iOTkiIHdpZHRoPSIxMzAiIGhlaWdodD0iMjAiIHJ4PSIxMCIgZmlsbD0iI2RiZWFmZSIvPgogIDx0ZXh0IHg9IjEwMSIgeT0iMTEzIiBmaWxsPSIjMWUzYThhIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZm9udC13ZWlnaHQ9IjcwMCI+TmFycmF0aW9uIHBsYXlpbmc8L3RleHQ+Cjwvc3ZnPgo=" alt="Narration / Audio Description example" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="navigational-elements">Navigational elements</h2>
+<p>Help users move between product areas, views, locations, or sections
+of content.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description — how the user interfaces with it</th>
+<th style="text-align: center;">Viewable?</th>
+<th style="text-align: center;">Device-dependent?</th>
+<th>Example image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Navigation bar</td>
+<td>Provides access to primary application destinations. The user
+selects a destination.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Im5hdiBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMTgiIHk9IjI2IiB3aWR0aD0iMTg0IiBoZWlnaHQ9IjQwIiByeD0iNCIgZmlsbD0iIzFlMjkzYiIgc3Ryb2tlPSIjMWUyOTNiIi8+PHRleHQgeD0iMzAiIHk9IjUwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiNmZmYiPkhvbWU8L3RleHQ+PHRleHQgeD0iODQiIHk9IjUwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiNjYmQ1ZTEiPlNlYXJjaDwvdGV4dD48dGV4dCB4PSIxNTEiIHk9IjUwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiNjYmQ1ZTEiPlByb2ZpbGU8L3RleHQ+PC9zdmc+" alt="Navigation bar example" /></td>
+</tr>
+<tr class="even">
+<td>Navigation Drawer</td>
+<td>An edge-attached panel containing navigation destinations. The user
+opens it, selects a destination, and may dismiss it; it may also remain
+persistently visible.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iMTQwIiB2aWV3Qm94PSIwIDAgMjYwIDE0MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InRpdGxlIGRlc2MiPgogIDx0aXRsZSBpZD0idGl0bGUiPk5hdmlnYXRpb24gZHJhd2VyIGV4YW1wbGU8L3RpdGxlPgogIDxkZXNjIGlkPSJkZXNjIj5BbiBhcHBsaWNhdGlvbiB2aWV3IHdpdGggYW4gb3BlbiBsZWZ0IG5hdmlnYXRpb24gZHJhd2VyIGNvbnRhaW5pbmcgZGVzdGluYXRpb25zLjwvZGVzYz4KICA8cmVjdCB3aWR0aD0iMjYwIiBoZWlnaHQ9IjE0MCIgcng9IjEwIiBmaWxsPSIjZWVmMmY3Ii8+CiAgPHJlY3QgeD0iOCIgeT0iOCIgd2lkdGg9IjI0NCIgaGVpZ2h0PSIxMjQiIHJ4PSI3IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM5NGEzYjgiLz4KICA8cmVjdCB4PSI4IiB5PSI4IiB3aWR0aD0iOTIiIGhlaWdodD0iMTI0IiByeD0iNyIgZmlsbD0iIzE3MjU1NCIvPgogIDx0ZXh0IHg9IjIzIiB5PSIzMSIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSI3MDAiPk1FTlU8L3RleHQ+CiAgPHJlY3QgeD0iMTciIHk9IjQzIiB3aWR0aD0iNzQiIGhlaWdodD0iMjUiIHJ4PSI1IiBmaWxsPSIjMjU2M2ViIi8+CiAgPGNpcmNsZSBjeD0iMjgiIGN5PSI1NS41IiByPSI0IiBmaWxsPSIjZmZmIi8+CiAgPHRleHQgeD0iMzkiIHk9IjYwIiBmaWxsPSIjZmZmIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCI+SG9tZTwvdGV4dD4KICA8Y2lyY2xlIGN4PSIyOCIgY3k9IjgyIiByPSI0IiBmaWxsPSIjOTNjNWZkIi8+CiAgPHRleHQgeD0iMzkiIHk9Ijg2IiBmaWxsPSIjZGJlYWZlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCI+UHJvamVjdHM8L3RleHQ+CiAgPGNpcmNsZSBjeD0iMjgiIGN5PSIxMDciIHI9IjQiIGZpbGw9IiM5M2M1ZmQiLz4KICA8dGV4dCB4PSIzOSIgeT0iMTExIiBmaWxsPSIjZGJlYWZlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCI+U2V0dGluZ3M8L3RleHQ+CiAgPHJlY3QgeD0iMTE2IiB5PSIyNyIgd2lkdGg9IjExMiIgaGVpZ2h0PSIxMyIgcng9IjMiIGZpbGw9IiNjYmQ1ZTEiLz4KICA8cmVjdCB4PSIxMTYiIHk9IjUxIiB3aWR0aD0iODYiIGhlaWdodD0iOCIgcng9IjMiIGZpbGw9IiNlMmU4ZjAiLz4KICA8cmVjdCB4PSIxMTYiIHk9IjY4IiB3aWR0aD0iMTEyIiBoZWlnaHQ9IjQ4IiByeD0iNSIgZmlsbD0iI2YxZjVmOSIvPgo8L3N2Zz4K" alt="Navigation Drawer example" /></td>
+</tr>
+<tr class="odd">
+<td>Navigation Rail</td>
+<td>A narrow, usually persistent vertical strip containing primary
+destinations. The user selects an icon or labeled destination to switch
+views.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iMTQwIiB2aWV3Qm94PSIwIDAgMjYwIDE0MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InRpdGxlIGRlc2MiPgogIDx0aXRsZSBpZD0idGl0bGUiPk5hdmlnYXRpb24gcmFpbCBleGFtcGxlPC90aXRsZT4KICA8ZGVzYyBpZD0iZGVzYyI+QSBuYXJyb3cgcGVyc2lzdGVudCB2ZXJ0aWNhbCBuYXZpZ2F0aW9uIHN0cmlwIHdpdGggZGVzdGluYXRpb24gaWNvbnMgYW5kIGxhYmVscy48L2Rlc2M+CiAgPHJlY3Qgd2lkdGg9IjI2MCIgaGVpZ2h0PSIxNDAiIHJ4PSIxMCIgZmlsbD0iI2VlZjJmNyIvPgogIDxyZWN0IHg9IjgiIHk9IjgiIHdpZHRoPSIyNDQiIGhlaWdodD0iMTI0IiByeD0iNyIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+CiAgPHJlY3QgeD0iOCIgeT0iOCIgd2lkdGg9IjYyIiBoZWlnaHQ9IjEyNCIgcng9IjciIGZpbGw9IiNlZmY2ZmYiLz4KICA8cmVjdCB4PSIxNiIgeT0iMTkiIHdpZHRoPSI0NiIgaGVpZ2h0PSIzMSIgcng9IjE0IiBmaWxsPSIjYmZkYmZlIi8+CiAgPHBhdGggZD0iTTMyIDM2bDctNyA3IDd2OEgzMnoiIGZpbGw9IiMxZDRlZDgiLz4KICA8dGV4dCB4PSIyNCIgeT0iNjEiIGZpbGw9IiMxZTNhOGEiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjkiPkhvbWU8L3RleHQ+CiAgPGNpcmNsZSBjeD0iMzkiIGN5PSI3OSIgcj0iNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjQ3NDhiIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSIyMiIgeT0iOTYiIGZpbGw9IiM0NzU1NjkiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjkiPlNlYXJjaDwvdGV4dD4KICA8Y2lyY2xlIGN4PSIzOSIgY3k9IjExMSIgcj0iNiIgZmlsbD0iIzk0YTNiOCIvPgogIDxyZWN0IHg9Ijg5IiB5PSIyNyIgd2lkdGg9IjEzMSIgaGVpZ2h0PSIxMyIgcng9IjMiIGZpbGw9IiNjYmQ1ZTEiLz4KICA8cmVjdCB4PSI4OSIgeT0iNTMiIHdpZHRoPSIxMDMiIGhlaWdodD0iOCIgcng9IjMiIGZpbGw9IiNlMmU4ZjAiLz4KICA8cmVjdCB4PSI4OSIgeT0iNzIiIHdpZHRoPSIxNDAiIGhlaWdodD0iNDQiIHJ4PSI1IiBmaWxsPSIjZjFmNWY5Ii8+Cjwvc3ZnPgo=" alt="Navigation Rail example" /></td>
+</tr>
+<tr class="even">
+<td>Hamburger Menu</td>
+<td>A compact menu trigger, usually shown as three horizontal lines. The
+user activates it to reveal navigation or commands.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImhhbWJ1cmdlciBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iNzYiIHk9IjE1IiB3aWR0aD0iNjgiIGhlaWdodD0iNjIiIHJ4PSI3IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM2NDc0OGIiLz48bGluZSB4MT0iOTIiIHkxPSIzMiIgeDI9IjEyOCIgeTI9IjMyIiBzdHJva2U9IiMzMzQxNTUiIHN0cm9rZS13aWR0aD0iNCIvPjxsaW5lIHgxPSI5MiIgeTE9IjQ2IiB4Mj0iMTI4IiB5Mj0iNDYiIHN0cm9rZT0iIzMzNDE1NSIgc3Ryb2tlLXdpZHRoPSI0Ii8+PGxpbmUgeDE9IjkyIiB5MT0iNjAiIHgyPSIxMjgiIHkyPSI2MCIgc3Ryb2tlPSIjMzM0MTU1IiBzdHJva2Utd2lkdGg9IjQiLz48L3N2Zz4=" alt="Hamburger Menu example" /></td>
+</tr>
+<tr class="odd">
+<td>Tab</td>
+<td>Selects one of several related content panels within the same
+context.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRhYnMgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjIwIiB5PSIyMCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSI1NSIgcng9IjQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzk0YTNiOCIvPjxyZWN0IHg9IjIwIiB5PSIyMCIgd2lkdGg9IjYyIiBoZWlnaHQ9IjI1IiBmaWxsPSIjZGJlYWZlIiBzdHJva2U9IiMyNTYzZWIiLz48dGV4dCB4PSIzNCIgeT0iMzciIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzMzNDE1NSI+R2VuZXJhbDwvdGV4dD48dGV4dCB4PSIxMDAiIHk9IjM3IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMzMzQxNTUiPkFkdmFuY2VkPC90ZXh0PjxsaW5lIHgxPSIzMCIgeTE9IjU4IiB4Mj0iMTg3IiB5Mj0iNTgiIHN0cm9rZT0iI2NiZDVlMSIgc3Ryb2tlLXdpZHRoPSI1Ii8+PC9zdmc+" alt="Tab example" /></td>
+</tr>
+<tr class="even">
+<td>Tab Bar</td>
+<td>A persistent row or column of tabs used to switch among peer views
+or primary destinations.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRhYmJhciBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMTgiIHk9IjI0IiB3aWR0aD0iMTg0IiBoZWlnaHQ9IjQ1IiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHJlY3QgeD0iMTgiIHk9IjI0IiB3aWR0aD0iNjEiIGhlaWdodD0iNDUiIGZpbGw9IiNkYmVhZmUiLz48dGV4dCB4PSIzNSIgeT0iNDMiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzI1NjNlYiI+4oyCPC90ZXh0Pjx0ZXh0IHg9IjMxIiB5PSI1OSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjgiIGZpbGw9IiMyNTYzZWIiPkhvbWU8L3RleHQ+PHRleHQgeD0iOTgiIHk9IjQzIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMzMzQxNTUiPuKMlTwvdGV4dD48dGV4dCB4PSI5NCIgeT0iNTkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSI4IiBmaWxsPSIjMzM0MTU1Ij5TZWFyY2g8L3RleHQ+PHRleHQgeD0iMTYxIiB5PSI0MyIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjE1IiBmaWxsPSIjMzM0MTU1Ij7il4s8L3RleHQ+PHRleHQgeD0iMTU3IiB5PSI1OSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjgiIGZpbGw9IiMzMzQxNTUiPlByb2ZpbGU8L3RleHQ+PC9zdmc+" alt="Tab Bar example" /></td>
+</tr>
+<tr class="odd">
+<td>Menu</td>
+<td>Presents commands or destinations. The user opens it and selects an
+item.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Im1lbnUgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjQ1IiB5PSIxMCIgd2lkdGg9IjExMCIgaGVpZ2h0PSI3MiIgcng9IjUiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzY0NzQ4YiIvPjx0ZXh0IHg9IjU3IiB5PSIyOSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij5PcGVuPC90ZXh0Pjx0ZXh0IHg9IjU3IiB5PSI0OSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij5SZW5hbWU8L3RleHQ+PHRleHQgeD0iNTciIHk9IjY5IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiNkYzI2MjYiPkRlbGV0ZTwvdGV4dD48L3N2Zz4=" alt="Menu example" /></td>
+</tr>
+<tr class="even">
+<td>Dropdown Menu</td>
+<td>A menu that opens below or beside its trigger and presents commands
+or navigation choices.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImRyb3Bkb3dubWVudSBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMjQiIHk9IjkiIHdpZHRoPSI3OCIgaGVpZ2h0PSIyNSIgcng9IjUiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzY0NzQ4YiIvPjx0ZXh0IHg9IjM2IiB5PSIyNiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij5BY3Rpb25zPC90ZXh0Pjx0ZXh0IHg9Ijg0IiB5PSIyNiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij7ilr48L3RleHQ+PHJlY3QgeD0iNjYiIHk9IjM5IiB3aWR0aD0iMTI2IiBoZWlnaHQ9IjQ3IiByeD0iNSIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjNjQ3NDhiIi8+PHRleHQgeD0iNzgiIHk9IjU2IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiMzMzQxNTUiPkR1cGxpY2F0ZTwvdGV4dD48dGV4dCB4PSI3OCIgeT0iNzIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzMzNDE1NSI+QXJjaGl2ZTwvdGV4dD48L3N2Zz4=" alt="Dropdown Menu example" /></td>
+</tr>
+<tr class="odd">
+<td>Context menu</td>
+<td>Presents actions relevant to an object or location, commonly after
+right-click or long-press.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImNvbnRleHQgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9Ijc1IiB5PSIxMCIgd2lkdGg9IjExMCIgaGVpZ2h0PSI3MiIgcng9IjUiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzY0NzQ4YiIvPjx0ZXh0IHg9Ijg3IiB5PSIyOSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij5PcGVuPC90ZXh0Pjx0ZXh0IHg9Ijg3IiB5PSI0OSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij5SZW5hbWU8L3RleHQ+PHRleHQgeD0iODciIHk9IjY5IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiNkYzI2MjYiPkRlbGV0ZTwvdGV4dD48L3N2Zz4=" alt="Context menu example" /></td>
+</tr>
+<tr class="even">
+<td>Breadcrumb</td>
+<td>Shows the current position in a hierarchy. The user can select an
+ancestor to navigate upward.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImJyZWFkY3J1bWIgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjx0ZXh0IHg9IjIyIiB5PSI0OSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjMjU2M2ViIj5Ib21lPC90ZXh0Pjx0ZXh0IHg9IjU4IiB5PSI0OSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij7igLo8L3RleHQ+PHRleHQgeD0iNzMiIHk9IjQ5IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMyNTYzZWIiPlByb2R1Y3RzPC90ZXh0Pjx0ZXh0IHg9IjEyOSIgeT0iNDkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzMzNDE1NSI+4oC6PC90ZXh0Pjx0ZXh0IHg9IjE0NCIgeT0iNDkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzMzNDE1NSI+Q2FtZXJhPC90ZXh0Pjwvc3ZnPg==" alt="Breadcrumb example" /></td>
+</tr>
+<tr class="odd">
+<td>Link</td>
+<td>Navigates to another location or resource when activated.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImxpbmsgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjx0ZXh0IHg9IjY1IiB5PSI1MCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMjU2M2ViIj5PcGVuIGRldGFpbHM8L3RleHQ+PGxpbmUgeDE9IjY1IiB5MT0iNTMiIHgyPSIxNTAiIHkyPSI1MyIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=" alt="Link example" /></td>
+</tr>
+<tr class="even">
+<td>Search field</td>
+<td>Accepts a query and may display suggestions or filters.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InNlYXJjaCBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMjgiIHk9IjMwIiB3aWR0aD0iMTY0IiBoZWlnaHQ9IjM0IiByeD0iNSIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjNjQ3NDhiIi8+PHRleHQgeD0iNDEiIHk9IjUyIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2NDc0OGIiPlNlYXJjaOKApjwvdGV4dD48dGV4dCB4PSIxNjkiIHk9IjUyIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMzMzQxNTUiPuKMlTwvdGV4dD48L3N2Zz4=" alt="Search field example" /></td>
+</tr>
+<tr class="odd">
+<td>Scrollbar</td>
+<td>Indicates position in overflowed content and permits scrolling by
+dragging or selecting its track.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InNjcm9sbGJhciBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iNzUiIHk9IjEwIiB3aWR0aD0iNzAiIGhlaWdodD0iNzIiIHJ4PSI0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM5NGEzYjgiLz48cmVjdCB4PSIxMzUiIHk9IjEzIiB3aWR0aD0iNyIgaGVpZ2h0PSI2NiIgcng9IjMiIGZpbGw9IiNlMmU4ZjAiLz48cmVjdCB4PSIxMzUiIHk9IjI5IiB3aWR0aD0iNyIgaGVpZ2h0PSIyNSIgcng9IjMiIGZpbGw9IiM2NDc0OGIiLz48bGluZSB4MT0iODQiIHkxPSIyNyIgeDI9IjEyNyIgeTI9IjI3IiBzdHJva2U9IiM5NGEzYjgiIHN0cm9rZS13aWR0aD0iMSIvPjxsaW5lIHgxPSI4NCIgeTE9IjQwIiB4Mj0iMTI3IiB5Mj0iNDAiIHN0cm9rZT0iIzk0YTNiOCIgc3Ryb2tlLXdpZHRoPSIxIi8+PGxpbmUgeDE9Ijg0IiB5MT0iNTMiIHgyPSIxMjciIHkyPSI1MyIgc3Ryb2tlPSIjOTRhM2I4IiBzdHJva2Utd2lkdGg9IjEiLz48bGluZSB4MT0iODQiIHkxPSI2NiIgeDI9IjEyNyIgeTI9IjY2IiBzdHJva2U9IiM5NGEzYjgiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg==" alt="Scrollbar example" /></td>
+</tr>
+<tr class="even">
+<td>Tree view</td>
+<td>Presents hierarchical data. The user expands, collapses, and selects
+nodes.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRyZWUgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjx0ZXh0IHg9IjI4IiB5PSIyNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij7ilr4gIFByb2plY3RzPC90ZXh0PjxsaW5lIHgxPSIzOSIgeTE9IjMxIiB4Mj0iMzkiIHkyPSI2OSIgc3Ryb2tlPSIjOTRhM2I4IiBzdHJva2Utd2lkdGg9IjEiLz48dGV4dCB4PSI0OSIgeT0iNDciIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzMzNDE1NSI+4pa+ICBXZWJzaXRlPC90ZXh0PjxsaW5lIHgxPSI2MCIgeTE9IjUyIiB4Mj0iNjAiIHkyPSI2OCIgc3Ryb2tlPSIjOTRhM2I4IiBzdHJva2Utd2lkdGg9IjEiLz48dGV4dCB4PSI3MCIgeT0iNjgiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzMzNDE1NSI+4pahICBpbmRleC5odG1sPC90ZXh0Pjwvc3ZnPg==" alt="Tree view example" /></td>
+</tr>
+<tr class="odd">
+<td>Pagination control</td>
+<td>Moves between discrete pages of content.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InBhZ2luYXRpb24gZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjQ4IiB5PSIzMSIgd2lkdGg9IjI1IiBoZWlnaHQ9IjI4IiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHRleHQgeD0iNTciIHk9IjUwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMzMzQxNTUiPjE8L3RleHQ+PHJlY3QgeD0iODAiIHk9IjMxIiB3aWR0aD0iMjUiIGhlaWdodD0iMjgiIHJ4PSI0IiBmaWxsPSIjMjU2M2ViIiBzdHJva2U9IiMyNTYzZWIiLz48dGV4dCB4PSI4OSIgeT0iNTAiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iI2ZmZiI+MjwvdGV4dD48cmVjdCB4PSIxMTIiIHk9IjMxIiB3aWR0aD0iMjUiIGhlaWdodD0iMjgiIHJ4PSI0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM5NGEzYjgiLz48dGV4dCB4PSIxMjEiIHk9IjUwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMzMzQxNTUiPjM8L3RleHQ+PHJlY3QgeD0iMTQ0IiB5PSIzMSIgd2lkdGg9IjI1IiBoZWlnaHQ9IjI4IiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHRleHQgeD0iMTUzIiB5PSI1MCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij40PC90ZXh0Pjwvc3ZnPg==" alt="Pagination control example" /></td>
+</tr>
+<tr class="even">
+<td>Carousel</td>
+<td>Shows one or several items in a constrained viewport. The user moves
+or swipes between items.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImNhcm91c2VsIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSIyMSIgeT0iMTQiIHdpZHRoPSIxNzgiIGhlaWdodD0iNjQiIHJ4PSI0IiBmaWxsPSIjZTJlOGYwIiBzdHJva2U9IiM5NGEzYjgiLz48cmVjdCB4PSI0MiIgeT0iMjAiIHdpZHRoPSIxMzYiIGhlaWdodD0iNTIiIHJ4PSI2IiBmaWxsPSIjYmZkYmZlIiBzdHJva2U9IiM2MGE1ZmEiLz48cGF0aCBkPSJNMzAgNDZsOC04bS04IDhsOCA4TTE5MCA0NmwtOC04bTggOGwtOCA4IiBzdHJva2U9IiMzMzQxNTUiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPjxjaXJjbGUgY3g9IjEwMiIgY3k9Ijg0IiByPSIzIiBmaWxsPSIjOTRhM2I4Ii8+PGNpcmNsZSBjeD0iMTEyIiBjeT0iODQiIHI9IjMiIGZpbGw9IiMyNTYzZWIiLz48Y2lyY2xlIGN4PSIxMjIiIGN5PSI4NCIgcj0iMyIgZmlsbD0iIzk0YTNiOCIvPjwvc3ZnPg==" alt="Carousel example" /></td>
+</tr>
+<tr class="odd">
+<td>Map</td>
+<td>Displays spatial information. The user pans, zooms, selects markers,
+or requests directions.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Im1hcCBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHBhdGggZD0iTTIwIDE4bDU1LTEwIDcwIDEzIDU1LTEwdjY0bC01NSAxMC03MC0xMy01NSAxMHoiIGZpbGw9IiNkY2ZjZTciIHN0cm9rZT0iIzk0YTNiOCIvPjxwYXRoIGQ9Ik03NSA4djY0TTE0NSAyMXY2NCIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHBhdGggZD0iTTEwNyAzMGMwLTE3IDI2LTE3IDI2IDAgMCAxMC0xMyAyNC0xMyAyNHMtMTMtMTQtMTMtMjR6IiBmaWxsPSIjZGMyNjI2Ii8+PGNpcmNsZSBjeD0iMTIwIiBjeT0iMzAiIHI9IjUiIGZpbGw9IndoaXRlIi8+PC9zdmc+" alt="Map example" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="container-elements">Container elements</h2>
+<p>Group, structure, and organize related content or other UI
+elements.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description — how the user interfaces with it</th>
+<th style="text-align: center;">Viewable?</th>
+<th style="text-align: center;">Device-dependent?</th>
+<th>Example image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Window</td>
+<td>A top-level application or document area. The user moves, resizes,
+minimizes, maximizes, or closes it.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IndpbmRvdyBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMTgiIHk9IjEwIiB3aWR0aD0iMTg0IiBoZWlnaHQ9IjcyIiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHJlY3QgeD0iMTgiIHk9IjEwIiB3aWR0aD0iMTg0IiBoZWlnaHQ9IjE2IiByeD0iNCIgZmlsbD0iI2RiZWFmZSIvPjxjaXJjbGUgY3g9IjI5IiBjeT0iMTgiIHI9IjMiIGZpbGw9IiNlZjQ0NDQiLz48Y2lyY2xlIGN4PSIzOSIgY3k9IjE4IiByPSIzIiBmaWxsPSIjZjU5ZTBiIi8+PGNpcmNsZSBjeD0iNDkiIGN5PSIxOCIgcj0iMyIgZmlsbD0iIzIyYzU1ZSIvPjwvc3ZnPg==" alt="Window example" /></td>
+</tr>
+<tr class="even">
+<td>Screen / View</td>
+<td>A complete application page or state. The user navigates to it and
+interacts with its contents.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InNjcmVlbiBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMTgiIHk9IjEwIiB3aWR0aD0iMTg0IiBoZWlnaHQ9IjcyIiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHJlY3QgeD0iMTgiIHk9IjEwIiB3aWR0aD0iMTg0IiBoZWlnaHQ9IjE0IiByeD0iNCIgZmlsbD0iIzFlM2E4YSIvPjxyZWN0IHg9IjI4IiB5PSIzMyIgd2lkdGg9IjQyIiBoZWlnaHQ9IjM4IiByeD0iNCIgZmlsbD0iI2UyZThmMCIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHJlY3QgeD0iNzgiIHk9IjMzIiB3aWR0aD0iMTE0IiBoZWlnaHQ9IjM4IiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PC9zdmc+" alt="Screen / View example" /></td>
+</tr>
+<tr class="odd">
+<td>Panel</td>
+<td>A bounded region grouping related content or controls. The user
+works with the items within it.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InBhbmVsIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSIxOCIgeT0iMTAiIHdpZHRoPSIxODQiIGhlaWdodD0iNzIiIHJ4PSI0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM5NGEzYjgiLz48cmVjdCB4PSIyOSIgeT0iMjEiIHdpZHRoPSIxNjIiIGhlaWdodD0iNDkiIHJ4PSI0IiBmaWxsPSIjZWVmMmZmIiBzdHJva2U9IiM2MzY2ZjEiLz48dGV4dCB4PSI0MCIgeT0iNDEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzMzNDE1NSI+U2V0dGluZ3MgcGFuZWw8L3RleHQ+PHJlY3QgeD0iNDAiIHk9IjQ5IiB3aWR0aD0iNzAiIGhlaWdodD0iMTAiIHJ4PSI0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM5NGEzYjgiLz48L3N2Zz4=" alt="Panel example" /></td>
+</tr>
+<tr class="even">
+<td>Container</td>
+<td>A layout object that holds and arranges child objects. It may have
+no direct interaction or visible boundary.</td>
+<td style="text-align: center;">Sometimes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImNvbnRhaW5lciBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMTgiIHk9IjEwIiB3aWR0aD0iMTg0IiBoZWlnaHQ9IjcyIiByeD0iNCIgZmlsbD0iI2VmZjZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHJlY3QgeD0iMzUiIHk9IjI3IiB3aWR0aD0iNTgiIGhlaWdodD0iMzgiIHJ4PSI0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM5NGEzYjgiLz48cmVjdCB4PSIxMDMiIHk9IjI3IiB3aWR0aD0iODIiIGhlaWdodD0iMzgiIHJ4PSI0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM5NGEzYjgiLz48dGV4dCB4PSIzOCIgeT0iMjAiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzMzNDE1NSI+Q29udGFpbmVyPC90ZXh0Pjwvc3ZnPg==" alt="Container example" /></td>
+</tr>
+<tr class="odd">
+<td>Card</td>
+<td>A bounded unit of related information and actions. The user reads,
+selects, opens, or acts on it.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImNhcmQgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjE4IiB5PSIxMCIgd2lkdGg9IjE4NCIgaGVpZ2h0PSI3MiIgcng9IjQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzk0YTNiOCIvPjxyZWN0IHg9IjM2IiB5PSIyMiIgd2lkdGg9IjE0OCIgaGVpZ2h0PSI1MCIgcng9IjciIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzk0YTNiOCIvPjxjaXJjbGUgY3g9IjU3IiBjeT0iNDIiIHI9IjExIiBmaWxsPSIjYmZkYmZlIi8+PHRleHQgeD0iNzYiIHk9IjM5IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMzMzQxNTUiPkNhcmQgdGl0bGU8L3RleHQ+PHRleHQgeD0iNzYiIHk9IjU2IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzY0NzQ4YiI+U3VwcG9ydGluZyB0ZXh0PC90ZXh0Pjwvc3ZnPg==" alt="Card example" /></td>
+</tr>
+<tr class="even">
+<td>Form</td>
+<td>Groups related fields and actions for entering, reviewing,
+validating, and submitting data.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImZvcm0gZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjMzIiB5PSI3IiB3aWR0aD0iMTU0IiBoZWlnaHQ9Ijc4IiByeD0iNiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHRleHQgeD0iNDUiIHk9IjIzIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMzMzQxNTUiPkNvbnRhY3QgZm9ybTwvdGV4dD48dGV4dCB4PSI0NSIgeT0iMzgiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSI4IiBmaWxsPSIjMzM0MTU1Ij5OYW1lPC90ZXh0PjxyZWN0IHg9IjgwIiB5PSIyOCIgd2lkdGg9IjkzIiBoZWlnaHQ9IjE0IiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHRleHQgeD0iNDUiIHk9IjU3IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzMzNDE1NSI+RW1haWw8L3RleHQ+PHJlY3QgeD0iODAiIHk9IjQ3IiB3aWR0aD0iOTMiIGhlaWdodD0iMTQiIHJ4PSI0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM5NGEzYjgiLz48cmVjdCB4PSIxMjIiIHk9IjY3IiB3aWR0aD0iNTEiIGhlaWdodD0iMTIiIHJ4PSIzIiBmaWxsPSIjMjU2M2ViIiBzdHJva2U9IiMyNTYzZWIiLz48dGV4dCB4PSIxMzQiIHk9Ijc2IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNyIgZmlsbD0iI2ZmZiI+U3VibWl0PC90ZXh0Pjwvc3ZnPg==" alt="Form example" /></td>
+</tr>
+<tr class="odd">
+<td>Toolbar</td>
+<td>A row or column of frequently used actions. The user activates its
+buttons or menus.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRvb2xiYXIgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjE4IiB5PSIyOCIgd2lkdGg9IjE4NCIgaGVpZ2h0PSIzNiIgcng9IjQiIGZpbGw9IiNlMmU4ZjAiIHN0cm9rZT0iIzk0YTNiOCIvPjxyZWN0IHg9IjI5IiB5PSIzNiIgd2lkdGg9IjI0IiBoZWlnaHQ9IjIwIiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHJlY3QgeD0iNjAiIHk9IjM2IiB3aWR0aD0iMjQiIGhlaWdodD0iMjAiIHJ4PSI0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM5NGEzYjgiLz48cmVjdCB4PSI5MSIgeT0iMzYiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyMCIgcng9IjQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzk0YTNiOCIvPjxyZWN0IHg9IjE2NyIgeT0iMzYiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyMCIgcng9IjQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzk0YTNiOCIvPjx0ZXh0IHg9IjM2IiB5PSI1MCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmaWxsPSIjMzM0MTU1Ij4rPC90ZXh0Pjwvc3ZnPg==" alt="Toolbar example" /></td>
+</tr>
+<tr class="even">
+<td>Sidebar</td>
+<td>A vertical region beside the main content that groups navigation,
+tools, filters, or supporting information.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InNpZGViYXIgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjIwIiB5PSI5IiB3aWR0aD0iMTgwIiBoZWlnaHQ9Ijc0IiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHJlY3QgeD0iMjAiIHk9IjkiIHdpZHRoPSI2MSIgaGVpZ2h0PSI3NCIgcng9IjQiIGZpbGw9IiNlMmU4ZjAiLz48dGV4dCB4PSIzMiIgeT0iMjkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzFkNGVkOCI+SG9tZTwvdGV4dD48dGV4dCB4PSIzMiIgeT0iNDgiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzMzNDE1NSI+UHJvamVjdHM8L3RleHQ+PHRleHQgeD0iMzIiIHk9IjY3IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiMzMzQxNTUiPlNldHRpbmdzPC90ZXh0PjxyZWN0IHg9Ijk0IiB5PSIyMCIgd2lkdGg9IjkyIiBoZWlnaHQ9IjEwIiByeD0iNCIgZmlsbD0iI2RiZWFmZSIgc3Ryb2tlPSIjZGJlYWZlIi8+PHJlY3QgeD0iOTQiIHk9IjM5IiB3aWR0aD0iNzYiIGhlaWdodD0iNyIgcng9IjQiIGZpbGw9IiNlMmU4ZjAiIHN0cm9rZT0iI2UyZThmMCIvPjwvc3ZnPg==" alt="Sidebar example" /></td>
+</tr>
+<tr class="odd">
+<td>Sheet</td>
+<td>A surface that temporarily or persistently presents supplementary
+content, controls, or a focused task over or alongside the main view.
+The user interacts with its contents and may dismiss it when it is
+temporary.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InNoZWV0IGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSIxOCIgeT0iMTAiIHdpZHRoPSIxODQiIGhlaWdodD0iNzIiIHJ4PSI1IiBmaWxsPSIjZTJlOGYwIi8+PHJlY3QgeD0iNDIiIHk9IjIwIiB3aWR0aD0iMTM2IiBoZWlnaHQ9IjYyIiByeD0iNyIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjNjQ3NDhiIi8+PHJlY3QgeD0iOTIiIHk9IjI3IiB3aWR0aD0iMzYiIGhlaWdodD0iNCIgcng9IjIiIGZpbGw9IiM5NGEzYjgiLz48dGV4dCB4PSI1NyIgeT0iNDYiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzMzNDE1NSI+U3VwcGxlbWVudGFyeSB0YXNrPC90ZXh0PjxyZWN0IHg9IjU3IiB5PSI1NSIgd2lkdGg9IjEwNiIgaGVpZ2h0PSI4IiByeD0iNCIgZmlsbD0iI2RiZWFmZSIgc3Ryb2tlPSIjZGJlYWZlIi8+PHJlY3QgeD0iMTExIiB5PSI2OSIgd2lkdGg9IjUyIiBoZWlnaHQ9IjkiIHJ4PSIzIiBmaWxsPSIjMjU2M2ViIiBzdHJva2U9IiMyNTYzZWIiLz48L3N2Zz4=" alt="Sheet example" /></td>
+</tr>
+<tr class="even">
+<td>Side Sheet</td>
+<td>A sheet attached to the left or right edge of a view. The user uses
+it for contextual details, filters, editing, navigation, or related
+actions, and may open or dismiss it.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InNpZGUtc2hlZXQgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjE4IiB5PSIxMCIgd2lkdGg9IjE4NCIgaGVpZ2h0PSI3MiIgcng9IjUiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzk0YTNiOCIvPjxyZWN0IHg9IjE4IiB5PSIxMCIgd2lkdGg9IjEwOCIgaGVpZ2h0PSI3MiIgcng9IjUiIGZpbGw9IiNlMmU4ZjAiLz48cmVjdCB4PSIxMzIiIHk9IjEwIiB3aWR0aD0iNzAiIGhlaWdodD0iNzIiIHJ4PSI1IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM2NDc0OGIiLz48dGV4dCB4PSIxNDEiIHk9IjI4IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMzMzQxNTUiPkZpbHRlcnM8L3RleHQ+PHJlY3QgeD0iMTQxIiB5PSIzNyIgd2lkdGg9IjQ5IiBoZWlnaHQ9IjkiIHJ4PSI0IiBmaWxsPSIjZGJlYWZlIiBzdHJva2U9IiNkYmVhZmUiLz48cmVjdCB4PSIxNDEiIHk9IjUzIiB3aWR0aD0iNDkiIGhlaWdodD0iOSIgcng9IjQiIGZpbGw9IiNkYmVhZmUiIHN0cm9rZT0iI2RiZWFmZSIvPjxyZWN0IHg9IjE1MyIgeT0iNjgiIHdpZHRoPSIzNyIgaGVpZ2h0PSI4IiByeD0iMyIgZmlsbD0iIzI1NjNlYiIgc3Ryb2tlPSIjMjU2M2ViIi8+PC9zdmc+" alt="Side Sheet example" /></td>
+</tr>
+<tr class="odd">
+<td>Bottom Sheet</td>
+<td>A sheet attached to the bottom edge of a view. The user opens,
+expands, collapses, drags, or dismisses it to access contextual actions
+or content.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImJvdHRvbS1zaGVldCBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMTgiIHk9IjkiIHdpZHRoPSIxODQiIGhlaWdodD0iNzQiIHJ4PSI1IiBmaWxsPSIjZTJlOGYwIi8+PHJlY3QgeD0iMTgiIHk9IjM5IiB3aWR0aD0iMTg0IiBoZWlnaHQ9IjQ0IiByeD0iNyIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjNjQ3NDhiIi8+PHJlY3QgeD0iOTIiIHk9IjQ1IiB3aWR0aD0iMzYiIGhlaWdodD0iNCIgcng9IjIiIGZpbGw9IiM5NGEzYjgiLz48dGV4dCB4PSIzMiIgeT0iNjQiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzMzNDE1NSI+U2hhcmU8L3RleHQ+PHRleHQgeD0iODYiIHk9IjY0IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiMzMzQxNTUiPlNhdmU8L3RleHQ+PHRleHQgeD0iMTM3IiB5PSI2NCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjZGMyNjI2Ij5EZWxldGU8L3RleHQ+PGNpcmNsZSBjeD0iNDYiIGN5PSI3NCIgcj0iNSIgZmlsbD0iI2RiZWFmZSIvPjxjaXJjbGUgY3g9Ijk5IiBjeT0iNzQiIHI9IjUiIGZpbGw9IiNkYmVhZmUiLz48Y2lyY2xlIGN4PSIxNTIiIGN5PSI3NCIgcj0iNSIgZmlsbD0iI2ZlZTJlMiIvPjwvc3ZnPg==" alt="Bottom Sheet example" /></td>
+</tr>
+<tr class="even">
+<td>Accordion</td>
+<td>Organizes content into expandable sections. The user expands or
+collapses each heading.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImFjY29yZGlvbiBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMjUiIHk9IjE0IiB3aWR0aD0iMTcwIiBoZWlnaHQ9IjY0IiByeD0iNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHJlY3QgeD0iMjUiIHk9IjE0IiB3aWR0aD0iMTcwIiBoZWlnaHQ9IjIxIiBmaWxsPSIjZGJlYWZlIi8+PHRleHQgeD0iMzUiIHk9IjI5IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMzMzQxNTUiPuKWviAgQWNjb3VudDwvdGV4dD48dGV4dCB4PSIzOSIgeT0iNTEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzMzNDE1NSI+RXhwYW5kZWQgY29udGVudDwvdGV4dD48bGluZSB4MT0iMjUiIHkxPSI1OSIgeDI9IjE5NSIgeTI9IjU5IiBzdHJva2U9IiM5NGEzYjgiIHN0cm9rZS13aWR0aD0iMSIvPjx0ZXh0IHg9IjM1IiB5PSI3MyIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMzM0MTU1Ij7igLogIFNlY3VyaXR5PC90ZXh0Pjwvc3ZnPg==" alt="Accordion example" /></td>
+</tr>
+<tr class="odd">
+<td>Popover</td>
+<td>Shows contextual, potentially interactive content anchored to
+another object.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InBvcG92ZXIgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjI0IiB5PSI1NCIgd2lkdGg9IjYzIiBoZWlnaHQ9IjI0IiByeD0iNCIgZmlsbD0iIzI1NjNlYiIgc3Ryb2tlPSIjMjU2M2ViIi8+PHRleHQgeD0iMzkiIHk9IjcwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiNmZmYiPkRldGFpbHM8L3RleHQ+PHJlY3QgeD0iNzUiIHk9IjEwIiB3aWR0aD0iMTI2IiBoZWlnaHQ9IjU0IiByeD0iNiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjNjQ3NDhiIi8+PHRleHQgeD0iODciIHk9IjI5IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMzMzQxNTUiPkl0ZW0gZGV0YWlsczwvdGV4dD48dGV4dCB4PSI4NyIgeT0iNDciIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSI5IiBmaWxsPSIjNjQ3NDhiIj5FZGl0IG9yIHJlbW92ZTwvdGV4dD48cGF0aCBkPSJNNzUgNDhsLTEwIDkgMTAgMyIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjNjQ3NDhiIi8+PC9zdmc+" alt="Popover example" /></td>
+</tr>
+<tr class="even">
+<td>Dialog</td>
+<td>Temporarily requests information, confirmation, or a decision.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImRpYWxvZyBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNlZWYyZjciIG9wYWNpdHk9IjEiLz48cmVjdCB4PSI0NSIgeT0iMTYiIHdpZHRoPSIxMzAiIGhlaWdodD0iNjIiIHJ4PSI3IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM2NDc0OGIiLz48dGV4dCB4PSI1OSIgeT0iMzYiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzMzNDE1NSI+RGVsZXRlIGl0ZW0/PC90ZXh0Pjx0ZXh0IHg9IjU5IiB5PSI1MiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjkiIGZpbGw9IiM2NDc0OGIiPlRoaXMgY2Fubm90IGJlIHVuZG9uZS48L3RleHQ+PHJlY3QgeD0iMTA2IiB5PSI1OCIgd2lkdGg9IjU2IiBoZWlnaHQ9IjE0IiByeD0iMyIgZmlsbD0iIzI1NjNlYiIgc3Ryb2tlPSIjMjU2M2ViIi8+PHRleHQgeD0iMTIxIiB5PSI2OSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjgiIGZpbGw9IiNmZmYiPkNvbmZpcm08L3RleHQ+PC9zdmc+" alt="Dialog example" /></td>
+</tr>
+<tr class="odd">
+<td>Modal overlay</td>
+<td>Blocks interaction with the underlying view until the foreground
+task is completed or dismissed.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Im1vZGFsIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iIzMzNDE1NSIgb3BhY2l0eT0iLjY1Ii8+PHJlY3QgeD0iNDUiIHk9IjE2IiB3aWR0aD0iMTMwIiBoZWlnaHQ9IjYyIiByeD0iNyIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjNjQ3NDhiIi8+PHRleHQgeD0iNTkiIHk9IjM2IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiMzMzQxNTUiPkRlbGV0ZSBpdGVtPzwvdGV4dD48dGV4dCB4PSI1OSIgeT0iNTIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSI5IiBmaWxsPSIjNjQ3NDhiIj5UaGlzIGNhbm5vdCBiZSB1bmRvbmUuPC90ZXh0PjxyZWN0IHg9IjEwNiIgeT0iNTgiIHdpZHRoPSI1NiIgaGVpZ2h0PSIxNCIgcng9IjMiIGZpbGw9IiMyNTYzZWIiIHN0cm9rZT0iIzI1NjNlYiIvPjx0ZXh0IHg9IjEyMSIgeT0iNjkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSI4IiBmaWxsPSIjZmZmIj5Db25maXJtPC90ZXh0Pjwvc3ZnPg==" alt="Modal overlay example" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="layout-and-structural-ui-elementsobjects">Layout and structural
+UI elements/objects</h2>
+<p>Concrete structural entities that organize, divide, align, or
+position other UI elements. They may be visible, partly visible, or
+identifiable only through their effect on the layout.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description — how the user interfaces with it</th>
+<th style="text-align: center;">Viewable?</th>
+<th style="text-align: center;">Device-dependent?</th>
+<th>Example image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Grid</td>
+<td>A row-and-column structure used to align and size content. Users
+interact with the elements arranged by it rather than necessarily with
+the grid itself.</td>
+<td style="text-align: center;">Sometimes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+R3JpZCBsYXlvdXQgZXhhbXBsZTwvdGl0bGU+PHJlY3Qgd2lkdGg9IjI0MCIgaGVpZ2h0PSIxMDQiIHJ4PSIxMCIgZmlsbD0iI2Y4ZmFmYyIvPjxnIGZpbGw9IiNkYmVhZmUiIHN0cm9rZT0iIzI1NjNlYiIgc3Ryb2tlLXdpZHRoPSIxLjUiPjxyZWN0IHg9IjE4IiB5PSIxNiIgd2lkdGg9IjU4IiBoZWlnaHQ9IjMwIiByeD0iNCIvPjxyZWN0IHg9IjkxIiB5PSIxNiIgd2lkdGg9IjU4IiBoZWlnaHQ9IjMwIiByeD0iNCIvPjxyZWN0IHg9IjE2NCIgeT0iMTYiIHdpZHRoPSI1OCIgaGVpZ2h0PSIzMCIgcng9IjQiLz48cmVjdCB4PSIxOCIgeT0iNTgiIHdpZHRoPSI1OCIgaGVpZ2h0PSIzMCIgcng9IjQiLz48cmVjdCB4PSI5MSIgeT0iNTgiIHdpZHRoPSI1OCIgaGVpZ2h0PSIzMCIgcng9IjQiLz48cmVjdCB4PSIxNjQiIHk9IjU4IiB3aWR0aD0iNTgiIGhlaWdodD0iMzAiIHJ4PSI0Ii8+PC9nPjwvc3ZnPgo=" alt="Grid example" /></td>
+</tr>
+<tr class="even">
+<td>Pane</td>
+<td>A distinct content region within a window or view. The user may
+interact with, scroll, resize, or switch the content inside it.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+UGFuZSBleGFtcGxlPC90aXRsZT48cmVjdCB4PSI4IiB5PSI4IiB3aWR0aD0iMjI0IiBoZWlnaHQ9Ijg4IiByeD0iOSIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjNjQ3NDhiIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI4IiB5PSI4IiB3aWR0aD0iODIiIGhlaWdodD0iODgiIHJ4PSI5IiBmaWxsPSIjZTBmMmZlIi8+PHBhdGggZD0iTTkwIDl2ODYiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgc3Ryb2tlPSIjMDI4NGM3IiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PHBhdGggZD0iTTI1IDI5aDQ2TTI1IDQ4aDM1TTI1IDY3aDQyIi8+PC9nPjxyZWN0IHg9IjExMCIgeT0iMjUiIHdpZHRoPSI5OSIgaGVpZ2h0PSIxMiIgcng9IjQiIGZpbGw9IiNjYmQ1ZTEiLz48cmVjdCB4PSIxMTAiIHk9IjQ5IiB3aWR0aD0iNzYiIGhlaWdodD0iOSIgcng9IjQiIGZpbGw9IiNlMmU4ZjAiLz48cmVjdCB4PSIxMTAiIHk9IjY3IiB3aWR0aD0iOTEiIGhlaWdodD0iOSIgcng9IjQiIGZpbGw9IiNlMmU4ZjAiLz48L3N2Zz4K" alt="Pane example" /></td>
+</tr>
+<tr class="odd">
+<td>Rail</td>
+<td>A narrow structural track along an edge used to align persistent
+controls, navigation, or supporting content.</td>
+<td style="text-align: center;">Sometimes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+UmFpbCBleGFtcGxlPC90aXRsZT48cmVjdCB4PSI4IiB5PSI4IiB3aWR0aD0iMjI0IiBoZWlnaHQ9Ijg4IiByeD0iOSIgZmlsbD0iI2Y4ZmFmYyIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHJlY3QgeD0iOCIgeT0iOCIgd2lkdGg9IjQ4IiBoZWlnaHQ9Ijg4IiByeD0iOSIgZmlsbD0iIzFlM2E4YSIvPjxnIGZpbGw9IiNiZmRiZmUiPjxjaXJjbGUgY3g9IjMyIiBjeT0iMjgiIHI9IjgiLz48cmVjdCB4PSIyMyIgeT0iNDgiIHdpZHRoPSIxOCIgaGVpZ2h0PSIxNiIgcng9IjQiLz48cGF0aCBkPSJNMjMgNzloMTgiIHN0cm9rZT0iI2JmZGJmZSIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L2c+PHJlY3QgeD0iNzYiIHk9IjI1IiB3aWR0aD0iMTI1IiBoZWlnaHQ9IjE0IiByeD0iNCIgZmlsbD0iI2NiZDVlMSIvPjxyZWN0IHg9Ijc2IiB5PSI1NSIgd2lkdGg9Ijk1IiBoZWlnaHQ9IjEwIiByeD0iNCIgZmlsbD0iI2UyZThmMCIvPjwvc3ZnPgo=" alt="Rail example" /></td>
+</tr>
+<tr class="even">
+<td>Stack</td>
+<td>A structure that arranges child elements sequentially along a
+horizontal, vertical, or depth axis.</td>
+<td style="text-align: center;">Sometimes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+VmVydGljYWwgc3RhY2sgZXhhbXBsZTwvdGl0bGU+PHJlY3Qgd2lkdGg9IjI0MCIgaGVpZ2h0PSIxMDQiIHJ4PSIxMCIgZmlsbD0iI2Y4ZmFmYyIvPjxnIHN0cm9rZT0iIzdjM2FlZCIgc3Ryb2tlLXdpZHRoPSIxLjUiPjxyZWN0IHg9IjQ2IiB5PSIxMCIgd2lkdGg9IjE0OCIgaGVpZ2h0PSIyMiIgcng9IjUiIGZpbGw9IiNlZGU5ZmUiLz48cmVjdCB4PSI0NiIgeT0iNDEiIHdpZHRoPSIxNDgiIGhlaWdodD0iMjIiIHJ4PSI1IiBmaWxsPSIjZGRkNmZlIi8+PHJlY3QgeD0iNDYiIHk9IjcyIiB3aWR0aD0iMTQ4IiBoZWlnaHQ9IjIyIiByeD0iNSIgZmlsbD0iI2M0YjVmZCIvPjwvZz48L3N2Zz4K" alt="Stack example" /></td>
+</tr>
+<tr class="odd">
+<td>Scaffold</td>
+<td>A top-level structural template defining the major regions of a
+screen, such as header, body, navigation, and footer.</td>
+<td style="text-align: center;">Usually no</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+U2NyZWVuIHNjYWZmb2xkIGV4YW1wbGU8L3RpdGxlPjxyZWN0IHg9IjgiIHk9IjYiIHdpZHRoPSIyMjQiIGhlaWdodD0iOTIiIHJ4PSI5IiBmaWxsPSIjZmZmIiBzdHJva2U9IiM0NzU1NjkiIHN0cm9rZS13aWR0aD0iMiIvPjxwYXRoIGQ9Ik05IDI5aDIyMk01NyAzMHY2N005IDc4aDIyMiIgc3Ryb2tlPSIjNDc1NTY5IiBzdHJva2Utd2lkdGg9IjEuNSIvPjxyZWN0IHg9IjkiIHk9IjciIHdpZHRoPSIyMjIiIGhlaWdodD0iMjEiIHJ4PSI4IiBmaWxsPSIjZGJlYWZlIi8+PHJlY3QgeD0iOSIgeT0iMzAiIHdpZHRoPSI0NyIgaGVpZ2h0PSI0NyIgZmlsbD0iI2UwZTdmZiIvPjxyZWN0IHg9IjU4IiB5PSIzMCIgd2lkdGg9IjE3MyIgaGVpZ2h0PSI0NyIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjkiIHk9Ijc5IiB3aWR0aD0iMjIyIiBoZWlnaHQ9IjE4IiByeD0iOCIgZmlsbD0iI2UyZThmMCIvPjwvc3ZnPgo=" alt="Scaffold example" /></td>
+</tr>
+<tr class="even">
+<td>Region</td>
+<td>A semantically or visually distinct area assigned a purpose within a
+view.</td>
+<td style="text-align: center;">Sometimes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+U2VtYW50aWMgcmVnaW9ucyBleGFtcGxlPC90aXRsZT48cmVjdCB4PSI4IiB5PSI3IiB3aWR0aD0iMjI0IiBoZWlnaHQ9IjkwIiByeD0iOSIgZmlsbD0iI2Y4ZmFmYyIgc3Ryb2tlPSIjNjQ3NDhiIi8+PHJlY3QgeD0iMTciIHk9IjE1IiB3aWR0aD0iMjA2IiBoZWlnaHQ9IjE4IiByeD0iNCIgZmlsbD0iI2JmZGJmZSIvPjxyZWN0IHg9IjE3IiB5PSI0MSIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjM4IiByeD0iNCIgZmlsbD0iI2RkZDZmZSIvPjxyZWN0IHg9IjczIiB5PSI0MSIgd2lkdGg9IjE1MCIgaGVpZ2h0PSIzOCIgcng9IjQiIGZpbGw9IiNkY2ZjZTciLz48cmVjdCB4PSIxNyIgeT0iODYiIHdpZHRoPSIyMDYiIGhlaWdodD0iNCIgcng9IjIiIGZpbGw9IiNjYmQ1ZTEiLz48L3N2Zz4K" alt="Region example" /></td>
+</tr>
+<tr class="odd">
+<td>Splitter</td>
+<td>A movable divider between adjacent panes. The user drags it to
+redistribute their available space.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+U3BsaXR0ZXIgYmV0d2VlbiBwYW5lcyBleGFtcGxlPC90aXRsZT48cmVjdCB4PSI4IiB5PSI5IiB3aWR0aD0iOTkiIGhlaWdodD0iODYiIHJ4PSI3IiBmaWxsPSIjZGJlYWZlIiBzdHJva2U9IiM2MGE1ZmEiLz48cmVjdCB4PSIxMzMiIHk9IjkiIHdpZHRoPSI5OSIgaGVpZ2h0PSI4NiIgcng9IjciIGZpbGw9IiNkY2ZjZTciIHN0cm9rZT0iIzRhZGU4MCIvPjxyZWN0IHg9IjExMyIgeT0iOSIgd2lkdGg9IjE0IiBoZWlnaHQ9Ijg2IiByeD0iNyIgZmlsbD0iIzY0NzQ4YiIvPjxnIGZpbGw9IiNmZmYiPjxjaXJjbGUgY3g9IjEyMCIgY3k9IjQ0IiByPSIyIi8+PGNpcmNsZSBjeD0iMTIwIiBjeT0iNTIiIHI9IjIiLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSI2MCIgcj0iMiIvPjwvZz48L3N2Zz4K" alt="Splitter example" /></td>
+</tr>
+</tbody>
+</table>
+<h1 id="ui-layout-mechanismsdefinitions">UI layout
+mechanisms/definitions</h1>
+<p>Framework-independent rules that determine how UI elements and
+structural objects are positioned, sized, aligned, grouped, and adapted
+to available space.</p>
+<h2 id="layout-rules-and-relationships">Layout rules and
+relationships</h2>
+<p>Rules and relationships that determine how structural objects and UI
+elements occupy and respond to space. The definitions themselves are
+abstract; their effects are viewable.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description — how the user experiences its effect</th>
+<th style="text-align: center;">Viewable?</th>
+<th style="text-align: center;">Device-dependent?</th>
+<th>Example image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Containment</td>
+<td>Establishes which object owns, bounds, clips, scrolls, or positions
+another object.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+Q29udGFpbm1lbnQgcmVsYXRpb25zaGlwIGV4YW1wbGU8L3RpdGxlPjxyZWN0IHg9IjE4IiB5PSIxMiIgd2lkdGg9IjIwNCIgaGVpZ2h0PSI4MCIgcng9IjkiIGZpbGw9IiNmMWY1ZjkiIHN0cm9rZT0iIzQ3NTU2OSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtZGFzaGFycmF5PSI1IDQiLz48ZyBmaWxsPSIjZGJlYWZlIiBzdHJva2U9IiMyNTYzZWIiPjxyZWN0IHg9IjM2IiB5PSIzMSIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQyIiByeD0iNSIvPjxyZWN0IHg9Ijk2IiB5PSIzMSIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQyIiByeD0iNSIvPjxyZWN0IHg9IjE1NiIgeT0iMzEiIHdpZHRoPSI0OCIgaGVpZ2h0PSI0MiIgcng9IjUiLz48L2c+PC9zdmc+Cg==" alt="Containment effect" /></td>
+</tr>
+<tr class="even">
+<td>Flow</td>
+<td>Determines the order and direction in which elements are placed as
+space is consumed.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+SG9yaXpvbnRhbCBmbG93IGV4YW1wbGU8L3RpdGxlPjxkZWZzPjxtYXJrZXIgaWQ9ImEiIG1hcmtlcldpZHRoPSI3IiBtYXJrZXJIZWlnaHQ9IjciIHJlZlg9IjYiIHJlZlk9IjMuNSIgb3JpZW50PSJhdXRvIj48cGF0aCBkPSJNMCAwbDcgMy41TDAgN3oiIGZpbGw9IiM2NDc0OGIiLz48L21hcmtlcj48L2RlZnM+PGcgZmlsbD0iI2UwZjJmZSIgc3Ryb2tlPSIjMDI4NGM3Ij48cmVjdCB4PSIxNSIgeT0iMzMiIHdpZHRoPSI0OCIgaGVpZ2h0PSIzOCIgcng9IjYiLz48cmVjdCB4PSI5NiIgeT0iMzMiIHdpZHRoPSI0OCIgaGVpZ2h0PSIzOCIgcng9IjYiLz48cmVjdCB4PSIxNzciIHk9IjMzIiB3aWR0aD0iNDgiIGhlaWdodD0iMzgiIHJ4PSI2Ii8+PC9nPjxnIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIyIiBtYXJrZXItZW5kPSJ1cmwoI2EpIj48cGF0aCBkPSJNNjYgNTJoMjMiLz48cGF0aCBkPSJNMTQ3IDUyaDIzIi8+PC9nPjwvc3ZnPgo=" alt="Flow effect" /></td>
+</tr>
+<tr class="odd">
+<td>Alignment</td>
+<td>Positions elements relative to an axis, edge, centerline, baseline,
+or one another.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+TGVmdCBhbGlnbm1lbnQgZXhhbXBsZTwvdGl0bGU+PHBhdGggZD0iTTQ4IDEwdjg0IiBzdHJva2U9IiNkYzI2MjYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iNCAzIi8+PGcgZmlsbD0iI2RiZWFmZSIgc3Ryb2tlPSIjMjU2M2ViIj48cmVjdCB4PSI0OCIgeT0iMTQiIHdpZHRoPSIxMjYiIGhlaWdodD0iMjAiIHJ4PSI0Ii8+PHJlY3QgeD0iNDgiIHk9IjQyIiB3aWR0aD0iODYiIGhlaWdodD0iMjAiIHJ4PSI0Ii8+PHJlY3QgeD0iNDgiIHk9IjcwIiB3aWR0aD0iMTQ4IiBoZWlnaHQ9IjIwIiByeD0iNCIvPjwvZz48L3N2Zz4K" alt="Alignment effect" /></td>
+</tr>
+<tr class="even">
+<td>Anchoring</td>
+<td>Keeps an element positioned relative to a container edge, point, or
+another element as dimensions change.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+Qm90dG9tLXJpZ2h0IGFuY2hvcmluZyBleGFtcGxlPC90aXRsZT48cmVjdCB4PSIxMSIgeT0iOCIgd2lkdGg9IjIxOCIgaGVpZ2h0PSI4OCIgcng9IjgiIGZpbGw9IiNmOGZhZmMiIHN0cm9rZT0iIzY0NzQ4YiIvPjxyZWN0IHg9IjE2MyIgeT0iNTciIHdpZHRoPSI1MCIgaGVpZ2h0PSIyNSIgcng9IjYiIGZpbGw9IiNmZWYzYzciIHN0cm9rZT0iI2Q5NzcwNiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTE4OCA4M3Y5TTIxNCA3MGgxMSIgc3Ryb2tlPSIjZGMyNjI2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTg0IDg5bDQgNCA0LTRNMjIyIDY2bDQgNC00IDQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2RjMjYyNiIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+Cg==" alt="Anchoring effect" /></td>
+</tr>
+<tr class="odd">
+<td>Sizing</td>
+<td>Determines fixed, intrinsic, minimum, maximum, proportional, or
+available-space dimensions.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+UHJvcG9ydGlvbmFsIHNpemluZyBleGFtcGxlPC90aXRsZT48cmVjdCB4PSIxMyIgeT0iMjYiIHdpZHRoPSI2NCIgaGVpZ2h0PSI1MiIgcng9IjYiIGZpbGw9IiNkYmVhZmUiIHN0cm9rZT0iIzI1NjNlYiIvPjxyZWN0IHg9Ijg2IiB5PSIyNiIgd2lkdGg9IjE0MSIgaGVpZ2h0PSI1MiIgcng9IjYiIGZpbGw9IiNkY2ZjZTciIHN0cm9rZT0iIzE2YTM0YSIvPjxwYXRoIGQ9Ik0xMyAxN2g2NE04NiAxN2gxNDEiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNDUiIHk9IjE0IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzMzNDE1NSI+McOXPC90ZXh0Pjx0ZXh0IHg9IjE1NiIgeT0iMTQiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMzM0MTU1Ij4yw5c8L3RleHQ+PC9zdmc+Cg==" alt="Sizing effect" /></td>
+</tr>
+<tr class="even">
+<td>Spacing</td>
+<td>Determines gaps, margins, padding, and spatial rhythm between or
+within elements.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+U3BhY2luZyBhbmQgZ2FwcyBleGFtcGxlPC90aXRsZT48ZyBmaWxsPSIjZWRlOWZlIiBzdHJva2U9IiM3YzNhZWQiPjxyZWN0IHg9IjE5IiB5PSIyNyIgd2lkdGg9IjUxIiBoZWlnaHQ9IjUwIiByeD0iNSIvPjxyZWN0IHg9Ijk0IiB5PSIyNyIgd2lkdGg9IjUxIiBoZWlnaHQ9IjUwIiByeD0iNSIvPjxyZWN0IHg9IjE2OSIgeT0iMjciIHdpZHRoPSI1MSIgaGVpZ2h0PSI1MCIgcng9IjUiLz48L2c+PGcgc3Ryb2tlPSIjZGMyNjI2IiBzdHJva2Utd2lkdGg9IjIiPjxwYXRoIGQ9Ik03MiA1MmgyME0xNDcgNTJoMjAiLz48L2c+PHRleHQgeD0iODIiIHk9IjQ2IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2RjMjYyNiI+Z2FwPC90ZXh0Pjx0ZXh0IHg9IjE1NyIgeT0iNDYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZGMyNjI2Ij5nYXA8L3RleHQ+PC9zdmc+Cg==" alt="Spacing effect" /></td>
+</tr>
+<tr class="odd">
+<td>Wrapping</td>
+<td>Moves overflowing items onto additional lines, rows, or columns when
+insufficient space remains.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+V3JhcHBpbmcgaXRlbXMgZXhhbXBsZTwvdGl0bGU+PGcgZmlsbD0iI2RiZWFmZSIgc3Ryb2tlPSIjMjU2M2ViIj48cmVjdCB4PSIxNCIgeT0iMTYiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyOCIgcng9IjUiLz48cmVjdCB4PSI3OCIgeT0iMTYiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyOCIgcng9IjUiLz48cmVjdCB4PSIxNDIiIHk9IjE2IiB3aWR0aD0iNTUiIGhlaWdodD0iMjgiIHJ4PSI1Ii8+PHJlY3QgeD0iMTQiIHk9IjYwIiB3aWR0aD0iNTUiIGhlaWdodD0iMjgiIHJ4PSI1Ii8+PHJlY3QgeD0iNzgiIHk9IjYwIiB3aWR0aD0iNTUiIGhlaWdodD0iMjgiIHJ4PSI1Ii8+PC9nPjxwYXRoIGQ9Ik0yMDMgMzBjMTggMCAxOCA0NC0xIDQ0aC02MSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjQ3NDhiIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjQgMyIvPjwvc3ZnPgo=" alt="Wrapping effect" /></td>
+</tr>
+<tr class="even">
+<td>Responsive Reflow</td>
+<td>Rearranges, replaces, hides, or resizes elements when available
+space or presentation conditions change.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+UmVzcG9uc2l2ZSByZWZsb3cgZXhhbXBsZTwvdGl0bGU+PHJlY3QgeD0iNyIgeT0iMTIiIHdpZHRoPSIxMjYiIGhlaWdodD0iODAiIHJ4PSI3IiBmaWxsPSIjZjhmYWZjIiBzdHJva2U9IiM2NDc0OGIiLz48ZyBmaWxsPSIjZGJlYWZlIiBzdHJva2U9IiMyNTYzZWIiPjxyZWN0IHg9IjE2IiB5PSIyNSIgd2lkdGg9IjUwIiBoZWlnaHQ9IjUzIiByeD0iNCIvPjxyZWN0IHg9Ijc1IiB5PSIyNSIgd2lkdGg9IjQ5IiBoZWlnaHQ9IjUzIiByeD0iNCIvPjwvZz48cGF0aCBkPSJNMTM5IDUyaDIwIiBzdHJva2U9IiM2NDc0OGIiIHN0cm9rZS13aWR0aD0iMiIvPjxwYXRoIGQ9Ik0xNTQgNDdsNiA1LTYgNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjQ3NDhiIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSIxNjYiIHk9IjUiIHdpZHRoPSI2NyIgaGVpZ2h0PSI5NCIgcng9IjkiIGZpbGw9IiNmOGZhZmMiIHN0cm9rZT0iIzY0NzQ4YiIvPjxnIGZpbGw9IiNkY2ZjZTciIHN0cm9rZT0iIzE2YTM0YSI+PHJlY3QgeD0iMTc2IiB5PSIxNyIgd2lkdGg9IjQ3IiBoZWlnaHQ9IjI5IiByeD0iNCIvPjxyZWN0IHg9IjE3NiIgeT0iNTYiIHdpZHRoPSI0NyIgaGVpZ2h0PSIyOSIgcng9IjQiLz48L2c+PC9zdmc+Cg==" alt="Responsive Reflow effect" /></td>
+</tr>
+<tr class="odd">
+<td>Breakpoint</td>
+<td>A viewport, container, orientation, resolution, or capability
+threshold at which selected layout or presentation rules change.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMjQwIDEwNCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InQiPjx0aXRsZSBpZD0idCI+UmVzcG9uc2l2ZSByZWZsb3cgZXhhbXBsZTwvdGl0bGU+PHJlY3QgeD0iNyIgeT0iMTIiIHdpZHRoPSIxMjYiIGhlaWdodD0iODAiIHJ4PSI3IiBmaWxsPSIjZjhmYWZjIiBzdHJva2U9IiM2NDc0OGIiLz48ZyBmaWxsPSIjZGJlYWZlIiBzdHJva2U9IiMyNTYzZWIiPjxyZWN0IHg9IjE2IiB5PSIyNSIgd2lkdGg9IjUwIiBoZWlnaHQ9IjUzIiByeD0iNCIvPjxyZWN0IHg9Ijc1IiB5PSIyNSIgd2lkdGg9IjQ5IiBoZWlnaHQ9IjUzIiByeD0iNCIvPjwvZz48cGF0aCBkPSJNMTM5IDUyaDIwIiBzdHJva2U9IiM2NDc0OGIiIHN0cm9rZS13aWR0aD0iMiIvPjxwYXRoIGQ9Ik0xNTQgNDdsNiA1LTYgNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjQ3NDhiIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSIxNjYiIHk9IjUiIHdpZHRoPSI2NyIgaGVpZ2h0PSI5NCIgcng9IjkiIGZpbGw9IiNmOGZhZmMiIHN0cm9rZT0iIzY0NzQ4YiIvPjxnIGZpbGw9IiNkY2ZjZTciIHN0cm9rZT0iIzE2YTM0YSI+PHJlY3QgeD0iMTc2IiB5PSIxNyIgd2lkdGg9IjQ3IiBoZWlnaHQ9IjI5IiByeD0iNCIvPjxyZWN0IHg9IjE3NiIgeT0iNTYiIHdpZHRoPSI0NyIgaGVpZ2h0PSIyOSIgcng9IjQiLz48L2c+PC9zdmc+Cg==" alt="Breakpoint effect" /></td>
+</tr>
+</tbody>
+</table>
+<h1 id="ui-presentation-and-style-definitions">UI presentation and style
+definitions</h1>
+<p>Framework-independent rules that determine how UI elements look,
+sound, and visually change without defining the elements themselves.</p>
+<h2 id="visual-appearance-and-presentation-rules">Visual appearance and
+presentation rules</h2>
+<p>Visual and auditory systems applied consistently to communicate
+hierarchy, identity, meaning, state, and change. Each illustration shows
+the effect produced by the definition.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description — how the user experiences its effect</th>
+<th style="text-align: center;">Viewable?</th>
+<th style="text-align: center;">Device-dependent?</th>
+<th>Example image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Color</td>
+<td>Defines foreground, background, border, accent, and semantic colors
+that communicate hierarchy, identity, status, and affordance.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNjAgOTYiPjxyZWN0IHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHJ4PSIxMCIgZmlsbD0iI2Y4ZmFmYyIvPjx0ZXh0IHg9IjE2IiB5PSIyMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjExIiBmaWxsPSIjNjQ3NDhiIj5DT0xPUjwvdGV4dD48cmVjdCB4PSIxNiIgeT0iMzIiIHdpZHRoPSI2NCIgaGVpZ2h0PSI0NSIgcng9IjciIGZpbGw9IiMyNTYzZWIiLz48cmVjdCB4PSI5OCIgeT0iMzIiIHdpZHRoPSI2NCIgaGVpZ2h0PSI0NSIgcng9IjciIGZpbGw9IiMxNmEzNGEiLz48cmVjdCB4PSIxODAiIHk9IjMyIiB3aWR0aD0iNjQiIGhlaWdodD0iNDUiIHJ4PSI3IiBmaWxsPSIjZGMyNjI2Ii8+PHRleHQgeD0iNDgiIHk9IjYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IndoaXRlIj5JbmZvPC90ZXh0Pjx0ZXh0IHg9IjEzMCIgeT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMSIgZmlsbD0id2hpdGUiPlN1Y2Nlc3M8L3RleHQ+PHRleHQgeD0iMjEyIiB5PSI2MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjExIiBmaWxsPSJ3aGl0ZSI+RXJyb3I8L3RleHQ+PC9zdmc+Cg==" alt="Color effect" /></td>
+</tr>
+<tr class="even">
+<td>Typography</td>
+<td>Defines font family, size, weight, style, line height, letter
+spacing, and text hierarchy.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNjAgOTYiPjxyZWN0IHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHJ4PSIxMCIgZmlsbD0iI2Y4ZmFmYyIvPjx0ZXh0IHg9IjE2IiB5PSIyNSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEiIGZvbnQtc2l6ZT0iMjIiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMwZjE3MmEiPlBhZ2UgaGVhZGluZzwvdGV4dD48dGV4dCB4PSIxNiIgeT0iNDkiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9IjYwMCIgZmlsbD0iIzMzNDE1NSI+U2VjdGlvbiBoZWFkaW5nPC90ZXh0Pjx0ZXh0IHg9IjE2IiB5PSI3MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjExIiBmaWxsPSIjNjQ3NDhiIj5SZWFkYWJsZSBib2R5IHRleHQgd2l0aCBjbGVhciBoaWVyYXJjaHkuPC90ZXh0Pjwvc3ZnPgo=" alt="Typography effect" /></td>
+</tr>
+<tr class="odd">
+<td>Shape</td>
+<td>Defines geometry such as corner treatment, outlines, clipping paths,
+and silhouettes.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNjAgOTYiPjxyZWN0IHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHJ4PSIxMCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjE4IiB5PSIyOCIgd2lkdGg9IjU4IiBoZWlnaHQ9IjQyIiBmaWxsPSIjZGJlYWZlIiBzdHJva2U9IiMyNTYzZWIiLz48cmVjdCB4PSIxMDEiIHk9IjI4IiB3aWR0aD0iNTgiIGhlaWdodD0iNDIiIHJ4PSIxMiIgZmlsbD0iI2RiZWFmZSIgc3Ryb2tlPSIjMjU2M2ViIi8+PGNpcmNsZSBjeD0iMjEzIiBjeT0iNDkiIHI9IjIyIiBmaWxsPSIjZGJlYWZlIiBzdHJva2U9IiMyNTYzZWIiLz48dGV4dCB4PSIxMzAiIHk9Ijg4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NDc0OGIiPmdlb21ldHJ5IGNoYW5nZXMgcGVyY2VpdmVkIHJvbGU8L3RleHQ+PC9zdmc+Cg==" alt="Shape effect" /></td>
+</tr>
+<tr class="even">
+<td>Border</td>
+<td>Defines a boundary’s width, color, pattern, position, and
+radius.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNjAgOTYiPjxyZWN0IHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHJ4PSIxMCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjE2IiB5PSIyNSIgd2lkdGg9IjY2IiBoZWlnaHQ9IjQ4IiByeD0iNSIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzk0YTNiOCIvPjxyZWN0IHg9Ijk3IiB5PSIyNSIgd2lkdGg9IjY2IiBoZWlnaHQ9IjQ4IiByeD0iMTAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiMyNTYzZWIiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9IjE3OCIgeT0iMjUiIHdpZHRoPSI2NiIgaGVpZ2h0PSI0OCIgcng9IjUiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNkYzI2MjYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iNSAzIi8+PC9zdmc+Cg==" alt="Border effect" /></td>
+</tr>
+<tr class="odd">
+<td>Shadow / Elevation</td>
+<td>Uses shadows, tonal separation, or layering cues to communicate
+depth and stacking.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNjAgOTYiPjxkZWZzPjxmaWx0ZXIgaWQ9InMiPjxmZURyb3BTaGFkb3cgZHg9IjAiIGR5PSI2IiBzdGREZXZpYXRpb249IjUiIGZsb29kLW9wYWNpdHk9Ii4yOCIvPjwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iMjYwIiBoZWlnaHQ9Ijk2IiByeD0iMTAiIGZpbGw9IiNlMmU4ZjAiLz48cmVjdCB4PSIyMiIgeT0iMjYiIHdpZHRoPSI4OCIgaGVpZ2h0PSI0OCIgcng9IjciIGZpbGw9IndoaXRlIi8+PHJlY3QgeD0iMTUwIiB5PSIyMCIgd2lkdGg9Ijg4IiBoZWlnaHQ9IjQ4IiByeD0iNyIgZmlsbD0id2hpdGUiIGZpbHRlcj0idXJsKCNzKSIvPjx0ZXh0IHg9IjY2IiB5PSI1NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjExIiBmaWxsPSIjNjQ3NDhiIj5mbGF0PC90ZXh0Pjx0ZXh0IHg9IjE5NCIgeT0iNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzMzNDE1NSI+ZWxldmF0ZWQ8L3RleHQ+PC9zdmc+Cg==" alt="Shadow / Elevation effect" /></td>
+</tr>
+<tr class="even">
+<td>Opacity</td>
+<td>Controls the transparency of an element or layer.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNjAgOTYiPjxyZWN0IHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHJ4PSIxMCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjE0IiB5PSIyMCIgd2lkdGg9IjIzMiIgaGVpZ2h0PSI2MiIgcng9IjciIGZpbGw9IiNlMmU4ZjAiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjUxIiByPSIyMyIgZmlsbD0iIzI1NjNlYiIvPjxjaXJjbGUgY3g9IjEzMCIgY3k9IjUxIiByPSIyMyIgZmlsbD0iIzI1NjNlYiIgb3BhY2l0eT0iLjU1Ii8+PGNpcmNsZSBjeD0iMjAwIiBjeT0iNTEiIHI9IjIzIiBmaWxsPSIjMjU2M2ViIiBvcGFjaXR5PSIuMiIvPjx0ZXh0IHg9IjYwIiB5PSI1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIiBmaWxsPSJ3aGl0ZSI+MTAwJTwvdGV4dD48dGV4dCB4PSIxMzAiIHk9IjU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IndoaXRlIj41NSU8L3RleHQ+PHRleHQgeD0iMjAwIiB5PSI1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIiBmaWxsPSIjMzM0MTU1Ij4yMCU8L3RleHQ+PC9zdmc+Cg==" alt="Opacity effect" /></td>
+</tr>
+<tr class="odd">
+<td>Icons / Iconography</td>
+<td>Defines the visual language applied to icon elements, including
+stroke or fill, weight, size, optical alignment, color, and stylistic
+consistency.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNjAgOTYiPjxyZWN0IHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHJ4PSIxMCIgZmlsbD0iI2Y4ZmFmYyIvPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzI1NjNlYiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0zNSA1MGwxNC0xNCAxNCAxNHYyMEgzNXoiLz48Y2lyY2xlIGN4PSIxMzAiIGN5PSI0OCIgcj0iMTYiLz48cGF0aCBkPSJNMTQyIDYwbDE0IDE0Ii8+PHBhdGggZD0iTTE5NiA0MmgzNE0yMDEgNDJsMyAzMGgxOGwzLTMwTTIwNyAzNWgxMiIvPjwvZz48dGV4dCB4PSIxMzAiIHk9IjIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NDc0OGIiPmNvbnNpc3RlbnQgc3Ryb2tlLCB3ZWlnaHQgYW5kIHNjYWxlPC90ZXh0Pjwvc3ZnPgo=" alt="Icons / Iconography effect" /></td>
+</tr>
+<tr class="even">
+<td>Spacing tokens</td>
+<td>Defines a reusable scale of spacing values used for consistent gaps,
+margins, and padding. Conceptually, the values support both presentation
+rhythm and layout.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNjAgOTYiPjxyZWN0IHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHJ4PSIxMCIgZmlsbD0iI2Y4ZmFmYyIvPjxnIGZpbGw9IiMyNTYzZWIiPjxyZWN0IHg9IjE4IiB5PSIzMCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjM4IiByeD0iNCIvPjxyZWN0IHg9IjY4IiB5PSIzMCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjM4IiByeD0iNCIvPjxyZWN0IHg9IjEzMCIgeT0iMzAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzOCIgcng9IjQiLz48cmVjdCB4PSIyMTIiIHk9IjMwIiB3aWR0aD0iMzAiIGhlaWdodD0iMzgiIHJ4PSI0Ii8+PC9nPjxnIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzY0NzQ4YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+PHRleHQgeD0iNTgiIHk9Ijg2Ij44PC90ZXh0Pjx0ZXh0IHg9IjExNCIgeT0iODYiPjE2PC90ZXh0Pjx0ZXh0IHg9IjE4NiIgeT0iODYiPjI0PC90ZXh0PjwvZz48ZyBzdHJva2U9IiM5NGEzYjgiPjxwYXRoIGQ9Ik00OSA3NmgxOE05OSA3NmgzME0xNjEgNzZoNTAiLz48L2c+PC9zdmc+Cg==" alt="Spacing-token effect" /></td>
+</tr>
+<tr class="odd">
+<td>Visual states</td>
+<td>Defines appearance changes that communicate hover, focus, pressed,
+selected, disabled, validation, and error states.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNjAgOTYiPjxyZWN0IHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHJ4PSIxMCIgZmlsbD0iI2Y4ZmFmYyIvPjxnIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+PHJlY3QgeD0iMTAiIHk9IjMwIiB3aWR0aD0iNTIiIGhlaWdodD0iMzIiIHJ4PSI2IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjOTRhM2I4Ii8+PHRleHQgeD0iMzYiIHk9IjUwIiBmaWxsPSIjMzM0MTU1Ij5EZWZhdWx0PC90ZXh0PjxyZWN0IHg9IjcyIiB5PSIzMCIgd2lkdGg9IjUyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iI2RiZWFmZSIgc3Ryb2tlPSIjMjU2M2ViIi8+PHRleHQgeD0iOTgiIHk9IjUwIiBmaWxsPSIjMWQ0ZWQ4Ij5Ib3ZlcjwvdGV4dD48cmVjdCB4PSIxMzQiIHk9IjMwIiB3aWR0aD0iNTIiIGhlaWdodD0iMzIiIHJ4PSI2IiBmaWxsPSIjMjU2M2ViIi8+PHRleHQgeD0iMTYwIiB5PSI1MCIgZmlsbD0id2hpdGUiPlByZXNzZWQ8L3RleHQ+PHJlY3QgeD0iMTk2IiB5PSIzMCIgd2lkdGg9IjU0IiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iI2UyZThmMCIvPjx0ZXh0IHg9IjIyMyIgeT0iNTAiIGZpbGw9IiM5NGEzYjgiPkRpc2FibGVkPC90ZXh0PjwvZz48L3N2Zz4K" alt="Visual-state effect" /></td>
+</tr>
+<tr class="even">
+<td>Theme</td>
+<td>Coordinates color, typography, shape, iconography, elevation, and
+other presentation values into a coherent visual system.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNjAgOTYiPjxyZWN0IHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHJ4PSIxMCIgZmlsbD0iI2NiZDVlMSIvPjxyZWN0IHg9IjEyIiB5PSIxMyIgd2lkdGg9IjEwOCIgaGVpZ2h0PSI3MCIgcng9IjciIGZpbGw9IndoaXRlIi8+PHJlY3QgeD0iMTQwIiB5PSIxMyIgd2lkdGg9IjEwOCIgaGVpZ2h0PSI3MCIgcng9IjciIGZpbGw9IiMwZjE3MmEiLz48cmVjdCB4PSIyNCIgeT0iMjUiIHdpZHRoPSI4NCIgaGVpZ2h0PSIxMiIgcng9IjMiIGZpbGw9IiMyNTYzZWIiLz48cmVjdCB4PSIxNTIiIHk9IjI1IiB3aWR0aD0iODQiIGhlaWdodD0iMTIiIHJ4PSIzIiBmaWxsPSIjNjBhNWZhIi8+PGcgZmlsbD0iIzk0YTNiOCI+PHJlY3QgeD0iMjQiIHk9IjQ4IiB3aWR0aD0iNjAiIGhlaWdodD0iNiIgcng9IjMiLz48cmVjdCB4PSIyNCIgeT0iNjEiIHdpZHRoPSI3NiIgaGVpZ2h0PSI2IiByeD0iMyIvPjwvZz48ZyBmaWxsPSIjNjQ3NDhiIj48cmVjdCB4PSIxNTIiIHk9IjQ4IiB3aWR0aD0iNjAiIGhlaWdodD0iNiIgcng9IjMiLz48cmVjdCB4PSIxNTIiIHk9IjYxIiB3aWR0aD0iNzYiIGhlaWdodD0iNiIgcng9IjMiLz48L2c+PC9zdmc+Cg==" alt="Theme effect" /></td>
+</tr>
+<tr class="odd">
+<td>Motion</td>
+<td>Defines animation and transition choreography, properties, duration,
+delay, direction, and easing used to communicate state changes,
+causality, continuity, and spatial relationships.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNjAgOTYiPjxyZWN0IHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHJ4PSIxMCIgZmlsbD0iI2Y4ZmFmYyIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iNDgiIHI9IjE2IiBmaWxsPSIjOTNjNWZkIi8+PGNpcmNsZSBjeD0iMTMwIiBjeT0iNDgiIHI9IjE5IiBmaWxsPSIjNjBhNWZhIiBvcGFjaXR5PSIuNzIiLz48Y2lyY2xlIGN4PSIyMjUiIGN5PSI0OCIgcj0iMjIiIGZpbGw9IiMyNTYzZWIiLz48cGF0aCBkPSJNNTggNDhoNDZNMTU2IDQ4aDQzIiBzdHJva2U9IiM2NDc0OGIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iNSA0Ii8+PHBhdGggZD0iTTk5IDQzbDcgNS03IDVNMTk0IDQzbDcgNS03IDUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+Cg==" alt="Motion effect" /></td>
+</tr>
+<tr class="even">
+<td>Visibility</td>
+<td>Determines whether an element is shown, hidden, visually suppressed,
+clipped, or revealed under specified conditions.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNjAgOTYiPjxyZWN0IHdpZHRoPSIyNjAiIGhlaWdodD0iOTYiIHJ4PSIxMCIgZmlsbD0iI2Y4ZmFmYyIvPjxnIHN0cm9rZT0iIzI1NjNlYiIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIj48cGF0aCBkPSJNMTggNDhzMTgtMjAgNDAtMjAgNDAgMjAgNDAgMjAtMTggMjAtNDAgMjAtNDAtMjAtNDAtMjB6Ii8+PGNpcmNsZSBjeD0iNTgiIGN5PSI0OCIgcj0iOSIgZmlsbD0iIzI1NjNlYiIvPjwvZz48ZyBvcGFjaXR5PSIuMjUiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIj48cGF0aCBkPSJNMTU4IDQ4czE4LTIwIDQwLTIwIDQwIDIwIDQwIDIwLTE4IDIwLTQwIDIwLTQwLTIwLTQwLTIweiIvPjxjaXJjbGUgY3g9IjE5OCIgY3k9IjQ4IiByPSI5IiBmaWxsPSIjNjQ3NDhiIi8+PC9nPjxwYXRoIGQ9Ik0xNTggMjJsODAgNTIiIHN0cm9rZT0iI2RjMjYyNiIgc3Ryb2tlLXdpZHRoPSI0Ii8+PC9zdmc+Cg==" alt="Visibility effect" /></td>
+</tr>
+</tbody>
+</table>
+<h1 id="ui-interaction-definitions">UI interaction definitions</h1>
+<p>Framework-independent definitions for the states, areas, gestures,
+and events through which users interact with UI elements. These are
+interaction concepts rather than UI elements.</p>
+<h2 id="interaction-states">Interaction states</h2>
+<p>Visual or behavioral conditions that communicate an element’s current
+availability, focus, activation, or selection.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description — how the user interfaces with it</th>
+<th style="text-align: center;">Viewable?</th>
+<th style="text-align: center;">Device-dependent?</th>
+<th>Example image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hover state</td>
+<td>A temporary visual or behavioral state shown when a pointing device
+is positioned over an interactive element.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImhvdmVyIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSI1NSIgeT0iMjciIHdpZHRoPSIxMTAiIGhlaWdodD0iMzgiIHJ4PSI2IiBmaWxsPSIjMWQ0ZWQ4IiBzdHJva2U9IiMxZTQwYWYiLz48dGV4dCB4PSI4MyIgeT0iNTEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZmlsbD0iI2ZmZiI+SG92ZXJlZDwvdGV4dD48cGF0aCBkPSJNMTc2IDY0bC05LTI1IDIyIDEzLTkgMyA3IDEyLTYgNC03LTEyeiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMzM0MTU1Ii8+PC9zdmc+" alt="Hover state example" /></td>
+</tr>
+<tr class="even">
+<td>Focus state</td>
+<td>Identifies the element currently prepared to receive keyboard,
+switch-device, or assistive-technology input.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImZvY3VzIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48dGV4dCB4PSIyOCIgeT0iMjUiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzMzNDE1NSI+RW1haWw8L3RleHQ+PHJlY3QgeD0iMjciIHk9IjMyIiB3aWR0aD0iMTY2IiBoZWlnaHQ9IjM0IiByeD0iNSIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMjU2M2ViIi8+PHJlY3QgeD0iMjMiIHk9IjI4IiB3aWR0aD0iMTc0IiBoZWlnaHQ9IjQyIiByeD0iOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjMgMyIvPjwvc3ZnPg==" alt="Focus state example" /></td>
+</tr>
+<tr class="odd">
+<td>Active / Pressed state</td>
+<td>Indicates that an element is currently being activated, such as
+while a pointer button or key is held down.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InByZXNzZWQgZXhhbXBsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiByeD0iOCIgZmlsbD0iI2Y4ZmFmYyIvPjxyZWN0IHg9IjYyIiB5PSIzMSIgd2lkdGg9Ijk2IiBoZWlnaHQ9IjM0IiByeD0iNiIgZmlsbD0iIzFlNDBhZiIgc3Ryb2tlPSIjMTcyNTU0Ii8+PHRleHQgeD0iODciIHk9IjUzIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiNmZmYiPlByZXNzZWQ8L3RleHQ+PHBhdGggZD0iTTExMCA2N3YxMG0tMTgtMTRsLTcgN200My03bDcgNyIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=" alt="Active / Pressed state example" /></td>
+</tr>
+<tr class="even">
+<td>Selected state</td>
+<td>Indicates that an item, option, text range, or object is currently
+chosen.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InNlbGVjdGlvbiBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHRleHQgeD0iMjQiIHk9IjM1IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiMzMzQxNTUiPlNlbGVjdCB0aGlzIGhpZ2hsaWdodGVkIHRleHQuPC90ZXh0PjxyZWN0IHg9IjU5IiB5PSIyMiIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxOCIgZmlsbD0iIzkzYzVmZCIgb3BhY2l0eT0iLjciLz48dGV4dCB4PSIyNCIgeT0iNjIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzY0NzQ4YiI+U2VsZWN0aW9uIGNhbiBhbHNvIG1hcmsgaXRlbXMuPC90ZXh0Pjwvc3ZnPg==" alt="Selected state example" /></td>
+</tr>
+<tr class="odd">
+<td>Disabled state</td>
+<td>Indicates that an element is currently unavailable and cannot be
+activated or edited.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImRpc2FibGVkIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSI1OCIgeT0iMjkiIHdpZHRoPSIxMDQiIGhlaWdodD0iMzYiIHJ4PSI2IiBmaWxsPSIjZTJlOGYwIiBzdHJva2U9IiNjYmQ1ZTEiLz48dGV4dCB4PSI4MyIgeT0iNTIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzk0YTNiOCI+RGlzYWJsZWQ8L3RleHQ+PC9zdmc+" alt="Disabled state example" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="interaction-areas-and-constraints">Interaction areas and
+constraints</h2>
+<p>Hit regions and usability rules that determine where and how reliably
+an interactive element can be targeted.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description — how the user interfaces with it</th>
+<th style="text-align: center;">Viewable?</th>
+<th style="text-align: center;">Device-dependent?</th>
+<th>Example image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Touch target</td>
+<td>The screen area that responds to touch for an interactive element.
+The user activates it by touching anywhere within that area.</td>
+<td style="text-align: center;">Sometimes</td>
+<td style="text-align: center;">Yes</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRvdWNoLXRhcmdldCBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iNjUiIHk9IjExIiB3aWR0aD0iOTAiIGhlaWdodD0iNzAiIHJ4PSI4IiBmaWxsPSIjZGJlYWZlIiBzdHJva2U9IiMyNTYzZWIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iNSA0Ii8+PHJlY3QgeD0iOTEiIHk9IjI5IiB3aWR0aD0iMzgiIGhlaWdodD0iMzQiIHJ4PSI2IiBmaWxsPSIjMjU2M2ViIiBzdHJva2U9IiMyNTYzZWIiLz48dGV4dCB4PSIxMDQiIHk9IjUxIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmYiPis8L3RleHQ+PHRleHQgeD0iMTYxIiB5PSI0OSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjkiIGZpbGw9IiMyNTYzZWIiPjQ4IHB4PC90ZXh0Pjwvc3ZnPg==" alt="Touch target example" /></td>
+</tr>
+<tr class="even">
+<td>Pointer hit area</td>
+<td>The region in which pointer input is interpreted as targeting a
+particular element, including any invisible interaction padding.</td>
+<td style="text-align: center;">Sometimes</td>
+<td style="text-align: center;">Yes</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImhpdC1hcmVhIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSI1NSIgeT0iMTYiIHdpZHRoPSIxMTAiIGhlaWdodD0iNjAiIHJ4PSI4IiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIuNiIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2UtZGFzaGFycmF5PSI0IDMiLz48cmVjdCB4PSI4NyIgeT0iMzAiIHdpZHRoPSI0NiIgaGVpZ2h0PSIzMiIgcng9IjUiIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzY0NzQ4YiIvPjx0ZXh0IHg9IjEwMCIgeT0iNTEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzMzNDE1NSI+RWRpdDwvdGV4dD48dGV4dCB4PSI2MyIgeT0iMTIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSI5IiBmaWxsPSIjMjU2M2ViIj5Qb2ludGVyIGhpdCBhcmVhPC90ZXh0Pjwvc3ZnPg==" alt="Pointer hit area example" /></td>
+</tr>
+<tr class="odd">
+<td>Minimum target size</td>
+<td>A usability and accessibility constraint defining the smallest
+acceptable interactive area for reliable activation.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="even">
+<td>Target spacing</td>
+<td>A usability constraint defining sufficient separation between
+adjacent targets to reduce accidental activation.</td>
+<td style="text-align: center;">Sometimes</td>
+<td style="text-align: center;">Yes</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InRhcmdldC1zcGFjaW5nIGV4YW1wbGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIyMCIgaGVpZ2h0PSI5MiIgcng9IjgiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSIzNyIgeT0iMjciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0MCIgcng9IjYiIGZpbGw9IiNkYmVhZmUiIHN0cm9rZT0iIzI1NjNlYiIvPjxyZWN0IHg9IjEzNSIgeT0iMjciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0MCIgcng9IjYiIGZpbGw9IiNkYmVhZmUiIHN0cm9rZT0iIzI1NjNlYiIvPjxsaW5lIHgxPSI4OCIgeTE9IjQ3IiB4Mj0iMTMyIiB5Mj0iNDciIHN0cm9rZT0iI2RjMjYyNiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iOTgiIHk9IjQxIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iI2RjMjYyNiI+Z2FwPC90ZXh0Pjwvc3ZnPg==" alt="Target spacing example" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="gestures">Gestures</h2>
+<p>Meaningful movements or contact patterns performed by users and
+interpreted as higher-level interactions.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description — how the user interfaces with it</th>
+<th style="text-align: center;">Viewable?</th>
+<th style="text-align: center;">Device-dependent?</th>
+<th>Example image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tap</td>
+<td>A brief touch and release on a target, normally used to activate or
+select it.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="even">
+<td>Double-tap</td>
+<td>Two taps in quick succession, commonly used for zooming or invoking
+a secondary action.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="odd">
+<td>Long-press</td>
+<td>Touching and holding a target beyond a defined duration, often used
+to reveal contextual actions or begin selection.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="even">
+<td>Swipe</td>
+<td>A quick directional touch movement used to navigate, reveal actions,
+dismiss content, or move between items.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="odd">
+<td>Pinch</td>
+<td>A two-touch gesture in which the distance between contact points
+changes, normally used to zoom.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="even">
+<td>Rotate</td>
+<td>A two-touch turning gesture used to rotate an object or view.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="odd">
+<td>Drag and drop</td>
+<td>A compound interaction in which the user presses an object, moves
+it, and releases it over a valid destination.</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjkyIiB2aWV3Qm94PSIwIDAgMjIwIDkyIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImRyYWctZHJvcCBleGFtcGxlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMjAiIGhlaWdodD0iOTIiIHJ4PSI4IiBmaWxsPSIjZjhmYWZjIi8+PHJlY3QgeD0iMjQiIHk9IjI1IiB3aWR0aD0iNjUiIGhlaWdodD0iNDIiIHJ4PSI2IiBmaWxsPSIjZGJlYWZlIiBzdHJva2U9IiMyNTYzZWIiLz48dGV4dCB4PSIzOSIgeT0iNTAiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzMzNDE1NSI+SXRlbTwvdGV4dD48cmVjdCB4PSIxMzkiIHk9IjE3IiB3aWR0aD0iNTgiIGhlaWdodD0iNTgiIHJ4PSI2IiBmaWxsPSIjZGNmY2U3IiBzdHJva2U9IiMxNmEzNGEiLz48dGV4dCB4PSIxNTAiIHk9IjQ5IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiMxNjY1MzQiPkRyb3A8L3RleHQ+PHBhdGggZD0iTTkxIDQ2YzE3LTIxIDI5LTIxIDQ0IDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzI1NjNlYiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtZGFzaGFycmF5PSI1IDQiLz48cGF0aCBkPSJNMTI4IDM5bDggNy05IDUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzI1NjNlYiIgc3Ryb2tlLXdpZHRoPSIzIi8+PC9zdmc+" alt="Drag and drop example" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="input-events">Input events</h2>
+<p>Lower-level occurrences generated by pointer, touch, keyboard, focus,
+or value changes and used to implement interactions.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description — how the user interfaces with it</th>
+<th style="text-align: center;">Viewable?</th>
+<th style="text-align: center;">Device-dependent?</th>
+<th>Example image</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pointer / mouse button press</td>
+<td>Occurs when a pointer button is pressed. Left, right, middle, or
+auxiliary buttons may have different meanings.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="even">
+<td>Pointer / mouse button release</td>
+<td>Occurs when a pressed pointer button is released and may complete a
+click, selection, or drag operation.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="odd">
+<td>Click</td>
+<td>A higher-level activation produced by pressing and releasing a
+pointer button on a target.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="even">
+<td>Pointer move</td>
+<td>Occurs when a mouse, pen, or other pointer changes position, with or
+without a button being pressed.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="odd">
+<td>Pointer enter / leave</td>
+<td>Occurs when a pointer crosses into or out of an element’s hit area
+and commonly controls hover behavior.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="even">
+<td>Wheel / scroll event</td>
+<td>Occurs when a mouse wheel, trackpad, or equivalent control requests
+scrolling or another continuous adjustment.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="odd">
+<td>Touch start / move / end</td>
+<td>Low-level events produced when touch contacts begin, move across the
+surface, or end.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="even">
+<td>Key down</td>
+<td>Occurs when a standard, modifier, navigation, function, or other
+keyboard key is pressed.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="odd">
+<td>Key up</td>
+<td>Occurs when a previously pressed keyboard key is released.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="even">
+<td>Modifier-key combination</td>
+<td>Combines Ctrl, Alt, Shift, or Meta with another key or pointer
+action to alter its meaning.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="odd">
+<td>Standard character-key input</td>
+<td>Produces letters, numbers, punctuation, or other text characters
+according to the active keyboard layout.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="even">
+<td>Special-key input</td>
+<td>Uses non-character keys such as Enter, Escape, Tab, arrows, Home,
+End, Delete, or function keys.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td>Not applicable</td>
+</tr>
+<tr class="odd">
+<td>Focus event</td>
+<td>Occurs when an element gains or loses input focus.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td>Not applicable</td>
+</tr>
+<tr class="even">
+<td>Input event</td>
+<td>Occurs while the user changes the value of an editable element,
+commonly after each edit.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td>Not applicable</td>
+</tr>
+<tr class="odd">
+<td>Change event</td>
+<td>Occurs when an element’s value or selection is committed or
+otherwise considered changed.</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td>Not applicable</td>
+</tr>
+</tbody>
+</table>
+<p><em>The examples are rendered SVG illustrations, not text or Unicode
+stand-ins. A visible example is intentionally omitted when the
+interaction definition itself has no visual representation.</em></p>
+</body>
+</html>

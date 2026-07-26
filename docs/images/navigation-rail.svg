@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="140" viewBox="0 0 260 140" role="img" aria-labelledby="title desc">
+  <title id="title">Navigation rail example</title>
+  <desc id="desc">A narrow persistent vertical navigation strip with destination icons and labels.</desc>
+  <rect width="260" height="140" rx="10" fill="#eef2f7"/>
+  <rect x="8" y="8" width="244" height="124" rx="7" fill="#fff" stroke="#94a3b8"/>
+  <rect x="8" y="8" width="62" height="124" rx="7" fill="#eff6ff"/>
+  <rect x="16" y="19" width="46" height="31" rx="14" fill="#bfdbfe"/>
+  <path d="M32 36l7-7 7 7v8H32z" fill="#1d4ed8"/>
+  <text x="24" y="61" fill="#1e3a8a" font-family="Arial,sans-serif" font-size="9">Home</text>
+  <circle cx="39" cy="79" r="7" fill="none" stroke="#64748b" stroke-width="2"/>
+  <text x="22" y="96" fill="#475569" font-family="Arial,sans-serif" font-size="9">Search</text>
+  <circle cx="39" cy="111" r="6" fill="#94a3b8"/>
+  <rect x="89" y="27" width="131" height="13" rx="3" fill="#cbd5e1"/>
+  <rect x="89" y="53" width="103" height="8" rx="3" fill="#e2e8f0"/>
+  <rect x="89" y="72" width="140" height="44" rx="5" fill="#f1f5f9"/>
+</svg>
