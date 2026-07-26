@@ -99,7 +99,7 @@ Group, structure, and organize related content or other UI elements.
 | Toolbar | A row or column of frequently used actions. The user activates its buttons or menus. | Yes | No | ![Toolbar example](images/toolbar.svg) |
 | Sidebar | A vertical region beside the main content that groups navigation, tools, filters, or supporting information. | Yes | No | ![Sidebar example](images/sidebar.svg) |
 | Sheet | A surface that temporarily or persistently presents supplementary content, controls, or a focused task over or alongside the main view. The user interacts with its contents and may dismiss it when it is temporary. | Yes | No | ![Sheet example](images/sheet.svg) |
-| Side Sheet | A sheet attached to the left or right edge of a view. The user uses it for contextual details, filters, editing, navigation, or related actions, and may open or dismiss it. | Yes | No | ![Side Sheet example](images/side-sheet.svg) |
+| Side Sheet | A sheet attached to the inline-start or inline-end edge of a view. Its physical side may change with the interface direction. The user uses it for contextual details, filters, editing, navigation, or related actions, and may open or dismiss it. | Yes | No | ![Side Sheet example](images/side-sheet.svg) |
 | Bottom Sheet | A sheet attached to the bottom edge of a view. The user opens, expands, collapses, drags, or dismisses it to access contextual actions or content. | Yes | No | ![Bottom Sheet example](images/bottom-sheet.svg) |
 | Accordion | Organizes content into expandable sections. The user expands or collapses each heading. | Yes | No | ![Accordion example](images/accordion.svg) |
 | Popover | Shows contextual, potentially interactive content anchored to another object. | Yes | No | ![Popover example](images/popover.svg) |
@@ -114,7 +114,7 @@ Concrete structural entities that organize, divide, align, or position other UI 
 |---|---|:---:|:---:|---|
 | Grid | A row-and-column structure used to align and size content. Users interact with the elements arranged by it rather than necessarily with the grid itself. | Sometimes | No | ![Grid example](images/layout-grid.svg) |
 | Pane | A distinct content region within a window or view. The user may interact with, scroll, resize, or switch the content inside it. | Yes | No | ![Pane example](images/pane.svg) |
-| Rail | A narrow structural track along an edge used to align persistent controls, navigation, or supporting content. | Sometimes | No | ![Rail example](images/rail.svg) |
+| Rail | A narrow structural track along an edge used to align persistent controls, navigation, or supporting content. Direction-sensitive rails should be assigned to logical start or end edges rather than fixed left or right edges. | Sometimes | No | ![Rail example](images/rail.svg) |
 | Stack | A structure that arranges child elements sequentially along a horizontal, vertical, or depth axis. | Sometimes | No | ![Stack example](images/stack.svg) |
 | Scaffold | A top-level structural template defining the major regions of a screen, such as header, body, navigation, and footer. | Usually no | No | ![Scaffold example](images/scaffold.svg) |
 | Region | A semantically or visually distinct area assigned a purpose within a view. | Sometimes | No | ![Region example](images/region.svg) |
@@ -131,9 +131,9 @@ Rules and relationships that determine how structural objects and UI elements oc
 | Name | Description — how the user experiences its effect | Viewable? | Device-dependent? | Example image |
 |---|---|:---:|:---:|---|
 | Containment | Establishes which object owns, bounds, clips, scrolls, or positions another object. | No | No | ![Containment effect](images/containment.svg) |
-| Flow | Determines the order and direction in which elements are placed as space is consumed. | No | No | ![Flow effect](images/flow.svg) |
-| Alignment | Positions elements relative to an axis, edge, centerline, baseline, or one another. | No | No | ![Alignment effect](images/alignment.svg) |
-| Anchoring | Keeps an element positioned relative to a container edge, point, or another element as dimensions change. | No | No | ![Anchoring effect](images/anchoring.svg) |
+| Flow | Determines the order and direction in which elements are placed as space is consumed. Direction-sensitive flow follows the writing mode and logical inline or block axis unless the content has an intrinsic direction. | No | No | ![Flow effect](images/flow.svg) |
+| Alignment | Positions elements relative to an axis, edge, centerline, baseline, or one another. Direction-adaptive interfaces use logical start and end alignment rather than assuming left and right. | No | No | ![Alignment effect](images/alignment.svg) |
+| Anchoring | Keeps an element positioned relative to a container edge, point, or another element as dimensions change. Direction-sensitive anchoring uses logical inline-start or inline-end edges. | No | No | ![Anchoring effect](images/anchoring.svg) |
 | Sizing | Determines fixed, intrinsic, minimum, maximum, proportional, or available-space dimensions. | No | No | ![Sizing effect](images/sizing.svg) |
 | Spacing | Determines gaps, margins, padding, and spatial rhythm between or within elements. | No | No | ![Spacing effect](images/spacing.svg) |
 | Wrapping | Moves overflowing items onto additional lines, rows, or columns when insufficient space remains. | No | No | ![Wrapping effect](images/wrapping.svg) |
@@ -156,12 +156,49 @@ Visual and auditory systems applied consistently to communicate hierarchy, ident
 | Border | Defines a boundary’s width, color, pattern, position, and radius. | Yes | No | ![Border effect](images/style-border.svg) |
 | Shadow / Elevation | Uses shadows, tonal separation, or layering cues to communicate depth and stacking. | Yes | No | ![Shadow / Elevation effect](images/style-shadow-elevation.svg) |
 | Opacity | Controls the transparency of an element or layer. | Yes | No | ![Opacity effect](images/style-opacity.svg) |
-| Icons / Iconography | Defines the visual language applied to icon elements, including stroke or fill, weight, size, optical alignment, color, and stylistic consistency. | Yes | No | ![Icons / Iconography effect](images/style-iconography.svg) |
+| Icons / Iconography | Defines the visual language applied to icon elements, including stroke or fill, weight, size, optical alignment, color, stylistic consistency, and direction-aware mirroring. Directional icons may mirror in RTL; culturally fixed or non-directional icons do not. | Yes | No | ![Icons / Iconography effect](images/style-iconography.svg) |
 | Spacing tokens | Defines a reusable scale of spacing values used for consistent gaps, margins, and padding. Conceptually, the values support both presentation rhythm and layout. | Yes | No | ![Spacing-token effect](images/style-spacing-tokens.svg) |
 | Visual states | Defines appearance changes that communicate hover, focus, pressed, selected, disabled, validation, and error states. | Yes | No | ![Visual-state effect](images/style-visual-states.svg) |
 | Theme | Coordinates color, typography, shape, iconography, elevation, and other presentation values into a coherent visual system. | Yes | No | ![Theme effect](images/style-theme.svg) |
-| Motion | Defines animation and transition choreography, properties, duration, delay, direction, and easing used to communicate state changes, causality, continuity, and spatial relationships. | Yes | No | ![Motion effect](images/style-animation-transition.svg) |
+| Motion | Defines animation and transition choreography, properties, duration, delay, direction, and easing used to communicate state changes, causality, continuity, and spatial relationships. Directional motion follows semantic navigation and may reverse in RTL. | Yes | No | ![Motion effect](images/style-animation-transition.svg) |
 | Visibility | Determines whether an element is shown, hidden, visually suppressed, clipped, or revealed under specified conditions. | Yes | No | ![Visibility effect](images/style-visibility.svg) |
+
+# UI internationalization and localization definitions
+
+Framework-independent rules and resources that adapt an interface to the user’s language, writing system, locale, and cultural conventions. Internationalization makes this adaptation possible; localization supplies and applies the language- and locale-specific result.
+
+## Language, locale, and writing-system rules
+
+Definitions governing language coverage, translation, writing direction, bidirectional content, culturally appropriate formatting, and localized input. The illustrations show the visible effect of each definition; the rule itself may be abstract.
+
+| Name | Description — how the user experiences its effect | Viewable? | Device-dependent? | Example image |
+|---|---|:---:|:---:|---|
+| Language support | Defines the languages and scripts whose text, input, fonts, grammar, and interface behavior the application can correctly support. It is broader than providing translated strings. | Sometimes | No | ![Language support effect](images/i18n-language-support.svg) |
+| Internationalization (i18n) | Structures software, content, and resources so the interface can be adapted to multiple languages, writing systems, locales, and cultural conventions without redesigning the product. | No | No | ![Internationalization effect](images/i18n-internationalization.svg) |
+| Localization (l10n) | Produces a locale-specific interface by translating and culturally adapting text, terminology, images, formats, content, and behavior. | Yes | No | ![Localization effect](images/i18n-localization.svg) |
+| Locale | Identifies the language and applicable regional conventions, such as `en-US`, `en-GB`, or `he-IL`, used to select localized resources and behavior. A locale is context, not merely a language code. | Sometimes | No | ![Locale effect](images/i18n-locale.svg) |
+| Translation | Provides language-specific UI labels, instructions, validation messages, notifications, help, and other textual content while preserving meaning and purpose. | Yes | No | ![Translation effect](images/i18n-translation.svg) |
+| Pluralization and grammatical variation | Selects text according to language-specific plural categories and grammatical factors such as gender, case, definiteness, or the referenced entity. | Yes | No | ![Pluralization effect](images/i18n-pluralization.svg) |
+| Text direction and writing mode | Determines the logical inline and block directions in which text and interface content flow, including LTR, RTL, and vertical writing modes. Direction belongs to content or a text run; it must not be inferred solely from the language of the surrounding page. | Yes | No | ![Text-direction effect](images/i18n-text-direction.svg) |
+| RTL layout adaptation | Adapts directional layout relationships for a right-to-left interface: reading order, logical start/end alignment, navigation placement, panels, lists, and directional motion. It does not blindly reverse every visual object. | Yes | No | ![RTL layout adaptation effect](images/i18n-rtl-layout.svg) |
+| Bidirectional text | Resolves and isolates mixed-direction content, such as Hebrew or Arabic containing Latin names, URLs, email addresses, codes, or numbers, so each run is ordered and displayed correctly. | Yes | No | ![Bidirectional-text effect](images/i18n-bidirectional-text.svg) |
+| Directional mirroring | Mirrors direction-sensitive layout and imagery when their meaning depends on start/end or forward/back. Media controls, clocks, mathematical symbols, brand marks, and other intrinsically directed or culturally fixed graphics normally remain unchanged. | Yes | No | ![Directional-mirroring effect](images/i18n-mirroring.svg) |
+| Date, time, and calendar formatting | Presents dates, times, day/month order, calendars, time zones, and hour cycles according to locale. Directional layout must not reverse the semantic order produced by the formatter. | Yes | No | ![Date-and-time-formatting effect](images/i18n-date-time.svg) |
+| Number, percentage, and digit formatting | Applies locale-specific decimal marks, grouping separators, signs, percentages, numbering systems, and digit shapes while preserving the internal direction and meaning of numeric values. | Yes | No | ![Number-formatting effect](images/i18n-number.svg) |
+| Currency and measurement formatting | Presents currency symbols, symbol placement, values, spacing, and measurement units according to locale and product policy, such as kilometres/miles or Celsius/Fahrenheit. | Yes | No | ![Currency-and-measurement-formatting effect](images/i18n-currency-measurement.svg) |
+| Locale-aware sorting and search | Compares, orders, filters, and searches text according to locale-specific collation, normalization, case, accents, and script rules rather than raw character-code order. | Sometimes | No | ![Locale-aware-sorting effect](images/i18n-sorting.svg) |
+| Font, glyph, and text-metrics support | Ensures selected fonts contain the required scripts and symbols and provide suitable shaping, fallback, line height, emphasis, and metrics without clipping or layout breakage. | Yes | No | ![Font-and-glyph-support effect](images/i18n-font-glyph.svg) |
+| Localized input and validation | Supports appropriate keyboards, input methods, character composition, cursor movement, selection, names, addresses, telephone numbers, and validation rules for the active locale and script. | Yes | Sometimes | ![Localized-input effect](images/i18n-localized-input.svg) |
+
+### RTL alignment notes
+
+- Use logical layout terms and properties—inline-start, inline-end, block-start, and block-end—in direction-adaptive specifications. Reserve left and right for cases that are intentionally physical.
+- Derive visual order from the writing mode and semantic reading order; do not reverse source or DOM order merely to obtain an RTL appearance.
+- Align natural-language text to its logical start by default. Preserve deliberate alignment for tabular numbers, diagrams, code, and other content with intrinsic presentation rules.
+- Keep mixed-direction values isolated so embedded URLs, email addresses, phone numbers, version identifiers, and Latin product names do not reorder surrounding text.
+- Mirror only direction-sensitive meaning. “Back,” “forward,” disclosure, and start/end placement commonly adapt; play, pause, clocks, mathematical notation, logos, and other fixed symbols normally do not.
+- Adapt keyboard navigation, focus traversal, swipe semantics, transitions, and spatial animations to semantic direction instead of assuming that left always means previous and right always means next.
+- Localize text before measuring or truncating it. Allow expansion, script-specific line height, font fallback, and wrapping without clipping or overlapping adjacent elements.
 
 # UI interaction definitions
 
@@ -199,7 +236,7 @@ Meaningful movements or contact patterns performed by users and interpreted as h
 | Tap | A brief touch and release on a target, normally used to activate or select it. | No | Yes | Not applicable |
 | Double-tap | Two taps in quick succession, commonly used for zooming or invoking a secondary action. | No | Yes | Not applicable |
 | Long-press | Touching and holding a target beyond a defined duration, often used to reveal contextual actions or begin selection. | No | Yes | Not applicable |
-| Swipe | A quick directional touch movement used to navigate, reveal actions, dismiss content, or move between items. | No | Yes | Not applicable |
+| Swipe | A quick directional touch movement used to navigate, reveal actions, dismiss content, or move between items. Its semantic result—such as previous, next, reveal, or dismiss—may map to a different physical direction in RTL. | No | Yes | Not applicable |
 | Pinch | A two-touch gesture in which the distance between contact points changes, normally used to zoom. | No | Yes | Not applicable |
 | Rotate | A two-touch turning gesture used to rotate an object or view. | No | Yes | Not applicable |
 | Drag and drop | A compound interaction in which the user presses an object, moves it, and releases it over a valid destination. | Yes | No | ![Drag and drop example](images/drag-and-drop.svg) |
@@ -221,7 +258,7 @@ Lower-level occurrences generated by pointer, touch, keyboard, focus, or value c
 | Key up | Occurs when a previously pressed keyboard key is released. | No | Yes | Not applicable |
 | Modifier-key combination | Combines Ctrl, Alt, Shift, or Meta with another key or pointer action to alter its meaning. | No | Yes | Not applicable |
 | Standard character-key input | Produces letters, numbers, punctuation, or other text characters according to the active keyboard layout. | No | Yes | Not applicable |
-| Special-key input | Uses non-character keys such as Enter, Escape, Tab, arrows, Home, End, Delete, or function keys. | No | Yes | Not applicable |
+| Special-key input | Uses non-character keys such as Enter, Escape, Tab, arrows, Home, End, Delete, or function keys. Directional-key behavior should follow component semantics, writing direction, and established platform conventions. | No | Yes | Not applicable |
 | Focus event | Occurs when an element gains or loses input focus. | No | No | Not applicable |
 | Input event | Occurs while the user changes the value of an editable element, commonly after each edit. | No | No | Not applicable |
 | Change event | Occurs when an element’s value or selection is committed or otherwise considered changed. | No | No | Not applicable |
