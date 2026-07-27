@@ -21,7 +21,8 @@ const INCREMENTAL_FIXTURE = path.join(
   "output_app-file-select",
 );
 const SPEC_FILE = path.join(INCREMENTAL_FIXTURE, "app-file-select.example.json");
-const FULL_GENERATOR_FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "minimal-openui.json");
+const REPOSITORY_ROOT = path.resolve(ANGULAR_GENERATOR_ROOT, "..", "..", "..");
+const FULL_GENERATOR_FIXTURE = path.join(REPOSITORY_ROOT, "openui.json");
 const DIALOG_FIXTURE = path.join(
   ANGULAR_GENERATOR_ROOT,
   "tests",

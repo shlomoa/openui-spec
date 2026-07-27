@@ -7,6 +7,7 @@ import { buildDataModel } from "../src/data-model/build-data-model";
 import type { DataModelPage } from "../src/data-model/data-model";
 import { run } from "../src/main";
 import { createCatalogIndex } from "../src/spec/catalog-index";
+import { extractOpenUiScopeNodes } from "../src/spec/openui-sections";
 import type { OpenUiElement } from "../src/spec/openui-spec.types";
 import { validateOpenUiCatalog, validateOpenUiSpec } from "../src/spec/validate-spec";
 import { SpecValidationError } from "../src/spec/diagnostics";
@@ -18,7 +19,7 @@ const ANGULAR_GENERATOR_ROOT =
     : path.resolve(__dirname, "..");
 const REPOSITORY_ROOT = path.resolve(ANGULAR_GENERATOR_ROOT, "..", "..", "..");
 const CATALOG_FIXTURE = path.join(REPOSITORY_ROOT, "openui.json");
-const FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "minimal-openui.json");
+const MINIMAL_CATALOG_FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "minimal-openui.json");
 const DIALOG_FIXTURE = path.join(
   ANGULAR_GENERATOR_ROOT,
   "tests",
@@ -75,6 +76,10 @@ function pageById(pages: DataModelPage[], id: string): DataModelPage {
     throw new assert.AssertionError({ message: `Expected page '${id}' to exist.` });
   }
   return page;
+}
+
+function assertPageFeatures(pages: DataModelPage[], id: string, features: DataModelPage["features"]): void {
+  assert.deepEqual(pageById(pages, id).features, features, `Expected '${id}' to map to ${features.join(", ")}.`);
 }
 
 function firstChild(node: OpenUiElement, message: string): OpenUiElement {
@@ -213,72 +218,47 @@ for (const fixtureCase of REPRESENTATIVE_CONCRETE_FIXTURES) {
   });
 }
 
-test("builds the data model from catalog scope-tree regression nodes", async () => {
-  const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));
+test("builds the data model from the generated OpenUI catalog", async () => {
+  const fixture = JSON.parse(await readFile(CATALOG_FIXTURE, "utf8"));
 
   const dataModel = buildDataModel(fixture);
+  const scopeIds = extractOpenUiScopeNodes(fixture).map((scope) => scope.id);
 
   assert.equal(dataModel.name, "OpenUI");
   assert.equal(dataModel.version, "0.0.1");
-  assert.deepEqual(
-    dataModel.pages.map((page) => page.id),
-    [
-      "application",
-      "routing",
-      "navigation",
-      "toolBars",
-      "controls",
-      "native",
-      "behaviors",
-      "dragAndDrop",
-      "resizable",
-      "collapsible",
-      "pages",
-      "dashboard",
-      "shellPage",
-      "emptyPage",
-      "views",
-      "reports",
-      "forms",
-      "containers",
-      "grid",
-      "expandablePanels",
-      "tabs",
-      "widgets",
-      "charts",
-      "tables",
-      "lists",
-      "dateTimePickers",
-      "stepper",
-      "dialog",
-    ],
-  );
+  assert.deepEqual(dataModel.pages.map((page) => page.id), scopeIds);
 
   const application = pageById(dataModel.pages, "application");
   assert.equal(application.route, "application");
   assert.equal(application.title, "Application");
   assert.equal(application.sourceDocument, "scopes/Application/scope.md");
   assert.deepEqual(application.features, ["application-structure"]);
-  assert.match(application.requirements[0], /Routing: Application-level route definitions/);
+  assert.match(application.requirements[0], /Routing: Routing defines how an application resolves navigation intents/);
 
-  const dragAndDrop = pageById(dataModel.pages, "dragAndDrop");
-  assert.equal(dragAndDrop.route, "drag-and-drop");
-  assert.deepEqual(dragAndDrop.features, ["interaction", "layout"]);
+  assert.equal(pageById(dataModel.pages, "dragAndDrop").route, "drag-and-drop");
+  assertPageFeatures(dataModel.pages, "scopes", ["ui-concept"]);
+  assertPageFeatures(dataModel.pages, "favicon", ["application-structure", "theme"]);
+  assertPageFeatures(dataModel.pages, "indexHtml", ["application-structure"]);
+  assertPageFeatures(dataModel.pages, "actionControls", ["component", "interaction"]);
+  assertPageFeatures(dataModel.pages, "textInputs", ["component", "form", "state-model"]);
+  assertPageFeatures(dataModel.pages, "table", ["component", "data-binding"]);
+  assertPageFeatures(dataModel.pages, "overlayContainers", ["layout", "feedback"]);
+  assertPageFeatures(dataModel.pages, "splitters", ["layout", "interaction"]);
+  assertPageFeatures(dataModel.pages, "interaction", ["interaction"]);
+  assertPageFeatures(dataModel.pages, "internationalization", ["internationalization"]);
+  assertPageFeatures(dataModel.pages, "layout", ["layout"]);
+  assertPageFeatures(dataModel.pages, "presentation", ["theme"]);
+  assertPageFeatures(dataModel.pages, "dataGrid", ["component", "data-binding", "interaction"]);
+  assertPageFeatures(dataModel.pages, "feedbackWidgets", ["component", "feedback"]);
+  assertPageFeatures(dataModel.pages, "menuWidgets", ["component", "navigation", "interaction"]);
 
-  const pages = pageById(dataModel.pages, "pages");
-  assert.deepEqual(pages.features, ["navigation"]);
-
-  const forms = pageById(dataModel.pages, "forms");
-  assert.deepEqual(forms.features, ["form", "data-binding"]);
-
-  const dialog = pageById(dataModel.pages, "dialog");
-  assert.equal(dialog.sourceDocument, "scopes/Widgets/dialog.scope.md");
+  assert.equal(pageById(dataModel.pages, "dialog").sourceDocument, "scopes/Widgets/dialog.scope.md");
 });
 
-test("generates an Angular Material standalone app from catalog scope-tree regression OpenUI", async () => {
+test("generates an Angular Material standalone app from the generated OpenUI catalog", async () => {
   const outDir = await createTestOutputDirectory();
   try {
-    await run(["generate", "--input", FIXTURE, "--out", outDir]);
+    await run(["generate", "--input", CATALOG_FIXTURE, "--out", outDir]);
 
     const packageJson = JSON.parse(await readFile(path.join(outDir, "package.json"), "utf8")) as {
       dependencies: Record<string, string>;
@@ -299,10 +279,14 @@ test("generates an Angular Material standalone app from catalog scope-tree regre
     assert.match(routes, /path: 'routing'/);
     assert.match(routes, /path: 'navigation'/);
     assert.match(routes, /path: 'tool-bars'/);
+    assert.match(routes, /path: 'action-controls'/);
+    assert.match(routes, /path: 'data-grid'/);
+    assert.match(routes, /path: 'internationalization'/);
+    assert.match(routes, /path: 'presentation'/);
     assert.match(routes, /path: 'drag-and-drop'/);
     assert.match(routes, /path: 'shell-page'/);
     assert.match(routes, /path: 'date-time-pickers'/);
-    assert.match(routes, /path: '', pathMatch: 'full', redirectTo: 'application'/);
+    assert.match(routes, /path: '', pathMatch: 'full', redirectTo: 'scopes'/);
 
     const appComponent = await readFile(path.join(outDir, "src/app/app.component.ts"), "utf8");
     assert.match(appComponent, /APPLICATION_STRUCTURE/);
@@ -322,24 +306,25 @@ test("generates an Angular Material standalone app from catalog scope-tree regre
     assert.match(applicationStructureModel, /ShellPagePage/);
 
     const i18nService = await readFile(path.join(outDir, "src/app/openui-i18n.service.ts"), "utf8");
-    assert.match(i18nService, /activeLocale: 'en'/);
-    assert.match(i18nService, /messageBundles: \{ en: \{\} \}/);
+    assert.match(i18nService, /activeLocale: "he-IL"/);
+    assert.match(i18nService, /defaultLocale: "en"/);
+    assert.match(i18nService, /"order.submit": "Submit order"/);
   } finally {
     await cleanupTestOutput(outDir);
   }
 });
 
-test("generates scope-specific Angular Material details from the catalog regression tree", async () => {
+test("generates scope-specific Angular Material details from the generated OpenUI catalog", async () => {
   const outDir = await createTestOutputDirectory();
   try {
-    await run(["generate", "--input", FIXTURE, "--out", outDir]);
+    await run(["generate", "--input", CATALOG_FIXTURE, "--out", outDir]);
 
     const applicationTemplate = await readFile(
       path.join(outDir, "src/app/pages/application/application.page.html"),
       "utf8",
     );
     assert.match(applicationTemplate, /aria-label="Application structure materialization"/);
-    assert.match(applicationTemplate, /Routing: Application-level route definitions and route resolution behavior\./);
+    assert.match(applicationTemplate, /Routing: Routing defines how an application resolves navigation intents/);
     assert.match(applicationTemplate, /mat-sidenav-container owns mat-sidenav navigation/);
 
     const dragAndDropPage = await readFile(
@@ -368,7 +353,8 @@ test("generates scope-specific Angular Material details from the catalog regress
     const formsTemplate = await readFile(path.join(outDir, "src/app/pages/forms/forms.page.html"), "utf8");
     assert.match(formsTemplate, /<mat-form-field appearance="outline">/);
     assert.match(formsTemplate, /aria-label="Data binding model materialization"/);
-    assert.match(formsTemplate, /Read-write data including validation, submission, and dirty state\./);
+    assert.match(formsTemplate, /read-write data view/);
+    assert.match(formsTemplate, /dirty-state tracking/);
 
     const dialogPage = await readFile(path.join(outDir, "src/app/pages/dialog/dialog.page.ts"), "utf8");
     assert.match(dialogPage, /MatChipsModule/);
@@ -377,14 +363,26 @@ test("generates scope-specific Angular Material details from the catalog regress
 
     const controlsTemplate = await readFile(path.join(outDir, "src/app/pages/controls/controls.page.html"), "utf8");
     assert.match(controlsTemplate, /aria-label="Component metadata contract"/);
-    assert.match(controlsTemplate, /Native: Browser and framework-provided native controls/);
+    assert.match(controlsTemplate, /Native: A standard browser, framework, or runtime presentation/);
+
+    const actionControlsTemplate = await readFile(
+      path.join(outDir, "src/app/pages/action-controls/action-controls.page.html"),
+      "utf8",
+    );
+    assert.match(actionControlsTemplate, /aria-label="Component metadata contract"/);
+    assert.match(actionControlsTemplate, /aria-label="Interaction model materialization"/);
+
+    const dataGridTemplate = await readFile(path.join(outDir, "src/app/pages/data-grid/data-grid.page.html"), "utf8");
+    assert.match(dataGridTemplate, /aria-label="Component metadata contract"/);
+    assert.match(dataGridTemplate, /aria-label="Data binding model materialization"/);
+    assert.match(dataGridTemplate, /aria-label="Interaction model materialization"/);
   } finally {
     await cleanupTestOutput(outDir);
   }
 });
 
 test("validates catalog root values, attrs, and scoped document uniqueness", async () => {
-  const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));
+  const fixture = JSON.parse(await readFile(MINIMAL_CATALOG_FIXTURE, "utf8"));
   const scopes = (fixture.children as OpenUiElement[])[0];
   const firstScope = firstChild(scopes, "Expected at least one scoped child.");
 
@@ -402,7 +400,7 @@ test("validates catalog root values, attrs, and scoped document uniqueness", asy
     },
   );
 
-  const duplicateFixture = JSON.parse(await readFile(FIXTURE, "utf8"));
+  const duplicateFixture = JSON.parse(await readFile(MINIMAL_CATALOG_FIXTURE, "utf8"));
   const duplicateScopes = (duplicateFixture.children as OpenUiElement[])[0];
   const duplicateFirstScope = firstChild(duplicateScopes, "Expected at least one scoped child.");
 
@@ -421,7 +419,7 @@ test("validates catalog root values, attrs, and scoped document uniqueness", asy
 });
 
 test("allows any valid OpenUI type at the document root", async () => {
-  const fixture = JSON.parse(await readFile(FIXTURE, "utf8"));
+  const fixture = JSON.parse(await readFile(MINIMAL_CATALOG_FIXTURE, "utf8"));
   fixture.type = "ApplicationRoot";
 
   assert.doesNotThrow(() => validateOpenUiSpec(fixture));

@@ -737,13 +737,13 @@ function buildPerformanceStyles(): string {
 
 function buildInternationalizationModel(): AngularInternationalizationModel {
   return {
-    activeLocale: "ar-EG",
+    activeLocale: "he-IL",
     angularLocale: "en-US",
     defaultLocale: "en",
-    fallbackLocales: ["ar-EG", "ar", "en"],
+    fallbackLocales: ["he-IL", "he", "en"],
     messageBundles: {
-      ar: {
-        "order.submit": "إرسال الطلب",
+      he: {
+        "order.submit": "שליחת הזמנה",
       },
       en: {
         "order.cancel": "Cancel",
@@ -751,7 +751,7 @@ function buildInternationalizationModel(): AngularInternationalizationModel {
         "order.total": "Order total",
       },
     },
-    rtlLocales: ["ar", "ar-EG", "fa", "he", "ur"],
+    rtlLocales: ["ar", "ar-EG", "fa", "he", "he-IL", "ur"],
   };
 }
 
