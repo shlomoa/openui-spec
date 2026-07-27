@@ -1,0 +1,20 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "WidgetExample",
+  "attrs": {
+    "title": "\"Data grid example\""
+  },
+  "children": [
+    {
+      "id": "ordersGrid",
+      "type": "DataGrid",
+      "attrs": {
+        "[data]": "orders",
+        "[selection]": "\"multiple\"",
+        "[sortable]": "true",
+        "(selectionChange)": "onOrderSelection($event)"
+      }
+    }
+  ]
+}

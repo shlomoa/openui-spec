@@ -1,0 +1,19 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "WidgetExample",
+  "attrs": {
+    "title": "\"Media widgets example\""
+  },
+  "children": [
+    {
+      "id": "productMedia",
+      "type": "MediaWidgets",
+      "attrs": {
+        "[src]": "\"/media/product.mp4\"",
+        "[caption]": "\"Product walkthrough\"",
+        "[controls]": "true"
+      }
+    }
+  ]
+}

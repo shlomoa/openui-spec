@@ -8,7 +8,12 @@ Common widgets include:
 
 - [Charts](charts.scope.md): Visual representations of data, including bar charts, line charts, and pie charts.
 - [Tables](tables.scope.md): Tabular representations of data, including sorting, filtering, and pagination.
+- [Data grid](data_grid.scope.md): Interactive tabular-data widgets with grid navigation, selection, or editing behavior.
 - [Lists](lists.scope.md): Lists of items, including sorting, filtering, and pagination.
+- [Feedback widgets](feedback_widgets.scope.md): Tooltips, alerts, toasts, snackbars, notifications, and audio-description surfaces.
+- [Media widgets](media_widgets.scope.md): Media players, camera previews, and map surfaces.
+- [Navigation widgets](navigation_widgets.scope.md): Navigation bars, drawers, rails, breadcrumbs, tree views, pagination controls, and carousels.
+- [Menu widgets](menu_widgets.scope.md): Menus, dropdown menus, and context menus.
 
 More complex widgets include:
 

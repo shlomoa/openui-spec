@@ -1,5 +1,6 @@
 import unittest
 from pathlib import Path
+from typing import cast
 
 from spec.to_json.converter import parse_leaf_scope
 
@@ -7,6 +8,35 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SCOPES_DIR = REPO_ROOT / "spec" / "scopes"
 
 ContractShape = tuple[str, tuple[str, ...], tuple[tuple[str, str], ...]]
+
+REQUIRED_TEMPLATE_SECTIONS = (
+    "## Identity",
+    "## Purpose",
+    "## Attributes",
+    "## Child model",
+)
+
+NEW_GROUPED_LEAF_SCOPES = {
+    "Containers/overlay_containers.scope.md",
+    "Containers/sheet_containers.scope.md",
+    "Containers/splitters.scope.md",
+    "Containers/structural_containers.scope.md",
+    "Containers/surface_containers.scope.md",
+    "Controls/action_controls.scope.md",
+    "Controls/choice_controls.scope.md",
+    "Controls/display_primitives.scope.md",
+    "Controls/drawing_and_capture.scope.md",
+    "Controls/link_and_scroll_controls.scope.md",
+    "Controls/picker_controls.scope.md",
+    "Controls/range_controls.scope.md",
+    "Controls/status_indicators.scope.md",
+    "Controls/text_inputs.scope.md",
+    "Widgets/data_grid.scope.md",
+    "Widgets/feedback_widgets.scope.md",
+    "Widgets/media_widgets.scope.md",
+    "Widgets/menu_widgets.scope.md",
+    "Widgets/navigation_widgets.scope.md",
+}
 
 EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     "Application/favicon.scope.md": (
@@ -60,12 +90,25 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
         (),
     ),
     "Containers/grid.scope.md": ("Grid", (), (("gridItem", "section"),)),
+    "Containers/overlay_containers.scope.md": ("OverlayContainers", (), ()),
+    "Containers/sheet_containers.scope.md": ("SheetContainers", (), ()),
+    "Containers/splitters.scope.md": ("Splitters", (), ()),
+    "Containers/structural_containers.scope.md": ("StructuralContainers", (), ()),
+    "Containers/surface_containers.scope.md": ("SurfaceContainers", (), ()),
     "Containers/tabs.scope.md": ("Tabs", (), (("tabsTab", "tab"),)),
+    "Controls/action_controls.scope.md": ("ActionControls", (), ()),
+    "Controls/choice_controls.scope.md": ("ChoiceControls", (), ()),
+    "Controls/display_primitives.scope.md": ("DisplayPrimitives", (), ()),
+    "Controls/drawing_and_capture.scope.md": ("DrawingAndCapture", (), ()),
+    "Controls/link_and_scroll_controls.scope.md": ("LinkAndScrollControls", (), ()),
     "Controls/native.scope.md": (
         "input",
         ("[disabled]", "[placeholder]", "[type]", "[value]"),
         (),
     ),
+    "Controls/picker_controls.scope.md": ("PickerControls", (), ()),
+    "Controls/range_controls.scope.md": ("RangeControls", (), ()),
+    "Controls/status_indicators.scope.md": ("StatusIndicators", (), ()),
     "Controls/Table/table.scope.md": ("table", (), (("tableRow", "tr"),)),
     "Controls/Table/td.scope.md": (
         "td",
@@ -82,6 +125,7 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
         (),
         (("trHeaderCell", "th"), ("trDataCell", "td")),
     ),
+    "Controls/text_inputs.scope.md": ("TextInputs", (), ()),
     "Pages/dashboard.scope.md": ("DashboardPage", (), ()),
     "Pages/empty_page.scope.md": ("EmptyPage", (), ()),
     "Pages/shell_page.scope.md": (
@@ -100,6 +144,7 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
         (),
     ),
     "Widgets/charts.scope.md": ("Chart", (), ()),
+    "Widgets/data_grid.scope.md": ("DataGrid", (), ()),
     "Widgets/date_time_pickers.scope.md": (
         "DateTimePicker",
         ("(dateChange)", "[end]", "[start]"),
@@ -114,11 +159,15 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
             ("dialogActions", "footer"),
         ),
     ),
+    "Widgets/feedback_widgets.scope.md": ("FeedbackWidgets", (), ()),
     "Widgets/lists.scope.md": (
         "ul",
         ("(filter)", "(paginate)", "(sort)"),
         (("listsListItem", "li"),),
     ),
+    "Widgets/media_widgets.scope.md": ("MediaWidgets", (), ()),
+    "Widgets/menu_widgets.scope.md": ("MenuWidgets", (), ()),
+    "Widgets/navigation_widgets.scope.md": ("NavigationWidgets", (), ()),
     "Widgets/stepper.scope.md": ("Stepper", (), (("stepperStep", "step"),)),
     "Widgets/tables.scope.md": (
         "table",
@@ -130,6 +179,16 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
 
 class EnrichedScopeContractCoverageTest(unittest.TestCase):
     """Every template-enriched leaf has an explicit public-contract assertion."""
+
+    def test_new_grouped_leaf_scopes_use_template_and_required_sections(self) -> None:
+        for relative_path in sorted(NEW_GROUPED_LEAF_SCOPES):
+            path = SCOPES_DIR / relative_path
+            text = path.read_text(encoding="utf-8")
+
+            with self.subTest(scope=relative_path):
+                self.assertIn("template.scope.md", text)
+                for section in REQUIRED_TEMPLATE_SECTIONS:
+                    self.assertIn(section, text)
 
     def test_guard_covers_every_template_enriched_leaf(self) -> None:
         enriched_leaves = {
@@ -150,10 +209,11 @@ class EnrichedScopeContractCoverageTest(unittest.TestCase):
                 self.assertEqual(self._contract_shape(instance), expected_contract)
 
     def _contract_shape(self, instance: dict[str, object]) -> ContractShape:
-        children = instance.get("children", [])
+        attrs = cast(dict[str, object], instance.get("attrs", {}))
+        children = cast(list[dict[str, str]], instance.get("children", []))
         return (
-            instance["type"],
-            tuple(sorted(instance.get("attrs", {}).keys())),
+            cast(str, instance["type"]),
+            tuple(sorted(attrs.keys())),
             tuple((child["id"], child["type"]) for child in children),
         )
 

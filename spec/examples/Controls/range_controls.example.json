@@ -1,0 +1,21 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ControlsExample",
+  "attrs": {
+    "title": "\"Range controls example\""
+  },
+  "children": [
+    {
+      "id": "volumeRange",
+      "type": "RangeControls",
+      "attrs": {
+        "[label]": "\"Volume\"",
+        "[min]": "0",
+        "[max]": "100",
+        "[value]": "volume",
+        "(valueChange)": "setVolume($event)"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "WidgetExample",
+  "attrs": {
+    "title": "\"Navigation widgets example\""
+  },
+  "children": [
+    {
+      "id": "sectionNavigation",
+      "type": "NavigationWidgets",
+      "attrs": {
+        "[ariaLabel]": "\"Sections\"",
+        "[selected]": "\"overview\""
+      }
+    }
+  ]
+}

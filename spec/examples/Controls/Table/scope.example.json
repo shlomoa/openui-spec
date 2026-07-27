@@ -1,0 +1,50 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "TableFamilyExample",
+  "attrs": {
+    "title": "\"Table family example\""
+  },
+  "children": [
+    {
+      "id": "ordersTable",
+      "type": "table",
+      "children": [
+        {
+          "id": "ordersHeaderRow",
+          "type": "tr",
+          "children": [
+            {
+              "id": "orderHeader",
+              "type": "th",
+              "attrs": {
+                "[scope]": "\"col\""
+              }
+            },
+            {
+              "id": "totalHeader",
+              "type": "th",
+              "attrs": {
+                "[scope]": "\"col\""
+              }
+            }
+          ]
+        },
+        {
+          "id": "ordersDataRow",
+          "type": "tr",
+          "children": [
+            {
+              "id": "orderCell",
+              "type": "td"
+            },
+            {
+              "id": "totalCell",
+              "type": "td"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

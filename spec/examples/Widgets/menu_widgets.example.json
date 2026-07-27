@@ -1,0 +1,19 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "WidgetExample",
+  "attrs": {
+    "title": "\"Menu widgets example\""
+  },
+  "children": [
+    {
+      "id": "rowActionsMenu",
+      "type": "MenuWidgets",
+      "attrs": {
+        "[label]": "\"Row actions\"",
+        "[open]": "isMenuOpen",
+        "(select)": "onMenuSelect($event)"
+      }
+    }
+  ]
+}

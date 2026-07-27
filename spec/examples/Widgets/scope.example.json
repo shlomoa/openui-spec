@@ -33,6 +33,14 @@
       ]
     },
     {
+      "id": "ordersGrid",
+      "type": "DataGrid",
+      "attrs": {
+        "[data]": "orders",
+        "[sortable]": "true"
+      }
+    },
+    {
       "id": "recentList",
       "type": "List",
       "attrs": {
@@ -47,6 +55,36 @@
           }
         }
       ]
+    },
+    {
+      "id": "saveFeedback",
+      "type": "FeedbackWidgets",
+      "attrs": {
+        "[message]": "\"Saved successfully.\""
+      }
+    },
+    {
+      "id": "productMedia",
+      "type": "MediaWidgets",
+      "attrs": {
+        "[src]": "\"/media/product.mp4\"",
+        "[controls]": "true"
+      }
+    },
+    {
+      "id": "sectionNavigation",
+      "type": "NavigationWidgets",
+      "attrs": {
+        "[ariaLabel]": "\"Sections\""
+      }
+    },
+    {
+      "id": "rowActionsMenu",
+      "type": "MenuWidgets",
+      "attrs": {
+        "[label]": "\"Row actions\"",
+        "[open]": "isMenuOpen"
+      }
     },
     {
       "id": "rangePicker",

@@ -1,0 +1,19 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ControlsExample",
+  "attrs": {
+    "title": "\"Drawing and capture example\""
+  },
+  "children": [
+    {
+      "id": "signatureCapture",
+      "type": "DrawingAndCapture",
+      "attrs": {
+        "[label]": "\"Signature\"",
+        "[mode]": "\"draw\"",
+        "(capture)": "saveSignature($event)"
+      }
+    }
+  ]
+}

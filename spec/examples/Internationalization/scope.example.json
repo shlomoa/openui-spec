@@ -1,0 +1,19 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Internationalization",
+  "attrs": {
+    "title": "\"Internationalization abstraction example\""
+  },
+  "children": [
+    {
+      "id": "localeRules",
+      "type": "LocalizationRule",
+      "attrs": {
+        "[locale]": "\"en-US\"",
+        "[direction]": "\"ltr\"",
+        "[dateFormat]": "\"mediumDate\""
+      }
+    }
+  ]
+}

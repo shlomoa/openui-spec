@@ -14,7 +14,7 @@
       "type": "Scopes",
       "attrs": {
         "title": "Scopes",
-        "purpose": "The `scopes` folder is the hierarchical source for OpenUI scope objects. Each top-level folder is a scope, and each child object is either another scope folder or a snake_case `*.scope.md` leaf file.",
+        "purpose": "The `scopes` folder is the hierarchical source for OpenUI scope objects. Each top-level folder is a scope, and each child object is either another scope folder or a snake_case `*.scope.md` leaf file. Shared vocabulary, aliases, and canonical meanings for terms such as object, element, control, widget, view, container, behavior, table, grid, and button are defined in the [spec glossary](../README.md#glossary). Scope files specialize those terms for concrete object contracts rather than redefining them. The [taxonomy mapping](taxonomy_mapping.md) maps entries from `docs/generic-ui-taxonomy.md` to these scope objects and records whether each entry is an existing object, alias, grouped leaf, or folder-level abstraction.",
         "scopeDocument": "scopes/scope.md",
         "status": "draft"
       },
@@ -335,6 +335,86 @@
                   ]
                 }
               ]
+            },
+            {
+              "id": "surfaceContainers",
+              "type": "SurfaceContainers",
+              "attrs": {
+                "title": "Surface containers",
+                "purpose": "Surface containers cover windows, screens, views, panels, cards, and toolbar surfaces when they are modeled as visual regions that hold related content or controls.",
+                "scopeDocument": "scopes/Containers/surface_containers.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "surfaceContainersInstance",
+                  "type": "SurfaceContainers"
+                }
+              ]
+            },
+            {
+              "id": "sheetContainers",
+              "type": "SheetContainers",
+              "attrs": {
+                "title": "Sheet containers",
+                "purpose": "Sheet containers cover sidebars, sheets, side sheets, and bottom sheets that reveal supplemental content from an edge or layered surface.",
+                "scopeDocument": "scopes/Containers/sheet_containers.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "sheetContainersInstance",
+                  "type": "SheetContainers"
+                }
+              ]
+            },
+            {
+              "id": "overlayContainers",
+              "type": "OverlayContainers",
+              "attrs": {
+                "title": "Overlay containers",
+                "purpose": "Overlay containers cover popovers and modal overlays that layer content above the current surface without necessarily becoming a full dialog widget.",
+                "scopeDocument": "scopes/Containers/overlay_containers.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "overlayContainersInstance",
+                  "type": "OverlayContainers"
+                }
+              ]
+            },
+            {
+              "id": "structuralContainers",
+              "type": "StructuralContainers",
+              "attrs": {
+                "title": "Structural containers",
+                "purpose": "Structural containers cover panes, rails, stacks, scaffolds, and regions that organize page or view content without prescribing a concrete layout engine.",
+                "scopeDocument": "scopes/Containers/structural_containers.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "structuralContainersInstance",
+                  "type": "StructuralContainers"
+                }
+              ]
+            },
+            {
+              "id": "splitters",
+              "type": "Splitters",
+              "attrs": {
+                "title": "Splitters",
+                "purpose": "Splitters cover movable dividers between panes or regions that let users adjust the relative size of adjacent containers.",
+                "scopeDocument": "scopes/Containers/splitters.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "splittersInstance",
+                  "type": "Splitters"
+                }
+              ]
             }
           ]
         },
@@ -367,6 +447,150 @@
                     "[placeholder]": null,
                     "[disabled]": null
                   }
+                }
+              ]
+            },
+            {
+              "id": "actionControls",
+              "type": "ActionControls",
+              "attrs": {
+                "title": "Action controls",
+                "purpose": "Action controls cover controls that trigger commands or state transitions, including button and icon button aliases when they are not modeled as a more specific widget.",
+                "scopeDocument": "scopes/Controls/action_controls.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "actionControlsInstance",
+                  "type": "ActionControls"
+                }
+              ]
+            },
+            {
+              "id": "textInputs",
+              "type": "TextInputs",
+              "attrs": {
+                "title": "Text inputs",
+                "purpose": "Text inputs cover single-line, multi-line, password, and search entry controls that accept textual user input.",
+                "scopeDocument": "scopes/Controls/text_inputs.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "textInputsInstance",
+                  "type": "TextInputs"
+                }
+              ]
+            },
+            {
+              "id": "choiceControls",
+              "type": "ChoiceControls",
+              "attrs": {
+                "title": "Choice controls",
+                "purpose": "Choice controls cover checkboxes, radio buttons, switches, toggles, dropdowns, list boxes, and combo boxes that let users select one or more values.",
+                "scopeDocument": "scopes/Controls/choice_controls.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "choiceControlsInstance",
+                  "type": "ChoiceControls"
+                }
+              ]
+            },
+            {
+              "id": "pickerControls",
+              "type": "PickerControls",
+              "attrs": {
+                "title": "Picker controls",
+                "purpose": "Picker controls cover specialized selection affordances such as wheel picker, color picker, and file picker. Date and time picker aliases map to the existing Date/Time pickers widget when calendar semantics are required.",
+                "scopeDocument": "scopes/Controls/picker_controls.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "pickerControlsInstance",
+                  "type": "PickerControls"
+                }
+              ]
+            },
+            {
+              "id": "rangeControls",
+              "type": "RangeControls",
+              "attrs": {
+                "title": "Range controls",
+                "purpose": "Range controls cover sliders, spin boxes, stepper inputs, and rating controls that select or present a value within a bounded or discrete range.",
+                "scopeDocument": "scopes/Controls/range_controls.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "rangeControlsInstance",
+                  "type": "RangeControls"
+                }
+              ]
+            },
+            {
+              "id": "drawingAndCapture",
+              "type": "DrawingAndCapture",
+              "attrs": {
+                "title": "Drawing and capture controls",
+                "purpose": "Drawing and capture controls cover canvas or drawing areas, microphone input, and biometric prompts that collect non-text user input.",
+                "scopeDocument": "scopes/Controls/drawing_and_capture.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "drawingAndCaptureInstance",
+                  "type": "DrawingAndCapture"
+                }
+              ]
+            },
+            {
+              "id": "displayPrimitives",
+              "type": "DisplayPrimitives",
+              "attrs": {
+                "title": "Display primitives",
+                "purpose": "Display primitives cover labels, text, images, icons, avatars, and separators or dividers that render content without owning a complex interaction model.",
+                "scopeDocument": "scopes/Controls/display_primitives.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "displayPrimitivesInstance",
+                  "type": "DisplayPrimitives"
+                }
+              ]
+            },
+            {
+              "id": "statusIndicators",
+              "type": "StatusIndicators",
+              "attrs": {
+                "title": "Status indicators",
+                "purpose": "Status indicators cover status bars, tags, badges, progress bars, loaders, and spinners that communicate state without requiring user activation.",
+                "scopeDocument": "scopes/Controls/status_indicators.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "statusIndicatorsInstance",
+                  "type": "StatusIndicators"
+                }
+              ]
+            },
+            {
+              "id": "linkAndScrollControls",
+              "type": "LinkAndScrollControls",
+              "attrs": {
+                "title": "Link and scroll controls",
+                "purpose": "Link and scroll controls cover links and scrollbars when they are modeled as primitive controls rather than application navigation structures or composite widgets.",
+                "scopeDocument": "scopes/Controls/link_and_scroll_controls.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "linkAndScrollControlsInstance",
+                  "type": "LinkAndScrollControls"
                 }
               ]
             },
@@ -477,6 +701,36 @@
           ]
         },
         {
+          "id": "interaction",
+          "type": "Interaction",
+          "attrs": {
+            "title": "Interaction",
+            "purpose": "Interaction defines state, target, gesture, pointer, keyboard, focus, input, and change event notions used by controls, behaviors, containers, and widgets.",
+            "scopeDocument": "scopes/Interaction/scope.md",
+            "status": "draft"
+          }
+        },
+        {
+          "id": "internationalization",
+          "type": "Internationalization",
+          "attrs": {
+            "title": "Internationalization",
+            "purpose": "Internationalization defines language, locale, writing-system, formatting, sorting, search, font, glyph, and localized input-validation notions used throughout OpenUI.",
+            "scopeDocument": "scopes/Internationalization/scope.md",
+            "status": "draft"
+          }
+        },
+        {
+          "id": "layout",
+          "type": "Layout",
+          "attrs": {
+            "title": "Layout",
+            "purpose": "Layout defines mechanism-level arrangement notions used by containers and widgets, including containment, flow, alignment, anchoring, sizing, spacing, wrapping, responsive reflow, and breakpoints.",
+            "scopeDocument": "scopes/Layout/scope.md",
+            "status": "draft"
+          }
+        },
+        {
           "id": "pages",
           "type": "Pages",
           "attrs": {
@@ -545,6 +799,16 @@
               ]
             }
           ]
+        },
+        {
+          "id": "presentation",
+          "type": "Presentation",
+          "attrs": {
+            "title": "Presentation",
+            "purpose": "Presentation defines visual styling notions used by controls, containers, widgets, pages, and views, including color, typography, shape, border, shadow, opacity, iconography, spacing tokens, visual states, theme, motion, and visibility.",
+            "scopeDocument": "scopes/Presentation/scope.md",
+            "status": "draft"
+          }
         },
         {
           "id": "views",
@@ -655,6 +919,22 @@
               ]
             },
             {
+              "id": "dataGrid",
+              "type": "DataGrid",
+              "attrs": {
+                "title": "Data grid",
+                "purpose": "A data grid is an interactive tabular-data widget that may support cell focus, selection, editing, sorting, filtering, pagination, or keyboard grid navigation.",
+                "scopeDocument": "scopes/Widgets/data_grid.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "dataGridInstance",
+                  "type": "DataGrid"
+                }
+              ]
+            },
+            {
               "id": "lists",
               "type": "Lists",
               "attrs": {
@@ -678,6 +958,70 @@
                       "type": "li"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "id": "feedbackWidgets",
+              "type": "FeedbackWidgets",
+              "attrs": {
+                "title": "Feedback widgets",
+                "purpose": "Feedback widgets cover tooltips, alerts, toasts, snackbars, notifications, and narration or audio-description surfaces that communicate contextual or transient information.",
+                "scopeDocument": "scopes/Widgets/feedback_widgets.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "feedbackWidgetsInstance",
+                  "type": "FeedbackWidgets"
+                }
+              ]
+            },
+            {
+              "id": "mediaWidgets",
+              "type": "MediaWidgets",
+              "attrs": {
+                "title": "Media widgets",
+                "purpose": "Media widgets cover media players, camera previews, and map surfaces that present rich visual, audio, video, or spatial content with widget-level behavior.",
+                "scopeDocument": "scopes/Widgets/media_widgets.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "mediaWidgetsInstance",
+                  "type": "MediaWidgets"
+                }
+              ]
+            },
+            {
+              "id": "navigationWidgets",
+              "type": "NavigationWidgets",
+              "attrs": {
+                "title": "Navigation widgets",
+                "purpose": "Navigation widgets cover navigation bars, drawers, rails, hamburger menus, breadcrumbs, tree views, pagination controls, and carousels when they are modeled as reusable widgets.",
+                "scopeDocument": "scopes/Widgets/navigation_widgets.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "navigationWidgetsInstance",
+                  "type": "NavigationWidgets"
+                }
+              ]
+            },
+            {
+              "id": "menuWidgets",
+              "type": "MenuWidgets",
+              "attrs": {
+                "title": "Menu widgets",
+                "purpose": "Menu widgets cover menus, dropdown menus, and context menus that present command or choice lists in a menu pattern.",
+                "scopeDocument": "scopes/Widgets/menu_widgets.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "menuWidgetsInstance",
+                  "type": "MenuWidgets"
                 }
               ]
             },

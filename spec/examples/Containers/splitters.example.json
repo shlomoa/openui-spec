@@ -1,0 +1,18 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ContainerExample",
+  "attrs": {
+    "title": "\"Splitters example\""
+  },
+  "children": [
+    {
+      "id": "workspaceSplitter",
+      "type": "Splitters",
+      "attrs": {
+        "[orientation]": "\"horizontal\"",
+        "[position]": "320"
+      }
+    }
+  ]
+}

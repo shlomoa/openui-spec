@@ -5,6 +5,9 @@ Shared vocabulary, aliases, and canonical meanings for terms such as object,
 element, control, widget, view, container, behavior, table, grid, and button are
 defined in the [spec glossary](../README.md#glossary). Scope files specialize
 those terms for concrete object contracts rather than redefining them.
+The [taxonomy mapping](taxonomy_mapping.md) maps entries from
+`docs/generic-ui-taxonomy.md` to these scope objects and records whether each
+entry is an existing object, alias, grouped leaf, or folder-level abstraction.
 
 ## Top-level scopes
 
@@ -15,6 +18,10 @@ those terms for concrete object contracts rather than redefining them.
 - [Views](Views/scope.md): user-facing views of business objects and workflows.
 - [Containers](Containers/scope.md): layout containers that arrange child content.
 - [Widgets](Widgets/scope.md): reusable components such as charts, tables, lists, date/time pickers, steppers, and dialogs.
+- [Layout](Layout/scope.md): mechanism-level arrangement notions such as flow, alignment, sizing, and breakpoints.
+- [Presentation](Presentation/scope.md): visual styling notions such as color, typography, visual states, theme, motion, and visibility.
+- [Internationalization](Internationalization/scope.md): language, locale, writing-system, formatting, sorting, search, font, and localized validation notions.
+- [Interaction](Interaction/scope.md): state, target, gesture, pointer, keyboard, focus, input, and change event notions.
 
 ## Folder and file convention
 

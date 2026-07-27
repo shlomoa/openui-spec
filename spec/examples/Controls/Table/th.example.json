@@ -1,0 +1,18 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ControlExample",
+  "attrs": {
+    "title": "\"Table header cell example\""
+  },
+  "children": [
+    {
+      "id": "amountHeader",
+      "type": "th",
+      "attrs": {
+        "[scope]": "\"col\"",
+        "[abbr]": "\"Amt\""
+      }
+    }
+  ]
+}

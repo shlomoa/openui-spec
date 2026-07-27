@@ -1,0 +1,18 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ContainerExample",
+  "attrs": {
+    "title": "\"Overlay containers example\""
+  },
+  "children": [
+    {
+      "id": "helpOverlay",
+      "type": "OverlayContainers",
+      "attrs": {
+        "[anchor]": "\"helpButton\"",
+        "[open]": "showHelp"
+      }
+    }
+  ]
+}

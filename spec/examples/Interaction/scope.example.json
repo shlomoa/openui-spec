@@ -1,0 +1,19 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Interaction",
+  "attrs": {
+    "title": "\"Interaction abstraction example\""
+  },
+  "children": [
+    {
+      "id": "dragInteraction",
+      "type": "InteractionRule",
+      "attrs": {
+        "[state]": "\"dragging\"",
+        "[gesture]": "\"drag\"",
+        "(complete)": "onDragComplete($event)"
+      }
+    }
+  ]
+}

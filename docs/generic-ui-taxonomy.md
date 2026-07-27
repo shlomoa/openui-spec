@@ -3,7 +3,8 @@
 Framework-independent UI taxonomy. Each entry is classified by its primary
 purpose. The canonical vocabulary, aliases, and detailed term definitions live in
 [`spec/README.md` § Glossary](../spec/README.md#glossary); this document
-classifies and illustrates those terms rather than redefining them.
+classifies and illustrates those terms rather than redefining them. The
+spec-object coverage map is maintained in `spec/scopes/taxonomy_mapping.md`.
 “Device-dependent” means that the element inherently requires a particular
 hardware or host-platform capability, not merely that its layout adapts to a
 device.

@@ -8,6 +8,7 @@ nav:
   - Overview: README.md
   - Scopes:
       - Overview: scopes/scope.md
+      - Taxonomy mapping: scopes/taxonomy_mapping.md
       - Evidence: scopes/evidence.md
       - Template: scopes/template.scope.md
       - Application:
@@ -20,6 +21,15 @@ nav:
       - Controls:
           - Overview: scopes/Controls/scope.md
           - Native: scopes/Controls/native.scope.md
+          - Action controls: scopes/Controls/action_controls.scope.md
+          - Text inputs: scopes/Controls/text_inputs.scope.md
+          - Choice controls: scopes/Controls/choice_controls.scope.md
+          - Picker controls: scopes/Controls/picker_controls.scope.md
+          - Range controls: scopes/Controls/range_controls.scope.md
+          - Drawing and capture controls: scopes/Controls/drawing_and_capture.scope.md
+          - Display primitives: scopes/Controls/display_primitives.scope.md
+          - Status indicators: scopes/Controls/status_indicators.scope.md
+          - Link and scroll controls: scopes/Controls/link_and_scroll_controls.scope.md
           - Table:
               - Overview: scopes/Controls/Table/scope.md
               - table: scopes/Controls/Table/table.scope.md
@@ -45,12 +55,30 @@ nav:
           - Grid: scopes/Containers/grid.scope.md
           - Expandable panels: scopes/Containers/expandable_panels.scope.md
           - Tabs: scopes/Containers/tabs.scope.md
+          - Surface containers: scopes/Containers/surface_containers.scope.md
+          - Sheet containers: scopes/Containers/sheet_containers.scope.md
+          - Overlay containers: scopes/Containers/overlay_containers.scope.md
+          - Structural containers: scopes/Containers/structural_containers.scope.md
+          - Splitters: scopes/Containers/splitters.scope.md
       - Widgets:
           - Overview: scopes/Widgets/scope.md
           - Charts: scopes/Widgets/charts.scope.md
           - Tables: scopes/Widgets/tables.scope.md
+          - Data grid: scopes/Widgets/data_grid.scope.md
           - Lists: scopes/Widgets/lists.scope.md
+          - Feedback widgets: scopes/Widgets/feedback_widgets.scope.md
+          - Media widgets: scopes/Widgets/media_widgets.scope.md
+          - Navigation widgets: scopes/Widgets/navigation_widgets.scope.md
+          - Menu widgets: scopes/Widgets/menu_widgets.scope.md
           - Date/Time pickers: scopes/Widgets/date_time_pickers.scope.md
           - Stepper: scopes/Widgets/stepper.scope.md
           - Dialog: scopes/Widgets/dialog.scope.md
+      - Layout:
+          - Overview: scopes/Layout/scope.md
+      - Presentation:
+          - Overview: scopes/Presentation/scope.md
+      - Internationalization:
+          - Overview: scopes/Internationalization/scope.md
+      - Interaction:
+          - Overview: scopes/Interaction/scope.md
   - Examples: examples/README.md

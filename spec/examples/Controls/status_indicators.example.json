@@ -1,0 +1,18 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ControlsExample",
+  "attrs": {
+    "title": "\"Status indicators example\""
+  },
+  "children": [
+    {
+      "id": "syncStatus",
+      "type": "StatusIndicators",
+      "attrs": {
+        "[state]": "\"loading\"",
+        "[label]": "\"Syncing\""
+      }
+    }
+  ]
+}

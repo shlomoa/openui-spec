@@ -1,0 +1,20 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ControlsExample",
+  "attrs": {
+    "title": "\"Text inputs example\""
+  },
+  "children": [
+    {
+      "id": "searchText",
+      "type": "TextInputs",
+      "attrs": {
+        "[label]": "\"Search\"",
+        "[placeholder]": "\"Type to search\"",
+        "[value]": "query",
+        "(valueChange)": "onQueryChange($event)"
+      }
+    }
+  ]
+}
