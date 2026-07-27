@@ -25,6 +25,96 @@
           }
         }
       ]
+    },
+    {
+      "id": "primaryAction",
+      "type": "ActionControls",
+      "attrs": {
+        "[label]": "\"Save\"",
+        "(activate)": "save()"
+      }
+    },
+    {
+      "id": "searchText",
+      "type": "TextInputs",
+      "attrs": {
+        "[placeholder]": "\"Search\"",
+        "[value]": "query"
+      }
+    },
+    {
+      "id": "shippingChoice",
+      "type": "ChoiceControls",
+      "attrs": {
+        "[value]": "shippingSpeed"
+      }
+    },
+    {
+      "id": "accentPicker",
+      "type": "PickerControls",
+      "attrs": {
+        "[value]": "accentColor"
+      }
+    },
+    {
+      "id": "volumeRange",
+      "type": "RangeControls",
+      "attrs": {
+        "[min]": "0",
+        "[max]": "100",
+        "[value]": "volume"
+      }
+    },
+    {
+      "id": "signatureCapture",
+      "type": "DrawingAndCapture",
+      "attrs": {
+        "[mode]": "\"draw\""
+      }
+    },
+    {
+      "id": "statusLabel",
+      "type": "DisplayPrimitives",
+      "attrs": {
+        "[text]": "\"Ready\""
+      }
+    },
+    {
+      "id": "syncStatus",
+      "type": "StatusIndicators",
+      "attrs": {
+        "[state]": "\"loading\""
+      }
+    },
+    {
+      "id": "skipToContent",
+      "type": "LinkAndScrollControls",
+      "attrs": {
+        "[target]": "\"#main\""
+      }
+    },
+    {
+      "id": "summaryTable",
+      "type": "table",
+      "children": [
+        {
+          "id": "summaryRow",
+          "type": "tr",
+          "children": [
+            {
+              "id": "summaryHeader",
+              "type": "th",
+              "attrs": {
+                "[scope]": "\"row\""
+              }
+            },
+            {
+              "id": "summaryValue",
+              "type": "td"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -57,6 +57,45 @@
           ]
         }
       ]
+    },
+    {
+      "id": "summaryCard",
+      "type": "SurfaceContainers",
+      "attrs": {
+        "[label]": "\"Summary\"",
+        "[elevation]": "2"
+      }
+    },
+    {
+      "id": "filterSheet",
+      "type": "SheetContainers",
+      "attrs": {
+        "[position]": "\"bottom\"",
+        "[open]": "showFilters"
+      }
+    },
+    {
+      "id": "helpOverlay",
+      "type": "OverlayContainers",
+      "attrs": {
+        "[anchor]": "\"helpButton\"",
+        "[open]": "showHelp"
+      }
+    },
+    {
+      "id": "mainArticle",
+      "type": "StructuralContainers",
+      "attrs": {
+        "[role]": "\"article\""
+      }
+    },
+    {
+      "id": "workspaceSplitter",
+      "type": "Splitters",
+      "attrs": {
+        "[orientation]": "\"horizontal\"",
+        "[position]": "320"
+      }
     }
   ]
 }
