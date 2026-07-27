@@ -1,0 +1,18 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Layout",
+  "attrs": {
+    "title": "\"Layout abstraction example\""
+  },
+  "children": [
+    {
+      "id": "responsiveLayout",
+      "type": "LayoutMechanism",
+      "attrs": {
+        "[flow]": "\"responsive\"",
+        "[breakpoints]": "\"compact medium expanded\""
+      }
+    }
+  ]
+}

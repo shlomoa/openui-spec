@@ -1,0 +1,19 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ControlsExample",
+  "attrs": {
+    "title": "\"Choice controls example\""
+  },
+  "children": [
+    {
+      "id": "shippingChoice",
+      "type": "ChoiceControls",
+      "attrs": {
+        "[label]": "\"Shipping speed\"",
+        "[value]": "shippingSpeed",
+        "(selectionChange)": "onShippingSpeedChange($event)"
+      }
+    }
+  ]
+}

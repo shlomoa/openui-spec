@@ -20,6 +20,12 @@ const ANGULAR_GENERATOR_ROOT =
 const REPOSITORY_ROOT = path.resolve(ANGULAR_GENERATOR_ROOT, "..", "..", "..");
 const CATALOG_FIXTURE = path.join(REPOSITORY_ROOT, "openui.json");
 const MINIMAL_CATALOG_FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "minimal-openui.json");
+const LATEST_SPEC_EXAMPLES_FIXTURE = path.join(
+  ANGULAR_GENERATOR_ROOT,
+  "tests",
+  "fixtures",
+  "latest-spec-examples.json",
+);
 const DIALOG_FIXTURE = path.join(
   ANGULAR_GENERATOR_ROOT,
   "tests",
@@ -64,6 +70,17 @@ const REPRESENTATIVE_CONCRETE_FIXTURES = [
 ] as const;
 const TEST_OUTPUT_ROOT = path.join(REPOSITORY_ROOT, "tmp");
 const TEST_OUTPUT_PREFIX = path.join(TEST_OUTPUT_ROOT, "openui-angular-generator-");
+
+type LatestSpecExampleCase = {
+  name: string;
+  sourceExample: string;
+  fixture: string;
+  route: string;
+};
+
+type LatestSpecExampleManifest = {
+  cases: LatestSpecExampleCase[];
+};
 
 async function createTestOutputDirectory(): Promise<string> {
   await mkdir(TEST_OUTPUT_ROOT, { recursive: true });
@@ -217,6 +234,45 @@ for (const fixtureCase of REPRESENTATIVE_CONCRETE_FIXTURES) {
     }
   });
 }
+
+test("validates and generates latest spec example cases from the fixture manifest", async () => {
+  const manifest = JSON.parse(await readFile(LATEST_SPEC_EXAMPLES_FIXTURE, "utf8")) as LatestSpecExampleManifest;
+  const catalog = createCatalogIndex(JSON.parse(await readFile(CATALOG_FIXTURE, "utf8")));
+
+  assert.ok(manifest.cases.length > 0, "Expected latest spec example fixture manifest to contain cases.");
+
+  for (const fixtureCase of manifest.cases) {
+    const sourceExamplePath = path.join(REPOSITORY_ROOT, fixtureCase.sourceExample);
+    const fixturePath = path.join(REPOSITORY_ROOT, fixtureCase.fixture);
+    const fixture = JSON.parse(await readFile(fixturePath, "utf8"));
+    const sourceExample = JSON.parse(await readFile(sourceExamplePath, "utf8"));
+
+    assert.deepEqual(
+      fixture,
+      sourceExample,
+      `${fixtureCase.name} fixture should mirror ${fixtureCase.sourceExample}; update the source example first.`,
+    );
+    assertNoScopeDocumentAttrs(fixture, fixtureCase.fixture);
+    assert.doesNotThrow(
+      () => validateOpenUiSpec(fixture, { catalog }),
+      `${fixtureCase.name} should validate against the generated OpenUI catalog.`,
+    );
+
+    const outDir = await createTestOutputDirectory();
+    try {
+      await run(["generate", "--input", fixturePath, "--out", outDir]);
+
+      await assert.doesNotReject(
+        readFile(path.join(outDir, "src", "app", "pages", fixtureCase.route, `${fixtureCase.route}.page.ts`), "utf8"),
+        `${fixtureCase.name} should generate a routed page from ${fixtureCase.fixture}.`,
+      );
+      const routes = await readFile(path.join(outDir, "src/app/app.routes.ts"), "utf8");
+      assert.match(routes, new RegExp(`path: '${fixtureCase.route}'`));
+    } finally {
+      await cleanupTestOutput(outDir);
+    }
+  }
+});
 
 test("builds the data model from the generated OpenUI catalog", async () => {
   const fixture = JSON.parse(await readFile(CATALOG_FIXTURE, "utf8"));

@@ -1,0 +1,33 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ControlExample",
+  "attrs": {
+    "title": "\"Native table example\""
+  },
+  "children": [
+    {
+      "id": "summaryTable",
+      "type": "table",
+      "children": [
+        {
+          "id": "summaryRow",
+          "type": "tr",
+          "children": [
+            {
+              "id": "summaryHeader",
+              "type": "th",
+              "attrs": {
+                "[scope]": "\"row\""
+              }
+            },
+            {
+              "id": "summaryValue",
+              "type": "td"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

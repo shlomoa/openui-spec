@@ -1,0 +1,18 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "WidgetExample",
+  "attrs": {
+    "title": "\"Feedback widgets example\""
+  },
+  "children": [
+    {
+      "id": "saveFeedback",
+      "type": "FeedbackWidgets",
+      "attrs": {
+        "[message]": "\"Saved successfully.\"",
+        "[severity]": "\"success\""
+      }
+    }
+  ]
+}

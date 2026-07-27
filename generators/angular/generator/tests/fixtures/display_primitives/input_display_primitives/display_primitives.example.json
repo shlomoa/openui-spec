@@ -1,0 +1,18 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ControlsExample",
+  "attrs": {
+    "title": "\"Display primitives example\""
+  },
+  "children": [
+    {
+      "id": "statusLabel",
+      "type": "DisplayPrimitives",
+      "attrs": {
+        "[text]": "\"Ready\"",
+        "[variant]": "\"caption\""
+      }
+    }
+  ]
+}

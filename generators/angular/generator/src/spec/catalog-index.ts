@@ -31,8 +31,11 @@ export class OpenUiCatalogIndex {
 const CONCRETE_EXAMPLE_ROOT_TYPES = new Set([
   "ApplicationExample",
   "BehaviorExample",
+  "ControlExample",
+  "ControlsExample",
   "ContainerExample",
   "PageExample",
+  "TableFamilyExample",
   "WidgetExample",
 ]);
 
@@ -40,10 +43,14 @@ const CONCRETE_FIXTURE_TYPE_ALIASES: Readonly<Record<string, string>> = {
   Column: "table",
   DateTimePicker: "DateTimePicker",
   EmptyState: "html",
+  InteractionRule: "Interaction",
+  LayoutMechanism: "Layout",
   List: "ul",
   ListItem: "li",
   LoadMore: "button",
+  LocalizationRule: "Internationalization",
   Pagination: "table",
+  PresentationRule: "Presentation",
   Step: "step",
   "mat-datetime-picker": "DateTimePicker",
 };

@@ -1,0 +1,17 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ControlExample",
+  "attrs": {
+    "title": "\"Table data cell example\""
+  },
+  "children": [
+    {
+      "id": "amountCell",
+      "type": "td",
+      "attrs": {
+        "[headers]": "\"amountHeader\""
+      }
+    }
+  ]
+}

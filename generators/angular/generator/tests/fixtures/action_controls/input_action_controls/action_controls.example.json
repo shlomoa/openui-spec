@@ -1,0 +1,19 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ControlsExample",
+  "attrs": {
+    "title": "\"Action controls example\""
+  },
+  "children": [
+    {
+      "id": "primaryAction",
+      "type": "ActionControls",
+      "attrs": {
+        "[label]": "\"Save\"",
+        "[disabled]": "isSaving",
+        "(activate)": "save()"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ControlsExample",
+  "attrs": {
+    "title": "\"Link and scroll controls example\""
+  },
+  "children": [
+    {
+      "id": "skipToContent",
+      "type": "LinkAndScrollControls",
+      "attrs": {
+        "[label]": "\"Skip to content\"",
+        "[target]": "\"#main\"",
+        "(activate)": "scrollToMain()"
+      }
+    }
+  ]
+}

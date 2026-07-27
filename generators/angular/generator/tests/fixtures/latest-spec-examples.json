@@ -1,0 +1,173 @@
+{
+  "description": "Generator fixture manifest for latest spec example cases. Each fixture copy is checked against its spec/examples source to preserve SSOT.",
+  "cases": [
+    {
+      "name": "overlay containers",
+      "sourceExample": "spec/examples/Containers/overlay_containers.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/overlay_containers/input_overlay_containers/overlay_containers.example.json",
+      "route": "overlay-containers"
+    },
+    {
+      "name": "sheet containers",
+      "sourceExample": "spec/examples/Containers/sheet_containers.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/sheet_containers/input_sheet_containers/sheet_containers.example.json",
+      "route": "sheet-containers"
+    },
+    {
+      "name": "splitters",
+      "sourceExample": "spec/examples/Containers/splitters.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/splitters/input_splitters/splitters.example.json",
+      "route": "splitters"
+    },
+    {
+      "name": "structural containers",
+      "sourceExample": "spec/examples/Containers/structural_containers.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/structural_containers/input_structural_containers/structural_containers.example.json",
+      "route": "structural-containers"
+    },
+    {
+      "name": "surface containers",
+      "sourceExample": "spec/examples/Containers/surface_containers.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/surface_containers/input_surface_containers/surface_containers.example.json",
+      "route": "surface-containers"
+    },
+    {
+      "name": "action controls",
+      "sourceExample": "spec/examples/Controls/action_controls.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/action_controls/input_action_controls/action_controls.example.json",
+      "route": "action-controls"
+    },
+    {
+      "name": "choice controls",
+      "sourceExample": "spec/examples/Controls/choice_controls.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/choice_controls/input_choice_controls/choice_controls.example.json",
+      "route": "choice-controls"
+    },
+    {
+      "name": "display primitives",
+      "sourceExample": "spec/examples/Controls/display_primitives.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/display_primitives/input_display_primitives/display_primitives.example.json",
+      "route": "display-primitives"
+    },
+    {
+      "name": "drawing and capture",
+      "sourceExample": "spec/examples/Controls/drawing_and_capture.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/drawing_and_capture/input_drawing_and_capture/drawing_and_capture.example.json",
+      "route": "drawing-and-capture"
+    },
+    {
+      "name": "link and scroll controls",
+      "sourceExample": "spec/examples/Controls/link_and_scroll_controls.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/link_and_scroll_controls/input_link_and_scroll_controls/link_and_scroll_controls.example.json",
+      "route": "link-and-scroll-controls"
+    },
+    {
+      "name": "picker controls",
+      "sourceExample": "spec/examples/Controls/picker_controls.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/picker_controls/input_picker_controls/picker_controls.example.json",
+      "route": "picker-controls"
+    },
+    {
+      "name": "range controls",
+      "sourceExample": "spec/examples/Controls/range_controls.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/range_controls/input_range_controls/range_controls.example.json",
+      "route": "range-controls"
+    },
+    {
+      "name": "status indicators",
+      "sourceExample": "spec/examples/Controls/status_indicators.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/status_indicators/input_status_indicators/status_indicators.example.json",
+      "route": "status-indicators"
+    },
+    {
+      "name": "table scope",
+      "sourceExample": "spec/examples/Controls/Table/scope.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/table_scope/input_table_scope/scope.example.json",
+      "route": "table"
+    },
+    {
+      "name": "table control",
+      "sourceExample": "spec/examples/Controls/Table/table.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/table/input_table/table.example.json",
+      "route": "table"
+    },
+    {
+      "name": "table cell",
+      "sourceExample": "spec/examples/Controls/Table/td.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/td/input_td/td.example.json",
+      "route": "td"
+    },
+    {
+      "name": "table header cell",
+      "sourceExample": "spec/examples/Controls/Table/th.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/th/input_th/th.example.json",
+      "route": "th"
+    },
+    {
+      "name": "table row",
+      "sourceExample": "spec/examples/Controls/Table/tr.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/tr/input_tr/tr.example.json",
+      "route": "tr"
+    },
+    {
+      "name": "text inputs",
+      "sourceExample": "spec/examples/Controls/text_inputs.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/text_inputs/input_text_inputs/text_inputs.example.json",
+      "route": "text-inputs"
+    },
+    {
+      "name": "interaction scope",
+      "sourceExample": "spec/examples/Interaction/scope.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/interaction_scope/input_interaction_scope/scope.example.json",
+      "route": "interaction-rule"
+    },
+    {
+      "name": "internationalization scope",
+      "sourceExample": "spec/examples/Internationalization/scope.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/internationalization_scope/input_internationalization_scope/scope.example.json",
+      "route": "localization-rule"
+    },
+    {
+      "name": "layout scope",
+      "sourceExample": "spec/examples/Layout/scope.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/layout_scope/input_layout_scope/scope.example.json",
+      "route": "layout-mechanism"
+    },
+    {
+      "name": "presentation scope",
+      "sourceExample": "spec/examples/Presentation/scope.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/presentation_scope/input_presentation_scope/scope.example.json",
+      "route": "presentation-rule"
+    },
+    {
+      "name": "data grid",
+      "sourceExample": "spec/examples/Widgets/data_grid.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/data_grid/input_data_grid/data_grid.example.json",
+      "route": "data-grid"
+    },
+    {
+      "name": "feedback widgets",
+      "sourceExample": "spec/examples/Widgets/feedback_widgets.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/feedback_widgets/input_feedback_widgets/feedback_widgets.example.json",
+      "route": "feedback-widgets"
+    },
+    {
+      "name": "media widgets",
+      "sourceExample": "spec/examples/Widgets/media_widgets.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/media_widgets/input_media_widgets/media_widgets.example.json",
+      "route": "media-widgets"
+    },
+    {
+      "name": "menu widgets",
+      "sourceExample": "spec/examples/Widgets/menu_widgets.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/menu_widgets/input_menu_widgets/menu_widgets.example.json",
+      "route": "menu-widgets"
+    },
+    {
+      "name": "navigation widgets",
+      "sourceExample": "spec/examples/Widgets/navigation_widgets.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/navigation_widgets/input_navigation_widgets/navigation_widgets.example.json",
+      "route": "navigation-widgets"
+    }
+  ]
+}

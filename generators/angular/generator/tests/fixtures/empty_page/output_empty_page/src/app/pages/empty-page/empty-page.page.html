@@ -1,0 +1,47 @@
+<section class="spec-page" aria-labelledby="empty-page-title">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title id="empty-page-title">empty Page</mat-card-title>
+      <mat-card-subtitle>emptyPage</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Concrete PageExample input for EmptyPage.</p>
+    <mat-list aria-label="Key requirements">
+      <mat-list-item>Materialize EmptyPage node &#39;emptyPage&#39;.</mat-list-item>
+    </mat-list>
+    <section class="component-contract-example" aria-label="Component metadata contract">
+      <h2>Component contract projection</h2>
+      <mat-chip-set aria-label="Public metadata definitions">
+
+      </mat-chip-set>
+      <dl>
+        <div>
+          <dt>Stable identity</dt>
+          <dd>sample.library.SearchInput</dd>
+        </div>
+        <div>
+          <dt>Public property</dt>
+          <dd>value: string = "" (bindable)</dd>
+        </div>
+        <div>
+          <dt>Owned aggregation</dt>
+          <dd>content: sap.ui.core.Control [0..n]</dd>
+        </div>
+        <div>
+          <dt>Association</dt>
+          <dd>ariaLabelledBy: sap.ui.core.Control [0..n]</dd>
+        </div>
+        <div>
+          <dt>Event output</dt>
+          <dd>liveChange(value: string)</dd>
+        </div>
+      </dl>
+      <mat-list aria-label="Generated Angular projection">
+        @for (item of componentContract; track item) {
+          <mat-list-item>{{ item }}</mat-list-item>
+        }
+      </mat-list>
+    </section>
+    </mat-card-content>
+  </mat-card>
+</section>

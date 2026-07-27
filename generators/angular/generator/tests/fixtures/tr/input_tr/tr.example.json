@@ -1,0 +1,27 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ControlExample",
+  "attrs": {
+    "title": "\"Table row example\""
+  },
+  "children": [
+    {
+      "id": "customerRow",
+      "type": "tr",
+      "children": [
+        {
+          "id": "customerNameHeader",
+          "type": "th",
+          "attrs": {
+            "[scope]": "\"row\""
+          }
+        },
+        {
+          "id": "customerStatusCell",
+          "type": "td"
+        }
+      ]
+    }
+  ]
+}

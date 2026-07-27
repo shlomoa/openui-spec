@@ -1,0 +1,18 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "ContainerExample",
+  "attrs": {
+    "title": "\"Sheet containers example\""
+  },
+  "children": [
+    {
+      "id": "filterSheet",
+      "type": "SheetContainers",
+      "attrs": {
+        "[position]": "\"bottom\"",
+        "[open]": "showFilters"
+      }
+    }
+  ]
+}

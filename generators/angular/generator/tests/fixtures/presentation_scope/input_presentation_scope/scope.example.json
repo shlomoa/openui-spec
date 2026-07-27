@@ -1,0 +1,19 @@
+{
+  "id": "root",
+  "version": "0.0.1",
+  "type": "Presentation",
+  "attrs": {
+    "title": "\"Presentation abstraction example\""
+  },
+  "children": [
+    {
+      "id": "visualTheme",
+      "type": "PresentationRule",
+      "attrs": {
+        "[colorScheme]": "\"light\"",
+        "[density]": "\"comfortable\"",
+        "[typography]": "\"system\""
+      }
+    }
+  ]
+}
