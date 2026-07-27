@@ -1,19 +1,27 @@
 # Root Test Suite Plan
 
-This document describes the Python tests implemented under `tests/`: what each
-module protects and how to run the suite locally. The repository-level
-validation strategy, documentation-validation commands, and CI gate overview
-live in the [root validation test plan](../docs/TEST_PLAN.md).
+This document describes the repository's root Python test-suite strategy and the
+tests implemented under `tests/`: what each root test surface protects, how the
+suite is organized, and how to run it locally.
+
+Root Python tests protect the golden source: the prose specification, scopes,
+schema, catalog, examples, and published documentation. They read the spec
+sources directly and fail when the hand-authored source drifts from its own
+rules. Shared terminology is defined in
+[`spec/README.md` § Glossary](../spec/README.md#glossary), so tests should
+reference that vocabulary instead of duplicating definitions.
+
+Repository validation commands and the CI gate overview live in
+[`README.md` § Repository validation](../README.md#repository-validation).
 
 Run from the repository root through the local virtual environment:
 
 ```powershell
-./.venv/Scripts/python -m pytest
+./.venv/Scripts/python -m unittest discover -s tests -p "test_*.py"
 ```
 
-These tests read the spec sources directly and fail when the hand-authored
-golden source drifts from its own rules. Each file is a `unittest.TestCase`
-discovered by `pytest`.
+Each test file is a `unittest.TestCase` module discoverable by the standard
+library `unittest` runner.
 
 | Test file                                  | Class                               | Protects                                                                                                                                                                                                                                              |
 | ------------------------------------------ | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
