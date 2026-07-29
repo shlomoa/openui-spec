@@ -35,8 +35,16 @@ The repository-local converter for the generated catalog lives in
 `spec/to_json/`. After changing scope prose or converter-relevant structure,
 regenerate the root catalog with:
 
+Windows (PowerShell):
+
 ```powershell
-./.venv/Scripts/python -m spec.to_json --spec-dir spec --output openui.json
+.\.venv\Scripts\python -m spec.to_json --spec-dir spec --output openui.json
+```
+
+Linux or macOS (Bash):
+
+```bash
+./.venv/bin/python -m spec.to_json --spec-dir spec --output openui.json
 ```
 
 The generated catalog keeps `attrs.scopeDocument` values relative to `spec/`,
@@ -569,10 +577,18 @@ documents validated against the grammar and catalog defined by the SSOT.
 
 Run from the generator package:
 
+Windows (PowerShell):
+
 ```powershell
 Push-Location generators/angular/generator
 npm run test
 Pop-Location
+```
+
+Linux or macOS (Bash):
+
+```bash
+(cd generators/angular/generator && npm run test)
 ```
 
 `npm run test` compiles TypeScript first and then runs the Node test suite from
@@ -717,10 +733,18 @@ genuine specification change.
 
 Run generator package validation from `generators/angular/generator/`:
 
+Windows (PowerShell):
+
 ```powershell
 Push-Location generators/angular/generator
 npm run test
 Pop-Location
+```
+
+Linux or macOS (Bash):
+
+```bash
+(cd generators/angular/generator && npm run test)
 ```
 
 That script runs TypeScript compilation first and then the Node test suite from

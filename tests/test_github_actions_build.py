@@ -16,6 +16,10 @@ class GitHubActionsBuildWorkflowTest(unittest.TestCase):
         self.assertIn("  pull_request:\n", self.workflow)
         self.assertIn("  workflow_dispatch:\n", self.workflow)
 
+    def test_build_workflow_validates_windows_and_linux(self):
+        self.assertIn("os: [ubuntu-latest, windows-latest]", self.workflow)
+        self.assertIn("runs-on: ${{ matrix.os }}", self.workflow)
+
     def test_build_workflow_runs_repository_checks(self):
         self.assertIn(
             "python -m unittest discover -s tests -p 'test_*.py'",

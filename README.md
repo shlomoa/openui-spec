@@ -52,14 +52,27 @@ Repository validation has three root layers:
    lint/format checks, strict MkDocs builds, Angular generator validation, and
    pinned action versions.
 
-Run repository validation from the root through the local virtual environment:
+Run repository validation from the root through the local virtual environment.
+
+Windows (PowerShell):
 
 ```powershell
-./.venv/Scripts/pre-commit run --all-files
-./.venv/Scripts/python -m unittest discover -s tests -p "test_*.py"
-./.venv/Scripts/python -m mkdocs build --strict
+.\.venv\Scripts\pre-commit run --all-files
+.\.venv\Scripts\python -m unittest discover -s tests -p "test_*.py"
+.\.venv\Scripts\python -m mkdocs build --strict
 git diff --check
 ```
+
+Linux or macOS (Bash):
+
+```bash
+./.venv/bin/pre-commit run --all-files
+./.venv/bin/python -m unittest discover -s tests -p "test_*.py"
+./.venv/bin/python -m mkdocs build --strict
+git diff --check
+```
+
+CI runs this validation on both Windows and Linux.
 
 Root validation treats the prose spec, scopes, schema, examples, and generated
 catalog as the source of truth for repository checks. Shared vocabulary is

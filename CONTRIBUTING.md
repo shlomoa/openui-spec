@@ -27,6 +27,8 @@ The generated app includes Angular routing, a Material shell and navigation, glo
 
 Use a repository-local Python virtual environment for validation tooling.
 
+Windows (PowerShell):
+
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python -m pip install pre-commit==4.6.0 -r requirements-test.txt
@@ -34,6 +36,13 @@ python -m venv .venv
 .\.venv\Scripts\pre-commit run --all-files
 ```
 
-On macOS or Linux, use the equivalent `.venv/bin/python` and `.venv/bin/pre-commit` paths.
+Linux or macOS (Bash):
+
+```bash
+python3 -m venv .venv
+./.venv/bin/python -m pip install pre-commit==4.6.0 -r requirements-test.txt
+./.venv/bin/python -m unittest discover -s tests -p 'test_*.py'
+./.venv/bin/pre-commit run --all-files
+```
 
 ---
