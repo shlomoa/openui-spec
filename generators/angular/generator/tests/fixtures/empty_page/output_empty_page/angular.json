@@ -11,9 +11,7 @@
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.json",
-            "styles": [
-              "src/styles.scss"
-            ]
+            "styles": ["src/styles.scss"]
           }
         },
         "serve": {

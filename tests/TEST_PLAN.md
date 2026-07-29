@@ -14,10 +14,18 @@ reference that vocabulary instead of duplicating definitions.
 Repository validation commands and the CI gate overview live in
 [`README.md` § Repository validation](../README.md#repository-validation).
 
-Run from the repository root through the local virtual environment:
+Run from the repository root through the local virtual environment.
+
+Windows (PowerShell):
 
 ```powershell
-./.venv/Scripts/python -m unittest discover -s tests -p "test_*.py"
+.\.venv\Scripts\python -m unittest discover -s tests -p "test_*.py"
+```
+
+Linux or macOS (Bash):
+
+```bash
+./.venv/bin/python -m unittest discover -s tests -p "test_*.py"
 ```
 
 Each test file is a `unittest.TestCase` module discoverable by the standard
