@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://shlomoa.github.io/openui-spec/openui.schema.json",
+  "$id": "https://raw.githubusercontent.com/shlomoa/openui-spec/main/spec/openui.schema.json",
   "title": "OpenUI Specification Document",
   "type": "object",
   "additionalProperties": false,
