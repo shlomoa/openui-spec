@@ -1,4 +1,5 @@
 import type { GeneratedFile } from "../writers/file-writer";
+import { getLogger } from "../logging/logger";
 import type { AngularDialogComponentModel, AngularProjectModel } from "./angular-model";
 import { escapeHtml, escapeTsString } from "./emit-utils";
 import { emitPageComponent } from "./emit-component";
@@ -6,8 +7,10 @@ import { emitRoutes } from "./emit-routes";
 import { emitTheme } from "./emit-theme";
 import { toTypeScriptObjectLiteral } from "./typescript-literals";
 
+const log = getLogger("amcg.emit");
+
 export function emitAngularProject(project: AngularProjectModel): GeneratedFile[] {
-  return [
+  const files = [
     emitPackageJson(project),
     emitAngularJson(project),
     emitTsConfig(),
@@ -22,6 +25,13 @@ export function emitAngularProject(project: AngularProjectModel): GeneratedFile[
     ...project.dialogComponents.flatMap(emitDialogComponent),
     ...project.pages.flatMap(emitPageComponent),
   ];
+
+  for (const file of files) {
+    log.debug(`Generated output file '${file.path}' (${file.content.length} char(s)).`);
+  }
+  log.debug(`Emitted ${files.length} Angular project file(s).`);
+
+  return files;
 }
 
 function emitDialogComponent(component: AngularDialogComponentModel): GeneratedFile[] {

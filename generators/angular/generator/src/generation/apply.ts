@@ -1,5 +1,8 @@
 import { resolveSafeWritePath, safeDelete, safeWrite } from "../writers/safe-write";
+import { getLogger } from "../logging/logger";
 import type { IncrementalPlan } from "./reconcile";
+
+const log = getLogger("amcg.apply");
 
 export interface ApplyResult {
   readonly added: readonly string[];
@@ -34,14 +37,17 @@ export async function applyIncrementalPlan(outDirectory: string, plan: Increment
   for (const entry of plan.reconciled) {
     switch (entry.action) {
       case "add":
+        log.debug(`Adding '${entry.file.path}'.`);
         await safeWrite(outDirectory, entry.file.path, entry.file.content);
         added.push(entry.file.path);
         break;
       case "modify":
+        log.debug(`Modifying '${entry.file.path}'.`);
         await safeWrite(outDirectory, entry.file.path, entry.file.content);
         modified.push(entry.file.path);
         break;
       case "match":
+        log.debug(`Matched (unchanged) '${entry.file.path}'.`);
         matched.push(entry.file.path);
         break;
       case "delete":
@@ -52,6 +58,7 @@ export async function applyIncrementalPlan(outDirectory: string, plan: Increment
 
   const deleted: string[] = [];
   for (const deletion of plan.toDelete) {
+    log.debug(`Deleting '${deletion.path}'.`);
     await safeDelete(outDirectory, deletion.path);
     deleted.push(deletion.path);
   }

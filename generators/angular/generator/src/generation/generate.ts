@@ -24,14 +24,26 @@ export interface PreparedAngularGeneration {
  * input without reading or mutating an output workspace.
  */
 export async function prepareAngularGeneration(inputPath: string): Promise<PreparedAngularGeneration> {
+  log.debug(`Loading OpenUI document from '${inputPath}'.`);
   const input = await loadOpenUiDocument(inputPath);
   const catalog = await loadDefaultOpenUiCatalog(inputPath);
   validateOpenUiGeneratorInput(input, catalog);
   log.debug(`Validated OpenUI input '${inputPath}'.`);
 
   const dataModel = buildDataModel(input);
+  log.debug(
+    `Built data model '${dataModel.name}' with ${dataModel.pages.length} page(s) and ` +
+      `${(dataModel.dialogComponents ?? []).length} dialog component(s).`,
+  );
+
   const angularProject = mapToAngularProject(dataModel);
+  log.debug(
+    `Mapped to Angular project '${angularProject.packageName}' with ` +
+      `${angularProject.pages.length} page component(s) and ${angularProject.dialogComponents.length} dialog component(s).`,
+  );
+
   const generatedFiles = emitAngularProject(angularProject);
+  log.debug(`Prepared ${generatedFiles.length} generated file(s) for reconciliation.`);
 
   return { input, generatedFiles };
 }
@@ -54,9 +66,19 @@ export async function generate(inputPath: string, outDirectory: string): Promise
 
   const manifestationIndex = buildSpecManifestationIndex(input);
   const workspace = await readWorkspaceIndex(outDirectory);
+  log.debug(`Indexed existing workspace '${outDirectory}' with ${workspace.files.size} file(s).`);
+
   const plan = await reconcileGeneratedFiles(outDirectory, generatedFiles, manifestationIndex, workspace);
+  log.debug(
+    `Reconciled plan: ${plan.toWrite.length} to write, ${plan.toDelete.length} to delete, ` +
+      `${plan.reconciled.length} reconciled entr(y/ies).`,
+  );
 
   const result = await applyIncrementalPlan(outDirectory, plan);
   log.info(`Applied incremental plan for '${outDirectory}'.`);
+  log.debug(
+    `Apply result: ${result.added.length} added, ${result.modified.length} modified, ` +
+      `${result.deleted.length} deleted, ${result.matched.length} matched.`,
+  );
   return result;
 }

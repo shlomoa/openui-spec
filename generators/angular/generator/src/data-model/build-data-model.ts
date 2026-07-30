@@ -9,6 +9,12 @@ import type {
   DataModelThemeToken,
 } from "./data-model";
 
+/**
+ * Builds the implementation-independent {@link DataModelApplication} from an
+ * OpenUI document. When the document declares scope nodes, each scope becomes a
+ * page; otherwise the document is treated as concrete input and modeled via
+ * {@link buildConcreteInputModel}.
+ */
 export function buildDataModel(document: OpenUiDocument): DataModelApplication {
   const scopes = extractOpenUiScopeNodes(document);
   if (scopes.length === 0) {
@@ -33,6 +39,11 @@ export function buildDataModel(document: OpenUiDocument): DataModelApplication {
   };
 }
 
+/**
+ * Models a document that carries concrete UI input rather than scope nodes,
+ * deriving a single page from its first child and, when present, a dialog
+ * component from a `Dialog` element.
+ */
 function buildConcreteInputModel(document: OpenUiDocument): DataModelApplication {
   const firstConcreteChild = document.children?.[0];
   const pageId = firstConcreteChild ? lowerFirst(firstConcreteChild.type) : document.id;
@@ -63,6 +74,11 @@ function buildConcreteInputModel(document: OpenUiDocument): DataModelApplication
   };
 }
 
+/**
+ * Derives a {@link DataModelDialogComponent} from a `Dialog` element, resolving
+ * its title, content, and action buttons and computing the selector, class, and
+ * file names used when the dialog is emitted.
+ */
 function buildDialogComponent(dialog: OpenUiElement): DataModelDialogComponent {
   const title = unquote(stringAttr(childrenOfType(dialog, "DialogTitle")[0] ?? dialog, "text")) ?? "Dialog";
   const content = unquote(stringAttr(childrenOfType(dialog, "DialogContent")[0] ?? dialog, "text")) ?? "";
@@ -83,6 +99,11 @@ function buildDialogComponent(dialog: OpenUiElement): DataModelDialogComponent {
   };
 }
 
+/**
+ * Builds a single dialog action from a `button` element, resolving its label
+ * and close result and flagging destructive actions (e.g. confirm/delete) with
+ * `warn` emphasis.
+ */
 function buildDialogAction(action: OpenUiElement): DataModelDialogAction {
   const text = unquote(stringAttr(action, "text")) ?? titleFromName(action.id);
   const result = resultFromClick(stringAttr(action, "(click)")) ?? normalizeRoute(action.id);
@@ -95,6 +116,7 @@ function buildDialogAction(action: OpenUiElement): DataModelDialogAction {
   };
 }
 
+/** Produces the human-readable requirements for a concrete input node: materialize the node itself and preserve each of its children. */
 function concreteRequirements(node: OpenUiElement): string[] {
   return [
     `Materialize ${node.type} node '${node.id}'.`,
@@ -102,6 +124,7 @@ function concreteRequirements(node: OpenUiElement): string[] {
   ];
 }
 
+/** Returns the default theme tokens (color, spacing, and density custom properties) applied to every generated application. */
 function defaultThemeTokens(): DataModelThemeToken[] {
   return [
     { name: "--openui-theme-primary", value: "#0a6ed1" },
