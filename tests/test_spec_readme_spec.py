@@ -76,6 +76,7 @@ EXPECTED_SPEC_MARKDOWN = [
     "scopes/scope.md",
     "scopes/taxonomy_mapping.md",
     "scopes/template.scope.md",
+    "tooling/comparison.md",
 ]
 
 
@@ -114,6 +115,7 @@ class SpecReadmeSpecTest(unittest.TestCase):
                 "scopes/evidence.md",
                 "scopes/template.scope.md",
                 "examples/README.md",
+                "tooling/comparison.md",
             }:
                 continue
             if is_family_tag_leaf:
