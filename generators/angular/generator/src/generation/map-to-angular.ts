@@ -1628,7 +1628,7 @@ function buildAcceptanceTemplate(): string {
       </mat-chip-set>
       <mat-list aria-label="Generated acceptance checks">
         <mat-list-item>Link each criterion to the source specification section, tag, fixture, and evidence artifact.</mat-list-item>
-        <mat-list-item>Compare runtime metadata, /openui.json, and generated API projections before emitting examples.</mat-list-item>
+        <mat-list-item>Compare runtime metadata, spec/openui.json, and generated API projections before emitting examples.</mat-list-item>
         <mat-list-item>Record deterministic DOM, accessibility, or screenshot evidence for visual-facing behavior.</mat-list-item>
       </mat-list>
     </section>`;

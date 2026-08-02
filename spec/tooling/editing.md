@@ -20,7 +20,7 @@ Every command validates the resulting document against two sources of truth:
   [`spec/openui.schema.json`](https://github.com/shlomoa/openui-spec/blob/main/spec/openui.schema.json),
   which defines the required structure of any OpenUI document.
 - **Object types** — each object's `type` must be one of the types supported by
-  the canonical [`openui.json`](https://github.com/shlomoa/openui-spec/blob/main/openui.json)
+  the canonical [`spec/openui.json`](https://github.com/shlomoa/openui-spec/blob/main/openui.json)
   catalog. Unknown types are rejected.
 
 The tool also rejects duplicate object `id` values, so every object in the
@@ -36,13 +36,13 @@ file.
 Windows (PowerShell):
 
 ```powershell
-.\.venv\Scripts\python bin\openui_json_cli.py validate --input openui.json
+.\.venv\Scripts\python bin\openui_json_cli.py validate --input .\spec\openui.json
 ```
 
 Linux or macOS (Bash):
 
 ```bash
-./.venv/bin/python bin/openui_json_cli.py validate --input openui.json
+./.venv/bin/python bin/openui_json_cli.py validate --input ./spec/openui.json
 ```
 
 Wherever a command accepts a JSON value (`--object`, `--attrs`), you may pass the
@@ -75,7 +75,7 @@ For `modify`, pass exactly one of `--attrs` or `--object`.
 Validate a document:
 
 ```bash
-./.venv/bin/python bin/openui_json_cli.py validate --input openui.json
+./.venv/bin/python bin/openui_json_cli.py validate --input ./spec/openui.json
 ```
 
 Add a new object to a parent:

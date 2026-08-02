@@ -8,7 +8,7 @@ from pathlib import Path
 from bin.openui_json import OpenUiJson, OpenUiJsonError, OpenUiValidationError
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-CATALOG_PATH = REPO_ROOT / "openui.json"
+CATALOG_PATH = REPO_ROOT / "spec" / "openui.json"
 CLI_PATH = REPO_ROOT / "bin" / "openui_json_cli.py"
 
 

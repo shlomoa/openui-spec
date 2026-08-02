@@ -1,7 +1,7 @@
 # Angular Material generator
 
 This package contains the initial Angular Material generator. The roles of
-`input.json`, `spec/openui.schema.json`, and root `openui.json` are defined in
+`input.json`, `spec/openui.schema.json`, and `spec/openui.json` are defined in
 [`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
 
 ```bash

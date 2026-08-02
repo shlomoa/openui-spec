@@ -15,7 +15,7 @@ CONTRACT_KEYS = ("[open]", "[modal]", "(close)", "(cancel)")
 
 
 class DialogScopeContractTest(unittest.TestCase):
-    """The dialog contract is authored in prose; openui.json is generated, not hand-edited."""
+    """The dialog contract is authored in prose; spec/openui.json is generated, not hand-edited."""
 
     def setUp(self) -> None:
         self.leaf = DIALOG_SCOPE.read_text(encoding="utf-8")

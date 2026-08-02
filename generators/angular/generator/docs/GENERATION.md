@@ -4,7 +4,7 @@ This document is the single source of truth for the Angular Material Code
 Generator (AMCG) architecture, code-generation pipeline, implementation
 boundaries, Angular validation strategy, and generator test conventions.
 
-The roles of `input.json`, `spec/openui.schema.json`, and root `openui.json`
+The roles of `input.json`, `spec/openui.schema.json`, and `spec/openui.json`
 are defined only in
 [`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
 This document explains how the Angular generator consumes those artifacts; it
@@ -27,7 +27,7 @@ The golden source for the OpenUI specification is the hand-authored prose:
 - the `spec/scopes/**` Markdown scopes, authoritative for each object's
   contract.
 
-Root `openui.json` is **generated** from that prose. It — together with
+`spec/openui.json` is **generated** from that prose. It — together with
 generator fixtures and Angular target models — is a derived artifact that must
 not replace or redefine the golden source.
 
@@ -38,13 +38,13 @@ regenerate the root catalog with:
 Windows (PowerShell):
 
 ```powershell
-.\.venv\Scripts\python -m spec.to_json --spec-dir spec --output openui.json
+.\.venv\Scripts\python -m spec.to_json --spec-dir spec --output .\spec\openui.json
 ```
 
 Linux or macOS (Bash):
 
 ```bash
-./.venv/bin/python -m spec.to_json --spec-dir spec --output openui.json
+./.venv/bin/python -m spec.to_json --spec-dir spec --output ./spec/openui.json
 ```
 
 The generated catalog keeps `attrs.scopeDocument` values relative to `spec/`,
@@ -107,7 +107,7 @@ Transitional input definitions and adapters are not allowed.
 
 ## Generation pipeline
 
-The roles of `input.json`, `spec/openui.schema.json`, and root `openui.json` are
+The roles of `input.json`, `spec/openui.schema.json`, and `spec/openui.json` are
 defined once in
 [`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
 The Angular generator consumes those artifacts according to the input, context,
@@ -137,7 +137,7 @@ The parser must not feed Angular emitters directly. It should produce explicit
 intermediate models:
 
 ```text
-spec/README.md + spec/**/*.md + openui.json
+spec/README.md + spec/**/*.md + spec/openui.json
   → golden-source validation
   → native OpenUI document model
   → DataModelApplication
@@ -278,7 +278,7 @@ specification layer.
 
 ## Core design rule
 
-Do **not** generate Angular directly from raw `input.json` or `openui.json` nodes.
+Do **not** generate Angular directly from raw `input.json` or `spec/openui.json` nodes.
 
 Use explicit model boundaries:
 
@@ -314,7 +314,7 @@ Avoid shortcuts that collapse these layers. For example, do not add a new OpenUI
 concept by string-building Angular output directly from raw source JSON. Instead:
 
 1. Update the golden source in `spec/README.md` and `spec/`.
-2. Regenerate `openui.json` with `python -m spec.to_json`.
+2. Regenerate `spec/openui.json` with `python -m spec.to_json`.
 3. Validate the golden source, generated catalog, and schema constraints.
 4. Adapt the native OpenUI source into `DataModelApplication`.
 5. Map the data model into Angular model fields.
@@ -332,7 +332,7 @@ then adds Angular imports, component state, template fragments, styles, and
 optional project-level models.
 
 This mapping documents the Angular generator implementation only. It must not be
-used to redefine or constrain the canonical `openui.json` contract.
+used to redefine or constrain the canonical `spec/openui.json` contract.
 
 | Scope ID                                                  | Feature                     | Current Angular materialization                                                                                                      |
 | --------------------------------------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
@@ -529,7 +529,7 @@ openui-angular-gen generate --input <input.json> --out <output-directory>
 ```
 
 The generator implements the OpenUI grammar parser and Angular catalog mapping;
-`spec/openui.schema.json` and root `openui.json` are not CLI inputs.
+`spec/openui.schema.json` and `spec/openui.json` are not CLI inputs.
 
 The source command implementation also accepts `--target angular`; `angular` is
 the default and only supported target.
@@ -539,10 +539,10 @@ the default and only supported target.
 The smallest useful generator slice should prove the documented `input.json`
 contract end to end:
 
-1. Keep regenerating `openui.json` from `spec/to_json` after scope changes.
+1. Keep regenerating `spec/openui.json` from `spec/to_json` after scope changes.
 2. Keep `spec/openui.schema.json` synchronized with the native `version` / `id` /
    `type` / `attrs` / `children` shape.
-3. Keep Python validation that checks `openui.json`, schema rules,
+3. Keep Python validation that checks `spec/openui.json`, schema rules,
    scope-document paths, converter behavior, and MkDocs navigation.
 4. Validate a concrete fixture such as `dialog.example.json` against the grammar
    and catalog without adding `attrs.scopeDocument` to concrete app nodes.
@@ -757,10 +757,10 @@ The root Python test-module matrix lives in
 
 ## Guardrails
 
-- Do not treat generator fixtures or root `openui.json` as hand-authored source.
+- Do not treat generator fixtures or `spec/openui.json` as hand-authored source.
 - Do not hand-edit generated catalog changes; update scope prose or converter
   logic, then rerun `python -m spec.to_json`.
-- Do not generate Angular files directly from raw `openui.json` or `input.json`
+- Do not generate Angular files directly from raw `spec/openui.json` or `input.json`
   nodes.
 - Do not bypass the golden source → native extraction → data model → Angular
   model → files separation.

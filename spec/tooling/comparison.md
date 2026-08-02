@@ -4,7 +4,7 @@
 hierarchical changelog of what was added, removed, or changed between them.
 
 The comparison tool answers a common question when the specification evolves:
-_what actually changed between an earlier `openui.json` and a newer one?_ It walks
+_what actually changed between an earlier `spec/openui.json` and a newer one?_ It walks
 both documents together and reports differences as a stable JSON changelog that is
 safe to diff, review, and store in version control.
 

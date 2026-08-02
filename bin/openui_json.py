@@ -13,7 +13,7 @@ from jsonschema import Draft202012Validator
 JsonObject = dict[str, Any]
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCHEMA_PATH = REPOSITORY_ROOT / "spec" / "openui.schema.json"
-DEFAULT_CATALOG_PATH = REPOSITORY_ROOT / "openui.json"
+DEFAULT_CATALOG_PATH = REPOSITORY_ROOT / "spec" / "openui.json"
 
 
 class OpenUiJsonError(ValueError):

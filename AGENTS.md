@@ -25,7 +25,7 @@ Angular TypeScript generator that applies the specification to an existing Angul
 - `docs/REQUIREMENTS.md` - Project requirements and goals.
 - `spec/README.md` - Specification entry point, including how to read the spec and the section index.
 - `spec/scopes/` - Human-authored specification scope sources.
-- `openui.json` - Generated canonical machine-readable specification built from `spec/scopes/`.
+- `spec/openui.json` - Generated canonical machine-readable specification built from `spec/scopes/`.
 - `generators/angular/generator/` - Angular TypeScript generator implementation.
 - `generators/angular/generator/docs/GENERATION.md` - Angular generator architecture,
   implementation details, code-generation flow, and validation strategy.
@@ -36,7 +36,7 @@ Angular TypeScript generator that applies the specification to an existing Angul
 ## Repository-specific rules
 
 - Treat `spec/` as the specification source of truth. Keep generated artifacts such as
-  `openui.json` aligned with the documented generation flow when the spec changes.
+  `spec/openui.json` aligned with the documented generation flow when the spec changes.
 - Keep common AI-agent guidance in `AGENTS.md`; keep agent-specific files thin and referential.
 - Before broad repository restructuring, provide an explicitly enumerated multi-step implementation
   plan.
