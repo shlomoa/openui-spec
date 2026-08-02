@@ -55,11 +55,11 @@ to write it to a file instead:
 
 ### Arguments
 
-| Argument         | Required | Description                                            |
-| ---------------- | -------- | ------------------------------------------------------ |
-| `reference`      | Yes      | Path to the reference (older) OpenUI JSON document.    |
-| `new`            | Yes      | Path to the new (updated) OpenUI JSON document.        |
-| `--output`, `-o` | No       | Write the changelog to this file instead of stdout.    |
+| Argument         | Required | Description                                         |
+| ---------------- | -------- | --------------------------------------------------- |
+| `reference`      | Yes      | Path to the reference (older) OpenUI JSON document. |
+| `new`            | Yes      | Path to the new (updated) OpenUI JSON document.     |
+| `--output`, `-o` | No       | Write the changelog to this file instead of stdout. |
 
 ## Output format
 
