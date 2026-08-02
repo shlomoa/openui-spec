@@ -50,23 +50,23 @@ JSON inline as a string or a path to a file that contains it.
 
 ## Commands
 
-| Command    | Description                                            |
-| ---------- | ------------------------------------------------------ |
-| `validate` | Validate an OpenUI JSON document.                      |
-| `add`      | Append an object to the children of a parent object.   |
-| `remove`   | Remove an object from the document.                    |
-| `modify`   | Change an object's attributes or replace it entirely.  |
+| Command    | Description                                           |
+| ---------- | ----------------------------------------------------- |
+| `validate` | Validate an OpenUI JSON document.                     |
+| `add`      | Append an object to the children of a parent object.  |
+| `remove`   | Remove an object from the document.                   |
+| `modify`   | Change an object's attributes or replace it entirely. |
 
 ### Arguments
 
-| Argument    | Commands              | Required | Description                                                        |
-| ----------- | --------------------- | -------- | ------------------------------------------------------------------ |
-| `--input`   | all                   | Yes      | Path to the OpenUI JSON document to read.                          |
-| `--output`  | `add`, `remove`, `modify` | No   | Write the result here instead of overwriting `--input`.            |
-| `--parent`  | `add` (required), `remove`, `modify` | Varies | Parent object `id`. For `remove`/`modify`, requires the object to belong to this parent. |
-| `--id`      | `remove`, `modify`    | Yes      | `id` of the object to remove or modify.                            |
-| `--object`  | `add`, `modify`       | Varies   | JSON object to append (`add`) or the full replacement object (`modify`). |
-| `--attrs`   | `modify`              | Varies   | JSON object of attribute changes; `null` removes an attribute.     |
+| Argument   | Commands                             | Required | Description                                                                              |
+| ---------- | ------------------------------------ | -------- | ---------------------------------------------------------------------------------------- |
+| `--input`  | all                                  | Yes      | Path to the OpenUI JSON document to read.                                                |
+| `--output` | `add`, `remove`, `modify`            | No       | Write the result here instead of overwriting `--input`.                                  |
+| `--parent` | `add` (required), `remove`, `modify` | Varies   | Parent object `id`. For `remove`/`modify`, requires the object to belong to this parent. |
+| `--id`     | `remove`, `modify`                   | Yes      | `id` of the object to remove or modify.                                                  |
+| `--object` | `add`, `modify`                      | Varies   | JSON object to append (`add`) or the full replacement object (`modify`).                 |
+| `--attrs`  | `modify`                             | Varies   | JSON object of attribute changes; `null` removes an attribute.                           |
 
 For `modify`, pass exactly one of `--attrs` or `--object`.
 
