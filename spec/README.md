@@ -350,6 +350,12 @@ PascalCase `type`.
 
 **Purpose:** validate that any OpenUI JSON is well-formed.
 
+**Canonical location:** the schema's `$id` is
+<https://raw.githubusercontent.com/shlomoa/openui-spec/main/spec/openui.schema.json>.
+Use this URL as the stable reference when validating an OpenUI document against
+the current grammar (for example, as a `$schema` value or in a validator
+configuration).
+
 ### `openui.json` — the spec catalog (an _instance_ of the grammar)
 
 A concrete document that **conforms to** `openui.schema.json`. Its _content_ is
