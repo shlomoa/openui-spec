@@ -13,7 +13,7 @@ license-files = ["LICENSE"]
 authors = [{ name = "shlomoa" }]
 dependencies = [
     "jsonschema==4.26.0",
-    "TatSu==5.23.0",
+    "TatSu==5.24.0",
 ]
 
 [project.scripts]
