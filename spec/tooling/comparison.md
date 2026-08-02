@@ -8,7 +8,7 @@ _what actually changed between an earlier `openui.json` and a newer one?_ It wal
 both documents together and reports differences as a stable JSON changelog that is
 safe to diff, review, and store in version control.
 
-The tool lives at [`bin/compare_openui_json.py`](../../bin/compare_openui_json.py)
+The tool lives at [`bin/compare_openui_json.py`](https://github.com/shlomoa/openui-spec/blob/main/bin/compare_openui_json.py)
 and depends only on the Python standard library.
 
 ## How it compares
