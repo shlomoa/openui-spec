@@ -7,7 +7,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SPEC_DIR = REPO_ROOT / "spec"
 SCOPES_DIR = SPEC_DIR / "scopes"
 SPEC_README = SPEC_DIR / "README.md"
-OPENUI_JSON = REPO_ROOT / "openui.json"
+OPENUI_JSON = REPO_ROOT / "spec" / "openui.json"
 MKDOCS_CONFIG = REPO_ROOT / "mkdocs.yml"
 NAV_ENTRY_PATTERN = re.compile(r"^\s*-\s+.*?:\s+(.+\.md)$")
 TOP_LEVEL_SCOPE_LINK_PATTERN = re.compile(r"^- \[([^\]]+)\]\(([^)]+/scope\.md)\):", re.MULTILINE)
@@ -76,6 +76,8 @@ EXPECTED_SPEC_MARKDOWN = [
     "scopes/scope.md",
     "scopes/taxonomy_mapping.md",
     "scopes/template.scope.md",
+    "tooling/comparison.md",
+    "tooling/editing.md",
 ]
 
 
@@ -114,6 +116,8 @@ class SpecReadmeSpecTest(unittest.TestCase):
                 "scopes/evidence.md",
                 "scopes/template.scope.md",
                 "examples/README.md",
+                "tooling/comparison.md",
+                "tooling/editing.md",
             }:
                 continue
             if is_family_tag_leaf:

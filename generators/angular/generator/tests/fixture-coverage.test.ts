@@ -87,6 +87,6 @@ test("generator fixtures do not duplicate the generated OpenUI catalog", async (
   assert.equal(
     await pathExists(EXPANDED_OPENUI_FIXTURE),
     false,
-    "Use root openui.json as the catalog SSOT instead of adding expanded-openui.json.",
+    "Use spec/openui.json as the catalog SSOT instead of adding expanded-openui.json.",
   );
 });

@@ -2,7 +2,7 @@
 
 **Purpose:** Define the scope of the OpenUI specification as an implementation-independent contract for Web UI frameworks.
 
-OpenUI is a technology-independent specification for a Web UI framework. It defines the required behavior, structure, terminology, and compliance rules for a compliant Web UI implementation, independent of any specific rendering technology, build tool, or framework. The prose scopes under `spec/scopes/` are the source of truth; the machine-readable `openui.json` at the repository root is generated from them. This README is the prose entry point for the specification.
+OpenUI is a technology-independent specification for a Web UI framework. It defines the required behavior, structure, terminology, and compliance rules for a compliant Web UI implementation, independent of any specific rendering technology, build tool, or framework. The prose scopes under `spec/scopes/` are the source of truth; the machine-readable `spec/openui.json` is generated from them. This README is the prose entry point for the specification.
 
 It serves application developers, designers and UX owners, framework maintainers, and generator/tooling authors, who all consume the same public contract.
 
@@ -63,10 +63,10 @@ logic.
 #### Catalog
 
 **Aliases:** object catalog, vocabulary catalog, specification catalog,
-`openui.json`.
+`spec/openui.json`.
 
 The catalog is the machine-readable vocabulary of objects defined by the prose
-specification. In this repository, root `openui.json` is the generated catalog.
+specification. In this repository, `spec/openui.json` is the generated catalog.
 It conforms to [`openui.schema.json`](openui.schema.json) but serves a different
 role: the schema validates document shape, while the catalog enumerates
 available OpenUI objects and links them to their `spec/scopes/**` source
@@ -314,7 +314,7 @@ filtering, or pagination.
 ## Specification artifacts: grammar vs. catalog
 
 This section is the repository source of truth for the roles of `input.json`,
-`spec/openui.schema.json`, and repository-root `openui.json`. Other documents
+`spec/openui.schema.json`, and `spec/openui.json`. Other documents
 should reference this section instead of redefining those roles. The files are
 easy to confuse — they are all JSON or JSON-related OpenUI artifacts — but they
 sit at **different levels of abstraction**.
@@ -323,12 +323,12 @@ sit at **different levels of abstraction**.
 
 - `spec/openui.schema.json` is the **grammar**: a JSON Schema that validates the
   _shape_ of any OpenUI document.
-- `openui.json` is a **document written in that grammar** whose _content_ is the
+- `spec/openui.json` is a **document written in that grammar** whose _content_ is the
   specification's object **catalog**.
 - `input.json` is a **concrete UI/app document** that conforms to the grammar and
   uses object vocabulary from the catalog.
 
-`openui.json` is to `openui.schema.json` as an XML file is to its XSD, or a
+`spec/openui.json` is to `openui.schema.json` as an XML file is to its XSD, or a
 `package.json` to its JSON Schema.
 
 ### `spec/openui.schema.json` — the grammar (meta-level)
@@ -350,7 +350,13 @@ PascalCase `type`.
 
 **Purpose:** validate that any OpenUI JSON is well-formed.
 
-### `openui.json` — the spec catalog (an _instance_ of the grammar)
+**Canonical location:** the schema's `$id` is
+<https://raw.githubusercontent.com/shlomoa/openui-spec/main/spec/openui.schema.json>.
+Use this URL as the stable reference when validating an OpenUI document against
+the current grammar (for example, as a `$schema` value or in a validator
+configuration).
+
+### `spec/openui.json` — the spec catalog (an _instance_ of the grammar)
 
 A concrete document that **conforms to** `openui.schema.json`. Its _content_ is
 the authoritative catalog of the specification's scopes:
@@ -361,7 +367,7 @@ Widgets → …`, each node carrying `attrs.scopeDocument` pointers into the pro
 **Purpose:** be the machine-readable vocabulary of _what objects the spec
 defines_, and the trace links to their prose.
 
-> `openui.json` is **generated** from the `spec/scopes/**` prose, which is the
+> `spec/openui.json` is **generated** from the `spec/scopes/**` prose, which is the
 > source of truth. It is canonical as the machine-readable form, but it is a
 > derived artifact, not hand-authored.
 
@@ -373,19 +379,19 @@ openui.schema.json   ← grammar / meta-schema (validates shape)
 openui.json          ← the spec's catalog of available objects (vocabulary)
 ```
 
-|              | `openui.schema.json`                  | `openui.json`                   |
-| ------------ | ------------------------------------- | ------------------------------- |
-| Kind         | JSON **Schema** (grammar)             | JSON **document** (instance)    |
-| Level        | meta / type-level                     | content / catalog-level         |
-| Knows about  | shapes, id/type/attrs rules           | `Charts`, `Dashboard`, `Forms`… |
-| Changes when | the _format_ changes                  | the _spec's objects_ change     |
-| Validates    | every OpenUI doc, incl. `openui.json` | nothing (it is data)            |
+|              | `openui.schema.json`                       | `spec/openui.json`              |
+| ------------ | ------------------------------------------ | ------------------------------- |
+| Kind         | JSON **Schema** (grammar)                  | JSON **document** (instance)    |
+| Level        | meta / type-level                          | content / catalog-level         |
+| Knows about  | shapes, id/type/attrs rules                | `Charts`, `Dashboard`, `Forms`… |
+| Changes when | the _format_ changes                       | the _spec's objects_ change     |
+| Validates    | every OpenUI doc, incl. `spec/openui.json` | nothing (it is data)            |
 
 ### Where `input.json` fits
 
 A generator `input.json` is a concrete UI/app document, e.g. a dashboard with
-three charts. It conforms to the **same grammar** as `openui.json` and uses
-object vocabulary from the `openui.json` catalog. The two documents are
+three charts. It conforms to the **same grammar** as `spec/openui.json` and uses
+object vocabulary from the `spec/openui.json` catalog. The two documents are
 distinguished by _role_, not by _shape_:
 
 ```text
@@ -397,7 +403,7 @@ openui.json   input.json
  what exists)   built from the catalog)
 ```
 
-- `openui.json` = "here is the **vocabulary** of objects you may use" (the
+- `spec/openui.json` = "here is the **vocabulary** of objects you may use" (the
   catalog).
 - `input.json` = "here is the **app** I want, using that vocabulary."
 - `openui.schema.json` = "here is the **syntax** both must obey."
@@ -410,7 +416,7 @@ Generators use the three files together:
 - validate `input.json` against the grammar defined by
   `spec/openui.schema.json`,
 - validate and interpret `input.json` content against the object catalog defined
-  by `openui.json`, and
+  by `spec/openui.json`, and
 - generate target-framework output from the validated `input.json`.
 
 ## Spec folder structure
@@ -477,7 +483,7 @@ each term.
 | **[Internationalization](scopes/Internationalization/scope.md)** |                                                                               | Language, locale, writing-system, formatting, sorting, search, and fonts.      |
 | **[Interaction](scopes/Interaction/scope.md)**                   |                                                                               | State, target, gesture, pointer, keyboard, focus, input, and change notions.   |
 
-Each linked path is the scope's `attrs.scopeDocument` value in the root `openui.json`, which maps every `spec/scopes/**` document to its machine-readable node.
+Each linked path is the scope's `attrs.scopeDocument` value in `spec/openui.json`, which maps every `spec/scopes/**` document to its machine-readable node.
 
 ### Scope folder
 
@@ -495,7 +501,7 @@ Structured hierarchically, named in Pascal Case for folders and snake case for f
 
 ### Canonical root document
 
-The repository root `openui.json` MUST satisfy these top-level root rules:
+`spec/openui.json` MUST satisfy these top-level root rules:
 
 - `"id"` MUST be `"root"`.
 - `"version"` is REQUIRED (top-level only) and MUST equal the current value in
@@ -580,7 +586,7 @@ The format itself is in [EBNF](./EBNF.txt)
 
 ## Leaf scope source format (`*.scope.md`)
 
-`openui.json` is **generated** from the `spec/scopes/**` prose; the prose is the
+`spec/openui.json` is **generated** from the `spec/scopes/**` prose; the prose is the
 source of truth. Every leaf
 `*.scope.md` follows the shared
 [`scopes/template.scope.md`](scopes/template.scope.md). Three of its sections are
@@ -594,7 +600,7 @@ free prose and are not parsed. The converter lives in
 A leaf produces a metadata-only **scope node** plus a single **`<scopeId>Instance`**
 child (see [`scopes/scope.md`](scopes/scope.md)). Fields come from:
 
-| `openui.json` field         | Source in the leaf                                         |
+| `spec/openui.json` field    | Source in the leaf                                         |
 | --------------------------- | ---------------------------------------------------------- |
 | scope `id`                  | Identity `id:` (camelCase)                                 |
 | scope `type`                | derived: PascalCase of the scope `id`                      |

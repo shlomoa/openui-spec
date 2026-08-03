@@ -143,7 +143,7 @@ const CATEGORIES: readonly DocCategory[] = [
             'Associations express non-owning semantic references such as labels and descriptions.',
             'Pages, dialogs, forms, lists, toolbars, and actions are modeled as specialized controls and elements connected by metadata.',
           ],
-          jsonMapping: 'specification.sections[4] in /openui.json',
+          jsonMapping: 'specification.sections[4] in /spec/openui.json',
         },
         examples: [
           {
@@ -246,7 +246,7 @@ const CATEGORIES: readonly DocCategory[] = [
             'The framework must support a navigable shell-level structure and page hierarchy built from public components.',
             'Library dependencies must be explicit so application structure can be resolved without reading component internals.',
           ],
-          jsonMapping: 'specification.sections[5] in /openui.json',
+          jsonMapping: 'specification.sections[5] in /spec/openui.json',
         },
         examples: [
           {
@@ -406,7 +406,7 @@ mat-sidenav {
             'Responsive behavior must preserve component composition semantics when layout density, theme, or viewport changes.',
             'Container components may expose drag-and-drop semantics only when declared in metadata.',
           ],
-          jsonMapping: 'specification.sections[6] in /openui.json',
+          jsonMapping: 'specification.sections[6] in /spec/openui.json',
         },
         examples: [
           {
@@ -594,7 +594,7 @@ export class BoardPage {
             'Aggregation bindings connect a model collection to an owned aggregation by repeating a template for each entry.',
             'Async model updates must preserve the declared property and aggregation types.',
           ],
-          jsonMapping: 'specification.sections[10] in /openui.json',
+          jsonMapping: 'specification.sections[10] in /spec/openui.json',
         },
         examples: [
           {
@@ -674,7 +674,7 @@ td.mat-mdc-cell mat-chip {
             'Field validity is published through a value state (None, Error, Warning, Success, Information) and optional value-state text.',
             'Editable and enabled properties gate user input and submission so read-only or disabled forms do not run submission handlers.',
           ],
-          jsonMapping: 'specification.sections[11] in /openui.json',
+          jsonMapping: 'specification.sections[11] in /spec/openui.json',
         },
         examples: [
           {
@@ -830,7 +830,7 @@ export class OrderValidationComponent {
             'Only public state participates in the external component contract; hidden state stays out of generated APIs.',
             'Derived state must remain type-compatible with the declared property it reflects.',
           ],
-          jsonMapping: 'specification.sections[9] in /openui.json',
+          jsonMapping: 'specification.sections[9] in /spec/openui.json',
         },
         examples: [
           {
@@ -916,7 +916,7 @@ mat-form-field {
             'Property bindings connect one model value to a typed scalar property; aggregation bindings expand a model collection through a template.',
             'Every binding resolves a path against a default or named model, and async updates must keep bound values type-compatible.',
           ],
-          jsonMapping: 'specification.sections[10] in /openui.json',
+          jsonMapping: 'specification.sections[10] in /spec/openui.json',
         },
         examples: [
           {
@@ -999,7 +999,7 @@ mat-list[aria-label='Bound orders'] mat-list-item {
             'A single activation event normalizes pointer, touch, keyboard, and assistive-technology activation.',
             'Disabled controls suppress public interaction events, so the handler is gated by enabled state.',
           ],
-          jsonMapping: 'specification.sections[8] in /openui.json',
+          jsonMapping: 'specification.sections[8] in /spec/openui.json',
         },
         examples: [
           {
@@ -1103,7 +1103,7 @@ export class SaveActionComponent {
             'Associations are non-owning references such as ariaLabelledBy used for semantic links rather than ownership.',
             'Events are named notifications that deliver typed parameters to listeners as the component reports state changes.',
           ],
-          jsonMapping: 'specification.sections[7] in /openui.json',
+          jsonMapping: 'specification.sections[7] in /spec/openui.json',
         },
         examples: [
           {
@@ -1257,7 +1257,7 @@ export class Card {
             'Design-time metadata is an optional overlay for labels, palette placement, edit actions, and drag-and-drop hints that does not change runtime APIs.',
             'Renderer and drag-and-drop extension capabilities are declarative and must preserve theming, accessibility, interaction, and performance contracts.',
           ],
-          jsonMapping: 'specification.sections[19] in /openui.json',
+          jsonMapping: 'specification.sections[19] in /spec/openui.json',
         },
         examples: [
           {
@@ -1371,7 +1371,7 @@ export class WorkspaceOutletComponent {
             'Dialogs and popovers are overlays whose open and close state is part of the public contract.',
             'Route-aware components map URL patterns to targets so application state is deep-linkable.',
           ],
-          jsonMapping: 'specification.sections[12] in /openui.json',
+          jsonMapping: 'specification.sections[12] in /spec/openui.json',
         },
         examples: [
           {
@@ -1488,7 +1488,7 @@ export class ConfirmDialogComponent {
             'Message feedback declares a semantic severity (information, success, warning, or error) with live-region politeness.',
             'Empty-state feedback is a public, addressable view that communicates absent data and offers a recovery action.',
           ],
-          jsonMapping: 'specification.sections[13] in /openui.json',
+          jsonMapping: 'specification.sections[13] in /spec/openui.json',
         },
         examples: [
           {
@@ -1607,7 +1607,7 @@ export class OrdersEmptyComponent {
             'Text direction is a declarable public property with LTR, RTL, and Inherit values for bidirectional content.',
             'Keyboard activation and focus order are part of the public, compliance-relevant interaction contract.',
           ],
-          jsonMapping: 'specification.sections[14] in /openui.json',
+          jsonMapping: 'specification.sections[14] in /spec/openui.json',
         },
         examples: [
           {
@@ -1717,7 +1717,7 @@ export class OrderReferenceComponent {
             'Immutable public projections such as the API projection are cacheable by a stable identity to avoid recomputation and refetching.',
             'Performance-relevant behavior is expressed through the public contract as observable, measurable budgets rather than hidden renderer timing.',
           ],
-          jsonMapping: 'specification.sections[18] in /openui.json',
+          jsonMapping: 'specification.sections[18] in /spec/openui.json',
         },
         examples: [
           {
@@ -1811,7 +1811,7 @@ projectionCache.set(cacheKey, projection);`,
             'Message resolution follows a deterministic fallback chain from the most specific locale to a default bundle.',
             'Text direction is a declarable public property with LTR, RTL, and Inherit values that components inherit from the active locale.',
           ],
-          jsonMapping: 'specification.sections[16] in /openui.json',
+          jsonMapping: 'specification.sections[16] in /spec/openui.json',
         },
         examples: [
           {
@@ -1905,7 +1905,7 @@ export class OrderReferenceComponent {
             'Hidden properties and deprecated compatibility aliases can be retained as evidence without becoming generated public API.',
             'Validation expectations connect the component contract to observable behavior such as enabled-state gating, text direction, visibility, and accessibility metadata.',
           ],
-          jsonMapping: 'specification.sections[22] in /openui.json',
+          jsonMapping: 'specification.sections[22] in /spec/openui.json',
         },
         examples: [
           {
@@ -2031,7 +2031,7 @@ it('maps popup and direction metadata to observable attributes', () => {
             'Density such as cozy or compact is an externally configurable mode applied at a root scope, not a per-component property.',
             'Theme and density selection stay externally configurable and swappable at runtime.',
           ],
-          jsonMapping: 'specification.sections[15] in /openui.json',
+          jsonMapping: 'specification.sections[15] in /spec/openui.json',
         },
         examples: [
           {
@@ -2142,7 +2142,7 @@ export class PrimaryButtonComponent {}`,
             'Compliance is evaluated from public metadata, documentation, generated projections, and observable behavior rather than private implementation details.',
             'Accessibility, theming, internationalization, security, privacy, performance, and extension requirements need public evidence or documentation.',
           ],
-          jsonMapping: 'specification.sections[20] in /openui.json',
+          jsonMapping: 'specification.sections[20] in /spec/openui.json',
         },
         examples: [
           {
@@ -2240,7 +2240,7 @@ assertCatalogDiscoverable(profile.catalog);`,
             'Evidence artifacts include automated results plus DOM, accessibility-tree, screenshot, or generated-source evidence when behavior is visual-facing.',
           ],
           jsonMapping:
-            'specification.sections entry with id "22-test-acceptance-criteria" in /openui.json',
+            'specification.sections entry with id "22-test-acceptance-criteria" in /spec/openui.json',
         },
         examples: [
           {
@@ -2328,7 +2328,7 @@ await expect(page).toHaveScreenshot('generated-order-form.png');`,
             'Sensitive values are presented through a public masking mode that defaults to masked so the rendered output does not disclose the underlying value.',
             'Irreversible actions request explicit confirmation, and permission-driven visibility removes a restricted action and its popup target from the contract.',
           ],
-          jsonMapping: 'specification.sections[17] in /openui.json',
+          jsonMapping: 'specification.sections[17] in /spec/openui.json',
         },
         examples: [
           {

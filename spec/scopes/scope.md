@@ -46,9 +46,9 @@ Scope objects follow the JSON shape defined in `../README.md`:
 - `children` contains nested UI elements.
 - No loose object properties are allowed outside `attrs` except the structural fields defined by the spec.
 
-### Scope node and instance representation (generated `openui.json`)
+### Scope node and instance representation (generated `spec/openui.json`)
 
-`openui.json` is generated from the prose scopes; it is not hand-authored. A leaf's contract is authored in its `*.scope.md` Attributes and Child model sections. When generated, each scope node is metadata-only (its `attrs` carry `title`, `purpose`, `scopeDocument`, and `status`) and the scope's object contract is represented by a single child instance node:
+`spec/openui.json` is generated from the prose scopes; it is not hand-authored. A leaf's contract is authored in its `*.scope.md` Attributes and Child model sections. When generated, each scope node is metadata-only (its `attrs` carry `title`, `purpose`, `scopeDocument`, and `status`) and the scope's object contract is represented by a single child instance node:
 
 - `id` is `<scopeId>Instance` (camelCase).
 - `type` is the concrete primitive the scope materializes (for example `dialog`, `input`, or `table`) or a PascalCase virtual type.

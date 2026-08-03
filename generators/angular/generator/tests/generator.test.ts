@@ -18,7 +18,7 @@ const ANGULAR_GENERATOR_ROOT =
     ? path.resolve(__dirname, "..", "..")
     : path.resolve(__dirname, "..");
 const REPOSITORY_ROOT = path.resolve(ANGULAR_GENERATOR_ROOT, "..", "..", "..");
-const CATALOG_FIXTURE = path.join(REPOSITORY_ROOT, "openui.json");
+const CATALOG_FIXTURE = path.join(REPOSITORY_ROOT, "spec", "openui.json");
 const MINIMAL_CATALOG_FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "minimal-openui.json");
 const LATEST_SPEC_EXAMPLES_FIXTURE = path.join(
   ANGULAR_GENERATOR_ROOT,
