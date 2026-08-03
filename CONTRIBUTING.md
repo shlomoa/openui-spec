@@ -19,7 +19,7 @@
 | Path                                                             | What's here                                                                                                                        |
 | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | [`spec/`](spec/)                                                 | The specification source of truth — prose scope documents and the ReadTheDocs source; start at [`spec/README.md`](spec/README.md). |
-| [`openui.json`](openui.json)                                     | Generated canonical machine-readable specification, built from `spec/scopes/`.                                                     |
+| [`spec/openui.json`](spec/openui.json)                           | Generated canonical machine-readable specification, built from `spec/scopes/`.                                                     |
 | [`generators/angular/generator/`](generators/angular/generator/) | Angular Material generator (TypeScript npm package).                                                                               |
 | [`docs/`](docs/)                                                 | Repository requirements and supporting documentation.                                                                              |
 | `AGENTS.md` / `CLAUDE.md` / `GEMINI.md`                          | AI coding-assistant guides.                                                                                                        |

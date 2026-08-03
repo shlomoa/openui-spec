@@ -2,7 +2,8 @@
 
 ## General instructions source of truth (SSOT)
 
-Read the external source of truth (SSOT) for general instructions from https://github.com/shlomoa/shlomoa/blob/main/.github/copilot-instructions.md It is mandatory.
+Read the external source of truth (SSOT) for general instructions from
+<https://github.com/shlomoa/shlomoa/blob/main/.github/copilot-instructions.md>. It is mandatory.
 
 ## Copilot bootstrap
 

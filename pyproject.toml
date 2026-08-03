@@ -1,3 +1,41 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openui-spec"
+version = "0.0.1"
+description = "Technology-independent OpenUI specification, canonical catalog, and OpenUI JSON tooling."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{ name = "shlomoa" }]
+dependencies = [
+    "jsonschema==4.26.0",
+    "TatSu==5.23.0",
+]
+
+[project.scripts]
+openui-json = "bin.openui_json_cli:main"
+openui-compare = "bin.compare_openui_json:main"
+
+[project.urls]
+Homepage = "https://github.com/shlomoa/openui-spec"
+Documentation = "https://openui-spec.readthedocs.io/"
+
+[tool.setuptools]
+packages = ["bin", "spec"]
+
+[tool.setuptools.package-data]
+spec = [
+    "openui.json",
+    "openui.schema.json",
+    "EBNF.txt",
+    "*.md",
+    "**/*.md",
+]
+
 [tool.ruff]
 target-version = "py312"
 line-length = 100

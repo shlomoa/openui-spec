@@ -7,8 +7,8 @@ authored against that specification to an existing Angular workspace.
 ## 1. Specification
 
 The OpenUI specification is a technology-independent contract for Web UI
-frameworks. The roles of `input.json`, `spec/openui.schema.json`, and root
-`openui.json` are defined once in
+frameworks. The roles of `input.json`, `spec/openui.schema.json`, and
+`spec/openui.json` are defined once in
 [`spec/README.md` § Specification artifacts: grammar vs. catalog](../spec/README.md#specification-artifacts-grammar-vs-catalog).
 Shared vocabulary, aliases, and cross-framework term meanings are defined once in
 [`spec/README.md` § Glossary](../spec/README.md#glossary).
@@ -29,7 +29,7 @@ existing Angular workspace.
 - **Inputs:**
   - `input.json` — the concrete UI/app document to build, using the role defined
     in the spec artifact contract.
-  - `spec/openui.schema.json` and root `openui.json` — the grammar and catalog
+  - `spec/openui.schema.json` and `spec/openui.json` — the grammar and catalog
     used to validate and interpret `input.json`, as defined in the spec artifact
     contract.
 - **Context:** an existing Angular workspace, which the generator reads to
@@ -41,8 +41,8 @@ existing Angular workspace.
 Implementation constraints:
 
 - The generator is hand-written TypeScript, published as an npm package. It is
-  _not_ generated from `openui.json`, and it is not a generator-generating
-  program; `openui.json` is data the generator consumes at runtime.
+  _not_ generated from `spec/openui.json`, and it is not a generator-generating
+  program; `spec/openui.json` is data the generator consumes at runtime.
 - Implemented in folder `generators/angular/generator`.
 - Follows the structure and implementation details documented in
   `generators/angular/generator/docs/GENERATION.md`.

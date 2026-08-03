@@ -81,4 +81,7 @@ nav:
           - Overview: scopes/Internationalization/scope.md
       - Interaction:
           - Overview: scopes/Interaction/scope.md
+  - Tooling:
+      - OpenUI JSON editing: tooling/editing.md
+      - OpenUI JSON comparison: tooling/comparison.md
   - Examples: examples/README.md

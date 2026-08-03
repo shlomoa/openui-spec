@@ -69,7 +69,7 @@ export function isConcreteExampleRootType(type: string): boolean {
 }
 
 export async function loadDefaultOpenUiCatalog(anchorPath: string): Promise<OpenUiDocument> {
-  const catalogPath = await findUp("openui.json", anchorPath);
+  const catalogPath = await findUp(path.join("spec", "openui.json"), anchorPath);
   return loadOpenUiDocument(catalogPath);
 }
 
