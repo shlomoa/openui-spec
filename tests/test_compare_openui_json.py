@@ -8,6 +8,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = REPO_ROOT / "bin" / "compare_openui_json.py"
+COMPARISON_DOCUMENTATION = REPO_ROOT / "spec" / "tooling" / "comparison.md"
 MODULE_SPEC = importlib.util.spec_from_file_location("compare_openui_json", SCRIPT)
 assert MODULE_SPEC and MODULE_SPEC.loader
 compare_openui_json = importlib.util.module_from_spec(MODULE_SPEC)
@@ -15,6 +16,17 @@ MODULE_SPEC.loader.exec_module(compare_openui_json)
 
 
 class CompareOpenUiJsonTest(unittest.TestCase):
+    def test_documentation_uses_installed_comparison_command(self) -> None:
+        documentation = COMPARISON_DOCUMENTATION.read_text(encoding="utf-8")
+
+        self.assertIn("The installed command is `openui-compare`.", documentation)
+        self.assertIn("openui-compare reference.json new.json", documentation)
+        self.assertIn(
+            "openui-compare reference.json new.json --output changelog.json",
+            documentation
+        )
+        self.assertNotIn("python bin\\compare_openui_json.py", documentation)
+
     def test_compare_reports_hierarchical_additions_removals_and_changes(self) -> None:
         reference = {
             "id": "root",

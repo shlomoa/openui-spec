@@ -8,7 +8,8 @@ _what actually changed between an earlier `spec/openui.json` and a newer one?_ I
 both documents together and reports differences as a stable JSON changelog that is
 safe to diff, review, and store in version control.
 
-The tool lives at [`bin/compare_openui_json.py`](https://github.com/shlomoa/openui-spec/blob/main/bin/compare_openui_json.py)
+The installed command is `openui-compare`. Its implementation lives in
+[`bin/compare_openui_json.py`](https://github.com/shlomoa/openui-spec/blob/main/bin/compare_openui_json.py)
 and depends only on the Python standard library.
 
 ## How it compares
@@ -31,26 +32,45 @@ points at the exact location in the document tree.
 
 ## Usage
 
-Run the tool with the repository-local Python interpreter, passing the reference
-document first and the new document second.
+Install `openui-spec` in a virtual environment, then run `openui-compare`,
+passing the reference document first and the new document second. For a cloned
+copy of this repository, create the environment and install the current checkout
+as follows.
 
 Windows (PowerShell):
 
 ```powershell
-.\.venv\Scripts\python bin\compare_openui_json.py reference.json new.json
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install .
+openui-compare reference.json new.json
 ```
 
 Linux or macOS (Bash):
 
 ```bash
-./.venv/bin/python bin/compare_openui_json.py reference.json new.json
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install .
+openui-compare reference.json new.json
+```
+
+After activation, the virtual environment adds `openui-compare` to `PATH`.
+Without activation, invoke its executable directly:
+
+```powershell
+.\.venv\Scripts\openui-compare.exe reference.json new.json
+```
+
+```bash
+./.venv/bin/openui-compare reference.json new.json
 ```
 
 By default the changelog is printed to standard output. Use `--output` (or `-o`)
 to write it to a file instead:
 
 ```bash
-./.venv/bin/python bin/compare_openui_json.py reference.json new.json --output changelog.json
+openui-compare reference.json new.json --output changelog.json
 ```
 
 ### Arguments
