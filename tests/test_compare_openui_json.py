@@ -22,8 +22,7 @@ class CompareOpenUiJsonTest(unittest.TestCase):
         self.assertIn("The installed command is `openui-compare`.", documentation)
         self.assertIn("openui-compare reference.json new.json", documentation)
         self.assertIn(
-            "openui-compare reference.json new.json --output changelog.json",
-            documentation
+            "openui-compare reference.json new.json --output changelog.json", documentation
         )
         self.assertNotIn("python bin\\compare_openui_json.py", documentation)
 
