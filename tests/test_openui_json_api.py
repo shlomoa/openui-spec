@@ -198,9 +198,7 @@ class OpenUiJsonCliTest(unittest.TestCase):
 
     def test_console_entry_point_is_registered(self) -> None:
         pyproject = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-        self.assertEqual(
-            pyproject["project"]["scripts"]["openui-json"], "bin.openui_json_cli:main"
-        )
+        self.assertEqual(pyproject["project"]["scripts"]["openui-json"], "bin.openui_json_cli:main")
 
     @staticmethod
     def _run(*arguments: str) -> subprocess.CompletedProcess[str]:
