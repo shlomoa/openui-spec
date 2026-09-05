@@ -4,6 +4,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from importlib.metadata import entry_points
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -98,6 +99,68 @@ class CompareOpenUiJsonTest(unittest.TestCase):
                 "remove": [],
             },
         )
+
+    def test_command_writes_changelog_to_output_file(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            directory = Path(temporary_directory)
+            reference_path = directory / "reference.json"
+            new_path = directory / "new.json"
+            output_path = directory / "changelog.json"
+            reference_path.write_text('{"id": "root"}', encoding="utf-8")
+            new_path.write_text('{"id": "root", "type": "html"}', encoding="utf-8")
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    str(reference_path),
+                    str(new_path),
+                    "--output",
+                    str(output_path),
+                ],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(result.stdout, "")
+            self.assertEqual(
+                json.loads(output_path.read_text(encoding="utf-8")),
+                {
+                    "add": [{"new": "html", "path": "/type"}],
+                    "change": [],
+                    "remove": [],
+                },
+            )
+
+    def test_command_rejects_malformed_input(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            directory = Path(temporary_directory)
+            reference_path = directory / "reference.json"
+            new_path = directory / "new.json"
+            reference_path.write_text("{not json}", encoding="utf-8")
+            new_path.write_text('{"id": "root"}', encoding="utf-8")
+
+            result = subprocess.run(
+                [sys.executable, str(SCRIPT), str(reference_path), str(new_path)],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+        self.assertEqual(result.returncode, 2)
+        self.assertNotIn("Traceback", result.stderr)
+
+    def test_console_entry_point_is_registered(self) -> None:
+        (entry_point,) = [
+            candidate
+            for candidate in entry_points(group="console_scripts")
+            if candidate.name == "openui-compare"
+        ]
+        self.assertEqual(entry_point.value, "bin.compare_openui_json:main")
+        loaded = entry_point.load()
+        self.assertTrue(callable(loaded))
+        self.assertEqual(loaded.__name__, "main")
 
 
 if __name__ == "__main__":
