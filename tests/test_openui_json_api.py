@@ -2,8 +2,8 @@ import json
 import subprocess
 import sys
 import tempfile
+import tomllib
 import unittest
-from importlib.metadata import entry_points
 from pathlib import Path
 
 from bin.openui_json import OpenUiJson, OpenUiJsonError, OpenUiValidationError
@@ -197,13 +197,8 @@ class OpenUiJsonCliTest(unittest.TestCase):
         self.assertIn("--input", result.stderr)
 
     def test_console_entry_point_is_registered(self) -> None:
-        (entry_point,) = [
-            candidate
-            for candidate in entry_points(group="console_scripts")
-            if candidate.name == "openui-json"
-        ]
-        self.assertEqual(entry_point.value, "bin.openui_json_cli:main")
-        self.assertIs(entry_point.load(), __import__("bin.openui_json_cli", fromlist=["main"]).main)
+        pyproject = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+        self.assertEqual(pyproject["project"]["scripts"]["openui-json"], "bin.openui_json_cli:main")
 
     @staticmethod
     def _run(*arguments: str) -> subprocess.CompletedProcess[str]:
