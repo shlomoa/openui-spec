@@ -2,6 +2,7 @@ import json
 import subprocess
 import sys
 import tempfile
+import tomllib
 import unittest
 from pathlib import Path
 
@@ -126,6 +127,78 @@ class OpenUiJsonCliTest(unittest.TestCase):
                 json.loads(input_path.read_text(encoding="utf-8"))["children"],
                 [{"id": "target", "type": "Table"}],
             )
+
+    def test_writes_result_to_separate_output_path(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            input_path = Path(temporary_directory) / "input.json"
+            output_path = Path(temporary_directory) / "output.json"
+            input_path.write_text(json.dumps(document_with()), encoding="utf-8")
+
+            add = self._run(
+                "add",
+                "--input",
+                str(input_path),
+                "--output",
+                str(output_path),
+                "--parent",
+                "root",
+                "--object",
+                '{"id":"added","type":"Grid"}',
+            )
+
+            self.assertEqual(add.returncode, 0, add.stderr)
+            self.assertEqual(json.loads(input_path.read_text(encoding="utf-8")), document_with())
+            self.assertEqual(
+                json.loads(output_path.read_text(encoding="utf-8"))["children"][-1]["id"],
+                "added",
+            )
+
+    def test_reports_domain_errors_without_traceback(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            input_path = Path(temporary_directory) / "input.json"
+            input_path.write_text(json.dumps(document_with()), encoding="utf-8")
+
+            result = self._run(
+                "add",
+                "--input",
+                str(input_path),
+                "--parent",
+                "missing",
+                "--object",
+                '{"id":"added","type":"Grid"}',
+            )
+
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("error:", result.stderr)
+            self.assertNotIn("Traceback", result.stderr)
+            self.assertEqual(json.loads(input_path.read_text(encoding="utf-8")), document_with())
+
+    def test_rejects_malformed_json_argument(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            input_path = Path(temporary_directory) / "input.json"
+            input_path.write_text(json.dumps(document_with()), encoding="utf-8")
+
+            result = self._run(
+                "add",
+                "--input",
+                str(input_path),
+                "--parent",
+                "root",
+                "--object",
+                "{not json}",
+            )
+
+            self.assertEqual(result.returncode, 2)
+            self.assertIn("invalid JSON", result.stderr)
+
+    def test_requires_input_argument(self) -> None:
+        result = self._run("validate")
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("--input", result.stderr)
+
+    def test_console_entry_point_is_registered(self) -> None:
+        pyproject = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+        self.assertEqual(pyproject["project"]["scripts"]["openui-json"], "bin.openui_json_cli:main")
 
     @staticmethod
     def _run(*arguments: str) -> subprocess.CompletedProcess[str]:
