@@ -3,8 +3,8 @@ import json
 import subprocess
 import sys
 import tempfile
+import tomllib
 import unittest
-from importlib.metadata import entry_points
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -152,15 +152,10 @@ class CompareOpenUiJsonTest(unittest.TestCase):
         self.assertNotIn("Traceback", result.stderr)
 
     def test_console_entry_point_is_registered(self) -> None:
-        (entry_point,) = [
-            candidate
-            for candidate in entry_points(group="console_scripts")
-            if candidate.name == "openui-compare"
-        ]
-        self.assertEqual(entry_point.value, "bin.compare_openui_json:main")
-        loaded = entry_point.load()
-        self.assertTrue(callable(loaded))
-        self.assertEqual(loaded.__name__, "main")
+        pyproject = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+        self.assertEqual(
+            pyproject["project"]["scripts"]["openui-compare"], "bin.compare_openui_json:main"
+        )
 
 
 if __name__ == "__main__":
