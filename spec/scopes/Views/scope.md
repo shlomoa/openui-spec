@@ -4,8 +4,8 @@ Views define user-facing representations of business objects and workflows.
 
 ## Objects
 
-- [Reports](reports.scope.md): Read-only data views including filtering, sorting, grouping, and pagination.
-- [Forms](forms.scope.md): Read-write data views including validation, submission, and dirty state.
+- [Report](report.scope.md): Read-only data views including filtering, sorting, grouping, and pagination.
+- [Form](form.scope.md): Read-write data views including validation, submission, and dirty state.
 
 ## Boundaries
 

@@ -1,11 +1,11 @@
-# Forms
+# Form
 
 This leaf follows the [leaf scope template](../template.scope.md). Its contract is
 drawn from the `spec/README.md` scope rule, recorded technology-independently.
 
 ## Identity
 
-- id: forms · type: Forms · status: draft
+- id: form · type: Form · status: draft
 
 ## Purpose
 

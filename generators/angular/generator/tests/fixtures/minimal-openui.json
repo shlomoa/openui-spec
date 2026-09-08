@@ -176,22 +176,22 @@
           },
           "children": [
             {
-              "id": "reports",
-              "type": "Reports",
+              "id": "report",
+              "type": "Report",
               "attrs": {
-                "title": "Reports",
+                "title": "Report",
                 "purpose": "Read-only data with filtering, sorting, grouping, and pagination.",
-                "scopeDocument": "scopes/Views/reports.scope.md",
+                "scopeDocument": "scopes/Views/report.scope.md",
                 "status": "draft"
               }
             },
             {
-              "id": "forms",
-              "type": "Forms",
+              "id": "form",
+              "type": "Form",
               "attrs": {
-                "title": "Forms",
+                "title": "Form",
                 "purpose": "Read-write data including validation, submission, and dirty state.",
-                "scopeDocument": "scopes/Views/forms.scope.md",
+                "scopeDocument": "scopes/Views/form.scope.md",
                 "status": "draft"
               }
             }
@@ -250,12 +250,12 @@
           },
           "children": [
             {
-              "id": "charts",
-              "type": "Charts",
+              "id": "chart",
+              "type": "Chart",
               "attrs": {
-                "title": "Charts",
+                "title": "Chart",
                 "purpose": "Visual data representations such as bar charts, line charts, and pie charts.",
-                "scopeDocument": "scopes/Widgets/charts.scope.md",
+                "scopeDocument": "scopes/Widgets/chart.scope.md",
                 "status": "draft"
               }
             },
@@ -270,12 +270,12 @@
               }
             },
             {
-              "id": "lists",
-              "type": "Lists",
+              "id": "list",
+              "type": "List",
               "attrs": {
-                "title": "Lists",
+                "title": "List",
                 "purpose": "Lists of items with sorting, filtering, and pagination.",
-                "scopeDocument": "scopes/Widgets/lists.scope.md",
+                "scopeDocument": "scopes/Widgets/list.scope.md",
                 "status": "draft"
               }
             },

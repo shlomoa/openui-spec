@@ -6,10 +6,10 @@ Widgets define reusable components that can be used in multiple pages or views.
 
 Common widgets include:
 
-- [Charts](charts.scope.md): Visual representations of data, including bar charts, line charts, and pie charts.
+- [Chart](chart.scope.md): Visual representations of data, including bar charts, line charts, and pie charts.
 - [Table](table.scope.md): Tabular presentation of data, including column definitions, row models, sorting, filtering, and pagination.
 - [Data grid](data_grid.scope.md): Interactive tabular-data widgets with grid navigation, selection, or editing behavior.
-- [Lists](lists.scope.md): Lists of items, including sorting, filtering, and pagination.
+- [List](list.scope.md): An ordered or unordered collection of items, including sorting, filtering, and pagination.
 - [Feedback widgets](feedback_widgets.scope.md): Tooltips, alerts, toasts, snackbars, notifications, and audio-description surfaces.
 - [Media widgets](media_widgets.scope.md): Media players, camera previews, and map surfaces.
 - [Navigation widgets](navigation_widgets.scope.md): Navigation bars, drawers, rails, breadcrumbs, tree views, pagination controls, and carousels.

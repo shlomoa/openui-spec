@@ -46,8 +46,8 @@ that assembles its child objects into a realistic whole.
 | [Shell page](../scopes/Pages/shell_page.scope.md)                                | [Pages/shell_page.example.json](Pages/shell_page.example.json)                                   |
 | [Empty page](../scopes/Pages/empty_page.scope.md)                                | [Pages/empty_page.example.json](Pages/empty_page.example.json)                                   |
 | [Views](../scopes/Views/scope.md)                                                | [Views/scope.example.json](Views/scope.example.json)                                             |
-| [Reports](../scopes/Views/reports.scope.md)                                      | [Views/reports.example.json](Views/reports.example.json)                                         |
-| [Forms](../scopes/Views/forms.scope.md)                                          | [Views/forms.example.json](Views/forms.example.json)                                             |
+| [Report](../scopes/Views/report.scope.md)                                        | [Views/report.example.json](Views/report.example.json)                                           |
+| [Form](../scopes/Views/form.scope.md)                                            | [Views/form.example.json](Views/form.example.json)                                               |
 | [Containers](../scopes/Containers/scope.md)                                      | [Containers/scope.example.json](Containers/scope.example.json)                                   |
 | [Grid](../scopes/Containers/grid.scope.md)                                       | [Containers/grid.example.json](Containers/grid.example.json)                                     |
 | [Expandable panels](../scopes/Containers/expandable_panels.scope.md)             | [Containers/expandable_panels.example.json](Containers/expandable_panels.example.json)           |
@@ -58,9 +58,9 @@ that assembles its child objects into a realistic whole.
 | [Structural containers](../scopes/Containers/structural_containers.scope.md)     | [Containers/structural_containers.example.json](Containers/structural_containers.example.json)   |
 | [Splitters](../scopes/Containers/splitters.scope.md)                             | [Containers/splitters.example.json](Containers/splitters.example.json)                           |
 | [Widgets](../scopes/Widgets/scope.md)                                            | [Widgets/scope.example.json](Widgets/scope.example.json)                                         |
-| [Charts](../scopes/Widgets/charts.scope.md)                                      | [Widgets/charts.example.json](Widgets/charts.example.json)                                       |
+| [Chart](../scopes/Widgets/chart.scope.md)                                        | [Widgets/chart.example.json](Widgets/chart.example.json)                                         |
 | [Table](../scopes/Widgets/table.scope.md)                                        | [Widgets/table.example.json](Widgets/table.example.json)                                         |
-| [Lists](../scopes/Widgets/lists.scope.md)                                        | [Widgets/lists.example.json](Widgets/lists.example.json)                                         |
+| [List](../scopes/Widgets/list.scope.md)                                          | [Widgets/list.example.json](Widgets/list.example.json)                                           |
 | [Date/Time pickers](../scopes/Widgets/date_time_pickers.scope.md)                | [Widgets/date_time_pickers.example.json](Widgets/date_time_pickers.example.json)                 |
 | [Stepper](../scopes/Widgets/stepper.scope.md)                                    | [Widgets/stepper.example.json](Widgets/stepper.example.json)                                     |
 | [Dialog](../scopes/Widgets/dialog.scope.md)                                      | [Widgets/dialog.example.json](Widgets/dialog.example.json)                                       |

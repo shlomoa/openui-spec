@@ -117,17 +117,17 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
         (),
         (("shellPageRouting", "Routing"), ("shellPageNavigation", "Navigation")),
     ),
-    "Views/forms.scope.md": (
-        "Forms",
+    "Views/form.scope.md": (
+        "Form",
         ("(dirtyChange)", "(submit)", "(validate)"),
         (),
     ),
-    "Views/reports.scope.md": (
-        "Reports",
+    "Views/report.scope.md": (
+        "Report",
         ("(filter)", "(group)", "(paginate)", "(sort)"),
         (),
     ),
-    "Widgets/charts.scope.md": ("Chart", (), ()),
+    "Widgets/chart.scope.md": ("Chart", (), ()),
     "Widgets/data_grid.scope.md": ("DataGrid", (), ()),
     "Widgets/date_time_pickers.scope.md": (
         "DateTimePicker",
@@ -144,10 +144,10 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
         ),
     ),
     "Widgets/feedback_widgets.scope.md": ("FeedbackWidgets", (), ()),
-    "Widgets/lists.scope.md": (
+    "Widgets/list.scope.md": (
         "ul",
         ("(filter)", "(paginate)", "(sort)"),
-        (("listsListItem", "li"),),
+        (("listItem", "li"),),
     ),
     "Widgets/media_widgets.scope.md": ("MediaWidgets", (), ()),
     "Widgets/menu_widgets.scope.md": ("MenuWidgets", (), ()),

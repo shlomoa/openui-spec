@@ -1,11 +1,11 @@
-# Reports
+# Report
 
 This leaf follows the [leaf scope template](../template.scope.md). Its contract is
 drawn from the `spec/README.md` scope rule, recorded technology-independently.
 
 ## Identity
 
-- id: reports · type: Reports · status: draft
+- id: report · type: Report · status: draft
 
 ## Purpose
 

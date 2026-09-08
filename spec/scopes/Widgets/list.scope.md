@@ -1,4 +1,4 @@
-# Lists
+# List
 
 This leaf follows the [leaf scope template](../template.scope.md). Its contract is
 drawn from the native HTML `ul`/`li` model and the `spec/README.md` scope rule,
@@ -6,7 +6,7 @@ recorded technology-independently.
 
 ## Identity
 
-- id: lists · type: ul · status: draft
+- id: list · type: ul · status: draft
 
 ## Purpose
 

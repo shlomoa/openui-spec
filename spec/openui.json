@@ -717,18 +717,18 @@
           },
           "children": [
             {
-              "id": "reports",
-              "type": "Reports",
+              "id": "report",
+              "type": "Report",
               "attrs": {
-                "title": "Reports",
+                "title": "Report",
                 "purpose": "A read-only data view that lets the user filter, sort, group, and page through business data.",
-                "scopeDocument": "scopes/Views/reports.scope.md",
+                "scopeDocument": "scopes/Views/report.scope.md",
                 "status": "draft"
               },
               "children": [
                 {
-                  "id": "reportsInstance",
-                  "type": "Reports",
+                  "id": "reportInstance",
+                  "type": "Report",
                   "attrs": {
                     "(filter)": null,
                     "(sort)": null,
@@ -739,18 +739,18 @@
               ]
             },
             {
-              "id": "forms",
-              "type": "Forms",
+              "id": "form",
+              "type": "Form",
               "attrs": {
-                "title": "Forms",
+                "title": "Form",
                 "purpose": "A read-write data view that lets the user enter and edit business data with validation, submission, and dirty-state tracking.",
-                "scopeDocument": "scopes/Views/forms.scope.md",
+                "scopeDocument": "scopes/Views/form.scope.md",
                 "status": "draft"
               },
               "children": [
                 {
-                  "id": "formsInstance",
-                  "type": "Forms",
+                  "id": "formInstance",
+                  "type": "Form",
                   "attrs": {
                     "(validate)": null,
                     "(submit)": null,
@@ -772,17 +772,17 @@
           },
           "children": [
             {
-              "id": "charts",
-              "type": "Charts",
+              "id": "chart",
+              "type": "Chart",
               "attrs": {
-                "title": "Charts",
+                "title": "Chart",
                 "purpose": "A visual representation of data — such as a bar, line, or pie chart — that summarizes a data series for the user.",
-                "scopeDocument": "scopes/Widgets/charts.scope.md",
+                "scopeDocument": "scopes/Widgets/chart.scope.md",
                 "status": "draft"
               },
               "children": [
                 {
-                  "id": "chartsInstance",
+                  "id": "chartInstance",
                   "type": "Chart"
                 }
               ]
@@ -831,17 +831,17 @@
               ]
             },
             {
-              "id": "lists",
-              "type": "Lists",
+              "id": "list",
+              "type": "List",
               "attrs": {
-                "title": "Lists",
+                "title": "List",
                 "purpose": "An ordered or unordered collection of items with optional sorting, filtering, and pagination, following the HTML `ul`/`li` model.",
-                "scopeDocument": "scopes/Widgets/lists.scope.md",
+                "scopeDocument": "scopes/Widgets/list.scope.md",
                 "status": "draft"
               },
               "children": [
                 {
-                  "id": "listsInstance",
+                  "id": "listInstance",
                   "type": "ul",
                   "attrs": {
                     "(sort)": null,
@@ -850,7 +850,7 @@
                   },
                   "children": [
                     {
-                      "id": "listsListItem",
+                      "id": "listItem",
                       "type": "li"
                     }
                   ]
