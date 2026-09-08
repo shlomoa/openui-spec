@@ -12,11 +12,26 @@ Contributor and developer entry points for this repository:
 
 ## OpenUI JSON API
 
-The `bin` package provides `OpenUiJson` for loading, validating, and editing an
-OpenUI JSON document. Validation checks both `spec/openui.schema.json` and the
-object types supported by the canonical `spec/openui.json` catalog. The published
-[OpenUI JSON editing](https://openui-spec.readthedocs.io/en/latest/tooling/editing/)
-tooling page documents these commands for spec users.
+The [`@openui-spec/openui-json`](package.json) package provides `OpenUiJson` for
+loading, validating, and editing an OpenUI JSON document. It bundles
+`spec/openui.schema.json` and `spec/openui.json`; validation checks both the
+schema and the object types supported by the canonical catalog.
+
+```bash
+npm install @openui-spec/openui-json
+```
+
+```typescript
+import { OpenUiJson } from "@openui-spec/openui-json";
+
+const document = OpenUiJson.load("input.json");
+document.validate();
+document.add("root", { id: "newTable", type: "Table" });
+document.save("output.json");
+```
+
+The published [OpenUI JSON editing](https://openui-spec.readthedocs.io/en/latest/tooling/editing/)
+tooling page documents the equivalent Python commands for spec users.
 
 Use the CLI to validate or apply one change in place (pass `--output` to write
 to a different file):

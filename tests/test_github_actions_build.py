@@ -59,6 +59,13 @@ class GitHubActionsBuildWorkflowTest(unittest.TestCase):
             self.workflow,
         )
 
+    def test_build_workflow_runs_openui_json_package_checks(self):
+        self.assertIn("package-lock.json", self.workflow)
+        self.assertIn("Install OpenUI JSON package dependencies", self.workflow)
+        self.assertIn("Test OpenUI JSON package", self.workflow)
+        self.assertIn("run: npm ci", self.workflow)
+        self.assertIn("run: npm test", self.workflow)
+
     def test_build_workflow_runs_angular_examples_checks(self):
         self.assertIn("generators/angular/generated-examples/package-lock.json", self.workflow)
         self.assertIn("working-directory: generators/angular/generated-examples", self.workflow)

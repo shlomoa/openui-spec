@@ -20,6 +20,7 @@
 | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | [`spec/`](spec/)                                                 | The specification source of truth — prose scope documents and the ReadTheDocs source; start at [`spec/README.md`](spec/README.md). |
 | [`spec/openui.json`](spec/openui.json)                           | Generated canonical machine-readable specification, built from `spec/scopes/`.                                                     |
+| [`package.json`](package.json)                                   | Framework-neutral TypeScript/npm package for OpenUI JSON documents.                                                                |
 | [`generators/angular/generator/`](generators/angular/generator/) | Angular Material generator (TypeScript npm package).                                                                               |
 | [`docs/`](docs/)                                                 | Repository requirements and supporting documentation.                                                                              |
 | `AGENTS.md` / `CLAUDE.md` / `GEMINI.md`                          | AI coding-assistant guides.                                                                                                        |
@@ -45,6 +46,19 @@ node dist/src/cli/main.js generate --input tests/fixtures/minimal-openui.json --
 The direct `node dist/src/cli/main.js` commands require `npm run build` to complete successfully first so the `dist` output exists. Re-run the build after changing generator source files.
 
 The generated app includes Angular routing, a Material shell and navigation, global theme styles, and per-section pages for the specification areas currently mapped by the generator. Keep generator changes aligned with the compiler-style pipeline documented in `generators/angular/generator/docs/GENERATION.md`: load, validate, normalize, build the UI model, map to Angular, emit files, and verify.
+
+---
+
+## OpenUI JSON npm package
+
+The repository root is the `@openui-spec/openui-json` npm package. Its build
+uses the canonical files under `spec/` directly and must be run from the
+repository root:
+
+```bash
+npm ci
+npm test
+```
 
 ---
 
@@ -86,8 +100,8 @@ Repository validation has three root layers:
 3. **CI build workflow** (`.github/workflows/build.yml`) — runs root validation
    on code-review events. `tests/test_github_actions_build.py` asserts the
    workflow keeps running repository checks, Python validation tooling,
-   lint/format checks, strict MkDocs builds, Angular generator validation, and
-   pinned action versions.
+   lint/format checks, strict MkDocs builds, the OpenUI JSON package, Angular
+   generator validation, and pinned action versions.
 
 Run repository validation from the root through the local virtual environment.
 

@@ -12,6 +12,22 @@ The tool lives at [`bin/openui_json_cli.py`](https://github.com/shlomoa/openui-s
 and is built on the `OpenUiJson` class in
 [`bin/openui_json.py`](https://github.com/shlomoa/openui-spec/blob/main/bin/openui_json.py).
 
+## TypeScript and JavaScript API
+
+The framework-neutral [`@openui-spec/openui-json`](https://www.npmjs.com/package/@openui-spec/openui-json)
+package provides the same document loading, validation, and mutation API for
+Node.js consumers. Its published package includes the canonical schema and
+catalog, so no asset paths are required for normal use.
+
+```typescript
+import { OpenUiJson } from "@openui-spec/openui-json";
+
+const document = OpenUiJson.load("input.json");
+document.validate();
+document.updateAttributes("table", { title: "Updated" });
+document.save("output.json");
+```
+
 ## What it validates
 
 Every command validates the resulting document against two sources of truth:

@@ -48,8 +48,15 @@ jobs:
           node-version: "22"
           cache: npm
           cache-dependency-path: |
+            package-lock.json
             generators/angular/generator/package-lock.json
             generators/angular/generated-examples/package-lock.json
+
+      - name: Install OpenUI JSON package dependencies
+        run: npm ci
+
+      - name: Test OpenUI JSON package
+        run: npm test
 
       - name: Install Angular generator dependencies
         working-directory: generators/angular/generator
