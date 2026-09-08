@@ -87,6 +87,30 @@ test("updates attributes and replaces objects", () => {
   document.validate();
 });
 
+test("supports mutations for every catalog type", () => {
+  const catalog = JSON.parse(
+    readFileSync(path.resolve(__dirname, "..", "..", "spec", "openui.json"), "utf8"),
+  ) as Record<string, any>;
+  const types = new Set<string>();
+  const collectTypes = (node: Record<string, any>): void => {
+    types.add(node.type);
+    for (const child of node.children ?? []) {
+      collectTypes(child);
+    }
+  };
+  collectTypes(catalog);
+
+  for (const [index, type] of [...types].entries()) {
+    const document = new OpenUiJson(documentWith());
+    const id = `object${index}`;
+    document.add("root", { id, type });
+    document.updateAttributes(id, { title: type });
+    document.replace(id, { id, type }, { parentId: "root" });
+    document.remove(id, { parentId: "root" });
+    document.validate();
+  }
+});
+
 test("accepts in-memory schema and catalog options", () => {
   const catalog = new OpenUiJson(documentWith()).document!;
   const schema = JSON.parse(
