@@ -25,7 +25,7 @@ part of this generated inventory and are maintained separately.
 | `action_controls/`            | [`spec/examples/Controls/action_controls.example.json`](../../../../../spec/examples/Controls/action_controls.example.json)                   |
 | `application_scope/`          | [`spec/examples/Application/scope.example.json`](../../../../../spec/examples/Application/scope.example.json)                                 |
 | `behaviors_scope/`            | [`spec/examples/Behaviors/scope.example.json`](../../../../../spec/examples/Behaviors/scope.example.json)                                     |
-| `charts/`                     | [`spec/examples/Widgets/charts.example.json`](../../../../../spec/examples/Widgets/charts.example.json)                                       |
+| `chart/`                      | [`spec/examples/Widgets/chart.example.json`](../../../../../spec/examples/Widgets/chart.example.json)                                         |
 | `choice_controls/`            | [`spec/examples/Controls/choice_controls.example.json`](../../../../../spec/examples/Controls/choice_controls.example.json)                   |
 | `collapsible/`                | [`spec/examples/Behaviors/collapsible.example.json`](../../../../../spec/examples/Behaviors/collapsible.example.json)                         |
 | `containers_scope/`           | [`spec/examples/Containers/scope.example.json`](../../../../../spec/examples/Containers/scope.example.json)                                   |
@@ -41,14 +41,14 @@ part of this generated inventory and are maintained separately.
 | `expandable_panels/`          | [`spec/examples/Containers/expandable_panels.example.json`](../../../../../spec/examples/Containers/expandable_panels.example.json)           |
 | `feedback_widgets/`           | [`spec/examples/Widgets/feedback_widgets.example.json`](../../../../../spec/examples/Widgets/feedback_widgets.example.json)                   |
 | `favicon/`                    | [`spec/examples/Application/favicon.example.json`](../../../../../spec/examples/Application/favicon.example.json)                             |
-| `forms/`                      | [`spec/examples/Views/forms.example.json`](../../../../../spec/examples/Views/forms.example.json)                                             |
+| `form/`                       | [`spec/examples/Views/form.example.json`](../../../../../spec/examples/Views/form.example.json)                                               |
 | `grid/`                       | [`spec/examples/Containers/grid.example.json`](../../../../../spec/examples/Containers/grid.example.json)                                     |
 | `index_html/`                 | [`spec/examples/Application/index_html.example.json`](../../../../../spec/examples/Application/index_html.example.json)                       |
 | `interaction_scope/`          | [`spec/examples/Interaction/scope.example.json`](../../../../../spec/examples/Interaction/scope.example.json)                                 |
 | `internationalization_scope/` | [`spec/examples/Internationalization/scope.example.json`](../../../../../spec/examples/Internationalization/scope.example.json)               |
 | `layout_scope/`               | [`spec/examples/Layout/scope.example.json`](../../../../../spec/examples/Layout/scope.example.json)                                           |
 | `link_and_scroll_controls/`   | [`spec/examples/Controls/link_and_scroll_controls.example.json`](../../../../../spec/examples/Controls/link_and_scroll_controls.example.json) |
-| `lists/`                      | [`spec/examples/Widgets/lists.example.json`](../../../../../spec/examples/Widgets/lists.example.json)                                         |
+| `list/`                       | [`spec/examples/Widgets/list.example.json`](../../../../../spec/examples/Widgets/list.example.json)                                           |
 | `media_widgets/`              | [`spec/examples/Widgets/media_widgets.example.json`](../../../../../spec/examples/Widgets/media_widgets.example.json)                         |
 | `menu_widgets/`               | [`spec/examples/Widgets/menu_widgets.example.json`](../../../../../spec/examples/Widgets/menu_widgets.example.json)                           |
 | `native/`                     | [`spec/examples/Controls/native.example.json`](../../../../../spec/examples/Controls/native.example.json)                                     |
@@ -59,7 +59,7 @@ part of this generated inventory and are maintained separately.
 | `picker_controls/`            | [`spec/examples/Controls/picker_controls.example.json`](../../../../../spec/examples/Controls/picker_controls.example.json)                   |
 | `presentation_scope/`         | [`spec/examples/Presentation/scope.example.json`](../../../../../spec/examples/Presentation/scope.example.json)                               |
 | `range_controls/`             | [`spec/examples/Controls/range_controls.example.json`](../../../../../spec/examples/Controls/range_controls.example.json)                     |
-| `reports/`                    | [`spec/examples/Views/reports.example.json`](../../../../../spec/examples/Views/reports.example.json)                                         |
+| `report/`                     | [`spec/examples/Views/report.example.json`](../../../../../spec/examples/Views/report.example.json)                                           |
 | `resizable/`                  | [`spec/examples/Behaviors/resizable.example.json`](../../../../../spec/examples/Behaviors/resizable.example.json)                             |
 | `routing/`                    | [`spec/examples/Application/routing.example.json`](../../../../../spec/examples/Application/routing.example.json)                             |
 | `scope/`                      | [`spec/examples/scope.example.json`](../../../../../spec/examples/scope.example.json)                                                         |

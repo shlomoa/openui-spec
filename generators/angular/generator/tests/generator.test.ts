@@ -36,14 +36,14 @@ const DIALOG_FIXTURE = path.join(
 );
 const REPRESENTATIVE_CONCRETE_FIXTURES = [
   {
-    name: "charts",
+    name: "chart",
     route: "chart",
-    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "charts", "input_charts", "charts.example.json"),
+    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "chart", "input_chart", "chart.example.json"),
   },
   {
-    name: "lists",
+    name: "list",
     route: "list",
-    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "lists", "input_lists", "lists.example.json"),
+    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "list", "input_list", "list.example.json"),
   },
   {
     name: "table",
@@ -348,7 +348,7 @@ test("generates an Angular Material standalone app from the generated OpenUI cat
     assert.match(appComponent, /APPLICATION_STRUCTURE/);
     assert.match(appComponent, /MatSidenavModule/);
     assert.match(appComponent, /Root component: {{ applicationStructure\.rootComponent }}/);
-    assert.match(appComponent, /routerLink="\/forms"/);
+    assert.match(appComponent, /routerLink="\/form"/);
 
     const applicationStructureModel = await readFile(
       path.join(outDir, "src/app/application-structure.model.ts"),
@@ -401,16 +401,16 @@ test("generates scope-specific Angular Material details from the generated OpenU
     assert.match(dragAndDropTemplate, /data-openui-event="press"/);
     assert.match(dragAndDropTemplate, /data-openui-region="columns" data-openui-aggregation="columns" cdkDropList/);
 
-    const formsPage = await readFile(path.join(outDir, "src/app/pages/forms/forms.page.ts"), "utf8");
-    assert.match(formsPage, /ReactiveFormsModule/);
-    assert.match(formsPage, /MatFormFieldModule/);
-    assert.match(formsPage, /dataBindingContracts/);
+    const formPage = await readFile(path.join(outDir, "src/app/pages/form/form.page.ts"), "utf8");
+    assert.match(formPage, /ReactiveFormsModule/);
+    assert.match(formPage, /MatFormFieldModule/);
+    assert.match(formPage, /dataBindingContracts/);
 
-    const formsTemplate = await readFile(path.join(outDir, "src/app/pages/forms/forms.page.html"), "utf8");
-    assert.match(formsTemplate, /<mat-form-field appearance="outline">/);
-    assert.match(formsTemplate, /aria-label="Data binding model materialization"/);
-    assert.match(formsTemplate, /read-write data view/);
-    assert.match(formsTemplate, /dirty-state tracking/);
+    const formTemplate = await readFile(path.join(outDir, "src/app/pages/form/form.page.html"), "utf8");
+    assert.match(formTemplate, /<mat-form-field appearance="outline">/);
+    assert.match(formTemplate, /aria-label="Data binding model materialization"/);
+    assert.match(formTemplate, /read-write data view/);
+    assert.match(formTemplate, /dirty-state tracking/);
 
     const dialogPage = await readFile(path.join(outDir, "src/app/pages/dialog/dialog.page.ts"), "utf8");
     assert.match(dialogPage, /MatChipsModule/);

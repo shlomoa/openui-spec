@@ -45,28 +45,28 @@ Abstraction levels:
 
 ## Output elements
 
-| Taxonomy entry                | Spec object                                                                | Abstraction level | Notes                                                                  |
-| ----------------------------- | -------------------------------------------------------------------------- | ----------------- | ---------------------------------------------------------------------- |
-| Status bar                    | [Status indicators](Controls/status_indicators.scope.md)                   | Grouped leaf      | Passive state feedback.                                                |
-| Label                         | [Display primitives](Controls/display_primitives.scope.md)                 | Grouped leaf      | Textual caption or labelling primitive.                                |
-| Text                          | [Display primitives](Controls/display_primitives.scope.md)                 | Alias             | Rendered text primitive.                                               |
-| Image                         | [Display primitives](Controls/display_primitives.scope.md)                 | Alias             | Static visual content primitive.                                       |
-| Icon                          | [Display primitives](Controls/display_primitives.scope.md)                 | Alias             | Symbolic visual primitive.                                             |
-| Avatar                        | [Display primitives](Controls/display_primitives.scope.md)                 | Alias             | Identity image or initials primitive.                                  |
-| Tag                           | [Status indicators](Controls/status_indicators.scope.md)                   | Alias             | Compact classification/status indicator.                               |
-| Badge                         | [Status indicators](Controls/status_indicators.scope.md)                   | Alias             | Compact count or state indicator.                                      |
-| Tooltip                       | [Feedback widgets](Widgets/feedback_widgets.scope.md)                      | Grouped leaf      | Contextual helper message.                                             |
-| Alert                         | [Feedback widgets](Widgets/feedback_widgets.scope.md)                      | Alias             | Urgent message feedback.                                               |
-| Toast / Snackbar              | [Feedback widgets](Widgets/feedback_widgets.scope.md)                      | Alias             | Transient message feedback.                                            |
-| Progress bar                  | [Status indicators](Controls/status_indicators.scope.md)                   | Alias             | Passive progress state.                                                |
-| Loader / Spinner              | [Status indicators](Controls/status_indicators.scope.md)                   | Alias             | Indeterminate loading feedback.                                        |
-| Separator / Divider           | [Display primitives](Controls/display_primitives.scope.md)                 | Alias             | Visual or semantic divider.                                            |
-| Table / Data grid             | [Table](Widgets/table.scope.md); [Data grid](Widgets/data_grid.scope.md)   | Existing object   | Tabular data maps to table scope; interactive grids map to data grid.   |
-| List                          | [Lists](Widgets/lists.scope.md)                                            | Existing object   | Reusable list widget.                                                  |
-| Media player                  | [Media widgets](Widgets/media_widgets.scope.md)                            | Grouped leaf      | Playback widget.                                                       |
-| Camera preview                | [Media widgets](Widgets/media_widgets.scope.md)                            | Alias             | Preview surface for camera input.                                      |
-| Notification                  | [Feedback widgets](Widgets/feedback_widgets.scope.md)                      | Alias             | System or application feedback message.                                |
-| Narration / Audio Description | [Feedback widgets](Widgets/feedback_widgets.scope.md)                      | Alias             | Non-visual feedback or descriptive output.                             |
+| Taxonomy entry                | Spec object                                                              | Abstraction level | Notes                                                                 |
+| ----------------------------- | ------------------------------------------------------------------------ | ----------------- | --------------------------------------------------------------------- |
+| Status bar                    | [Status indicators](Controls/status_indicators.scope.md)                 | Grouped leaf      | Passive state feedback.                                               |
+| Label                         | [Display primitives](Controls/display_primitives.scope.md)               | Grouped leaf      | Textual caption or labelling primitive.                               |
+| Text                          | [Display primitives](Controls/display_primitives.scope.md)               | Alias             | Rendered text primitive.                                              |
+| Image                         | [Display primitives](Controls/display_primitives.scope.md)               | Alias             | Static visual content primitive.                                      |
+| Icon                          | [Display primitives](Controls/display_primitives.scope.md)               | Alias             | Symbolic visual primitive.                                            |
+| Avatar                        | [Display primitives](Controls/display_primitives.scope.md)               | Alias             | Identity image or initials primitive.                                 |
+| Tag                           | [Status indicators](Controls/status_indicators.scope.md)                 | Alias             | Compact classification/status indicator.                              |
+| Badge                         | [Status indicators](Controls/status_indicators.scope.md)                 | Alias             | Compact count or state indicator.                                     |
+| Tooltip                       | [Feedback widgets](Widgets/feedback_widgets.scope.md)                    | Grouped leaf      | Contextual helper message.                                            |
+| Alert                         | [Feedback widgets](Widgets/feedback_widgets.scope.md)                    | Alias             | Urgent message feedback.                                              |
+| Toast / Snackbar              | [Feedback widgets](Widgets/feedback_widgets.scope.md)                    | Alias             | Transient message feedback.                                           |
+| Progress bar                  | [Status indicators](Controls/status_indicators.scope.md)                 | Alias             | Passive progress state.                                               |
+| Loader / Spinner              | [Status indicators](Controls/status_indicators.scope.md)                 | Alias             | Indeterminate loading feedback.                                       |
+| Separator / Divider           | [Display primitives](Controls/display_primitives.scope.md)               | Alias             | Visual or semantic divider.                                           |
+| Table / Data grid             | [Table](Widgets/table.scope.md); [Data grid](Widgets/data_grid.scope.md) | Existing object   | Tabular data maps to table scope; interactive grids map to data grid. |
+| List                          | [List](Widgets/list.scope.md)                                            | Existing object   | Reusable list widget.                                                 |
+| Media player                  | [Media widgets](Widgets/media_widgets.scope.md)                          | Grouped leaf      | Playback widget.                                                      |
+| Camera preview                | [Media widgets](Widgets/media_widgets.scope.md)                          | Alias             | Preview surface for camera input.                                     |
+| Notification                  | [Feedback widgets](Widgets/feedback_widgets.scope.md)                    | Alias             | System or application feedback message.                               |
+| Narration / Audio Description | [Feedback widgets](Widgets/feedback_widgets.scope.md)                    | Alias             | Non-visual feedback or descriptive output.                            |
 
 ## Navigational elements
 
@@ -99,7 +99,7 @@ Abstraction levels:
 | Panel          | [Surface containers](Containers/surface_containers.scope.md) | Alias             | Generic content surface.                                              |
 | Container      | [Containers](Containers/scope.md)                            | Existing object   | Generic arrangement scope.                                            |
 | Card           | [Surface containers](Containers/surface_containers.scope.md) | Alias             | Self-contained content surface.                                       |
-| Form           | [Forms](Views/forms.scope.md)                                | Existing object   | Read-write data view.                                                 |
+| Form           | [Form](Views/form.scope.md)                                  | Existing object   | Read-write data view.                                                 |
 | Toolbar        | [Tool bars](Application/tool_bars.scope.md)                  | Existing object   | Application-level command surface.                                    |
 | Sidebar        | [Sheet containers](Containers/sheet_containers.scope.md)     | Grouped leaf      | Side-attached supplemental surface.                                   |
 | Sheet          | [Sheet containers](Containers/sheet_containers.scope.md)     | Alias             | Layered sheet surface.                                                |

@@ -19,10 +19,10 @@ TYPE_COMPATIBILITY_ALIASES = {
     "Containers/expandable_panels.scope.md": {"ExpandablePanel", "PanelGroup"},
     "Containers/tabs.scope.md": {"TabGroup"},
     "Controls/native.scope.md": {"NativeControls"},
-    "Views/forms.scope.md": {"FormView"},
-    "Views/reports.scope.md": {"ReportView"},
+    "Views/form.scope.md": {"FormView"},
+    "Views/report.scope.md": {"ReportView"},
     "Widgets/date_time_pickers.scope.md": {"mat-datetime-picker"},
-    "Widgets/lists.scope.md": {"List"},
+    "Widgets/list.scope.md": {"List"},
 }
 
 

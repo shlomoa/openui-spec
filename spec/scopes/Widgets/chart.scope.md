@@ -1,4 +1,4 @@
-# Charts
+# Chart
 
 This leaf follows the [leaf scope template](../template.scope.md). Its purpose is
 drawn from the `spec/README.md` scope rule; a framework chart component (e.g.
@@ -7,7 +7,7 @@ technology-independently.
 
 ## Identity
 
-- id: charts · type: Chart · status: draft
+- id: chart · type: Chart · status: draft
 
 ## Purpose
 

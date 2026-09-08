@@ -42,8 +42,8 @@ nav:
           - Empty page: scopes/Pages/empty_page.scope.md
       - Views:
           - Overview: scopes/Views/scope.md
-          - Reports: scopes/Views/reports.scope.md
-          - Forms: scopes/Views/forms.scope.md
+          - Report: scopes/Views/report.scope.md
+          - Form: scopes/Views/form.scope.md
       - Containers:
           - Overview: scopes/Containers/scope.md
           - Grid: scopes/Containers/grid.scope.md
@@ -56,10 +56,10 @@ nav:
           - Splitters: scopes/Containers/splitters.scope.md
       - Widgets:
           - Overview: scopes/Widgets/scope.md
-          - Charts: scopes/Widgets/charts.scope.md
+          - Chart: scopes/Widgets/chart.scope.md
           - Table: scopes/Widgets/table.scope.md
           - Data grid: scopes/Widgets/data_grid.scope.md
-          - Lists: scopes/Widgets/lists.scope.md
+          - List: scopes/Widgets/list.scope.md
           - Feedback widgets: scopes/Widgets/feedback_widgets.scope.md
           - Media widgets: scopes/Widgets/media_widgets.scope.md
           - Navigation widgets: scopes/Widgets/navigation_widgets.scope.md
