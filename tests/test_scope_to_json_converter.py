@@ -64,9 +64,10 @@ class ScopeToJsonConverterTest(unittest.TestCase):
         self.assertEqual(dialog["attrs"]["scopeDocument"], "scopes/Widgets/dialog.scope.md")
         self.assertEqual(dialog["children"][0]["id"], "dialogInstance")
 
-        table_scope = self._find_by_id(tree, "tableScope")
-        self.assertIsNotNone(table_scope)
-        self.assertEqual(table_scope["attrs"]["scopeDocument"], "scopes/Controls/Table/scope.md")
+        table = self._find_by_id(tree, "table")
+        self.assertIsNotNone(table)
+        self.assertEqual(table["attrs"]["scopeDocument"], "scopes/Widgets/table.scope.md")
+        self.assertEqual(table["children"][0]["id"], "tableInstance")
 
     def test_child_model_ids_are_scoped_when_needed(self) -> None:
         node = parse_leaf_scope(

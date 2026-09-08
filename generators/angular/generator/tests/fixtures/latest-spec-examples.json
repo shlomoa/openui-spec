@@ -80,34 +80,10 @@
       "route": "status-indicators"
     },
     {
-      "name": "table scope",
-      "sourceExample": "spec/examples/Controls/Table/scope.example.json",
-      "fixture": "generators/angular/generator/tests/fixtures/table_scope/input_table_scope/scope.example.json",
-      "route": "table"
-    },
-    {
-      "name": "table control",
-      "sourceExample": "spec/examples/Controls/Table/table.example.json",
+      "name": "table widget",
+      "sourceExample": "spec/examples/Widgets/table.example.json",
       "fixture": "generators/angular/generator/tests/fixtures/table/input_table/table.example.json",
       "route": "table"
-    },
-    {
-      "name": "table cell",
-      "sourceExample": "spec/examples/Controls/Table/td.example.json",
-      "fixture": "generators/angular/generator/tests/fixtures/td/input_td/td.example.json",
-      "route": "td"
-    },
-    {
-      "name": "table header cell",
-      "sourceExample": "spec/examples/Controls/Table/th.example.json",
-      "fixture": "generators/angular/generator/tests/fixtures/th/input_th/th.example.json",
-      "route": "th"
-    },
-    {
-      "name": "table row",
-      "sourceExample": "spec/examples/Controls/Table/tr.example.json",
-      "fixture": "generators/angular/generator/tests/fixtures/tr/input_tr/tr.example.json",
-      "route": "tr"
     },
     {
       "name": "text inputs",

@@ -1,17 +1,17 @@
-# Tables
+# Table
 
 This leaf follows the [leaf scope template](../template.scope.md). Its contract is
-drawn from the native HTML `table` model and the `spec/README.md` scope rule,
-recorded technology-independently.
+drawn from technology-independent tabular data presentation and the `spec/README.md`
+scope rule.
 
 ## Identity
 
-- id: tables · type: table · status: draft
+- id: table · type: table · status: draft
 
 ## Purpose
 
-A tabular presentation of data with optional sorting, filtering, and pagination,
-following the HTML `table` row-and-cell model.
+A tabular presentation of data with column definitions, row models, and optional
+sorting, filtering, and pagination.
 
 ## Attributes
 
@@ -23,9 +23,9 @@ Categories are defined in [`../scope.md`](../scope.md):
 
 ## Child model
 
-A table owns its rows, following the HTML `table` model:
+A table defines its structural rows and column specifications:
 
-- tableRow — tr — 0..n — a row of cells (`th` / `td`), per the Table family.
+- tableRow — tr — 0..n — a row of data or header cells.
 
 ## Accessibility
 
@@ -37,4 +37,5 @@ A table owns its rows, following the HTML `table` model:
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
-- Rows follow the HTML `table` row-and-cell model defined by the Table family.
+- Column definitions, row models, and tabular behaviors (sorting, filtering, pagination)
+  are attributes and facets of the Table concept.

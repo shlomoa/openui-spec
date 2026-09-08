@@ -294,10 +294,9 @@ the table's purpose and cell relationships. Tables must not be used as a generic
 layout mechanism; use layout containers for visual arrangement without tabular
 data semantics.
 
-In OpenUI, the Controls/Table family names the primitive HTML table vocabulary
-(`table`, `tr`, `th`, `td`). The Widgets/Tables object names a higher-level
-tabular data widget that builds on table semantics and may add sorting,
-filtering, or pagination.
+In OpenUI, the Widgets/Table object (`table`) names a unified tabular data widget
+that encapsulates column definitions, row models, cells, sorting, filtering, and pagination.
+For interactive spreadsheet-like grids with cell selection and editing, see Data grid.
 
 ### External references used for vocabulary alignment
 
@@ -445,7 +444,6 @@ each term.
 |                                                                  | [Display primitives](scopes/Controls/display_primitives.scope.md)             | Render-only primitives such as labels, text, images, icons, and separators.    |
 |                                                                  | [Status indicators](scopes/Controls/status_indicators.scope.md)               | Passive state feedback such as status bars, badges, progress, and loaders.     |
 |                                                                  | [Link and scroll controls](scopes/Controls/link_and_scroll_controls.scope.md) | Primitive links and scrollbars.                                                |
-|                                                                  | [Table](scopes/Controls/Table/scope.md)                                       | HTML5 tabular data tags (`table`, `tr`, `th`, `td`).                           |
 | **[Behaviors](scopes/Behaviors/scope.md)**                       |                                                                               | Reusable behaviors applied to pages, views, containers, and widgets.           |
 |                                                                  | [Drag and drop](scopes/Behaviors/drag_and_drop.scope.md)                      | Move elements within a page, view, container, or widget.                       |
 |                                                                  | [Resizable](scopes/Behaviors/resizable.scope.md)                              | Resize elements within a page or view.                                         |
@@ -468,7 +466,7 @@ each term.
 |                                                                  | [Splitters](scopes/Containers/splitters.scope.md)                             | Movable dividers between panes or regions.                                     |
 | **[Widgets](scopes/Widgets/scope.md)**                           |                                                                               | Reusable components usable across pages or views.                              |
 |                                                                  | [Charts](scopes/Widgets/charts.scope.md)                                      | Visual data representations (bar, line, pie).                                  |
-|                                                                  | [Tables](scopes/Widgets/tables.scope.md)                                      | Tabular data with sorting, filtering, and pagination.                          |
+|                                                                  | [Table](scopes/Widgets/table.scope.md)                                        | Tabular presentation of data with column definitions, row models, sorting, filtering, and pagination. |
 |                                                                  | [Data grid](scopes/Widgets/data_grid.scope.md)                                | Interactive tabular data with grid navigation, selection, or editing.          |
 |                                                                  | [Lists](scopes/Widgets/lists.scope.md)                                        | Lists of items with sorting, filtering, and pagination.                        |
 |                                                                  | [Feedback widgets](scopes/Widgets/feedback_widgets.scope.md)                  | Tooltips, alerts, toasts, notifications, and audio-description surfaces.       |

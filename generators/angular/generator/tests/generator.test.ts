@@ -46,9 +46,9 @@ const REPRESENTATIVE_CONCRETE_FIXTURES = [
     fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "lists", "input_lists", "lists.example.json"),
   },
   {
-    name: "tables",
+    name: "table",
     route: "table",
-    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "tables", "input_tables", "tables.example.json"),
+    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "table", "input_table", "table.example.json"),
   },
   {
     name: "stepper",

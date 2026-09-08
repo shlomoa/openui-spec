@@ -593,110 +593,6 @@
                   "type": "LinkAndScrollControls"
                 }
               ]
-            },
-            {
-              "id": "tableScope",
-              "type": "Table",
-              "attrs": {
-                "title": "Table",
-                "purpose": "The Table family covers the HTML5 standard tags that present tabular data: `table`, `tr`, `th`, and `td`. Each tag is a leaf following the [leaf scope template](../../template.scope.md).",
-                "scopeDocument": "scopes/Controls/Table/scope.md",
-                "status": "draft"
-              },
-              "children": [
-                {
-                  "id": "table",
-                  "type": "Table",
-                  "attrs": {
-                    "title": "table",
-                    "purpose": "The container element for tabular data, presenting rows of cells arranged in columns.",
-                    "scopeDocument": "scopes/Controls/Table/table.scope.md",
-                    "status": "draft"
-                  },
-                  "children": [
-                    {
-                      "id": "tableInstance",
-                      "type": "table",
-                      "children": [
-                        {
-                          "id": "tableRow",
-                          "type": "tr"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "id": "tr",
-                  "type": "Tr",
-                  "attrs": {
-                    "title": "tr",
-                    "purpose": "A single row of cells within a table.",
-                    "scopeDocument": "scopes/Controls/Table/tr.scope.md",
-                    "status": "draft"
-                  },
-                  "children": [
-                    {
-                      "id": "trInstance",
-                      "type": "tr",
-                      "children": [
-                        {
-                          "id": "trHeaderCell",
-                          "type": "th"
-                        },
-                        {
-                          "id": "trDataCell",
-                          "type": "td"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "id": "th",
-                  "type": "Th",
-                  "attrs": {
-                    "title": "th",
-                    "purpose": "A header cell that labels a column or row of a table.",
-                    "scopeDocument": "scopes/Controls/Table/th.scope.md",
-                    "status": "draft"
-                  },
-                  "children": [
-                    {
-                      "id": "thInstance",
-                      "type": "th",
-                      "attrs": {
-                        "[colspan]": null,
-                        "[rowspan]": null,
-                        "[scope]": null,
-                        "[headers]": null,
-                        "[abbr]": null
-                      }
-                    }
-                  ]
-                },
-                {
-                  "id": "td",
-                  "type": "Td",
-                  "attrs": {
-                    "title": "td",
-                    "purpose": "A data cell within a table row.",
-                    "scopeDocument": "scopes/Controls/Table/td.scope.md",
-                    "status": "draft"
-                  },
-                  "children": [
-                    {
-                      "id": "tdInstance",
-                      "type": "td",
-                      "attrs": {
-                        "[colspan]": null,
-                        "[rowspan]": null,
-                        "[headers]": null
-                      }
-                    }
-                  ]
-                }
-              ]
             }
           ]
         },
@@ -892,17 +788,17 @@
               ]
             },
             {
-              "id": "tables",
-              "type": "Tables",
+              "id": "table",
+              "type": "Table",
               "attrs": {
-                "title": "Tables",
-                "purpose": "A tabular presentation of data with optional sorting, filtering, and pagination, following the HTML `table` row-and-cell model.",
-                "scopeDocument": "scopes/Widgets/tables.scope.md",
+                "title": "Table",
+                "purpose": "A tabular presentation of data with column definitions, row models, and optional sorting, filtering, and pagination.",
+                "scopeDocument": "scopes/Widgets/table.scope.md",
                 "status": "draft"
               },
               "children": [
                 {
-                  "id": "tablesInstance",
+                  "id": "tableInstance",
                   "type": "table",
                   "attrs": {
                     "(sort)": null,
@@ -911,7 +807,7 @@
                   },
                   "children": [
                     {
-                      "id": "tablesTableRow",
+                      "id": "tableRow",
                       "type": "tr"
                     }
                   ]

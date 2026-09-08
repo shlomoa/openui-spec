@@ -1,7 +1,7 @@
 # Data grid
 
 This leaf follows the [leaf scope template](../template.scope.md). It separates the
-interactive data-grid taxonomy alias from the static table control family.
+interactive data-grid taxonomy alias from standard tabular data presentation.
 
 ## Identity
 
@@ -29,5 +29,5 @@ and selection or editing state when those capabilities are present.
 
 ## Validation notes
 
-- Use the Controls/Table family for static tabular data; use this widget for
+- Use the Table widget (`table.scope.md`) for standard tabular data; use this widget for
   interactive grid behavior.

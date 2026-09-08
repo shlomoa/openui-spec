@@ -79,12 +79,25 @@ git commit -m "chore: release X.Y.Z"
 ### Schema and catalog version changes
 
 The package version and the OpenUI schema/catalog version are separate
-contracts. Update [`SCHEMA_VERSION`](SCHEMA_VERSION) only when intentionally
-releasing a new OpenUI schema/catalog version. In that case, also update the
-root `version` of [`spec/openui.json`](spec/openui.json), regenerate the catalog
-from `spec/scopes/` when scope prose changed, and update affected examples and
-fixtures. The repository contract tests validate the catalog's version against
-`SCHEMA_VERSION`.
+contracts. **Every spec change forces a version bump.** Any change to the
+specification prose under `spec/scopes/`, the schema, or the catalog contracts
+cannot be released or merged under an unchanged version:
+
+- **Mandatory version bump**: Update [`SCHEMA_VERSION`](SCHEMA_VERSION) whenever
+  the specification changes.
+- **Catalog alignment**: Update the root `version` of
+  [`spec/openui.json`](spec/openui.json) (or regenerate it with
+  `python -m spec.to_json --spec-dir spec --output .\spec\openui.json`), ensuring
+  it matches `SCHEMA_VERSION`.
+- **Examples and fixtures**: Update all affected examples under `spec/examples/`
+  and generator fixtures under `generators/angular/generator/tests/fixtures/` to
+  the bumped version.
+- **Package release**: Any release that includes specification changes must
+  also bump the package version in [`pyproject.toml`](pyproject.toml)
+  appropriately.
+
+The repository contract tests validate the catalog's version against
+`SCHEMA_VERSION` and ensure all spec examples and fixtures remain aligned.
 
 ---
 

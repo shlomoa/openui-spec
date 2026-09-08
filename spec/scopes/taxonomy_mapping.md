@@ -61,7 +61,7 @@ Abstraction levels:
 | Progress bar                  | [Status indicators](Controls/status_indicators.scope.md)                   | Alias             | Passive progress state.                                                |
 | Loader / Spinner              | [Status indicators](Controls/status_indicators.scope.md)                   | Alias             | Indeterminate loading feedback.                                        |
 | Separator / Divider           | [Display primitives](Controls/display_primitives.scope.md)                 | Alias             | Visual or semantic divider.                                            |
-| Table / Data grid             | [Tables](Widgets/tables.scope.md); [Data grid](Widgets/data_grid.scope.md) | Existing object   | Static tables map to table scopes; interactive grids map to data grid. |
+| Table / Data grid             | [Table](Widgets/table.scope.md); [Data grid](Widgets/data_grid.scope.md)   | Existing object   | Tabular data maps to table scope; interactive grids map to data grid.   |
 | List                          | [Lists](Widgets/lists.scope.md)                                            | Existing object   | Reusable list widget.                                                  |
 | Media player                  | [Media widgets](Widgets/media_widgets.scope.md)                            | Grouped leaf      | Playback widget.                                                       |
 | Camera preview                | [Media widgets](Widgets/media_widgets.scope.md)                            | Alias             | Preview surface for camera input.                                      |

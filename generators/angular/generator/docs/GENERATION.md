@@ -346,7 +346,7 @@ used to redefine or constrain the canonical `spec/openui.json` contract.
 | `behaviors`, `dragAndDrop`, `resizable`, `collapsible`    | `interaction`               | Semantic `press` activation mapped to Material button `(click)` without private DOM event plumbing.                                  |
 | `views`, `reports`                                        | `data-binding`              | Property and aggregation binding contracts and typed async update examples.                                                          |
 | `forms`                                                   | `form`, `data-binding`      | Reactive Forms plus data-binding materialization where applicable.                                                                   |
-| `charts`, `tables`, `lists`                               | `component`, `data-binding` | Component and data-binding examples for reusable data-oriented widgets.                                                              |
+| `charts`, `table`, `lists`                                | `component`, `data-binding` | Component and data-binding examples for reusable data-oriented widgets.                                                              |
 | `dateTimePickers`                                         | `component`, `form`         | Component and form-control materialization for date/time picker examples.                                                            |
 
 New catalog scope IDs that are not listed above still generate catalog-driven

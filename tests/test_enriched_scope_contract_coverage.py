@@ -109,22 +109,6 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     "Controls/picker_controls.scope.md": ("PickerControls", (), ()),
     "Controls/range_controls.scope.md": ("RangeControls", (), ()),
     "Controls/status_indicators.scope.md": ("StatusIndicators", (), ()),
-    "Controls/Table/table.scope.md": ("table", (), (("tableRow", "tr"),)),
-    "Controls/Table/td.scope.md": (
-        "td",
-        ("[colspan]", "[headers]", "[rowspan]"),
-        (),
-    ),
-    "Controls/Table/th.scope.md": (
-        "th",
-        ("[abbr]", "[colspan]", "[headers]", "[rowspan]", "[scope]"),
-        (),
-    ),
-    "Controls/Table/tr.scope.md": (
-        "tr",
-        (),
-        (("trHeaderCell", "th"), ("trDataCell", "td")),
-    ),
     "Controls/text_inputs.scope.md": ("TextInputs", (), ()),
     "Pages/dashboard.scope.md": ("DashboardPage", (), ()),
     "Pages/empty_page.scope.md": ("EmptyPage", (), ()),
@@ -169,10 +153,10 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     "Widgets/menu_widgets.scope.md": ("MenuWidgets", (), ()),
     "Widgets/navigation_widgets.scope.md": ("NavigationWidgets", (), ()),
     "Widgets/stepper.scope.md": ("Stepper", (), (("stepperStep", "step"),)),
-    "Widgets/tables.scope.md": (
+    "Widgets/table.scope.md": (
         "table",
         ("(filter)", "(paginate)", "(sort)"),
-        (("tablesTableRow", "tr"),),
+        (("tableRow", "tr"),),
     ),
 }
 

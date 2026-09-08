@@ -30,12 +30,6 @@ nav:
           - Display primitives: scopes/Controls/display_primitives.scope.md
           - Status indicators: scopes/Controls/status_indicators.scope.md
           - Link and scroll controls: scopes/Controls/link_and_scroll_controls.scope.md
-          - Table:
-              - Overview: scopes/Controls/Table/scope.md
-              - table: scopes/Controls/Table/table.scope.md
-              - tr: scopes/Controls/Table/tr.scope.md
-              - th: scopes/Controls/Table/th.scope.md
-              - td: scopes/Controls/Table/td.scope.md
       - Behaviors:
           - Overview: scopes/Behaviors/scope.md
           - Drag and drop: scopes/Behaviors/drag_and_drop.scope.md
@@ -63,7 +57,7 @@ nav:
       - Widgets:
           - Overview: scopes/Widgets/scope.md
           - Charts: scopes/Widgets/charts.scope.md
-          - Tables: scopes/Widgets/tables.scope.md
+          - Table: scopes/Widgets/table.scope.md
           - Data grid: scopes/Widgets/data_grid.scope.md
           - Lists: scopes/Widgets/lists.scope.md
           - Feedback widgets: scopes/Widgets/feedback_widgets.scope.md

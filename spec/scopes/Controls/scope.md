@@ -14,7 +14,6 @@ Controls define reusable interaction and rendering primitives that can appear in
 - [Display primitives](display_primitives.scope.md): Render-only primitives such as labels, text, images, icons, avatars, and separators.
 - [Status indicators](status_indicators.scope.md): Passive state feedback such as status bars, tags, badges, progress bars, loaders, and spinners.
 - [Link and scroll controls](link_and_scroll_controls.scope.md): Primitive links and scrollbars.
-- [Table](Table/scope.md): HTML5 tabular data tags (`table`, `tr`, `th`, `td`).
 
 ## Boundaries
 

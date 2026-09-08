@@ -260,12 +260,12 @@
               }
             },
             {
-              "id": "tables",
-              "type": "Tables",
+              "id": "table",
+              "type": "Table",
               "attrs": {
-                "title": "Tables",
+                "title": "Table",
                 "purpose": "Tabular data with sorting, filtering, and pagination.",
-                "scopeDocument": "scopes/Widgets/tables.scope.md",
+                "scopeDocument": "scopes/Widgets/table.scope.md",
                 "status": "draft"
               }
             },

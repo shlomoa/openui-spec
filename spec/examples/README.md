@@ -37,11 +37,6 @@ that assembles its child objects into a realistic whole.
 | [Display primitives](../scopes/Controls/display_primitives.scope.md)             | [Controls/display_primitives.example.json](Controls/display_primitives.example.json)             |
 | [Status indicators](../scopes/Controls/status_indicators.scope.md)               | [Controls/status_indicators.example.json](Controls/status_indicators.example.json)               |
 | [Link and scroll controls](../scopes/Controls/link_and_scroll_controls.scope.md) | [Controls/link_and_scroll_controls.example.json](Controls/link_and_scroll_controls.example.json) |
-| [Table](../scopes/Controls/Table/scope.md)                                       | [Controls/Table/scope.example.json](Controls/Table/scope.example.json)                           |
-| [table](../scopes/Controls/Table/table.scope.md)                                 | [Controls/Table/table.example.json](Controls/Table/table.example.json)                           |
-| [tr](../scopes/Controls/Table/tr.scope.md)                                       | [Controls/Table/tr.example.json](Controls/Table/tr.example.json)                                 |
-| [th](../scopes/Controls/Table/th.scope.md)                                       | [Controls/Table/th.example.json](Controls/Table/th.example.json)                                 |
-| [td](../scopes/Controls/Table/td.scope.md)                                       | [Controls/Table/td.example.json](Controls/Table/td.example.json)                                 |
 | [Behaviors](../scopes/Behaviors/scope.md)                                        | [Behaviors/scope.example.json](Behaviors/scope.example.json)                                     |
 | [Drag and drop](../scopes/Behaviors/drag_and_drop.scope.md)                      | [Behaviors/drag_and_drop.example.json](Behaviors/drag_and_drop.example.json)                     |
 | [Resizable](../scopes/Behaviors/resizable.scope.md)                              | [Behaviors/resizable.example.json](Behaviors/resizable.example.json)                             |
@@ -64,7 +59,7 @@ that assembles its child objects into a realistic whole.
 | [Splitters](../scopes/Containers/splitters.scope.md)                             | [Containers/splitters.example.json](Containers/splitters.example.json)                           |
 | [Widgets](../scopes/Widgets/scope.md)                                            | [Widgets/scope.example.json](Widgets/scope.example.json)                                         |
 | [Charts](../scopes/Widgets/charts.scope.md)                                      | [Widgets/charts.example.json](Widgets/charts.example.json)                                       |
-| [Tables](../scopes/Widgets/tables.scope.md)                                      | [Widgets/tables.example.json](Widgets/tables.example.json)                                       |
+| [Table](../scopes/Widgets/table.scope.md)                                        | [Widgets/table.example.json](Widgets/table.example.json)                                         |
 | [Lists](../scopes/Widgets/lists.scope.md)                                        | [Widgets/lists.example.json](Widgets/lists.example.json)                                         |
 | [Date/Time pickers](../scopes/Widgets/date_time_pickers.scope.md)                | [Widgets/date_time_pickers.example.json](Widgets/date_time_pickers.example.json)                 |
 | [Stepper](../scopes/Widgets/stepper.scope.md)                                    | [Widgets/stepper.example.json](Widgets/stepper.example.json)                                     |

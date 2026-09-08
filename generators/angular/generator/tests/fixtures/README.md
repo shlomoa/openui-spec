@@ -70,14 +70,9 @@ part of this generated inventory and are maintained separately.
 | `stepper/`                    | [`spec/examples/Widgets/stepper.example.json`](../../../../../spec/examples/Widgets/stepper.example.json)                                     |
 | `structural_containers/`      | [`spec/examples/Containers/structural_containers.example.json`](../../../../../spec/examples/Containers/structural_containers.example.json)   |
 | `surface_containers/`         | [`spec/examples/Containers/surface_containers.example.json`](../../../../../spec/examples/Containers/surface_containers.example.json)         |
-| `table/`                      | [`spec/examples/Controls/Table/table.example.json`](../../../../../spec/examples/Controls/Table/table.example.json)                           |
-| `table_scope/`                | [`spec/examples/Controls/Table/scope.example.json`](../../../../../spec/examples/Controls/Table/scope.example.json)                           |
-| `tables/`                     | [`spec/examples/Widgets/tables.example.json`](../../../../../spec/examples/Widgets/tables.example.json)                                       |
+| `table/`                      | [`spec/examples/Widgets/table.example.json`](../../../../../spec/examples/Widgets/table.example.json)                                         |
 | `tabs/`                       | [`spec/examples/Containers/tabs.example.json`](../../../../../spec/examples/Containers/tabs.example.json)                                     |
-| `td/`                         | [`spec/examples/Controls/Table/td.example.json`](../../../../../spec/examples/Controls/Table/td.example.json)                                 |
 | `text_inputs/`                | [`spec/examples/Controls/text_inputs.example.json`](../../../../../spec/examples/Controls/text_inputs.example.json)                           |
-| `th/`                         | [`spec/examples/Controls/Table/th.example.json`](../../../../../spec/examples/Controls/Table/th.example.json)                                 |
 | `tool_bars/`                  | [`spec/examples/Application/tool_bars.example.json`](../../../../../spec/examples/Application/tool_bars.example.json)                         |
-| `tr/`                         | [`spec/examples/Controls/Table/tr.example.json`](../../../../../spec/examples/Controls/Table/tr.example.json)                                 |
 | `views_scope/`                | [`spec/examples/Views/scope.example.json`](../../../../../spec/examples/Views/scope.example.json)                                             |
 | `widgets_scope/`              | [`spec/examples/Widgets/scope.example.json`](../../../../../spec/examples/Widgets/scope.example.json)                                         |
