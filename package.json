@@ -12,6 +12,9 @@
       "require": "./dist/src/index.js"
     }
   },
+  "bin": {
+    "openui-json": "./dist/src/cli.js"
+  },
   "files": [
     "dist/src",
     "spec/openui.json",
