@@ -40,7 +40,7 @@ You are a specialist at generating and maintaining the machine-readable OpenUI s
 ## JSON Shape Rules
 
 - Top-level OpenUI documents may include `version`, `id`, `type`, `attrs`, and `children` when representing UI trees.
-- `spec/openui.json` must use exact top-level values `id: "root"`, `type: "html"`, and `version: "0.0.1"`.
+- `spec/openui.json` must use exact top-level values `id: "root"`, `type: "html"`, and `version: "0.1.0"`.
 - UI element IDs are camelCase alphanumeric strings that start with a lowercase letter.
 - `type` values are standard HTML tags, kebab-case component names, or approved PascalCase aliases.
 - Attribute values belong in `attrs`; valueless attributes use `null`.

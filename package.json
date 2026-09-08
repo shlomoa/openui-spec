@@ -1,6 +1,6 @@
 {
   "name": "@openui-spec/openui-json",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Load, validate, and edit OpenUI JSON documents.",
   "license": "Apache-2.0",
   "main": "./dist/src/index.js",

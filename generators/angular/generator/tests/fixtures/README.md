@@ -56,9 +56,9 @@ part of this generated inventory and are maintained separately.
 | `navigation_widgets/`         | [`spec/examples/Widgets/navigation_widgets.example.json`](../../../../../spec/examples/Widgets/navigation_widgets.example.json)               |
 | `overlay_containers/`         | [`spec/examples/Containers/overlay_containers.example.json`](../../../../../spec/examples/Containers/overlay_containers.example.json)         |
 | `pages_scope/`                | [`spec/examples/Pages/scope.example.json`](../../../../../spec/examples/Pages/scope.example.json)                                             |
-| `picker_controls/`            | [`spec/examples/Controls/picker_controls.example.json`](../../../../../spec/examples/Controls/picker_controls.example.json)                   |
+| `picker_control/`             | [`spec/examples/Controls/picker_control.example.json`](../../../../../spec/examples/Controls/picker_control.example.json)                     |
 | `presentation_scope/`         | [`spec/examples/Presentation/scope.example.json`](../../../../../spec/examples/Presentation/scope.example.json)                               |
-| `range_controls/`             | [`spec/examples/Controls/range_controls.example.json`](../../../../../spec/examples/Controls/range_controls.example.json)                     |
+| `range_control/`              | [`spec/examples/Controls/range_control.example.json`](../../../../../spec/examples/Controls/range_control.example.json)                       |
 | `report/`                     | [`spec/examples/Views/report.example.json`](../../../../../spec/examples/Views/report.example.json)                                           |
 | `resizable/`                  | [`spec/examples/Behaviors/resizable.example.json`](../../../../../spec/examples/Behaviors/resizable.example.json)                             |
 | `routing/`                    | [`spec/examples/Application/routing.example.json`](../../../../../spec/examples/Application/routing.example.json)                             |
@@ -66,7 +66,7 @@ part of this generated inventory and are maintained separately.
 | `sheet_containers/`           | [`spec/examples/Containers/sheet_containers.example.json`](../../../../../spec/examples/Containers/sheet_containers.example.json)             |
 | `shell_page/`                 | [`spec/examples/Pages/shell_page.example.json`](../../../../../spec/examples/Pages/shell_page.example.json)                                   |
 | `splitters/`                  | [`spec/examples/Containers/splitters.example.json`](../../../../../spec/examples/Containers/splitters.example.json)                           |
-| `status_indicators/`          | [`spec/examples/Controls/status_indicators.example.json`](../../../../../spec/examples/Controls/status_indicators.example.json)               |
+| `status_indicator/`           | [`spec/examples/Controls/status_indicator.example.json`](../../../../../spec/examples/Controls/status_indicator.example.json)                 |
 | `stepper/`                    | [`spec/examples/Widgets/stepper.example.json`](../../../../../spec/examples/Widgets/stepper.example.json)                                     |
 | `structural_containers/`      | [`spec/examples/Containers/structural_containers.example.json`](../../../../../spec/examples/Containers/structural_containers.example.json)   |
 | `surface_containers/`         | [`spec/examples/Containers/surface_containers.example.json`](../../../../../spec/examples/Containers/surface_containers.example.json)         |

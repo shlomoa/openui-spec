@@ -24,11 +24,11 @@ nav:
           - Action controls: scopes/Controls/action_controls.scope.md
           - Text inputs: scopes/Controls/text_inputs.scope.md
           - Choice controls: scopes/Controls/choice_controls.scope.md
-          - Picker controls: scopes/Controls/picker_controls.scope.md
-          - Range controls: scopes/Controls/range_controls.scope.md
+          - Picker control: scopes/Controls/picker_control.scope.md
+          - Range control: scopes/Controls/range_control.scope.md
           - Drawing and capture controls: scopes/Controls/drawing_and_capture.scope.md
           - Display primitives: scopes/Controls/display_primitives.scope.md
-          - Status indicators: scopes/Controls/status_indicators.scope.md
+          - Status indicator: scopes/Controls/status_indicator.scope.md
           - Link and scroll controls: scopes/Controls/link_and_scroll_controls.scope.md
       - Behaviors:
           - Overview: scopes/Behaviors/scope.md

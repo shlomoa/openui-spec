@@ -31,11 +31,11 @@ that assembles its child objects into a realistic whole.
 | [Action controls](../scopes/Controls/action_controls.scope.md)                   | [Controls/action_controls.example.json](Controls/action_controls.example.json)                   |
 | [Text inputs](../scopes/Controls/text_inputs.scope.md)                           | [Controls/text_inputs.example.json](Controls/text_inputs.example.json)                           |
 | [Choice controls](../scopes/Controls/choice_controls.scope.md)                   | [Controls/choice_controls.example.json](Controls/choice_controls.example.json)                   |
-| [Picker controls](../scopes/Controls/picker_controls.scope.md)                   | [Controls/picker_controls.example.json](Controls/picker_controls.example.json)                   |
-| [Range controls](../scopes/Controls/range_controls.scope.md)                     | [Controls/range_controls.example.json](Controls/range_controls.example.json)                     |
+| [Picker control](../scopes/Controls/picker_control.scope.md)                     | [Controls/picker_control.example.json](Controls/picker_control.example.json)                     |
+| [Range control](../scopes/Controls/range_control.scope.md)                       | [Controls/range_control.example.json](Controls/range_control.example.json)                       |
 | [Drawing and capture](../scopes/Controls/drawing_and_capture.scope.md)           | [Controls/drawing_and_capture.example.json](Controls/drawing_and_capture.example.json)           |
 | [Display primitives](../scopes/Controls/display_primitives.scope.md)             | [Controls/display_primitives.example.json](Controls/display_primitives.example.json)             |
-| [Status indicators](../scopes/Controls/status_indicators.scope.md)               | [Controls/status_indicators.example.json](Controls/status_indicators.example.json)               |
+| [Status indicator](../scopes/Controls/status_indicator.scope.md)                 | [Controls/status_indicator.example.json](Controls/status_indicator.example.json)                 |
 | [Link and scroll controls](../scopes/Controls/link_and_scroll_controls.scope.md) | [Controls/link_and_scroll_controls.example.json](Controls/link_and_scroll_controls.example.json) |
 | [Behaviors](../scopes/Behaviors/scope.md)                                        | [Behaviors/scope.example.json](Behaviors/scope.example.json)                                     |
 | [Drag and drop](../scopes/Behaviors/drag_and_drop.scope.md)                      | [Behaviors/drag_and_drop.example.json](Behaviors/drag_and_drop.example.json)                     |

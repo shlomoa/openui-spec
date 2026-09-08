@@ -1,30 +1,30 @@
-# Picker controls
+# Picker control
 
-This leaf follows the [leaf scope template](../template.scope.md). It groups picker
+This leaf follows the [leaf scope template](../template.scope.md). It covers picker
 control aliases from the generic UI taxonomy.
 
 ## Identity
 
-- id: pickerControls · type: PickerControls · status: draft
+- id: pickerControl · type: PickerControl · status: draft
 
 ## Purpose
 
-Picker controls cover specialized selection affordances such as wheel picker, color
+A picker control covers specialized selection affordances such as wheel picker, color
 picker, and file picker. Date and time picker aliases map to the existing
 Date/Time pickers widget when calendar semantics are required.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This family inherits concrete
+Categories are defined in [`../scope.md`](../scope.md). This object inherits concrete
 value, range, and source attributes from the selected picker implementation.
 
 ## Child model
 
-Picker controls do not define a fixed child model at this abstraction level.
+A picker control does not define a fixed child model at this abstraction level.
 
 ## Accessibility
 
-Picker controls expose the selected value, available choices or source, and an
+A picker control exposes the selected value, available choices or source, and an
 accessible label for the control and any opened picker surface.
 
 ## Validation notes

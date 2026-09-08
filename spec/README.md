@@ -438,11 +438,11 @@ each term.
 |                                                                  | [Action controls](scopes/Controls/action_controls.scope.md)                   | Command controls such as buttons and icon buttons.                                                    |
 |                                                                  | [Text inputs](scopes/Controls/text_inputs.scope.md)                           | Text-entry controls such as text fields, text areas, and search fields.                               |
 |                                                                  | [Choice controls](scopes/Controls/choice_controls.scope.md)                   | Selection controls such as checkboxes, radio buttons, and combo boxes.                                |
-|                                                                  | [Picker controls](scopes/Controls/picker_controls.scope.md)                   | Specialized picker controls such as wheel, color, and file pickers.                                   |
-|                                                                  | [Range controls](scopes/Controls/range_controls.scope.md)                     | Scalar value controls such as sliders, spin boxes, and rating controls.                               |
+|                                                                  | [Picker control](scopes/Controls/picker_control.scope.md)                     | Specialized picker controls such as wheel, color, and file pickers.                                   |
+|                                                                  | [Range control](scopes/Controls/range_control.scope.md)                       | Scalar value controls such as sliders, spin boxes, and rating controls.                               |
 |                                                                  | [Drawing and capture](scopes/Controls/drawing_and_capture.scope.md)           | Canvas, drawing, microphone, and biometric capture controls.                                          |
 |                                                                  | [Display primitives](scopes/Controls/display_primitives.scope.md)             | Render-only primitives such as labels, text, images, icons, and separators.                           |
-|                                                                  | [Status indicators](scopes/Controls/status_indicators.scope.md)               | Passive state feedback such as status bars, badges, progress, and loaders.                            |
+|                                                                  | [Status indicator](scopes/Controls/status_indicator.scope.md)                 | Passive state feedback such as status bars, badges, progress, and loaders.                            |
 |                                                                  | [Link and scroll controls](scopes/Controls/link_and_scroll_controls.scope.md) | Primitive links and scrollbars.                                                                       |
 | **[Behaviors](scopes/Behaviors/scope.md)**                       |                                                                               | Reusable behaviors applied to pages, views, containers, and widgets.                                  |
 |                                                                  | [Drag and drop](scopes/Behaviors/drag_and_drop.scope.md)                      | Move elements within a page, view, container, or widget.                                              |
@@ -503,7 +503,7 @@ Structured hierarchically, named in Pascal Case for folders and snake case for f
 
 - `"id"` MUST be `"root"`.
 - `"version"` is REQUIRED (top-level only) and MUST equal the current value in
-  the repository-root `SCHEMA_VERSION` file (currently `0.0.1`).
+  the repository-root `SCHEMA_VERSION` file (currently `0.1.0`).
 - `"type"` follows the general type rules below and is not pinned to a specific
   value.
 
@@ -575,7 +575,7 @@ The format itself is in [EBNF](./EBNF.txt)
 
 ### Syntax rules
 
-- **Version field (top-level only):** Required semantic version string (e.g., "0.0.1") identifying the spec version
+- **Version field (top-level only):** Required semantic version string (e.g., "0.1.0") identifying the spec version
 - **ID field:** Must be a camelCase alphanumeric string (starts with lowercase letter, can contain uppercase letters and digits)
 - **Type field:** Can be HTML tag names, kebab-case names (e.g., `mat-date-range-input`), or PascalCase names (e.g., `MainPage`)
 - **Attributes field:** Key-value pairs where values are strings or null. Attribute key syntax identifies input, output, and behavior categories; all such categories must stay inside the `attrs` object.
