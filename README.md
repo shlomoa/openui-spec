@@ -31,15 +31,15 @@ document.save("output.json");
 ```
 
 The published [OpenUI JSON editing](https://openui-spec.readthedocs.io/en/latest/tooling/editing/)
-tooling page documents the equivalent Python commands for spec users.
+tooling page documents the API and command-line interface.
 
-Use the CLI to validate or apply one change in place (pass `--output` to write
-to a different file):
+The package also installs an `openui-json` CLI to validate or apply one change
+in place (pass `--output` to write to a different file):
 
 ```bash
-python bin/openui_json_cli.py validate --input spec/openui.json
-python bin/openui_json_cli.py add --input document.json --parent root --object '{"id":"newTable","type":"Table"}'
-python bin/openui_json_cli.py remove --input document.json --id newTable
-python bin/openui_json_cli.py modify --input document.json --id table --attrs '{"title":"Updated"}'
-python bin/openui_json_cli.py modify --input document.json --id table --object '{"id":"table","type":"Grid"}'
+openui-json validate --input spec/openui.json
+openui-json add --input document.json --parent root --object '{"id":"newTable","type":"Table"}'
+openui-json remove --input document.json --id newTable
+openui-json modify --input document.json --id table --attrs '{"title":"Updated"}'
+openui-json modify --input document.json --id table --object '{"id":"table","type":"Grid"}'
 ```

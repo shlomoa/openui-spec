@@ -8,9 +8,10 @@ _how do I add, remove, or change an object without hand-editing JSON and risking
 an invalid document?_ It loads a document, applies one change, revalidates the
 result, and writes it back out.
 
-The tool lives at [`bin/openui_json_cli.py`](https://github.com/shlomoa/openui-spec/blob/main/bin/openui_json_cli.py)
-and is built on the `OpenUiJson` class in
-[`bin/openui_json.py`](https://github.com/shlomoa/openui-spec/blob/main/bin/openui_json.py).
+The Python implementation lives at
+[`bin/openui_json_cli.py`](https://github.com/shlomoa/openui-spec/blob/main/bin/openui_json_cli.py).
+The `@openui-spec/openui-json` package installs an equivalent `openui-json`
+CLI for Node.js consumers.
 
 ## TypeScript and JavaScript API
 
@@ -44,10 +45,17 @@ document remains uniquely addressable.
 
 ## Usage
 
-Run the tool with the repository-local Python interpreter. Each command takes an
-`--input` document; the `add`, `remove`, and `modify` commands write the result
-back to `--input` in place unless you pass `--output` to write to a different
-file.
+Each command takes an `--input` document; the `add`, `remove`, and `modify`
+commands write the result back to `--input` in place unless you pass `--output`
+to write to a different file. Use the package CLI after installing
+`@openui-spec/openui-json`:
+
+```bash
+openui-json validate --input ./spec/openui.json
+```
+
+The same commands are available from the Python implementation with the
+repository-local interpreter:
 
 Windows (PowerShell):
 
