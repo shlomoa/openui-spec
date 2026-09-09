@@ -15,7 +15,7 @@ CLI_PATH = REPO_ROOT / "bin" / "openui_json_cli.py"
 
 def document_with(child_type: str = "Table") -> dict[str, object]:
     return {
-        "version": "0.0.1",
+        "version": "0.1.0",
         "id": "root",
         "type": "html",
         "children": [{"id": "target", "type": child_type}],

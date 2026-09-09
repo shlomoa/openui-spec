@@ -1,7 +1,7 @@
 {
   "id": "root",
   "type": "html",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "attrs": {
     "name": "OpenUI",
     "description": "Technology-independent Web UI framework specification",
@@ -499,34 +499,34 @@
               ]
             },
             {
-              "id": "pickerControls",
-              "type": "PickerControls",
+              "id": "pickerControl",
+              "type": "PickerControl",
               "attrs": {
-                "title": "Picker controls",
-                "purpose": "Picker controls cover specialized selection affordances such as wheel picker, color picker, and file picker. Date and time picker aliases map to the existing Date/Time pickers widget when calendar semantics are required.",
-                "scopeDocument": "scopes/Controls/picker_controls.scope.md",
+                "title": "Picker control",
+                "purpose": "A picker control covers specialized selection affordances such as wheel picker, color picker, and file picker. Date and time picker aliases map to the existing Date/Time pickers widget when calendar semantics are required.",
+                "scopeDocument": "scopes/Controls/picker_control.scope.md",
                 "status": "draft"
               },
               "children": [
                 {
-                  "id": "pickerControlsInstance",
-                  "type": "PickerControls"
+                  "id": "pickerControlInstance",
+                  "type": "PickerControl"
                 }
               ]
             },
             {
-              "id": "rangeControls",
-              "type": "RangeControls",
+              "id": "rangeControl",
+              "type": "RangeControl",
               "attrs": {
-                "title": "Range controls",
-                "purpose": "Range controls cover sliders, spin boxes, stepper inputs, and rating controls that select or present a value within a bounded or discrete range.",
-                "scopeDocument": "scopes/Controls/range_controls.scope.md",
+                "title": "Range control",
+                "purpose": "A range control covers sliders, spin boxes, stepper inputs, and rating controls that select or present a value within a bounded or discrete range.",
+                "scopeDocument": "scopes/Controls/range_control.scope.md",
                 "status": "draft"
               },
               "children": [
                 {
-                  "id": "rangeControlsInstance",
-                  "type": "RangeControls"
+                  "id": "rangeControlInstance",
+                  "type": "RangeControl"
                 }
               ]
             },
@@ -563,18 +563,18 @@
               ]
             },
             {
-              "id": "statusIndicators",
-              "type": "StatusIndicators",
+              "id": "statusIndicator",
+              "type": "StatusIndicator",
               "attrs": {
-                "title": "Status indicators",
-                "purpose": "Status indicators cover status bars, tags, badges, progress bars, loaders, and spinners that communicate state without requiring user activation.",
-                "scopeDocument": "scopes/Controls/status_indicators.scope.md",
+                "title": "Status indicator",
+                "purpose": "A status indicator covers status bars, tags, badges, progress bars, loaders, and spinners that communicate state without requiring user activation.",
+                "scopeDocument": "scopes/Controls/status_indicator.scope.md",
                 "status": "draft"
               },
               "children": [
                 {
-                  "id": "statusIndicatorsInstance",
-                  "type": "StatusIndicators"
+                  "id": "statusIndicatorInstance",
+                  "type": "StatusIndicator"
                 }
               ]
             },

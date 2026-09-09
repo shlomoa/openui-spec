@@ -53,7 +53,7 @@ Before changing generator code, read the relevant parts of:
 ## Accepted Architecture Decision
 
 - The accepted design is a virtualenv-based Python generator that builds typed Python data structures, validates them, then serializes them to JSON.
-- The generated repository `spec/openui.json` uses exact root values: `id` is `root`, `type` is `html`, and `version` is `0.0.1`.
+- The generated repository `spec/openui.json` uses exact root values: `id` is `root`, `type` is `html`, and `version` is `0.1.0`.
 - The canonical native OpenUI JSON shape is the only supported generated shape; transitional definitions such as `FrameworkSpecDocument` must be removed rather than adapted to.
 - No adapters are allowed between generated `spec/openui.json` and downstream consumers.
 - Do not use a text templating engine to generate `spec/openui.json`.
@@ -76,7 +76,7 @@ Before changing generator code, read the relevant parts of:
 
 - Preserve the native OpenUI document shape defined in `spec/README.md`: top-level `version`, `id`, `type`, optional `attrs`, and optional `children`.
 - Do not generate, preserve, or adapt to `FrameworkSpecDocument` or any other transitional shape.
-- Generate `spec/openui.json` with exact top-level values `id: "root"`, `type: "html"`, and `version: "0.0.1"`.
+- Generate `spec/openui.json` with exact top-level values `id: "root"`, `type: "html"`, and `version: "0.1.0"`.
 - Keep scope IDs stable and aligned with the scope tree described in `spec/README.md`, such as `application`, `pages`, and `dateTimePickers`.
 - Preserve traversal relationships, mapped sections, evidence links, requirements, tags, formal definitions, usage notes, implementation notes, and examples when available.
 - Generate valid JSON only: no comments, trailing commas, Markdown syntax, or non-deterministic ordering.

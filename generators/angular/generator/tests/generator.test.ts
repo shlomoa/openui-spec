@@ -281,7 +281,7 @@ test("builds the data model from the generated OpenUI catalog", async () => {
   const scopeIds = extractOpenUiScopeNodes(fixture).map((scope) => scope.id);
 
   assert.equal(dataModel.name, "OpenUI");
-  assert.equal(dataModel.version, "0.0.1");
+  assert.equal(dataModel.version, "0.1.0");
   assert.deepEqual(dataModel.pages.map((page) => page.id), scopeIds);
 
   const application = pageById(dataModel.pages, "application");
@@ -485,7 +485,7 @@ test("allows a valid empty root document for incremental deletion", () => {
   assert.doesNotThrow(() =>
     validateOpenUiSpec({
       id: "root",
-      version: "0.0.1",
+      version: "0.1.0",
       type: "html",
       children: [],
     }),

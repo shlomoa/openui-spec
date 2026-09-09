@@ -31,12 +31,12 @@ Abstraction levels:
 | Combo box                | [Choice controls](Controls/choice_controls.scope.md)                  | Alias             | Editable or select-only popup choice control.               |
 | Date picker              | [Date/Time pickers](Widgets/date_time_pickers.scope.md)               | Existing object   | Calendar-oriented picker widget.                            |
 | Time picker              | [Date/Time pickers](Widgets/date_time_pickers.scope.md)               | Alias             | Time-selection variant of date/time picker.                 |
-| Wheel picker             | [Picker controls](Controls/picker_controls.scope.md)                  | Grouped leaf      | Picker interaction variant.                                 |
-| Color picker             | [Picker controls](Controls/picker_controls.scope.md)                  | Alias             | Specialized value picker.                                   |
-| File picker              | [Picker controls](Controls/picker_controls.scope.md)                  | Alias             | File-source picker.                                         |
-| Slider                   | [Range controls](Controls/range_controls.scope.md)                    | Grouped leaf      | Continuous or discrete range control.                       |
-| Spin box / Stepper input | [Range controls](Controls/range_controls.scope.md)                    | Alias             | Discrete value increment/decrement control.                 |
-| Rating control           | [Range controls](Controls/range_controls.scope.md)                    | Alias             | Bounded rating value control.                               |
+| Wheel picker             | [Picker control](Controls/picker_control.scope.md)                    | Grouped leaf      | Picker interaction variant.                                 |
+| Color picker             | [Picker control](Controls/picker_control.scope.md)                    | Alias             | Specialized value picker.                                   |
+| File picker              | [Picker control](Controls/picker_control.scope.md)                    | Alias             | File-source picker.                                         |
+| Slider                   | [Range control](Controls/range_control.scope.md)                      | Grouped leaf      | Continuous or discrete range control.                       |
+| Spin box / Stepper input | [Range control](Controls/range_control.scope.md)                      | Alias             | Discrete value increment/decrement control.                 |
+| Rating control           | [Range control](Controls/range_control.scope.md)                      | Alias             | Bounded rating value control.                               |
 | Drag handle              | [Drag and drop](Behaviors/drag_and_drop.scope.md)                     | Existing object   | Handle is an affordance for the drag-and-drop behavior.     |
 | Resize handle            | [Resizable](Behaviors/resizable.scope.md)                             | Existing object   | Handle is an affordance for the resizable behavior.         |
 | Canvas / Drawing area    | [Drawing and capture controls](Controls/drawing_and_capture.scope.md) | Grouped leaf      | Direct drawing input surface.                               |
@@ -47,19 +47,19 @@ Abstraction levels:
 
 | Taxonomy entry                | Spec object                                                              | Abstraction level | Notes                                                                 |
 | ----------------------------- | ------------------------------------------------------------------------ | ----------------- | --------------------------------------------------------------------- |
-| Status bar                    | [Status indicators](Controls/status_indicators.scope.md)                 | Grouped leaf      | Passive state feedback.                                               |
+| Status bar                    | [Status indicator](Controls/status_indicator.scope.md)                   | Grouped leaf      | Passive state feedback.                                               |
 | Label                         | [Display primitives](Controls/display_primitives.scope.md)               | Grouped leaf      | Textual caption or labelling primitive.                               |
 | Text                          | [Display primitives](Controls/display_primitives.scope.md)               | Alias             | Rendered text primitive.                                              |
 | Image                         | [Display primitives](Controls/display_primitives.scope.md)               | Alias             | Static visual content primitive.                                      |
 | Icon                          | [Display primitives](Controls/display_primitives.scope.md)               | Alias             | Symbolic visual primitive.                                            |
 | Avatar                        | [Display primitives](Controls/display_primitives.scope.md)               | Alias             | Identity image or initials primitive.                                 |
-| Tag                           | [Status indicators](Controls/status_indicators.scope.md)                 | Alias             | Compact classification/status indicator.                              |
-| Badge                         | [Status indicators](Controls/status_indicators.scope.md)                 | Alias             | Compact count or state indicator.                                     |
+| Tag                           | [Status indicator](Controls/status_indicator.scope.md)                   | Alias             | Compact classification/status indicator.                              |
+| Badge                         | [Status indicator](Controls/status_indicator.scope.md)                   | Alias             | Compact count or state indicator.                                     |
 | Tooltip                       | [Feedback widgets](Widgets/feedback_widgets.scope.md)                    | Grouped leaf      | Contextual helper message.                                            |
 | Alert                         | [Feedback widgets](Widgets/feedback_widgets.scope.md)                    | Alias             | Urgent message feedback.                                              |
 | Toast / Snackbar              | [Feedback widgets](Widgets/feedback_widgets.scope.md)                    | Alias             | Transient message feedback.                                           |
-| Progress bar                  | [Status indicators](Controls/status_indicators.scope.md)                 | Alias             | Passive progress state.                                               |
-| Loader / Spinner              | [Status indicators](Controls/status_indicators.scope.md)                 | Alias             | Indeterminate loading feedback.                                       |
+| Progress bar                  | [Status indicator](Controls/status_indicator.scope.md)                   | Alias             | Passive progress state.                                               |
+| Loader / Spinner              | [Status indicator](Controls/status_indicator.scope.md)                   | Alias             | Indeterminate loading feedback.                                       |
 | Separator / Divider           | [Display primitives](Controls/display_primitives.scope.md)               | Alias             | Visual or semantic divider.                                           |
 | Table / Data grid             | [Table](Widgets/table.scope.md); [Data grid](Widgets/data_grid.scope.md) | Existing object   | Tabular data maps to table scope; interactive grids map to data grid. |
 | List                          | [List](Widgets/list.scope.md)                                            | Existing object   | Reusable list widget.                                                 |

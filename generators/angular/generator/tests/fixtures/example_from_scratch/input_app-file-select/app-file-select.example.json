@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "ApplicationExample",
   "attrs": {
     "title": "App file select example",

@@ -84,7 +84,7 @@ function componentTemplateNode(id: string, selector: string): OpenUiElement {
 
 /** Wrap component-template nodes in a minimal valid OpenUI input document. */
 function inputDocument(children: OpenUiElement[]): OpenUiDocument {
-  return { id: "root", version: "0.0.1", type: "ApplicationExample", children };
+  return { id: "root", version: "0.1.0", type: "ApplicationExample", children };
 }
 
 function deletionFor(plan: Awaited<ReturnType<typeof reconcileGeneratedFiles>>, relativePath: string) {

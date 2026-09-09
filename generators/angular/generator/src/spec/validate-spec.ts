@@ -88,8 +88,8 @@ function validateElement(
     }
   }
 
-  if (isRoot && value.version !== "0.0.1") {
-    diagnostics.push({ path: `${path}.version`, message: 'Root version must be exactly "0.0.1".' });
+  if (isRoot && value.version !== "0.1.0") {
+    diagnostics.push({ path: `${path}.version`, message: 'Root version must be exactly "0.1.0".' });
   }
   if (isRoot && value.id !== "root") {
     diagnostics.push({ path: `${path}.id`, message: 'Root id must be exactly "root".' });

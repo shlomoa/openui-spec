@@ -62,22 +62,22 @@
       "route": "link-and-scroll-controls"
     },
     {
-      "name": "picker controls",
-      "sourceExample": "spec/examples/Controls/picker_controls.example.json",
-      "fixture": "generators/angular/generator/tests/fixtures/picker_controls/input_picker_controls/picker_controls.example.json",
-      "route": "picker-controls"
+      "name": "picker control",
+      "sourceExample": "spec/examples/Controls/picker_control.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/picker_control/input_picker_control/picker_control.example.json",
+      "route": "picker-control"
     },
     {
-      "name": "range controls",
-      "sourceExample": "spec/examples/Controls/range_controls.example.json",
-      "fixture": "generators/angular/generator/tests/fixtures/range_controls/input_range_controls/range_controls.example.json",
-      "route": "range-controls"
+      "name": "range control",
+      "sourceExample": "spec/examples/Controls/range_control.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/range_control/input_range_control/range_control.example.json",
+      "route": "range-control"
     },
     {
-      "name": "status indicators",
-      "sourceExample": "spec/examples/Controls/status_indicators.example.json",
-      "fixture": "generators/angular/generator/tests/fixtures/status_indicators/input_status_indicators/status_indicators.example.json",
-      "route": "status-indicators"
+      "name": "status indicator",
+      "sourceExample": "spec/examples/Controls/status_indicator.example.json",
+      "fixture": "generators/angular/generator/tests/fixtures/status_indicator/input_status_indicator/status_indicator.example.json",
+      "route": "status-indicator"
     },
     {
       "name": "table widget",
