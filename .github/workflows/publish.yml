@@ -44,15 +44,14 @@ jobs:
       id-token: write
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@v4
 
       - name: Set up Node
-        uses: actions/setup-node@v6.1.0
+        uses: actions/setup-node@v4
         with:
-          node-version: "22"
-          registry-url: "https://registry.npmjs.org"
+          node-version: 24
+          registry-url: https://registry.npmjs.org
           cache: npm
-          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -64,6 +63,6 @@ jobs:
         run: npm test
 
       - name: Publish package to npm
-        run: npm publish --access public --provenance
+        run: npm publish ./dist/openui-spec --access public --tag "${{ inputs.npm-tag }}"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
