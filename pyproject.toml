@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openui-spec"
-version = "0.1.0"
+version = "0.1.1"
 description = "Technology-independent OpenUI specification, canonical catalog, and OpenUI JSON tooling."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -17,8 +17,8 @@ dependencies = [
 ]
 
 [project.scripts]
-openui-json = "bin.openui_json_cli:main"
-openui-compare = "bin.compare_openui_json:main"
+openui_spec = "bin.openui_spec_cli:main"
+compare_openui_spec = "bin.compare_openui_spec:main"
 
 [project.urls]
 Homepage = "https://github.com/shlomoa/openui-spec"

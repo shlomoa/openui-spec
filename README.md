@@ -12,17 +12,17 @@ Contributor and developer entry points for this repository:
 
 ## OpenUI JSON API
 
-The [`@openui-spec/openui-json`](package.json) package provides `OpenUiJson` for
+The [`@shlomoa/openui-spec`](package.json) package provides `OpenUiJson` for
 loading, validating, and editing an OpenUI JSON document. It bundles
 `spec/openui.schema.json` and `spec/openui.json`; validation checks both the
 schema and the object types supported by the canonical catalog.
 
 ```bash
-npm install @openui-spec/openui-json
+npm install @shlomoa/openui-spec
 ```
 
 ```typescript
-import { OpenUiJson } from "@openui-spec/openui-json";
+import { OpenUiJson } from "@shlomoa/openui-spec";
 
 const document = OpenUiJson.load("input.json");
 document.validate();
@@ -33,13 +33,13 @@ document.save("output.json");
 The published [OpenUI JSON editing](https://openui-spec.readthedocs.io/en/latest/tooling/editing/)
 tooling page documents the API and command-line interface.
 
-The package also installs an `openui-json` CLI to validate or apply one change
+The package also installs an `ng-openui-spec` CLI to validate or apply one change
 in place (pass `--output` to write to a different file):
 
 ```bash
-openui-json validate --input spec/openui.json
-openui-json add --input document.json --parent root --object '{"id":"newTable","type":"Table"}'
-openui-json remove --input document.json --id newTable
-openui-json modify --input document.json --id table --attrs '{"title":"Updated"}'
-openui-json modify --input document.json --id table --object '{"id":"table","type":"Grid"}'
+ng-openui-spec validate --input spec/openui.json
+ng-openui-spec add --input document.json --parent root --object '{"id":"newTable","type":"Table"}'
+ng-openui-spec remove --input document.json --id newTable
+ng-openui-spec modify --input document.json --id table --attrs '{"title":"Updated"}'
+ng-openui-spec modify --input document.json --id table --object '{"id":"table","type":"Grid"}'
 ```

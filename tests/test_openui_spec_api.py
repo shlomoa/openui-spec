@@ -6,11 +6,11 @@ import tomllib
 import unittest
 from pathlib import Path
 
-from bin.openui_json import OpenUiJson, OpenUiJsonError, OpenUiValidationError
+from bin.openui_spec import OpenUiJson, OpenUiJsonError, OpenUiValidationError
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = REPO_ROOT / "spec" / "openui.json"
-CLI_PATH = REPO_ROOT / "bin" / "openui_json_cli.py"
+CLI_PATH = REPO_ROOT / "bin" / "openui_spec_cli.py"
 
 
 def document_with(child_type: str = "Table") -> dict[str, object]:
@@ -198,7 +198,7 @@ class OpenUiJsonCliTest(unittest.TestCase):
 
     def test_console_entry_point_is_registered(self) -> None:
         pyproject = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-        self.assertEqual(pyproject["project"]["scripts"]["openui-json"], "bin.openui_json_cli:main")
+        self.assertEqual(pyproject["project"]["scripts"]["openui_spec"], "bin.openui_spec_cli:main")
 
     @staticmethod
     def _run(*arguments: str) -> subprocess.CompletedProcess[str]:

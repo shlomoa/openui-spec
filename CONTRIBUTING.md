@@ -51,7 +51,7 @@ The generated app includes Angular routing, a Material shell and navigation, glo
 
 ## OpenUI JSON npm package
 
-The repository root is the `@openui-spec/openui-json` npm package. Its build
+The repository root is the `@shlomoa/openui-spec` npm package. Its build
 uses the canonical files under `spec/` directly and must be run from the
 repository root:
 

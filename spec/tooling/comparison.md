@@ -8,8 +8,8 @@ _what actually changed between an earlier `spec/openui.json` and a newer one?_ I
 both documents together and reports differences as a stable JSON changelog that is
 safe to diff, review, and store in version control.
 
-The installed command is `openui-compare`. Its implementation lives in
-[`bin/compare_openui_json.py`](https://github.com/shlomoa/openui-spec/blob/main/bin/compare_openui_json.py)
+The installed command is `compare_openui_spec`. Its implementation lives in
+[`bin/compare_openui_spec.py`](https://github.com/shlomoa/openui-spec/blob/main/bin/compare_openui_spec.py)
 and depends only on the Python standard library.
 
 ## How it compares
@@ -32,7 +32,7 @@ points at the exact location in the document tree.
 
 ## Usage
 
-Install `openui-spec` in a virtual environment, then run `openui-compare`,
+Install `openui-spec` in a virtual environment, then run `compare_openui_spec`,
 passing the reference document first and the new document second. For a cloned
 copy of this repository, create the environment and install the current checkout
 as follows.
@@ -43,7 +43,7 @@ Windows (PowerShell):
 py -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install .
-openui-compare reference.json new.json
+compare_openui_spec reference.json new.json
 ```
 
 Linux or macOS (Bash):
@@ -52,25 +52,25 @@ Linux or macOS (Bash):
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install .
-openui-compare reference.json new.json
+compare_openui_spec reference.json new.json
 ```
 
-After activation, the virtual environment adds `openui-compare` to `PATH`.
+After activation, the virtual environment adds `compare_openui_spec` to `PATH`.
 Without activation, invoke its executable directly:
 
 ```powershell
-.\.venv\Scripts\openui-compare.exe reference.json new.json
+.\.venv\Scripts\compare_openui_spec.exe reference.json new.json
 ```
 
 ```bash
-./.venv/bin/openui-compare reference.json new.json
+./.venv/bin/compare_openui_spec reference.json new.json
 ```
 
 By default the changelog is printed to standard output. Use `--output` (or `-o`)
 to write it to a file instead:
 
 ```bash
-openui-compare reference.json new.json --output changelog.json
+compare_openui_spec reference.json new.json --output changelog.json
 ```
 
 ### Arguments

@@ -6,6 +6,11 @@ OpenUI is a technology-independent specification for a Web UI framework. It defi
 
 It serves application developers, designers and UX owners, framework maintainers, and generator/tooling authors, who all consume the same public contract.
 
+## Packages and Tooling
+
+- **TypeScript / Node.js**: The [`@shlomoa/openui-spec`](https://www.npmjs.com/package/@shlomoa/openui-spec) package on npm provides the `OpenUiJson` document API, bundled canonical catalog/schema, TypeScript types, and the `ng-openui-spec` CLI. See the [OpenUI JSON editing guide](tooling/editing.md) for full usage.
+- **Python**: The [`openui-spec`](https://pypi.org/project/openui-spec/) package on PyPI provides the `openui_spec` editing CLI and the `compare_openui_spec` comparison CLI. See the [OpenUI JSON comparison guide](tooling/comparison.md) for changelog tooling.
+
 ## Glossary
 
 This glossary is the repository source of truth for OpenUI vocabulary. Other

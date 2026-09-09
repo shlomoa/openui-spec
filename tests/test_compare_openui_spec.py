@@ -8,24 +8,24 @@ import unittest
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = REPO_ROOT / "bin" / "compare_openui_json.py"
+SCRIPT = REPO_ROOT / "bin" / "compare_openui_spec.py"
 COMPARISON_DOCUMENTATION = REPO_ROOT / "spec" / "tooling" / "comparison.md"
-MODULE_SPEC = importlib.util.spec_from_file_location("compare_openui_json", SCRIPT)
+MODULE_SPEC = importlib.util.spec_from_file_location("compare_openui_spec", SCRIPT)
 assert MODULE_SPEC and MODULE_SPEC.loader
-compare_openui_json = importlib.util.module_from_spec(MODULE_SPEC)
-MODULE_SPEC.loader.exec_module(compare_openui_json)
+compare_openui_spec = importlib.util.module_from_spec(MODULE_SPEC)
+MODULE_SPEC.loader.exec_module(compare_openui_spec)
 
 
-class CompareOpenUiJsonTest(unittest.TestCase):
+class CompareOpenUiSpecTest(unittest.TestCase):
     def test_documentation_uses_installed_comparison_command(self) -> None:
         documentation = COMPARISON_DOCUMENTATION.read_text(encoding="utf-8")
 
-        self.assertIn("The installed command is `openui-compare`.", documentation)
-        self.assertIn("openui-compare reference.json new.json", documentation)
+        self.assertIn("The installed command is `compare_openui_spec`.", documentation)
+        self.assertIn("compare_openui_spec reference.json new.json", documentation)
         self.assertIn(
-            "openui-compare reference.json new.json --output changelog.json", documentation
+            "compare_openui_spec reference.json new.json --output changelog.json", documentation
         )
-        self.assertNotIn("python bin\\compare_openui_json.py", documentation)
+        self.assertNotIn("python bin\\compare_openui_spec.py", documentation)
 
     def test_compare_reports_hierarchical_additions_removals_and_changes(self) -> None:
         reference = {
@@ -43,7 +43,7 @@ class CompareOpenUiJsonTest(unittest.TestCase):
         }
 
         self.assertEqual(
-            compare_openui_json.compare(reference, new),
+            compare_openui_spec.compare(reference, new),
             {
                 "remove": [{"path": "/attrs/obsolete", "reference": True}],
                 "add": [
@@ -72,7 +72,7 @@ class CompareOpenUiJsonTest(unittest.TestCase):
         }
 
         self.assertEqual(
-            compare_openui_json.compare(reference, new),
+            compare_openui_spec.compare(reference, new),
             {"remove": [], "add": [], "change": []},
         )
 
@@ -154,7 +154,7 @@ class CompareOpenUiJsonTest(unittest.TestCase):
     def test_console_entry_point_is_registered(self) -> None:
         pyproject = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
         self.assertEqual(
-            pyproject["project"]["scripts"]["openui-compare"], "bin.compare_openui_json:main"
+            pyproject["project"]["scripts"]["compare_openui_spec"], "bin.compare_openui_spec:main"
         )
 
 

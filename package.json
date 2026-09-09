@@ -1,6 +1,6 @@
 {
-  "name": "@openui-spec/openui-json",
-  "version": "0.1.0",
+  "name": "@shlomoa/openui-spec",
+  "version": "0.1.1",
   "description": "Load, validate, and edit OpenUI JSON documents.",
   "license": "Apache-2.0",
   "main": "./dist/src/index.js",
@@ -13,7 +13,7 @@
     }
   },
   "bin": {
-    "openui-json": "./dist/src/cli.js"
+    "ng-openui-spec": "./dist/src/cli.js"
   },
   "files": [
     "dist/src",
@@ -27,6 +27,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shlomoa/openui-spec.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "engines": {
     "node": ">=22"

@@ -16,7 +16,7 @@ function documentWith(childType = "Table"): Record<string, any> {
 }
 
 test("parses, serializes, saves, and validates with bundled assets", () => {
-  const temporaryDirectory = mkdtempSync(path.join(os.tmpdir(), "openui-json-"));
+  const temporaryDirectory = mkdtempSync(path.join(os.tmpdir(), "ng-openui-spec-"));
   try {
     const inputPath = path.join(temporaryDirectory, "input.json");
     const outputPath = path.join(temporaryDirectory, "nested", "output.json");
@@ -121,7 +121,7 @@ test("accepts in-memory schema and catalog options", () => {
 });
 
 test("accepts custom schema and catalog paths", () => {
-  const temporaryDirectory = mkdtempSync(path.join(os.tmpdir(), "openui-json-"));
+  const temporaryDirectory = mkdtempSync(path.join(os.tmpdir(), "ng-openui-spec-"));
   try {
     const schemaPath = path.resolve(__dirname, "..", "..", "spec", "openui.schema.json");
     const catalogPath = path.join(temporaryDirectory, "catalog.json");

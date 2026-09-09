@@ -22,7 +22,7 @@ function run(...arguments_: string[]): SpawnSyncReturns<string> {
 }
 
 test("validates and applies each CLI change command", () => {
-  const temporaryDirectory = mkdtempSync(path.join(os.tmpdir(), "openui-json-cli-"));
+  const temporaryDirectory = mkdtempSync(path.join(os.tmpdir(), "ng-openui-spec-cli-"));
   try {
     const inputPath = path.join(temporaryDirectory, "input.json");
     const objectPath = path.join(temporaryDirectory, "object.json");
@@ -46,7 +46,7 @@ test("validates and applies each CLI change command", () => {
 });
 
 test("writes changes to an optional output path", () => {
-  const temporaryDirectory = mkdtempSync(path.join(os.tmpdir(), "openui-json-cli-"));
+  const temporaryDirectory = mkdtempSync(path.join(os.tmpdir(), "ng-openui-spec-cli-"));
   try {
     const inputPath = path.join(temporaryDirectory, "input.json");
     const outputPath = path.join(temporaryDirectory, "nested", "output.json");
@@ -73,7 +73,7 @@ test("writes changes to an optional output path", () => {
 });
 
 test("reports argument and document errors without a stack trace", () => {
-  const temporaryDirectory = mkdtempSync(path.join(os.tmpdir(), "openui-json-cli-"));
+  const temporaryDirectory = mkdtempSync(path.join(os.tmpdir(), "ng-openui-spec-cli-"));
   try {
     const inputPath = path.join(temporaryDirectory, "input.json");
     writeFileSync(inputPath, JSON.stringify(documentWith()), "utf8");

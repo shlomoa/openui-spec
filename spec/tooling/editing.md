@@ -9,24 +9,83 @@ an invalid document?_ It loads a document, applies one change, revalidates the
 result, and writes it back out.
 
 The Python implementation lives at
-[`bin/openui_json_cli.py`](https://github.com/shlomoa/openui-spec/blob/main/bin/openui_json_cli.py).
-The `@openui-spec/openui-json` package installs an equivalent `openui-json`
+[`bin/openui_spec_cli.py`](https://github.com/shlomoa/openui-spec/blob/main/bin/openui_spec_cli.py)
+and installs the `openui_spec` CLI.
+The `@shlomoa/openui-spec` package installs an equivalent `ng-openui-spec`
 CLI for Node.js consumers.
 
-## TypeScript and JavaScript API
+## TypeScript package: `@shlomoa/openui-spec`
 
-The framework-neutral [`@openui-spec/openui-json`](https://www.npmjs.com/package/@openui-spec/openui-json)
-package provides the same document loading, validation, and mutation API for
-Node.js consumers. Its published package includes the canonical schema and
-catalog, so no asset paths are required for normal use.
+The official TypeScript and Node.js package is published to npm at:
+<https://www.npmjs.com/package/@shlomoa/openui-spec>
+
+It provides a framework-neutral document loading, validation, and mutation API
+for Node.js consumers along with the `ng-openui-spec` command-line tool.
+
+### Installation
+
+```bash
+npm install @shlomoa/openui-spec
+```
+
+### Key features
+
+- **Bundled canonical assets** — includes `spec/openui.schema.json` and
+  `spec/openui.json` directly within the distribution; no external path configuration
+  is required.
+- **Strict document validation** — validates against both the Draft 2020-12 schema
+  and the catalog's allowed element types.
+- **Safe programmatic mutations** — provides strongly-typed methods to add, remove,
+  modify attributes, and replace objects in OpenUI documents.
+- **Command-line interface** — installs the `ng-openui-spec` binary for
+  terminal and CI/CD validation and updates.
+
+### TypeScript and JavaScript API
 
 ```typescript
-import { OpenUiJson } from "@openui-spec/openui-json";
+import { OpenUiJson, OpenUiValidationError } from "@shlomoa/openui-spec";
 
+// Load from a file or instantiate with an existing OpenUI document
 const document = OpenUiJson.load("input.json");
-document.validate();
-document.updateAttributes("table", { title: "Updated" });
+
+// Validate against canonical schema and catalog
+try {
+  document.validate();
+} catch (error) {
+  if (error instanceof OpenUiValidationError) {
+    console.error("Validation failed:", error.diagnostics);
+  }
+}
+
+// Add an object to a parent
+document.add("root", { id: "newTable", type: "Table" });
+
+// Update attributes in place
+document.updateAttributes("newTable", { title: "Updated" });
+
+// Replace an object
+document.replace(
+  "newTable",
+  { id: "newTable", type: "Grid" },
+  { parentId: "root" },
+);
+
+// Remove an object
+document.remove("newTable", { parentId: "root" });
+
+// Save modifications back to disk
 document.save("output.json");
+```
+
+### Node.js CLI: `ng-openui-spec`
+
+Use the package CLI directly after installing `@shlomoa/openui-spec`:
+
+```bash
+ng-openui-spec validate --input ./spec/openui.json
+ng-openui-spec add --input document.json --parent root --object '{"id":"newTable","type":"Table"}'
+ng-openui-spec modify --input document.json --id newTable --attrs '{"title":"Updated"}'
+ng-openui-spec remove --input document.json --id newTable
 ```
 
 ## What it validates
@@ -48,10 +107,10 @@ document remains uniquely addressable.
 Each command takes an `--input` document; the `add`, `remove`, and `modify`
 commands write the result back to `--input` in place unless you pass `--output`
 to write to a different file. Use the package CLI after installing
-`@openui-spec/openui-json`:
+`@shlomoa/openui-spec`:
 
 ```bash
-openui-json validate --input ./spec/openui.json
+ng-openui-spec validate --input ./spec/openui.json
 ```
 
 The same commands are available from the Python implementation with the
@@ -60,13 +119,13 @@ repository-local interpreter:
 Windows (PowerShell):
 
 ```powershell
-.\.venv\Scripts\python bin\openui_json_cli.py validate --input .\spec\openui.json
+.\.venv\Scripts\python bin\openui_spec_cli.py validate --input .\spec\openui.json
 ```
 
 Linux or macOS (Bash):
 
 ```bash
-./.venv/bin/python bin/openui_json_cli.py validate --input ./spec/openui.json
+./.venv/bin/python bin/openui_spec_cli.py validate --input ./spec/openui.json
 ```
 
 Wherever a command accepts a JSON value (`--object`, `--attrs`), you may pass the
@@ -99,39 +158,43 @@ For `modify`, pass exactly one of `--attrs` or `--object`.
 Validate a document:
 
 ```bash
-./.venv/bin/python bin/openui_json_cli.py validate --input ./spec/openui.json
+# Using npm CLI
+ng-openui-spec validate --input ./spec/openui.json
+
+# Using Python CLI
+openui_spec validate --input ./spec/openui.json
 ```
 
 Add a new object to a parent:
 
 ```bash
-./.venv/bin/python bin/openui_json_cli.py add --input document.json \
+ng-openui-spec add --input document.json \
   --parent root --object '{"id":"newTable","type":"Table"}'
 ```
 
 Remove an object by `id`:
 
 ```bash
-./.venv/bin/python bin/openui_json_cli.py remove --input document.json --id newTable
+ng-openui-spec remove --input document.json --id newTable
 ```
 
 Change an object's attributes without touching its children:
 
 ```bash
-./.venv/bin/python bin/openui_json_cli.py modify --input document.json \
+ng-openui-spec modify --input document.json \
   --id table --attrs '{"title":"Updated"}'
 ```
 
 Replace an object entirely, including any children it contains:
 
 ```bash
-./.venv/bin/python bin/openui_json_cli.py modify --input document.json \
+ng-openui-spec modify --input document.json \
   --id table --object '{"id":"table","type":"Grid"}'
 ```
 
 To preview a change without overwriting the source, add `--output`:
 
 ```bash
-./.venv/bin/python bin/openui_json_cli.py add --input document.json \
+ng-openui-spec add --input document.json \
   --parent root --object '{"id":"newTable","type":"Table"}' --output updated.json
 ```

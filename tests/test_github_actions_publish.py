@@ -37,8 +37,20 @@ class GitHubActionsPublishWorkflowTest(unittest.TestCase):
             [
                 ("actions/checkout", "v6.0.3"),
                 ("actions/setup-python", "v6.2.0"),
+                ("actions/checkout", "v6.0.3"),
+                ("actions/setup-node", "v6.1.0"),
             ],
         )
+
+    def test_publish_workflow_builds_and_tests_npm_package(self):
+        self.assertIn("run: npm ci", self.workflow)
+        self.assertIn("run: npm run build", self.workflow)
+        self.assertIn("run: npm test", self.workflow)
+
+    def test_publish_workflow_publishes_to_npm(self):
+        self.assertIn("run: npm publish --access public --provenance", self.workflow)
+        self.assertIn("NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}", self.workflow)
+        self.assertIn('registry-url: "https://registry.npmjs.org"', self.workflow)
 
 
 if __name__ == "__main__":

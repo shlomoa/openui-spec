@@ -9,9 +9,9 @@ from pathlib import Path
 from typing import Any
 
 if __package__:
-    from .openui_json import OpenUiJson, OpenUiJsonError
+    from .openui_spec import OpenUiJson, OpenUiJsonError
 else:
-    from openui_json import OpenUiJson, OpenUiJsonError
+    from openui_spec import OpenUiJson, OpenUiJsonError
 
 
 def _json_argument(value: str) -> dict[str, Any]:

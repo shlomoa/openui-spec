@@ -28,11 +28,11 @@ const commandOptions: Record<Command, ReadonlySet<string>> = {
 export function main(argv: string[] = process.argv.slice(2)): number {
   try {
     if (argv.length === 1 && isHelp(argv[0])) {
-      process.stdout.write("usage: openui-json <validate|add|remove|modify> [options]\n");
+      process.stdout.write("usage: ng-openui-spec <validate|add|remove|modify> [options]\n");
       return 0;
     }
     if (isCommand(argv[0]) && argv.length === 2 && isHelp(argv[1])) {
-      process.stdout.write(`usage: openui-json ${argv[0]} [options]\n`);
+      process.stdout.write(`usage: ng-openui-spec ${argv[0]} [options]\n`);
       return 0;
     }
     const arguments_ = parseArguments(argv);
