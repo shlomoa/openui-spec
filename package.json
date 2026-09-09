@@ -3,7 +3,10 @@
   "version": "0.1.1",
   "description": "Load, validate, and edit OpenUI JSON documents.",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build:tsc": "tsc -p tsconfig.json",
+    "build:package": "cpy package.json README.md LICENSE \"dist/openui-spec/\" && cpy \"dist/src/**\" \"dist/openui-spec/dist/src/\" && cpy \"spec/*.json\" \"dist/openui-spec/spec/\"",
+    "build": "npm run build:tsc && npm run build:package",
+    "pack:dry-run": "npm run build && npm pack ./dist/openui-spec --dry-run",
     "test": "npm run build && node --test dist/tests/*.test.js"
   },
   "packageManager": "npm@11.16.0",
@@ -25,6 +28,7 @@
   },
   "devDependencies": {
     "@types/node": "26.4.0",
+    "cpy-cli": "^7.0.0",
     "typescript": "7.0.2"
   },
   "main": "./dist/src/index.js",
