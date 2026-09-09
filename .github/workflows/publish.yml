@@ -2,15 +2,15 @@
 # PyPI uses PyPI Trusted Publishing (OIDC): configure a trusted publisher for this
 # repository/workflow on PyPI and add a "pypi" environment before first use.
 # npm uses NPM_TOKEN secret: configure NPM_TOKEN in repository secrets.
-name: Publish
+name: Publish OpenUi Specification
 
 on:
-  release:
-    types: [published]
   workflow_dispatch:
-
-permissions:
-  contents: read
+    inputs:
+      npm-tag:
+        description: npm dist-tag to publish under
+        required: true
+        default: latest
 
 jobs:
   publish-pypi:
