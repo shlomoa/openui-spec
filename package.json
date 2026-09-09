@@ -2,7 +2,31 @@
   "name": "@shlomoa/openui-spec",
   "version": "0.1.1",
   "description": "Load, validate, and edit OpenUI JSON documents.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test dist/tests/*.test.js"
+  },
+  "packageManager": "npm@11.16.0",
   "license": "Apache-2.0",
+  "homepage": "https://github.com/shlomoa/openui-spec#readme",
+  "bugs": {
+    "url": "https://github.com/shlomoa/openui-spec/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shlomoa/openui-spec.git"
+  },
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0",
+    "npm": ">=11"
+  },
+  "dependencies": {
+    "ajv": "8.20.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.4.0",
+    "typescript": "7.0.2"
+  },
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
   "exports": {
@@ -20,25 +44,7 @@
     "spec/openui.json",
     "spec/openui.schema.json"
   ],
-  "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "test": "npm run build && node --test dist/tests/*.test.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shlomoa/openui-spec.git"
-  },
   "publishConfig": {
     "access": "public"
-  },
-  "engines": {
-    "node": ">=22"
-  },
-  "dependencies": {
-    "ajv": "8.20.0"
-  },
-  "devDependencies": {
-    "@types/node": "26.4.0",
-    "typescript": "7.0.2"
   }
 }
