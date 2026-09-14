@@ -1,7 +1,7 @@
 {
   "id": "root",
   "type": "html",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "attrs": {
     "name": "OpenUI",
     "description": "Technology-independent Web UI framework specification",
@@ -71,7 +71,7 @@
           "children": [
             {
               "id": "native",
-              "type": "NativeControls",
+              "type": "Native",
               "attrs": {
                 "title": "Native",
                 "purpose": "Browser and framework-provided native controls and presentation capabilities.",

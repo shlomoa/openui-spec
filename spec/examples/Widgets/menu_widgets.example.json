@@ -1,7 +1,7 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "WidgetExample",
+  "version": "0.2.0",
+  "type": "MenuWidgets",
   "attrs": {
     "title": "\"Menu widgets example\""
   },

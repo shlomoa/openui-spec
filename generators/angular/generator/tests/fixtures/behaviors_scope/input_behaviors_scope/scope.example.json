@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "Behaviors",
   "attrs": {
     "title": "\"Behaviors example\""
@@ -8,7 +8,7 @@
   "children": [
     {
       "id": "workspacePanel",
-      "type": "Panel",
+      "type": "SurfaceContainers",
       "attrs": {
         "[title]": "\"Workspace\""
       },
@@ -30,7 +30,7 @@
         },
         {
           "id": "panelDnd",
-          "type": "Draggable",
+          "type": "DragAndDrop",
           "attrs": {
             "[itemType]": "\"panel\"",
             "[ariaLabel]": "\"Move panel\""

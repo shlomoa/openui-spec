@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "Containers",
   "attrs": {
     "title": "\"Containers example\""
@@ -16,21 +16,21 @@
       "children": [
         {
           "id": "mainItem",
-          "type": "GridItem",
+          "type": "section",
           "attrs": {
             "[colSpan]": "8"
           },
           "children": [
             {
               "id": "detailTabs",
-              "type": "TabGroup",
+              "type": "Tabs",
               "attrs": {
                 "[selectedIndex]": "0"
               },
               "children": [
                 {
                   "id": "overviewTab",
-                  "type": "Tab",
+                  "type": "tab",
                   "attrs": {
                     "[label]": "\"Overview\""
                   }
@@ -41,14 +41,14 @@
         },
         {
           "id": "sideItem",
-          "type": "GridItem",
+          "type": "section",
           "attrs": {
             "[colSpan]": "4"
           },
           "children": [
             {
               "id": "filtersPanel",
-              "type": "ExpandablePanel",
+              "type": "ExpandablePanels",
               "attrs": {
                 "[heading]": "\"Filters\"",
                 "[expanded]": "true"

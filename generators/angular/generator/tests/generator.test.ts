@@ -57,7 +57,7 @@ const REPRESENTATIVE_CONCRETE_FIXTURES = [
   },
   {
     name: "date/time pickers",
-    route: "mat-datetime-picker",
+    route: "date-time-picker",
     fixture: path.join(
       ANGULAR_GENERATOR_ROOT,
       "tests",
@@ -128,7 +128,7 @@ test("treats the dialog fixture as concrete input without catalog traceability a
   // Artifact roles are defined by spec/README.md, section
   // "Specification artifacts: grammar vs. catalog": concrete input nodes do not
   // carry generated catalog traceability such as attrs.scopeDocument.
-  assert.equal(fixture.type, "WidgetExample");
+  assert.equal(fixture.type, "Dialog");
   assertNoScopeDocumentAttrs(fixture);
 });
 
@@ -148,7 +148,10 @@ test("rejects unknown non-native concrete input types during catalog validation"
   assert.throws(
     () => validateOpenUiSpec(fixture, { catalog }),
     (error: unknown) => {
-      assert.match(specValidationMessage(error), /root\.children\[0\]\.type: Unknown OpenUI type 'MissingWidget'\./);
+      assert.match(
+        specValidationMessage(error),
+        /root\.children\[0\]\.type: Unknown OpenUI object type 'MissingWidget'\./,
+      );
       return true;
     },
   );
@@ -281,7 +284,7 @@ test("builds the data model from the generated OpenUI catalog", async () => {
   const scopeIds = extractOpenUiScopeNodes(fixture).map((scope) => scope.id);
 
   assert.equal(dataModel.name, "OpenUI");
-  assert.equal(dataModel.version, "0.1.0");
+  assert.equal(dataModel.version, "0.2.0");
   assert.deepEqual(dataModel.pages.map((page) => page.id), scopeIds);
 
   const application = pageById(dataModel.pages, "application");
@@ -485,7 +488,7 @@ test("allows a valid empty root document for incremental deletion", () => {
   assert.doesNotThrow(() =>
     validateOpenUiSpec({
       id: "root",
-      version: "0.1.0",
+      version: "0.2.0",
       type: "html",
       children: [],
     }),

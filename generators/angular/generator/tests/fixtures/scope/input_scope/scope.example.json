@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "Application",
   "attrs": {
     "title": "\"OpenUI demo application\"",
@@ -82,7 +82,7 @@
     },
     {
       "id": "ordersReport",
-      "type": "ReportView",
+      "type": "Report",
       "attrs": {
         "title": "\"Orders\"",
         "[readOnly]": "true"
@@ -97,7 +97,7 @@
           "children": [
             {
               "id": "colOrderId",
-              "type": "Column",
+              "type": "Table",
               "attrs": {
                 "[field]": "\"id\"",
                 "[header]": "\"Order\"",

@@ -34,7 +34,7 @@ npm install @shlomoa/openui-spec
   `spec/openui.json` directly within the distribution; no external path configuration
   is required.
 - **Strict document validation** — validates against both the Draft 2020-12 schema
-  and the catalog's allowed element types.
+  and exact known-type membership in the catalog.
 - **Safe programmatic mutations** — provides strongly-typed methods to add, remove,
   modify attributes, and replace objects in OpenUI documents.
 - **Command-line interface** — installs the `ng-openui-spec` binary for
@@ -95,9 +95,12 @@ Every command validates the resulting document against two sources of truth:
 - **Shape** — the document is checked against
   [`spec/openui.schema.json`](https://github.com/shlomoa/openui-spec/blob/main/spec/openui.schema.json),
   which defines the required structure of any OpenUI document.
-- **Object types** — each object's `type` must be one of the types supported by
-  the canonical [`spec/openui.json`](https://github.com/shlomoa/openui-spec/blob/main/openui.json)
-  catalog. Unknown types are rejected.
+- **Object types** — each object's `type` must exactly equal a literal `type`
+  present in the canonical
+  [`spec/openui.json`](https://github.com/shlomoa/openui-spec/blob/main/spec/openui.json)
+  catalog. Unknown types, aliases, selectors, and implementation identifiers are
+  rejected. The normative definition and instance-flexibility rules live in the
+  [`Known object type`](../README.md#known-object-type) glossary entry.
 
 The tool also rejects duplicate object `id` values, so every object in the
 document remains uniquely addressable.

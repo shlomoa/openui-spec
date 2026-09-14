@@ -11,11 +11,12 @@ from bin.openui_spec import OpenUiJson, OpenUiJsonError, OpenUiValidationError
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = REPO_ROOT / "spec" / "openui.json"
 CLI_PATH = REPO_ROOT / "bin" / "openui_spec_cli.py"
+SCHEMA_VERSION_FILE = REPO_ROOT / "SCHEMA_VERSION"
 
 
 def document_with(child_type: str = "Table") -> dict[str, object]:
     return {
-        "version": "0.1.0",
+        "version": SCHEMA_VERSION_FILE.read_text(encoding="utf-8").strip(),
         "id": "root",
         "type": "html",
         "children": [{"id": "target", "type": child_type}],
@@ -35,18 +36,51 @@ class OpenUiJsonTest(unittest.TestCase):
 
             self.assertEqual(json.loads(output.read_text(encoding="utf-8")), document_with())
 
-    def test_rejects_invalid_schema_and_unsupported_content(self) -> None:
+    def test_rejects_invalid_schema_and_unknown_content(self) -> None:
         with self.assertRaisesRegex(OpenUiValidationError, "required property"):
             OpenUiJson({"id": "root", "type": "html"}).validate()
-        with self.assertRaisesRegex(OpenUiValidationError, "unsupported object type"):
+        with self.assertRaisesRegex(OpenUiValidationError, "unknown OpenUI object type"):
             OpenUiJson(document_with("Unsupported")).validate()
+
+    def test_rejects_syntax_valid_types_absent_from_catalog(self) -> None:
+        for unknown_type in ("custom-widget", "UnknownWidget"):
+            with (
+                self.subTest(unknown_type=unknown_type),
+                self.assertRaisesRegex(OpenUiValidationError, "unknown OpenUI object type"),
+            ):
+                OpenUiJson(document_with(unknown_type)).validate()
+
+    def test_accepts_flexible_instances_of_the_same_known_type(self) -> None:
+        document = OpenUiJson(
+            {
+                "version": SCHEMA_VERSION_FILE.read_text(encoding="utf-8").strip(),
+                "id": "root",
+                "type": "html",
+                "children": [
+                    {
+                        "id": "firstTable",
+                        "type": "Table",
+                        "attrs": {"source": "orders", "optional": None},
+                        "children": [{"id": "firstRow", "type": "tr"}],
+                    },
+                    {
+                        "id": "secondTable",
+                        "type": "Table",
+                        "attrs": {"source": "customers"},
+                        "children": [{"id": "secondSection", "type": "section"}],
+                    },
+                ],
+            }
+        )
+
+        document.validate()
 
     def test_add_requires_existing_parent_and_valid_child(self) -> None:
         document = OpenUiJson(document_with())
 
         with self.assertRaisesRegex(OpenUiJsonError, "parent object not found"):
             document.add("missing", {"id": "newChild", "type": "Table"})
-        with self.assertRaisesRegex(OpenUiJsonError, "unsupported object type"):
+        with self.assertRaisesRegex(OpenUiJsonError, "unknown OpenUI object type"):
             document.add("root", {"id": "newChild", "type": "Unsupported"})
 
         document.add("root", {"id": "newChild", "type": "Table"})

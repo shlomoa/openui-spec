@@ -102,8 +102,10 @@ Given a reference document:
 ```json
 {
   "id": "root",
-  "attrs": { "title": "Reference", "obsolete": true },
-  "children": [{ "id": "page", "type": "Page", "attrs": { "title": "Old" } }]
+  "version": "0.2.0",
+  "type": "Dialog",
+  "attrs": { "title": "Reference", "obsolete": "true" },
+  "children": [{ "id": "page", "type": "page", "attrs": { "title": "Old" } }]
 }
 ```
 
@@ -112,10 +114,12 @@ and a new document:
 ```json
 {
   "id": "root",
-  "attrs": { "title": "New", "introduced": true },
+  "version": "0.2.0",
+  "type": "Dialog",
+  "attrs": { "title": "New", "introduced": "true" },
   "children": [
     { "id": "dialog", "type": "Dialog" },
-    { "id": "page", "type": "Page", "attrs": { "title": "New" } }
+    { "id": "page", "type": "page", "attrs": { "title": "New" } }
   ]
 }
 ```
@@ -125,14 +129,14 @@ the tool produces:
 ```json
 {
   "add": [
-    { "new": true, "path": "/attrs/introduced" },
+    { "new": "true", "path": "/attrs/introduced" },
     { "new": { "id": "dialog", "type": "Dialog" }, "path": "/children/dialog" }
   ],
   "change": [
     { "new": "New", "path": "/attrs/title", "reference": "Reference" },
     { "new": "New", "path": "/children/page/attrs/title", "reference": "Old" }
   ],
-  "remove": [{ "path": "/attrs/obsolete", "reference": true }]
+  "remove": [{ "path": "/attrs/obsolete", "reference": "true" }]
 }
 ```
 

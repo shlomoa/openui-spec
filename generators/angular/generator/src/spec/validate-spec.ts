@@ -1,8 +1,4 @@
-import {
-  createCatalogIndex,
-  isConcreteExampleRootType,
-  OpenUiCatalogIndex,
-} from "./catalog-index";
+import { createCatalogIndex, OpenUiCatalogIndex } from "./catalog-index";
 import { extractOpenUiScopeNodes } from "./openui-sections";
 import type { OpenUiDocument, OpenUiElement } from "./openui-spec.types";
 import { type Diagnostic, SpecValidationError } from "./diagnostics";
@@ -15,23 +11,9 @@ export interface ValidateOpenUiSpecOptions {
 const ROOT_KEYS = new Set(["version", "id", "type", "attrs", "children"]);
 const ELEMENT_KEYS = new Set(["id", "type", "attrs", "children"]);
 const ID_PATTERN = /^[a-z][A-Za-z0-9]*$/;
+const VERSION_PATTERN = /^[0-9]+\.[0-9]+\.[0-9]+$/;
 const KEBAB_TYPE_PATTERN = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
 const PASCAL_TYPE_PATTERN = /^[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?$/;
-const HTML_TAGS = new Set([
-  "html",
-  "body",
-  "main",
-  "section",
-  "article",
-  "header",
-  "footer",
-  "nav",
-  "div",
-  "span",
-  "input",
-  "button",
-  "table",
-]);
 
 export function validateOpenUiSpec(document: OpenUiDocument, options: ValidateOpenUiSpecOptions = {}): void {
   const diagnostics: Diagnostic[] = [];
@@ -42,7 +24,9 @@ export function validateOpenUiSpec(document: OpenUiDocument, options: ValidateOp
   }
 
   if (diagnostics.length === 0 && options.catalog) {
-    validateCatalogReferences(document, toCatalogIndex(options.catalog), diagnostics);
+    const catalog = toCatalogIndex(options.catalog);
+    validateCatalogVersion(document, catalog, diagnostics);
+    validateCatalogReferences(document, catalog, diagnostics);
   }
 
   if (diagnostics.length > 0) {
@@ -50,8 +34,11 @@ export function validateOpenUiSpec(document: OpenUiDocument, options: ValidateOp
   }
 }
 
-export function validateOpenUiCatalog(document: OpenUiDocument): void {
-  validateOpenUiSpec(document, { mode: "catalog" });
+export function validateOpenUiCatalog(
+  document: OpenUiDocument,
+  catalog?: OpenUiCatalogIndex | OpenUiDocument,
+): void {
+  validateOpenUiSpec(document, { mode: "catalog", catalog });
 }
 
 export function validateOpenUiGeneratorInput(
@@ -59,7 +46,7 @@ export function validateOpenUiGeneratorInput(
   catalog: OpenUiCatalogIndex | OpenUiDocument,
 ): void {
   if (extractOpenUiScopeNodes(document).length > 0) {
-    validateOpenUiCatalog(document);
+    validateOpenUiCatalog(document, catalog);
     return;
   }
 
@@ -88,8 +75,8 @@ function validateElement(
     }
   }
 
-  if (isRoot && value.version !== "0.1.0") {
-    diagnostics.push({ path: `${path}.version`, message: 'Root version must be exactly "0.1.0".' });
+  if (isRoot && (typeof value.version !== "string" || !VERSION_PATTERN.test(value.version))) {
+    diagnostics.push({ path: `${path}.version`, message: 'Root version must use "major.minor.patch" format.' });
   }
   if (isRoot && value.id !== "root") {
     diagnostics.push({ path: `${path}.id`, message: 'Root id must be exactly "root".' });
@@ -169,27 +156,35 @@ function validateCatalogReferences(
   catalog: OpenUiCatalogIndex,
   diagnostics: Diagnostic[],
 ): void {
-  validateCatalogReference(node, "root", true, catalog, diagnostics);
+  validateCatalogReference(node, "root", catalog, diagnostics);
+}
+
+function validateCatalogVersion(
+  document: OpenUiDocument,
+  catalog: OpenUiCatalogIndex,
+  diagnostics: Diagnostic[],
+): void {
+  if (document.version !== catalog.version) {
+    diagnostics.push({
+      path: "root.version",
+      message: `Root version '${document.version}' does not match catalog version '${catalog.version}'.`,
+    });
+  }
 }
 
 function validateCatalogReference(
   node: OpenUiElement,
   path: string,
-  isRoot: boolean,
   catalog: OpenUiCatalogIndex,
   diagnostics: Diagnostic[],
 ): void {
-  if (!isKnownConcreteInputType(node.type, isRoot, catalog)) {
-    diagnostics.push({ path: `${path}.type`, message: `Unknown OpenUI type '${node.type}'.` });
+  if (!catalog.hasType(node.type)) {
+    diagnostics.push({ path: `${path}.type`, message: `Unknown OpenUI object type '${node.type}'.` });
   }
 
   (node.children ?? []).forEach((child, index) =>
-    validateCatalogReference(child, `${path}.children[${index}]`, false, catalog, diagnostics),
+    validateCatalogReference(child, `${path}.children[${index}]`, catalog, diagnostics),
   );
-}
-
-function isKnownConcreteInputType(type: string, isRoot: boolean, catalog: OpenUiCatalogIndex): boolean {
-  return HTML_TAGS.has(type) || catalog.hasType(type) || (isRoot && isConcreteExampleRootType(type));
 }
 
 function toCatalogIndex(catalog: OpenUiCatalogIndex | OpenUiDocument): OpenUiCatalogIndex {
@@ -197,7 +192,7 @@ function toCatalogIndex(catalog: OpenUiCatalogIndex | OpenUiDocument): OpenUiCat
 }
 
 function isValidType(type: string): boolean {
-  return HTML_TAGS.has(type) || KEBAB_TYPE_PATTERN.test(type) || PASCAL_TYPE_PATTERN.test(type);
+  return KEBAB_TYPE_PATTERN.test(type) || PASCAL_TYPE_PATTERN.test(type);
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

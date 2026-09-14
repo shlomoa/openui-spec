@@ -70,11 +70,11 @@ function componentFile(selector: string, extension: "ts" | "html" | "scss"): str
   return `src/components/${selector}/${selector}.component.${extension}`;
 }
 
-/** A bare component-template node carrying only the attrs the classifier reads. */
-function componentTemplateNode(id: string, selector: string): OpenUiElement {
+/** A bare widget node carrying only the manifestation attrs the classifier reads. */
+function manifestedWidgetNode(id: string, selector: string): OpenUiElement {
   return {
     id,
-    type: "ComponentTemplate",
+    type: "widget",
     attrs: {
       selector,
       sourceFile: componentFile(selector, "html"),
@@ -82,9 +82,9 @@ function componentTemplateNode(id: string, selector: string): OpenUiElement {
   };
 }
 
-/** Wrap component-template nodes in a minimal valid OpenUI input document. */
+/** Wrap manifested widget nodes in a minimal valid OpenUI input document. */
 function inputDocument(children: OpenUiElement[]): OpenUiDocument {
-  return { id: "root", version: "0.1.0", type: "ApplicationExample", children };
+  return { id: "root", version: "0.2.0", type: "Application", children };
 }
 
 function deletionFor(plan: Awaited<ReturnType<typeof reconcileGeneratedFiles>>, relativePath: string) {
@@ -214,7 +214,7 @@ test("removal — dropping one child from the JSON deletes it and rewires the pa
   // JSON. The emitted upload files are the parent rewired to drop every reference
   // to the removed child (its import statement, its imports-array entry, and its
   // template tag), modelling "delete the object and the reference from parent".
-  const index = buildSpecManifestationIndex(inputDocument([componentTemplateNode("appFileUploadTemplate", "app-file-upload")]));
+  const index = buildSpecManifestationIndex(inputDocument([manifestedWidgetNode("appFileUploadTemplate", "app-file-upload")]));
   const [parentTs, parentHtml, parentScss] = await Promise.all(
     (["ts", "html", "scss"] as const).map((extension) =>
       readFile(path.join(OUTPUT_WORKSPACE, componentFile("app-file-upload", extension)), "utf8"),
@@ -261,8 +261,8 @@ test("modification — a simple child rename is reconciled as delete-old plus ad
   // the old folder is removed, matching the spec's "rename → delete and re-add".
   const index = buildSpecManifestationIndex(
     inputDocument([
-      componentTemplateNode("appFilePickerTemplate", "app-file-picker"),
-      componentTemplateNode("appFileUploadTemplate", "app-file-upload"),
+      manifestedWidgetNode("appFilePickerTemplate", "app-file-picker"),
+      manifestedWidgetNode("appFileUploadTemplate", "app-file-upload"),
     ]),
   );
 

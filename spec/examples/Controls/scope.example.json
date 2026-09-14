@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "Controls",
   "attrs": {
     "title": "\"Controls example\""
@@ -8,18 +8,18 @@
   "children": [
     {
       "id": "nativeControls",
-      "type": "NativeControls",
+      "type": "Native",
       "children": [
         {
           "id": "colorScheme",
-          "type": "native-color-scheme",
+          "type": "Native",
           "attrs": {
             "[supported]": "\"light dark\""
           }
         },
         {
           "id": "scrollRegion",
-          "type": "native-scrollbar",
+          "type": "Native",
           "attrs": {
             "[overflow]": "\"auto\""
           }
@@ -51,14 +51,14 @@
     },
     {
       "id": "accentPicker",
-      "type": "PickerControls",
+      "type": "PickerControl",
       "attrs": {
         "[value]": "accentColor"
       }
     },
     {
       "id": "volumeRange",
-      "type": "RangeControls",
+      "type": "RangeControl",
       "attrs": {
         "[min]": "0",
         "[max]": "100",
@@ -81,7 +81,7 @@
     },
     {
       "id": "syncStatus",
-      "type": "StatusIndicators",
+      "type": "StatusIndicator",
       "attrs": {
         "[state]": "\"loading\""
       }
@@ -103,14 +103,14 @@
           "children": [
             {
               "id": "summaryHeader",
-              "type": "th",
+              "type": "DisplayPrimitives",
               "attrs": {
                 "[scope]": "\"row\""
               }
             },
             {
               "id": "summaryValue",
-              "type": "td"
+              "type": "DisplayPrimitives"
             }
           ]
         }

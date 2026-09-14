@@ -8,7 +8,7 @@ import { OpenUiJson, OpenUiJsonError, OpenUiValidationError } from "../src/index
 
 function documentWith(childType = "Table"): Record<string, any> {
   return {
-    version: "0.1.0",
+    version: "0.2.0",
     id: "root",
     type: "html",
     children: [{ id: "target", type: childType }],
@@ -33,14 +33,14 @@ test("parses, serializes, saves, and validates with bundled assets", () => {
   }
 });
 
-test("rejects invalid documents, unsupported types, and duplicate IDs", () => {
+test("rejects invalid documents, unknown types, and duplicate IDs", () => {
   assert.throws(
     () => new OpenUiJson({ id: "root", type: "html" }).validate(),
     OpenUiValidationError,
   );
   assert.throws(
     () => new OpenUiJson(documentWith("Unsupported")).validate(),
-    /unsupported object type/,
+    /unknown OpenUI object type/,
   );
   assert.throws(
     () =>
@@ -55,11 +55,42 @@ test("rejects invalid documents, unsupported types, and duplicate IDs", () => {
   );
 });
 
+test("rejects syntax-valid types absent from the catalog", () => {
+  for (const unknownType of ["custom-widget", "UnknownWidget"]) {
+    assert.throws(
+      () => new OpenUiJson(documentWith(unknownType)).validate(),
+      /unknown OpenUI object type/,
+    );
+  }
+});
+
+test("accepts flexible instances of the same known type", () => {
+  const document = new OpenUiJson({
+    ...documentWith(),
+    children: [
+      {
+        id: "firstTable",
+        type: "Table",
+        attrs: { source: "orders", optional: null },
+        children: [{ id: "firstRow", type: "tr" }],
+      },
+      {
+        id: "secondTable",
+        type: "Table",
+        attrs: { source: "customers" },
+        children: [{ id: "secondSection", type: "section" }],
+      },
+    ],
+  });
+
+  document.validate();
+});
+
 test("adds only valid unique children", () => {
   const document = new OpenUiJson(documentWith());
 
   assert.throws(() => document.add("missing", { id: "newChild", type: "Table" }), /parent object not found/);
-  assert.throws(() => document.add("root", { id: "newChild", type: "Unsupported" }), /unsupported object type/);
+  assert.throws(() => document.add("root", { id: "newChild", type: "Unsupported" }), /unknown OpenUI object type/);
   assert.throws(() => document.add("root", { id: "target", type: "Table" }), /object id already exists/);
 
   document.add("root", { id: "newChild", type: "Table" });

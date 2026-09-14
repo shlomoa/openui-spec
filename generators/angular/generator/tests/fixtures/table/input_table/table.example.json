@@ -1,7 +1,7 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "WidgetExample",
+  "version": "0.2.0",
+  "type": "Table",
   "attrs": {
     "title": "\"Table example\""
   },
@@ -19,7 +19,7 @@
       "children": [
         {
           "id": "colId",
-          "type": "Column",
+          "type": "Table",
           "attrs": {
             "[field]": "\"id\"",
             "[header]": "\"Order\"",
@@ -28,7 +28,7 @@
         },
         {
           "id": "colCustomer",
-          "type": "Column",
+          "type": "Table",
           "attrs": {
             "[field]": "\"customer\"",
             "[header]": "\"Customer\"",
@@ -37,7 +37,7 @@
         },
         {
           "id": "colTotal",
-          "type": "Column",
+          "type": "Table",
           "attrs": {
             "[field]": "\"total\"",
             "[header]": "\"Total\"",
@@ -46,7 +46,7 @@
         },
         {
           "id": "ordersPaging",
-          "type": "Pagination",
+          "type": "NavigationWidgets",
           "attrs": {
             "[pageSize]": "20",
             "[total]": "orderCount",
@@ -55,7 +55,7 @@
         },
         {
           "id": "ordersEmpty",
-          "type": "EmptyState",
+          "type": "FeedbackWidgets",
           "attrs": {
             "[message]": "\"No orders found.\""
           }

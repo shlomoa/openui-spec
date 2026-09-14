@@ -2,7 +2,8 @@
 
 This document is the single source of truth for releasing the `openui-spec`
 Python package and the `@shlomoa/openui-spec` npm package. Follow every stage in
-order. Do not publish from a dirty or unverified working tree.
+order. Do not publish from a dirty or unverified working tree. Release notes are
+maintained in [`CHANGELOG.md`](CHANGELOG.md) and reused for the GitHub release.
 
 ---
 
@@ -12,9 +13,9 @@ order. Do not publish from a dirty or unverified working tree.
 - You have write access to `shlomoa/openui-spec` on GitHub.
 - Your local `main` is up to date with `origin/main`.
 - PyPI Trusted Publishing is configured for this repository's
-  [`.github/workflows/publish.yml`](.github/workflows/publish.yml) workflow and
-  its `pypi` GitHub environment. The workflow uses OIDC; do not add a PyPI API
-  token to the repository or workflow.
+  [`.github/workflows/publish-pypi.yml`](.github/workflows/publish-pypi.yml)
+  workflow and its `pypi` GitHub environment. The workflow uses OIDC; do not add
+  a PyPI API token to the repository or workflow.
 - An `NPM_TOKEN` secret is configured in the repository's GitHub Actions secrets
   with publishing permissions for the `@shlomoa` scope on the npm registry
   (<https://registry.npmjs.org>).
@@ -71,12 +72,16 @@ Semantic Versioning-compatible final releases where applicable.
 | Patch release     | `0.2.1`    |
 
 Update `[project].version` in [`pyproject.toml`](pyproject.toml) and
-`version` in [`package.json`](package.json), ensuring both packages remain
-aligned. Then commit that release change with its completed release notes and
-other intended changes:
+`version` in [`package.json`](package.json), ensuring both published packages
+remain aligned. Align the Angular generator package metadata when it is part of
+the release, update the corresponding lockfiles, and complete the release entry
+in [`CHANGELOG.md`](CHANGELOG.md). The current publication workflows do not
+publish the Angular generator as a separate package. Then commit those files
+with the other intended release changes:
 
 ```bash
-git add pyproject.toml package.json
+git add CHANGELOG.md pyproject.toml package.json package-lock.json
+git add generators/angular/generator/package.json generators/angular/generator/package-lock.json
 git commit -m "chore: release X.Y.Z"
 ```
 
@@ -217,24 +222,36 @@ GitHub release.
 1. Go to <https://github.com/shlomoa/openui-spec/releases/new>.
 2. Select the `vX.Y.Z` tag.
 3. Set the release title to `vX.Y.Z`.
-4. Summarize notable changes, breaking changes, schema/catalog compatibility,
-   and upgrade guidance.
+4. Use the matching [`CHANGELOG.md`](CHANGELOG.md) entry for the notable
+   changes, breaking changes, schema/catalog compatibility, and upgrade
+   guidance.
 5. Publish the GitHub release.
 
-Publishing triggers `publish.yml`, which:
+Publishing the GitHub release does not publish either package automatically.
+Dispatch both publication workflows against the release tag:
 
-- Rebuilds the sdist and wheel and publishes them to PyPI through Trusted Publishing.
-- Installs dependencies, builds, tests, and publishes `@shlomoa/openui-spec` to npm with provenance.
+```bash
+gh workflow run publish-pypi.yml --ref vX.Y.Z
+gh workflow run publish-npm.yml --ref vX.Y.Z -f npm-tag=latest
+```
 
-Do not use `workflow_dispatch` for a normal release: it publishes the currently
-checked out revision without the GitHub-release review point.
+The workflows perform these independent releases:
+
+- [`publish-pypi.yml`](.github/workflows/publish-pypi.yml) rebuilds the sdist and
+  wheel and publishes them to PyPI through Trusted Publishing.
+- [`publish-npm.yml`](.github/workflows/publish-npm.yml) installs dependencies,
+  builds, tests, and publishes `@shlomoa/openui-spec` to npm under the selected
+  distribution tag.
+
+Always select the immutable release tag as the workflow ref; do not publish a
+moving branch revision.
 
 ---
 
 ## Post-release verification
 
-- Monitor the **Publish** workflow in GitHub Actions until both `publish-pypi`
-  and `publish-npm` succeed.
+- Monitor the **Publish PyPI package** and **Publish npm package** workflows in
+  GitHub Actions until both succeed.
 - Verify the PyPI release appears at <https://pypi.org/project/openui-spec/>.
 - In a fresh virtual environment, install the released version and run:
 

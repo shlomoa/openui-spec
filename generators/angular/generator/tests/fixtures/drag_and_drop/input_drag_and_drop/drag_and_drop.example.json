@@ -1,14 +1,14 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "BehaviorExample",
+  "version": "0.2.0",
+  "type": "DragAndDrop",
   "attrs": {
     "title": "\"Drag and drop example\""
   },
   "children": [
     {
       "id": "taskBoard",
-      "type": "DropContainer",
+      "type": "container",
       "attrs": {
         "[acceptedTypes]": "\"task\"",
         "(drop)": "onDrop($event)",
@@ -17,7 +17,7 @@
       "children": [
         {
           "id": "todoColumn",
-          "type": "DropTarget",
+          "type": "container",
           "attrs": {
             "[label]": "\"To do\"",
             "[connectedTo]": "\"doneColumn\""
@@ -25,7 +25,7 @@
           "children": [
             {
               "id": "taskCard",
-              "type": "Draggable",
+              "type": "DragAndDrop",
               "attrs": {
                 "[itemType]": "\"task\"",
                 "[disabled]": "false",
@@ -38,7 +38,7 @@
         },
         {
           "id": "doneColumn",
-          "type": "DropTarget",
+          "type": "container",
           "attrs": {
             "[label]": "\"Done\""
           }

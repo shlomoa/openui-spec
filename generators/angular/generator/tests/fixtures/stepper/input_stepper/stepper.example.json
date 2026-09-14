@@ -1,7 +1,7 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "WidgetExample",
+  "version": "0.2.0",
+  "type": "Stepper",
   "attrs": {
     "title": "\"Stepper example\""
   },
@@ -18,7 +18,7 @@
       "children": [
         {
           "id": "cartStep",
-          "type": "Step",
+          "type": "step",
           "attrs": {
             "[label]": "\"Cart\"",
             "[order]": "1",
@@ -27,7 +27,7 @@
         },
         {
           "id": "shippingStep",
-          "type": "Step",
+          "type": "step",
           "attrs": {
             "[label]": "\"Shipping\"",
             "[order]": "2",
@@ -36,7 +36,7 @@
         },
         {
           "id": "paymentStep",
-          "type": "Step",
+          "type": "step",
           "attrs": {
             "[label]": "\"Payment\"",
             "[order]": "3"
@@ -44,7 +44,7 @@
         },
         {
           "id": "stepperSubmit",
-          "type": "button",
+          "type": "ActionControls",
           "attrs": {
             "text": "\"Place order\"",
             "[disabled]": "!allStepsValid",

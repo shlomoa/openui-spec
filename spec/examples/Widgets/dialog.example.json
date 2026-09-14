@@ -1,7 +1,7 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "WidgetExample",
+  "version": "0.2.0",
+  "type": "Dialog",
   "attrs": {
     "title": "\"Dialog example\""
   },
@@ -19,25 +19,25 @@
       "children": [
         {
           "id": "dialogTitle",
-          "type": "DialogTitle",
+          "type": "header",
           "attrs": {
             "text": "\"Delete item?\""
           }
         },
         {
           "id": "dialogContent",
-          "type": "DialogContent",
+          "type": "section",
           "attrs": {
             "text": "\"This action cannot be undone.\""
           }
         },
         {
           "id": "dialogActions",
-          "type": "DialogActions",
+          "type": "footer",
           "children": [
             {
               "id": "cancelDialog",
-              "type": "button",
+              "type": "ActionControls",
               "attrs": {
                 "text": "\"Cancel\"",
                 "(click)": "close('cancel')"
@@ -45,7 +45,7 @@
             },
             {
               "id": "confirmDelete",
-              "type": "button",
+              "type": "ActionControls",
               "attrs": {
                 "text": "\"Delete\"",
                 "(click)": "close('confirm')"

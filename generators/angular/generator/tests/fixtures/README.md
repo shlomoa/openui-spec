@@ -15,6 +15,12 @@ disambiguated by its category folder (for example `Application/scope.example.jso
 becomes `application_scope/`); the top-level `scope.example.json` keeps the plain
 `scope` name.
 
+Fixture JSON copied from `spec/examples/` must stay synchronized with its linked
+authoritative example and use only exact
+[known object type](../../../../../spec/README.md#known-object-type) literals.
+Fixture-specific identity and specialization belong in `id`, `attrs`, and
+known-type child composition, not aliases, selectors, or pseudo-types.
+
 The scenario fixtures `example_from_scratch/` and `example_incremental/` are not
 part of this generated inventory and are maintained separately.
 

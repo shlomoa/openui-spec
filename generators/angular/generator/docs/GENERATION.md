@@ -180,10 +180,15 @@ Catalog-specific validation should verify catalog data derived from prose:
 
 Concrete `input.json` validation should verify app documents against the catalog:
 
-- node `type` values resolve to catalog vocabulary,
-- attributes are legal for the referenced object contract,
-- children satisfy the referenced child model, and
+- every node `type` is an exact literal present in catalog vocabulary,
+- ids are globally unique and attributes and children satisfy the common OpenUI
+  grammar without per-type allowlists, and
 - concrete app nodes are not required to carry `attrs.scopeDocument`.
+
+The normative membership and instance-flexibility contract is the
+[`Known object type`](../../../../spec/README.md#known-object-type) glossary
+entry. Angular selectors and generated identifiers are target implementation
+details, not OpenUI document types.
 
 ## Current package layout
 
@@ -228,6 +233,7 @@ generators/angular/
 │  ├─ tests/
 │  │  ├─ fixtures/
 │  │  │  └─ minimal-openui.json
+│  │  ├─ catalog-validation.test.ts
 │  │  ├─ classifier.test.ts
 │  │  ├─ generator.test.ts
 │  │  ├─ incremental.test.ts
@@ -248,12 +254,12 @@ specification layer.
 | `main.ts`                           | Parses `generate` and `validate` commands, loads and validates native OpenUI JSON, emits the project, and reconciles it incrementally into the workspace.                                                   |
 | `spec/load-spec.ts`                 | Reads JSON and parses it into the native OpenUI document type.                                                                                                                                              |
 | `spec/openui-spec.types.ts`         | Defines the native OpenUI `id` / `type` / `attrs` / `children` input contract.                                                                                                                              |
-| `spec/catalog-index.ts`             | Builds catalog lookup structures used to validate concrete input nodes against the generated OpenUI catalog.                                                                                                |
+| `spec/catalog-index.ts`             | Indexes only literal `type` values from the generated catalog for exact concrete-input membership checks.                                                                                                   |
 | `spec/openui-sections.ts`           | Provides catalog helpers for scoped OpenUI nodes that carry `attrs.scopeDocument` traceability in the generated catalog tree.                                                                               |
 | `spec/validate-spec.ts`             | Fails early for malformed OpenUI node data and compliance-rule synchronization gaps.                                                                                                                        |
 | `spec/diagnostics.ts`               | Defines validation diagnostic and error reporting types.                                                                                                                                                    |
 | `data-model/normalize-spec.ts`      | Converts native scope IDs into routes, summaries, and feature flags.                                                                                                                                        |
-| `data-model/build-data-model.ts`    | Builds the implementation-independent `DataModelApplication` from catalog scope trees or concrete app documents.                                                                                            |
+| `data-model/build-data-model.ts`    | Builds the implementation-independent `DataModelApplication` from catalog scope trees or concrete app documents; concrete dialog regions use stable ids with known semantic types.                          |
 | `data-model/data-model.ts`          | Defines implementation-independent application, page, feature, theme-token, and dialog-component model types.                                                                                               |
 | `generation/angular-model.ts`       | Defines Angular-specific project, page, application-structure, internationalization, and extension model types.                                                                                             |
 | `generation/map-to-angular.ts`      | Maps `DataModelApplication` pages and features into an `AngularProjectModel`.                                                                                                                               |
@@ -275,6 +281,7 @@ specification layer.
 | `tests/generator.test.ts`           | Verifies CLI generation, Angular Material dependencies, routes, feature-specific page output, and compliance validation diagnostics.                                                                        |
 | `tests/logger.test.ts`              | Verifies logger formatting and log-level behavior.                                                                                                                                                          |
 | `tests/main-logging.test.ts`        | Verifies CLI logging output and verbosity behavior.                                                                                                                                                         |
+| `tests/catalog-validation.test.ts`  | Verifies exact literal catalog membership, rejection of aliases/selectors/pseudo-types, root coverage, and flexible known-type instances.                                                                   |
 
 ## Core design rule
 
@@ -440,13 +447,14 @@ The reconciliation step is driven by the classifier in
 `generation/classifier.ts`. Given the generator's emitted model and source input
 identity, it indexes each declared manifestation by its workspace footprint:
 
-- a `ComponentTemplate` node with `attrs.selector` owns
+- a known-type `widget` instance with `attrs.selector` owns
   `src/components/<selector>/<selector>.component.{ts,html,scss}`,
 - catalog-driven routed page coverage maps scoped catalog nodes with
   `attrs.scopeDocument` to the routed page files emitted from those catalog
   nodes,
   `src/app/pages/<route>/<route>.page.{ts,html,scss}`,
-- explicit `PageScope` nodes remain supported for page-manifestation fixtures,
+- explicit known-type `page` instances remain supported for
+  page-manifestation fixtures,
   and
 - known generator-owned project files such as `package.json`, `angular.json`,
   `tsconfig.json`, `src/main.ts`, `src/index.html`, `src/styles.scss`,
@@ -606,8 +614,9 @@ Current catalog/scope-tree regression coverage:
 
 | Test                                                                          | Verifies                                                                                                                                                             |
 | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| validates exact catalog type membership                                       | Only literal catalog `type` values are accepted; grammar-valid aliases, selectors, pseudo-types, and id-derived names are rejected for roots and descendants.        |
 | classifies every generated full-output page and application file              | The classifier maps generated routed page files to catalog scoped OpenUI nodes and project files to application-level ownership.                                     |
-| classifies every generated component folder and file in the fixture workspace | Component-template fixture folders and generated component files classify back to their owning selectors.                                                            |
+| classifies every generated component folder and file in the fixture workspace | Manifested `widget` fixture nodes and generated component files classify back to their owning selectors.                                                             |
 | builds the data model from catalog scope-tree OpenUI nodes                    | `buildDataModel` produces the expected `DataModelApplication` name, version, and ordered pages for catalog regression coverage.                                      |
 | generates an Angular Material standalone app from catalog scope-tree OpenUI   | The `generate` CLI emits the expected Angular project skeleton and Angular Material dependencies for catalog regression coverage.                                    |
 | generates scope-specific Angular Material details from the catalog tree       | Feature-specific page output (structure, layout, i18n, extension, etc.) is emitted per catalog scope.                                                                |

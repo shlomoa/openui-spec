@@ -1,7 +1,7 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "ControlsExample",
+  "version": "0.2.0",
+  "type": "ActionControls",
   "attrs": {
     "title": "\"Action controls example\""
   },

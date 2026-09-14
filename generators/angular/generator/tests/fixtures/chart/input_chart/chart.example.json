@@ -1,7 +1,7 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "WidgetExample",
+  "version": "0.2.0",
+  "type": "Chart",
   "attrs": {
     "title": "\"Chart example\""
   },
@@ -23,7 +23,7 @@
       "children": [
         {
           "id": "chartEmpty",
-          "type": "EmptyState",
+          "type": "FeedbackWidgets",
           "attrs": {
             "[message]": "\"No data to chart.\""
           }

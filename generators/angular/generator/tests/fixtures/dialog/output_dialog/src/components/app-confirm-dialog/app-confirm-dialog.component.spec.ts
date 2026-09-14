@@ -10,10 +10,10 @@ import { AppConfirmDialogComponent } from './app-confirm-dialog.component';
  * `app-confirm-dialog` component manifests the confirm-deletion dialog
  * described by `dialog.example.json`:
  *
- * - `DialogTitle` text "Delete item?"
- * - `DialogContent` text "This action cannot be undone."
- * - `DialogActions` with a Cancel button wired to `close('cancel')` and a
- *   Delete button wired to `close('confirm')`.
+ * - `dialogTitle` (`header`) text "Delete item?"
+ * - `dialogContent` (`section`) text "This action cannot be undone."
+ * - `dialogActions` (`footer`) with `ActionControls` instances for Cancel and
+ *   Delete, wired to `close('cancel')` and `close('confirm')`.
  */
 describe('AppConfirmDialogComponent (dialog output fixture)', () => {
   let dialogRef: { close: ReturnType<typeof vi.fn> };

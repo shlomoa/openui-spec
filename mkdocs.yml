@@ -1,6 +1,7 @@
 site_name: OpenUI Specification
 site_description: Documentation for the OpenUI specification.
 repo_url: https://github.com/shlomoa/openui-spec
+edit_uri: edit/main/spec/
 theme:
   name: readthedocs
 docs_dir: spec

@@ -1,14 +1,14 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "ContainerExample",
+  "version": "0.2.0",
+  "type": "Tabs",
   "attrs": {
     "title": "\"Tabs example\""
   },
   "children": [
     {
       "id": "detailTabs",
-      "type": "TabGroup",
+      "type": "Tabs",
       "attrs": {
         "[selectedIndex]": "0",
         "[keyboardNavigation]": "true",
@@ -17,7 +17,7 @@
       "children": [
         {
           "id": "overviewTab",
-          "type": "Tab",
+          "type": "tab",
           "attrs": {
             "[label]": "\"Overview\"",
             "[order]": "1"
@@ -25,7 +25,7 @@
           "children": [
             {
               "id": "overviewPanel",
-              "type": "TabPanel",
+              "type": "section",
               "attrs": {
                 "text": "\"Overview content\""
               }
@@ -34,7 +34,7 @@
         },
         {
           "id": "historyTab",
-          "type": "Tab",
+          "type": "tab",
           "attrs": {
             "[label]": "\"History\"",
             "[order]": "2"
@@ -42,7 +42,7 @@
           "children": [
             {
               "id": "historyPanel",
-              "type": "TabPanel",
+              "type": "section",
               "attrs": {
                 "text": "\"History content\""
               }
@@ -51,7 +51,7 @@
         },
         {
           "id": "auditTab",
-          "type": "Tab",
+          "type": "tab",
           "attrs": {
             "[label]": "\"Audit\"",
             "[disabled]": "true",

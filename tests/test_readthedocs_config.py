@@ -21,6 +21,7 @@ class ReadTheDocsConfigTest(unittest.TestCase):
         config = MKDOCS_CONFIG.read_text(encoding="utf-8")
 
         self.assertIn("docs_dir: spec", config)
+        self.assertIn("edit_uri: edit/main/spec/", config)
         referenced_docs = [
             match.group(1)
             for line in config.splitlines()

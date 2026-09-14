@@ -9,13 +9,15 @@ This repository contains a technology-independent specification for a Web UI fra
 Contributor and developer entry points for this repository:
 
 - [Contributing guide](CONTRIBUTING.md) — local setup and validation basics.
+- [Changelog](CHANGELOG.md) — release notes, breaking changes, and upgrade guidance.
 
 ## OpenUI JSON API
 
 The [`@shlomoa/openui-spec`](package.json) package provides `OpenUiJson` for
 loading, validating, and editing an OpenUI JSON document. It bundles
 `spec/openui.schema.json` and `spec/openui.json`; validation checks both the
-schema and the object types supported by the canonical catalog.
+schema and exact [known object type](spec/README.md#known-object-type)
+membership in the canonical catalog.
 
 ```bash
 npm install @shlomoa/openui-spec

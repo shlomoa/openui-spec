@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "Internationalization",
   "attrs": {
     "title": "\"Internationalization abstraction example\""
@@ -8,7 +8,7 @@
   "children": [
     {
       "id": "localeRules",
-      "type": "LocalizationRule",
+      "type": "Internationalization",
       "attrs": {
         "[locale]": "\"en-US\"",
         "[direction]": "\"ltr\"",

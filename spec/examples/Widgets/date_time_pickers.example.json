@@ -1,14 +1,14 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "WidgetExample",
+  "version": "0.2.0",
+  "type": "DateTimePickers",
   "attrs": {
     "title": "\"Date/time picker example\""
   },
   "children": [
     {
       "id": "appointmentPicker",
-      "type": "mat-datetime-picker",
+      "type": "DateTimePicker",
       "attrs": {
         "[min]": "\"2026-01-01\"",
         "[max]": "\"2026-12-31\"",

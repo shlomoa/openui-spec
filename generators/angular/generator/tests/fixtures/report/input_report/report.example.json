@@ -1,7 +1,7 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "ReportView",
+  "version": "0.2.0",
+  "type": "Report",
   "attrs": {
     "title": "\"Sales report\"",
     "[readOnly]": "true",
@@ -11,7 +11,7 @@
   "children": [
     {
       "id": "reportFilters",
-      "type": "FilterBar",
+      "type": "ToolBar",
       "attrs": {
         "[fields]": "\"region,period\"",
         "(filterChange)": "onFilter($event)"
@@ -28,7 +28,7 @@
       "children": [
         {
           "id": "colRegion",
-          "type": "Column",
+          "type": "Table",
           "attrs": {
             "[field]": "\"region\"",
             "[header]": "\"Region\"",
@@ -37,7 +37,7 @@
         },
         {
           "id": "colRevenue",
-          "type": "Column",
+          "type": "Table",
           "attrs": {
             "[field]": "\"revenue\"",
             "[header]": "\"Revenue\"",
@@ -48,7 +48,7 @@
     },
     {
       "id": "reportPaging",
-      "type": "Pagination",
+      "type": "NavigationWidgets",
       "attrs": {
         "[pageSize]": "25",
         "[total]": "rowCount",
@@ -57,7 +57,7 @@
     },
     {
       "id": "reportEmpty",
-      "type": "EmptyState",
+      "type": "FeedbackWidgets",
       "attrs": {
         "[message]": "\"No data for the selected filters.\""
       }

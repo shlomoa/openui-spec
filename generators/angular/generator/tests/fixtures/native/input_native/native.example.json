@@ -1,14 +1,14 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "NativeControls",
+  "version": "0.2.0",
+  "type": "Native",
   "attrs": {
     "title": "\"Native controls example\""
   },
   "children": [
     {
       "id": "colorScheme",
-      "type": "native-color-scheme",
+      "type": "Native",
       "attrs": {
         "[supported]": "\"light dark\"",
         "[default]": "\"light\""
@@ -16,7 +16,7 @@
     },
     {
       "id": "typography",
-      "type": "native-font",
+      "type": "Native",
       "attrs": {
         "[fontFamily]": "\"system-ui, sans-serif\"",
         "[fontSize]": "\"16px\""
@@ -24,7 +24,7 @@
     },
     {
       "id": "scrollRegion",
-      "type": "native-scrollbar",
+      "type": "Native",
       "attrs": {
         "[overflow]": "\"auto\"",
         "[scrollBehavior]": "\"smooth\""
@@ -32,7 +32,7 @@
     },
     {
       "id": "focusRing",
-      "type": "native-focus",
+      "type": "Native",
       "attrs": {
         "[focusVisible]": "true",
         "[tabIndex]": "0"

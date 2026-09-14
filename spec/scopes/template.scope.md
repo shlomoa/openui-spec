@@ -27,9 +27,11 @@ Where:
 - `id` — the scope id (camelCase). The scope `type` (PascalCase), the instance id
   (`<id>Instance`), `title` (this file's H1), `purpose` (the Purpose body), and
   `scopeDocument` (this file's path) are **derived**, not authored.
-- `type` — the concrete primitive the scope materializes (e.g. `dialog`, `input`,
-  `table`) or a PascalCase virtual type. This becomes the `<scopeId>Instance` node
-  `type`.
+- `type` — the exact semantic-category literal the scope materializes (e.g.
+  `dialog`, `input`, `table`, or a PascalCase category). This becomes the
+  `<scopeId>Instance` node `type` and therefore a literal member of the generated
+  catalog's [known-type set](../README.md#known-object-type); do not use a
+  framework selector, implementation identifier, or alias.
 - `status` — the scope's lifecycle status, serialized verbatim.
 
 ## Purpose
@@ -62,6 +64,10 @@ Where `<childId>` is camelCase, `<childType>` is a valid `type`, and
 per bullet under the instance, in listed order. Multiplicity is recorded for
 validation but is not serialized into the grammar. Omit the whole
 section if the object owns no children.
+
+Use the child `id` to distinguish the owned role or instance. Use an exact
+semantic-category literal for `childType`; the emitted literal becomes part of
+the generated catalog's known-type set.
 
 ## Accessibility
 

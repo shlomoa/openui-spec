@@ -59,7 +59,9 @@ class GitHubActionsPublishWorkflowTest(unittest.TestCase):
         self.assertIn("uses: pypa/gh-action-pypi-publish@release/v1", self.pypi_workflow)
 
     def test_publish_pypi_workflow_uses_pinned_actions(self):
-        actions = re.findall(r"uses:\s+(actions/[^\s@]+)@(v[0-9]+(?:\.[0-9]+)*)", self.pypi_workflow)
+        actions = re.findall(
+            r"uses:\s+(actions/[^\s@]+)@(v[0-9]+(?:\.[0-9]+)*)", self.pypi_workflow
+        )
         self.assertEqual(
             actions,
             [

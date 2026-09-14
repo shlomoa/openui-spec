@@ -1,7 +1,7 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "WidgetExample",
+  "version": "0.2.0",
+  "type": "List",
   "attrs": {
     "title": "\"List example\""
   },
@@ -21,7 +21,7 @@
       "children": [
         {
           "id": "taskItem",
-          "type": "ListItem",
+          "type": "li",
           "attrs": {
             "[label]": "item.title",
             "[description]": "item.due"
@@ -29,7 +29,7 @@
         },
         {
           "id": "listMore",
-          "type": "LoadMore",
+          "type": "ActionControls",
           "attrs": {
             "[hasMore]": "hasMore",
             "(loadMore)": "onLoadMore()"
@@ -37,7 +37,7 @@
         },
         {
           "id": "listEmpty",
-          "type": "EmptyState",
+          "type": "FeedbackWidgets",
           "attrs": {
             "[message]": "\"No tasks.\""
           }

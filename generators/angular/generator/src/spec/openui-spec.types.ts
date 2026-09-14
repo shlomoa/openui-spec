@@ -9,7 +9,7 @@ export interface OpenUiElement {
 
 export interface OpenUiDocument extends OpenUiElement {
   id: "root";
-  version: "0.1.0";
+  version: string;
 }
 
 export interface OpenUiScopeNode {

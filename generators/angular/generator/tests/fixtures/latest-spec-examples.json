@@ -95,25 +95,25 @@
       "name": "interaction scope",
       "sourceExample": "spec/examples/Interaction/scope.example.json",
       "fixture": "generators/angular/generator/tests/fixtures/interaction_scope/input_interaction_scope/scope.example.json",
-      "route": "interaction-rule"
+      "route": "interaction"
     },
     {
       "name": "internationalization scope",
       "sourceExample": "spec/examples/Internationalization/scope.example.json",
       "fixture": "generators/angular/generator/tests/fixtures/internationalization_scope/input_internationalization_scope/scope.example.json",
-      "route": "localization-rule"
+      "route": "internationalization"
     },
     {
       "name": "layout scope",
       "sourceExample": "spec/examples/Layout/scope.example.json",
       "fixture": "generators/angular/generator/tests/fixtures/layout_scope/input_layout_scope/scope.example.json",
-      "route": "layout-mechanism"
+      "route": "layout"
     },
     {
       "name": "presentation scope",
       "sourceExample": "spec/examples/Presentation/scope.example.json",
       "fixture": "generators/angular/generator/tests/fixtures/presentation_scope/input_presentation_scope/scope.example.json",
-      "route": "presentation-rule"
+      "route": "presentation"
     },
     {
       "name": "data grid",

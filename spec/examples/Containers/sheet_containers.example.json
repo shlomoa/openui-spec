@@ -1,7 +1,7 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "ContainerExample",
+  "version": "0.2.0",
+  "type": "SheetContainers",
   "attrs": {
     "title": "\"Sheet containers example\""
   },

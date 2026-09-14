@@ -105,15 +105,15 @@ export class OpenUiJson {
       throw new OpenUiValidationError(formatValidationErrors(validator.errors));
     }
 
-    const supportedTypes = new Set([...this.walk(catalog)].map((node) => node.type));
+    const knownTypes = this.catalogTypes(catalog);
     const seenIds = new Set<string>();
     for (const node of this.walk(this.document)) {
       if (seenIds.has(node.id)) {
         throw new OpenUiValidationError(`duplicate object id: ${node.id}`);
       }
       seenIds.add(node.id);
-      if (!supportedTypes.has(node.type)) {
-        throw new OpenUiValidationError(`unsupported object type: ${node.type}`);
+      if (!knownTypes.has(node.type)) {
+        throw new OpenUiValidationError(`unknown OpenUI object type: ${node.type}`);
       }
     }
   }
@@ -207,17 +207,21 @@ export class OpenUiJson {
   private validateChild(child: JsonObject): void {
     this.validateNode(child, false);
     const catalog = this.loadJson(this.options.catalog, this.options.catalogPath, "catalog");
-    const supportedTypes = new Set([...this.walk(catalog)].map((node) => node.type));
+    const knownTypes = this.catalogTypes(catalog);
     const seenIds = new Set<string>();
     for (const node of this.walk(child)) {
       if (seenIds.has(node.id)) {
         throw new OpenUiJsonError(`duplicate object id: ${node.id}`);
       }
       seenIds.add(node.id);
-      if (!supportedTypes.has(node.type)) {
-        throw new OpenUiJsonError(`unsupported object type: ${node.type}`);
+      if (!knownTypes.has(node.type)) {
+        throw new OpenUiJsonError(`unknown OpenUI object type: ${node.type}`);
       }
     }
+  }
+
+  private catalogTypes(catalog: JsonObject): Set<string> {
+    return new Set([...this.walk(catalog)].map((node) => node.type));
   }
 
   private validateNode(node: JsonObject, isRoot: boolean): void {

@@ -86,7 +86,8 @@ A concrete UI document describes one UI to build or validate. It uses the same
 JSON grammar as the catalog, but its role is different: it represents an app,
 page, view, or widget tree using vocabulary from the catalog. Concrete UI
 documents do not need catalog traceability fields such as `attrs.scopeDocument`
-on their app nodes; those fields belong to catalog scope nodes.
+on their app nodes; those fields belong to catalog scope nodes. Every node in a
+concrete UI document MUST use a [known object type](#known-object-type).
 
 #### Container
 
@@ -118,8 +119,9 @@ instance.
 
 An element is one node in an OpenUI document tree. Every element has an `id` and
 `type`, may have `attrs`, and may have `children`. Element is the generic word
-for any concrete occurrence in a document, whether its type is a native HTML tag,
-a framework tag, a PascalCase OpenUI object, or a custom implementation type.
+for any concrete occurrence in a document. Its `type` is a semantic category
+from the catalog; its `id`, `attrs`, and `children` describe that particular
+instance.
 
 #### Grammar
 
@@ -131,6 +133,31 @@ element fields, id syntax, type syntax, `attrs` value shape, and `children`
 nesting. The grammar is intentionally content-blind. It can decide whether a
 document is well-formed; it cannot decide whether a `type` names a real OpenUI
 object or whether that object is used in the right semantic context.
+
+#### Known object type
+
+**Aliases:** known type, catalog type, object type, supported type.
+
+A known object type is an exact, case-sensitive string that occurs as the
+literal `type` value of at least one node in the current canonical
+`spec/openui.json` catalog. Every node in a concrete UI document MUST use a
+known object type. Grammar-valid names that do not occur literally in the
+catalog are unknown and MUST be rejected.
+
+Membership is literal: framework selectors, implementation identifiers,
+example-only pseudo-types, compatibility aliases, and names derived from a
+catalog node's `id` are not object types unless that exact string independently
+occurs as a catalog `type`. A type names a reusable semantic category, not a
+particular instance or generated artifact. Instance identity belongs in `id`;
+instance configuration belongs in `attrs`; hierarchy belongs in `children`;
+generated framework selectors and class names are implementation details.
+
+Known type membership does not impose per-type attribute or child restrictions.
+Any number of elements may use the same known type while differing in globally
+unique `id`, string-or-null `attrs`, and compositions of known-type `children`,
+subject only to the common OpenUI grammar. Specialized or complex UI is modeled
+by selecting the closest known semantic categories and preserving distinctions
+through instance ids, attributes, and composition rather than inventing types.
 
 #### Node
 
@@ -161,7 +188,9 @@ An object is a named contract in the OpenUI vocabulary. Objects are authored in
 `spec/scopes/**` prose and generated into the catalog. An object defines an
 implementation-independent purpose, optional attributes, optional child model,
 accessibility expectations, and validation notes. In a concrete UI document, an
-element whose `type` resolves to that object is an instance of the object.
+element whose `type` exactly matches a known object type is an instance of that
+semantic category. Catalog descriptions do not restrict concrete instances to
+per-type attribute or child allowlists.
 
 #### Page
 
@@ -328,9 +357,9 @@ sit at **different levels of abstraction**.
 - `spec/openui.schema.json` is the **grammar**: a JSON Schema that validates the
   _shape_ of any OpenUI document.
 - `spec/openui.json` is a **document written in that grammar** whose _content_ is the
-  specification's object **catalog**.
+  specification's object **catalog** and exact known-type set.
 - `input.json` is a **concrete UI/app document** that conforms to the grammar and
-  uses object vocabulary from the catalog.
+  uses only exact known object type literals from the catalog.
 
 `spec/openui.json` is to `openui.schema.json` as an XML file is to its XSD, or a
 `package.json` to its JSON Schema.
@@ -344,13 +373,13 @@ the shape every OpenUI document must have, and nothing about content:
   `"root"`;
 - a recursive `element`: each node requires `id` + `type`, optionally `attrs` +
   `children`;
-- `id` rules (camelCase `^[a-z][A-Za-z0-9]*$`), `type` rules (html enum |
-  kebab-case | PascalCase), `attrs` as a `string | null` map, with
+- `id` rules (camelCase `^[a-z][A-Za-z0-9]*$`), kebab-case or PascalCase
+  `type` syntax, `attrs` as a `string | null` map, with
   `additionalProperties: false` everywhere.
 
 It is **generic and content-blind**. It has no idea what `Charts`, `Dashboard`,
 or `Application` are — it only knows that `"Charts"` is a syntactically legal
-PascalCase `type`.
+PascalCase `type`. Syntactic validity does not make `Charts` a known object type.
 
 **Purpose:** validate that any OpenUI JSON is well-formed.
 
@@ -369,7 +398,8 @@ Widgets → …`, each node carrying `attrs.scopeDocument` pointers into the pro
 `spec/**` files.
 
 **Purpose:** be the machine-readable vocabulary of _what objects the spec
-defines_, and the trace links to their prose.
+defines_, the exact literal set of known object types, and the trace links to
+their prose.
 
 > `spec/openui.json` is **generated** from the `spec/scopes/**` prose, which is the
 > source of truth. It is canonical as the machine-readable form, but it is a
@@ -383,13 +413,13 @@ openui.schema.json   ← grammar / meta-schema (validates shape)
 openui.json          ← the spec's catalog of available objects (vocabulary)
 ```
 
-|              | `openui.schema.json`                       | `spec/openui.json`              |
-| ------------ | ------------------------------------------ | ------------------------------- |
-| Kind         | JSON **Schema** (grammar)                  | JSON **document** (instance)    |
-| Level        | meta / type-level                          | content / catalog-level         |
-| Knows about  | shapes, id/type/attrs rules                | `Charts`, `Dashboard`, `Forms`… |
-| Changes when | the _format_ changes                       | the _spec's objects_ change     |
-| Validates    | every OpenUI doc, incl. `spec/openui.json` | nothing (it is data)            |
+|              | `openui.schema.json`                       | `spec/openui.json`           |
+| ------------ | ------------------------------------------ | ---------------------------- |
+| Kind         | JSON **Schema** (grammar)                  | JSON **document** (instance) |
+| Level        | meta / type-level                          | content / catalog-level      |
+| Knows about  | shapes, id/type/attrs rules                | exact known `type` literals  |
+| Changes when | the _format_ changes                       | the _spec's objects_ change  |
+| Validates    | every OpenUI doc, incl. `spec/openui.json` | nothing (it is data)         |
 
 ### Where `input.json` fits
 
@@ -407,20 +437,22 @@ openui.json   input.json
  what exists)   built from the catalog)
 ```
 
-- `spec/openui.json` = "here is the **vocabulary** of objects you may use" (the
+- `spec/openui.json` = "here are the exact **type literals** you may use" (the
   catalog).
 - `input.json` = "here is the **app** I want, using that vocabulary."
 - `openui.schema.json` = "here is the **syntax** both must obey."
 
-The grammar alone cannot tell whether `input.json` uses a _real_ object in a
-_legal place_ — that check is against the **catalog**, not the schema.
+The grammar alone cannot tell whether `input.json` uses a known object type —
+that exact-membership check is against the **catalog**, not the schema. Once a
+type is known, the common grammar and globally unique ids govern its instance;
+the catalog does not impose per-type attribute or child restrictions.
 
 Generators use the three files together:
 
 - validate `input.json` against the grammar defined by
   `spec/openui.schema.json`,
-- validate and interpret `input.json` content against the object catalog defined
-  by `spec/openui.json`, and
+- validate every `input.json` node's exact `type` literal against the object
+  catalog defined by `spec/openui.json`, and
 - generate target-framework output from the validated `input.json`.
 
 ## Spec folder structure
@@ -504,16 +536,19 @@ Structured hierarchically, named in Pascal Case for folders and snake case for f
 
 ### Canonical root document
 
-`spec/openui.json` MUST satisfy these top-level root rules:
+The generated `spec/openui.json` catalog MUST satisfy these top-level root
+rules:
 
 - `"id"` MUST be `"root"`.
 - `"version"` is REQUIRED (top-level only) and MUST equal the current value in
-  the repository-root `SCHEMA_VERSION` file (currently `0.1.0`).
-- `"type"` follows the general type rules below and is not pinned to a specific
-  value.
+  the repository-root `SCHEMA_VERSION` file (currently `0.2.0`).
+- `"type"` MUST be `"html"`.
 
-These rules are enforced by `openui.schema.json`, the machine-readable grammar
-for OpenUI documents.
+`openui.schema.json` enforces the required root fields, literal root id,
+semantic-version syntax, and type-name syntax. The converter and repository
+contract tests enforce the catalog-specific `SCHEMA_VERSION` and `html` values.
+A concrete UI document uses the same grammar, but its root `type`, like every
+other node type, may be any [known object type](#known-object-type).
 
 ### Naming conventions
 
@@ -521,18 +556,17 @@ the "id" field is a unique identifier for each element, and it must be a camelCa
 
 ### types - "type" field
 
-Types are names that are either:
+The grammar recognizes standard HTML tag syntax, kebab-case names, and
+PascalCase names. That syntax rule only determines whether a `type` string is
+well formed. For a concrete UI document, the value MUST also be a
+[known object type](#known-object-type): an exact literal `type` present in the
+canonical catalog.
 
-- following the kebab-case naming convention, e.g. "my-component".
-- PascalCase virtual/spec names, e.g. "MyComponent". PascalCase names do not require a concrete tag name in this document.
-
-Types are categorized to these groups:
-
-- html tags
-- Framework specific tags: for example Angular Material
-  - Angular Material CDK directives: <table cdk\*\/>
-  - Angular Material tags: mat-\*
-- Other names: either native names in kebab-case or PascalCase virtual/spec names, e.g. "app-_", "my-_", "custom-\*"
+Do not use framework selectors, directives, generated component names,
+implementation identifiers, id-derived aliases, compatibility aliases, or
+example-only pseudo-types as document types. Represent specialized UI with the
+closest known semantic category, then express instance distinctions through
+`id`, `attrs`, and known-type `children`.
 
 ### attributes - "attrs" field
 
@@ -569,6 +603,10 @@ framework. The OpenUI specification treats those values as target-language
 expressions; generators may validate or transform them for a specific framework,
 but the base JSON format does not execute them.
 
+Framework selectors and generated identifiers remain implementation details;
+their possible appearance as attribute data does not make them valid `type`
+values.
+
 ### EBNF notation
 
 The EBNF blocks use `(* ... *)` for comments; comment text is explanatory and
@@ -580,9 +618,9 @@ The format itself is in [EBNF](./EBNF.txt)
 
 ### Syntax rules
 
-- **Version field (top-level only):** Required semantic version string (e.g., "0.1.0") identifying the spec version
+- **Version field (top-level only):** Required semantic version string (e.g., "0.2.0") identifying the spec version
 - **ID field:** Must be a camelCase alphanumeric string (starts with lowercase letter, can contain uppercase letters and digits)
-- **Type field:** Can be HTML tag names, kebab-case names (e.g., `mat-date-range-input`), or PascalCase names (e.g., `MainPage`)
+- **Type field:** Must satisfy the grammar's HTML/kebab-case/PascalCase syntax and, in a concrete UI document, exactly match a literal `type` in `spec/openui.json`
 - **Attributes field:** Key-value pairs where values are strings or null. Attribute key syntax identifies input, output, and behavior categories; all such categories must stay inside the `attrs` object.
 - **Children field:** Array of UI elements forming a hierarchical tree structure
 - **No loose properties:** All properties must be contained within the `attrs` object
@@ -691,8 +729,8 @@ the `scopes` tree: a `<object>.example.json` for each leaf scope and a composite
 ```json
 {
   "id": "root",
-  "version": "1.0.0",
-  "type": "MainPage",
+  "version": "0.2.0",
+  "type": "Pages",
   "attrs": {
     "size": "1960x1080",
     "text": "App navigation demo"
@@ -700,7 +738,7 @@ the `scopes` tree: a `<object>.example.json` for each leaf scope and a composite
   "children": [
     {
       "id": "dateRangeInput",
-      "type": "mat-date-range-input",
+      "type": "DateTimePicker",
       "attrs": {
         "[formGroup]": "\"campaignTwo\"",
         "[rangePicker]": "\"campaignTwoPicker\"",

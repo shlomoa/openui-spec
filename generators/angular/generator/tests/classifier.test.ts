@@ -37,7 +37,7 @@ async function loadIndex(): Promise<ReturnType<typeof buildSpecManifestationInde
   return buildSpecManifestationIndex(document);
 }
 
-test("indexes component-template manifestations from the input spec", async () => {
+test("indexes widget manifestations from the input spec", async () => {
   const index = await loadIndex();
   assert.deepEqual(index.directories.sort(), ["src/components/app-file-select", "src/components/app-file-upload"]);
 });
@@ -48,7 +48,7 @@ test("classifies a component folder back to its spec node", async () => {
 
   assert.equal(classification.kind, "component");
   assert.equal(classification.nodeId, "appFileSelectTemplate");
-  assert.equal(classification.nodeType, "ComponentTemplate");
+  assert.equal(classification.nodeType, "widget");
   assert.equal(classification.selector, "app-file-select");
   assert.equal(classification.sourceFile, "src/components/app-file-select/app-file-select.component.html");
 });
@@ -83,8 +83,8 @@ test("classifies a page folder and page file back to its scope node", () => {
   const document: OpenUiDocument = {
     id: "root",
     type: "html",
-    version: "0.1.0",
-    children: [{ id: "dashboardPage", type: "PageScope", attrs: { route: "dashboard" } }],
+    version: "0.2.0",
+    children: [{ id: "dashboardPage", type: "page", attrs: { route: "dashboard" } }],
   };
   const index = buildSpecManifestationIndex(document);
 

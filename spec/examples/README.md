@@ -3,10 +3,13 @@
 Worked OpenUI documents, one per scope, illustrating how each
 [`scope`](../scopes/scope.md) translates into the JSON document format defined in
 [`../README.md`](../README.md). Every file is a complete, schema-valid OpenUI
-document (`id: "root"`, `version`, `type`, `children`) that exercises the
-attributes its scope describes, using Angular-Material-style `[uses]` and
-`(produces)` / `(behaves)` attribute keys for illustration only — the format is
-framework-independent.
+document (`id: "root"`, `version`, `type`, `children`) whose node types are exact
+[known object type](../README.md#known-object-type) literals from the generated
+catalog. Examples distinguish specialized instances through globally unique
+ids, attributes, and known-type child composition rather than new aliases or
+pseudo-types. They exercise the attributes their scopes describe, using
+Angular-Material-style `[uses]` and `(produces)` / `(behaves)` attribute keys for
+illustration only — the format is framework-independent.
 Vocabulary and aliases used by examples are defined in the
 [spec glossary](../README.md#glossary); examples demonstrate usage and should not
 redefine shared terms.

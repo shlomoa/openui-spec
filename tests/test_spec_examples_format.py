@@ -13,22 +13,14 @@ SCOPES_DIR = SPEC_DIR / "scopes"
 EXAMPLES_DIR = SPEC_DIR / "examples"
 EBNF_VALIDATOR = SPEC_DIR / "tests" / "test_example_json_ebnf.py"
 SCHEMA_VERSION_FILE = REPO_ROOT / "SCHEMA_VERSION"
-
-TYPE_COMPATIBILITY_ALIASES = {
-    "Behaviors/drag_and_drop.scope.md": {"Draggable", "DropContainer", "DropTarget"},
-    "Containers/expandable_panels.scope.md": {"ExpandablePanel", "PanelGroup"},
-    "Containers/tabs.scope.md": {"TabGroup"},
-    "Controls/native.scope.md": {"NativeControls"},
-    "Views/form.scope.md": {"FormView"},
-    "Views/report.scope.md": {"ReportView"},
-    "Widgets/date_time_pickers.scope.md": {"mat-datetime-picker"},
-    "Widgets/list.scope.md": {"List"},
-}
+CATALOG_PATH = SPEC_DIR / "openui.json"
 
 
 class SpecExamplesFormatTest(unittest.TestCase):
     def setUp(self) -> None:
         self.expected_version = SCHEMA_VERSION_FILE.read_text(encoding="utf-8").strip()
+        catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+        self.catalog_types = _document_types(catalog)
 
     def test_every_spec_example_is_ebnf_valid_openui_json(self) -> None:
         example_paths = sorted(EXAMPLES_DIR.rglob("*.example.json"))
@@ -55,6 +47,13 @@ class SpecExamplesFormatTest(unittest.TestCase):
                 self.assertIsInstance(document.get("children"), list)
                 self.assertGreater(len(document["children"]), 0)
 
+    def test_every_spec_example_uses_exact_catalog_type_literals(self) -> None:
+        for path in sorted(EXAMPLES_DIR.rglob("*.example.json")):
+            with self.subTest(path=path.relative_to(EXAMPLES_DIR).as_posix()):
+                document = json.loads(path.read_text(encoding="utf-8"))
+                unknown_types = _document_types(document) - self.catalog_types
+                self.assertEqual(unknown_types, set())
+
     def test_every_leaf_scope_has_matching_example(self) -> None:
         self.assertEqual(_leaf_scope_paths(), _leaf_example_paths_as_scope_paths())
 
@@ -69,7 +68,7 @@ class SpecExamplesFormatTest(unittest.TestCase):
 
         self.assertEqual(scope_folders, example_folders)
 
-    def test_leaf_examples_use_compatible_scope_type(self) -> None:
+    def test_leaf_examples_represent_their_cataloged_scope_type(self) -> None:
         for relative_scope_path in sorted(_leaf_scope_paths()):
             scope_path = SCOPES_DIR / relative_scope_path
             example_path = EXAMPLES_DIR / relative_scope_path.replace(".scope.md", ".example.json")
@@ -77,15 +76,14 @@ class SpecExamplesFormatTest(unittest.TestCase):
             with self.subTest(example=example_path.relative_to(EXAMPLES_DIR).as_posix()):
                 scope_node = parse_leaf_scope(scope_path, scopes_dir=SCOPES_DIR)
                 instance = cast(dict[str, object], scope_node["children"][0])
-                compatible_types = {cast(str, scope_node["type"]), cast(str, instance["type"])}
-                compatible_types.update(TYPE_COMPATIBILITY_ALIASES.get(relative_scope_path, set()))
+                expected_types = {cast(str, scope_node["type"]), cast(str, instance["type"])}
                 example_types = _document_types(
                     json.loads(example_path.read_text(encoding="utf-8"))
                 )
 
                 self.assertTrue(
-                    compatible_types & example_types,
-                    f"expected one of {sorted(compatible_types)} in {sorted(example_types)}",
+                    expected_types & example_types,
+                    f"expected one of {sorted(expected_types)} in {sorted(example_types)}",
                 )
 
 

@@ -1,7 +1,7 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "ContainerExample",
+  "version": "0.2.0",
+  "type": "Grid",
   "attrs": {
     "title": "\"Grid example\""
   },
@@ -18,7 +18,7 @@
       "children": [
         {
           "id": "mainRegion",
-          "type": "GridItem",
+          "type": "section",
           "attrs": {
             "[colSpan]": "8",
             "[rowSpan]": "2",
@@ -27,7 +27,7 @@
         },
         {
           "id": "sideRegion",
-          "type": "GridItem",
+          "type": "section",
           "attrs": {
             "[colSpan]": "4",
             "[order]": "2"
@@ -35,7 +35,7 @@
         },
         {
           "id": "footerRegion",
-          "type": "GridItem",
+          "type": "section",
           "attrs": {
             "[colSpan]": "12",
             "[order]": "3"

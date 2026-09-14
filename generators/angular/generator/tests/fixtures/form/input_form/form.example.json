@@ -1,7 +1,7 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "FormView",
+  "version": "0.2.0",
+  "type": "Form",
   "attrs": {
     "title": "\"Customer form\"",
     "[dirty]": "form.dirty",
@@ -12,7 +12,7 @@
   "children": [
     {
       "id": "nameField",
-      "type": "Field",
+      "type": "TextInputs",
       "attrs": {
         "[label]": "\"Name\"",
         "[required]": "true",
@@ -23,7 +23,7 @@
     },
     {
       "id": "emailField",
-      "type": "Field",
+      "type": "TextInputs",
       "attrs": {
         "[label]": "\"Email\"",
         "[required]": "true",
@@ -33,7 +33,7 @@
     },
     {
       "id": "submitButton",
-      "type": "button",
+      "type": "ActionControls",
       "attrs": {
         "[disabled]": "form.invalid",
         "text": "\"Save\"",
@@ -42,7 +42,7 @@
     },
     {
       "id": "cancelButton",
-      "type": "button",
+      "type": "ActionControls",
       "attrs": {
         "text": "\"Cancel\"",
         "(click)": "onReset()"

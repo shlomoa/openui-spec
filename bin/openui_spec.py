@@ -85,15 +85,15 @@ class OpenUiJson:
             ]
             raise OpenUiValidationError("\n".join(messages))
 
-        supported_types = {node["type"] for node in self._walk(catalog)}
+        known_types = self._catalog_types(catalog)
         seen_ids: set[str] = set()
         for node in self._walk(self.document):
             object_id = node["id"]
             if object_id in seen_ids:
                 raise OpenUiValidationError(f"duplicate object id: {object_id}")
             seen_ids.add(object_id)
-            if node["type"] not in supported_types:
-                raise OpenUiValidationError(f"unsupported object type: {node['type']}")
+            if node["type"] not in known_types:
+                raise OpenUiValidationError(f"unknown OpenUI object type: {node['type']}")
 
     def add(self, parent_id: str, child: Mapping[str, Any]) -> None:
         """Validate and append *child* to the children of *parent_id*."""
@@ -166,16 +166,18 @@ class OpenUiJson:
 
     def _validate_child(self, child: JsonObject) -> None:
         self._validate_node(child, is_root=False)
-        supported_types = {
-            node["type"] for node in self._walk(self._load_json(self.catalog_path, "catalog"))
-        }
+        known_types = self._catalog_types(self._load_json(self.catalog_path, "catalog"))
         seen_ids: set[str] = set()
         for node in self._walk(child):
             if node["id"] in seen_ids:
                 raise OpenUiJsonError(f"duplicate object id: {node['id']}")
             seen_ids.add(node["id"])
-            if node["type"] not in supported_types:
-                raise OpenUiJsonError(f"unsupported object type: {node['type']}")
+            if node["type"] not in known_types:
+                raise OpenUiJsonError(f"unknown OpenUI object type: {node['type']}")
+
+    @classmethod
+    def _catalog_types(cls, catalog: JsonObject) -> set[str]:
+        return {node["type"] for node in cls._walk(catalog)}
 
     def _validate_node(self, node: JsonObject, *, is_root: bool) -> None:
         schema = self._load_json(self.schema_path, "schema")

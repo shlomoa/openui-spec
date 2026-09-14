@@ -1,7 +1,7 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "BehaviorExample",
+  "version": "0.2.0",
+  "type": "Collapsible",
   "attrs": {
     "title": "\"Collapsible example\""
   },
@@ -17,7 +17,7 @@
       "children": [
         {
           "id": "collapseTrigger",
-          "type": "button",
+          "type": "ActionControls",
           "attrs": {
             "[ariaExpanded]": "isExpanded",
             "[ariaControls]": "\"collapseContent\"",
@@ -27,7 +27,7 @@
         },
         {
           "id": "collapseContent",
-          "type": "div",
+          "type": "section",
           "attrs": {
             "role": "\"region\"",
             "[hidden]": "!isExpanded",

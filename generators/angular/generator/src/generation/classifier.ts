@@ -93,12 +93,12 @@ export class SpecManifestationIndex {
 
 /**
  * Build the manifestation index for the components and pages declared by an
- * OpenUI input document. Component templates contribute
+ * OpenUI input document. Manifested `widget` nodes contribute
  * `src/components/<selector>` footprints; page scopes contribute
  * `src/app/pages/<route>` footprints.
  */
 export function buildSpecManifestationIndex(document: OpenUiDocument): SpecManifestationIndex {
-  const components = findElementsByType(document, "ComponentTemplate")
+  const components = manifestedComponentNodes(document)
     .map(toComponentManifestation)
     .filter((manifestation): manifestation is SpecManifestation => manifestation !== undefined);
 
@@ -167,7 +167,7 @@ function toComponentManifestation(node: OpenUiElement): SpecManifestation | unde
 function collectPageManifestations(document: OpenUiDocument): SpecManifestation[] {
   return [
     ...collectScopedNodePageManifestations(document),
-    ...collectExplicitPageScopeManifestations(document),
+    ...collectExplicitPageManifestations(document),
     ...collectConcreteInputPageManifestations(document),
   ];
 }
@@ -187,8 +187,8 @@ function collectScopedNodePageManifestations(document: OpenUiDocument): SpecMani
   });
 }
 
-function collectExplicitPageScopeManifestations(document: OpenUiDocument): SpecManifestation[] {
-  return childrenOfType(document, "PageScope").map((node): SpecManifestation => {
+function collectExplicitPageManifestations(document: OpenUiDocument): SpecManifestation[] {
+  return childrenOfType(document, "page").map((node): SpecManifestation => {
     const route = stringAttr(node, "route") ?? normalizeRoute(node.id);
     return {
       kind: "page",
@@ -203,7 +203,7 @@ function collectExplicitPageScopeManifestations(document: OpenUiDocument): SpecM
 }
 
 function collectConcreteInputPageManifestations(document: OpenUiDocument): SpecManifestation[] {
-  if (extractOpenUiScopeNodes(document).length > 0 || findElementsByType(document, "ComponentTemplate").length > 0) {
+  if (extractOpenUiScopeNodes(document).length > 0 || manifestedComponentNodes(document).length > 0) {
     return [];
   }
 
@@ -224,6 +224,11 @@ function collectConcreteInputPageManifestations(document: OpenUiDocument): SpecM
     },
     ...findElementsByType(document, "Dialog").map(toConcreteDialogComponentManifestation),
   ];
+}
+
+/** Returns known-type widget instances that explicitly declare an Angular component manifestation. */
+function manifestedComponentNodes(document: OpenUiDocument): OpenUiElement[] {
+  return findElementsByType(document, "widget").filter((node) => stringAttr(node, "selector") !== undefined);
 }
 
 function toConcreteDialogComponentManifestation(node: OpenUiElement): SpecManifestation {

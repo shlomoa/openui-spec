@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "Views",
   "attrs": {
     "title": "\"Views example\""
@@ -8,7 +8,7 @@
   "children": [
     {
       "id": "customerReport",
-      "type": "ReportView",
+      "type": "Report",
       "attrs": {
         "title": "\"Customers\"",
         "[readOnly]": "true"
@@ -23,7 +23,7 @@
           "children": [
             {
               "id": "colName",
-              "type": "Column",
+              "type": "Table",
               "attrs": {
                 "[field]": "\"name\"",
                 "[header]": "\"Name\"",
@@ -36,7 +36,7 @@
     },
     {
       "id": "customerForm",
-      "type": "FormView",
+      "type": "Form",
       "attrs": {
         "title": "\"Edit customer\"",
         "[dirty]": "form.dirty",
@@ -45,7 +45,7 @@
       "children": [
         {
           "id": "nameField",
-          "type": "Field",
+          "type": "TextInputs",
           "attrs": {
             "[label]": "\"Name\"",
             "[required]": "true"

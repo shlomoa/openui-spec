@@ -1,21 +1,21 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "ContainerExample",
+  "version": "0.2.0",
+  "type": "ExpandablePanels",
   "attrs": {
     "title": "\"Expandable panels example\""
   },
   "children": [
     {
       "id": "settingsAccordion",
-      "type": "PanelGroup",
+      "type": "ExpandablePanels",
       "attrs": {
         "[multi]": "false"
       },
       "children": [
         {
           "id": "generalPanel",
-          "type": "ExpandablePanel",
+          "type": "ExpandablePanels",
           "attrs": {
             "[heading]": "\"General\"",
             "[expanded]": "true",
@@ -25,7 +25,7 @@
           "children": [
             {
               "id": "generalContent",
-              "type": "div",
+              "type": "section",
               "attrs": {
                 "text": "\"General settings\""
               }
@@ -34,7 +34,7 @@
         },
         {
           "id": "advancedPanel",
-          "type": "ExpandablePanel",
+          "type": "ExpandablePanels",
           "attrs": {
             "[heading]": "\"Advanced\"",
             "[expanded]": "false",
@@ -43,7 +43,7 @@
           "children": [
             {
               "id": "advancedContent",
-              "type": "div",
+              "type": "section",
               "attrs": {
                 "text": "\"Advanced settings\""
               }

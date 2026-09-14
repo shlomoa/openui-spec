@@ -1,7 +1,7 @@
 {
   "id": "root",
-  "version": "0.1.0",
-  "type": "BehaviorExample",
+  "version": "0.2.0",
+  "type": "Resizable",
   "attrs": {
     "title": "\"Resizable example\""
   },
@@ -22,7 +22,7 @@
       "children": [
         {
           "id": "resizableContent",
-          "type": "div",
+          "type": "section",
           "attrs": {
             "text": "\"Resizable content region\""
           }

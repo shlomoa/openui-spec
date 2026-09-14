@@ -4,7 +4,7 @@ This document records Step 5 of
 [`populating_test_use_cases.md`](../../populating_test_use_cases.md): populating
 the **output** side of the `dialog` fixture pair. The output workspace is the
 _expected_ Angular Material workspace after running the generator on
-[`dialog.example.json`](dialog.example.json).
+[`dialog.example.json`](../input_dialog/dialog.example.json).
 
 ## 5.1 Create output fixture placeholders
 
@@ -35,15 +35,15 @@ example JSON. They are wired with the same Angular unit-test setup used by the
 - `tsconfig.spec.json` — compiles `src/**/*.spec.ts` with `vitest/globals`.
 - `src/components/app-confirm-dialog/app-confirm-dialog.component.spec.ts` —
   validates the generated `app-confirm-dialog` component against
-  `dialog.example.json`:
+  the synchronized input `dialog.example.json`:
 
-  | Example node    | Validated expectation                                    |
-  | --------------- | -------------------------------------------------------- |
-  | `DialogTitle`   | Renders the title text `Delete item?`                    |
-  | `DialogContent` | Renders the content text `This action cannot be undone.` |
-  | `DialogActions` | Renders `Cancel` and `Delete` action buttons             |
-  | `button` Cancel | Clicking it closes the dialog with `'cancel'`            |
-  | `button` Delete | Clicking it closes the dialog with `'confirm'`           |
+  | Example node                       | Validated expectation                                    |
+  | ---------------------------------- | -------------------------------------------------------- |
+  | `dialogTitle` (`header`)           | Renders the title text `Delete item?`                    |
+  | `dialogContent` (`section`)        | Renders the content text `This action cannot be undone.` |
+  | `dialogActions` (`footer`)         | Renders `Cancel` and `Delete` action buttons             |
+  | `cancelDialog` (`ActionControls`)  | Clicking it closes the dialog with `'cancel'`            |
+  | `confirmDelete` (`ActionControls`) | Clicking it closes the dialog with `'confirm'`           |
 
 ## 5.3 Run the generator
 
@@ -81,8 +81,10 @@ tsconfig.json
 The earlier failure
 `root.children: Expected at least one scoped OpenUI node with attrs.scopeDocument.`
 is resolved for the dialog fixture. The generator now accepts the concrete
-`WidgetExample` / `Dialog` input without adding catalog traceability metadata to
-app nodes.
+`Dialog` composition without adding catalog traceability metadata to app nodes.
+It identifies the title, content, and actions by their stable ids while their
+`header`, `section`, `footer`, and `ActionControls` values remain exact known
+catalog types.
 
 This fixture still keeps its validation harness files (`package.json`,
 `package-lock.json`, `tsconfig.spec.json`, and the component spec) separate from

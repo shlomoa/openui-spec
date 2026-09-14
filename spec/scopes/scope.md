@@ -41,7 +41,9 @@ Top-level scope folder names use Pascal Case. Leaf filenames use snake_case.
 Scope objects follow the JSON shape defined in `../README.md`:
 
 - `id` is a camelCase alphanumeric identifier.
-- `type` is an HTML tag, kebab-case name, or PascalCase virtual/spec name.
+- `type` satisfies the grammar's kebab-case or PascalCase syntax. Each literal
+  emitted from the scope sources becomes part of the catalog's exact
+  [known-type set](../README.md#known-object-type).
 - `attrs` contains all non-hierarchical configuration.
 - `children` contains nested UI elements.
 - No loose object properties are allowed outside `attrs` except the structural fields defined by the spec.
@@ -51,7 +53,10 @@ Scope objects follow the JSON shape defined in `../README.md`:
 `spec/openui.json` is generated from the prose scopes; it is not hand-authored. A leaf's contract is authored in its `*.scope.md` Attributes and Child model sections. When generated, each scope node is metadata-only (its `attrs` carry `title`, `purpose`, `scopeDocument`, and `status`) and the scope's object contract is represented by a single child instance node:
 
 - `id` is `<scopeId>Instance` (camelCase).
-- `type` is the concrete primitive the scope materializes (for example `dialog`, `input`, or `table`) or a PascalCase virtual type.
+- `type` is the exact semantic-category literal the scope materializes (for
+  example `dialog`, `input`, `table`, or a PascalCase category). The generated
+  literal is a known catalog type; framework selectors and aliases are not
+  substituted for it.
 - `attrs` carry the contract attributes by category — Uses `[name]`, Produces `(name)`, Behaves `(name)` — using the Attribute categories below.
 - `children` carry the instance's typed child model.
 - The instance node has no `scopeDocument`; scope-document traceability stays on the scope node.
