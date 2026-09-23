@@ -1,0 +1,1556 @@
+# Angular Material inventory
+
+Status: Step 3 complete at the fixed [source baseline](BASELINE.md).
+
+## Scope and counting rules
+
+The complete scope is every tracked file and folder recursively under
+`src/material/` at the fixed commit, plus every declaration in the published
+`@angular/material` 22.1.7 export map. The source root is included once. The earlier
+upstream-versus-local ambiguity is resolved by the accepted POC, baseline, and
+instruction to execute Steps 3–5.
+
+- 1,233 files: 1,232 UTF-8 text files and one PNG.
+- 135 folders: 134 nested trees plus the Material root.
+- 86 published export declarations: 37 runtime/root entries, 37 testing entries,
+  two Sass-only aliases, eight concrete theme stylesheet entries, one stylesheet
+  wildcard, and one package-metadata entry.
+- Total: **1,454 distinct inventory objects**, each with one primary category row.
+
+Source files, source folders, and published export identities are different object
+types. A public symbol mentioned in a file description is not another inventory
+object. The wildcard export is one declaration; it is not treated as an infinite
+set of files. A declared export is included even when its target is missing.
+
+The Git tree API response was not truncated. All 1,233 downloaded file contents
+matched their Git blob hashes before classification. Hashes below preserve the
+enumerated snapshot. Directories use Git tree hashes; exports use the fixed npm
+version and package evidence described in [research notes](RESEARCH_NOTES.md).
+
+Sources: [recursive Git tree](https://api.github.com/repos/angular/components/git/trees/53696d1f44e31eb811c303ba190b296d32399058?recursive=1),
+[source archive](https://codeload.github.com/angular/components/tar.gz/e950f29dcfbda93c13bff0d1a632465364488249),
+[published export metadata](https://registry.npmjs.org/@angular%2fmaterial/22.1.7).
+
+## Explicit exclusions
+
+- Files outside `src/material/`: CDK implementation, Angular framework source,
+  sibling adapter packages, repository-wide tools, guides, examples, integration
+  tests, API goldens, and the documentation-site application.
+- Generated JavaScript, declaration bundles, and compiled CSS as additional file
+  objects. Their published export declarations remain included and their archive
+  presence was checked as supporting evidence.
+- Transitive dependency inventories, individual class/member inventories, and
+  untracked local files. No Material file inside the fixed root was excluded.
+
+The source `testing/` folder is not a published `@angular/material/testing` entry.
+The schematics nested package manifest is a source file, not evidence of a new
+standalone library. Extra roots require a recorded scope change.
+
+## Object ledger
+
+Each heading links to the authoritative category tables. The ledger lists identity,
+kind, and hash only; descriptions are maintained in those category files.
+
+### Actions and triggers
+
+[Category descriptions](Actions-and-triggers.survey.md). Objects: 62.
+
+- `@angular/material/button` — export; published export declaration, version `22.1.7`.
+- `@angular/material/button-toggle` — export; published export declaration, version `22.1.7`.
+- `@angular/material/button-toggle/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/button/testing` — export; published export declaration, version `22.1.7`.
+- `src/material/button-toggle/` — folder; Git tree `0f181ce51f7e791dd9818292ed7f81a2a634c290`.
+- `src/material/button-toggle/BUILD.bazel` — file; Git blob `ef5093e44c5aaedbfe6817422757e004e1fa6e43`.
+- `src/material/button-toggle/README.md` — file; Git blob `e596a6654baf237b93805d76276dca26c1f1a07f`.
+- `src/material/button-toggle/_button-toggle-theme.scss` — file; Git blob `dc5512d2f49aa1cc103d6187d350002fd1139f64`.
+- `src/material/button-toggle/_m2-button-toggle.scss` — file; Git blob `e826eb874ffb6b9f8e912afde6198e7421a723c9`.
+- `src/material/button-toggle/_m3-button-toggle.scss` — file; Git blob `667d1ea56d2ca69da4ce2c727a17cb7079d36f0c`.
+- `src/material/button-toggle/button-toggle-module.ts` — file; Git blob `4a2cdafbae9028126feac24a87f460b3259d2fc8`.
+- `src/material/button-toggle/button-toggle.html` — file; Git blob `948a45e443e66a988249fdaf4e50ba6896e0c5eb`.
+- `src/material/button-toggle/button-toggle.md` — file; Git blob `e41062c3ad2d081fe4d431ddcfd69768ad075a4b`.
+- `src/material/button-toggle/button-toggle.scss` — file; Git blob `9245d028ca531fe847983c76f0e1e48b7a93eba3`.
+- `src/material/button-toggle/button-toggle.spec.ts` — file; Git blob `bbb18bc3419c76ed831d1c93f637d0a551e494d2`.
+- `src/material/button-toggle/button-toggle.ts` — file; Git blob `66b5224fa26f6625931478396d59770db5d4cef2`.
+- `src/material/button-toggle/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/button-toggle/public-api.ts` — file; Git blob `62a9f0319f7cd7e588cfb551a674842daf8eb7ab`.
+- `src/material/button-toggle/testing/` — folder; Git tree `9459539d6f9e3ad548d578c47d3fb58911ea2726`.
+- `src/material/button-toggle/testing/BUILD.bazel` — file; Git blob `a0fd2a96363101ff7a94d36f8bf489653ccb104f`.
+- `src/material/button-toggle/testing/button-toggle-group-harness-filters.ts` — file; Git blob `43ce13c1db31db3e09a454d5e8e1b9798cd09d53`.
+- `src/material/button-toggle/testing/button-toggle-group-harness.ts` — file; Git blob `7f05a5b1e9da4d74e8d699e7d4248be93cb7d508`.
+- `src/material/button-toggle/testing/button-toggle-group.spec.ts` — file; Git blob `b69ef19b9e3255257b00977b692bb41f6e5d694b`.
+- `src/material/button-toggle/testing/button-toggle-harness-filters.ts` — file; Git blob `d8682df6337867997075eee9b2398f18ab91362b`.
+- `src/material/button-toggle/testing/button-toggle-harness.spec.ts` — file; Git blob `0cdbcae7744e83e0d4996d0c6e11af4dc8c4d7cd`.
+- `src/material/button-toggle/testing/button-toggle-harness.ts` — file; Git blob `c80c1cbb6ae170958ebdc9e65f234ea228bd1583`.
+- `src/material/button-toggle/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/button-toggle/testing/public-api.ts` — file; Git blob `8f58ee0b27a5afa51e118a0e29c604657077bf30`.
+- `src/material/button/` — folder; Git tree `430f8fdf0d27fe4e2f229826a396ea1efad87890`.
+- `src/material/button/BUILD.bazel` — file; Git blob `9671cabd541c22d1329c9ed53e124b91c90312a8`.
+- `src/material/button/_button-base.scss` — file; Git blob `d4c21b6d58c439c4e7eefde13d685388e102e954`.
+- `src/material/button/_button-theme.scss` — file; Git blob `00b50eb0d276791811b7f0bed74319d450aeaeb8`.
+- `src/material/button/_fab-theme.scss` — file; Git blob `2ced18f9f54447cbcd4307845bdb5992615e43c7`.
+- `src/material/button/_icon-button-theme.scss` — file; Git blob `0115351874e8d4167ced089c0ea4f86c114ecd0c`.
+- `src/material/button/_m2-button.scss` — file; Git blob `f3d19287d4bdf9b634cafff3a0b616b1bbe7b99c`.
+- `src/material/button/_m2-fab.scss` — file; Git blob `7b429cd7d02becaba4d0a0a7537771bb1b32b8c6`.
+- `src/material/button/_m2-icon-button.scss` — file; Git blob `f6a420e052d64a6734106d436a098cf11160b8e6`.
+- `src/material/button/_m3-button.scss` — file; Git blob `a388b17234ccb394007af65423878d25364af760`.
+- `src/material/button/_m3-fab.scss` — file; Git blob `29798b9071edc6a8163633c95d279b732d2b95e3`.
+- `src/material/button/_m3-icon-button.scss` — file; Git blob `5639ca2a227c8899e234217eef18a8a7e626b3dc`.
+- `src/material/button/button-base.ts` — file; Git blob `5eca45356df9dd9b1503fd22a095cad833459530`.
+- `src/material/button/button-high-contrast.scss` — file; Git blob `5dbb5164e2c1b370dee4a5fb81530fc99f30296e`.
+- `src/material/button/button-module.ts` — file; Git blob `babea61728725def61f3b1b06f6617cde9df4c8e`.
+- `src/material/button/button.html` — file; Git blob `b03f650aeb8f7f4965d610cb2c1c1b45b158fb18`.
+- `src/material/button/button.md` — file; Git blob `bd7b8f4238ee4b1f659f0b566555e1c35da7ea37`.
+- `src/material/button/button.scss` — file; Git blob `e2fe568b74b7b0253907f9ef2d5464783d3c8d76`.
+- `src/material/button/button.spec.ts` — file; Git blob `7c4679ee83348a90dfe4e05ea182eda42c93d380`.
+- `src/material/button/button.ts` — file; Git blob `4363735c48b8421b635a48f0928021ae903b3379`.
+- `src/material/button/fab.scss` — file; Git blob `f1ff64f3837b908bdd3d6d23c686456e79571582`.
+- `src/material/button/fab.ts` — file; Git blob `f155280d41a88630ee6314e9d56ddf9c564c73e8`.
+- `src/material/button/icon-button.html` — file; Git blob `762a605197a0e87bf61ed011158375c5fa735df3`.
+- `src/material/button/icon-button.scss` — file; Git blob `11eb5b947036da8e40398ea5dcfc9d77e1e505c4`.
+- `src/material/button/icon-button.ts` — file; Git blob `1582882d5b36606fbffe97d12616945625330eab`.
+- `src/material/button/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/button/public-api.ts` — file; Git blob `647a10543799545c468a0626a4b738adab2d7fad`.
+- `src/material/button/testing/` — folder; Git tree `d923f596a8e2d4a13c2e718ac113aaf316ba4f42`.
+- `src/material/button/testing/BUILD.bazel` — file; Git blob `bb52531b947948cec035b98bf4da9aa8ff1c5a5d`.
+- `src/material/button/testing/button-harness-filters.ts` — file; Git blob `eb490a364773d56a8f59ca1c237a3ab54d30593e`.
+- `src/material/button/testing/button-harness.spec.ts` — file; Git blob `85ef3b581846c09f30dabd69c5df6f30f46e1529`.
+- `src/material/button/testing/button-harness.ts` — file; Git blob `06184c91e5f1bba4f379f92dc37b040a38b86317`.
+- `src/material/button/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/button/testing/public-api.ts` — file; Git blob `ff6c54c526aa5815e716e558be8470eaddb0c1b0`.
+
+### Data entry
+
+[Category descriptions](Data-entry.survey.md). Objects: 398.
+
+- `@angular/material/autocomplete` — export; published export declaration, version `22.1.7`.
+- `@angular/material/autocomplete/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/checkbox` — export; published export declaration, version `22.1.7`.
+- `@angular/material/checkbox/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/chips` — export; published export declaration, version `22.1.7`.
+- `@angular/material/chips/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/datepicker` — export; published export declaration, version `22.1.7`.
+- `@angular/material/datepicker/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/form-field` — export; published export declaration, version `22.1.7`.
+- `@angular/material/form-field/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/form-field/testing/control` — export; published export declaration, version `22.1.7`.
+- `@angular/material/input` — export; published export declaration, version `22.1.7`.
+- `@angular/material/input/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/radio` — export; published export declaration, version `22.1.7`.
+- `@angular/material/radio/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/select` — export; published export declaration, version `22.1.7`.
+- `@angular/material/select/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/slide-toggle` — export; published export declaration, version `22.1.7`.
+- `@angular/material/slide-toggle/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/slider` — export; published export declaration, version `22.1.7`.
+- `@angular/material/slider/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/timepicker` — export; published export declaration, version `22.1.7`.
+- `@angular/material/timepicker/testing` — export; published export declaration, version `22.1.7`.
+- `src/material/autocomplete/` — folder; Git tree `1cbca5c38b2cc9651788cd2395b1997c92d82af1`.
+- `src/material/autocomplete/BUILD.bazel` — file; Git blob `44dea63a861f4a3ce741be5422a99ab2b3a883a9`.
+- `src/material/autocomplete/README.md` — file; Git blob `c02e254b2a0d8b18bdc701638d65a8e6f63c03b5`.
+- `src/material/autocomplete/_autocomplete-theme.scss` — file; Git blob `1eeda823fb32bddaa2487654457249eb61ce776d`.
+- `src/material/autocomplete/_m2-autocomplete.scss` — file; Git blob `bc5264890e0aac505830cbe3c7ee7920d82f2068`.
+- `src/material/autocomplete/_m3-autocomplete.scss` — file; Git blob `4a5272bbf3f8693572ead32a46bef170e2fd61b2`.
+- `src/material/autocomplete/autocomplete-module.ts` — file; Git blob `4344e1f21e47dfae488bd71996a967495bb17087`.
+- `src/material/autocomplete/autocomplete-origin.ts` — file; Git blob `daeeeb80e64185790c49d702652843d68d52bdc1`.
+- `src/material/autocomplete/autocomplete-trigger.ts` — file; Git blob `5e9ad873463f0a8bb47e4b783d730403807b897d`.
+- `src/material/autocomplete/autocomplete.html` — file; Git blob `6f62099ca795d8c8c7fb79fa9e9b668c238f0504`.
+- `src/material/autocomplete/autocomplete.md` — file; Git blob `8cda8f8874c682f694568e6f6f89834dcd417d2b`.
+- `src/material/autocomplete/autocomplete.scss` — file; Git blob `d2ee490bfa0838dde7e2170851eef94ebed7e576`.
+- `src/material/autocomplete/autocomplete.spec.ts` — file; Git blob `916ea277b357d91b5773c02c34d694d5e8e9c226`.
+- `src/material/autocomplete/autocomplete.ts` — file; Git blob `b87e31282b9e0c8230fc3c0f1b401d289aa2e8c2`.
+- `src/material/autocomplete/autocomplete.zone.spec.ts` — file; Git blob `fda0cede343d1320bb2eeb500c4bd5cfbb62532c`.
+- `src/material/autocomplete/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/autocomplete/public-api.ts` — file; Git blob `26bd6e4386595225ed333141af96003613be3af7`.
+- `src/material/autocomplete/testing/` — folder; Git tree `6d3c3f22fbda06989771c74709ab6d8f3b45f2c7`.
+- `src/material/autocomplete/testing/BUILD.bazel` — file; Git blob `60a53a1df71dbd4ab966d87199c6b54c5f1229bb`.
+- `src/material/autocomplete/testing/autocomplete-harness-filters.ts` — file; Git blob `de6120630b085058a1090ac3ae3424c34a04b54f`.
+- `src/material/autocomplete/testing/autocomplete-harness.spec.ts` — file; Git blob `059689e1d7ec90e2d436b17743f8b9491561dd58`.
+- `src/material/autocomplete/testing/autocomplete-harness.ts` — file; Git blob `41d08a05f061339555698baacd13784ce97e734c`.
+- `src/material/autocomplete/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/autocomplete/testing/public-api.ts` — file; Git blob `405a76dc1730743a5ee922a78e685649dfb6886f`.
+- `src/material/checkbox/` — folder; Git tree `88893471d51053827b9f3dae05ed3fbbb12e36c4`.
+- `src/material/checkbox/BUILD.bazel` — file; Git blob `5eb1f4c0f4568a047ee116fe450316a42e82e530`.
+- `src/material/checkbox/README.md` — file; Git blob `b5786b93e9de5c837ac2405b27cc877c289a0443`.
+- `src/material/checkbox/_checkbox-common.scss` — file; Git blob `79208ea3c9a9be255ca73c51a9acca3c88227649`.
+- `src/material/checkbox/_checkbox-theme.scss` — file; Git blob `f889041b1d8671ed8f6ae6de7fe26a2e56b279a8`.
+- `src/material/checkbox/_m2-checkbox.scss` — file; Git blob `d36da29f792ea3d5fe50ea60225dc4dadce43e79`.
+- `src/material/checkbox/_m3-checkbox.scss` — file; Git blob `82a872148cf2f9116408be06f083aa8492470156`.
+- `src/material/checkbox/checkbox-config.ts` — file; Git blob `6f5d0dc31c66c5bcc5957460c031318fcab573cf`.
+- `src/material/checkbox/checkbox-module.ts` — file; Git blob `702e3b431c38accf3278a455342c3f7f83c5cab1`.
+- `src/material/checkbox/checkbox.html` — file; Git blob `e32a8240523f555d5cac1cbfd1c6973300ac53c9`.
+- `src/material/checkbox/checkbox.md` — file; Git blob `c441671d19cd52f2b0c3482b5456f23b3d2e71f1`.
+- `src/material/checkbox/checkbox.scss` — file; Git blob `0bf883c03ad24f47928983075f79908645a48fa5`.
+- `src/material/checkbox/checkbox.spec.ts` — file; Git blob `4dc36d493e30a6ab538d40c44fa59603e9437832`.
+- `src/material/checkbox/checkbox.ts` — file; Git blob `103390066fb3c38da0e061667dd6c66f0e694741`.
+- `src/material/checkbox/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/checkbox/public-api.ts` — file; Git blob `6f8cb4c78bede1ed4f6798447d6f8decf24f784d`.
+- `src/material/checkbox/testing/` — folder; Git tree `ac0bbebb5cff07d2d84cdb92a164bd987b3b4c00`.
+- `src/material/checkbox/testing/BUILD.bazel` — file; Git blob `82a168339cfbbad3c64321ffad93e15d9e7aa273`.
+- `src/material/checkbox/testing/checkbox-harness-filters.ts` — file; Git blob `617302ed2144b9b09da6eb11263ae262da421676`.
+- `src/material/checkbox/testing/checkbox-harness.spec.ts` — file; Git blob `0fcf93377a77b670d32e03587c106c8aa50c8473`.
+- `src/material/checkbox/testing/checkbox-harness.ts` — file; Git blob `6b9b0e6bb55139fd925b74e3f6186d6d8a7edfc2`.
+- `src/material/checkbox/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/checkbox/testing/public-api.ts` — file; Git blob `c66a956db5649a2ec95c3fd98c9406329d10268f`.
+- `src/material/chips/` — folder; Git tree `d9b96415eeed70a6187d6ab174f5d4c0b8b0182a`.
+- `src/material/chips/BUILD.bazel` — file; Git blob `0146ffcfaa3e07882d89048a4c21276897612a6f`.
+- `src/material/chips/README.md` — file; Git blob `f1166c8a38a99bcb8f2e367fc2e20030adacce82`.
+- `src/material/chips/_chips-theme.scss` — file; Git blob `5d9c821625e7f3d8e444fece6bcd9d66a2c218b9`.
+- `src/material/chips/_m2-chip.scss` — file; Git blob `2263debd5fda8917132b5c2e1e771e206145df40`.
+- `src/material/chips/_m3-chip.scss` — file; Git blob `23cc387aa05aa81240f086453f0147d16809227e`.
+- `src/material/chips/chip-action.ts` — file; Git blob `ae633cbbd2a0a44c9d4d6b54374c2138081e3cef`.
+- `src/material/chips/chip-edit-input.spec.ts` — file; Git blob `7f5ed42e58d608bef405ee927a7ad68af9bd5c0a`.
+- `src/material/chips/chip-edit-input.ts` — file; Git blob `7f8ba611eea346efecd956cd93da351a45c2bd08`.
+- `src/material/chips/chip-grid.spec.ts` — file; Git blob `28f0156d8b5e27de713867423019cd3f966cc7ba`.
+- `src/material/chips/chip-grid.ts` — file; Git blob `c77343c3ef69435b7bb1e691752561d1d143baaa`.
+- `src/material/chips/chip-icons.ts` — file; Git blob `ba1e0b044bdc661dd35f02913e48db82ca2f100e`.
+- `src/material/chips/chip-input.spec.ts` — file; Git blob `c83acbc360c00865eb3ddf956b1bd1a848edf527`.
+- `src/material/chips/chip-input.ts` — file; Git blob `314da69b8208e88ae36d03c508812364b71fc2cc`.
+- `src/material/chips/chip-listbox.spec.ts` — file; Git blob `592c7ca66b9857296dfb3f77ae406b26126b66f9`.
+- `src/material/chips/chip-listbox.ts` — file; Git blob `14b44a3a4f6857edc7a03787f694d204dfedf9cb`.
+- `src/material/chips/chip-option.html` — file; Git blob `c9c125e27b004563fba44aad90a9d97991741b99`.
+- `src/material/chips/chip-option.spec.ts` — file; Git blob `f3a635581f33af6297470ebf2f4ec4c0b46ebb66`.
+- `src/material/chips/chip-option.ts` — file; Git blob `09897387dac07ed495bb74b8d7745c9fb916b7df`.
+- `src/material/chips/chip-remove.spec.ts` — file; Git blob `77ca4b51fc7f9bff8eff9267ef1e7f393897750f`.
+- `src/material/chips/chip-row.html` — file; Git blob `c1715e7e43444d098ff825747033ae020529de9b`.
+- `src/material/chips/chip-row.spec.ts` — file; Git blob `299a9f4a24ea2281e19e72b3e3579c45d214caa4`.
+- `src/material/chips/chip-row.ts` — file; Git blob `a43dc91669a482f2b61a15779b098bf3e37b6617`.
+- `src/material/chips/chip-set.scss` — file; Git blob `3538a9daed9dc467db89c6d14227c4aa32ae3b76`.
+- `src/material/chips/chip-set.spec.ts` — file; Git blob `fe30e18349b2199f4ec3441d14c2e21646fd27e7`.
+- `src/material/chips/chip-set.ts` — file; Git blob `b0682239d1d5aab416ca412b55a2f233e7acff93`.
+- `src/material/chips/chip-text-control.ts` — file; Git blob `da91c1958695982cd4dea56c7f83b3af28d6c98c`.
+- `src/material/chips/chip.html` — file; Git blob `be514ac35fc84ae7d64284499c44fc0d1aa5d7ed`.
+- `src/material/chips/chip.scss` — file; Git blob `6324868ef8f68a82a40fa489daef96d8420f48ae`.
+- `src/material/chips/chip.spec.ts` — file; Git blob `b08260c16d1ea1bb5e61c5c289b69ef4d435439b`.
+- `src/material/chips/chip.ts` — file; Git blob `bf87b4e38be6868a1d1124f39f082ca29a08b0cb`.
+- `src/material/chips/chips-module.ts` — file; Git blob `7970d1fe1bf88bf15b100ee1899dd0bc4dfb7c2f`.
+- `src/material/chips/chips.md` — file; Git blob `c0c0851f70a8cccedbb353b17c14be7fe343ccd2`.
+- `src/material/chips/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/chips/public-api.ts` — file; Git blob `b5979b01765c37df416f0cab6025e837dae85245`.
+- `src/material/chips/testing/` — folder; Git tree `e9b7bd2ab10135da8f83eb8f6cdc20bd993e8e48`.
+- `src/material/chips/testing/BUILD.bazel` — file; Git blob `513c485efefc6e408e12f23d68c46be1c383211e`.
+- `src/material/chips/testing/chip-avatar-harness.ts` — file; Git blob `0d676573a2537050a6970e07a9f43e151edfcc40`.
+- `src/material/chips/testing/chip-edit-harness.ts` — file; Git blob `dacebe95f5cd7d99a71891fbe603d411818656fe`.
+- `src/material/chips/testing/chip-edit-input-harness.ts` — file; Git blob `c9acfa3891d696c4d2ee6a66f9fab7470ef92b2d`.
+- `src/material/chips/testing/chip-grid-harness.spec.ts` — file; Git blob `718d21c865d8622e2404c1ed49fa77a43b67d99e`.
+- `src/material/chips/testing/chip-grid-harness.ts` — file; Git blob `9fdae7c0556945bec12c46838ad7ef639e56a3ea`.
+- `src/material/chips/testing/chip-harness-filters.ts` — file; Git blob `d42e3c6a803a55375fca57a49611d60fe95b6abe`.
+- `src/material/chips/testing/chip-harness.spec.ts` — file; Git blob `8fd39bfee45a4bc1130ffd09e4accc74a8750958`.
+- `src/material/chips/testing/chip-harness.ts` — file; Git blob `4b7c5133c70f583c915fccef8a04dcf08420abf8`.
+- `src/material/chips/testing/chip-input-harness.spec.ts` — file; Git blob `66579f28ab634f3de75776b9ccb7a79de9f59fee`.
+- `src/material/chips/testing/chip-input-harness.ts` — file; Git blob `951f401faf461121b4d143d60d3a8718b2b3eb2e`.
+- `src/material/chips/testing/chip-listbox-harness.spec.ts` — file; Git blob `a878403781f3586cdb7a37144c356b309197a6e3`.
+- `src/material/chips/testing/chip-listbox-harness.ts` — file; Git blob `4a5ba050168c3247100bf4cb6d3b67f8b1e97b26`.
+- `src/material/chips/testing/chip-option-harness.spec.ts` — file; Git blob `b890d3200f16f29b44b6a133f2c5da29bcee4aa5`.
+- `src/material/chips/testing/chip-option-harness.ts` — file; Git blob `366f9617ba5ac311ea6ca5c30e150c055f1fff05`.
+- `src/material/chips/testing/chip-remove-harness.ts` — file; Git blob `67b55583a9c5c2e5fe11a7014235a0986dee52ea`.
+- `src/material/chips/testing/chip-row-harness.spec.ts` — file; Git blob `faa64bcf0f3253de18733f96c3f391c3877c250b`.
+- `src/material/chips/testing/chip-row-harness.ts` — file; Git blob `6b827ba6bfe60e8c0e698f2aef5c138401a728c6`.
+- `src/material/chips/testing/chip-set-harness.spec.ts` — file; Git blob `a70cf5d1a61fee5a15a7a6d6f00d356fb7c28615`.
+- `src/material/chips/testing/chip-set-harness.ts` — file; Git blob `e9e823bbd970a031106ffec1075a822bc9ec109c`.
+- `src/material/chips/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/chips/testing/public-api.ts` — file; Git blob `222ff8ce2414ef8dfcea6ed8e1dc800ef177db72`.
+- `src/material/chips/tokens.ts` — file; Git blob `945ac4bc39b2dffdf5e0b7ea7b12b702fd3e78d3`.
+- `src/material/datepicker/` — folder; Git tree `007002293c88262ff29bb615a9164988908daa3f`.
+- `src/material/datepicker/BUILD.bazel` — file; Git blob `af9de2eed2e7ff65f0c3ca0b59653a01bb07554b`.
+- `src/material/datepicker/README.md` — file; Git blob `b972f67e5d281c7867e2d3b81ad1f7ef2b9fc9a6`.
+- `src/material/datepicker/_datepicker-legacy-compat.scss` — file; Git blob `bd290f4a6269fb94deca0ce87b80c17087208fdc`.
+- `src/material/datepicker/_datepicker-theme.scss` — file; Git blob `d961841d85d6bd3a44016e055020d64644bbcb8d`.
+- `src/material/datepicker/_m2-datepicker.scss` — file; Git blob `595b38d9482f792e1b70ea83452015d70c90d6d7`.
+- `src/material/datepicker/_m3-datepicker.scss` — file; Git blob `262c93b0f958a4bd0880c7df1a0e48be79d53782`.
+- `src/material/datepicker/aria-accessible-name.spec.ts` — file; Git blob `260164b2cddcf7e2eb3927346d5535eff5f24d48`.
+- `src/material/datepicker/aria-accessible-name.ts` — file; Git blob `b7a3377a8e6121b26c213e512350c9bb44bd38fd`.
+- `src/material/datepicker/calendar-body.html` — file; Git blob `1b6c113fe87eda7c13bb050589ed681d23ecffd7`.
+- `src/material/datepicker/calendar-body.scss` — file; Git blob `d0e622715f0e024fbd8496be29f4852cf3b3b1be`.
+- `src/material/datepicker/calendar-body.spec.ts` — file; Git blob `d71acc974cb05e268b7673f8267c1d6ec4a280c6`.
+- `src/material/datepicker/calendar-body.ts` — file; Git blob `73140921a559c440c814abceb52df80a01519fed`.
+- `src/material/datepicker/calendar-header.html` — file; Git blob `9885aeb0af1bab4e2b18f61be8b704549ad39c3f`.
+- `src/material/datepicker/calendar-header.spec.ts` — file; Git blob `0ff5aa7c293b655c922ca84bf3cd76c7d269a5b5`.
+- `src/material/datepicker/calendar.html` — file; Git blob `c75a30eff443e6a730ce83684319157d627814a9`.
+- `src/material/datepicker/calendar.scss` — file; Git blob `15510913ee1e640fc1c7076616f4778ac0a9bfdb`.
+- `src/material/datepicker/calendar.spec.ts` — file; Git blob `eb5977bb3db67529c415d90e66bb47ffe9d85848`.
+- `src/material/datepicker/calendar.ts` — file; Git blob `67fe3ed0a75ddcb0993aea26e3da6402de44df25`.
+- `src/material/datepicker/date-range-input-parts.ts` — file; Git blob `62c2b810088ca7ffe19e7f2af2f5c98d74ac9ec8`.
+- `src/material/datepicker/date-range-input.html` — file; Git blob `a81347d7a6f6d8be54a4868c371d6619dcf1b0cd`.
+- `src/material/datepicker/date-range-input.scss` — file; Git blob `0764e8719cf809f73ad8aab15ab9f096f412e2cb`.
+- `src/material/datepicker/date-range-input.spec.ts` — file; Git blob `27e7717aa5075cc85605a258343f8f25d53c085f`.
+- `src/material/datepicker/date-range-input.ts` — file; Git blob `f2486041beb2d82a0316086b38f05bcb66338907`.
+- `src/material/datepicker/date-range-picker.ts` — file; Git blob `7d094e7d7536b6288c4c2cb1bddc99988783e04a`.
+- `src/material/datepicker/date-range-selection-strategy.spec.ts` — file; Git blob `b8944672fee49618b9cf2aeb999ae94e5c0b2373`.
+- `src/material/datepicker/date-range-selection-strategy.ts` — file; Git blob `b7faaf2b3ed96d0714276c67b2c87b924b58351c`.
+- `src/material/datepicker/date-selection-model.ts` — file; Git blob `95549d187c98ecf1ded88b6df3fc04b35dc8ac8d`.
+- `src/material/datepicker/datepicker-actions.scss` — file; Git blob `ddb4fed95519c86dc4a9f03bbd3dbc14040f514e`.
+- `src/material/datepicker/datepicker-actions.spec.ts` — file; Git blob `5959c4e28d8f754200aa5c5f35b3ea8f9b2a4357`.
+- `src/material/datepicker/datepicker-actions.ts` — file; Git blob `d7692b5989c25dd963e3f285ad1f9301d0d0419d`.
+- `src/material/datepicker/datepicker-base.ts` — file; Git blob `9b4958b3560b4ab622225ef252d9c5328a2e1ef6`.
+- `src/material/datepicker/datepicker-content.html` — file; Git blob `c424674818873740ed6f0415a1e5e05c8242e2bc`.
+- `src/material/datepicker/datepicker-content.scss` — file; Git blob `9fac4e7cb9902da1804ffe45547af1b855442464`.
+- `src/material/datepicker/datepicker-errors.ts` — file; Git blob `0bfc681796243020e5cf75d0e9a4ebf5db712cfb`.
+- `src/material/datepicker/datepicker-input-base.ts` — file; Git blob `70b879464e2e69c6698acb2a41c7c6266e6ff304`.
+- `src/material/datepicker/datepicker-input.ts` — file; Git blob `65a69d434128f4df0b11efbdcb854e0213a804f8`.
+- `src/material/datepicker/datepicker-intl.ts` — file; Git blob `d07fcab6580157fe08232ec3105c4ab7f885b767`.
+- `src/material/datepicker/datepicker-module.ts` — file; Git blob `7048cdb4b732e1fd2489213d82eb70cb5a179078`.
+- `src/material/datepicker/datepicker-toggle.html` — file; Git blob `3bdcc341f5a6eda61ebdaa71df11e79a3c2aca48`.
+- `src/material/datepicker/datepicker-toggle.scss` — file; Git blob `f12d390eb3db2f2b2aabcc0f0fe2dece4510cd62`.
+- `src/material/datepicker/datepicker-toggle.ts` — file; Git blob `7646acddb3175b4d1f3029e58cc7388b1e5114af`.
+- `src/material/datepicker/datepicker.md` — file; Git blob `a95f0af9852f047c95a52f8a00b989e19fcbf9b7`.
+- `src/material/datepicker/datepicker.spec.ts` — file; Git blob `3e6ef9ded20abf3c32b23e56a72ded35ff550a4f`.
+- `src/material/datepicker/datepicker.ts` — file; Git blob `639402be9cabaebd32d0f5e5f7fdd125ea252ff8`.
+- `src/material/datepicker/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/datepicker/month-view.html` — file; Git blob `fa0c2750d94ddd4c974dd8222312b6fdd6bf1b31`.
+- `src/material/datepicker/month-view.spec.ts` — file; Git blob `c444fc394140f0a8c84b8789e61bbee3b3ee5d56`.
+- `src/material/datepicker/month-view.ts` — file; Git blob `8d248096a9c616edf9d1cb8fc3f5142e6588ee66`.
+- `src/material/datepicker/multi-year-view.html` — file; Git blob `91a72ab51eb00c5c6bcd0a79ada84658b7adeca6`.
+- `src/material/datepicker/multi-year-view.spec.ts` — file; Git blob `8d4a4864389b0d74d55112633d25ad54bfbf572a`.
+- `src/material/datepicker/multi-year-view.ts` — file; Git blob `24211f2d7631646195caa26d6ccfaf27e030683c`.
+- `src/material/datepicker/public-api.ts` — file; Git blob `e9d153e3eb3d9e02ce96ba4abadacd0ac9959232`.
+- `src/material/datepicker/testing/` — folder; Git tree `92abc1378822f8916b4d8dc204f93173c7359de1`.
+- `src/material/datepicker/testing/BUILD.bazel` — file; Git blob `e6dfdf891f12d0e46b243b35edc77b0ebca518b3`.
+- `src/material/datepicker/testing/calendar-cell-harness.ts` — file; Git blob `0b5f259ea7c73e37159ccbadff5bd14b81df16aa`.
+- `src/material/datepicker/testing/calendar-harness.spec.ts` — file; Git blob `4e58afb54f202a4026f737d84e346153f10b9e9d`.
+- `src/material/datepicker/testing/calendar-harness.ts` — file; Git blob `a565d599cdde36af7221d20cb5db03fca36bd272`.
+- `src/material/datepicker/testing/date-range-input-harness.spec.ts` — file; Git blob `844b0b2923864e715e21d47a3dc73918fb18d6e8`.
+- `src/material/datepicker/testing/date-range-input-harness.ts` — file; Git blob `d1cbee84b9309722438addb200e5d6aa060573ca`.
+- `src/material/datepicker/testing/datepicker-actions-harness.spec.ts` — file; Git blob `ce9437b4c0dcddb77db8d783f052084583b09a43`.
+- `src/material/datepicker/testing/datepicker-actions-harness.ts` — file; Git blob `1e59800b6053c5fc6d9f14700f9167aa926ea173`.
+- `src/material/datepicker/testing/datepicker-harness-filters.ts` — file; Git blob `ba783c50356b10c3f276e7c2e06ebfc2b6755106`.
+- `src/material/datepicker/testing/datepicker-input-harness-base.ts` — file; Git blob `e2a41fa70e76efd471b2175803e2a481b9065e88`.
+- `src/material/datepicker/testing/datepicker-input-harness.spec.ts` — file; Git blob `93c77e8f1b112a2f40ff66299c22b0233becb9f6`.
+- `src/material/datepicker/testing/datepicker-input-harness.ts` — file; Git blob `8fda0dd806aadbf8d71531bf207eec52c7449f30`.
+- `src/material/datepicker/testing/datepicker-toggle-harness.spec.ts` — file; Git blob `079d982dac5a28e15ac07439382b37b06f4f2120`.
+- `src/material/datepicker/testing/datepicker-toggle-harness.ts` — file; Git blob `a163fc9cb3b871e8ec8e165d4c8d94ab7ff2b21e`.
+- `src/material/datepicker/testing/datepicker-trigger-harness-base.ts` — file; Git blob `a7299663709f732065b3e3803a916088f232921e`.
+- `src/material/datepicker/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/datepicker/testing/public-api.ts` — file; Git blob `ce944a176dafbf4e3bbd3b4daf2486d441297ee0`.
+- `src/material/datepicker/year-view.html` — file; Git blob `343cd814dfd6661b8b69ce7ac45680e7612ebbc0`.
+- `src/material/datepicker/year-view.spec.ts` — file; Git blob `1bb1805758c477f2e4a4bc1f82360e0697b117f9`.
+- `src/material/datepicker/year-view.ts` — file; Git blob `60765eb90263f75f4645af181cf94b10fa44a2ba`.
+- `src/material/form-field/` — folder; Git tree `b683153caf6c4d46aa9f3225ab0ad47509e6acb1`.
+- `src/material/form-field/BUILD.bazel` — file; Git blob `9d2bbecd71f1273b300189e9b496d3a36f1ccb25`.
+- `src/material/form-field/README.md` — file; Git blob `6f04996ade635103b201e50f2b26a15c694be2d4`.
+- `src/material/form-field/_form-field-focus-overlay.scss` — file; Git blob `81f1f6ab1c373d21733c657067737c3464f257ff`.
+- `src/material/form-field/_form-field-high-contrast.scss` — file; Git blob `40ea6551c28a093d320482ef52a85a0c5e2f9b99`.
+- `src/material/form-field/_form-field-native-select.scss` — file; Git blob `f41291505ee5ff0d7cee0bbae42ec1f814956695`.
+- `src/material/form-field/_form-field-subscript.scss` — file; Git blob `b3e06145400c80e5515a1dfa4e1bc05ee4b10289`.
+- `src/material/form-field/_form-field-theme.scss` — file; Git blob `fc272690e6f4f58923536725affa027c234eff8e`.
+- `src/material/form-field/_m2-form-field.scss` — file; Git blob `0c946f1d0e17aaee9b11265b1d7a3563e24f8f08`.
+- `src/material/form-field/_m3-form-field.scss` — file; Git blob `7d6b1bbfd36bc5e012a68cd690cefbc10baa8fb7`.
+- `src/material/form-field/_mdc-text-field-density-overrides.scss` — file; Git blob `efc14d0e19b6e858a61ab61acf91fa59cc3e34d5`.
+- `src/material/form-field/_mdc-text-field-structure-overrides.scss` — file; Git blob `9bcc1572612f2935948e76d0bf928c6a7f8a5d03`.
+- `src/material/form-field/_mdc-text-field-structure.scss` — file; Git blob `e84c27a5a683bee6dd73f6de0416e25dfdf655cb`.
+- `src/material/form-field/_mdc-text-field-textarea-overrides.scss` — file; Git blob `cee19bbf8536177eca9d86c7afb155dcaf40d86e`.
+- `src/material/form-field/_user-agent-overrides.scss` — file; Git blob `0c64ab6ac79f9c007e9d6b56a842df1910addd56`.
+- `src/material/form-field/directives/` — folder; Git tree `d6fe78325f49b54020a5d8b73042fc0f6003bafc`.
+- `src/material/form-field/directives/BUILD.bazel` — file; Git blob `5d5e7db6a335ab4d43f95f6e1cf846f217a1b64e`.
+- `src/material/form-field/directives/error.ts` — file; Git blob `ab56e375f76caa4fdd2facd2a0d4a526eea476b0`.
+- `src/material/form-field/directives/floating-label.ts` — file; Git blob `7f5f9bd2f2ec970261224c35d4778c156af2790a`.
+- `src/material/form-field/directives/hint.ts` — file; Git blob `147bd77b86e16a2f1574371719e492a199284778`.
+- `src/material/form-field/directives/label.ts` — file; Git blob `03074e52f24edbe3352360775296fce2107f3b3d`.
+- `src/material/form-field/directives/line-ripple.ts` — file; Git blob `4197ed37f70f2c5ba8b52f37392c236c4909b213`.
+- `src/material/form-field/directives/notched-outline.html` — file; Git blob `d0faa88541483d9d551c48fb94447f35f7e80aa1`.
+- `src/material/form-field/directives/notched-outline.ts` — file; Git blob `216e2b5eb5409e12192aa61da4ea5da97392fa60`.
+- `src/material/form-field/directives/prefix.ts` — file; Git blob `2a52c729e4f0db66109a347ea7314e03d98950a7`.
+- `src/material/form-field/directives/suffix.ts` — file; Git blob `eb0f557801b7250dfca6a762475a13676bb4e587`.
+- `src/material/form-field/form-field-control.ts` — file; Git blob `4454c7f534f794e9ab71df304c8b76ac4326ddb2`.
+- `src/material/form-field/form-field-errors.ts` — file; Git blob `90ca8417a84f50e32b590c03e75213a7c947753e`.
+- `src/material/form-field/form-field-module.ts` — file; Git blob `6b1d6884682cb02a3c1aa8c7d5f7f586c6a021f8`.
+- `src/material/form-field/form-field.html` — file; Git blob `b5e38afad4fb1e83a7069208ef70b99d0304bdce`.
+- `src/material/form-field/form-field.md` — file; Git blob `b89d1dbac824d57c7a58f5278dabe74dc24d7f64`.
+- `src/material/form-field/form-field.scss` — file; Git blob `00b2c60540e41b9edb0896caa72914615a8e3eb9`.
+- `src/material/form-field/form-field.ts` — file; Git blob `eaf3ccc9340c6d609331e1c697221309934be467`.
+- `src/material/form-field/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/form-field/public-api.ts` — file; Git blob `e16b3893296c5170f2b226f529b70fa5e0ab65dc`.
+- `src/material/form-field/testing/` — folder; Git tree `d9aa6eff3060d05406e3fc2920d992fa8ee880e0`.
+- `src/material/form-field/testing/BUILD.bazel` — file; Git blob `a8e660e17f18e559a6f5aba767e549f07076a207`.
+- `src/material/form-field/testing/control/` — folder; Git tree `2e110e9d600df3515704e430d323f3cd2d1747fa`.
+- `src/material/form-field/testing/control/BUILD.bazel` — file; Git blob `dbe086fe6d21b3acb6edd960cb8ac19c2e9ccb5a`.
+- `src/material/form-field/testing/control/form-field-control-harness-filters.ts` — file; Git blob `2959983406ab430c8a0e13066684cf03dfba2073`.
+- `src/material/form-field/testing/control/form-field-control-harness.ts` — file; Git blob `ad357f061badcc1e9325313283d4d90e420215af`.
+- `src/material/form-field/testing/control/index.ts` — file; Git blob `4454049bc88ae29dcd6f4812ba480b0033a8f252`.
+- `src/material/form-field/testing/error-harness.ts` — file; Git blob `f03bcf10a04d16687937389c67903cfdc8189f16`.
+- `src/material/form-field/testing/form-field-harness-filters.ts` — file; Git blob `fb627adab21e0b3aa673cadd2fb5aaa93d77c7a4`.
+- `src/material/form-field/testing/form-field-harness.spec.ts` — file; Git blob `028f45074eabce84160e7a952203ee2a00d2cde1`.
+- `src/material/form-field/testing/form-field-harness.ts` — file; Git blob `a33e760c248ffd0b9ba9f4535ad16c16b049bbdb`.
+- `src/material/form-field/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/form-field/testing/public-api.ts` — file; Git blob `e837753695fc0376fc9ff2a48d74be1e0bd63068`.
+- `src/material/input/` — folder; Git tree `911b432c80e378283d8be8d1a19d6aed32babfff`.
+- `src/material/input/BUILD.bazel` — file; Git blob `c7ababc6e637fd380b9006e1c98bb7d0ece36d20`.
+- `src/material/input/README.md` — file; Git blob `dd31fc35021de6b4c982cfd9d5c082bf2646964f`.
+- `src/material/input/_input-theme.scss` — file; Git blob `36b7be9470ac3f500fa6fd18be62c0aa59dc8eac`.
+- `src/material/input/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/input/input-errors.ts` — file; Git blob `faa79ef1475a27307e800bd999f941e2c368d156`.
+- `src/material/input/input-module.ts` — file; Git blob `864fd77fdf72cc9a73a913833bd445e1b49c2be7`.
+- `src/material/input/input-value-accessor.ts` — file; Git blob `4d00b96a48ec66a202ba0d36feda2ef2ad18c929`.
+- `src/material/input/input.md` — file; Git blob `5bc65709328c8d64b90d742968671ca5e3997032`.
+- `src/material/input/input.spec.ts` — file; Git blob `d1e2c57636bb8c5773354cf7da17eecf8271a4e1`.
+- `src/material/input/input.ts` — file; Git blob `ab71331eaaf8c3d5715501fb12c2ab93ebdb1e5f`.
+- `src/material/input/public-api.ts` — file; Git blob `ee0f998cb5a1d5b42d47bd390812ad99eace7d84`.
+- `src/material/input/testing/` — folder; Git tree `6e9c73a795333b0fa5c493ae602ffe67e288f4c5`.
+- `src/material/input/testing/BUILD.bazel` — file; Git blob `62f2ecbeab90c6def6fcd98c9565c945d071e579`.
+- `src/material/input/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/input/testing/input-harness-filters.ts` — file; Git blob `1635877e6ae952fd4c218c80f14f5430e05389d6`.
+- `src/material/input/testing/input-harness.spec.ts` — file; Git blob `20382ca4fe2946b72edb0e7fb029b6938730d097`.
+- `src/material/input/testing/input-harness.ts` — file; Git blob `c88101a32ad9f301a68cc9afe43e52f0a222b7d8`.
+- `src/material/input/testing/native-option-harness.ts` — file; Git blob `1c0a99e0abca64c870e3af105b213f045050ef5d`.
+- `src/material/input/testing/native-select-harness-filters.ts` — file; Git blob `e44566192d32b10955991a69eee05237305b2694`.
+- `src/material/input/testing/native-select-harness.spec.ts` — file; Git blob `3fc7eb1569baafc84079512f3e69feaa410356c4`.
+- `src/material/input/testing/native-select-harness.ts` — file; Git blob `7b0b17b175b18edb915da9521da74c34a7e142d0`.
+- `src/material/input/testing/public-api.ts` — file; Git blob `3c4d296e66bd5e9ac2eb960ace61a64dc34f50b1`.
+- `src/material/radio/` — folder; Git tree `d1ca14745e417688164e7e6fdb2836aabdf64e11`.
+- `src/material/radio/BUILD.bazel` — file; Git blob `72a82b87f39e510fa715a884002a0f569f2c7106`.
+- `src/material/radio/README.md` — file; Git blob `2ca2f121f10bea05518ff3c180feb1aa63dc26b6`.
+- `src/material/radio/_m2-radio.scss` — file; Git blob `4f60a4643bcd6744cac9f95bceb99812b51bbda8`.
+- `src/material/radio/_m3-radio.scss` — file; Git blob `b133ecd230699b3e7e51e922e309c610d066b519`.
+- `src/material/radio/_radio-common.scss` — file; Git blob `b73b0382d591b0ee7df3bc5664181dab0939157d`.
+- `src/material/radio/_radio-theme.scss` — file; Git blob `3afa42163e4c1709bdfa71112f3bb3981c8a4ce7`.
+- `src/material/radio/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/radio/public-api.ts` — file; Git blob `a9d8b43059b0dce15c1f53b5ab727c1c462df310`.
+- `src/material/radio/radio-module.ts` — file; Git blob `4bbdcac8004aafe18861a52938e602be0fc962f5`.
+- `src/material/radio/radio.html` — file; Git blob `f7546b17e11edcd84eea3b726ab83c82041b7ff6`.
+- `src/material/radio/radio.md` — file; Git blob `30103908fd371333574863dbb9dcdb0cedda75be`.
+- `src/material/radio/radio.scss` — file; Git blob `9aac73119483c63a816d53a207b883a20b07ce1f`.
+- `src/material/radio/radio.spec.ts` — file; Git blob `d4a1e796944585663897b1d29a4dbccc54f7e304`.
+- `src/material/radio/radio.ts` — file; Git blob `b5cc58cb27b219578c4c3165b1d7b715e02ed181`.
+- `src/material/radio/testing/` — folder; Git tree `f81fbcb97b409d179758e3475c35172f8b28056d`.
+- `src/material/radio/testing/BUILD.bazel` — file; Git blob `a392dca94dc767ff14c92eb8bf89f535d11bd21d`.
+- `src/material/radio/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/radio/testing/public-api.ts` — file; Git blob `98769ce9f7dd23c2636c87e4659e8521b886d83c`.
+- `src/material/radio/testing/radio-harness-filters.ts` — file; Git blob `94db1b7a8b7bb07907ca72ccb39278d6787780ec`.
+- `src/material/radio/testing/radio-harness.spec.ts` — file; Git blob `55aab6a2fef77a88cc6321cac004342e0c7d11cd`.
+- `src/material/radio/testing/radio-harness.ts` — file; Git blob `c445f7cd46283af06c1be9f8b9a278b8677f9248`.
+- `src/material/select/` — folder; Git tree `bd35e427d8d7627e6cd6507447f1b6489c9a39f0`.
+- `src/material/select/BUILD.bazel` — file; Git blob `a0322c99128fb84529f6cc87cda083861b742030`.
+- `src/material/select/README.md` — file; Git blob `beb4f46142349e5208c7d60745ef344a276a6731`.
+- `src/material/select/_m2-select.scss` — file; Git blob `c485ee3bd603cb685696e84fba169567b4eb339f`.
+- `src/material/select/_m3-select.scss` — file; Git blob `de5199f7b1a867d2d4cfe00b2b88d7a1b80ed747`.
+- `src/material/select/_select-theme.scss` — file; Git blob `0e842a4e4f8f3a9c2393bf04e2dc45e41c6c356f`.
+- `src/material/select/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/select/public-api.ts` — file; Git blob `a6fccb38fc11e29713a729ace3568e6c4bc21fd0`.
+- `src/material/select/select-errors.ts` — file; Git blob `d60346afacd6d4e41ec33c12037dd7a25de9859f`.
+- `src/material/select/select-module.ts` — file; Git blob `98730ff9c4e3ad0892614f6d84b3062cadaca999`.
+- `src/material/select/select.html` — file; Git blob `d31f2c834ecdbafc55bc08984ee3a63b9cef86f1`.
+- `src/material/select/select.md` — file; Git blob `6bedcb29c88c0470b114267f5b7145c3e7fe6942`.
+- `src/material/select/select.scss` — file; Git blob `62786f255c7a6ba8c6079a906ea71ef80bfe3660`.
+- `src/material/select/select.spec.ts` — file; Git blob `9728ec2d78ac6fe24c5f2c85ff3704a350281e8b`.
+- `src/material/select/select.ts` — file; Git blob `59415b689663896489a893c23d965a4a4c6565fe`.
+- `src/material/select/testing/` — folder; Git tree `307593a324797a2fed950c0ef4ff2d7192bffced`.
+- `src/material/select/testing/BUILD.bazel` — file; Git blob `9d0dd1b76905ad58ffa1064b7d403cc503790602`.
+- `src/material/select/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/select/testing/public-api.ts` — file; Git blob `e52abf9ce2bbb8eecd9e72969282b3760b7dcce7`.
+- `src/material/select/testing/select-harness-filters.ts` — file; Git blob `cacbeb900d2703a3d7c2e45eec09c5a62ac7a8ad`.
+- `src/material/select/testing/select-harness.spec.ts` — file; Git blob `cd9c8b6b626b43b761855ac61f051f4276660f9a`.
+- `src/material/select/testing/select-harness.ts` — file; Git blob `36d10d4ed5b0ea27e2ed717a8121af4cba5678dd`.
+- `src/material/slide-toggle/` — folder; Git tree `7dc102a8a671a1b9bf1423848ae517994df125fc`.
+- `src/material/slide-toggle/BUILD.bazel` — file; Git blob `670051f1243c4618e111c3461e7ef7d83c6248da`.
+- `src/material/slide-toggle/README.md` — file; Git blob `31214c49d1ad51a8246afad886457f18604de6d4`.
+- `src/material/slide-toggle/_m2-slide-toggle.scss` — file; Git blob `a81c3a5fa9b2e3a928e6f2ef503b0b3c2a6fe141`.
+- `src/material/slide-toggle/_m3-slide-toggle.scss` — file; Git blob `df3292cb7dbefc2ca29e71e931dfdacd36502242`.
+- `src/material/slide-toggle/_slide-toggle-theme.scss` — file; Git blob `8fbbeab6bc212a629fb72efe4b25535e621e86e9`.
+- `src/material/slide-toggle/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/slide-toggle/public-api.ts` — file; Git blob `1bec866b031eefa2f8c060c894e321d1b12037b9`.
+- `src/material/slide-toggle/slide-toggle-config.ts` — file; Git blob `e78afce93700d53e7e801c3660f99f38e73dcc06`.
+- `src/material/slide-toggle/slide-toggle-module.ts` — file; Git blob `6ae1231aac936867cc4def5153f4e794ec0701e9`.
+- `src/material/slide-toggle/slide-toggle.html` — file; Git blob `6e1c74ce2ad4de72a194f30372c26a2814338814`.
+- `src/material/slide-toggle/slide-toggle.md` — file; Git blob `f95117afbfcc8da8cf7f87f71ada6c02f6149a3e`.
+- `src/material/slide-toggle/slide-toggle.scss` — file; Git blob `d504cb9b23579924b15f5be9b3d08c83b6346876`.
+- `src/material/slide-toggle/slide-toggle.spec.ts` — file; Git blob `760d2a824fa6636792051a9ee4371e9950d01960`.
+- `src/material/slide-toggle/slide-toggle.ts` — file; Git blob `3fb3c70f9a511b914dcbd2179db382059d24f2e8`.
+- `src/material/slide-toggle/testing/` — folder; Git tree `50d07faca64f2f1a127293c662a89b1cf2742f1c`.
+- `src/material/slide-toggle/testing/BUILD.bazel` — file; Git blob `3e27e2531ab7f0f8d7ea989758ebd960c5b5b915`.
+- `src/material/slide-toggle/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/slide-toggle/testing/public-api.ts` — file; Git blob `1c983b29ad85debe558367eed607a0f3da13aa4b`.
+- `src/material/slide-toggle/testing/slide-toggle-harness-filters.ts` — file; Git blob `6eea9dfad04d5e5464f1a9bc5d8ff93960ecd49a`.
+- `src/material/slide-toggle/testing/slide-toggle-harness.spec.ts` — file; Git blob `ac0bac3b7046b9b8d47bb2d0817ba031f7f3dd7c`.
+- `src/material/slide-toggle/testing/slide-toggle-harness.ts` — file; Git blob `4e4432a2a156d87da3073e2133ce0019c369e980`.
+- `src/material/slider/` — folder; Git tree `ed26d1cac375ee3b504e3be55bd67a1574729dda`.
+- `src/material/slider/BUILD.bazel` — file; Git blob `8344ebca78177d7d605bb6968a9030b4115508cd`.
+- `src/material/slider/README.md` — file; Git blob `9bf0fca3c9c5ea31bf2d403dcba6a19d93102ba8`.
+- `src/material/slider/_m2-slider.scss` — file; Git blob `acaa27667ccb595f6a8981aad877c570a06230e1`.
+- `src/material/slider/_m3-slider.scss` — file; Git blob `c3e4908fb560dfb1f456ec07439ee5e19c3c81a6`.
+- `src/material/slider/_slider-theme.scss` — file; Git blob `5a2bc794003a53309bb627dbd58d0d35addf3771`.
+- `src/material/slider/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/slider/public-api.ts` — file; Git blob `f44399a0fbf852c1ad3133ccfc3d83209126eb59`.
+- `src/material/slider/slider-input.ts` — file; Git blob `fb8318b88d762e58657e319a2e63bd0e43f56c99`.
+- `src/material/slider/slider-interface.ts` — file; Git blob `292eec4dfca2ef3e0a798ad0a9c3954486cd4140`.
+- `src/material/slider/slider-module.ts` — file; Git blob `1a70527107599fe6530d43dd2684ab36c54a7069`.
+- `src/material/slider/slider-thumb.html` — file; Git blob `155fd0ad4a85f8ea17017f90d8fa61847b919a3c`.
+- `src/material/slider/slider-thumb.scss` — file; Git blob `48a4acb23f7fd00c52b9f073a93eb1d0de6e450b`.
+- `src/material/slider/slider-thumb.ts` — file; Git blob `74d32c2dc410be377d11fafdff6fb7eda151dead`.
+- `src/material/slider/slider.e2e.spec.ts` — file; Git blob `7bf1ff539429f61ca9e1e9491116dd519e311442`.
+- `src/material/slider/slider.html` — file; Git blob `23329ba40b40cecc033f85d0a6fd52d756149ec6`.
+- `src/material/slider/slider.md` — file; Git blob `c8e358b8e58257549a89f0e30d35ba2be82af5e2`.
+- `src/material/slider/slider.scss` — file; Git blob `952f722af0c2efdd79397180d6f5c4c7f4aae582`.
+- `src/material/slider/slider.spec.ts` — file; Git blob `a22860c4ae78fdf69773ba2ea8df82d6a0907aa3`.
+- `src/material/slider/slider.ts` — file; Git blob `12f8e52e009f8b10ee5ddd59e933fe0488838d83`.
+- `src/material/slider/testing/` — folder; Git tree `45ff8890d3762e85122391e2bc49230b89b751f4`.
+- `src/material/slider/testing/BUILD.bazel` — file; Git blob `22e581d4e169d9cbf7ad52eaba55fe878f3c3859`.
+- `src/material/slider/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/slider/testing/public-api.ts` — file; Git blob `c0de2cd49f8e645b824827e9ea9c622f50a849ec`.
+- `src/material/slider/testing/slider-harness-filters.ts` — file; Git blob `76c769b1d8f420b50820329820475887d6b31f6d`.
+- `src/material/slider/testing/slider-harness.spec.ts` — file; Git blob `a1cb420759263365387650438d09db393a0f6d17`.
+- `src/material/slider/testing/slider-harness.ts` — file; Git blob `19b535fa55b1460d435fc57d0f2853d81539a260`.
+- `src/material/slider/testing/slider-thumb-harness.ts` — file; Git blob `18610fc8c0ce968a9fe3493d6c38872871654296`.
+- `src/material/timepicker/` — folder; Git tree `018eedfa155ebb6bdc61c0e374fd0a6d872f60b3`.
+- `src/material/timepicker/BUILD.bazel` — file; Git blob `1e8bcf2457adfe7c83a6afea71d1c8a934b3e7b0`.
+- `src/material/timepicker/README.md` — file; Git blob `7e82b09e58924d27f18766ff6a634b91140283e1`.
+- `src/material/timepicker/_m2-timepicker.scss` — file; Git blob `1863caf22f47cd3b1e9ea2bfde93108aa2ba2c9e`.
+- `src/material/timepicker/_m3-timepicker.scss` — file; Git blob `8c8e3c5663f5f56fc9c263988436a6491c95d0f6`.
+- `src/material/timepicker/_timepicker-theme.scss` — file; Git blob `29fc4dc7348df9e0f7ee363c75cdb14f38f37640`.
+- `src/material/timepicker/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/timepicker/public-api.ts` — file; Git blob `d544ec4520a5da0eb37928119b19efde2170ffe2`.
+- `src/material/timepicker/testing/` — folder; Git tree `aa7b2147c181e52628ec624413a71da5baf71222`.
+- `src/material/timepicker/testing/BUILD.bazel` — file; Git blob `8927412942c0244ec35ab081cd18e4116eea1d45`.
+- `src/material/timepicker/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/timepicker/testing/public-api.ts` — file; Git blob `3aa001551b7baac3f42990ff38898662f94ce8df`.
+- `src/material/timepicker/testing/timepicker-harness-filters.ts` — file; Git blob `0b34e2bdecc0b3997eeabda200fe90c0b02acb06`.
+- `src/material/timepicker/testing/timepicker-harness.spec.ts` — file; Git blob `d732973de5b6705cdcfbdf11a65bb9c4cdd648cb`.
+- `src/material/timepicker/testing/timepicker-harness.ts` — file; Git blob `f682d40455c1ecebe17838178664061252574604`.
+- `src/material/timepicker/testing/timepicker-input-harness.spec.ts` — file; Git blob `0060b04485ca7754006e9e3f4ce15a5a8e88788a`.
+- `src/material/timepicker/testing/timepicker-input-harness.ts` — file; Git blob `4ac18ba5b3ac3a25bd11c9f08c67c0324d00a24b`.
+- `src/material/timepicker/testing/timepicker-toggle-harness.spec.ts` — file; Git blob `6335288dd7baca0e30281bba2643c2110317fcbc`.
+- `src/material/timepicker/testing/timepicker-toggle-harness.ts` — file; Git blob `4c4219531dff93b2fa2fd47eee4f2948b94d31d4`.
+- `src/material/timepicker/timepicker-input.ts` — file; Git blob `d06b164b549ebe99b9eea08227401a3866c1c6fa`.
+- `src/material/timepicker/timepicker-module.ts` — file; Git blob `a6850da9706662c78904f1bcea81938744c6a986`.
+- `src/material/timepicker/timepicker-toggle.html` — file; Git blob `c8edc8a33a3be30b5ee476404011364c91892a61`.
+- `src/material/timepicker/timepicker-toggle.ts` — file; Git blob `0fcd14c9740eafc482e1bf10cb6b07e4c43676a6`.
+- `src/material/timepicker/timepicker.html` — file; Git blob `7e248eae11f4d0f89e98d2e20b6dbd0fa38f6747`.
+- `src/material/timepicker/timepicker.md` — file; Git blob `1240110c7c78bb7e64691d9b990f3e4c51cac77a`.
+- `src/material/timepicker/timepicker.scss` — file; Git blob `391a565d72717c3cd0f833e82dc1a909071e347f`.
+- `src/material/timepicker/timepicker.spec.ts` — file; Git blob `0907f469f2910df8ef4d0abf2bf5d56b1347c11a`.
+- `src/material/timepicker/timepicker.ts` — file; Git blob `566b0e8baedcbcbddb1a7001cd86127e58d8050b`.
+- `src/material/timepicker/util.spec.ts` — file; Git blob `f3225eace9718b7cc8d9b12aa2c8c02b0440bab1`.
+- `src/material/timepicker/util.ts` — file; Git blob `1a97abbee2b697259fcf8d3a4f63b07e8fd2a9fd`.
+
+### Navigation and workflow
+
+[Category descriptions](Navigation-and-workflow.survey.md). Objects: 177.
+
+- `@angular/material/menu` — export; published export declaration, version `22.1.7`.
+- `@angular/material/menu/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/sidenav` — export; published export declaration, version `22.1.7`.
+- `@angular/material/sidenav/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/stepper` — export; published export declaration, version `22.1.7`.
+- `@angular/material/stepper/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/tabs` — export; published export declaration, version `22.1.7`.
+- `@angular/material/tabs/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/toolbar` — export; published export declaration, version `22.1.7`.
+- `@angular/material/toolbar/testing` — export; published export declaration, version `22.1.7`.
+- `src/material/menu/` — folder; Git tree `367305f406d2f5c4fd0ad013f8b776b092ad8c85`.
+- `src/material/menu/BUILD.bazel` — file; Git blob `9b8ab63420f14b91a8ac9aea2d06e0fda19c9556`.
+- `src/material/menu/README.md` — file; Git blob `de661e68c8bedabb345cff5a7dede52988c69002`.
+- `src/material/menu/_m2-menu.scss` — file; Git blob `80d8b990afe2ac9fde9407d37f8e14b7441df231`.
+- `src/material/menu/_m3-menu.scss` — file; Git blob `20ecd0555dad9c27f52597eb93b33fdd3c619cac`.
+- `src/material/menu/_menu-theme.scss` — file; Git blob `aefbf7611b95007b91f69c6f568e659a710879ef`.
+- `src/material/menu/context-menu-trigger.spec.ts` — file; Git blob `a97259a53099698714a072a3eb3eb963be34410d`.
+- `src/material/menu/context-menu-trigger.ts` — file; Git blob `0d39ba7834ead8c83655b7e9867a800a47ea7b4d`.
+- `src/material/menu/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/menu/menu-content.ts` — file; Git blob `ff99bda85d3107e0e6002c58498a65a6f37c2fe5`.
+- `src/material/menu/menu-errors.ts` — file; Git blob `6511748851fcc3be9e5a0d6262a9553b74281a6c`.
+- `src/material/menu/menu-item.html` — file; Git blob `a7d348e5b93e8be14f4ea545d37da031ece18003`.
+- `src/material/menu/menu-item.ts` — file; Git blob `e16ea30a4114c4b8defe7b4f3f88207aa71ab8a0`.
+- `src/material/menu/menu-module.ts` — file; Git blob `f8abb7f1edee75d10cc3bd9206300f79f8747ecc`.
+- `src/material/menu/menu-panel.ts` — file; Git blob `b6814cbc28285f6b59b6cdda5aebaea439a2ae39`.
+- `src/material/menu/menu-positions.ts` — file; Git blob `8e3854e0c703d184b2e12d4d44b3ba7cb52116fb`.
+- `src/material/menu/menu-trigger-base.ts` — file; Git blob `6e8bf225b59c2603cc11a3ee21794b60a20fec66`.
+- `src/material/menu/menu-trigger.ts` — file; Git blob `16b56ae4b12e6321d34cc12fe237b0c4eda7be61`.
+- `src/material/menu/menu.html` — file; Git blob `bfa7b7419207f737a044a77293d782f71898fce1`.
+- `src/material/menu/menu.md` — file; Git blob `b3ded2c9ecc761a13cc8a179908d46a47433de7b`.
+- `src/material/menu/menu.scss` — file; Git blob `4f8d64d46b908717e09db6e7d8c9d420e2f96524`.
+- `src/material/menu/menu.spec.ts` — file; Git blob `969a34725eb3d9877596358ae80647903a202a3a`.
+- `src/material/menu/menu.ts` — file; Git blob `9a76162a8611083eef0a68ead831808df87d0595`.
+- `src/material/menu/public-api.ts` — file; Git blob `f861c34ee0426b6c5656cc34adaa4d2e15d71654`.
+- `src/material/menu/testing/` — folder; Git tree `5513bb9aeedf83267f89cd0b12cfca4706106753`.
+- `src/material/menu/testing/BUILD.bazel` — file; Git blob `bb8065b43cb314c88609872d0334e16fcf0df39f`.
+- `src/material/menu/testing/context-menu-harness.spec.ts` — file; Git blob `71c39eb089e4d3a1e15e59a832924433e117c3b1`.
+- `src/material/menu/testing/context-menu-harness.ts` — file; Git blob `4b08d4514cc3c04bec298698359f69d95d743c8e`.
+- `src/material/menu/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/menu/testing/menu-harness-filters.ts` — file; Git blob `fc74bc6daa9a9b3358e15796481f0c1f0599773c`.
+- `src/material/menu/testing/menu-harness.spec.ts` — file; Git blob `55ac3068b5ed2b20d03c168d2daf4aff7b592a96`.
+- `src/material/menu/testing/menu-harness.ts` — file; Git blob `55951213b65fa55477535cb9eb6d27089c0233bb`.
+- `src/material/menu/testing/public-api.ts` — file; Git blob `72ad90e6fc0e26b792f88ab335a28fc4fb9f6329`.
+- `src/material/sidenav/` — folder; Git tree `f25e47543944edd73c3d808c56122c3686a6411f`.
+- `src/material/sidenav/BUILD.bazel` — file; Git blob `12b246015cc9cfdc794caa390f3d461ca3694bb0`.
+- `src/material/sidenav/README.md` — file; Git blob `4fb96a0f590309a57c6ad52fbe98cf5b0b29d4e4`.
+- `src/material/sidenav/_m2-sidenav.scss` — file; Git blob `d52efc4749ab642755cae90193777c0269461db6`.
+- `src/material/sidenav/_m3-sidenav.scss` — file; Git blob `7bc2219d9204969fdc23657693e2b42d19e86f73`.
+- `src/material/sidenav/_sidenav-theme.scss` — file; Git blob `602f22f4024ddb7061fb001d104c15af0974aabc`.
+- `src/material/sidenav/drawer-container.html` — file; Git blob `193284095fecfefee53107f01f172bca939f7ea3`.
+- `src/material/sidenav/drawer.html` — file; Git blob `5743adea2ce967c96b1db210c25c03526289c35c`.
+- `src/material/sidenav/drawer.scss` — file; Git blob `b84d79c8260f534e90641cb8c41b5df5de4508e6`.
+- `src/material/sidenav/drawer.spec.ts` — file; Git blob `c16fa2e45ad03b7b6e49fc1ee5f6cbf30d9691a2`.
+- `src/material/sidenav/drawer.ts` — file; Git blob `af08195d76102034fbc631aa98e9c252b20b85fd`.
+- `src/material/sidenav/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/sidenav/public-api.ts` — file; Git blob `867b82d25c9a2f0884f8f53e7842520734e48b23`.
+- `src/material/sidenav/sidenav-container.html` — file; Git blob `a6ce93472723f4a890242576921f06e1b34d7a56`.
+- `src/material/sidenav/sidenav-module.ts` — file; Git blob `25b15220f66783e3fa124e50fec371929a52d6ca`.
+- `src/material/sidenav/sidenav.md` — file; Git blob `b999760e0c3a0733bc8f8d2120c9c0f74f1d0981`.
+- `src/material/sidenav/sidenav.spec.ts` — file; Git blob `4d23fe8f02c2687edf328bf3d8e0359b1a06d4d9`.
+- `src/material/sidenav/sidenav.ts` — file; Git blob `dc7b69e70ac0a226b582a32beb946f8f1fffdea2`.
+- `src/material/sidenav/testing/` — folder; Git tree `053fdb127f315a93df81f4dc4b9cbfba6d7d29cc`.
+- `src/material/sidenav/testing/BUILD.bazel` — file; Git blob `3ef6ee854a8d1a75f13e6811f2d16a82608c33d9`.
+- `src/material/sidenav/testing/drawer-container-harness.ts` — file; Git blob `01e3afd6d9b37d47b3e2bdf15242591c6f4c86c9`.
+- `src/material/sidenav/testing/drawer-content-harness.ts` — file; Git blob `246581ad41be0fbfb7abec59cc56481e19368770`.
+- `src/material/sidenav/testing/drawer-harness-filters.ts` — file; Git blob `8a69f3f40c1f2cd7efd5b85626824baff19786d4`.
+- `src/material/sidenav/testing/drawer-harness.ts` — file; Git blob `151535da44eb6e38cb6b60387efb4a4f8c8388ac`.
+- `src/material/sidenav/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/sidenav/testing/public-api.ts` — file; Git blob `ce2352c4b4d06bfae5a4ca2f1dc218ad5b0adfac`.
+- `src/material/sidenav/testing/sidenav-container-harness.ts` — file; Git blob `1eaeff17a4fbddf739f6603e2d32c0915eaed251`.
+- `src/material/sidenav/testing/sidenav-content-harness.ts` — file; Git blob `e55c1c892164dddc12a54b48bac219221eb421f4`.
+- `src/material/sidenav/testing/sidenav-harness.spec.ts` — file; Git blob `8126d1027e5ad2e9778dc09de0090c00be3702cf`.
+- `src/material/sidenav/testing/sidenav-harness.ts` — file; Git blob `7d03f14ff2382c937914cbb6bdd07989b4e28791`.
+- `src/material/stepper/` — folder; Git tree `3574ad73c2c18c454af05785c5595159808368a4`.
+- `src/material/stepper/BUILD.bazel` — file; Git blob `362a7aa08934256537cd087615ff6a7d82dc6a1d`.
+- `src/material/stepper/_m2-stepper.scss` — file; Git blob `fb5df6095a743a1c2b3eaf0426168107869f2eed`.
+- `src/material/stepper/_m3-stepper.scss` — file; Git blob `6c3b5433a2909d53c825433f465a6b536a093949`.
+- `src/material/stepper/_stepper-theme.scss` — file; Git blob `326be2bf20408537568b26480ffd995d878bc964`.
+- `src/material/stepper/_stepper-variables.scss` — file; Git blob `7e3e0bdfe07d328f57b958a76991d1a2efdbb06d`.
+- `src/material/stepper/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/stepper/public-api.ts` — file; Git blob `2bb62cbf7977afe17c5259fce2de477da25c6028`.
+- `src/material/stepper/step-content.ts` — file; Git blob `21b660a91cc976c9dab4f9a117fba24fce9228b4`.
+- `src/material/stepper/step-header.html` — file; Git blob `0835eff4349d46914b58e78105693957ff4b7481`.
+- `src/material/stepper/step-header.scss` — file; Git blob `2dad0d3a6d7b782ae0c7613e3a8c720e07e43a64`.
+- `src/material/stepper/step-header.ts` — file; Git blob `d6a39d4dfc569d6741c3ad3863e27e1e7622a9d3`.
+- `src/material/stepper/step-label.ts` — file; Git blob `aa3b72a91fc8b69815cbba7be986a751ccad5514`.
+- `src/material/stepper/step.html` — file; Git blob `bd5b263e74ae7b6c533400a80101b980221474bf`.
+- `src/material/stepper/stepper-button.ts` — file; Git blob `1fe568527eccb71596c2afc91d31c0f4867b1d30`.
+- `src/material/stepper/stepper-icon.ts` — file; Git blob `3f55c8829d6c0ba4854c57610a54ec0392c2f69e`.
+- `src/material/stepper/stepper-intl.ts` — file; Git blob `2970d1b226beaa2ed5cbd47cb42a897475fc68c2`.
+- `src/material/stepper/stepper-module.ts` — file; Git blob `d06908efe3d516493ec7a91dc5e2325cc1366c18`.
+- `src/material/stepper/stepper.html` — file; Git blob `fbb58e7f27cb2bf1d8fa06f6a27a6ffaf83c0087`.
+- `src/material/stepper/stepper.md` — file; Git blob `f012d4520ef8e11bb24a1dd421b17ce0bf706403`.
+- `src/material/stepper/stepper.scss` — file; Git blob `22358d2234278d3c4f45e8de6d146ca5fa6d667b`.
+- `src/material/stepper/stepper.spec.ts` — file; Git blob `cfb7b1f12d0358d2d3bb9cb60e865677431cd9aa`.
+- `src/material/stepper/stepper.ts` — file; Git blob `a22a9c1e554eeb39af8fd3388b950f6f8d17f54e`.
+- `src/material/stepper/testing/` — folder; Git tree `d4fa0fc5a82308dc7527374d6c469a9b1e78759a`.
+- `src/material/stepper/testing/BUILD.bazel` — file; Git blob `6cb377847f8f2343d9ae5757c3e295dbd9ad0eab`.
+- `src/material/stepper/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/stepper/testing/public-api.ts` — file; Git blob `88b41e6bca71253075461a498932ace57f3096bd`.
+- `src/material/stepper/testing/step-harness-filters.ts` — file; Git blob `b4e5fc3bf26eb681d02db00341484d9de74ade45`.
+- `src/material/stepper/testing/step-harness.ts` — file; Git blob `ca27dc35212108dce7f67905dacad81a0f13f321`.
+- `src/material/stepper/testing/stepper-button-harnesses.ts` — file; Git blob `b05a5d14ff13980726edc60da86e313f20cc5eac`.
+- `src/material/stepper/testing/stepper-harness.spec.ts` — file; Git blob `34b156e44aaf24d17f5e9950912df14ad0838e49`.
+- `src/material/stepper/testing/stepper-harness.ts` — file; Git blob `07ee5929e3c2baabf53dfd91e4e1de32f6b25f67`.
+- `src/material/tabs/` — folder; Git tree `553f141217dd01ec66d4ad08ff79794b6936ffcd`.
+- `src/material/tabs/BUILD.bazel` — file; Git blob `8096c7c9d398c8d0b29ba654d306b760b7ea4977`.
+- `src/material/tabs/README.md` — file; Git blob `d7e5441f45c20255b65fa5b5d2e459d2ed3d3815`.
+- `src/material/tabs/_m2-tabs.scss` — file; Git blob `85d392439a7a69b926a48968dd23f77514ead38b`.
+- `src/material/tabs/_m3-tabs.scss` — file; Git blob `b5236583183b6cc170a86d583a1c61f7042910a7`.
+- `src/material/tabs/_tabs-common.scss` — file; Git blob `e3fc7a550ed24875ae6b0c0980888b05ee21a238`.
+- `src/material/tabs/_tabs-theme.scss` — file; Git blob `1c3afa5f42d363c71708671c479133e0ca8bad3a`.
+- `src/material/tabs/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/tabs/ink-bar.ts` — file; Git blob `d1dc457c022cca764d7881b63fb865d31ea5a9bf`.
+- `src/material/tabs/paginated-tab-header.ts` — file; Git blob `6e6d3bf69c2849cceb28fae215a456c22a9a478d`.
+- `src/material/tabs/public-api.ts` — file; Git blob `ed8772bac441ad44b92fcc9784abe54851f3c45d`.
+- `src/material/tabs/tab-body.html` — file; Git blob `be8068e38f7db57767d8ffeb3a07e87df70711cf`.
+- `src/material/tabs/tab-body.scss` — file; Git blob `dd3dcf078a5aa603683a8ac52872ab3c6c99e416`.
+- `src/material/tabs/tab-body.spec.ts` — file; Git blob `a2575259556cc0013e7db98ef74eddd4241ae1a7`.
+- `src/material/tabs/tab-body.ts` — file; Git blob `8319c2d0a72efd78b8182fcb9211dc9930354acb`.
+- `src/material/tabs/tab-config.ts` — file; Git blob `3a35ecf8ee8b46f8bedf6a5620b734a3834030ed`.
+- `src/material/tabs/tab-content.ts` — file; Git blob `7d774b5ecaad04337f61df7ba941283f52d55ab9`.
+- `src/material/tabs/tab-group.html` — file; Git blob `99f49f0cf1cc7f15d041a59a6ebd45c3d74bedfc`.
+- `src/material/tabs/tab-group.scss` — file; Git blob `2ac03c19965a3893bdf3d68698d12cf026aa77ea`.
+- `src/material/tabs/tab-group.spec.ts` — file; Git blob `71705913bbfa2980f0ac4ee2b868be5f4b48639f`.
+- `src/material/tabs/tab-group.ts` — file; Git blob `e5cc623effc7a27588e96c6ac3ff5a8a5a795973`.
+- `src/material/tabs/tab-header.html` — file; Git blob `78099632a2bca6106c4c96b3e84638591562da50`.
+- `src/material/tabs/tab-header.scss` — file; Git blob `05c2a61c79e1015acaee852876d2ca24e5334a2c`.
+- `src/material/tabs/tab-header.spec.ts` — file; Git blob `71483fcc0b8bf8d6be2ee3454ecac8ef05cf720b`.
+- `src/material/tabs/tab-header.ts` — file; Git blob `03552a5b0810454474f53831febd99f4e99cdd27`.
+- `src/material/tabs/tab-label-wrapper.ts` — file; Git blob `ecc1b226d2da78883349ea4a36a9c9cad1d53644`.
+- `src/material/tabs/tab-label.ts` — file; Git blob `dff42617d0124169861f3d6887f1a85e4228e540`.
+- `src/material/tabs/tab-nav-bar/` — folder; Git tree `0c75fd4764a15a1c9d42db1d1345a6374b7e8aeb`.
+- `src/material/tabs/tab-nav-bar/tab-link.html` — file; Git blob `be3c90598fac185a09bf62215ccedb86cfc53024`.
+- `src/material/tabs/tab-nav-bar/tab-link.scss` — file; Git blob `0fcae6c69f2a9316ca8005600c2926504162dcc3`.
+- `src/material/tabs/tab-nav-bar/tab-nav-bar.html` — file; Git blob `d8f0fb02ca0a443f5014a62482d73172cdae7ffd`.
+- `src/material/tabs/tab-nav-bar/tab-nav-bar.scss` — file; Git blob `5d3addf4a09e5ba7ddd6333ac5cd155c6b10bc68`.
+- `src/material/tabs/tab-nav-bar/tab-nav-bar.spec.ts` — file; Git blob `62252ff08fa75cd30876d8b8eeca605505993d48`.
+- `src/material/tabs/tab-nav-bar/tab-nav-bar.ts` — file; Git blob `44e2c0b90e9e40a6a2aebac149acc1856e11c6dc`.
+- `src/material/tabs/tab.html` — file; Git blob `99442c1f1e3714d78a33b5358f97cdc31d4a27eb`.
+- `src/material/tabs/tab.ts` — file; Git blob `2d59fd953c12a1b0f730c3aab91429aba8ec2672`.
+- `src/material/tabs/tabs-module.ts` — file; Git blob `f0ccb1f2d1aa071f05684111c02c8bc099c5cffd`.
+- `src/material/tabs/tabs.md` — file; Git blob `d48905c525983339ee0d3e389cbd3e91480ff06f`.
+- `src/material/tabs/testing/` — folder; Git tree `c742649f66dd30ce12972d052e3da3e13a403333`.
+- `src/material/tabs/testing/BUILD.bazel` — file; Git blob `8e7cda7392dcd6c6ba0bf75c77dfed5c4bc77eef`.
+- `src/material/tabs/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/tabs/testing/public-api.ts` — file; Git blob `b87ec2573416a09dddef78d21d220dc01ef04281`.
+- `src/material/tabs/testing/tab-group-harness.spec.ts` — file; Git blob `b0ab892a9608803fe9114884913d64f346c634ac`.
+- `src/material/tabs/testing/tab-group-harness.ts` — file; Git blob `5a63381769757997a94a9070969c25e621ff1899`.
+- `src/material/tabs/testing/tab-harness-filters.ts` — file; Git blob `ab3f68c5a90ec421ea10458d56362a16485acba9`.
+- `src/material/tabs/testing/tab-harness.ts` — file; Git blob `3bc2357d64bfc84b3ebd6436c95d09b61905e812`.
+- `src/material/tabs/testing/tab-link-harness.ts` — file; Git blob `817fc945513679258db5637f194db5aa96f2c405`.
+- `src/material/tabs/testing/tab-nav-bar-harness.spec.ts` — file; Git blob `1cea2b189f003b8094c16bac7c2e63c713ae1e38`.
+- `src/material/tabs/testing/tab-nav-bar-harness.ts` — file; Git blob `21be2bb822e50a3ac792e64e24a5644c64e94b73`.
+- `src/material/tabs/testing/tab-nav-panel-harness.ts` — file; Git blob `40204ecc50e7c767d38f9348dca4b18f811a9eee`.
+- `src/material/toolbar/` — folder; Git tree `5c437104c1df0b7bc6b6b456c10c43a9b7e19fd7`.
+- `src/material/toolbar/BUILD.bazel` — file; Git blob `d52db6a50a6be7e8cdf4399d8307a732f9534591`.
+- `src/material/toolbar/README.md` — file; Git blob `72dd4eca7442801dad67e9d056198c9aba43c026`.
+- `src/material/toolbar/_m2-toolbar.scss` — file; Git blob `cffbceff1cb6e4538957a8f24bea9d2c5a81529d`.
+- `src/material/toolbar/_m3-toolbar.scss` — file; Git blob `90ba878639f35eaacbbe0d17f08411cff1b3c5d4`.
+- `src/material/toolbar/_toolbar-theme.scss` — file; Git blob `a9663c6ba9583d8529dff0d31857990759a34836`.
+- `src/material/toolbar/_toolbar-variables.scss` — file; Git blob `95a23b604ac9f3cd0f35e1ee7b6d073dffe709c9`.
+- `src/material/toolbar/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/toolbar/public-api.ts` — file; Git blob `70bd9bdc461ee2fc26c8d5b877b94f719c291883`.
+- `src/material/toolbar/testing/` — folder; Git tree `f159a1ab774114f3897d296167b4962b70831889`.
+- `src/material/toolbar/testing/BUILD.bazel` — file; Git blob `e5c830ee625b9bd1f90be9e9c11a1ddd3b27d500`.
+- `src/material/toolbar/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/toolbar/testing/public-api.ts` — file; Git blob `5193382ed2f89946efdd47cb806dfaafb19d15cc`.
+- `src/material/toolbar/testing/toolbar-harness-filters.ts` — file; Git blob `cc397ada868e9e76d00fce909f216ef3af149111`.
+- `src/material/toolbar/testing/toolbar-harness.spec.ts` — file; Git blob `64b9257d175545d4de25fa5eb493c7a566efde63`.
+- `src/material/toolbar/testing/toolbar-harness.ts` — file; Git blob `59dd9d7ca0d129d8dea9db31bcd0ad31c34978e9`.
+- `src/material/toolbar/toolbar-module.ts` — file; Git blob `49b738be70a168cd480afe661e3cf27e4e122d8d`.
+- `src/material/toolbar/toolbar.html` — file; Git blob `f01ae835ce04492794e9c5e500c8304ab542394b`.
+- `src/material/toolbar/toolbar.md` — file; Git blob `0b1d596d8afb2325e95b0d0080d388d91fc36ab6`.
+- `src/material/toolbar/toolbar.scss` — file; Git blob `b1adb154c4060b7be999e9b5a5e8b7f1f4de6430`.
+- `src/material/toolbar/toolbar.spec.ts` — file; Git blob `ddd2dbac9c4da14b61bafcceced3e4abba5e9f4c`.
+- `src/material/toolbar/toolbar.ts` — file; Git blob `deae512e6f12737611f61dff32393775dfdc52d5`.
+
+### Layout and containers
+
+[Category descriptions](Layout-and-containers.survey.md). Objects: 111.
+
+- `@angular/material/card` — export; published export declaration, version `22.1.7`.
+- `@angular/material/card/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/divider` — export; published export declaration, version `22.1.7`.
+- `@angular/material/divider/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/expansion` — export; published export declaration, version `22.1.7`.
+- `@angular/material/expansion/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/grid-list` — export; published export declaration, version `22.1.7`.
+- `@angular/material/grid-list/testing` — export; published export declaration, version `22.1.7`.
+- `src/material/card/` — folder; Git tree `c3b56b9daa2359e02ce45f61b97cbcc1adee3494`.
+- `src/material/card/BUILD.bazel` — file; Git blob `de75a8684e6af642d8298455045092343d2a58bf`.
+- `src/material/card/README.md` — file; Git blob `2911a4be0c6f623e15dbb7d99bb8f1ff3d08b471`.
+- `src/material/card/_card-theme.scss` — file; Git blob `2b3c594e1e324dc1fea9e5f04669806e0dce3a89`.
+- `src/material/card/_m2-card.scss` — file; Git blob `d73e6b1817208aba546be0a0cfa3d0855de85674`.
+- `src/material/card/_m3-card.scss` — file; Git blob `ec943cf682a4dfe08802e34f01dd84f7f55207fa`.
+- `src/material/card/card-header.html` — file; Git blob `b476f9327c98000248751d9ee28bf44502e50048`.
+- `src/material/card/card-module.ts` — file; Git blob `c85b358611ba1a8cc363552fc0dc3a9d99e845a4`.
+- `src/material/card/card-title-group.html` — file; Git blob `67c0eba6f6e9ec2831cfeebc9a6706f722ad9ca7`.
+- `src/material/card/card.html` — file; Git blob `6dbc74306383aaa6efc4216ee6c449c3b38ceaa9`.
+- `src/material/card/card.md` — file; Git blob `3e05919f61e3c235c7cba189c4ae470d8a2501cb`.
+- `src/material/card/card.scss` — file; Git blob `70a993310db65dd705011db07c9126525cf26f2e`.
+- `src/material/card/card.spec.ts` — file; Git blob `ab5ec4335ad36cf19459014931cd8e87cb904a13`.
+- `src/material/card/card.ts` — file; Git blob `e2e0d778d5b0011779eaee54356b409319ae05dc`.
+- `src/material/card/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/card/migration.md` — file; Git blob `c1d7c311f15b81c81ba8bc46cff6970e4de54205`.
+- `src/material/card/public-api.ts` — file; Git blob `ac93ced6e8101a316b30c6a2af4e906c4c69e9f8`.
+- `src/material/card/testing/` — folder; Git tree `480a150ecbe35bdd05d4cc892f64305002a7d40d`.
+- `src/material/card/testing/BUILD.bazel` — file; Git blob `0d46c874a01110c9bfc88888d41c53ef80b24fa3`.
+- `src/material/card/testing/card-harness-filters.ts` — file; Git blob `961a6e0a8591a0c68216fc06f7b84fab3ddd8ff3`.
+- `src/material/card/testing/card-harness.spec.ts` — file; Git blob `f2383b16ff36995694bb56e0d98b001e77eef32f`.
+- `src/material/card/testing/card-harness.ts` — file; Git blob `84503b8272bf999ad45776009aca16a04d0fddcd`.
+- `src/material/card/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/card/testing/public-api.ts` — file; Git blob `bb2f2aed220af27509363c50919f46cdef0ac05b`.
+- `src/material/divider/` — folder; Git tree `0f068477462261b5a387869ed589f39f4b53c58d`.
+- `src/material/divider/BUILD.bazel` — file; Git blob `30ef52c684308d3e4180514dc365e0623669d339`.
+- `src/material/divider/README.md` — file; Git blob `b7de9b27a82b6b4a5d1243d36c37cf4b09f5717f`.
+- `src/material/divider/_divider-offset.scss` — file; Git blob `7091a3a41dcc8305bbbbb4f30969e33973c051d1`.
+- `src/material/divider/_divider-theme.scss` — file; Git blob `3aac3203cf311452f5c94754f26cd9a7e98bc1f4`.
+- `src/material/divider/_m2-divider.scss` — file; Git blob `045fcba92606f4a97be658037291fd0c78a2fac9`.
+- `src/material/divider/_m3-divider.scss` — file; Git blob `88e7c67155408fe7172bace9477497a75d2e3179`.
+- `src/material/divider/divider-module.ts` — file; Git blob `627509bffee9c06c84aa1eae4f8d3af341084ad8`.
+- `src/material/divider/divider.md` — file; Git blob `6e0094184c3b29b67f1ff53bf5eb41511c20305d`.
+- `src/material/divider/divider.scss` — file; Git blob `6dd6271d2eb53ea1fa43fb625f22c95f5b5984fb`.
+- `src/material/divider/divider.spec.ts` — file; Git blob `8f7f31923b27b2665f7b7d4f75b99eec534e2224`.
+- `src/material/divider/divider.ts` — file; Git blob `316a24e472d74a7fab09d16512f01ee09b065a42`.
+- `src/material/divider/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/divider/public-api.ts` — file; Git blob `62f4eef77e03fa4181cc9cf8355d10f60614e192`.
+- `src/material/divider/testing/` — folder; Git tree `6100d61ddb6d8fead12adbcdd2422d12862ccb03`.
+- `src/material/divider/testing/BUILD.bazel` — file; Git blob `56704da5d12e16ceff9d16833636cb2b94982cab`.
+- `src/material/divider/testing/divider-harness-filters.ts` — file; Git blob `c93a2af481ce2c018975fa6167cda86f21ab6d0a`.
+- `src/material/divider/testing/divider-harness.spec.ts` — file; Git blob `747b4a3eda6e68acd196fe4a63f7d222cad07f47`.
+- `src/material/divider/testing/divider-harness.ts` — file; Git blob `444d6550dd9669fc1e6c4482a32840e6412a564c`.
+- `src/material/divider/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/divider/testing/public-api.ts` — file; Git blob `2b33bf45d21406da462f9cb820529c45259e45be`.
+- `src/material/expansion/` — folder; Git tree `a9a9a538833969fde3d6d0b59e9d821077e83f1c`.
+- `src/material/expansion/BUILD.bazel` — file; Git blob `7c3ad0c29e9330588444c6ad1593a215427ea8b8`.
+- `src/material/expansion/_expansion-theme.scss` — file; Git blob `086e8789bde3783a8d9831ac361906dd18bfeb74`.
+- `src/material/expansion/_expansion-variables.scss` — file; Git blob `d69761731484055a37e5aaa85d803e0d18145c01`.
+- `src/material/expansion/_m2-expansion.scss` — file; Git blob `ce6bc6bf34c764e9f91ae88d17f36f0a5feb348b`.
+- `src/material/expansion/_m3-expansion.scss` — file; Git blob `d23838252455e4201300dc78e1b9b2007c9fcc66`.
+- `src/material/expansion/accordion-base.ts` — file; Git blob `db94a151bc8b48ab7d4289cecfb9922b7b1d9601`.
+- `src/material/expansion/accordion.spec.ts` — file; Git blob `d1e495268b188db02725c2b4cf41d41657d84e9d`.
+- `src/material/expansion/accordion.ts` — file; Git blob `18c6359fd53bfa2dec04376e01bf47f825652c9a`.
+- `src/material/expansion/expansion-module.ts` — file; Git blob `a368915d1465c21e1f45c69cf3f71a60c1442486`.
+- `src/material/expansion/expansion-panel-base.ts` — file; Git blob `d241f4655947f4a47fe6e8c98f26acd11ea72170`.
+- `src/material/expansion/expansion-panel-content.ts` — file; Git blob `aadf20ef1963e90da0838c2ef6ed4a01a1311524`.
+- `src/material/expansion/expansion-panel-header.html` — file; Git blob `a631bfea4c2912294fc10516c26323a480c4c502`.
+- `src/material/expansion/expansion-panel-header.scss` — file; Git blob `31935508323f54b72d14b19ca876b1af471a63d7`.
+- `src/material/expansion/expansion-panel-header.ts` — file; Git blob `1c7ee65ccff7f66e9bddc21c68dd9e5eeed4fae4`.
+- `src/material/expansion/expansion-panel.html` — file; Git blob `c27378e51129193801cfe9b38639bfed05a90304`.
+- `src/material/expansion/expansion-panel.scss` — file; Git blob `62b6cb4b727d15f9e3192a2480d928dab3480c38`.
+- `src/material/expansion/expansion-panel.ts` — file; Git blob `b89e4c17c8bd682df04db0c2c3dafce47513de86`.
+- `src/material/expansion/expansion.md` — file; Git blob `1f10152ddcb34496b1268979fe52b00632ff75e1`.
+- `src/material/expansion/expansion.spec.ts` — file; Git blob `228c36023389a0f6e151b8c6106ed27331951564`.
+- `src/material/expansion/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/expansion/public-api.ts` — file; Git blob `87bca86cda6483543fd1022b3ba5b835c6ad0974`.
+- `src/material/expansion/testing/` — folder; Git tree `54746fa555a42b02b96bebeebcfa9e28ed791380`.
+- `src/material/expansion/testing/BUILD.bazel` — file; Git blob `ce58deb309d78c5db33b837189b748b3be6ca5b6`.
+- `src/material/expansion/testing/accordion-harness.ts` — file; Git blob `fe2b7351fefe574a492a7329b37620bc7ce5ce29`.
+- `src/material/expansion/testing/expansion-harness-filters.ts` — file; Git blob `654166e25f741c9273283700fffb2b12c41f19f2`.
+- `src/material/expansion/testing/expansion-harness.spec.ts` — file; Git blob `4bb68c6ca567ae77f0158c3a4e011f392c121c66`.
+- `src/material/expansion/testing/expansion-harness.ts` — file; Git blob `2ae1ae0c93c66fde0f316e173cae9d898c144217`.
+- `src/material/expansion/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/expansion/testing/public-api.ts` — file; Git blob `62e1ac033526fb7fd9b68fd1a71e727e3982f8c1`.
+- `src/material/grid-list/` — folder; Git tree `da3c90962cf8163304431256981f7bcb3fcae5c0`.
+- `src/material/grid-list/BUILD.bazel` — file; Git blob `7e32331c766de1810f029d2458bc3382ae006985`.
+- `src/material/grid-list/README.md` — file; Git blob `e97dcc80ae6be1b3e1f006b63c40c897066c7caf`.
+- `src/material/grid-list/_grid-list-theme.scss` — file; Git blob `4f1fb0e90a5c0976e906b83905525b9d785c2fe4`.
+- `src/material/grid-list/_m2-grid-list.scss` — file; Git blob `02206ec0a24535780adb5a48de46d3825453eae0`.
+- `src/material/grid-list/_m3-grid-list.scss` — file; Git blob `1afc0b5b78d649364106b1d47943ca6c8f5e0d75`.
+- `src/material/grid-list/grid-list-base.ts` — file; Git blob `198abc830ab99c224defe75a121a50c7ea41aa05`.
+- `src/material/grid-list/grid-list-module.ts` — file; Git blob `efabe06ef11232faf5e889c981db6fa8a24ee08b`.
+- `src/material/grid-list/grid-list.html` — file; Git blob `748b375187a1c889ea09988a6fd16cc2c7eacebe`.
+- `src/material/grid-list/grid-list.md` — file; Git blob `da183845202d207fd6ec4ba3904f9c021caac443`.
+- `src/material/grid-list/grid-list.scss` — file; Git blob `3e1144c3f55fdc4497d6f9eb266547c0a59df519`.
+- `src/material/grid-list/grid-list.spec.ts` — file; Git blob `2119f47d5bb47c24a934d4f933a860abff8d4fba`.
+- `src/material/grid-list/grid-list.ts` — file; Git blob `f702321936ccdff7ce15c3c8f1764222a48e0291`.
+- `src/material/grid-list/grid-tile-text.html` — file; Git blob `ec16bf917e16c01cae72b04cd75872200d5d8570`.
+- `src/material/grid-list/grid-tile.html` — file; Git blob `a67379cf80f5942de9a2d154b4993122bcb65720`.
+- `src/material/grid-list/grid-tile.ts` — file; Git blob `65c9c6fd7f27c072c542b3470ca55d79812828a4`.
+- `src/material/grid-list/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/grid-list/public-api.ts` — file; Git blob `2782644ddc48b1ab2b2ba0a181840c910e6862b4`.
+- `src/material/grid-list/testing/` — folder; Git tree `313f4f1c46a3f1230ea3b46da74d70045d4ef260`.
+- `src/material/grid-list/testing/BUILD.bazel` — file; Git blob `b1c04df624a7da71d723548e66da3e550baa153e`.
+- `src/material/grid-list/testing/grid-list-harness-filters.ts` — file; Git blob `258c9d44cee59d62603d9bf479e1cbfb14755f63`.
+- `src/material/grid-list/testing/grid-list-harness.spec.ts` — file; Git blob `4c8b93de64d25d70d23d48b0759f62ff5bf3f16f`.
+- `src/material/grid-list/testing/grid-list-harness.ts` — file; Git blob `3bd237fa306e9260266a6f4c8a39222784eb635e`.
+- `src/material/grid-list/testing/grid-tile-harness.ts` — file; Git blob `1f65cfbb91c4ae258a576a5fddcd07c2de7967c1`.
+- `src/material/grid-list/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/grid-list/testing/public-api.ts` — file; Git blob `a39e025f800f77ade67471bde77f858b9e27f6a7`.
+- `src/material/grid-list/tile-coordinator.ts` — file; Git blob `cbd84c0a73dbafe1762dd8bea8a41730ef581fd5`.
+- `src/material/grid-list/tile-styler.ts` — file; Git blob `672fc6889331050f65b5a4f24d6d41acc5e86631`.
+
+### Data presentation
+
+[Category descriptions](Data-presentation.survey.md). Objects: 153.
+
+- `@angular/material/list` — export; published export declaration, version `22.1.7`.
+- `@angular/material/list/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/paginator` — export; published export declaration, version `22.1.7`.
+- `@angular/material/paginator/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/sort` — export; published export declaration, version `22.1.7`.
+- `@angular/material/sort/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/table` — export; published export declaration, version `22.1.7`.
+- `@angular/material/table/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/tree` — export; published export declaration, version `22.1.7`.
+- `@angular/material/tree/testing` — export; published export declaration, version `22.1.7`.
+- `src/material/list/` — folder; Git tree `97cc29d3b61224fc68fbc570bf276a2df6cc73be`.
+- `src/material/list/BUILD.bazel` — file; Git blob `7f574e3e9b66b3c2c20c2abf8804e2431ac877d3`.
+- `src/material/list/README.md` — file; Git blob `0be54e55f670f31651facc4978f967dbb8057777`.
+- `src/material/list/_list-inherited-structure.scss` — file; Git blob `1572eb7e69bc61733879b431d3ccca5da8db72ae`.
+- `src/material/list/_list-item-hcm-indicator.scss` — file; Git blob `86fafc2ddccf4a5b13405a214f000be596255281`.
+- `src/material/list/_list-theme.scss` — file; Git blob `8816f45fbb11e42790f8294df4b2a5f4ef10110e`.
+- `src/material/list/_m2-list.scss` — file; Git blob `d037420c6aba3a6a57efde2411416bb47ecc1ff0`.
+- `src/material/list/_m3-list.scss` — file; Git blob `85567cbecd560e541b913116e4989416b57a1753`.
+- `src/material/list/action-list.ts` — file; Git blob `d8617f381b2f52614ba6d97fb6f74c11e4845520`.
+- `src/material/list/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/list/list-base.ts` — file; Git blob `7bb840b814c8660c8a0bba729cdc616edfaa093c`.
+- `src/material/list/list-item-sections.ts` — file; Git blob `14bf83ba3c35a090164c91215e856b0dfe7c1fea`.
+- `src/material/list/list-item.html` — file; Git blob `8a13cf30fec6acdc8f9fc60ec18b4154e4a03a71`.
+- `src/material/list/list-module.ts` — file; Git blob `c3b31ae0597c5f6c891462d9b5a51b805f3a697e`.
+- `src/material/list/list-option-types.ts` — file; Git blob `238f3f6dac9f15ddd9c9b968e419b98f9abc8620`.
+- `src/material/list/list-option.html` — file; Git blob `a79070f74907fb47d6f03e5318ddfb59d9f92929`.
+- `src/material/list/list-option.scss` — file; Git blob `fcf3bff9b09233e79f13243c1e196d94722e7f0a`.
+- `src/material/list/list-option.ts` — file; Git blob `4ee9bd60ae81977a6fde9f5856e64ecf93f6c858`.
+- `src/material/list/list.md` — file; Git blob `a6ca84936f701c71fefde40485f93cc490903626`.
+- `src/material/list/list.scss` — file; Git blob `8d1802e2b23c86058e636a4c5dc9ff15cdc9a3d0`.
+- `src/material/list/list.spec.ts` — file; Git blob `691f04e437d44c7a40563b3d7cf02c358f3b3f4f`.
+- `src/material/list/list.ts` — file; Git blob `91f2544d0da4cebe7fa9363346afe4a2c9f10043`.
+- `src/material/list/nav-list.ts` — file; Git blob `e3fd276fdf5ca0b6cd3bc0ba3da1a94d75900e22`.
+- `src/material/list/public-api.ts` — file; Git blob `b7ae4be9751bf57499632546e17f5e6c606d94e9`.
+- `src/material/list/selection-list.spec.ts` — file; Git blob `6fdd4ef6f296a6fd2dd1d815ca819e7aa56cae5a`.
+- `src/material/list/selection-list.ts` — file; Git blob `b307a394dd62ea68d45e332bd2ed2e8fa01c2f1d`.
+- `src/material/list/subheader.ts` — file; Git blob `fc0b21dd26824363eaa8ad987c33763defced5ef`.
+- `src/material/list/testing/` — folder; Git tree `0ee9163a853cceb1e60f794c0b85d0f4bb5c62e8`.
+- `src/material/list/testing/BUILD.bazel` — file; Git blob `eae71fdc580cbbbc79ad3357c5de45c6caa042fc`.
+- `src/material/list/testing/action-list-harness.ts` — file; Git blob `3d636bf4314ab74cebde738245a0bb8d7b46b832`.
+- `src/material/list/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/list/testing/list-harness-base.ts` — file; Git blob `877357738678be07a06bcc55696f74b8987a31b8`.
+- `src/material/list/testing/list-harness-filters.ts` — file; Git blob `b572dc9c9ce9e678ac568b703bdfc87a51e7abf5`.
+- `src/material/list/testing/list-harness.spec.ts` — file; Git blob `bb0c16cde29155c30b123f48bcb080a739cca7ed`.
+- `src/material/list/testing/list-harness.ts` — file; Git blob `1b3af2ba8e0ae29fb5f82b1ad6b2cbe444db521b`.
+- `src/material/list/testing/list-item-harness-base.ts` — file; Git blob `e964b997824e24d80e9517f56fc254fb037d4b55`.
+- `src/material/list/testing/nav-list-harness.ts` — file; Git blob `9e51bdd57d6e24bf9424b2f44deb574014077448`.
+- `src/material/list/testing/public-api.ts` — file; Git blob `bea6d3bd60b704f2f6319f1704fe3eb6426aa562`.
+- `src/material/list/testing/selection-list-harness.ts` — file; Git blob `999f951dbcb7f8f98e6756f0e6541408d8610e0a`.
+- `src/material/list/tokens.ts` — file; Git blob `d882ceed932a0daa1f5515fdcc034dc8e659dd67`.
+- `src/material/paginator/` — folder; Git tree `c2747773fb7be392ce03956ea32f628f6c4b9db0`.
+- `src/material/paginator/BUILD.bazel` — file; Git blob `a685da54f71e285f54fca841639e71adcfac52f1`.
+- `src/material/paginator/_m2-paginator.scss` — file; Git blob `3674e11dc2ecaf5cd6328e77dca4a8903beb21cc`.
+- `src/material/paginator/_m3-paginator.scss` — file; Git blob `d4a1a6b41e843b8ca7c624f405dface09462b52c`.
+- `src/material/paginator/_paginator-theme.scss` — file; Git blob `6934d7b76134478366eee866efe001fdbf932e29`.
+- `src/material/paginator/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/paginator/paginator-intl.ts` — file; Git blob `09bf620b3d76813da969841d882acc596d149d00`.
+- `src/material/paginator/paginator-module.ts` — file; Git blob `c5f3d99d265ad0bed57a7d2bce2a86affbcda129`.
+- `src/material/paginator/paginator.html` — file; Git blob `eb83f768429cf7a9a7a7a7dbb7aaf2547fbe0b9d`.
+- `src/material/paginator/paginator.md` — file; Git blob `ab40df1494e1fb79bead885504065e10856a5b65`.
+- `src/material/paginator/paginator.scss` — file; Git blob `0f7f17b6a89cf548d59e79bd2a3438bae29a6644`.
+- `src/material/paginator/paginator.spec.ts` — file; Git blob `55506d2da74ec2673dd01bd2969ecdb3704888af`.
+- `src/material/paginator/paginator.ts` — file; Git blob `4bb81e71b631bdc72c8776c049062af8face5681`.
+- `src/material/paginator/public-api.ts` — file; Git blob `627d71f4845bd228a5d96f0e1db334ac73861833`.
+- `src/material/paginator/testing/` — folder; Git tree `f5b126863413de9c60526130280eb616244af3a7`.
+- `src/material/paginator/testing/BUILD.bazel` — file; Git blob `11f415cdb868ad082f45a645cc741bc8373c1abe`.
+- `src/material/paginator/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/paginator/testing/paginator-harness-filters.ts` — file; Git blob `f6bbb661e56a0e5ef789d5931851662122f86f45`.
+- `src/material/paginator/testing/paginator-harness.spec.ts` — file; Git blob `ec036e154bc58f00c14586ea55ec13fecf6bea0a`.
+- `src/material/paginator/testing/paginator-harness.ts` — file; Git blob `94b4ef77df8e20677067a45678fd08397d48b1fe`.
+- `src/material/paginator/testing/public-api.ts` — file; Git blob `5877a4c157089bd63976f8e20dc221c810c201f4`.
+- `src/material/sort/` — folder; Git tree `6ed2c006e1160df4625f6d2dca2a3d5d3d7934bf`.
+- `src/material/sort/BUILD.bazel` — file; Git blob `f7508bf87e5805681ca05ebfd9f78934ba3de0ca`.
+- `src/material/sort/_m2-sort.scss` — file; Git blob `d3483b3d5b18fcbb3be5a8cf73824903c1614efe`.
+- `src/material/sort/_m3-sort.scss` — file; Git blob `ae5785b56fc0f89f6b474dab87e0d6455505b5e5`.
+- `src/material/sort/_sort-theme.scss` — file; Git blob `99797f12190b51ff20fca7a72e3a0cf5c2f2e63c`.
+- `src/material/sort/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/sort/public-api.ts` — file; Git blob `a53962429a28e70a75b939f0b3a11f0358d31b86`.
+- `src/material/sort/sort-direction.ts` — file; Git blob `1f1e95f4e205cff473af444b7481fa75d1866f26`.
+- `src/material/sort/sort-errors.ts` — file; Git blob `80ffc0b8379b99e909a62ab8b7a2ab5f8e7d7301`.
+- `src/material/sort/sort-header-intl.ts` — file; Git blob `2d69ae64e7e47a1df448c0139fabbcefe2f7f99f`.
+- `src/material/sort/sort-header.html` — file; Git blob `9cc1c26493a7b53a473a75904f118c9a6b1ca850`.
+- `src/material/sort/sort-header.scss` — file; Git blob `004617d1b6389105ca8e853afaeecaae14624321`.
+- `src/material/sort/sort-header.ts` — file; Git blob `ec1ee5d15fb12a65f6383295d3c013c1067e2a9c`.
+- `src/material/sort/sort-module.ts` — file; Git blob `eaef4b189abb21530390b66daa15fa7495f29493`.
+- `src/material/sort/sort.md` — file; Git blob `93c56a11b37768519eab6b4f470cf77bb993174e`.
+- `src/material/sort/sort.spec.ts` — file; Git blob `48a0c7a62d4cba7ee949a940e12c94061ce3d8da`.
+- `src/material/sort/sort.ts` — file; Git blob `2044fd5c8427845b42c99d0cf17c8a34bbaed401`.
+- `src/material/sort/testing/` — folder; Git tree `ae7be1b34805cd04bbab41d086633e8e9b7552a2`.
+- `src/material/sort/testing/BUILD.bazel` — file; Git blob `98330de2b6bc52ffa613231b3a7d13569071ebf0`.
+- `src/material/sort/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/sort/testing/public-api.ts` — file; Git blob `8864bf8f9716c82bb4d784aca38e9fb2a73c7ed1`.
+- `src/material/sort/testing/sort-harness-filters.ts` — file; Git blob `6cef060a087529eda3b213e159633eeeb8b29885`.
+- `src/material/sort/testing/sort-harness.spec.ts` — file; Git blob `e019f372358fdd37efc94c786c99d6f4ab2026d3`.
+- `src/material/sort/testing/sort-harness.ts` — file; Git blob `ce3c0c1c2bdbdca525953b890eb83a4711786cff`.
+- `src/material/sort/testing/sort-header-harness.ts` — file; Git blob `e281710285654eb1d0b2bee46b876b031755acf1`.
+- `src/material/table/` — folder; Git tree `5c1619b08e0e19a467a58575f91cdbcdc7bf01bd`.
+- `src/material/table/BUILD.bazel` — file; Git blob `67b0969822853a87b7d3ea8751e4d73b0e204462`.
+- `src/material/table/README.md` — file; Git blob `e5703902b6e34a1596f51c25d2ae6b797f6176c6`.
+- `src/material/table/_m2-table.scss` — file; Git blob `da8afdcbcf7bdea87cd113bda1f2cbb9dbc0a055`.
+- `src/material/table/_m3-table.scss` — file; Git blob `27d9f9594052f5e673ab878b468b61277cd4f67b`.
+- `src/material/table/_table-flex-styles.scss` — file; Git blob `b07da2d44046f945c9a07bf2c43458f0dfab6720`.
+- `src/material/table/_table-theme.scss` — file; Git blob `226241daa096f3802c3551e3852433c315166379`.
+- `src/material/table/cell.ts` — file; Git blob `74cba97a2e0a5b17d10e827ba7cfa481750ffab1`.
+- `src/material/table/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/table/public-api.ts` — file; Git blob `80268741762cbfe559f50fbd61c217d719eed9fa`.
+- `src/material/table/row.ts` — file; Git blob `489432c6c29e86cbdac1e4a218488f9a9cc5610f`.
+- `src/material/table/table-data-source.spec.ts` — file; Git blob `5be1df436ba42102dd4679abf306a8dd6851f8fb`.
+- `src/material/table/table-data-source.ts` — file; Git blob `96b944a6d555f8e5d8de522e1bc5b78db2b80374`.
+- `src/material/table/table-module.ts` — file; Git blob `8d5dad2bed92e0db38bc5b47c8845e61c290a22b`.
+- `src/material/table/table.md` — file; Git blob `a46ff2e62214e2d0803bf1b0cc8d79599fe94967`.
+- `src/material/table/table.scss` — file; Git blob `a163bbf4812f1fdc1298af9550a907a82571ff64`.
+- `src/material/table/table.spec.ts` — file; Git blob `b7645c4f23decb8aa485faf7adac06adb9ce61a7`.
+- `src/material/table/table.ts` — file; Git blob `9951870a03ae42ccb8b5effef7e0879261ece7cd`.
+- `src/material/table/testing/` — folder; Git tree `41c0c2115a06bfc45ffd52c3f51184c9e6a33021`.
+- `src/material/table/testing/BUILD.bazel` — file; Git blob `845994dd5b52176f40840ed226e6020046ff507f`.
+- `src/material/table/testing/cell-harness.ts` — file; Git blob `2cae26f526650a50087861dc4a17d85b4c479169`.
+- `src/material/table/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/table/testing/public-api.ts` — file; Git blob `9e2d41093c434e0330d03444c26e130239b143b0`.
+- `src/material/table/testing/row-harness.ts` — file; Git blob `605aec6538fbd674db2483715cfc0217adbd1f0a`.
+- `src/material/table/testing/table-harness-filters.ts` — file; Git blob `0f99c5817ac6183ed58cea598d33577d89c6afac`.
+- `src/material/table/testing/table-harness.spec.ts` — file; Git blob `8380c048c3ec83277d5bc676dcc46fa321b58830`.
+- `src/material/table/testing/table-harness.ts` — file; Git blob `4ca8a40ac541ec8bae8a18c3f9b7febe734aebaa`.
+- `src/material/table/text-column.ts` — file; Git blob `b52eedc75a03140a45382e433665212289e4b162`.
+- `src/material/tree/` — folder; Git tree `cfc84ac6078e02d163080d0e406947835cdee81b`.
+- `src/material/tree/BUILD.bazel` — file; Git blob `d727de28c8202fb8dcf127f308167dfe107bf0ec`.
+- `src/material/tree/_m2-tree.scss` — file; Git blob `6d657165a5adb2feafeb99d370bafd7af2343595`.
+- `src/material/tree/_m3-tree.scss` — file; Git blob `9e921b069f21378c02c9e9b705b85281386ec48f`.
+- `src/material/tree/_tree-theme.scss` — file; Git blob `e17db37b896ca03b861b35dff9c3f973191be592`.
+- `src/material/tree/data-source/` — folder; Git tree `96229abfdd7d634fe24b33df4706b7f02c1c8187`.
+- `src/material/tree/data-source/flat-data-source.ts` — file; Git blob `28ec279b60f4864d467dc022a6b18447db1a7fb8`.
+- `src/material/tree/data-source/nested-data-source.ts` — file; Git blob `a230c617cd30c38e88cac5e040f426f071c05412`.
+- `src/material/tree/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/tree/node.ts` — file; Git blob `f09fbe0fa71fa73777e935f5f5a8e242b4b9c12b`.
+- `src/material/tree/outlet.ts` — file; Git blob `e7ab152b2c585f90ca566e095436135ff9b7dbbe`.
+- `src/material/tree/padding.ts` — file; Git blob `7e81fdf38d5dccd0a1da9886a9044e94587309d1`.
+- `src/material/tree/public-api.ts` — file; Git blob `a33f6bc987780f65a98461791f2cc18b3497939d`.
+- `src/material/tree/testing/` — folder; Git tree `857c1da8e8b29aabca034b4b5827009ae2e381f3`.
+- `src/material/tree/testing/BUILD.bazel` — file; Git blob `1ecc2b9cca628485cfc5e4e20c20ac8326194447`.
+- `src/material/tree/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/tree/testing/node-harness.ts` — file; Git blob `1b2defeae72814e1f91e46831a5357a8fe7abfce`.
+- `src/material/tree/testing/public-api.ts` — file; Git blob `c9642ee4d704ea4f103b23c4da6d030e08a71c03`.
+- `src/material/tree/testing/tree-harness-filters.ts` — file; Git blob `2966697b56fac7a8973dbf57a75a1748c7ed1859`.
+- `src/material/tree/testing/tree-harness.spec.ts` — file; Git blob `467c9e83a3e0d8403a84fb75ceb3526f541e2112`.
+- `src/material/tree/testing/tree-harness.ts` — file; Git blob `b13de0b3a472bcd50164de85538ed341560fad21`.
+- `src/material/tree/toggle.ts` — file; Git blob `1b84120591615ef4c04f90a284b2887a67f999a9`.
+- `src/material/tree/tree-module.ts` — file; Git blob `0495fea7de478aa04f7baf33f3a48547fa9e3354`.
+- `src/material/tree/tree-using-legacy-key-manager.spec.ts` — file; Git blob `4b9d956ed560fa68ac6616a2525ea044fd89fbc0`.
+- `src/material/tree/tree-using-tree-control.spec.ts` — file; Git blob `094b42a88ff48df4bd96b8058d1d0235005fca96`.
+- `src/material/tree/tree.md` — file; Git blob `e2411fa4cda08c3d9687338fe4f59ff279926944`.
+- `src/material/tree/tree.scss` — file; Git blob `1b90dff8f2316a997d9624edca85f421696ffb82`.
+- `src/material/tree/tree.spec.ts` — file; Git blob `43254420962bb57c24e4f745d7b4038094f0adeb`.
+- `src/material/tree/tree.ts` — file; Git blob `80f0cd78d756133a82d2de064de40cfcfcaf0de1`.
+
+### Feedback and overlays
+
+[Category descriptions](Feedback-and-overlays.survey.md). Objects: 179.
+
+- `@angular/material/badge` — export; published export declaration, version `22.1.7`.
+- `@angular/material/badge/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/bottom-sheet` — export; published export declaration, version `22.1.7`.
+- `@angular/material/bottom-sheet/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/dialog` — export; published export declaration, version `22.1.7`.
+- `@angular/material/dialog/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/progress-bar` — export; published export declaration, version `22.1.7`.
+- `@angular/material/progress-bar/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/progress-spinner` — export; published export declaration, version `22.1.7`.
+- `@angular/material/progress-spinner/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/snack-bar` — export; published export declaration, version `22.1.7`.
+- `@angular/material/snack-bar/testing` — export; published export declaration, version `22.1.7`.
+- `@angular/material/tooltip` — export; published export declaration, version `22.1.7`.
+- `@angular/material/tooltip/testing` — export; published export declaration, version `22.1.7`.
+- `src/material/badge/` — folder; Git tree `430a5ec550a04a3c7fe9b0c4e0ee43cf5f7be949`.
+- `src/material/badge/BUILD.bazel` — file; Git blob `2943c37a634a91b864c12ca742d0867213be4906`.
+- `src/material/badge/_badge-theme.scss` — file; Git blob `ef5801f8fab9c45d52b74a369bb22eaa20ece233`.
+- `src/material/badge/_m2-badge.scss` — file; Git blob `226d8fb774dffeeb4cfc83d1eb1be810ee4f9a07`.
+- `src/material/badge/_m3-badge.scss` — file; Git blob `1ef9287cecf4b841aed542db46223972f22fa520`.
+- `src/material/badge/badge-module.ts` — file; Git blob `a56f89406dea9869984609883c7ba200533071d8`.
+- `src/material/badge/badge.md` — file; Git blob `b4f4a4146f99e3babafc133412f9e0552afef631`.
+- `src/material/badge/badge.scss` — file; Git blob `79da874efc0ca82368ea779b21be416e22c24618`.
+- `src/material/badge/badge.spec.ts` — file; Git blob `dd763028231f6680008e19cc7f82e7f8497dfae7`.
+- `src/material/badge/badge.ts` — file; Git blob `16af2eec291d1fbb4f5a3feecdcce2d75d623da4`.
+- `src/material/badge/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/badge/public-api.ts` — file; Git blob `fa5b01d528668aad0c4550b170ab6765bdf5e75b`.
+- `src/material/badge/testing/` — folder; Git tree `6739d4f756d414554ff5538ae534756ed4706ba7`.
+- `src/material/badge/testing/BUILD.bazel` — file; Git blob `e5ee9840408b6aea47febe60ec696dc219ea6387`.
+- `src/material/badge/testing/badge-harness-filters.ts` — file; Git blob `d97c01251997c2e0ece1ecd7a3f87e7764ab1bf9`.
+- `src/material/badge/testing/badge-harness.spec.ts` — file; Git blob `365b0aa98be5d048394e97dec5faa55df8a0b08f`.
+- `src/material/badge/testing/badge-harness.ts` — file; Git blob `93a49ff12b93e1a002580bcc87f8d0d62b9fe5c1`.
+- `src/material/badge/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/badge/testing/public-api.ts` — file; Git blob `5705638b5dd982aa0c9caa2286b788162091f68f`.
+- `src/material/bottom-sheet/` — folder; Git tree `e6c2cdc911683097b14037d840798dd135b9c46b`.
+- `src/material/bottom-sheet/BUILD.bazel` — file; Git blob `e7c5e6a32b10eaa515216bff35232b3b516d323d`.
+- `src/material/bottom-sheet/README.md` — file; Git blob `d8a7d20fffa35aadbe4e88bddd1f7581f58cba6e`.
+- `src/material/bottom-sheet/_bottom-sheet-theme.scss` — file; Git blob `2e887e713a12290938cdaec52ff9ef1f5428b4ba`.
+- `src/material/bottom-sheet/_m2-bottom-sheet.scss` — file; Git blob `f4a0889bae3467f618eb77cf856bb51ef26c3f86`.
+- `src/material/bottom-sheet/_m3-bottom-sheet.scss` — file; Git blob `87420eb865bdb7dd3ec62640f9c70a80fc642f5f`.
+- `src/material/bottom-sheet/bottom-sheet-config.ts` — file; Git blob `9f25f53c0f5cf0701147bbbb925ee2c8fb8924ea`.
+- `src/material/bottom-sheet/bottom-sheet-container.html` — file; Git blob `180e3656473cfbdce93b375536454bd7c3564f38`.
+- `src/material/bottom-sheet/bottom-sheet-container.scss` — file; Git blob `8fd8c681664c7c9d5f24c1b97a1e76bf57fc5e04`.
+- `src/material/bottom-sheet/bottom-sheet-container.ts` — file; Git blob `93331d8df6e13e1d8842591c434a4e81937ba490`.
+- `src/material/bottom-sheet/bottom-sheet-module.ts` — file; Git blob `331ed9c7b8ff9debf44035b703cd103fe7e6467a`.
+- `src/material/bottom-sheet/bottom-sheet-ref.ts` — file; Git blob `2e005b471d56a95ff61d1a339105583b66dda98c`.
+- `src/material/bottom-sheet/bottom-sheet.md` — file; Git blob `f9efd651e65a50fe9eca74edb6f97ad8125d4e0e`.
+- `src/material/bottom-sheet/bottom-sheet.spec.ts` — file; Git blob `79b162609effd429667d4932d17ea9aa7f13b32f`.
+- `src/material/bottom-sheet/bottom-sheet.ts` — file; Git blob `23d0f3af0a658cfea033cb78ced3ebd3470912f6`.
+- `src/material/bottom-sheet/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/bottom-sheet/public-api.ts` — file; Git blob `853b3ddbeb71e37684367092fd528ea79b256cb3`.
+- `src/material/bottom-sheet/testing/` — folder; Git tree `b339e3829b29291eccbd7edbbef69c08c9297096`.
+- `src/material/bottom-sheet/testing/BUILD.bazel` — file; Git blob `ae03161a699f85fa110a61fc4af6c788c71da9bd`.
+- `src/material/bottom-sheet/testing/bottom-sheet-harness-filters.ts` — file; Git blob `f647e0fda4d9977ec79d9559cc9190947a0bb1eb`.
+- `src/material/bottom-sheet/testing/bottom-sheet-harness.spec.ts` — file; Git blob `0ed18b8701d75217b44a5abfadc79986e9a2e59e`.
+- `src/material/bottom-sheet/testing/bottom-sheet-harness.ts` — file; Git blob `d431988c66d0cfdb968e5f884aabc07ae2cad5c3`.
+- `src/material/bottom-sheet/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/bottom-sheet/testing/public-api.ts` — file; Git blob `65fcc2c785a6ff75e3b94ff032bd02fa2b4881cb`.
+- `src/material/dialog/` — folder; Git tree `fe574526bf2c0968ea06391f4c04a186c935727b`.
+- `src/material/dialog/BUILD.bazel` — file; Git blob `fdeb092c536a90ef474e7661a853c30367351ea8`.
+- `src/material/dialog/README.md` — file; Git blob `f550eedab7c2621036085228f6c1dd5e1689dac2`.
+- `src/material/dialog/_dialog-legacy-padding.scss` — file; Git blob `1aca9f55bfde072298df3e2590a26f0bdfba0fe9`.
+- `src/material/dialog/_dialog-theme.scss` — file; Git blob `2e0d8f88918fb71e7b7ca9d9543893574722c41a`.
+- `src/material/dialog/_m2-dialog.scss` — file; Git blob `0aefeccbaefbab4178bf1d401225b38187a54c6b`.
+- `src/material/dialog/_m3-dialog.scss` — file; Git blob `d9b924c2f8f337b87d7ae9f2ddab7e24fef5e76d`.
+- `src/material/dialog/dialog-config.ts` — file; Git blob `0ebf4ee37b6819125a2c6e5ba52fb2552e819cf0`.
+- `src/material/dialog/dialog-container.html` — file; Git blob `b22dd496289ba88d40b739ff666d28a1d151822e`.
+- `src/material/dialog/dialog-container.ts` — file; Git blob `dd3cf5b51dabd184c586b010666c96c5351c37c2`.
+- `src/material/dialog/dialog-content-directives.ts` — file; Git blob `190bcb2664b46e717f817388d0aede1a9a711ff4`.
+- `src/material/dialog/dialog-module.ts` — file; Git blob `63b1f3884aa4ed5e8be385f86cae29a122a5d316`.
+- `src/material/dialog/dialog-ref.ts` — file; Git blob `1220932c524263eb1bf3d99762b5f56d1283c91a`.
+- `src/material/dialog/dialog.md` — file; Git blob `1424d81c92708bb401b14ebebe921c87d008fcff`.
+- `src/material/dialog/dialog.scss` — file; Git blob `a5a58edf73dea2277aacd36b9aceb5d0b0a5127b`.
+- `src/material/dialog/dialog.spec.ts` — file; Git blob `7ddbf3968dc45c79f37b6fda52a9733a4fc19087`.
+- `src/material/dialog/dialog.ts` — file; Git blob `158ed28e80956ea5e736ec42deb79f56f8e0e1a2`.
+- `src/material/dialog/dialog.zone.spec.ts` — file; Git blob `b6ab3d72d77342ef29452de3d69b3edf3e4df28b`.
+- `src/material/dialog/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/dialog/public-api.ts` — file; Git blob `4ea436d02c713fdeada839e9e03cd75b9afd9a57`.
+- `src/material/dialog/testing/` — folder; Git tree `1f55f106a763034544fe9a0357e043935bb6f24d`.
+- `src/material/dialog/testing/BUILD.bazel` — file; Git blob `dee5f9e57a7845df3441f423a67412e785321771`.
+- `src/material/dialog/testing/dialog-harness-filters.ts` — file; Git blob `c4c2960a752700006e10b2c4734190cb738be2fd`.
+- `src/material/dialog/testing/dialog-harness.spec.ts` — file; Git blob `ecef8c96ec6b60de1db47122a1e8f063368c1c5c`.
+- `src/material/dialog/testing/dialog-harness.ts` — file; Git blob `a4562affb8f8d2b8521b2994ca95cde75c818a46`.
+- `src/material/dialog/testing/dialog-opener.spec.ts` — file; Git blob `d7a77fde86a62ad217fba419ecf571260cfd8282`.
+- `src/material/dialog/testing/dialog-opener.ts` — file; Git blob `43e55b5c713a3797551a66229fc00d999c25a196`.
+- `src/material/dialog/testing/index.ts` — file; Git blob `28a0c7f656bb4adf2c8b8680489a5ac517b8a6ec`.
+- `src/material/dialog/testing/public-api.ts` — file; Git blob `ffe246ad70e0ce326d9156abcdb70ac81433f77e`.
+- `src/material/progress-bar/` — folder; Git tree `1d7cbb543a47ee00f166f16b291d84bc094a2e8a`.
+- `src/material/progress-bar/BUILD.bazel` — file; Git blob `7cb4f1c4b4e0e82a8414ead86a20b00c2f616158`.
+- `src/material/progress-bar/README.md` — file; Git blob `6b435b4416724d68d1e5b706bf1ceedd4d7bd4f7`.
+- `src/material/progress-bar/_m2-progress-bar.scss` — file; Git blob `7308b9e6f036a4d132ffa96a42247312ee4f0a24`.
+- `src/material/progress-bar/_m3-progress-bar.scss` — file; Git blob `efc7512ebed5074224858e168c3e65cbced314a7`.
+- `src/material/progress-bar/_progress-bar-theme.scss` — file; Git blob `cdb71f71be1c49f51d7597bbc8ce1f845b23e810`.
+- `src/material/progress-bar/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/progress-bar/progress-bar-module.ts` — file; Git blob `3d08b09bb6d57a1fd18e2c2557a56ec3a715de7b`.
+- `src/material/progress-bar/progress-bar.html` — file; Git blob `f9d596ab728335ef68e2b751dc892608be518043`.
+- `src/material/progress-bar/progress-bar.md` — file; Git blob `855051a30da9227a3597a2fecdcd84ed85f13067`.
+- `src/material/progress-bar/progress-bar.scss` — file; Git blob `d5bf593c296fc3a40d9927457ed485a5e8a32cb2`.
+- `src/material/progress-bar/progress-bar.spec.ts` — file; Git blob `550691fee044f2a0308e4991595ce00890fdbbe6`.
+- `src/material/progress-bar/progress-bar.ts` — file; Git blob `afc75ebadc85876f6af1cf6cc9df51d6850f2fb9`.
+- `src/material/progress-bar/public-api.ts` — file; Git blob `e57fbcab2c9d100d99bfdd0059b98a68595e0308`.
+- `src/material/progress-bar/testing/` — folder; Git tree `1a0e71a06dbdb8c26bffeefca83e424c11c75422`.
+- `src/material/progress-bar/testing/BUILD.bazel` — file; Git blob `b89438ea72634eb7ba54b2f9507daa3c70f75d09`.
+- `src/material/progress-bar/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/progress-bar/testing/progress-bar-harness-filters.ts` — file; Git blob `d8695c9087e5ea6b7dfc87860469ba6b70136fd1`.
+- `src/material/progress-bar/testing/progress-bar-harness.spec.ts` — file; Git blob `53072b9fdcabc3060d0022e16bcc7541d5ce37f4`.
+- `src/material/progress-bar/testing/progress-bar-harness.ts` — file; Git blob `1c4a9d6a460c55d81a626e80b016e2171b449fde`.
+- `src/material/progress-bar/testing/public-api.ts` — file; Git blob `f6da2a6ca468fa913021bee8831dcb012843ef5e`.
+- `src/material/progress-spinner/` — folder; Git tree `1667c2b48bddfba2bc2ad004b4e4aa337412c149`.
+- `src/material/progress-spinner/BUILD.bazel` — file; Git blob `d079b06797117758afe59724d4d67e52d4fdd701`.
+- `src/material/progress-spinner/README.md` — file; Git blob `fc9c1d17480b9802fad075b134321e143a5e45a9`.
+- `src/material/progress-spinner/_m2-progress-spinner.scss` — file; Git blob `50700466394cefa078800d3b1d0a6319252d7db3`.
+- `src/material/progress-spinner/_m3-progress-spinner.scss` — file; Git blob `2bbc35975bee6f1af578750d2d5c192d44772607`.
+- `src/material/progress-spinner/_progress-spinner-theme.scss` — file; Git blob `cfcca702132ff0f4a3383257e19107d5732d7ec8`.
+- `src/material/progress-spinner/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/progress-spinner/progress-spinner-module.ts` — file; Git blob `f153cb97f0c709c5e1d84e607cc4ce7e6bee5a23`.
+- `src/material/progress-spinner/progress-spinner.html` — file; Git blob `23b8df6c3eaab19d296b9ec690d62f6adcaf0963`.
+- `src/material/progress-spinner/progress-spinner.md` — file; Git blob `0ca04cd24e6ab317283b17b981e7bdec855c3338`.
+- `src/material/progress-spinner/progress-spinner.scss` — file; Git blob `e27428fdf46d5108677ded9d4560629c7945f7c6`.
+- `src/material/progress-spinner/progress-spinner.spec.ts` — file; Git blob `9632e559ecd66454855e972bfbac584e7b6eae19`.
+- `src/material/progress-spinner/progress-spinner.ts` — file; Git blob `d8a8c02eb74f8862502dfec14b5b5dd51cf3c023`.
+- `src/material/progress-spinner/public-api.ts` — file; Git blob `b154274f6a01f14326906d98abdfab1d8780d884`.
+- `src/material/progress-spinner/testing/` — folder; Git tree `e364d2d9a91fe9746b7f8497d5d409572bf3d9f7`.
+- `src/material/progress-spinner/testing/BUILD.bazel` — file; Git blob `128d0d8f4e0d494f019a9ff5b1ccda5ea95dd142`.
+- `src/material/progress-spinner/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/progress-spinner/testing/progress-spinner-harness-filters.ts` — file; Git blob `a2154942df01704a77ea09793a1de0d21b49f315`.
+- `src/material/progress-spinner/testing/progress-spinner-harness.spec.ts` — file; Git blob `a21dab13764a844160611da6b53530f02cc09332`.
+- `src/material/progress-spinner/testing/progress-spinner-harness.ts` — file; Git blob `9995ac722f93cd63839a2e1f2c875664deb36b3b`.
+- `src/material/progress-spinner/testing/public-api.ts` — file; Git blob `a7f4af8b6cacfec39683b952c8014d3d120c1371`.
+- `src/material/snack-bar/` — folder; Git tree `7416206e14c70dc4a6df05ee5e6843c9696b646b`.
+- `src/material/snack-bar/BUILD.bazel` — file; Git blob `9908896fdc623f2cddb480af2c89ac0fd7688608`.
+- `src/material/snack-bar/README.md` — file; Git blob `67bb1b880d063565bbb1b4c6d568df0a8fdf7540`.
+- `src/material/snack-bar/_m2-snack-bar.scss` — file; Git blob `63bfa6058dcd0d917ff148c05d61118882dac11c`.
+- `src/material/snack-bar/_m3-snack-bar.scss` — file; Git blob `3d0d8262e98f6ebba96f3a1ec806f3175493e670`.
+- `src/material/snack-bar/_snack-bar-theme.scss` — file; Git blob `64eb6e231376d58dd153a97dc43d310e01a48bb5`.
+- `src/material/snack-bar/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/snack-bar/public-api.ts` — file; Git blob `fa4c66af7b01f8e06bb0e3bf4576f4b436427b1e`.
+- `src/material/snack-bar/simple-snack-bar.html` — file; Git blob `4f3f4a0e71b045d25b811d853f53674f6cda7743`.
+- `src/material/snack-bar/simple-snack-bar.scss` — file; Git blob `4ce7754b6ef66a4e9232e8e92e7c01ebdd92ed48`.
+- `src/material/snack-bar/simple-snack-bar.ts` — file; Git blob `0bc617374fbac3a96c4daab2ee8861ad2c99e7d3`.
+- `src/material/snack-bar/snack-bar-config.ts` — file; Git blob `3ea23b9d82551bab0dc25c8b6068ea1d754200ed`.
+- `src/material/snack-bar/snack-bar-container.html` — file; Git blob `59538dab820e0c5aef90e40db4016c7d3d2e1ae1`.
+- `src/material/snack-bar/snack-bar-container.scss` — file; Git blob `f2ffe71c8a0ba4d180776503e422a6baad81a5fa`.
+- `src/material/snack-bar/snack-bar-container.ts` — file; Git blob `e8615579c9513c4e57e416e7d4876f4d9afefacb`.
+- `src/material/snack-bar/snack-bar-content.ts` — file; Git blob `fed06130846a82009d4ae89b3c6a6fddfced8a74`.
+- `src/material/snack-bar/snack-bar-module.ts` — file; Git blob `3460c754d22040a0f2440a580b6d5d2760d9bef0`.
+- `src/material/snack-bar/snack-bar-ref.ts` — file; Git blob `0cbc819e87f9db92649eb96148ea12b66fd6fd41`.
+- `src/material/snack-bar/snack-bar.md` — file; Git blob `4c0f62dad5f6a9607c23ed799b3c0a63320e0328`.
+- `src/material/snack-bar/snack-bar.spec.ts` — file; Git blob `a6d3ed6022bb4b7c81d423323a139b9fff44154d`.
+- `src/material/snack-bar/snack-bar.ts` — file; Git blob `d9f9d24e02ce59ce4bcba0472a95556ca17914e5`.
+- `src/material/snack-bar/snack-bar.zone.spec.ts` — file; Git blob `6821a849c2a0d17ece5b17a7ec418bbfd8cd2bcf`.
+- `src/material/snack-bar/testing/` — folder; Git tree `37055ac92bfb88df79945a70d3a2f5de3b87684c`.
+- `src/material/snack-bar/testing/BUILD.bazel` — file; Git blob `98f8c6c7c6f4e310db24c12f21512d8a085bdde9`.
+- `src/material/snack-bar/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/snack-bar/testing/public-api.ts` — file; Git blob `c8d4df8bbd8b39b6dee8788362e9560cfb67c997`.
+- `src/material/snack-bar/testing/snack-bar-harness-filters.ts` — file; Git blob `bba788d3eae04d5523a0324480f3bc8fa095391a`.
+- `src/material/snack-bar/testing/snack-bar-harness.spec.ts` — file; Git blob `05e0429fa263a0bea6b055e7ef9a9f452bbe1c9a`.
+- `src/material/snack-bar/testing/snack-bar-harness.ts` — file; Git blob `7239cd194d329be8ade7c31ff58653cdba73c3aa`.
+- `src/material/tooltip/` — folder; Git tree `ad749111b486598009de524b08926727bb9283ee`.
+- `src/material/tooltip/BUILD.bazel` — file; Git blob `5ff2539e19931dcd1f5f399e258ed75216e058f4`.
+- `src/material/tooltip/README.md` — file; Git blob `a290691811e9109b09124894c1fa8e61de02bc15`.
+- `src/material/tooltip/_m2-tooltip.scss` — file; Git blob `03f4822efe364dd98c068259f118ab8714760f96`.
+- `src/material/tooltip/_m3-tooltip.scss` — file; Git blob `7bbfa2be067bce701d63a1e9a5fcd4229c23899e`.
+- `src/material/tooltip/_tooltip-theme.scss` — file; Git blob `513c292be5367ef6a9b4024d5b4a23aa43e5bece`.
+- `src/material/tooltip/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/tooltip/public-api.ts` — file; Git blob `9496f7d0f5fe2a43a73da4636f4d69345876a609`.
+- `src/material/tooltip/testing/` — folder; Git tree `ec8d1015cabe4c529bf0607179496a27cfc2b9c3`.
+- `src/material/tooltip/testing/BUILD.bazel` — file; Git blob `618edb5b200a627389791959dea963238bccda0d`.
+- `src/material/tooltip/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/tooltip/testing/public-api.ts` — file; Git blob `5d6aaf67cd99af096700a03668fa57f45e4e7e27`.
+- `src/material/tooltip/testing/tooltip-harness-filters.ts` — file; Git blob `cfc7bac8275278e131cb0b25123f37f60ae2ba50`.
+- `src/material/tooltip/testing/tooltip-harness.spec.ts` — file; Git blob `031d34e41692dbe2ecbdb706beec92d384140605`.
+- `src/material/tooltip/testing/tooltip-harness.ts` — file; Git blob `2232e80ef1677b508566dce0986727a7362cdaa7`.
+- `src/material/tooltip/tooltip-module.ts` — file; Git blob `b00b07f0e8847c012785f00d5658f88a028e87bd`.
+- `src/material/tooltip/tooltip.html` — file; Git blob `e9cf9bf15bef646f1747f02d20cb7ec1d645ecaa`.
+- `src/material/tooltip/tooltip.md` — file; Git blob `d76c3f8e71d6a38a1ea83f4ad370de1c4ec3f1a1`.
+- `src/material/tooltip/tooltip.scss` — file; Git blob `6b6f8bcdd9d601a42fe62c955e0da9281d282a26`.
+- `src/material/tooltip/tooltip.spec.ts` — file; Git blob `ff2e61183cc005374fd4a18f5174a1290002ef3a`.
+- `src/material/tooltip/tooltip.ts` — file; Git blob `e6d9a41eb346af6b5da87154ccb1de1a3a2a7ab0`.
+- `src/material/tooltip/tooltip.zone.spec.ts` — file; Git blob `1130cad2baa306a2ed1d7401b6c8824032daabf3`.
+
+### Icons and graphics
+
+[Category descriptions](Icons-and-graphics.survey.md). Objects: 25.
+
+- `@angular/material/icon` — export; published export declaration, version `22.1.7`.
+- `@angular/material/icon/testing` — export; published export declaration, version `22.1.7`.
+- `src/material/icon/` — folder; Git tree `a67d918fefa95d87b7c567e716deb665425624dc`.
+- `src/material/icon/BUILD.bazel` — file; Git blob `20049624476921dc49d97af462d5c522693840b4`.
+- `src/material/icon/README.md` — file; Git blob `7292fe11975ba788edc2b9c19fed858a42383c62`.
+- `src/material/icon/_icon-theme.scss` — file; Git blob `c0d08b503a39ab63c99251bdd80999079440a076`.
+- `src/material/icon/_m2-icon.scss` — file; Git blob `f381e03e0c8584e5de43e410ef5f693d0680b396`.
+- `src/material/icon/_m3-icon.scss` — file; Git blob `c70a19db9ea5ccb61fc2d9d51763f886abfd6e17`.
+- `src/material/icon/fake-svgs.ts` — file; Git blob `fe211d4c56c9e903bc6271c47b14666a346c3567`.
+- `src/material/icon/icon-module.ts` — file; Git blob `f464a6c3eb5282f35f7801699912663252e569be`.
+- `src/material/icon/icon-registry.ts` — file; Git blob `ea5dda5f69525b9d43c68bbb8cf5a7dde35a0e48`.
+- `src/material/icon/icon.md` — file; Git blob `87df3223232c133a901d55aea943e45f259ae698`.
+- `src/material/icon/icon.scss` — file; Git blob `4f2491832fcf49242b56f74c062c28bf9e395a83`.
+- `src/material/icon/icon.spec.ts` — file; Git blob `28812b00a57f031cf182f53f878b5a5b5bddac62`.
+- `src/material/icon/icon.ts` — file; Git blob `e94f4cb6716df6eb03034e4f74c68bb0dec94a49`.
+- `src/material/icon/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/icon/public-api.ts` — file; Git blob `417edc03ff5b4ef04f196e1bae867b8001551543`.
+- `src/material/icon/testing/` — folder; Git tree `3f894702f1cec558045d3d03f2a4f04212d03369`.
+- `src/material/icon/testing/BUILD.bazel` — file; Git blob `4422eec6c4e552f4cd8a2b68aee7f6020d0787f4`.
+- `src/material/icon/testing/fake-icon-registry.ts` — file; Git blob `0551cf77f8538f58f815a80d28eb52db155cace2`.
+- `src/material/icon/testing/icon-harness-filters.ts` — file; Git blob `ace76daa4bca0d29bbf8d4a7133472da2be09441`.
+- `src/material/icon/testing/icon-harness.spec.ts` — file; Git blob `f53c45ff1f396f25b54ae49cc6726c676cc94005`.
+- `src/material/icon/testing/icon-harness.ts` — file; Git blob `65e093dd1e506fc640464f0fefddec50325d008b`.
+- `src/material/icon/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/icon/testing/public-api.ts` — file; Git blob `f6f3f790b2520c3dd4842c265c0296ffc71a0215`.
+
+### Shared foundations
+
+[Category descriptions](Shared-foundations.survey.md). Objects: 206.
+
+- `@angular/material/core` — export; published export declaration, version `22.1.7`.
+- `@angular/material/core/testing` — export; published export declaration, version `22.1.7`.
+- `src/material/core/` — folder; Git tree `53b58c3b17b4647625c38808ac9de2f4f3f0afbc`.
+- `src/material/core/BUILD.bazel` — file; Git blob `87aaf7d74341424df40de2ee26b5b7571e79a782`.
+- `src/material/core/README.md` — file; Git blob `c925e64b6a7e85faf28dedab4e24c21c3a2e21cb`.
+- `src/material/core/_core-theme.scss` — file; Git blob `89b27a7cb69a7610a5d60005e5a004b7bad759b9`.
+- `src/material/core/_core.scss` — file; Git blob `8cf15459bc406dd7b8b85f8df12dcbcbf4eaccbb`.
+- `src/material/core/_m2-app.scss` — file; Git blob `ea21f00bee979750f346f375fab1150957a14580`.
+- `src/material/core/_m3-app.scss` — file; Git blob `c29b33d2f9bf2d5109cc9367b683e39904f3b5b1`.
+- `src/material/core/animation/` — folder; Git tree `f9ff15e4d11f45a97ea4d02c5ef5c38a971948fc`.
+- `src/material/core/animation/BUILD.bazel` — file; Git blob `832994055274d6f253bc9eb6779147b2e7a222f7`.
+- `src/material/core/animation/animation.ts` — file; Git blob `4d1f3eb887e2a7f175961b7ebcd5ed1ab7719278`.
+- `src/material/core/color/` — folder; Git tree `72ef7bed1ab94153d4d9fb86026949feb98a886a`.
+- `src/material/core/color/BUILD.bazel` — file; Git blob `fc51348164da5b0d95c0bd4a048c579b9956868c`.
+- `src/material/core/color/_all-color.scss` — file; Git blob `ce75b859c505f670fec464fad355f6e580e2a792`.
+- `src/material/core/common-behaviors/` — folder; Git tree `4972a233920c6981b862c7e980c9e38130b72919`.
+- `src/material/core/common-behaviors/BUILD.bazel` — file; Git blob `100288aa375ec1f2bcfe651d2b5e834d4e25c869`.
+- `src/material/core/common-behaviors/error-state.ts` — file; Git blob `b8dd602d78df6a0c2f1f953497e7762c4ac69555`.
+- `src/material/core/common-behaviors/index.ts` — file; Git blob `1d6d2979d2fa2cda6e202cdadee5b342dc165de0`.
+- `src/material/core/common-behaviors/palette.ts` — file; Git blob `d02fa4a7ae7f0e7b691363d121c394017ab5b290`.
+- `src/material/core/core.md` — file; Git blob `6e4a70adddd462ecf281f182355a1dcea45d15fc`.
+- `src/material/core/datetime/` — folder; Git tree `b717fc13bbf8ad003cd378974cebf07297b840ed`.
+- `src/material/core/datetime/BUILD.bazel` — file; Git blob `2017ce59eea8784a3173b1cb7d81a7886f1d4e25`.
+- `src/material/core/datetime/date-adapter.ts` — file; Git blob `8fb3d8207309ae64faa7f46810a7abbac631d0f3`.
+- `src/material/core/datetime/date-formats.ts` — file; Git blob `25dbd15fb38694dce15e0430f87ddb7ba7ebf7b0`.
+- `src/material/core/datetime/index.ts` — file; Git blob `1df5d5b9218d3f05e51617605caa482d9942e031`.
+- `src/material/core/datetime/native-date-adapter.spec.ts` — file; Git blob `a1264175bf02a97be8b73ee97d3629a205aa27e0`.
+- `src/material/core/datetime/native-date-adapter.ts` — file; Git blob `80d69d7e8f1075f320703523f1f21003c2ffe4d2`.
+- `src/material/core/datetime/native-date-formats.ts` — file; Git blob `792c3fded8e5bf87c80954dd5d704f7d6d81ac48`.
+- `src/material/core/density/` — folder; Git tree `a174a1c1d548fe5371ab2bcec0df22d6a4e2f8a2`.
+- `src/material/core/density/private/` — folder; Git tree `3f743aaf71f30cdd78b224fd90d4fadb3d8d2987`.
+- `src/material/core/density/private/BUILD.bazel` — file; Git blob `ebe5f6ec30baff5e157c3151db70741ff34cab37`.
+- `src/material/core/density/private/_all-density.scss` — file; Git blob `0b615d687ac1cc69a6f1b81fea270ad0eff885c2`.
+- `src/material/core/error/` — folder; Git tree `38e462c00093143cf070ad677515e43810c7904c`.
+- `src/material/core/error/BUILD.bazel` — file; Git blob `137c0b3c655a602c179e32572686941a6bf48c17`.
+- `src/material/core/error/error-options.ts` — file; Git blob `df3cd11301ca53e94397bcfccd021c0ea60ffcef`.
+- `src/material/core/focus-indicators/` — folder; Git tree `5499b0ed8fec1f2932fae3cd42eedb760dc95175`.
+- `src/material/core/focus-indicators/BUILD.bazel` — file; Git blob `17495d4bbdafcc40bb2cdff15b2b570604eae36b`.
+- `src/material/core/focus-indicators/_private.scss` — file; Git blob `c557ac8d9078aea030581619f1bd4285188ceede`.
+- `src/material/core/focus-indicators/structural-styles.scss` — file; Git blob `9087e727cb982485572d4a93bdb90df7cebaa29f`.
+- `src/material/core/focus-indicators/structural-styles.ts` — file; Git blob `5ed61e119007d94124e2362d59443b0cd07c86ab`.
+- `src/material/core/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/core/internal-form-field/` — folder; Git tree `64201f0256ef0e395999b77310667996ca5c999f`.
+- `src/material/core/internal-form-field/BUILD.bazel` — file; Git blob `032b2f748a536b331b2676992d67b19e9974e592`.
+- `src/material/core/internal-form-field/internal-form-field.scss` — file; Git blob `d46f1d1b1348bbafd2195c4217a1b03441973450`.
+- `src/material/core/internal-form-field/internal-form-field.ts` — file; Git blob `db494457d6e1f9ca6809634d387b398d91461b21`.
+- `src/material/core/line/` — folder; Git tree `2bcba30459dfdc189cca24f9f09f56f8e1022322`.
+- `src/material/core/line/line.ts` — file; Git blob `df36630222a14838ea20ec4f81cc76248e3eb65c`.
+- `src/material/core/m2/` — folder; Git tree `e00dc30fc267d54f4a1f4b41f9ccef3880855340`.
+- `src/material/core/m2/BUILD.bazel` — file; Git blob `881f735a775193e0e3836c5ad2f1c31ff6277bd8`.
+- `src/material/core/m2/_index.scss` — file; Git blob `6bea4c1b85c42cbff941148cadb6fdc6e9a66934`.
+- `src/material/core/m2/_palette.scss` — file; Git blob `e2b5faada05cc4a2c00d3404cfb605b9d843db2b`.
+- `src/material/core/m2/_theming.scss` — file; Git blob `0154ee1d29a18219ceeba872304dff88071d6ba9`.
+- `src/material/core/m2/_typography-utils.scss` — file; Git blob `0f5ada1b21495808771d281e4f2efb5f3c0fab49`.
+- `src/material/core/m2/_typography.scss` — file; Git blob `bddab72253117eb748d782d045f2df5a4329a0b5`.
+- `src/material/core/option/` — folder; Git tree `9ab0aa7c6f451656c88ad38abe47b8e3312754c4`.
+- `src/material/core/option/BUILD.bazel` — file; Git blob `db193878f52da573837561dd0f1722ef5dda3b64`.
+- `src/material/core/option/_m2-optgroup.scss` — file; Git blob `f8caf91dd36cbdc506e0d8eaa2f04ba7f22318cc`.
+- `src/material/core/option/_m2-option.scss` — file; Git blob `11414eb6dd5b2c4db098db70635c001d4a7ad7f1`.
+- `src/material/core/option/_m3-optgroup.scss` — file; Git blob `b787e9cd8259e234aa52bb3b44a59d1f4055839e`.
+- `src/material/core/option/_m3-option.scss` — file; Git blob `b7eae506d8e85d75fdd6a048e654cc5fbae9d866`.
+- `src/material/core/option/_optgroup-theme.scss` — file; Git blob `98c885f9790e5b8a8fd3e7839ab5de8ce965f0e7`.
+- `src/material/core/option/_option-theme.scss` — file; Git blob `064fa5bdf3134747be84bfeadd7e8c96a7ba9417`.
+- `src/material/core/option/index.ts` — file; Git blob `d64e63014c9a8f4111ccbe38eced3e94f273d4e6`.
+- `src/material/core/option/optgroup.html` — file; Git blob `6fbc80f6baccdcc0aaa0b62326d422a40b77f339`.
+- `src/material/core/option/optgroup.scss` — file; Git blob `6233fcb2a7f0bbadda24461b368249925ae728c7`.
+- `src/material/core/option/optgroup.ts` — file; Git blob `ab231c5a2f9490535e85998b49b1146cca403970`.
+- `src/material/core/option/option-module.ts` — file; Git blob `b93bd273dc4ea9e6c0849e7bd3322ace84ab7a13`.
+- `src/material/core/option/option-parent.ts` — file; Git blob `8df8908f35a5816939a1b8707c54c8d91611fbb8`.
+- `src/material/core/option/option.html` — file; Git blob `6e4c2cf594812c4be07bda0e8110bd74d9be240a`.
+- `src/material/core/option/option.scss` — file; Git blob `6a10be1141c0b992f1d93e4903a83c02b571f713`.
+- `src/material/core/option/option.spec.ts` — file; Git blob `741ad692fb943384fa15ac0f8f32988b4460fa19`.
+- `src/material/core/option/option.ts` — file; Git blob `a4a893b25489431fea88cd1baa268ec8b589c46d`.
+- `src/material/core/private/` — folder; Git tree `6e782243561939e203bbb0df3cfbecb7a3d59a92`.
+- `src/material/core/private/BUILD.bazel` — file; Git blob `0401bbd4cb2b8a4d73436b446a5b56ae43fe9f16`.
+- `src/material/core/private/index.ts` — file; Git blob `fd6069a5b5e183223c23ca1d6729d8f59b37726b`.
+- `src/material/core/private/ripple-loader.ts` — file; Git blob `abed2766bf03be174f3171b98411b2981c2f474a`.
+- `src/material/core/public-api.ts` — file; Git blob `0317e8f4e36266cc5e67ae46748dd8b74e54c69e`.
+- `src/material/core/ripple/` — folder; Git tree `b1095104b7d08c3839d01520de88e3ac063f30ca`.
+- `src/material/core/ripple/_m2-ripple.scss` — file; Git blob `61ea2aec4799bf9862742336b0a6e372d57be04d`.
+- `src/material/core/ripple/_m3-ripple.scss` — file; Git blob `2a3949c98b706d9bd76a7ac0f8c027cda81febd1`.
+- `src/material/core/ripple/_ripple-theme.scss` — file; Git blob `f69a7f0cc34ff41bb1d4e619e754a607e1a61635`.
+- `src/material/core/ripple/_ripple.scss` — file; Git blob `103ff5877e6d97f60151fe4f14979aa9e6681809`.
+- `src/material/core/ripple/index.ts` — file; Git blob `921c1a794d5d27783d0b85d7b4d4644a9a5ba47f`.
+- `src/material/core/ripple/ripple-event-manager.ts` — file; Git blob `6cb9a15ca9cd21bdd3afa50e1e4c3fd86513bdbb`.
+- `src/material/core/ripple/ripple-module.ts` — file; Git blob `b37233e24392dda92b689d921417f33e869bf93b`.
+- `src/material/core/ripple/ripple-ref.ts` — file; Git blob `ae588dc0dcabae82ed3bdc70dec198bcd275211a`.
+- `src/material/core/ripple/ripple-renderer.ts` — file; Git blob `d111939d723f019d9f192a1ba4597c1ee7d526ba`.
+- `src/material/core/ripple/ripple-structure.scss` — file; Git blob `1ef209c2644ceaf5c19abfa2a114e9f772b0f9ba`.
+- `src/material/core/ripple/ripple.md` — file; Git blob `8e3e7d90e54cb53933656c5852920137f31e5150`.
+- `src/material/core/ripple/ripple.spec.ts` — file; Git blob `bc5c79c58bac52fb07403c16380ab9b56f709cfe`.
+- `src/material/core/ripple/ripple.ts` — file; Git blob `36bfc40213d7522fa7dd4e174205f151aea67134`.
+- `src/material/core/ripple/ripple.zone.spec.ts` — file; Git blob `b35a66b14934342d149d65984c6a04c8ccefd843`.
+- `src/material/core/selection/` — folder; Git tree `3532c743e3e7399f6fef3ae800320c35d83c8e60`.
+- `src/material/core/selection/BUILD.bazel` — file; Git blob `925ba5ad6cac0b8f5c9af676517e04037855dbeb`.
+- `src/material/core/selection/index.ts` — file; Git blob `f6874d63da44546291c27f67f86ab62de0428601`.
+- `src/material/core/selection/pseudo-checkbox/` — folder; Git tree `16eeca18df309d4a5e0222c58923a9c716af8f83`.
+- `src/material/core/selection/pseudo-checkbox/BUILD.bazel` — file; Git blob `744a69374472260ee5ee9a0dc187dbeefc8ebcdc`.
+- `src/material/core/selection/pseudo-checkbox/_m2-pseudo-checkbox.scss` — file; Git blob `7d40a631cbe7693e75ae51786443eb9c18a6872f`.
+- `src/material/core/selection/pseudo-checkbox/_m3-pseudo-checkbox.scss` — file; Git blob `ff45b0153e82722ee121e915286883511462c43e`.
+- `src/material/core/selection/pseudo-checkbox/_pseudo-checkbox-common.scss` — file; Git blob `69b44d4a24f41971620e109c4827b4781052275d`.
+- `src/material/core/selection/pseudo-checkbox/_pseudo-checkbox-theme.scss` — file; Git blob `bbfff2857750457b44601b1a73f00b431a5f0132`.
+- `src/material/core/selection/pseudo-checkbox/pseudo-checkbox-module.ts` — file; Git blob `5ef00a4f5f78b9c5f232d8cb68955138f85c438f`.
+- `src/material/core/selection/pseudo-checkbox/pseudo-checkbox.scss` — file; Git blob `363c5486cf601a72c91cac13a8090a8355db307d`.
+- `src/material/core/selection/pseudo-checkbox/pseudo-checkbox.ts` — file; Git blob `5f08516f06f0fdeaf9deb85947381be380db7c6d`.
+- `src/material/core/style/` — folder; Git tree `86cdf024b6a92285aab579095dee3ddfcdb32f97`.
+- `src/material/core/style/BUILD.bazel` — file; Git blob `959dc5a7c22f624794ce0673c1209d466cc1d45a`.
+- `src/material/core/style/_button-common.scss` — file; Git blob `08f0a53f9934847b435b9472408448b0c9acbb9d`.
+- `src/material/core/style/_checkbox-common.scss` — file; Git blob `d3679b3d1d9d4cc606533cbd9e9e1b67a6f96a45`.
+- `src/material/core/style/_elevation.scss` — file; Git blob `5a3d8c98b0ea1968129c94fe095a9e7856adaf16`.
+- `src/material/core/style/_layout-common.scss` — file; Git blob `eeadafebebb07478e1ae309753120fb2080dd6fe`.
+- `src/material/core/style/_list-common.scss` — file; Git blob `a258f641ec26875ee06711bbd2ef64170b922a38`.
+- `src/material/core/style/_menu-common.scss` — file; Git blob `4742b320261f16e4e5e71e5ad1ebbc38428311b6`.
+- `src/material/core/style/_private.scss` — file; Git blob `9274ce8365be29c7070c6a81c192f62b8fe0304e`.
+- `src/material/core/style/_sass-utils.scss` — file; Git blob `2bc7a72ac72fc56bdc1ad4e423e47dc6092261f2`.
+- `src/material/core/style/_validation.scss` — file; Git blob `40502504912f7284549523401da223e19943f5e4`.
+- `src/material/core/style/_variables.scss` — file; Git blob `7180be33820a5deecd8ee57c23d0fd58f1d6aae7`.
+- `src/material/core/style/_vendor-prefixes.scss` — file; Git blob `50e76be224653ae169e6b011aedbd0e99b01c617`.
+- `src/material/core/testing/` — folder; Git tree `4b626e83d57701506ca39725321268f88f34f9fc`.
+- `src/material/core/testing/BUILD.bazel` — file; Git blob `7ca3e9e22d108f8560c30d9117cbfede489f14f1`.
+- `src/material/core/testing/index.ts` — file; Git blob `52b3c7a5156f27e9432c462bebc79590ba56b674`.
+- `src/material/core/testing/optgroup-harness-filters.ts` — file; Git blob `8a210931f7a44943e5a8df1af8e2a657050ca6e5`.
+- `src/material/core/testing/optgroup-harness.spec.ts` — file; Git blob `310c7acc00519a9154143e629e3ee9cdc6f97e16`.
+- `src/material/core/testing/optgroup-harness.ts` — file; Git blob `3442e05fefafeaee967fc6a4ec4396f5811d7f93`.
+- `src/material/core/testing/option-harness-filters.ts` — file; Git blob `52c2bdaedd2fcaa6d87b28f8fae85923a1c72de6`.
+- `src/material/core/testing/option-harness.spec.ts` — file; Git blob `75cff42e11c02a19d7b7759fd02ea4449fc1f361`.
+- `src/material/core/testing/option-harness.ts` — file; Git blob `e431cdf09c27243bb45078c6ed96fa2631fc1e99`.
+- `src/material/core/testing/public-api.ts` — file; Git blob `b89bc1ab94edf151c252154b7f8babaf04fbfbdf`.
+- `src/material/core/theming/` — folder; Git tree `b66ad4ce70492ae6a764d3e15ccf192170c31222`.
+- `src/material/core/theming/BUILD.bazel` — file; Git blob `d17d68dd44de10297863a4c90f0b52bf522c3ac1`.
+- `src/material/core/theming/_all-theme.scss` — file; Git blob `3f101ef80f4173f3fffeffb79ae374a452330a12`.
+- `src/material/core/theming/_color-api-backwards-compatibility.scss` — file; Git blob `1e1b75af91f202ba1b8250434b1950ed2ea59b43`.
+- `src/material/core/theming/_config-validation.scss` — file; Git blob `60a8e74bf32a73ce6ba113d64f7a1d1eb84164b2`.
+- `src/material/core/theming/_definition.scss` — file; Git blob `da0e5013316ffe6636bb5a195da9b6232cbc00b0`.
+- `src/material/core/theming/_inspection.scss` — file; Git blob `ec096c59c8fbfaa7125f8282f6e9aef440eba31e`.
+- `src/material/core/theming/_m2-inspection.scss` — file; Git blob `f6ef37ef6f88e0304d75ec25b4114c14b412e177`.
+- `src/material/core/theming/_palette-deprecated.scss` — file; Git blob `b9f3409b545375d32c64afdeb33924c7c861de7c`.
+- `src/material/core/theming/_palettes.scss` — file; Git blob `f9d0be9c35fe7858f36237b07813c70c0745398b`.
+- `src/material/core/theming/_theming-deprecated.scss` — file; Git blob `3e94938ddf5333a34f2eee2571b3f69bdbb6a774`.
+- `src/material/core/theming/_theming.scss` — file; Git blob `0b9ffa7eb2a7a285302dbde71f204671b5ec969f`.
+- `src/material/core/theming/_typography.scss` — file; Git blob `88487e1e48ee8b10d65ee6e22fa4d70b153b4f79`.
+- `src/material/core/theming/_validation.scss` — file; Git blob `11c1ab98c21becce4f926db90157c1899bba084b`.
+- `src/material/core/theming/prebuilt/` — folder; Git tree `f859019c0b48ae690a68eea904f17042dee893bc`.
+- `src/material/core/theming/prebuilt/BUILD.bazel` — file; Git blob `f631700a2031593d3f5d9d742540d7993464e53b`.
+- `src/material/core/theming/prebuilt/azure-blue.scss` — file; Git blob `19280e55ea6a2078917a4cf1b6797818a928e201`.
+- `src/material/core/theming/prebuilt/cyan-orange.scss` — file; Git blob `17a3355c37ff2e805120dbb1719e070159d4fae1`.
+- `src/material/core/theming/prebuilt/deeppurple-amber.scss` — file; Git blob `57a01c38db74e252cb247ed377846d44c6581211`.
+- `src/material/core/theming/prebuilt/indigo-pink.scss` — file; Git blob `3c8d2e7c7fa976c3803838a5b2c769c42c8b898b`.
+- `src/material/core/theming/prebuilt/magenta-violet.scss` — file; Git blob `b8ab9da088679fdb079a2d293e862ec4a7463624`.
+- `src/material/core/theming/prebuilt/pink-bluegrey.scss` — file; Git blob `23c5b11ec9f1dcce5714c80a87c7ef15e38b2b81`.
+- `src/material/core/theming/prebuilt/purple-green.scss` — file; Git blob `5c89938f71de1535383a47160978b6aca34a7681`.
+- `src/material/core/theming/prebuilt/rose-red.scss` — file; Git blob `517372dcd0e41a9a6a6413fd9959b29ae39d1b49`.
+- `src/material/core/theming/tests/` — folder; Git tree `c3f936057e60bf1ae54641684167ace5c4c62ac1`.
+- `src/material/core/theming/tests/BUILD.bazel` — file; Git blob `49dd08d74b0beb5ca7086dcfcb2d78097fd12bb3`.
+- `src/material/core/theming/tests/m3-theme.spec.ts` — file; Git blob `eaa524c78f8591e82266b98a9f660cee2d343448`.
+- `src/material/core/theming/tests/test-css-variables-theme.scss` — file; Git blob `9b69f7d8a9be53e099829d370dad08cf06c06014`.
+- `src/material/core/theming/tests/test-theming-api.scss` — file; Git blob `963c79333e9222b7678b1c82e80900e20280971b`.
+- `src/material/core/theming/tests/test-theming-bundle.scss` — file; Git blob `61f1191f73537bf0a79707caca947dc430dd2a7a`.
+- `src/material/core/theming/tests/test-typography-font-family.scss` — file; Git blob `91b9fb824ff35e65457349ffbc2429499c1bdc23`.
+- `src/material/core/theming/tests/theming-definition-api.spec.ts` — file; Git blob `fe96363cc029f4cfe18d12456f04b01e1267312b`.
+- `src/material/core/theming/tests/theming-inspection-api.spec.ts` — file; Git blob `e3ce2cdef6cd2d37520a32149726ba600f8b2366`.
+- `src/material/core/theming/tests/theming-typography-hierarchy.spec.ts` — file; Git blob `abb408dda07889500d53192544ec064ed5a1c9dd`.
+- `src/material/core/tokens/` — folder; Git tree `a49183b163d56b6c09e8511b8fb58cf6ae6f8772`.
+- `src/material/core/tokens/BUILD.bazel` — file; Git blob `9c454a93e3a9b902ded07e0e3c9d62206b015ac7`.
+- `src/material/core/tokens/_classes.scss` — file; Git blob `d827c0f3aae42d19bc62323bc1a4211daa6c3914`.
+- `src/material/core/tokens/_m2-utils.scss` — file; Git blob `f3af536395df5821fd839162513966d875aed695`.
+- `src/material/core/tokens/_m3-tokens.scss` — file; Git blob `e8a35fe94b7825be3f3e0c6fa56f7c2d35a00fec`.
+- `src/material/core/tokens/_m3-utils.scss` — file; Git blob `179ecaf867e06360e6d0c69e0da8ce95f7efc3ba`.
+- `src/material/core/tokens/_system.scss` — file; Git blob `35b44751476358500751cf6734e453c59ed37193`.
+- `src/material/core/tokens/_token-utils.scss` — file; Git blob `56be21d0df12362437dc8c61eb0770e0b43d3943`.
+- `src/material/core/tokens/m2/` — folder; Git tree `dad403065eb5459a26f074f6aa3c37adb267bf77`.
+- `src/material/core/tokens/m2/BUILD.bazel` — file; Git blob `63455be98ea9a88d8e57184ef0a447830f8aa48d`.
+- `src/material/core/tokens/m2/_index.scss` — file; Git blob `7cc298e399204d8f7fb59aaf093c368ada819d55`.
+- `src/material/core/tokens/m2/_md-sys-color-internal.scss` — file; Git blob `110beea741babae4ef22d14f2adbc6377cddb15b`.
+- `src/material/core/tokens/m2/_md-sys-color.scss` — file; Git blob `713f488c3f99dc545fe38bc9e33a6f4053ee0641`.
+- `src/material/core/tokens/m2/_md-sys-elevation.scss` — file; Git blob `2986702a77768d3ad620f4ff9359b7b3d7ee5a3c`.
+- `src/material/core/tokens/m2/_md-sys-motion.scss` — file; Git blob `b2a2c3da4c80c3cfb5743e7cd1b8ce3190be9637`.
+- `src/material/core/tokens/m2/_md-sys-shape.scss` — file; Git blob `0f82a9b368001573426f8d04d3a92f7c29df603a`.
+- `src/material/core/tokens/m2/_md-sys-state.scss` — file; Git blob `c70e698324604add7c8a17fc0fba5beed99e8710`.
+- `src/material/core/tokens/m2/_md-sys-typescale.scss` — file; Git blob `212c3afdeab4f63e7d3af1f304ac551c504aa171`.
+- `src/material/core/tokens/m3/` — folder; Git tree `16b3c3ab540d29aa0152db5c4878cd7f22ba6615`.
+- `src/material/core/tokens/m3/BUILD.bazel` — file; Git blob `df8965ff357aa8ba2465b7a36a5bd9ef226dbaf6`.
+- `src/material/core/tokens/m3/README.md` — file; Git blob `dd6d235ea3db8ed28155bbbd49e78d957bdf1dbe`.
+- `src/material/core/tokens/m3/_index.scss` — file; Git blob `9bcad7f5b59872df66a62760519f0ff209a60265`.
+- `src/material/core/tokens/m3/_md-sys-color-internal.scss` — file; Git blob `e21b8fde76e0ad9b2b19dae136428061d1b6e981`.
+- `src/material/core/tokens/m3/_md-sys-color.scss` — file; Git blob `b97fe7eae9d419409794a18f694ecac99e9e8ce1`.
+- `src/material/core/tokens/m3/_md-sys-elevation.scss` — file; Git blob `6aad8c6baad9880f4761d51c39fe30c20a085f0d`.
+- `src/material/core/tokens/m3/_md-sys-motion.scss` — file; Git blob `645f99b158d9d3eaf95974a85684f1e19eec6555`.
+- `src/material/core/tokens/m3/_md-sys-shape.scss` — file; Git blob `73c3f30c131e311ca88422988efa15e283c7e3a3`.
+- `src/material/core/tokens/m3/_md-sys-state.scss` — file; Git blob `ddc9ebfb7aa2cdaa617777b68f63a75dd25ae482`.
+- `src/material/core/tokens/m3/_md-sys-typescale-internal.scss` — file; Git blob `436ff4eaa831f42d6a7b4da11a9e7d1b137976a9`.
+- `src/material/core/tokens/m3/_md-sys-typescale.scss` — file; Git blob `4af98c1440131f85c27179412eccf079d672ebf2`.
+- `src/material/core/tokens/m3/_theme.scss` — file; Git blob `66a8c8975f4d8d914f9b2e227a2c5204fcabf388`.
+- `src/material/core/typography/` — folder; Git tree `7c961b160860a632c4cbebfb89dfc4716555c99f`.
+- `src/material/core/typography/BUILD.bazel` — file; Git blob `325583e8960df2e620022557a3aab1a1d3c466c6`.
+- `src/material/core/typography/_all-typography.scss` — file; Git blob `c20e532a5f1483bbbcdc97b8b144f7e84350e1a2`.
+- `src/material/core/typography/_typography-utils-deprecated.scss` — file; Git blob `5f45ad8faa337fbb7feaeead4a723426959c4f79`.
+- `src/material/core/typography/_typography-utils.scss` — file; Git blob `539987c891cd838f0fd9e92df122e0cb7da5a53f`.
+- `src/material/core/typography/_typography.scss` — file; Git blob `a4986960b121de87d126b179fdcc05b9760adaff`.
+- `src/material/core/typography/_versioning.scss` — file; Git blob `0d4c09dd4e530b5ea6e22717ef1b26575dbdb500`.
+- `src/material/core/version.ts` — file; Git blob `bd7efacab13a99e6e4560590b3b4f71000aef952`.
+- `src/material/testing/` — folder; Git tree `f37939925b9eea97aef57292c1bf31a5928efa3f`.
+- `src/material/testing/BUILD.bazel` — file; Git blob `f977ff3cdfc4a6296a1a48933d0c1265cbe4d3d6`.
+- `src/material/testing/README.md` — file; Git blob `386f41450b78cec1eb2e3c4d4e5e0035ebb10028`.
+- `src/material/testing/index.ts` — file; Git blob `d783c3fa166a14b80b8393c7c164c30c5655bbe6`.
+- `src/material/testing/month-constants.ts` — file; Git blob `41acf529af2d0e52fc4226f3b3fe61894780d710`.
+
+### Development tooling
+
+[Category descriptions](Development-tooling.survey.md). Objects: 121.
+
+- `src/material/schematics/` — folder; Git tree `d3fafe918f558ac4e1c628fa30660ea38bcaad36`.
+- `src/material/schematics/BUILD.bazel` — file; Git blob `b796230b205a2343217be7a7e8a35626b50b75b7`.
+- `src/material/schematics/cdk-shared-logic.png` — file; Git blob `52cfec54b530b70924088b43ddb33a58a078ee2d`.
+- `src/material/schematics/collection.json` — file; Git blob `6a135e799eade7f2d5b0364699a787337b7bd393`.
+- `src/material/schematics/migration-utilities/` — folder; Git tree `f00898eb00509bdba81c6e2e0c8bdc2e03d56d0f`.
+- `src/material/schematics/migration-utilities/BUILD.bazel` — file; Git blob `975e3da4a06aef54c145c0367fab811326ff03e2`.
+- `src/material/schematics/migration-utilities/index.spec.ts` — file; Git blob `7dd7799cf631a31b86292da521fa7310b6587c2f`.
+- `src/material/schematics/migration-utilities/index.ts` — file; Git blob `b895ef6279aabfdcfc7dcd1933a8bbb9e0c81db9`.
+- `src/material/schematics/migration-utilities/typescript/` — folder; Git tree `88900f9196f83c33046ee8ab4baed860b26fd37c`.
+- `src/material/schematics/migration-utilities/typescript/import-operations.spec.ts` — file; Git blob `e008bf394259643e820b5d2f54e55b16ae5afd41`.
+- `src/material/schematics/migration-utilities/typescript/import-operations.ts` — file; Git blob `9f4d54bf7b4764fd08a86e55ef393d7907f74f8b`.
+- `src/material/schematics/migration-utilities/update.ts` — file; Git blob `69c2e0d2a896520425dc1305187c45899b3aea9e`.
+- `src/material/schematics/migration.json` — file; Git blob `8184d1939cf106d4b2088b08caad9f8ac40ad62b`.
+- `src/material/schematics/ng-add/` — folder; Git tree `6927ffc41d22a5fb06f2324f11dfaf0c2cd7f276`.
+- `src/material/schematics/ng-add/fonts/` — folder; Git tree `368134d9de00aac306c1f3227d996832a5eb13c6`.
+- `src/material/schematics/ng-add/fonts/material-fonts.ts` — file; Git blob `c6f70f9dd5cb0dfdc27af9676ca7a3a9258acc4b`.
+- `src/material/schematics/ng-add/index.spec.ts` — file; Git blob `58977ad01a32319b39d09c3dff3bbaa6c5a788b2`.
+- `src/material/schematics/ng-add/index.ts` — file; Git blob `3af2da35e7c8623fe8232afd3160440825247f84`.
+- `src/material/schematics/ng-add/package-config.ts` — file; Git blob `568a614b6b274f8e99572c6e07f1328cd1d2e7af`.
+- `src/material/schematics/ng-add/schema.json` — file; Git blob `683e954780f6c9040e5a9e307168e2c4eee39ad6`.
+- `src/material/schematics/ng-add/schema.ts` — file; Git blob `01229e0f79053f5eed94e41fd0e640d932f21d19`.
+- `src/material/schematics/ng-add/setup-project.ts` — file; Git blob `652679b52a4e918b5790b23e5da181614f2a211b`.
+- `src/material/schematics/ng-add/theming/` — folder; Git tree `27776258c5510a23cea350c86a356c17ee6e76a2`.
+- `src/material/schematics/ng-add/theming/create-theme.ts` — file; Git blob `fb25eb8eb01018507d5159b34f4b411c091765c4`.
+- `src/material/schematics/ng-add/theming/theming.ts` — file; Git blob `f8ebae0096f362ed09920398f20905cac01f6e1c`.
+- `src/material/schematics/ng-generate/` — folder; Git tree `a3bebb8002a812d2f98a55e4883b11ca22056d76`.
+- `src/material/schematics/ng-generate/address-form/` — folder; Git tree `3a80a7e746930ef9dbb9a862a595716cb7eb425c`.
+- `src/material/schematics/ng-generate/address-form/files/` — folder; Git tree `437807437709793de69694a3b1741b9d5265d50d`.
+- `src/material/schematics/ng-generate/address-form/files/__path__/` — folder; Git tree `2cc0a5aab37b6a16420f0506d63ff01a637c43c7`.
+- `src/material/schematics/ng-generate/address-form/files/__path__/__name@dasherize@if-flat__/` — folder; Git tree `97540a8bb241d6282b762f587f03da759483bf1d`.
+- `src/material/schematics/ng-generate/address-form/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.__style__.template` — file; Git blob `194f9ec7473d2f231a1b432fcaba5173e0d0c6a8`.
+- `src/material/schematics/ng-generate/address-form/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.html.template` — file; Git blob `0673b2e622fd1ef46f76fd39c4fbd276885a876c`.
+- `src/material/schematics/ng-generate/address-form/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.spec.ts.template` — file; Git blob `ff5b604dd3e6b50f49faf327e8aa8f488d12ad7d`.
+- `src/material/schematics/ng-generate/address-form/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts.template` — file; Git blob `ac3c3228902cf1bd552c3fba10c5a6076388f187`.
+- `src/material/schematics/ng-generate/address-form/index.spec.ts` — file; Git blob `3df760bb565a7dd8aa170ec63430da514f07a9fc`.
+- `src/material/schematics/ng-generate/address-form/index.ts` — file; Git blob `40f8985b2fa6167faf4676a8b14db1a15119e0ca`.
+- `src/material/schematics/ng-generate/address-form/schema.json` — file; Git blob `751ecadde744b501de29829c18acf242d35cb2ee`.
+- `src/material/schematics/ng-generate/address-form/schema.ts` — file; Git blob `178e5010cbc2d25c7239942590f5652905c91856`.
+- `src/material/schematics/ng-generate/dashboard/` — folder; Git tree `93259d7c3a580566d07e62e4c7b685ba12b0233e`.
+- `src/material/schematics/ng-generate/dashboard/files/` — folder; Git tree `bf65c835378623fbf30fae4c1bef2bcab4f2863c`.
+- `src/material/schematics/ng-generate/dashboard/files/__path__/` — folder; Git tree `a72e772ebe416136511c0e456aeaf6138edf3059`.
+- `src/material/schematics/ng-generate/dashboard/files/__path__/__name@dasherize@if-flat__/` — folder; Git tree `a77cd86104015efb3e1e1dae4ee58fba55f2b205`.
+- `src/material/schematics/ng-generate/dashboard/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.__style__.template` — file; Git blob `49a8146fc2ffe511bf22e5b64818140cac795702`.
+- `src/material/schematics/ng-generate/dashboard/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.html.template` — file; Git blob `659971205047639c96428e2ebd891ffcfe06e615`.
+- `src/material/schematics/ng-generate/dashboard/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.spec.ts.template` — file; Git blob `7e320757aab3248cadac7462f9e58c66e20f143b`.
+- `src/material/schematics/ng-generate/dashboard/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts.template` — file; Git blob `9435b012075fc3094275811ea058cc2fb68b54a3`.
+- `src/material/schematics/ng-generate/dashboard/index.spec.ts` — file; Git blob `81f1e2ca3109f69c05daecc82722ce924c9502ea`.
+- `src/material/schematics/ng-generate/dashboard/index.ts` — file; Git blob `52ad391facdd472621e1c405081ebb0755656f28`.
+- `src/material/schematics/ng-generate/dashboard/schema.json` — file; Git blob `1550b96ce054a278e956db308b99fa7b9b160332`.
+- `src/material/schematics/ng-generate/dashboard/schema.ts` — file; Git blob `178e5010cbc2d25c7239942590f5652905c91856`.
+- `src/material/schematics/ng-generate/navigation/` — folder; Git tree `3bc746dff585656d50fd6e6b59e36ae73b376477`.
+- `src/material/schematics/ng-generate/navigation/files/` — folder; Git tree `78f6116711b9ae4ad399ed6a1707518ff0becce0`.
+- `src/material/schematics/ng-generate/navigation/files/__path__/` — folder; Git tree `ef198fc2acc40af8614f6c58fd4567c2cbf77ede`.
+- `src/material/schematics/ng-generate/navigation/files/__path__/__name@dasherize@if-flat__/` — folder; Git tree `a505b6e27ec98773a23009712cfb4a838858752d`.
+- `src/material/schematics/ng-generate/navigation/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.__style__.template` — file; Git blob `f4bad0f2b76361dc722fc509ab0b41c93013373a`.
+- `src/material/schematics/ng-generate/navigation/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.html.template` — file; Git blob `a16f1f2bd276da5413e4add6d789d879dc056f96`.
+- `src/material/schematics/ng-generate/navigation/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.spec.ts.template` — file; Git blob `8f628af7ea1d72849cfd8f8d6ca736f46ad27b50`.
+- `src/material/schematics/ng-generate/navigation/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts.template` — file; Git blob `0994133e74acc959f25618fc717a55f0c15fad11`.
+- `src/material/schematics/ng-generate/navigation/index.spec.ts` — file; Git blob `b7416967e67776c0c31c2c0f74ced5b1ac368610`.
+- `src/material/schematics/ng-generate/navigation/index.ts` — file; Git blob `fe55e66d7d190e8db19a030994cb72ac06cca311`.
+- `src/material/schematics/ng-generate/navigation/schema.json` — file; Git blob `31abbc330b08d77b5dc1f28c6d3935d96618707f`.
+- `src/material/schematics/ng-generate/navigation/schema.ts` — file; Git blob `178e5010cbc2d25c7239942590f5652905c91856`.
+- `src/material/schematics/ng-generate/table/` — folder; Git tree `2853d31e143c9d7f22e20bf5872a9483e3b8a536`.
+- `src/material/schematics/ng-generate/table/files/` — folder; Git tree `9638252434013fed345a6b7140fdfcd7071847b2`.
+- `src/material/schematics/ng-generate/table/files/__path__/` — folder; Git tree `b4087acba39501347a5d21a59ab65abc4ad080b1`.
+- `src/material/schematics/ng-generate/table/files/__path__/__name@dasherize@if-flat__/` — folder; Git tree `19aa81d22f4f2a3e58b4da6ccc0e4261cfe02192`.
+- `src/material/schematics/ng-generate/table/files/__path__/__name@dasherize@if-flat__/__name@dasherize__-datasource.ts.template` — file; Git blob `58999eadfe8979e798d88cd17251fb2f5fe670bc`.
+- `src/material/schematics/ng-generate/table/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.__style__.template` — file; Git blob `5050fb6e04f3454d9ea32ba1de9256179bc4d426`.
+- `src/material/schematics/ng-generate/table/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.html.template` — file; Git blob `fba358b44012b338c3307be13c73eb1d46be1aec`.
+- `src/material/schematics/ng-generate/table/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.spec.ts.template` — file; Git blob `e1f117c06f927c3318f67ddb37035051de0f70cd`.
+- `src/material/schematics/ng-generate/table/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts.template` — file; Git blob `852f2650e26a8aef685639546ba4a2a35514b30f`.
+- `src/material/schematics/ng-generate/table/index.spec.ts` — file; Git blob `e70646bbf98250ed1c840a2d87c999675aa5d589`.
+- `src/material/schematics/ng-generate/table/index.ts` — file; Git blob `617deb245e4dfc6ca80d0f693dbab418a4b7dad8`.
+- `src/material/schematics/ng-generate/table/schema.json` — file; Git blob `29f97bdc17d8256d14e293502dd8b685a7f47212`.
+- `src/material/schematics/ng-generate/table/schema.ts` — file; Git blob `178e5010cbc2d25c7239942590f5652905c91856`.
+- `src/material/schematics/ng-generate/theme-color/` — folder; Git tree `2761f2dc36a71b9e18ac2ba4e0da2b0f7d98401c`.
+- `src/material/schematics/ng-generate/theme-color/BUILD.bazel` — file; Git blob `2b1d5bba9f2f527f8ec039b21871d8696606a165`.
+- `src/material/schematics/ng-generate/theme-color/README.md` — file; Git blob `fa6544d348dc6fd880fd55d2d876b340adeeab84`.
+- `src/material/schematics/ng-generate/theme-color/index.spec.ts` — file; Git blob `bc78eec527c0f2c9cecebdf3f455eaed6bb205f6`.
+- `src/material/schematics/ng-generate/theme-color/index.ts` — file; Git blob `d17310676052c5418f1334d0c9b6396940890d5d`.
+- `src/material/schematics/ng-generate/theme-color/index_bundled.d.ts` — file; Git blob `07066146182c6b19598c147332b3dacbe7fb0cbd`.
+- `src/material/schematics/ng-generate/theme-color/schema.d.ts` — file; Git blob `bab53f3c1fe575c0de4c7228ec121905469da2ef`.
+- `src/material/schematics/ng-generate/theme-color/schema.json` — file; Git blob `b8e36dc8ba4e63b74367d9db4e058cbe9f47602d`.
+- `src/material/schematics/ng-generate/tree/` — folder; Git tree `fa494a58ac1ab8189e86bd057156512309a0025e`.
+- `src/material/schematics/ng-generate/tree/files/` — folder; Git tree `b913c19b99b449b74cbfae92168cc0cd5304da21`.
+- `src/material/schematics/ng-generate/tree/files/__path__/` — folder; Git tree `9f7b7b163e698e439d653221949a60f6134290a1`.
+- `src/material/schematics/ng-generate/tree/files/__path__/__name@dasherize@if-flat__/` — folder; Git tree `cf8941cec4eb7643f0e1aeeca0d1ae6868281118`.
+- `src/material/schematics/ng-generate/tree/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.__style__.template` — file; Git blob `bcf84cd4022d64309154702b6ae1307619f3bfed`.
+- `src/material/schematics/ng-generate/tree/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.html.template` — file; Git blob `d037316833f66bb1ae36e026171355b0a5866c80`.
+- `src/material/schematics/ng-generate/tree/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.spec.ts.template` — file; Git blob `685025ac59434474bb19fd1320a323bfb1b2e672`.
+- `src/material/schematics/ng-generate/tree/files/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts.template` — file; Git blob `98e2291d00cfa07519ebb09cb256cd10d68d1624`.
+- `src/material/schematics/ng-generate/tree/files/__path__/__name@dasherize@if-flat__/example-data.ts.template` — file; Git blob `4b9d3501e64f4753d20548babaa5e439eb43b8e0`.
+- `src/material/schematics/ng-generate/tree/index.spec.ts` — file; Git blob `a4e2c23d3e71138ed5471358157a97baca0833ff`.
+- `src/material/schematics/ng-generate/tree/index.ts` — file; Git blob `bad5aeb8025f3d2b02aab3957b185ab5f8a0c1e6`.
+- `src/material/schematics/ng-generate/tree/schema.json` — file; Git blob `9780a6b91aea0d0af8b80d18a8ba899f5aaa5b83`.
+- `src/material/schematics/ng-generate/tree/schema.ts` — file; Git blob `178e5010cbc2d25c7239942590f5652905c91856`.
+- `src/material/schematics/ng-update/` — folder; Git tree `57b044878edace01bff22dafbe58afa59a6cd7d5`.
+- `src/material/schematics/ng-update/BUILD.bazel` — file; Git blob `9e2e41d1cfd9c05addda4033d45914a95126c06d`.
+- `src/material/schematics/ng-update/data/` — folder; Git tree `50cfd5064555c5b15fb17cef9aa1a55c757a18e7`.
+- `src/material/schematics/ng-update/data/attribute-selectors.ts` — file; Git blob `c8c2bf5aeae9aa514026a7c4d85c72dc8411f36a`.
+- `src/material/schematics/ng-update/data/class-names.ts` — file; Git blob `04203f40bcda5a219eca1a5907d8159d18687b6f`.
+- `src/material/schematics/ng-update/data/constructor-checks.ts` — file; Git blob `01cbd8ad755b13b676c9d2a2fa40c32505996105`.
+- `src/material/schematics/ng-update/data/css-selectors.ts` — file; Git blob `2948de49fc168cac5af2a5eded06e6042bf89b7d`.
+- `src/material/schematics/ng-update/data/css-tokens.ts` — file; Git blob `77a29777d6a11cdcbf9aff552f464e6b66f4c072`.
+- `src/material/schematics/ng-update/data/element-selectors.ts` — file; Git blob `85a7b82f5fccefcee9dcf0769877b6b5b09ecc08`.
+- `src/material/schematics/ng-update/data/index.ts` — file; Git blob `e3da248921f3ac185acf0c6787a5803f32739aa2`.
+- `src/material/schematics/ng-update/data/input-names.ts` — file; Git blob `90dfb6c7fe7d417802150c7c455e201c689ae9d6`.
+- `src/material/schematics/ng-update/data/method-call-checks.ts` — file; Git blob `0365b513471c8908795db93554d15976f798d53b`.
+- `src/material/schematics/ng-update/data/output-names.ts` — file; Git blob `d5613da599c254697fee68624ac1f0f400a31cee`.
+- `src/material/schematics/ng-update/data/property-names.ts` — file; Git blob `3ef6090292f4cd4705d5aa1112f87213c4efa6d0`.
+- `src/material/schematics/ng-update/data/symbol-removal.ts` — file; Git blob `f68708ce1d72a793932fada4bbbdcf090215b7f8`.
+- `src/material/schematics/ng-update/index.ts` — file; Git blob `77d6f4daf63966c21f22abfbc17350061f706b1e`.
+- `src/material/schematics/ng-update/test-cases/` — folder; Git tree `98e31a1d430f5e0b0ecedcd4f28f7a86f46ec4a3`.
+- `src/material/schematics/ng-update/test-cases/index.spec.ts` — file; Git blob `2ae5866517ece25fa281800fef0039e80584fe75`.
+- `src/material/schematics/ng-update/typescript/` — folder; Git tree `9825487e13aa0cb7852401febec6bc8d309bb4b3`.
+- `src/material/schematics/ng-update/typescript/module-specifiers.ts` — file; Git blob `4ec3c25544dc6c6bd12cef9dc99ee8a37fcff6ff`.
+- `src/material/schematics/ng-update/upgrade-data.ts` — file; Git blob `f082b3f1233db7282e5489fabcf4a5684a6c8e0f`.
+- `src/material/schematics/package.json` — file; Git blob `5bbefffbabee392d1855491b84dc0a716b6a3bf2`.
+- `src/material/schematics/paths.ts` — file; Git blob `a183003589debdd24244bf30d579add2c70d0aad`.
+- `src/material/schematics/tsconfig-test.json` — file; Git blob `6b63c9589e00f7d01b70b846b614f6f7f24770a3`.
+- `src/material/schematics/tsconfig.json` — file; Git blob `3a72ab670281759048c1841edce9bbccfc8f083f`.
+
+### Package and style distribution
+
+[Category descriptions](Package-and-style-distribution.survey.md). Objects: 22.
+
+- `@angular/material` — export; published export declaration, version `22.1.7`.
+- `@angular/material/_theming` — export; published export declaration, version `22.1.7`.
+- `@angular/material/package.json` — export; published export declaration, version `22.1.7`.
+- `@angular/material/prebuilt-themes/*` — export; published export declaration, version `22.1.7`.
+- `@angular/material/prebuilt-themes/azure-blue.css` — export; published export declaration, version `22.1.7`.
+- `@angular/material/prebuilt-themes/cyan-orange.css` — export; published export declaration, version `22.1.7`.
+- `@angular/material/prebuilt-themes/deeppurple-amber.css` — export; published export declaration, version `22.1.7`.
+- `@angular/material/prebuilt-themes/indigo-pink.css` — export; published export declaration, version `22.1.7`.
+- `@angular/material/prebuilt-themes/magenta-violet.css` — export; published export declaration, version `22.1.7`.
+- `@angular/material/prebuilt-themes/pink-bluegrey.css` — export; published export declaration, version `22.1.7`.
+- `@angular/material/prebuilt-themes/purple-green.css` — export; published export declaration, version `22.1.7`.
+- `@angular/material/prebuilt-themes/rose-red.css` — export; published export declaration, version `22.1.7`.
+- `@angular/material/theming` — export; published export declaration, version `22.1.7`.
+- `src/material/` — folder; Git tree `53696d1f44e31eb811c303ba190b296d32399058`.
+- `src/material/BUILD.bazel` — file; Git blob `4640784669a345a1dcc88879a3cda323f55c2574`.
+- `src/material/_index.scss` — file; Git blob `9be63ec45e5a79c91240f94c8341113891ac737f`.
+- `src/material/config.bzl` — file; Git blob `7b63b4a3253bbe059d0045db0ab8e1c3ccfe4cca`.
+- `src/material/index.ts` — file; Git blob `bb88b041f333dcb2fbe00845d8b94665de629dc5`.
+- `src/material/package.json` — file; Git blob `2b5bafc90ac2aa9ceeb2228731378d0e3844c101`.
+- `src/material/prebuilt-themes/` — folder; Git tree `d71c7fea321a7c0aff140af6c9b8a9f0fb55fcac`.
+- `src/material/prebuilt-themes/BUILD.bazel` — file; Git blob `cee8f50e28aea81e41910ea76f67e511688e80b3`.
+- `src/material/tsconfig.json` — file; Git blob `4f6adf68fc62ab7e2b779a3703d308d51236aef2`.

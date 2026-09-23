@@ -1,0 +1,32 @@
+[
+ {
+  "file": "src/sap.ui.codeeditor/src/sap/ui/codeeditor/CodeEditor.js",
+  "lib": "sap.ui.codeeditor",
+  "module": "sap/ui/codeeditor/CodeEditor",
+  "class": "sap.ui.codeeditor.CodeEditor",
+  "extends": "Control",
+  "is_renderer": false,
+  "is_primary": true,
+  "is_enum": false,
+  "is_other": false,
+  "likely_base_class": false,
+  "deprecated": false,
+  "experimental": false,
+  "desc": "Constructor for a new CodeEditor. Allows to visualize source code of various types with syntax highlighting, line numbers in editable and read only mode. Use this control in scenarios where the user should be able to inspect and edit source code. The control c"
+ },
+ {
+  "file": "src/sap.ui.codeeditor/src/sap/ui/codeeditor/aceWorkerProxy.js",
+  "lib": "sap.ui.codeeditor",
+  "module": "sap/ui/codeeditor/aceWorkerProxy",
+  "class": null,
+  "extends": null,
+  "is_renderer": false,
+  "is_primary": false,
+  "is_enum": false,
+  "is_other": true,
+  "likely_base_class": false,
+  "deprecated": false,
+  "experimental": false,
+  "desc": null
+ }
+]

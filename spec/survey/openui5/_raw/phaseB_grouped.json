@@ -1,0 +1,786 @@
+[
+  {
+    "category": "Application",
+    "objects": [
+      {
+        "id": "routing",
+        "title": "Routing",
+        "path": "Application/routing.scope.md",
+        "count": 0,
+        "classes": []
+      },
+      {
+        "id": "navigation",
+        "title": "Navigation",
+        "path": "Application/navigation.scope.md",
+        "count": 0,
+        "classes": []
+      },
+      {
+        "id": "toolBars",
+        "title": "Tool bars",
+        "path": "Application/tool_bars.scope.md",
+        "count": 8,
+        "classes": [
+          "sap.m.AssociativeOverflowToolbar",
+          "sap.m.Bar",
+          "sap.m.OverflowToolbar",
+          "sap.m.Toolbar",
+          "sap.tnt.ToolHeader",
+          "sap.ui.mdc.ActionToolbar",
+          "sap.ui.mdc.table.utils.FilterInfoBar",
+          "sap.uxap.AnchorBar"
+        ]
+      },
+      {
+        "id": "favicon",
+        "title": "favicon.ico",
+        "path": "Application/favicon.scope.md",
+        "count": 0,
+        "classes": []
+      },
+      {
+        "id": "indexHtml",
+        "title": "index.html",
+        "path": "Application/index_html.scope.md",
+        "count": 0,
+        "classes": []
+      }
+    ]
+  },
+  {
+    "category": "Behaviors",
+    "objects": [
+      {
+        "id": "dragAndDrop",
+        "title": "Drag and drop",
+        "path": "Behaviors/drag_and_drop.scope.md",
+        "count": 7,
+        "classes": [
+          "sap.f.dnd.GridDropInfo",
+          "sap.ui.core.dnd.DragDropInfo",
+          "sap.ui.core.dnd.DragInfo",
+          "sap.ui.core.dnd.DropInfo",
+          "sap.ui.mdc.list.DragDropConfig",
+          "sap.ui.mdc.table.DragDropConfig",
+          "sap.ui.mdc.util.DragDropConfigBase"
+        ]
+      },
+      {
+        "id": "resizable",
+        "title": "Resizable",
+        "path": "Behaviors/resizable.scope.md",
+        "count": 0,
+        "classes": []
+      },
+      {
+        "id": "collapsible",
+        "title": "Collapsible",
+        "path": "Behaviors/collapsible.scope.md",
+        "count": 0,
+        "classes": []
+      }
+    ]
+  },
+  {
+    "category": "Containers",
+    "objects": [
+      {
+        "id": "grid",
+        "title": "Grid",
+        "path": "Containers/grid.scope.md",
+        "count": 3,
+        "classes": [
+          "sap.f.GridContainer",
+          "sap.ui.layout.Grid",
+          "sap.ui.layout.cssgrid.CSSGrid"
+        ]
+      },
+      {
+        "id": "expandablePanels",
+        "title": "Expandable panels",
+        "path": "Containers/expandable_panels.scope.md",
+        "count": 2,
+        "classes": [
+          "sap.m.Panel",
+          "sap.ui.mdc.link.Panel"
+        ]
+      },
+      {
+        "id": "tabs",
+        "title": "Tabs",
+        "path": "Containers/tabs.scope.md",
+        "count": 7,
+        "classes": [
+          "sap.m.IconTabBar",
+          "sap.m.IconTabBarSelectList",
+          "sap.m.IconTabFilterExpandButtonBadge",
+          "sap.m.IconTabSeparator",
+          "sap.m.TabContainer",
+          "sap.m.TabContainerItem",
+          "sap.m.TabStrip"
+        ]
+      },
+      {
+        "id": "surfaceContainers",
+        "title": "Surface containers",
+        "path": "Containers/surface_containers.scope.md",
+        "count": 2,
+        "classes": [
+          "sap.m.GenericTile",
+          "sap.m.Page"
+        ]
+      },
+      {
+        "id": "sheetContainers",
+        "title": "Sheet containers",
+        "path": "Containers/sheet_containers.scope.md",
+        "count": 1,
+        "classes": [
+          "sap.f.SidePanel"
+        ]
+      },
+      {
+        "id": "overlayContainers",
+        "title": "Overlay containers",
+        "path": "Containers/overlay_containers.scope.md",
+        "count": 13,
+        "classes": [
+          "sap.m.ColorPalettePopover",
+          "sap.m.Popover",
+          "sap.m.QuickView",
+          "sap.m.QuickViewBase",
+          "sap.m.QuickViewCard",
+          "sap.m.QuickViewGroup",
+          "sap.m.QuickViewGroupElement",
+          "sap.m.QuickViewPage",
+          "sap.m.ResponsivePopover",
+          "sap.m.SelectionDetails",
+          "sap.m.SuggestionsPopover",
+          "sap.m._overflowToolbarHelpers.OverflowToolbarAssociativePopover",
+          "sap.ui.mdc.chart.ChartSelectionDetails"
+        ]
+      },
+      {
+        "id": "structuralContainers",
+        "title": "Structural containers",
+        "path": "Containers/structural_containers.scope.md",
+        "count": 4,
+        "classes": [
+          "sap.m.FlexBox",
+          "sap.m.HBox",
+          "sap.m.VBox",
+          "sap.ui.layout.VerticalLayout"
+        ]
+      },
+      {
+        "id": "splitters",
+        "title": "Splitters",
+        "path": "Containers/splitters.scope.md",
+        "count": 9,
+        "classes": [
+          "sap.m.SplitApp",
+          "sap.m.SplitContainer",
+          "sap.ui.layout.AssociativeSplitter",
+          "sap.ui.layout.PaneContainer",
+          "sap.ui.layout.ResponsiveSplitter",
+          "sap.ui.layout.ResponsiveSplitterPage",
+          "sap.ui.layout.SplitPane",
+          "sap.ui.layout.Splitter",
+          "sap.ui.unified.SplitContainer"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Controls",
+    "objects": [
+      {
+        "id": "native",
+        "title": "Native",
+        "path": "Controls/native.scope.md",
+        "count": 95,
+        "classes": [
+          "sap.html.A",
+          "sap.html.Abbr",
+          "sap.html.Address",
+          "sap.html.Area",
+          "sap.html.Article",
+          "sap.html.Aside",
+          "sap.html.B",
+          "sap.html.Bdi",
+          "sap.html.Bdo",
+          "sap.html.Blockquote",
+          "sap.html.Br",
+          "sap.html.Button",
+          "sap.html.Canvas",
+          "sap.html.Caption",
+          "sap.html.Cite",
+          "sap.html.Code",
+          "sap.html.Col",
+          "sap.html.Colgroup",
+          "sap.html.Data",
+          "sap.html.Datalist",
+          "sap.html.Dd",
+          "sap.html.Del",
+          "sap.html.Details",
+          "sap.html.Dfn",
+          "sap.html.Div",
+          "sap.html.Dl",
+          "sap.html.Dt",
+          "sap.html.Em",
+          "sap.html.Fieldset",
+          "sap.html.Figcaption",
+          "sap.html.Figure",
+          "sap.html.Footer",
+          "sap.html.Form",
+          "sap.html.H1",
+          "sap.html.H2",
+          "sap.html.H3",
+          "sap.html.H4",
+          "sap.html.H5",
+          "sap.html.H6",
+          "sap.html.Header",
+          "sap.html.Hgroup",
+          "sap.html.Hr",
+          "sap.html.I",
+          "sap.html.Img",
+          "sap.html.Input",
+          "sap.html.Ins",
+          "sap.html.Kbd",
+          "sap.html.Label",
+          "sap.html.Legend",
+          "sap.html.Li",
+          "sap.html.Main",
+          "sap.html.Map",
+          "sap.html.Mark",
+          "sap.html.Menu",
+          "sap.html.Meter",
+          "sap.html.Nav",
+          "sap.html.Ol",
+          "sap.html.Optgroup",
+          "sap.html.Option",
+          "sap.html.Output",
+          "sap.html.P",
+          "sap.html.Pre",
+          "sap.html.Progress",
+          "sap.html.Q",
+          "sap.html.Rp",
+          "sap.html.Rt",
+          "sap.html.Ruby",
+          "sap.html.S",
+          "sap.html.Samp",
+          "sap.html.Search",
+          "sap.html.Section",
+          "sap.html.Select",
+          "sap.html.Selectedcontent",
+          "sap.html.Small",
+          "sap.html.Span",
+          "sap.html.Strong",
+          "sap.html.Sub",
+          "sap.html.Summary",
+          "sap.html.Sup",
+          "sap.html.Table",
+          "sap.html.Tbody",
+          "sap.html.Td",
+          "sap.html.Textarea",
+          "sap.html.Tfoot",
+          "sap.html.Th",
+          "sap.html.Thead",
+          "sap.html.Time",
+          "sap.html.Tr",
+          "sap.html.U",
+          "sap.html.Ul",
+          "sap.html.Var",
+          "sap.html.Wbr",
+          "sap.ui.core.HTML",
+          "sap.ui.core.html.HTMLElement",
+          "sap.ui.core.html.TextContent"
+        ]
+      },
+      {
+        "id": "actionControls",
+        "title": "Action controls",
+        "path": "Controls/action_controls.scope.md",
+        "count": 61,
+        "classes": [
+          "sap.f.gen.ui5.webcomponents.dist.Button",
+          "sap.f.semantic.AddAction",
+          "sap.f.semantic.CloseAction",
+          "sap.f.semantic.CopyAction",
+          "sap.f.semantic.DeleteAction",
+          "sap.f.semantic.DiscussInJamAction",
+          "sap.f.semantic.EditAction",
+          "sap.f.semantic.ExitFullScreenAction",
+          "sap.f.semantic.FavoriteAction",
+          "sap.f.semantic.FlagAction",
+          "sap.f.semantic.FooterMainAction",
+          "sap.f.semantic.FullScreenAction",
+          "sap.f.semantic.MainAction",
+          "sap.f.semantic.MessagesIndicator",
+          "sap.f.semantic.NegativeAction",
+          "sap.f.semantic.PositiveAction",
+          "sap.f.semantic.PrintAction",
+          "sap.f.semantic.SemanticButton",
+          "sap.f.semantic.SemanticToggleButton",
+          "sap.f.semantic.SendEmailAction",
+          "sap.f.semantic.SendMessageAction",
+          "sap.f.semantic.ShareInJamAction",
+          "sap.f.semantic.TitleMainAction",
+          "sap.m.AccButton",
+          "sap.m.AdditionalTextButton",
+          "sap.m.Button",
+          "sap.m.OverflowToolbarButton",
+          "sap.m.OverflowToolbarMenuButton",
+          "sap.m.OverflowToolbarToggleButton",
+          "sap.m.PagingButton",
+          "sap.m.SegmentedButton",
+          "sap.m.SplitButton",
+          "sap.m.ToggleButton",
+          "sap.m.semantic.AddAction",
+          "sap.m.semantic.CancelAction",
+          "sap.m.semantic.DeleteAction",
+          "sap.m.semantic.DiscussInJamAction",
+          "sap.m.semantic.EditAction",
+          "sap.m.semantic.FavoriteAction",
+          "sap.m.semantic.FilterAction",
+          "sap.m.semantic.FlagAction",
+          "sap.m.semantic.ForwardAction",
+          "sap.m.semantic.GroupAction",
+          "sap.m.semantic.MainAction",
+          "sap.m.semantic.MessagesIndicator",
+          "sap.m.semantic.MultiSelectAction",
+          "sap.m.semantic.NegativeAction",
+          "sap.m.semantic.OpenInAction",
+          "sap.m.semantic.PositiveAction",
+          "sap.m.semantic.PrintAction",
+          "sap.m.semantic.SaveAction",
+          "sap.m.semantic.SemanticButton",
+          "sap.m.semantic.SemanticOverflowToolbarButton",
+          "sap.m.semantic.SemanticOverflowToolbarToggleButton",
+          "sap.m.semantic.SemanticToggleButton",
+          "sap.m.semantic.SendEmailAction",
+          "sap.m.semantic.SendMessageAction",
+          "sap.m.semantic.ShareInJamAction",
+          "sap.m.semantic.SortAction",
+          "sap.ui.mdc.chart.SelectionButton",
+          "sap.uxap.ObjectPageHeaderActionButton"
+        ]
+      },
+      {
+        "id": "textInputs",
+        "title": "Text inputs",
+        "path": "Controls/text_inputs.scope.md",
+        "count": 7,
+        "classes": [
+          "sap.f.gen.ui5.webcomponents_fiori.dist.SearchField",
+          "sap.f.gen.ui5.webcomponents_fiori.dist.ShellBarSearch",
+          "sap.m.Input",
+          "sap.m.MaskInput",
+          "sap.m.SearchField",
+          "sap.m.TextArea",
+          "sap.tnt.SideNavigationSearchField"
+        ]
+      },
+      {
+        "id": "choiceControls",
+        "title": "Choice controls",
+        "path": "Controls/choice_controls.scope.md",
+        "count": 20,
+        "classes": [
+          "sap.m.ActionSelect",
+          "sap.m.CheckBox",
+          "sap.m.ComboBox",
+          "sap.m.ComboBoxBase",
+          "sap.m.ComboBoxTextField",
+          "sap.m.MultiComboBox",
+          "sap.m.RadioButton",
+          "sap.m.RadioButtonGroup",
+          "sap.m.Select",
+          "sap.m.SelectDialogBase",
+          "sap.m.SelectList",
+          "sap.m.Switch",
+          "sap.m.semantic.FilterSelect",
+          "sap.m.semantic.GroupSelect",
+          "sap.m.semantic.SortSelect",
+          "sap.ui.integration.cards.filters.ComboBoxFilter",
+          "sap.ui.integration.cards.filters.SelectFilter",
+          "sap.ui.integration.controls.ComboBox",
+          "sap.ui.mdc.field.FieldSelect",
+          "sap.uxap.HierarchicalSelect"
+        ]
+      },
+      {
+        "id": "pickerControl",
+        "title": "Picker control",
+        "path": "Controls/picker_control.scope.md",
+        "count": 3,
+        "classes": [
+          "sap.m.WheelSlider",
+          "sap.ui.unified.ColorPicker",
+          "sap.ui.unified.ColorPickerPopover"
+        ]
+      },
+      {
+        "id": "rangeControl",
+        "title": "Range control",
+        "path": "Controls/range_control.scope.md",
+        "count": 8,
+        "classes": [
+          "sap.m.RangeSlider",
+          "sap.m.RatingIndicator",
+          "sap.m.ResponsiveScale",
+          "sap.m.Slider",
+          "sap.m.SliderTooltip",
+          "sap.m.SliderTooltipBase",
+          "sap.m.SliderTooltipContainer",
+          "sap.m.StepInput"
+        ]
+      },
+      {
+        "id": "drawingAndCapture",
+        "title": "Drawing and capture controls",
+        "path": "Controls/drawing_and_capture.scope.md",
+        "count": 0,
+        "classes": []
+      },
+      {
+        "id": "displayPrimitives",
+        "title": "Display primitives",
+        "path": "Controls/display_primitives.scope.md",
+        "count": 17,
+        "classes": [
+          "sap.f.Avatar",
+          "sap.f.AvatarGroup",
+          "sap.f.AvatarGroupItem",
+          "sap.f.gen.ui5.webcomponents.dist.Avatar",
+          "sap.f.gen.ui5.webcomponents.dist.Label",
+          "sap.m.Avatar",
+          "sap.m.ExpandableText",
+          "sap.m.Image",
+          "sap.m.Label",
+          "sap.m.ObjectAttribute",
+          "sap.m.ObjectNumber",
+          "sap.m.Text",
+          "sap.m.Title",
+          "sap.tnt.ToolHeaderUtilitySeparator",
+          "sap.ui.core.Icon",
+          "sap.ui.core.SeparatorItem",
+          "sap.ui.core.Title"
+        ]
+      },
+      {
+        "id": "statusIndicator",
+        "title": "Status indicator",
+        "path": "Controls/status_indicator.scope.md",
+        "count": 6,
+        "classes": [
+          "sap.m.BusyIndicator",
+          "sap.m.ObjectStatus",
+          "sap.m.ProgressIndicator",
+          "sap.tnt.InfoLabel",
+          "sap.ui.core.LocalBusyIndicator",
+          "sap.ui.integration.controls.ObjectStatus"
+        ]
+      },
+      {
+        "id": "linkAndScrollControls",
+        "title": "Link and scroll controls",
+        "path": "Controls/link_and_scroll_controls.scope.md",
+        "count": 4,
+        "classes": [
+          "sap.m.Link",
+          "sap.m.ScrollBar",
+          "sap.ui.core.ScrollBar",
+          "sap.ui.mdc.Link"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pages",
+    "objects": [
+      {
+        "id": "dashboard",
+        "title": "Dashboard",
+        "path": "Pages/dashboard.scope.md",
+        "count": 0,
+        "classes": []
+      },
+      {
+        "id": "shellPage",
+        "title": "Shell page",
+        "path": "Pages/shell_page.scope.md",
+        "count": 0,
+        "classes": []
+      },
+      {
+        "id": "emptyPage",
+        "title": "Empty page",
+        "path": "Pages/empty_page.scope.md",
+        "count": 0,
+        "classes": []
+      }
+    ]
+  },
+  {
+    "category": "Views",
+    "objects": [
+      {
+        "id": "report",
+        "title": "Report",
+        "path": "Views/report.scope.md",
+        "count": 0,
+        "classes": []
+      },
+      {
+        "id": "form",
+        "title": "Form",
+        "path": "Views/form.scope.md",
+        "count": 5,
+        "classes": [
+          "sap.ui.layout.form.Form",
+          "sap.ui.layout.form.FormContainer",
+          "sap.ui.layout.form.FormElement",
+          "sap.ui.layout.form.SemanticFormElement",
+          "sap.ui.layout.form.SimpleForm"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Widgets",
+    "objects": [
+      {
+        "id": "chart",
+        "title": "Chart",
+        "path": "Widgets/chart.scope.md",
+        "count": 1,
+        "classes": [
+          "sap.ui.mdc.Chart"
+        ]
+      },
+      {
+        "id": "table",
+        "title": "Table",
+        "path": "Widgets/table.scope.md",
+        "count": 13,
+        "classes": [
+          "sap.m.Column",
+          "sap.m.Table",
+          "sap.m.upload.Column",
+          "sap.ui.mdc.Table",
+          "sap.ui.mdc.table.Column",
+          "sap.ui.table.AnalyticalColumn",
+          "sap.ui.table.Column",
+          "sap.ui.table.CreationRow",
+          "sap.ui.table.HeaderSelector",
+          "sap.ui.table.Row",
+          "sap.ui.table.RowAction",
+          "sap.ui.table.RowActionItem",
+          "sap.ui.table.Table"
+        ]
+      },
+      {
+        "id": "dataGrid",
+        "title": "Data grid",
+        "path": "Widgets/data_grid.scope.md",
+        "count": 2,
+        "classes": [
+          "sap.ui.table.AnalyticalTable",
+          "sap.ui.table.TreeTable"
+        ]
+      },
+      {
+        "id": "list",
+        "title": "List",
+        "path": "Widgets/list.scope.md",
+        "count": 47,
+        "classes": [
+          "sap.f.GridList",
+          "sap.f.GridListItem",
+          "sap.f.gen.ui5.webcomponents.dist.ListItem",
+          "sap.m.ActionListItem",
+          "sap.m.ColumnListItem",
+          "sap.m.CustomListItem",
+          "sap.m.CustomTreeItem",
+          "sap.m.DisplayListItem",
+          "sap.m.FacetFilterItem",
+          "sap.m.FeedListItem",
+          "sap.m.GroupHeaderListItem",
+          "sap.m.GrowingList",
+          "sap.m.IconTabFilter",
+          "sap.m.InputListItem",
+          "sap.m.List",
+          "sap.m.MenuListItem",
+          "sap.m.MessageItem",
+          "sap.m.MessageListItem",
+          "sap.m.MessagePopoverItem",
+          "sap.m.ObjectListItem",
+          "sap.m.P13nAnyFilterItem",
+          "sap.m.P13nColumnsItem",
+          "sap.m.P13nDimMeasureItem",
+          "sap.m.P13nFilterItem",
+          "sap.m.P13nGroupItem",
+          "sap.m.P13nSelectionItem",
+          "sap.m.P13nSortItem",
+          "sap.m.SegmentedButtonItem",
+          "sap.m.SelectionDetailsListItem",
+          "sap.m.StandardListItem",
+          "sap.m.StandardTreeItem",
+          "sap.m.SuggestionItem",
+          "sap.m.TabStripItem",
+          "sap.m.TreeItemBase",
+          "sap.m.VariantItem",
+          "sap.m.ViewSettingsCustomItem",
+          "sap.m.ViewSettingsCustomTab",
+          "sap.m.ViewSettingsFilterItem",
+          "sap.m.ViewSettingsItem",
+          "sap.m.VisibleItem",
+          "sap.m.table.columnmenu.ActionItem",
+          "sap.m.table.columnmenu.Item",
+          "sap.m.table.columnmenu.ItemContainer",
+          "sap.ui.core.ListItem",
+          "sap.ui.integration.controls.ListContentItem",
+          "sap.ui.mdc.List",
+          "sap.ui.mdc.filterbar.p13n.FilterColumnLayout"
+        ]
+      },
+      {
+        "id": "feedbackWidgets",
+        "title": "Feedback widgets",
+        "path": "Widgets/feedback_widgets.scope.md",
+        "count": 12,
+        "classes": [
+          "sap.f.gen.ui5.webcomponents_fiori.dist.NotificationList",
+          "sap.f.gen.ui5.webcomponents_fiori.dist.NotificationListGroupItem",
+          "sap.f.gen.ui5.webcomponents_fiori.dist.NotificationListItem",
+          "sap.m.MessagePopover",
+          "sap.m.MessageStrip",
+          "sap.m.MessageView",
+          "sap.m.p13n.MessageStrip",
+          "sap.ui.core.TooltipBase",
+          "sap.ui.core.tooltip.Tooltip",
+          "sap.ui.core.tooltip.TooltipEnablement",
+          "sap.ui.core.tooltip.TooltipEventTrigger",
+          "sap.ui.core.tooltip.TooltipFocusGuard"
+        ]
+      },
+      {
+        "id": "mediaWidgets",
+        "title": "Media widgets",
+        "path": "Widgets/media_widgets.scope.md",
+        "count": 2,
+        "classes": [
+          "sap.m.ImageContent",
+          "sap.ui.mdc.Geomap"
+        ]
+      },
+      {
+        "id": "navigationWidgets",
+        "title": "Navigation widgets",
+        "path": "Widgets/navigation_widgets.scope.md",
+        "count": 13,
+        "classes": [
+          "sap.m.Breadcrumbs",
+          "sap.m.Carousel",
+          "sap.m.IconTabHeader",
+          "sap.m.NavContainer",
+          "sap.m.TileContainer",
+          "sap.m.Tree",
+          "sap.tnt.NavigationList",
+          "sap.tnt.NavigationListGroup",
+          "sap.tnt.NavigationListItem",
+          "sap.tnt.NavigationListItemBase",
+          "sap.tnt.NavigationListMenuItem",
+          "sap.tnt.SideNavigation",
+          "sap.uxap.BreadCrumbs"
+        ]
+      },
+      {
+        "id": "menuWidgets",
+        "title": "Menu widgets",
+        "path": "Widgets/menu_widgets.scope.md",
+        "count": 15,
+        "classes": [
+          "sap.f.gen.ui5.webcomponents.dist.Menu",
+          "sap.f.gen.ui5.webcomponents.dist.MenuItem",
+          "sap.m.Menu",
+          "sap.m.MenuButton",
+          "sap.m.MenuItem",
+          "sap.m.MenuItemGroup",
+          "sap.m.MenuWrapper",
+          "sap.m.table.columnmenu.Menu",
+          "sap.ui.table.AnalyticalColumnMenu",
+          "sap.ui.table.ColumnMenu",
+          "sap.ui.unified.Menu",
+          "sap.ui.unified.MenuItem",
+          "sap.ui.unified.MenuItemBase",
+          "sap.ui.unified.MenuItemGroup",
+          "sap.ui.unified.MenuTextFieldItem"
+        ]
+      },
+      {
+        "id": "dateTimePickers",
+        "title": "Date/Time pickers",
+        "path": "Widgets/date_time_pickers.scope.md",
+        "count": 29,
+        "classes": [
+          "sap.m.DateHighZoomInputs",
+          "sap.m.DatePicker",
+          "sap.m.DateRangeSelection",
+          "sap.m.DateTimeField",
+          "sap.m.DateTimePicker",
+          "sap.m.TimePicker",
+          "sap.m.TimePickerClock",
+          "sap.m.TimePickerClocks",
+          "sap.m.TimePickerInputs",
+          "sap.m.TimePickerInternals",
+          "sap.m.TimePickerSlider",
+          "sap.m.TimePickerSliders",
+          "sap.ui.unified.Calendar",
+          "sap.ui.unified.CalendarLegend",
+          "sap.ui.unified.CalendarMonthInterval",
+          "sap.ui.unified.CalendarTimeInterval",
+          "sap.ui.unified.DateTypeRange",
+          "sap.ui.unified.calendar.CalendarDate",
+          "sap.ui.unified.calendar.DatesRow",
+          "sap.ui.unified.calendar.Header",
+          "sap.ui.unified.calendar.IndexPicker",
+          "sap.ui.unified.calendar.Month",
+          "sap.ui.unified.calendar.MonthPicker",
+          "sap.ui.unified.calendar.MonthsRow",
+          "sap.ui.unified.calendar.OneMonthDatesRow",
+          "sap.ui.unified.calendar.TimesRow",
+          "sap.ui.unified.calendar.WeeksRow",
+          "sap.ui.unified.calendar.YearPicker",
+          "sap.ui.unified.calendar.YearRangePicker"
+        ]
+      },
+      {
+        "id": "stepper",
+        "title": "Stepper",
+        "path": "Widgets/stepper.scope.md",
+        "count": 3,
+        "classes": [
+          "sap.m.Wizard",
+          "sap.m.WizardProgressNavigator",
+          "sap.m.WizardStep"
+        ]
+      },
+      {
+        "id": "dialog",
+        "title": "Dialog",
+        "path": "Widgets/dialog.scope.md",
+        "count": 5,
+        "classes": [
+          "sap.m.Dialog",
+          "sap.m.P13nDialog",
+          "sap.m.TableSelectDialog",
+          "sap.m.ViewSettingsDialog",
+          "sap.m.upload.FilePreviewDialog"
+        ]
+      }
+    ]
+  }
+]
