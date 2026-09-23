@@ -2,6 +2,10 @@
 
 Source: [HTML Living Standard](https://html.spec.whatwg.org/multipage/).
 
+Status: steps 1–3 completed for inventory and structural classification on 2026-09-23.
+See the [survey results](README.md), [coverage checklist](COVERAGE.md), and
+[open semantic decisions](EXCLUSIONS.md). Steps 4–7 remain pending.
+
 1. **Define the scope and baseline**
 
    - **1.1** Record the survey date and the specification's commit snapshot.
@@ -41,7 +45,7 @@ Source: [HTML Living Standard](https://html.spec.whatwg.org/multipage/).
    - **5.6** Use exactly these four columns in every object and subcategory table:
 
    | Object name in HTML5 | Abstract object name | Object description | Links to the sources |
-   |---|---|---|---|
+   | --- | --- | --- | --- |
    | Exact identifier or official section name | Consistent conceptual name | Concise meaning, purpose, important constraints, and status | Direct specification links with section anchors |
 
    Retain "HTML5" in the requested column heading, while explaining that the research baseline is the HTML Living Standard.
