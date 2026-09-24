@@ -67,7 +67,7 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     "Application/route.scope.md": (
         "Route",
         ("[access]", "[path]", "[redirectTo]", "[target]", "[title]"),
-        (("route", "Route"),),
+        (("routeChildRoute", "Route"),),
     ),
     "Application/routing.scope.md": (
         "Routing",

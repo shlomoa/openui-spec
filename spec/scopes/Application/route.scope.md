@@ -28,7 +28,7 @@ Categories are defined in [`../scope.md`](../scope.md):
 
 A route may own nested route definitions:
 
-- route — Route — 0..n — a child route matched relative to this route.
+- childRoute — Route — 0..n — a child route matched relative to this route.
 
 ## Accessibility
 

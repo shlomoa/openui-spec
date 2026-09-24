@@ -3,6 +3,17 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.3.0] - 2026-09-24
+
+### Added
+
+- Defined generated contracts for application routes, navigation items and groups,
+  toolbar rows, and toolbar actions.
+- Defined route, navigation, and application-title ownership; same-document
+  element references; and the `ToolBar` concrete type literal.
+- Added application examples for the new contracts and updated the catalog to
+  include their typed instances.
+
 ## [0.2.0] - 2026-09-14
 
 ### Breaking changes
@@ -41,8 +52,8 @@ and enforced rather than adding or removing catalog types.
 
 ### Upgrade guidance
 
-1. Upgrade the Python or npm package to `0.2.0` and set concrete document
-   `version` fields to `0.2.0`.
+1. Upgrade the Python or npm package to `0.3.0` and set concrete document
+   `version` fields to `0.3.0`.
 2. Validate every `type` against the literal values in the bundled canonical
    catalog. Replace aliases, selectors, pseudo-types, and ID-derived names with
    the closest known semantic type.
@@ -54,3 +65,4 @@ and enforced rather than adding or removing catalog types.
    regenerating downstream applications.
 
 [0.2.0]: https://github.com/shlomoa/openui-spec/compare/v0.1.1...v0.2.0
+[0.3.0]: https://github.com/shlomoa/openui-spec/compare/v0.2.0...v0.3.0

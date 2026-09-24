@@ -7,7 +7,7 @@ import type { OpenUiDocument } from "../src/spec/openui-spec.types";
 import { validateOpenUiSpec } from "../src/spec/validate-spec";
 
 const CATALOG: OpenUiDocument = {
-  version: "0.2.0",
+  version: "0.3.0",
   id: "root",
   type: "html",
   children: [{ id: "tableWidget", type: "Table" }],
@@ -15,11 +15,11 @@ const CATALOG: OpenUiDocument = {
 
 function documentWith(type: string, options: { atRoot?: boolean } = {}): OpenUiDocument {
   if (options.atRoot) {
-    return { version: "0.2.0", id: "root", type };
+    return { version: "0.3.0", id: "root", type };
   }
 
   return {
-    version: "0.2.0",
+    version: "0.3.0",
     id: "root",
     type: "html",
     children: [{ id: "target", type }],
@@ -59,7 +59,7 @@ test("keeps version grammar separate from catalog compatibility", () => {
   assert.doesNotThrow(() => validateOpenUiSpec(standaloneDocument));
   assert.throws(
     () => validateOpenUiSpec(standaloneDocument, { catalog: CATALOG }),
-    /root\.version: Root version '9\.8\.7' does not match catalog version '0\.2\.0'\./,
+    /root\.version: Root version '9\.8\.7' does not match catalog version '0\.3\.0'\./,
   );
   assert.throws(
     () => validateOpenUiSpec({ ...standaloneDocument, version: "9.8" }),
@@ -81,7 +81,7 @@ test("requires exact catalog membership at the document root", () => {
 test("accepts literal catalog types with flexible ids, attributes, and children", () => {
   const catalog = createCatalogIndex(CATALOG);
   const document: OpenUiDocument = {
-    version: "0.2.0",
+    version: "0.3.0",
     id: "root",
     type: "html",
     children: [

@@ -65,7 +65,7 @@ class ApplicationScopeContractTest(unittest.TestCase):
             "route.scope.md": (
                 "Route",
                 {"[path]", "[target]", "[title]", "[redirectTo]", "[access]"},
-                [{"id": "route", "type": "Route"}],
+                [{"id": "routeChildRoute", "type": "Route"}],
             ),
             "nav_item.scope.md": (
                 "NavItem",

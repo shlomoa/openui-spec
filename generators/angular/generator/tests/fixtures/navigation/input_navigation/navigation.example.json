@@ -1,11 +1,26 @@
 {
   "id": "root",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "Application",
-  "attrs": {
-    "title": "\"Navigation example\""
-  },
   "children": [
+    {
+      "id": "homeRoute",
+      "type": "Route",
+      "attrs": {
+        "[path]": "\"home\"",
+        "[target]": "\"homePage\"",
+        "[title]": "\"Home\""
+      }
+    },
+    {
+      "id": "reportsRoute",
+      "type": "Route",
+      "attrs": {
+        "[path]": "\"reports\"",
+        "[target]": "\"reportsPage\"",
+        "[title]": "\"Reports\""
+      }
+    },
     {
       "id": "primaryNav",
       "type": "Navigation",
@@ -15,27 +30,58 @@
       "children": [
         {
           "id": "navHome",
-          "type": "NavItem"
+          "type": "NavItem",
+          "attrs": {
+            "[label]": "\"Home\"",
+            "[route]": "\"homeRoute\"",
+            "[icon]": "\"home\""
+          }
         },
         {
           "id": "navReportsGroup",
           "type": "NavGroup",
+          "attrs": {
+            "[label]": "\"Reports\"",
+            "[expanded]": "true"
+          },
           "children": [
             {
               "id": "navSalesReport",
-              "type": "NavItem"
+              "type": "NavItem",
+              "attrs": {
+                "[label]": "\"Sales\"",
+                "[route]": "\"reportsRoute\""
+              }
             },
             {
               "id": "navAuditReport",
-              "type": "NavItem"
+              "type": "NavItem",
+              "attrs": {
+                "[label]": "\"Audit\"",
+                "[route]": "\"reportsRoute\"",
+                "[disabled]": "true"
+              }
             }
           ]
         },
         {
           "id": "navAdmin",
-          "type": "NavItem"
+          "type": "NavItem",
+          "attrs": {
+            "[label]": "\"Administration\"",
+            "[route]": "\"homeRoute\"",
+            "[icon]": "\"settings\""
+          }
         }
       ]
+    },
+    {
+      "id": "homePage",
+      "type": "EmptyPage"
+    },
+    {
+      "id": "reportsPage",
+      "type": "Report"
     }
   ]
 }
