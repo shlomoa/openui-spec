@@ -1,6 +1,6 @@
 {
   "name": "@openui-spec/angular-generator",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Initial Angular Material generator for the OpenUI framework specification.",
   "bin": {
     "openui-angular-gen": "dist/src/main.js"

@@ -11,8 +11,13 @@ APPLICATION_EXAMPLES_DIR = REPO_ROOT / "spec" / "examples" / "Application"
 
 APPLICATION_LEAVES = (
     APPLICATION_DIR / "routing.scope.md",
+    APPLICATION_DIR / "route.scope.md",
     APPLICATION_DIR / "navigation.scope.md",
+    APPLICATION_DIR / "nav_item.scope.md",
+    APPLICATION_DIR / "nav_group.scope.md",
     APPLICATION_DIR / "tool_bars.scope.md",
+    APPLICATION_DIR / "tool_bar_row.scope.md",
+    APPLICATION_DIR / "tool_action.scope.md",
     APPLICATION_DIR / "favicon.scope.md",
     APPLICATION_DIR / "index_html.scope.md",
 )
@@ -55,17 +60,53 @@ class ApplicationScopeContractTest(unittest.TestCase):
             ],
         )
 
+    def test_application_child_contracts_materialize_typed_instances(self) -> None:
+        expected_contracts = {
+            "route.scope.md": (
+                "Route",
+                {"[path]", "[target]", "[title]", "[redirectTo]", "[access]"},
+                [{"id": "routeChildRoute", "type": "Route"}],
+            ),
+            "nav_item.scope.md": (
+                "NavItem",
+                {"[label]", "[route]", "[icon]", "[disabled]"},
+                [],
+            ),
+            "nav_group.scope.md": (
+                "NavGroup",
+                {"[label]", "[expanded]"},
+                [
+                    {"id": "navGroupNavigationItem", "type": "NavItem"},
+                    {"id": "navGroupNavigationGroup", "type": "NavGroup"},
+                ],
+            ),
+            "tool_bar_row.scope.md": (
+                "ToolBarRow",
+                set(),
+                [{"id": "toolBarRowToolAction", "type": "ToolAction"}],
+            ),
+            "tool_action.scope.md": (
+                "ToolAction",
+                {"[label]", "[icon]", "[disabled]", "(activate)"},
+                [],
+            ),
+        }
+
+        for file_name, (object_type, attributes, children) in expected_contracts.items():
+            with self.subTest(file_name=file_name):
+                instance = self._instance(file_name)
+                self.assertEqual(instance["type"], object_type)
+                self.assertEqual(set(instance.get("attrs", {})), attributes)
+                self.assertEqual(instance.get("children", []), children)
+
     def test_tool_bars_contract_exposes_rows_and_actions(self) -> None:
         instance = self._instance("tool_bars.scope.md")
 
         self.assertEqual(instance["type"], "ToolBar")
-        self.assertNotIn("attrs", instance)
+        self.assertEqual(instance["attrs"], {"[ariaLabel]": None})
         self.assertEqual(
             instance["children"],
-            [
-                {"id": "toolBarsToolBarRow", "type": "ToolBarRow"},
-                {"id": "toolBarsToolAction", "type": "ToolAction"},
-            ],
+            [{"id": "toolBarsToolBarRow", "type": "ToolBarRow"}],
         )
 
     def test_favicon_contract_materializes_icon_link(self) -> None:
@@ -88,7 +129,7 @@ class ApplicationScopeContractTest(unittest.TestCase):
         instance = self._instance("index_html.scope.md")
 
         self.assertEqual(instance["type"], "html")
-        self.assertEqual(instance["attrs"], {"[lang]": None, "[dir]": None})
+        self.assertEqual(instance["attrs"], {"[lang]": None, "[dir]": None, "[title]": None})
         self.assertEqual(
             instance["children"],
             [
@@ -97,20 +138,24 @@ class ApplicationScopeContractTest(unittest.TestCase):
             ],
         )
 
-    def test_application_examples_stay_within_current_contracts(self) -> None:
+    def test_application_examples_use_contract_attributes(self) -> None:
+        routing = self._example_child("routing.example.json", "appRouting")
+        self.assertEqual(routing["attrs"], {"[defaultRoute]": '"dashboardRoute"'})
+        self.assertEqual(routing["children"][0]["attrs"]["[target]"], '"dashboardPage"')
+        self.assertEqual(routing["children"][2]["attrs"]["[redirectTo]"], '"dashboardRoute"')
+
+        navigation = self._example_child("navigation.example.json", "primaryNav")
+        nav_group = navigation["children"][1]
+        self.assertEqual(nav_group["attrs"], {"[label]": '"Reports"', "[expanded]": "true"})
+        self.assertEqual(nav_group["children"][1]["attrs"]["[disabled]"], "true")
+
+        toolbar = self._example_child("tool_bars.example.json", "appToolbar")
+        self.assertEqual(toolbar["type"], "ToolBar")
+        self.assertEqual(toolbar["attrs"], {"[ariaLabel]": '"Application commands"'})
         self.assertEqual(
-            self._example_child("routing.example.json"),
-            {
-                "id": "appRouting",
-                "type": "Routing",
-                "attrs": {"[defaultRoute]": '"dashboard"'},
-                "children": [
-                    {"id": "dashboardRoute", "type": "Route"},
-                    {"id": "reportRoute", "type": "Route"},
-                    {"id": "fallbackRoute", "type": "Route"},
-                ],
-            },
+            toolbar["children"][0]["children"][0]["attrs"]["(activate)"], "createNew()"
         )
+
         self.assertEqual(
             self._example_child("favicon.example.json"),
             {
@@ -130,58 +175,33 @@ class ApplicationScopeContractTest(unittest.TestCase):
         )
 
         self.assertEqual(document["type"], "Application")
+        children = {child["id"]: child for child in document["children"]}
+        self.assertEqual(children["appHost"]["attrs"]["[title]"], '"Application bootstrap example"')
+        self.assertEqual(children["appRouting"]["attrs"]["[defaultRoute]"], '"homeRoute"')
         self.assertEqual(
-            document["children"],
-            [
-                {
-                    "id": "appHost",
-                    "type": "html",
-                    "attrs": {"[lang]": '"en"', "[dir]": '"ltr"'},
-                    "children": [
-                        {"id": "documentHead", "type": "head"},
-                        {"id": "documentBody", "type": "body"},
-                    ],
-                },
-                {
-                    "id": "appFavicon",
-                    "type": "link",
-                    "attrs": {"[rel]": '"icon"', "[href]": '"/favicon.ico"'},
-                },
-                {
-                    "id": "appRouting",
-                    "type": "Routing",
-                    "attrs": {"[defaultRoute]": '"home"'},
-                    "children": [{"id": "homeRoute", "type": "Route"}],
-                },
-                {
-                    "id": "appNavigation",
-                    "type": "Navigation",
-                    "attrs": {"[ariaLabel]": '"Primary"'},
-                    "children": [{"id": "navHome", "type": "NavItem"}],
-                },
-                {
-                    "id": "appToolbar",
-                    "type": "ToolBar",
-                    "children": [
-                        {
-                            "id": "toolbarRow",
-                            "type": "ToolBarRow",
-                            "children": [{"id": "helpAction", "type": "ToolAction"}],
-                        }
-                    ],
-                },
-            ],
+            children["appNavigation"]["children"][0]["attrs"]["[route]"], '"homeRoute"'
+        )
+        self.assertEqual(children["appToolbar"]["type"], "ToolBar")
+        self.assertEqual(
+            children["appToolbar"]["children"][0]["children"][0]["attrs"]["(activate)"],
+            "openHelp()",
         )
 
     def _instance(self, file_name: str) -> dict[str, object]:
         node = parse_leaf_scope(APPLICATION_DIR / file_name, scopes_dir=SCOPES_DIR)
         return node["children"][0]
 
-    def _example_child(self, file_name: str) -> dict[str, object]:
+    def _example_child(self, file_name: str, object_id: str | None = None) -> dict[str, object]:
         example_text = (APPLICATION_EXAMPLES_DIR / file_name).read_text(encoding="utf-8")
         document = json.loads(example_text)
-        self.assertEqual(len(document["children"]), 1)
-        return document["children"][0]
+        children = document["children"]
+        if object_id is None:
+            self.assertEqual(len(children), 1)
+            return children[0]
+        for child in children:
+            if child["id"] == object_id:
+                return child
+        self.fail(f"missing child {object_id}")
 
 
 if __name__ == "__main__":

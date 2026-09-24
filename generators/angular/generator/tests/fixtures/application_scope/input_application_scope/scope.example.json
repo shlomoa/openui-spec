@@ -1,17 +1,15 @@
 {
   "id": "root",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "Application",
-  "attrs": {
-    "title": "\"Application bootstrap example\""
-  },
   "children": [
     {
       "id": "appHost",
       "type": "html",
       "attrs": {
         "[lang]": "\"en\"",
-        "[dir]": "\"ltr\""
+        "[dir]": "\"ltr\"",
+        "[title]": "\"Application bootstrap example\""
       },
       "children": [
         {
@@ -36,12 +34,17 @@
       "id": "appRouting",
       "type": "Routing",
       "attrs": {
-        "[defaultRoute]": "\"home\""
+        "[defaultRoute]": "\"homeRoute\""
       },
       "children": [
         {
           "id": "homeRoute",
-          "type": "Route"
+          "type": "Route",
+          "attrs": {
+            "[path]": "\"home\"",
+            "[target]": "\"homePage\"",
+            "[title]": "\"Home\""
+          }
         }
       ]
     },
@@ -54,13 +57,21 @@
       "children": [
         {
           "id": "navHome",
-          "type": "NavItem"
+          "type": "NavItem",
+          "attrs": {
+            "[label]": "\"Home\"",
+            "[route]": "\"homeRoute\"",
+            "[icon]": "\"home\""
+          }
         }
       ]
     },
     {
       "id": "appToolbar",
       "type": "ToolBar",
+      "attrs": {
+        "[ariaLabel]": "\"Application commands\""
+      },
       "children": [
         {
           "id": "toolbarRow",
@@ -68,7 +79,16 @@
           "children": [
             {
               "id": "helpAction",
-              "type": "ToolAction"
+              "type": "ToolAction",
+              "attrs": {
+                "[label]": "\"Help\"",
+                "[icon]": "\"help\"",
+                "(activate)": "openHelp()"
+              }
+            },
+            {
+              "id": "homePage",
+              "type": "EmptyPage"
             }
           ]
         }

@@ -13,12 +13,17 @@ a reference pattern only.
 
 Tool bars define application-level command surfaces for frequently used actions.
 
+## Attributes
+
+Categories are defined in [`../scope.md`](../scope.md):
+
+- `[ariaLabel]` — Uses — accessible label for the toolbar command surface.
+
 ## Child model
 
-Tool bars own rows and command actions:
+Tool bars own ordered rows:
 
 - toolBarRow — ToolBarRow — 0..n — an ordered row of toolbar content.
-- toolAction — ToolAction — 0..n — an application command exposed in the toolbar.
 
 ## Accessibility
 
@@ -31,6 +36,7 @@ Tool bars own rows and command actions:
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
+- In a concrete document, an Application child uses the `ToolBar` instance type;
+  `ToolBars` identifies only this catalog scope node.
 - Placement, ordering, grouping, overflow behavior, responsive breakpoint, color,
-  and concrete command-handler details remain reference-pattern details until
-  approved as OpenUI contract entries.
+  and concrete command-handler details remain reference-pattern details.

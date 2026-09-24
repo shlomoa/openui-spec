@@ -25,8 +25,13 @@ that assembles its child objects into a realistic whole.
 | [Scopes](../scopes/scope.md)                                                     | [scope.example.json](scope.example.json)                                                         |
 | [Application](../scopes/Application/scope.md)                                    | [Application/scope.example.json](Application/scope.example.json)                                 |
 | [Routing](../scopes/Application/routing.scope.md)                                | [Application/routing.example.json](Application/routing.example.json)                             |
+| [Route](../scopes/Application/route.scope.md)                                    | [Application/route.example.json](Application/route.example.json)                                 |
 | [Navigation](../scopes/Application/navigation.scope.md)                          | [Application/navigation.example.json](Application/navigation.example.json)                       |
+| [Navigation item](../scopes/Application/nav_item.scope.md)                       | [Application/nav_item.example.json](Application/nav_item.example.json)                           |
+| [Navigation group](../scopes/Application/nav_group.scope.md)                     | [Application/nav_group.example.json](Application/nav_group.example.json)                         |
 | [Tool bars](../scopes/Application/tool_bars.scope.md)                            | [Application/tool_bars.example.json](Application/tool_bars.example.json)                         |
+| [Tool bar row](../scopes/Application/tool_bar_row.scope.md)                      | [Application/tool_bar_row.example.json](Application/tool_bar_row.example.json)                   |
+| [Tool action](../scopes/Application/tool_action.scope.md)                        | [Application/tool_action.example.json](Application/tool_action.example.json)                     |
 | [favicon.ico](../scopes/Application/favicon.scope.md)                            | [Application/favicon.example.json](Application/favicon.example.json)                             |
 | [index.html](../scopes/Application/index_html.scope.md)                          | [Application/index_html.example.json](Application/index_html.example.json)                       |
 | [Controls](../scopes/Controls/scope.md)                                          | [Controls/scope.example.json](Controls/scope.example.json)                                       |

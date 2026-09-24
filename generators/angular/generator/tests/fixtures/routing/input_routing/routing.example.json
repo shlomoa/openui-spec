@@ -1,31 +1,52 @@
 {
   "id": "root",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "Application",
-  "attrs": {
-    "title": "\"Routing example\""
-  },
   "children": [
     {
       "id": "appRouting",
       "type": "Routing",
       "attrs": {
-        "[defaultRoute]": "\"dashboard\""
+        "[defaultRoute]": "\"dashboardRoute\""
       },
       "children": [
         {
           "id": "dashboardRoute",
-          "type": "Route"
+          "type": "Route",
+          "attrs": {
+            "[path]": "\"dashboard\"",
+            "[target]": "\"dashboardPage\"",
+            "[title]": "\"Dashboard\"",
+            "[access]": "\"authenticated\""
+          }
         },
         {
           "id": "reportRoute",
-          "type": "Route"
+          "type": "Route",
+          "attrs": {
+            "[path]": "\"reports\"",
+            "[target]": "\"reportPage\"",
+            "[title]": "\"Reports\"",
+            "[access]": "\"report-reader\""
+          }
         },
         {
           "id": "fallbackRoute",
-          "type": "Route"
+          "type": "Route",
+          "attrs": {
+            "[path]": "\"**\"",
+            "[redirectTo]": "\"dashboardRoute\""
+          }
         }
       ]
+    },
+    {
+      "id": "dashboardPage",
+      "type": "DashboardPage"
+    },
+    {
+      "id": "reportPage",
+      "type": "Report"
     }
   ]
 }

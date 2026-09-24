@@ -1,0 +1,22 @@
+{
+  "id": "root",
+  "version": "0.3.0",
+  "type": "ToolBar",
+  "children": [
+    {
+      "id": "primaryRow",
+      "type": "ToolBarRow",
+      "children": [
+        {
+          "id": "refreshAction",
+          "type": "ToolAction",
+          "attrs": {
+            "[label]": "\"Refresh\"",
+            "[icon]": "\"refresh\"",
+            "(activate)": "refresh()"
+          }
+        }
+      ]
+    }
+  ]
+}

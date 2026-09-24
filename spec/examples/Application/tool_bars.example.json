@@ -1,14 +1,14 @@
 {
   "id": "root",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "Application",
-  "attrs": {
-    "title": "\"Tool bar example\""
-  },
   "children": [
     {
       "id": "appToolbar",
       "type": "ToolBar",
+      "attrs": {
+        "[ariaLabel]": "\"Application commands\""
+      },
       "children": [
         {
           "id": "primaryRow",
@@ -16,11 +16,21 @@
           "children": [
             {
               "id": "newAction",
-              "type": "ToolAction"
+              "type": "ToolAction",
+              "attrs": {
+                "[label]": "\"New\"",
+                "[icon]": "\"add\"",
+                "(activate)": "createNew()"
+              }
             },
             {
               "id": "saveAction",
-              "type": "ToolAction"
+              "type": "ToolAction",
+              "attrs": {
+                "[label]": "\"Save\"",
+                "[icon]": "\"save\"",
+                "(activate)": "save()"
+              }
             }
           ]
         },
@@ -30,7 +40,13 @@
           "children": [
             {
               "id": "deleteAction",
-              "type": "ToolAction"
+              "type": "ToolAction",
+              "attrs": {
+                "[label]": "\"Delete\"",
+                "[icon]": "\"delete\"",
+                "[disabled]": "true",
+                "(activate)": "deleteSelected()"
+              }
             }
           ]
         }

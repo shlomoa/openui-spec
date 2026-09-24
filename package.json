@@ -1,6 +1,6 @@
 {
   "name": "@shlomoa/openui-spec",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Load, validate, and edit OpenUI JSON documents.",
   "scripts": {
     "build:tsc": "tsc -p tsconfig.json",

@@ -83,7 +83,7 @@ test("classifies a page folder and page file back to its scope node", () => {
   const document: OpenUiDocument = {
     id: "root",
     type: "html",
-    version: "0.2.0",
+    version: "0.3.0",
     children: [{ id: "dashboardPage", type: "page", attrs: { route: "dashboard" } }],
   };
   const index = buildSpecManifestationIndex(document);

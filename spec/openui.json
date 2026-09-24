@@ -1,7 +1,7 @@
 {
   "id": "root",
   "type": "html",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "attrs": {
     "name": "OpenUI",
     "description": "Technology-independent Web UI framework specification",
@@ -55,6 +55,35 @@
               ]
             },
             {
+              "id": "route",
+              "type": "Route",
+              "attrs": {
+                "title": "Route",
+                "purpose": "A route maps a location pattern to application content or redirects the location to another route.",
+                "scopeDocument": "scopes/Application/route.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "routeInstance",
+                  "type": "Route",
+                  "attrs": {
+                    "[path]": null,
+                    "[target]": null,
+                    "[title]": null,
+                    "[redirectTo]": null,
+                    "[access]": null
+                  },
+                  "children": [
+                    {
+                      "id": "routeChildRoute",
+                      "type": "Route"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "id": "navigation",
               "type": "Navigation",
               "attrs": {
@@ -84,6 +113,58 @@
               ]
             },
             {
+              "id": "navItem",
+              "type": "NavItem",
+              "attrs": {
+                "title": "Navigation item",
+                "purpose": "A navigation item presents one labelled application route as a user-selectable destination.",
+                "scopeDocument": "scopes/Application/nav_item.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "navItemInstance",
+                  "type": "NavItem",
+                  "attrs": {
+                    "[label]": null,
+                    "[route]": null,
+                    "[icon]": null,
+                    "[disabled]": null
+                  }
+                }
+              ]
+            },
+            {
+              "id": "navGroup",
+              "type": "NavGroup",
+              "attrs": {
+                "title": "Navigation group",
+                "purpose": "A navigation group labels and organizes related navigation destinations.",
+                "scopeDocument": "scopes/Application/nav_group.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "navGroupInstance",
+                  "type": "NavGroup",
+                  "attrs": {
+                    "[label]": null,
+                    "[expanded]": null
+                  },
+                  "children": [
+                    {
+                      "id": "navGroupNavigationItem",
+                      "type": "NavItem"
+                    },
+                    {
+                      "id": "navGroupNavigationGroup",
+                      "type": "NavGroup"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "id": "toolBars",
               "type": "ToolBars",
               "attrs": {
@@ -96,16 +177,59 @@
                 {
                   "id": "toolBarsInstance",
                   "type": "ToolBar",
+                  "attrs": {
+                    "[ariaLabel]": null
+                  },
                   "children": [
                     {
                       "id": "toolBarsToolBarRow",
                       "type": "ToolBarRow"
-                    },
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "toolBarRow",
+              "type": "ToolBarRow",
+              "attrs": {
+                "title": "Tool bar row",
+                "purpose": "A tool bar row orders command actions within a tool bar.",
+                "scopeDocument": "scopes/Application/tool_bar_row.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "toolBarRowInstance",
+                  "type": "ToolBarRow",
+                  "children": [
                     {
-                      "id": "toolBarsToolAction",
+                      "id": "toolBarRowToolAction",
                       "type": "ToolAction"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "id": "toolAction",
+              "type": "ToolAction",
+              "attrs": {
+                "title": "Tool action",
+                "purpose": "A tool action is a labelled application command exposed from a tool bar.",
+                "scopeDocument": "scopes/Application/tool_action.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "toolActionInstance",
+                  "type": "ToolAction",
+                  "attrs": {
+                    "[label]": null,
+                    "[icon]": null,
+                    "[disabled]": null,
+                    "(activate)": null
+                  }
                 }
               ]
             },
@@ -147,7 +271,8 @@
                   "type": "html",
                   "attrs": {
                     "[lang]": null,
-                    "[dir]": null
+                    "[dir]": null,
+                    "[title]": null
                   },
                   "children": [
                     {
@@ -657,7 +782,7 @@
               "type": "ShellPage",
               "attrs": {
                 "title": "Shell page",
-                "purpose": "A page shell with no business-object content that connects application routing and navigation.",
+                "purpose": "A page shell with no business-object content that presents application routing and navigation.",
                 "scopeDocument": "scopes/Pages/shell_page.scope.md",
                 "status": "draft"
               },

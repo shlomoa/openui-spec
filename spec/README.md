@@ -445,7 +445,11 @@ openui.json   input.json
 The grammar alone cannot tell whether `input.json` uses a known object type —
 that exact-membership check is against the **catalog**, not the schema. Once a
 type is known, the common grammar and globally unique ids govern its instance;
-the catalog does not impose per-type attribute or child restrictions.
+the catalog does not impose per-type attribute or child restrictions. The base
+validator also does not resolve element references or enforce required,
+exclusive, or target-type constraints documented by individual object contracts.
+Consumers that need those checks must implement them for their target until
+catalog-driven contract validation is specified.
 
 Generators use the three files together:
 
@@ -466,8 +470,13 @@ each term.
 | ---------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
 | **[Application](scopes/Application/scope.md)**                   |                                                                               | Application-level bootstrap artifacts and implementation-independent concepts.                        |
 |                                                                  | [Routing](scopes/Application/routing.scope.md)                                | Application-level route definitions and route resolution.                                             |
+|                                                                  | [Route](scopes/Application/route.scope.md)                                    | Location pattern resolving to application content or another route.                                   |
 |                                                                  | [Navigation](scopes/Application/navigation.scope.md)                          | User-facing navigation exposing routes, pages, and views.                                             |
+|                                                                  | [Navigation item](scopes/Application/nav_item.scope.md)                       | Labelled destination for an application route.                                                        |
+|                                                                  | [Navigation group](scopes/Application/nav_group.scope.md)                     | Labelled hierarchical collection of navigation destinations.                                          |
 |                                                                  | [Tool bars](scopes/Application/tool_bars.scope.md)                            | Application-level command surfaces and action placement.                                              |
+|                                                                  | [Tool bar row](scopes/Application/tool_bar_row.scope.md)                      | Ordered collection of toolbar actions.                                                                |
+|                                                                  | [Tool action](scopes/Application/tool_action.scope.md)                        | Labelled application command exposed from a toolbar.                                                  |
 |                                                                  | [favicon.ico](scopes/Application/favicon.scope.md)                            | Application icon asset for browser and shell identity.                                                |
 |                                                                  | [index.html](scopes/Application/index_html.scope.md)                          | Application host document and static bootstrap metadata.                                              |
 | **[Controls](scopes/Controls/scope.md)**                         |                                                                               | Browser, framework, or runtime-provided native controls.                                              |
@@ -541,7 +550,7 @@ rules:
 
 - `"id"` MUST be `"root"`.
 - `"version"` is REQUIRED (top-level only) and MUST equal the current value in
-  the repository-root `SCHEMA_VERSION` file (currently `0.2.0`).
+  the repository-root `SCHEMA_VERSION` file (currently `0.3.0`).
 - `"type"` MUST be `"html"`.
 
 `openui.schema.json` enforces the required root fields, literal root id,
@@ -603,6 +612,22 @@ framework. The OpenUI specification treats those values as target-language
 expressions; generators may validate or transform them for a specific framework,
 but the base JSON format does not execute them.
 
+### Element references
+
+An element reference is a Uses-attribute value that identifies another element in
+the same concrete document by its globally unique `id`. Its static form is a
+quoted string literal whose decoded value is that id; for example,
+`"[route]": "\"dashboardRoute\""`. A consumer resolves the reference across the
+whole document, not just among the referring node's siblings.
+
+`Routing[defaultRoute]` and `NavItem[route]` reference a `Route`;
+`Route[redirectTo]` references a `Route`; and `Route[target]` references the
+page or content element selected by that route. The referenced contract defines
+any additional permitted type. The base grammar, catalog validator, and
+`OpenUiJson.validate()` do not currently parse, resolve, or type-check reference
+values; they continue to validate only document shape, globally unique ids, and
+known type literals.
+
 Framework selectors and generated identifiers remain implementation details;
 their possible appearance as attribute data does not make them valid `type`
 values.
@@ -618,7 +643,7 @@ The format itself is in [EBNF](./EBNF.txt)
 
 ### Syntax rules
 
-- **Version field (top-level only):** Required semantic version string (e.g., "0.2.0") identifying the spec version
+- **Version field (top-level only):** Required semantic version string (e.g., "0.3.0") identifying the spec version
 - **ID field:** Must be a camelCase alphanumeric string (starts with lowercase letter, can contain uppercase letters and digits)
 - **Type field:** Must satisfy the grammar's HTML/kebab-case/PascalCase syntax and, in a concrete UI document, exactly match a literal `type` in `spec/openui.json`
 - **Attributes field:** Key-value pairs where values are strings or null. Attribute key syntax identifies input, output, and behavior categories; all such categories must stay inside the `attrs` object.
@@ -729,7 +754,7 @@ the `scopes` tree: a `<object>.example.json` for each leaf scope and a composite
 ```json
 {
   "id": "root",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "Pages",
   "attrs": {
     "size": "1960x1080",

@@ -20,6 +20,7 @@ Categories are defined in [`../scope.md`](../scope.md):
 
 - `[lang]` — Uses — document language tag for the application host document.
 - `[dir]` — Uses — document text direction for the application host document.
+- `[title]` — Uses — application document title.
 
 ## Child model
 
@@ -39,6 +40,6 @@ The host document owns the standard metadata and body regions:
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
-- Title, viewport, mount element, stylesheet links, script entry points, concrete
-  framework bootstrap API, bundler, development server, and file emission details
-  remain reference-pattern details until approved as OpenUI contract entries.
+- Viewport, mount element, stylesheet links, script entry points, concrete framework
+  bootstrap API, bundler, development server, and file emission details remain
+  reference-pattern details.

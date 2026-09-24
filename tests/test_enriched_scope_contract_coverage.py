@@ -46,7 +46,7 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     ),
     "Application/index_html.scope.md": (
         "html",
-        ("[dir]", "[lang]"),
+        ("[dir]", "[lang]", "[title]"),
         (("indexHtmlDocumentHead", "head"), ("indexHtmlDocumentBody", "body")),
     ),
     "Application/navigation.scope.md": (
@@ -54,15 +54,40 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
         ("[ariaLabel]",),
         (("navigationItem", "NavItem"), ("navigationGroup", "NavGroup")),
     ),
+    "Application/nav_group.scope.md": (
+        "NavGroup",
+        ("[expanded]", "[label]"),
+        (("navGroupNavigationItem", "NavItem"), ("navGroupNavigationGroup", "NavGroup")),
+    ),
+    "Application/nav_item.scope.md": (
+        "NavItem",
+        ("[disabled]", "[icon]", "[label]", "[route]"),
+        (),
+    ),
+    "Application/route.scope.md": (
+        "Route",
+        ("[access]", "[path]", "[redirectTo]", "[target]", "[title]"),
+        (("routeChildRoute", "Route"),),
+    ),
     "Application/routing.scope.md": (
         "Routing",
         ("[defaultRoute]",),
         (("routingRoute", "Route"),),
     ),
+    "Application/tool_action.scope.md": (
+        "ToolAction",
+        ("(activate)", "[disabled]", "[icon]", "[label]"),
+        (),
+    ),
+    "Application/tool_bar_row.scope.md": (
+        "ToolBarRow",
+        (),
+        (("toolBarRowToolAction", "ToolAction"),),
+    ),
     "Application/tool_bars.scope.md": (
         "ToolBar",
-        (),
-        (("toolBarsToolBarRow", "ToolBarRow"), ("toolBarsToolAction", "ToolAction")),
+        ("[ariaLabel]",),
+        (("toolBarsToolBarRow", "ToolBarRow"),),
     ),
     "Behaviors/collapsible.scope.md": (
         "Collapsible",

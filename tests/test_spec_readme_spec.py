@@ -16,9 +16,14 @@ EXPECTED_SPEC_MARKDOWN = [
     "examples/README.md",
     "scopes/Application/favicon.scope.md",
     "scopes/Application/index_html.scope.md",
+    "scopes/Application/nav_group.scope.md",
+    "scopes/Application/nav_item.scope.md",
     "scopes/Application/navigation.scope.md",
+    "scopes/Application/route.scope.md",
     "scopes/Application/routing.scope.md",
     "scopes/Application/scope.md",
+    "scopes/Application/tool_action.scope.md",
+    "scopes/Application/tool_bar_row.scope.md",
     "scopes/Application/tool_bars.scope.md",
     "scopes/Behaviors/collapsible.scope.md",
     "scopes/Behaviors/drag_and_drop.scope.md",
@@ -79,7 +84,9 @@ EXPECTED_SPEC_MARKDOWN = [
 class SpecReadmeSpecTest(unittest.TestCase):
     def test_spec_folder_contains_expected_markdown_files(self) -> None:
         markdown_files = sorted(
-            path.relative_to(SPEC_DIR).as_posix() for path in SPEC_DIR.rglob("*.md")
+            path.relative_to(SPEC_DIR).as_posix()
+            for path in SPEC_DIR.rglob("*.md")
+            if path.relative_to(SPEC_DIR).parts[0] != "survey"
         )
 
         self.assertEqual(markdown_files, EXPECTED_SPEC_MARKDOWN)
