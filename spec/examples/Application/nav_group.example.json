@@ -1,0 +1,46 @@
+{
+  "id": "root",
+  "version": "0.2.0",
+  "type": "Application",
+  "children": [
+    {
+      "id": "reportsRoute",
+      "type": "Route",
+      "attrs": {
+        "[path]": "\"reports\"",
+        "[target]": "\"reportsPage\"",
+        "[title]": "\"Reports\""
+      }
+    },
+    {
+      "id": "navReports",
+      "type": "NavGroup",
+      "attrs": {
+        "[label]": "\"Reports\"",
+        "[expanded]": "true"
+      },
+      "children": [
+        {
+          "id": "navSales",
+          "type": "NavItem",
+          "attrs": {
+            "[label]": "\"Sales\"",
+            "[route]": "\"reportsRoute\""
+          }
+        },
+        {
+          "id": "navArchived",
+          "type": "NavGroup",
+          "attrs": {
+            "[label]": "\"Archived\"",
+            "[expanded]": "false"
+          }
+        }
+      ]
+    },
+    {
+      "id": "reportsPage",
+      "type": "Report"
+    }
+  ]
+}

@@ -3,7 +3,6 @@
   "version": "0.2.0",
   "type": "Application",
   "attrs": {
-    "title": "\"OpenUI demo application\"",
     "size": "\"1960x1080\""
   },
   "children": [
@@ -11,7 +10,7 @@
       "id": "appRouting",
       "type": "Routing",
       "attrs": {
-        "[defaultRoute]": "\"dashboard\""
+        "[defaultRoute]": "\"dashboardRoute\""
       },
       "children": [
         {
@@ -19,7 +18,8 @@
           "type": "Route",
           "attrs": {
             "[path]": "\"dashboard\"",
-            "[target]": "\"dashboardPage\""
+            "[target]": "\"dashboardPage\"",
+            "[title]": "\"Dashboard\""
           }
         },
         {
@@ -27,7 +27,8 @@
           "type": "Route",
           "attrs": {
             "[path]": "\"orders\"",
-            "[target]": "\"ordersReport\""
+            "[target]": "\"ordersReport\"",
+            "[title]": "\"Orders\""
           }
         }
       ]
@@ -44,8 +45,8 @@
           "type": "NavItem",
           "attrs": {
             "[label]": "\"Dashboard\"",
-            "[target]": "\"dashboard\"",
-            "[selected]": "true"
+            "[route]": "\"dashboardRoute\"",
+            "[icon]": "\"dashboard\""
           }
         },
         {
@@ -53,7 +54,7 @@
           "type": "NavItem",
           "attrs": {
             "[label]": "\"Orders\"",
-            "[target]": "\"orders\""
+            "[route]": "\"ordersRoute\""
           }
         }
       ]
@@ -62,17 +63,23 @@
       "id": "appToolbar",
       "type": "ToolBar",
       "attrs": {
-        "[placement]": "\"top\""
+        "[ariaLabel]": "\"Order commands\""
       },
       "children": [
         {
-          "id": "newOrderAction",
-          "type": "ToolAction",
-          "attrs": {
-            "[label]": "\"New order\"",
-            "[icon]": "\"add\"",
-            "(click)": "onNewOrder()"
-          }
+          "id": "appToolbarRow",
+          "type": "ToolBarRow",
+          "children": [
+            {
+              "id": "newOrderAction",
+              "type": "ToolAction",
+              "attrs": {
+                "[label]": "\"New order\"",
+                "[icon]": "\"add\"",
+                "(activate)": "onNewOrder()"
+              }
+            }
+          ]
         }
       ]
     },

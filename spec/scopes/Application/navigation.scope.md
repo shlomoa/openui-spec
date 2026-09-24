@@ -38,6 +38,5 @@ Navigation owns user-facing entries and grouping nodes:
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
-- Menu, side navigation, tab navigation, router-link, responsive breakpoint,
-  focus-capture, and concrete framework component details remain
-  reference-pattern details until approved as OpenUI contract entries.
+- Menu, side navigation, tab navigation, responsive breakpoint, focus-capture, and
+  concrete framework component details remain reference-pattern details.

@@ -1,0 +1,30 @@
+{
+  "id": "root",
+  "version": "0.2.0",
+  "type": "Application",
+  "children": [
+    {
+      "id": "dashboardRoute",
+      "type": "Route",
+      "attrs": {
+        "[path]": "\"dashboard\"",
+        "[target]": "\"dashboardPage\"",
+        "[title]": "\"Dashboard\""
+      }
+    },
+    {
+      "id": "navDashboard",
+      "type": "NavItem",
+      "attrs": {
+        "[label]": "\"Dashboard\"",
+        "[route]": "\"dashboardRoute\"",
+        "[icon]": "\"dashboard\"",
+        "[disabled]": "false"
+      }
+    },
+    {
+      "id": "dashboardPage",
+      "type": "DashboardPage"
+    }
+  ]
+}

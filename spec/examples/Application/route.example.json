@@ -1,0 +1,36 @@
+{
+  "id": "root",
+  "version": "0.2.0",
+  "type": "Application",
+  "children": [
+    {
+      "id": "dashboardRoute",
+      "type": "Route",
+      "attrs": {
+        "[path]": "\"dashboard\"",
+        "[target]": "\"dashboardPage\"",
+        "[title]": "\"Dashboard\"",
+        "[access]": "\"authenticated\""
+      },
+      "children": [
+        {
+          "id": "dashboardSettingsRoute",
+          "type": "Route",
+          "attrs": {
+            "[path]": "\"settings\"",
+            "[target]": "\"settingsPage\"",
+            "[title]": "\"Settings\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "dashboardPage",
+      "type": "DashboardPage"
+    },
+    {
+      "id": "settingsPage",
+      "type": "EmptyPage"
+    }
+  ]
+}

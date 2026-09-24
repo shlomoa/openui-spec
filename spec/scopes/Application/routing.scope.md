@@ -18,7 +18,7 @@ application content.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `[defaultRoute]` — Uses — optional initial route used when the application does not receive a more specific navigation target.
+- `[defaultRoute]` — Uses — optional reference to the `id` of a `Route` owned by this routing definition; used when the application does not receive a more specific navigation target.
 
 ## Child model
 
@@ -38,5 +38,4 @@ Routing owns route definitions:
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
 - Router implementation details, URL strategy, lazy loading, guards, resolvers,
-  and concrete framework route object fields remain reference-pattern details
-  until approved as OpenUI contract entries.
+  and concrete framework route object fields remain reference-pattern details.

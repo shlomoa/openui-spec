@@ -15,8 +15,13 @@ nav:
       - Application:
           - Overview: scopes/Application/scope.md
           - Routing: scopes/Application/routing.scope.md
+          - Route: scopes/Application/route.scope.md
           - Navigation: scopes/Application/navigation.scope.md
+          - Navigation item: scopes/Application/nav_item.scope.md
+          - Navigation group: scopes/Application/nav_group.scope.md
           - Tool bars: scopes/Application/tool_bars.scope.md
+          - Tool bar row: scopes/Application/tool_bar_row.scope.md
+          - Tool action: scopes/Application/tool_action.scope.md
           - favicon.ico: scopes/Application/favicon.scope.md
           - index.html: scopes/Application/index_html.scope.md
       - Controls:

@@ -4,7 +4,8 @@
   "type": "html",
   "attrs": {
     "[lang]": "\"en\"",
-    "[dir]": "\"ltr\""
+    "[dir]": "\"ltr\"",
+    "[title]": "\"OpenUI application\""
   },
   "children": [
     {
