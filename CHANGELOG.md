@@ -14,6 +14,18 @@ published packages.
 - Added application examples for the new contracts and updated the catalog to
   include their typed instances.
 
+### Upgrading to 0.3.0
+
+1. Upgrade the Python or npm package to `0.3.0` and set concrete document
+   `version` fields to `0.3.0`.
+2. Use `Route`, `NavItem`, `NavGroup`, `ToolBar`, `ToolBarRow`, and
+   `ToolAction` exact type literals when adopting the new application routing,
+   navigation, and command-surface contracts.
+3. Represent same-document route and navigation relationships with quoted
+   element-id values in the documented Uses attributes. The base validator does
+   not resolve these references; target consumers must enforce the documented
+   contract constraints.
+
 ## [0.2.0] - 2026-09-14
 
 ### Breaking changes
@@ -52,8 +64,8 @@ and enforced rather than adding or removing catalog types.
 
 ### Upgrade guidance
 
-1. Upgrade the Python or npm package to `0.3.0` and set concrete document
-   `version` fields to `0.3.0`.
+1. Upgrade the Python or npm package to `0.2.0` and set concrete document
+   `version` fields to `0.2.0`.
 2. Validate every `type` against the literal values in the bundled canonical
    catalog. Replace aliases, selectors, pseudo-types, and ID-derived names with
    the closest known semantic type.
