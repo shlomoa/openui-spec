@@ -178,7 +178,9 @@ class ApplicationScopeContractTest(unittest.TestCase):
         children = {child["id"]: child for child in document["children"]}
         self.assertEqual(children["appHost"]["attrs"]["[title]"], '"Application bootstrap example"')
         self.assertEqual(children["appRouting"]["attrs"]["[defaultRoute]"], '"homeRoute"')
-        self.assertEqual(children["appNavigation"]["children"][0]["attrs"]["[route]"], '"homeRoute"')
+        self.assertEqual(
+            children["appNavigation"]["children"][0]["attrs"]["[route]"], '"homeRoute"'
+        )
         self.assertEqual(children["appToolbar"]["type"], "ToolBar")
         self.assertEqual(
             children["appToolbar"]["children"][0]["children"][0]["attrs"]["(activate)"],
@@ -189,9 +191,7 @@ class ApplicationScopeContractTest(unittest.TestCase):
         node = parse_leaf_scope(APPLICATION_DIR / file_name, scopes_dir=SCOPES_DIR)
         return node["children"][0]
 
-    def _example_child(
-        self, file_name: str, object_id: str | None = None
-    ) -> dict[str, object]:
+    def _example_child(self, file_name: str, object_id: str | None = None) -> dict[str, object]:
         example_text = (APPLICATION_EXAMPLES_DIR / file_name).read_text(encoding="utf-8")
         document = json.loads(example_text)
         children = document["children"]
