@@ -84,7 +84,9 @@ EXPECTED_SPEC_MARKDOWN = [
 class SpecReadmeSpecTest(unittest.TestCase):
     def test_spec_folder_contains_expected_markdown_files(self) -> None:
         markdown_files = sorted(
-            path.relative_to(SPEC_DIR).as_posix() for path in SPEC_DIR.rglob("*.md")
+            path.relative_to(SPEC_DIR).as_posix()
+            for path in SPEC_DIR.rglob("*.md")
+            if path.relative_to(SPEC_DIR).parts[0] != "survey"
         )
 
         self.assertEqual(markdown_files, EXPECTED_SPEC_MARKDOWN)

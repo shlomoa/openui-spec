@@ -5,6 +5,8 @@ edit_uri: edit/main/spec/
 theme:
   name: readthedocs
 docs_dir: spec
+exclude_docs: |
+  survey/**
 nav:
   - Overview: README.md
   - Scopes:
