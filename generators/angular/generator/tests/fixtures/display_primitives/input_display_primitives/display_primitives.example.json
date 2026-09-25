@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "DisplayPrimitives",
   "attrs": {
     "title": "\"Display primitives example\""

@@ -3,6 +3,23 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.3.1] - 2026-09-25
+
+### Fixed
+
+- Aligned the Table worked example with its `table` contract: it now uses only
+  the documented sorting, filtering, and pagination behaviors with `tr` row
+  children.
+- Added a contract test that prevents the Table worked example from drifting
+  outside the table scope.
+
+### Upgrading to 0.3.1
+
+1. Upgrade the Python or npm package to `0.3.1` and set concrete document
+   `version` fields to `0.3.1`.
+2. Replace unsupported Table column, pagination, and empty-state children with
+   the documented table behaviors and `tr` rows.
+
 ## [0.3.0] - 2026-09-24
 
 ### Added
@@ -78,3 +95,4 @@ and enforced rather than adding or removing catalog types.
 
 [0.2.0]: https://github.com/shlomoa/openui-spec/compare/v0.1.1...v0.2.0
 [0.3.0]: https://github.com/shlomoa/openui-spec/compare/v0.2.0...v0.3.0
+[0.3.1]: https://github.com/shlomoa/openui-spec/compare/v0.3.0...v0.3.1

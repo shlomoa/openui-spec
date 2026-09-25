@@ -1,7 +1,7 @@
 {
   "id": "root",
   "type": "html",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "attrs": {
     "name": "OpenUI",
     "description": "Technology-independent Web UI framework specification",

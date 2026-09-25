@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "Table",
   "attrs": {
     "title": "\"Table example\""
@@ -10,55 +10,14 @@
       "id": "ordersTable",
       "type": "table",
       "attrs": {
-        "[data]": "orders",
-        "[selection]": "\"multiple\"",
-        "[loading]": "isLoading",
-        "[error]": "loadError",
-        "(selectionChange)": "onSelect($event)"
+        "(sort)": "sortOrders($event)",
+        "(filter)": "filterOrders($event)",
+        "(paginate)": "paginateOrders($event)"
       },
       "children": [
         {
-          "id": "colId",
-          "type": "Table",
-          "attrs": {
-            "[field]": "\"id\"",
-            "[header]": "\"Order\"",
-            "[sortable]": "true"
-          }
-        },
-        {
-          "id": "colCustomer",
-          "type": "Table",
-          "attrs": {
-            "[field]": "\"customer\"",
-            "[header]": "\"Customer\"",
-            "[filterable]": "true"
-          }
-        },
-        {
-          "id": "colTotal",
-          "type": "Table",
-          "attrs": {
-            "[field]": "\"total\"",
-            "[header]": "\"Total\"",
-            "[sortable]": "true"
-          }
-        },
-        {
-          "id": "ordersPaging",
-          "type": "NavigationWidgets",
-          "attrs": {
-            "[pageSize]": "20",
-            "[total]": "orderCount",
-            "(pageChange)": "onPage($event)"
-          }
-        },
-        {
-          "id": "ordersEmpty",
-          "type": "FeedbackWidgets",
-          "attrs": {
-            "[message]": "\"No orders found.\""
-          }
+          "id": "ordersTableRow",
+          "type": "tr"
         }
       ]
     }
