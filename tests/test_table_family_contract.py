@@ -1,5 +1,5 @@
-import unittest
 import json
+import unittest
 from pathlib import Path
 
 from spec.to_json.converter import parse_leaf_scope
