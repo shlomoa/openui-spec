@@ -1,9 +1,13 @@
 import unittest
+import json
 from pathlib import Path
+
+from spec.to_json.converter import parse_leaf_scope
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 WIDGETS_DIR = REPO_ROOT / "spec" / "scopes" / "Widgets"
 CONTROLS_TABLE_DIR = REPO_ROOT / "spec" / "scopes" / "Controls" / "Table"
+TABLE_EXAMPLE_PATH = REPO_ROOT / "spec" / "examples" / "Widgets" / "table.example.json"
 
 ALWAYS_SECTIONS = (
     "## Identity",
@@ -49,6 +53,19 @@ class TableContractTest(unittest.TestCase):
         child_model = text.split("## Child model", 1)[1].split("## Accessibility", 1)[0]
 
         self.assertIn("tableRow — tr — 0..n", child_model)
+
+    def test_table_example_stays_within_current_table_contract(self) -> None:
+        contract = parse_leaf_scope(WIDGETS_DIR / "table.scope.md", scopes_dir=WIDGETS_DIR.parent)
+        table_contract = contract["children"][0]
+        document = json.loads(TABLE_EXAMPLE_PATH.read_text(encoding="utf-8"))
+        table = document["children"][0]
+
+        self.assertEqual(table["type"], table_contract["type"])
+        self.assertEqual(set(table["attrs"]), set(table_contract["attrs"]))
+        self.assertEqual(
+            table["children"],
+            [{"id": "ordersTableRow", "type": table_contract["children"][0]["type"]}],
+        )
 
 
 if __name__ == "__main__":
