@@ -4,10 +4,10 @@ This document describes the repository's root Python test-suite strategy and the
 tests implemented under `tests/`: what each root test surface protects, how the
 suite is organized, and how to run it locally.
 
-Root Python tests protect the golden source: the prose specification, scopes,
-schema, catalog, examples, and published documentation. They read the spec
-sources directly and fail when the hand-authored source drifts from its own
-rules. Shared terminology is defined in
+Root Python tests protect the format SSOT in `spec/EBNF.txt`, the catalog-content
+SSOT in `spec/scopes/`, their schema and catalog projections, examples, and
+published documentation. They read the spec sources directly and fail when a
+hand-authored source drifts from its own rules. Shared terminology is defined in
 [`spec/README.md` § Glossary](../spec/README.md#glossary), so tests should
 reference that vocabulary instead of duplicating definitions.
 Exact concrete-document membership and instance flexibility are defined by the
@@ -39,6 +39,7 @@ library `unittest` runner.
 | `test_dialog_scope_contract.py`            | `DialogScopeContractTest`              | `Widgets/dialog.scope.md` fills every template section and documents its attribute contract.                                                                                                                                                                                                   |
 | `test_enriched_scope_contract_coverage.py` | `EnrichedScopeContractCoverageTest`    | Every template-enriched leaf is covered by the guard list, and each covered leaf asserts its public attribute and child-type contract.                                                                                                                                                         |
 | `test_github_actions_build.py`             | `GitHubActionsBuildWorkflowTest`       | `build.yml` runs on code-review events, installs Python validation tools, runs repository and documentation checks, delegates to Angular validation, and pins its actions.                                                                                                                     |
+| `test_grammar_consistency.py`              | `GrammarConsistencyTest`               | `EBNF.txt` remains the format SSOT; its JSON Schema projection and README enforcement boundaries agree on the shared document-format fixture matrix.                                                                                                                                           |
 | `test_openui_spec_contract.py`             | `OpenUiSpecContractTest`               | `openui.schema.json` is a valid draft 2020-12 schema; `spec/openui.json` validates against it, uses the required root values, matches the document shape, and references scope documents that exist; `SCHEMA_VERSION` matches the grammar version pattern.                                     |
 | `test_openui_spec_api.py`                  | `OpenUiJsonTest` / `OpenUiJsonCliTest` | Python document editing and CLI operations enforce schema shape, globally unique ids, exact catalog type membership, and unrestricted known-type instance attributes and child composition.                                                                                                    |
 | `test_pages_scope_contract.py`             | `PagesScopeContractTest`               | Page scopes (`dashboard`, `shell_page`, and `empty_page`) fill required template sections, expose their current relationships, and keep Pages worked examples within those contracts.                                                                                                          |
@@ -58,6 +59,7 @@ every node's exact `type` literal with the generated catalog.
 
 ## Conventions
 
-- **Golden source is authoritative.** These tests treat the prose spec, scopes,
-  schema, examples, and catalog as the source of truth; downstream generator
-  validation must not redefine the contract.
+- **Sources of truth are authoritative.** `spec/EBNF.txt` owns the document
+  format, and `spec/scopes/` owns catalog content. These tests protect their
+  schema and catalog projections; downstream generator validation must not
+  redefine either contract.

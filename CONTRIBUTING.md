@@ -4,7 +4,8 @@
 
 - [Requirements and goals](docs/REQUIREMENTS.md).
 - [Spec artifacts: grammar vs. catalog](spec/README.md#specification-artifacts-grammar-vs-catalog)
-  — how `openui.schema.json` and `openui.json` differ.
+  — how the authoritative `EBNF.txt`, its `openui.schema.json` projection, and
+  `openui.json` catalog differ.
 - Angular generator: [generation architecture, flow, and validation](generators/angular/generator/docs/GENERATION.md)
   and [AMCG TDD workflow](generators/angular/generator/docs/TDD.md).
 - [Root Python test-suite plan](tests/TEST_PLAN.md) — implemented Python test
@@ -71,6 +72,7 @@ Windows (PowerShell):
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python -m pip install pre-commit==4.6.0 -r requirements-test.txt
+.\.venv\Scripts\pre-commit install
 .\.venv\Scripts\python -m unittest discover -s tests -p 'test_*.py'
 .\.venv\Scripts\pre-commit run --all-files
 ```
@@ -80,6 +82,7 @@ Linux or macOS (Bash):
 ```bash
 python3 -m venv .venv
 ./.venv/bin/python -m pip install pre-commit==4.6.0 -r requirements-test.txt
+./.venv/bin/pre-commit install
 ./.venv/bin/python -m unittest discover -s tests -p 'test_*.py'
 ./.venv/bin/pre-commit run --all-files
 ```
@@ -96,7 +99,9 @@ Repository validation has three root layers:
    [root Python test-suite plan](tests/TEST_PLAN.md).
 2. **Documentation validation** (`pre-commit`, `mkdocs`, `git diff --check`) —
    protects Markdown formatting, link consistency, generated examples, and the
-   published spec site.
+   published spec site. The `openui-grammar-consistency` pre-commit hook also
+   verifies that the EBNF format SSOT, JSON Schema projection, and README
+   enforcement boundaries remain aligned.
 3. **CI build workflow** (`.github/workflows/build.yml`) — runs root validation
    on code-review events. `tests/test_github_actions_build.py` asserts the
    workflow keeps running repository checks, Python validation tooling,
@@ -125,9 +130,11 @@ git diff --check
 
 CI runs this validation on both Windows and Linux.
 
-Root validation treats the prose spec, scopes, schema, examples, and generated
-catalog as the source of truth for repository checks. Shared vocabulary is
-defined in the [spec glossary](spec/README.md#glossary); tests and docs should
-reference that vocabulary instead of duplicating definitions.
+`spec/EBNF.txt` is the source of truth for the OpenUI document format, while
+`spec/scopes/` is the source of truth for catalog content. The schema, examples,
+and generated catalog are checked projections or artifacts of those sources.
+Shared vocabulary is defined in the [spec glossary](spec/README.md#glossary);
+tests and docs should reference that vocabulary instead of duplicating
+definitions.
 
 ---

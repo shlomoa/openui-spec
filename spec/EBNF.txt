@@ -1,25 +1,22 @@
-(* OpenUI specification in EBNF notation *)
+(* OpenUI document format — normative source of truth.
+  JSON object member order is insignificant, and trailing commas are invalid. *)
 
-openui_document = "{"
-  id_field ","
-  version_field ","
-  type_field
-  [ "," attrs_field ]
-  [ "," children_field ]
-  [ "," ]
-"}" ;
+openui_document = "{" document_field { "," document_field } "}" ;
+document_field = root_id_field | version_field | type_field | attrs_field | children_field ;
 
-ui_element = "{"
-  id_field ","
-  type_field
-  [ "," attrs_field ]
-  [ "," children_field ]
-  [ "," ]
-"}" ;
+(* A document has exactly one root_id_field, version_field, and type_field.
+  It has at most one attrs_field and at most one children_field. *)
+
+ui_element = "{" element_field { "," element_field } "}" ;
+element_field = id_field | type_field | attrs_field | children_field ;
+
+(* An element has exactly one id_field and type_field.
+  It has at most one attrs_field and at most one children_field. *)
 
 version_field = '"version"' ":" version_value ;
 version_value = /"[0-9]+\.[0-9]+\.[0-9]+"/ ;
 
+root_id_field = '"id"' ":" '"root"' ;
 id_field = '"id"' ":" id_value ;
 type_field = '"type"' ":" type_value ;
 attrs_field = '"attrs"' ":" "{" [ attribute_list ] "}" ;
@@ -33,12 +30,12 @@ type_value = /"(?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-
 
 (* Attributes: key-value pairs. Attribute key syntax identifies input,
    output, or behavior categories. Values are strings or null. *)
-attribute_list = attribute_pair { "," attribute_pair } [ "," ] ;
+attribute_list = attribute_pair { "," attribute_pair } ;
 attribute_pair = attr_key ":" attr_value ;
 attr_key = string ;
 attr_value = string | null ;
 
-ui_element_list = ui_element { "," ui_element } [ "," ] ;
+ui_element_list = ui_element { "," ui_element } ;
 
 string = /"(?:[^"\\]|\\["\\\/bfnrt]|\\u[0-9a-fA-F]{4})*"/ ;
 null = "null" ;

@@ -346,28 +346,36 @@ For interactive spreadsheet-like grids with cell selection and editing, see Data
 
 ## Specification artifacts: grammar vs. catalog
 
-This section is the repository source of truth for the roles of `input.json`,
-`spec/openui.schema.json`, and `spec/openui.json`. Other documents
+This section is the repository source of truth for the roles of `EBNF.txt`,
+`input.json`, `spec/openui.schema.json`, and `spec/openui.json`. Other documents
 should reference this section instead of redefining those roles. The files are
 easy to confuse — they are all JSON or JSON-related OpenUI artifacts — but they
 sit at **different levels of abstraction**.
 
 ### TL;DR
 
-- `spec/openui.schema.json` is the **grammar**: a JSON Schema that validates the
-  _shape_ of any OpenUI document.
+- `EBNF.txt` is the authoritative definition of the OpenUI document format.
+- `spec/openui.schema.json` is an executable JSON Schema projection of that format.
 - `spec/openui.json` is a **document written in that grammar** whose _content_ is the
   specification's object **catalog** and exact known-type set.
 - `input.json` is a **concrete UI/app document** that conforms to the grammar and
   uses only exact known object type literals from the catalog.
 
-`spec/openui.json` is to `openui.schema.json` as an XML file is to its XSD, or a
+`spec/openui.json` is to `EBNF.txt` as an XML file is to its DTD, or a
 `package.json` to its JSON Schema.
 
-### `spec/openui.schema.json` — the grammar (meta-level)
+### `EBNF.txt` — the format grammar
 
-A standard [JSON Schema](https://json-schema.org/) (draft 2020-12). It defines
-the shape every OpenUI document must have, and nothing about content:
+`EBNF.txt` is the authoritative source for OpenUI document syntax: root and
+element fields, required and optional field cardinality, JSON member ordering,
+id and type syntax, attributes, and child nesting. It defines JSON object member
+order as insignificant and forbids trailing commas.
+
+### `spec/openui.schema.json` — executable grammar projection
+
+A standard [JSON Schema](https://json-schema.org/) (draft 2020-12) that projects
+the EBNF format into validator rules. It validates the shape every OpenUI
+document must have, and nothing about content:
 
 - the root object requires `version` + `id` + `type`; `id` must be the literal
   `"root"`;
@@ -381,7 +389,8 @@ It is **generic and content-blind**. It has no idea what `Charts`, `Dashboard`,
 or `Application` are — it only knows that `"Charts"` is a syntactically legal
 PascalCase `type`. Syntactic validity does not make `Charts` a known object type.
 
-**Purpose:** validate that any OpenUI JSON is well-formed.
+**Purpose:** validate that any OpenUI JSON is well-formed according to the EBNF
+format.
 
 **Canonical location:** the schema's `$id` is
 <https://raw.githubusercontent.com/shlomoa/openui-spec/main/spec/openui.schema.json>.
@@ -408,18 +417,20 @@ their prose.
 ### The relationship
 
 ```text
-openui.schema.json   ← grammar / meta-schema (validates shape)
-        ▲ validates
+EBNF.txt             ← authoritative document format
+  │ projected as
+openui.schema.json   ← executable shape validator
+  ▲ validates
 openui.json          ← the spec's catalog of available objects (vocabulary)
 ```
 
-|              | `openui.schema.json`                       | `spec/openui.json`           |
-| ------------ | ------------------------------------------ | ---------------------------- |
-| Kind         | JSON **Schema** (grammar)                  | JSON **document** (instance) |
-| Level        | meta / type-level                          | content / catalog-level      |
-| Knows about  | shapes, id/type/attrs rules                | exact known `type` literals  |
-| Changes when | the _format_ changes                       | the _spec's objects_ change  |
-| Validates    | every OpenUI doc, incl. `spec/openui.json` | nothing (it is data)         |
+|              | `EBNF.txt`                   | `openui.schema.json`                       | `spec/openui.json`           |
+| ------------ | ---------------------------- | ------------------------------------------ | ---------------------------- |
+| Kind         | Format grammar               | JSON **Schema** projection                 | JSON **document** (instance) |
+| Level        | normative syntax             | executable validation                      | content / catalog-level      |
+| Knows about  | format and field cardinality | shapes, id/type/attrs rules                | exact known `type` literals  |
+| Changes when | the _format_ changes         | the EBNF format changes                    | the _spec's objects_ change  |
+| Validates    | defines valid documents      | every OpenUI doc, incl. `spec/openui.json` | nothing (it is data)         |
 
 ### Where `input.json` fits
 
@@ -429,9 +440,10 @@ object vocabulary from the `spec/openui.json` catalog. The two documents are
 distinguished by _role_, not by _shape_:
 
 ```text
-openui.schema.json   ← grammar
-        ▲ validates both
-   ┌────┴─────┐
+EBNF.txt                 ← authoritative format
+  │ projected as
+openui.schema.json       ← validates both documents
+  ┌────┴─────┐
 openui.json   input.json
 (catalog of    (one concrete app
  what exists)   built from the catalog)
@@ -440,20 +452,23 @@ openui.json   input.json
 - `spec/openui.json` = "here are the exact **type literals** you may use" (the
   catalog).
 - `input.json` = "here is the **app** I want, using that vocabulary."
-- `openui.schema.json` = "here is the **syntax** both must obey."
+- `EBNF.txt` = "here is the **format** both must obey."
+- `openui.schema.json` = "here is the executable validator for that format."
 
-The grammar alone cannot tell whether `input.json` uses a known object type —
-that exact-membership check is against the **catalog**, not the schema. Once a
-type is known, the common grammar and globally unique ids govern its instance;
-the catalog does not impose per-type attribute or child restrictions. The base
-validator also does not resolve element references or enforce required,
-exclusive, or target-type constraints documented by individual object contracts.
-Consumers that need those checks must implement them for their target until
+The format alone cannot tell whether `input.json` uses a known object type —
+that exact-membership check is against the **catalog**, not the EBNF or schema.
+Global ID uniqueness is enforced by OpenUI tooling, not by the EBNF or JSON Schema.
+Once a type is known, the common format governs its instance; the catalog does
+not impose per-type attribute or child restrictions. The base validator also
+does not resolve element references or enforce required, exclusive, or
+target-type constraints documented by individual object contracts. Consumers
+that need those checks must implement them for their target until
 catalog-driven contract validation is specified.
 
-Generators use the three files together:
+Generators use the three artifacts together:
 
-- validate `input.json` against the grammar defined by
+- define and maintain `input.json` format against `EBNF.txt`,
+- validate `input.json` against the executable projection in
   `spec/openui.schema.json`,
 - validate every `input.json` node's exact `type` literal against the object
   catalog defined by `spec/openui.json`, and
@@ -553,19 +568,21 @@ rules:
   the repository-root `SCHEMA_VERSION` file (currently `0.3.1`).
 - `"type"` MUST be `"html"`.
 
-`openui.schema.json` enforces the required root fields, literal root id,
-semantic-version syntax, and type-name syntax. The converter and repository
-contract tests enforce the catalog-specific `SCHEMA_VERSION` and `html` values.
+`EBNF.txt` defines the required root fields, literal root id, version syntax,
+and type-name syntax; `openui.schema.json` is its executable projection. The
+converter and repository contract tests enforce the catalog-specific
+`SCHEMA_VERSION` and `html` values.
 A concrete UI document uses the same grammar, but its root `type`, like every
 other node type, may be any [known object type](#known-object-type).
 
 ### Naming conventions
 
-the "id" field is a unique identifier for each element, and it must be a camelCase alphanumeric string.
+Every element `id` is a camelCase alphanumeric string. IDs must be globally
+unique within a document; OpenUI tooling enforces that document-wide constraint.
 
 ### types - "type" field
 
-The grammar recognizes standard HTML tag syntax, kebab-case names, and
+The EBNF format recognizes standard HTML tag syntax, kebab-case names, and
 PascalCase names. That syntax rule only determines whether a `type` string is
 well formed. For a concrete UI document, the value MUST also be a
 [known object type](#known-object-type): an exact literal `type` present in the
@@ -634,10 +651,11 @@ values.
 
 ### EBNF notation
 
-The EBNF blocks use `(* ... *)` for comments; comment text is explanatory and
-is not part of the grammar. Quoted punctuation terminals are literal: for
-example, `"-"` is a hyphen character where a production allows hyphenated
-names.
+[`EBNF.txt`](./EBNF.txt) is the authoritative definition of the OpenUI document
+format. The JSON Schema is an executable projection that must remain aligned
+with it. EBNF blocks use `(* ... *)` for comments; comment text is explanatory
+and is not part of the grammar. Quoted punctuation terminals are literal: for
+example, `"-"` is a hyphen character where a production allows hyphenated names.
 
 The format itself is in [EBNF](./EBNF.txt)
 
@@ -648,7 +666,7 @@ The format itself is in [EBNF](./EBNF.txt)
 - **Type field:** Must satisfy the grammar's HTML/kebab-case/PascalCase syntax and, in a concrete UI document, exactly match a literal `type` in `spec/openui.json`
 - **Attributes field:** Key-value pairs where values are strings or null. Attribute key syntax identifies input, output, and behavior categories; all such categories must stay inside the `attrs` object.
 - **Children field:** Array of UI elements forming a hierarchical tree structure
-- **No loose properties:** All properties must be contained within the `attrs` object
+- **No unknown properties:** Objects contain only the fields defined by the EBNF format.
 
 ## Leaf scope source format (`*.scope.md`)
 
