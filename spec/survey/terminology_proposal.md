@@ -1,215 +1,216 @@
 # Consolidated terminology proposal
 
-This proposal consolidates the terminology findings of the four UI surveys into one set of
-recommendations for the OpenUI glossary.
+This proposal turns the terminology findings of the four UI surveys into concrete
+changes to the OpenUI vocabulary. Each recommendation is one of four actions on a
+specific term.
 
-- **Inputs:**
-  - Each survey's `README.md`, `SUMMARY.md` and taxonomy and terminology files:
-    [Angular Material](angular-material/README.md), [HTML Standard](html5/README.md),
-    [OpenUI5](openui5/README.md) and [Qt Widgets](qt/README.md).
-  - The consolidated [schema and architecture report](schema_architecture_changes.md).
-- **Status:** proposal for review. The canonical [glossary](../README.md#glossary),
-  [taxonomy mapping](../scopes/taxonomy_mapping.md) and scope files are unchanged.
-- **Plan links:** this proposal feeds terminology workstream W1 in the
-  [v1 publish plan](specui_v1_publish_plan.md): task 8 (canonical-term rule, term
-  list, alias table, conflict catalog) and task 9 (conflict resolution). It also
-  covers plan question Q5 (the canonical-term rule) and Q10 (Standalone / Host-bound).
-  Where the accepted terms live is set by task 7, which moves glossary definitions into
-  [`spec/scopes/scope.md`](../scopes/scope.md).
+| Action               | Meaning                                                                                                                                                   |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Change A to B**    | Same concept, new name. A is renamed to B; A may remain as an alias where noted.                                                                          |
+| **Replace A with B** | A is removed and a different or more precise term B (or several terms) takes over its content.                                                            |
+| **Delete A**         | A is removed with no successor, because it is not a UI object, is covered by other terms, or conflicts with OpenUI meanings.                              |
+| **Add C**            | C is a new term, placed under the named scope with the named abstraction level. Adding a term does not create a new scope or known object type by itself. |
+
+- **Targets:** the [glossary](../README.md#glossary) (G) and the canonical
+  [taxonomy mapping](../scopes/taxonomy_mapping.md) (T), with its taxonomy section and
+  destination scope.
+- **Inputs:** each survey's README, SUMMARY and taxonomy and terminology files
+  ([Angular Material](angular-material/README.md), [HTML Standard](html5/README.md),
+  [OpenUI5](openui5/README.md), [Qt Widgets](qt/README.md)), and the
+  [schema and architecture report](schema_architecture_changes.md).
+- **Status:** proposal for review. Nothing is applied. It feeds terminology workstream
+  W1, tasks 8 and 9, and plan questions Q5 and Q10 in the
+  [v1 publish plan](specui_v1_publish_plan.md).
+- **Naming rule used:** keep an existing OpenUI term; otherwise use the HTML or ARIA name;
+  otherwise the name most surveyed frameworks use; otherwise a neutral descriptive
+  name. Never use a framework class or brand. See
+  [appendix A](#appendix-a-canonical-term-rule).
 
 ## Summary
 
-1. **Adopt a canonical-term rule.** Keep existing OpenUI terms; otherwise prefer
-   HTML/ARIA names; otherwise use the majority term across surveyed frameworks, never a
-   framework class or brand name. See [part 1](#part-1-canonical-term-rule).
-2. **Qualify six core terms that frameworks use differently.** Page, Widget, Control,
-   Element, Component and Grid each have a conflicting framework meaning. See
-   [part 2](#part-2-core-terms-with-conflicting-framework-meanings).
-3. **Add the classification vocabulary the surveys share.** This covers abstraction
-   levels, merge dispositions, the component / behavior / state / appearance split,
-   trigger versus response, owned versus referenced, and Standalone / Host-bound. See
-   [part 3](#part-3-classification-vocabulary).
-4. **Preserve 16 distinctions** that the surveys warn must not be merged. See
-   [part 4](#part-4-distinctions-to-preserve).
-5. **Review the candidate terms** and settle four naming choices where surveys use
-   different words for one concept. See [part 5](#part-5-candidate-new-terms).
-6. **Use the cross-framework alias table** as the starting point for glossary aliases.
-   See [part 6](#part-6-cross-framework-alias-table).
+| Action  | Count | Examples                                                                            |
+| ------- | ----: | ----------------------------------------------------------------------------------- |
+| Change  |     8 | Screen / View → View; Dropdown → Select; Stack → Linear stack                       |
+| Replace |     4 | Table / Data grid → Table + Data grid; Modal overlay → Modal interaction + Backdrop |
+| Delete  |     4 | Biometric prompt; Hamburger Menu; "component" as a Widget alias                     |
+| Add     |    67 | Modal interaction, Viewport scrolling, Page stack, Meter, Host-bound                |
 
-## Part 1: Canonical-term rule
+## 1. Change
 
-Plan question Q5 asks whether the HTML/ARIA name or the majority across sources should
-win. The surveys support a combined rule, applied in order:
+| #   | Change                   | To                         | Target and location                                        | Why                                                                                                                                                                                      | Evidence                                                                                                                      |
+| --- | ------------------------ | -------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| C1  | Screen / View            | View                       | T · Container elements · Views                             | The glossary lists "screen" as an alias of **Page**, and the taxonomy note itself says Pages cover route-level screens. Keeping "Screen" here gives one word two owners.                 | [Glossary: Page](../README.md#page); [taxonomy mapping](../scopes/taxonomy_mapping.md)                                        |
+| C2  | Spin box / Stepper input | Spin box / Numeric stepper | T · Input elements · Range control                         | "Stepper" is also the workflow Stepper widget. Both Qt and Angular Material require numeric and workflow steppers to stay distinct.                                                      | [Qt scopes proposal](qt/scopes_proposal.md); [Angular Material scopes proposal](angular-material/scopes_proposal.md)          |
+| C3  | Stack                    | Linear stack               | T · Layout and structural elements · Structural containers | The generic taxonomy lets Stack include depth, while the mapping says linear. Qt adds Page stack (one active child) and a layered arrangement, so the linear meaning needs its own name. | [Qt merge review](qt/inventory/TAXONOMY_MERGE_REVIEW.md)                                                                      |
+| C4  | Toolbar                  | Application toolbar        | T · Container elements · Tool bars                         | The entry maps to the application-level command surface. Angular Material separates a reusable toolbar surface (see A36).                                                                | [Angular Material AM-E08](angular-material/scopes_proposal.md)                                                                |
+| C5  | Dropdown                 | Select                     | T · Input elements · Choice controls                       | HTML `select` is a direct match and Angular Material's family is `select`. "Dropdown" collides with "Dropdown Menu", which is a command menu.                                            | [HTML taxonomy mapping](html5/taxonomy_mapping.md); [Angular Material taxonomy mapping](angular-material/taxonomy_mapping.md) |
+| C6  | Map                      | Geographic map             | T · Navigational elements · Media widgets                  | HTML image maps are a semantic mismatch; Qt's graphics view is only a partial fit. The qualifier states the intended meaning.                                                            | [HTML taxonomy mapping](html5/taxonomy_mapping.md); [Qt taxonomy mapping](qt/taxonomy_mapping.md)                             |
+| C7  | Canvas / Drawing area    | Drawing area               | T · Input elements · Drawing and capture controls          | The scope is drawing input. A canvas is also a custom-rendered output surface, which Qt separates (see A24).                                                                             | [Qt structure proposal](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#classification-and-merge-rules)                           |
+| C8  | Window                   | Window surface             | T · Container elements · Surface containers                | HTML's Window is a browsing-context API, a semantic mismatch; the entry means a visible UI surface.                                                                                      | [HTML taxonomy mapping](html5/taxonomy_mapping.md)                                                                            |
 
-1. **Existing OpenUI term.** If the [glossary](../README.md#glossary) or the canonical
-   [taxonomy mapping](../scopes/taxonomy_mapping.md) already names the concept, keep
-   that name. All four surveys preserve existing terms and add aliases instead of
-   renaming.
-2. **HTML or WAI-ARIA name.** If the web platform defines the concept (an element,
-   role or pattern), use its name in plain words (for example "Dialog", "Table", "Link").
-   HTML is the only surveyed source that is a standard rather than a product.
-3. **Majority across surveyed frameworks.** Otherwise, use the term shared by most of
-   Qt, Angular Material and OpenUI5, and check it against the taxonomy.
-4. **Neutral descriptive name.** Otherwise, name the purpose or outcome, as the Qt
-   behavior labels do (for example "Viewport scrolling", not "Scroller").
+## 2. Replace
 
-In every case:
+| #   | Replace                        | With                                                                                                 | Target and location                         | Why                                                                                                                                           | Evidence                                                                                                                                        |
+| --- | ------------------------------ | ---------------------------------------------------------------------------------------------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| R1  | Table / Data grid              | **Table** (Widgets/table) and **Data grid** (Widgets/data_grid), two entries                         | T · Output elements                         | One entry maps to two scopes that the glossary defines as different things: static tabular structure versus interactive grid behavior.        | [Glossary: Data grid](../README.md#data-grid); [HTML taxonomy mapping](html5/taxonomy_mapping.md)                                               |
+| R2  | Progress bar; Loader / Spinner | **Determinate progress** and **Indeterminate progress**; bar and spinner become presentation aliases | T · Output elements · Status indicator      | A bar or a spinner is presentation. The meaningful distinction is whether progress has a known value.                                         | [HTML taxonomy mapping](html5/taxonomy_mapping.md); [Angular Material AM-E06](angular-material/scopes_proposal.md); [Qt](qt/scopes_proposal.md) |
+| R3  | Modal overlay                  | **Modal interaction** (Behaviors, see A53) and **Backdrop** (Presentation, see A60)                  | T · Container elements · Overlay containers | Overlays are not automatically modal. Three surveys separate modality (a behavior) from the overlay surface and from the backdrop appearance. | [HTML](html5/scopes_proposal.md); [Angular Material AM-E12](angular-material/scopes_proposal.md); [Qt P05](qt/scopes_proposal.md)               |
+| R4  | Dropdown Menu                  | **Menu button** (Button variant in the glossary); the menu itself stays **Menu**                     | T · Navigational elements · Menu widgets    | HTML marks "dropdown menu" a semantic mismatch. What is distinct is the trigger, which the glossary already defines as a menu button.         | [HTML taxonomy mapping](html5/taxonomy_mapping.md); [Glossary: Button](../README.md#button)                                                     |
 
-- Never use a framework class, selector or brand as the canonical term. The Angular
-  Material survey screened its abstract names for Angular, Material and CDK branding.
-- Keep framework names as aliases, with the framework named.
-- An alias never becomes a new known object type by itself (see the
-  [known object type](../README.md#known-object-type) rule).
+## 3. Delete
 
-## Part 2: Core terms with conflicting framework meanings
+| #   | Delete                                                       | Target and location                               | Why                                                                                                                                                       | Evidence                                                                                                   |
+| --- | ------------------------------------------------------------ | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| D1  | Biometric prompt                                             | T · Input elements · Drawing and capture controls | Authentication is a platform prompt, not a UI object the document describes. No surveyed framework has one; HTML classes it as an external dependency.    | [HTML taxonomy mapping](html5/taxonomy_mapping.md); [alias table](#appendix-b-cross-framework-alias-table) |
+| D2  | Hamburger Menu                                               | T · Navigational elements · Navigation widgets    | It is a composition, not an object: an Icon button that opens a Navigation Drawer. Both terms already exist. No surveyed framework has a separate object. | [HTML taxonomy mapping](html5/taxonomy_mapping.md); [alias table](#appendix-b-cross-framework-alias-table) |
+| D3  | "component" (alias of Widget)                                | G · Widget                                        | In Angular a component is any UI building block, including primitives. As a Widget alias it contradicts Control.                                          | [Angular Material taxonomy](angular-material/inventory/TAXONOMY.md#artifact-role-subcategories)            |
+| D4  | "component instance", "widget instance" (aliases of Element) | G · Element                                       | An Element is any node. Calling it a widget instance conflicts with OpenUI's Widget and with Qt, where `QWidget` is every UI object.                      | [Qt inventory](qt/inventory/01_COMPONENT_INVENTORY.md)                                                     |
 
-These OpenUI core terms are used by at least one surveyed framework with a different
-meaning. The glossary should state the OpenUI meaning and name the conflicting use.
+## 4. Add
 
-| Term      | OpenUI meaning (current glossary)                                   | Conflicting framework meaning                                                                                                                                                                                                                             | Proposed resolution                                                                               |
-| --------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| Page      | A top-level, navigable screen                                       | OpenUI5 `sap.m.Page` is a header/content/footer container; the survey maps it to [Surface containers](../scopes/Containers/surface_containers.scope.md), and no OpenUI5 class matches an OpenUI Page ([Pages survey](openui5/inventory/Pages.survey.md)). | Keep. Add a note that framework "page" classes are often containers.                              |
-| Widget    | A reusable composite UI object                                      | Qt `QWidget` is the base of every UI object; the survey names it "Generic UI surface" and maps it to Surface containers ([Qt inventory](qt/inventory/01_COMPONENT_INVENTORY.md)).                                                                         | Keep. Add a note that in Qt "widget" means any UI object.                                         |
-| Control   | A reusable interaction or rendering primitive                       | OpenUI5 `sap.ui.core.Control` is the base class of all controls; the survey found it "too generic to resolve by base class" ([classification key](openui5/inventory/_classification_key.md)).                                                             | Keep. Classify by primitive semantics, never by base class (already the glossary rule).           |
-| Element   | One node in an OpenUI document tree                                 | An HTML element is a markup element; OpenUI5 `sap.ui.core.Element` is the base class that controls build on.                                                                                                                                              | Keep. Say "HTML element" when the markup meaning is intended.                                     |
-| Component | Alias of Widget                                                     | An Angular component is any declared UI building block, including primitives ([Angular Material artifact roles](angular-material/inventory/TAXONOMY.md#artifact-role-subcategories)).                                                                     | Keep "component" as a Widget alias only in framework-neutral prose; use Widget in normative text. |
-| Grid      | Overloaded: layout grid, data grid, ARIA grid (already in glossary) | Qt `QGridLayout` and Angular Material `grid-list` are layout grids; OpenUI5 has both layout grids and tables.                                                                                                                                             | Keep the glossary rule: always qualify as layout grid or data grid.                               |
+Abstraction levels follow the taxonomy mapping: Existing object, Alias, Grouped leaf,
+Folder abstraction. "Proposed leaf" means the term goes with a proposed new scope, so it
+is added only if that scope is accepted.
 
-## Part 3: Classification vocabulary
+### 4.1 Glossary terms
 
-The surveys use a shared set of classification terms that are not yet in the glossary.
-These are meta-terms for describing the specification, not UI object types.
+| #   | Add        | Definition                                                                                                                                                      | Evidence                                                                                                                |
+| --- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| A1  | Standalone | A UI object that is meaningful and usable on its own, without a reference to an existing object of another type.                                                | [OpenUI5 terminology proposal](openui5/inventory/TERMINOLOGY_PROPOSAL.md) (approved 2026-09-23, Q10)                    |
+| A2  | Host-bound | A UI object that is meaningful only when associated with an existing object of another type. Its Purpose names the relationship: targets, controls or supplies. | [OpenUI5 terminology proposal](openui5/inventory/TERMINOLOGY_PROPOSAL.md) (Q10)                                         |
+| A3  | Host       | The object that owns content and lifecycle for a behavior or host-bound object.                                                                                 | [Angular Material D01](angular-material/openui_schema_proposal.md)                                                      |
+| A4  | Target     | The object a behavior acts on, named by id reference and not owned.                                                                                             | [Qt D01](qt/openui_schema_proposal.md); [schema report S1](schema_architecture_changes.md#consolidated-recommendations) |
+| A5  | Trigger    | An input or condition (gesture, key, pointer, hover, timer) that starts a behavior. Behaviors are classified by outcome, not trigger.                           | [Qt D07](qt/openui_schema_proposal.md)                                                                                  |
 
-| Proposed term                                            | Proposed definition                                                                                                                                                                                                                                                 | Values                                                                                                                   | Source                                                                                                     |
-| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| Abstraction level                                        | How a taxonomy entry relates to a scope object. Already defined in the taxonomy mapping; used unchanged by all four surveys.                                                                                                                                        | Existing object, Alias, Grouped leaf, Folder abstraction                                                                 | [Taxonomy mapping](../scopes/taxonomy_mapping.md)                                                          |
-| Merge disposition                                        | The proposed change to a scope when a survey entry maps to it. Separate from the abstraction level.                                                                                                                                                                 | Reuse, Enhance, Owned part, Folder notion, New leaf, Deferred                                                            | [Qt taxonomy mapping](qt/taxonomy_mapping.md)                                                              |
-| Correspondence                                           | How closely a source-framework concept matches an OpenUI entry. Separate from the abstraction level.                                                                                                                                                                | For example Direct primitive, Composed variant, Partial pattern, No direct match, Semantic mismatch, External dependency | [HTML taxonomy mapping](html5/taxonomy_mapping.md)                                                         |
-| Component, behavior, configuration and state, appearance | Four aspects of a UI concept. A component is the object or surface; a behavior is what happens to a target; configuration and state are settings and current conditions; appearance is how they are presented. A state or visual treatment alone is not a behavior. | —                                                                                                                        | [Qt plan](qt/inventory/PLAN.md#classification-model)                                                       |
-| Trigger and response                                     | A trigger (gesture, key, pointer, hover, timer) starts a response (the behavior's outcome). Behaviors are classified by response, not by trigger or input device.                                                                                                   | —                                                                                                                        | [Qt decision D07](qt/openui_schema_proposal.md)                                                            |
-| Owned and referenced                                     | Owned content is listed in `children` and has one owner. Referenced content is named by id in `attrs` and is not duplicated or transferred.                                                                                                                         | —                                                                                                                        | [Schema report S1](schema_architecture_changes.md#consolidated-recommendations)                            |
-| Host and target                                          | The host is the object that owns the content and lifecycle; the target is the object a behavior acts on by reference.                                                                                                                                               | —                                                                                                                        | [Angular Material D01](angular-material/openui_schema_proposal.md), [Qt D01](qt/openui_schema_proposal.md) |
-| Standalone and Host-bound                                | Standalone: meaningful on its own. Host-bound: only meaningful when associated with an existing object of another type; the relationship is stated in Purpose prose as **targets**, **controls** or **supplies**.                                                   | Approved 2026-09-23 as prose-only; not applied (Q10)                                                                     | [OpenUI5 terminology proposal](openui5/inventory/TERMINOLOGY_PROPOSAL.md)                                  |
-| Applicability                                            | Whether a behavior applies to a component, recorded per pair.                                                                                                                                                                                                       | Qt matrix: I, O, A, U, N                                                                                                 | [Qt applicability matrix](qt/inventory/COMPONENT_BEHAVIOR_MATRIX.md)                                       |
-| Family-level leaf                                        | A leaf scope that groups related variants under one contract (the current "grouped leaf" practice).                                                                                                                                                                 | —                                                                                                                        | [Angular Material proposal](angular-material/scopes_proposal.md)                                           |
+### 4.2 Input elements
 
-**Caution on Standalone / Host-bound:** the Angular Material survey asks that these terms
-not become a canonical abstraction level without review. Adopting them as prose-only
-vocabulary, as approved, is consistent with that request.
+| #   | Add                         | Scope              | Level         | Evidence                                                                                    |
+| --- | --------------------------- | ------------------ | ------------- | ------------------------------------------------------------------------------------------- |
+| A6  | Tool button                 | Action controls    | Alias         | [Qt](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#proposed-extension-tree)                   |
+| A7  | Rich text editor            | Text inputs        | Alias         | [Qt](qt/scopes_proposal.md)                                                                 |
+| A8  | Keyboard shortcut field     | Text inputs        | Alias         | [Qt](qt/scopes_proposal.md)                                                                 |
+| A9  | Metadata-driven field       | Text inputs        | Alias         | [OpenUI5](openui5/scopes_proposal.md)                                                       |
+| A10 | Suggestion-backed combo box | Choice controls    | Alias         | [Angular Material](angular-material/scopes_proposal.md)                                     |
+| A11 | Font-family selector        | Choice controls    | Alias         | [Qt](qt/scopes_proposal.md)                                                                 |
+| A12 | Range slider                | Range control      | Alias         | [Angular Material AM-E02](angular-material/scopes_proposal.md)                              |
+| A13 | Rotary value control        | Range control      | Alias         | [Qt](qt/scopes_proposal.md)                                                                 |
+| A14 | Date field                  | Date/Time pickers  | Alias         | [Qt](qt/scopes_proposal.md); [Angular Material AM-E03](angular-material/scopes_proposal.md) |
+| A15 | Time field                  | Date/Time pickers  | Alias         | [Qt](qt/scopes_proposal.md); [Angular Material AM-E03](angular-material/scopes_proposal.md) |
+| A16 | Font picker                 | Picker control     | Alias         | [Qt](qt/scopes_proposal.md)                                                                 |
+| A17 | Folder picker               | Picker control     | Alias         | [Qt](qt/scopes_proposal.md)                                                                 |
+| A18 | Token collection            | Widgets (new leaf) | Proposed leaf | [Angular Material AM-P02](angular-material/scopes_proposal.md)                              |
+| A19 | Editable chip collection    | Token collection   | Alias         | [Angular Material](angular-material/scopes_proposal.md)                                     |
+| A20 | File upload                 | Widgets            | Grouped leaf  | [OpenUI5](openui5/scopes_proposal.md)                                                       |
 
-## Part 4: Distinctions to preserve
+### 4.3 Output elements
 
-The surveys repeatedly warn against merging these pairs. The glossary should define both
-sides, or state the distinction under the existing term.
+| #   | Add                     | Scope              | Level         | Evidence                                                              |
+| --- | ----------------------- | ------------------ | ------------- | --------------------------------------------------------------------- |
+| A21 | Meter                   | Status indicator   | Alias         | [HTML](html5/scopes_proposal.md)                                      |
+| A22 | Calculated output       | Display primitives | Alias         | [HTML](html5/scopes_proposal.md)                                      |
+| A23 | Geometric shape         | Display primitives | Alias         | [Qt](qt/scopes_proposal.md) (ellipse, rectangle, line, polygon, path) |
+| A24 | Custom graphics surface | Media widgets      | Alias         | [Qt](qt/scopes_proposal.md)                                           |
+| A25 | Graphics viewport       | Widgets (new leaf) | Proposed leaf | [Qt P04](qt/scopes_proposal.md)                                       |
+| A26 | Description list        | List               | Alias         | [HTML](html5/scopes_proposal.md)                                      |
+| A27 | Icon collection         | List               | Alias         | [Qt](qt/scopes_proposal.md)                                           |
+| A28 | Contextual help         | Feedback widgets   | Alias         | [Qt](qt/scopes_proposal.md)                                           |
+| A29 | Startup screen          | Feedback widgets   | Alias         | [Qt](qt/scopes_proposal.md)                                           |
+| A30 | Tile                    | Surface containers | Alias of Card | [OpenUI5](openui5/scopes_proposal.md)                                 |
 
-| #   | Keep apart                              | Why                                                                                                                     | Source                                                                                                                                    |
-| --- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| D1  | Table and Data grid                     | Static tabular structure versus interactive cell navigation and editing.                                                | Glossary; [HTML](html5/scopes_proposal.md); [Angular Material AM-E07](angular-material/scopes_proposal.md)                                |
-| D2  | Layout grid and Data grid               | Arrangement versus interactive tabular data.                                                                            | Glossary; [Qt](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#classification-and-merge-rules)                                                |
-| D3  | Linear Stack and Page stack             | Arrangement of all children versus one active child. The taxonomy and mapping disagree on whether Stack includes depth. | [Qt merge review](qt/inventory/TAXONOMY_MERGE_REVIEW.md)                                                                                  |
-| D4  | Numeric stepper and Workflow stepper    | Value increment control versus staged workflow.                                                                         | [Qt](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#classification-and-merge-rules); [Angular Material](angular-material/scopes_proposal.md) |
-| D5  | Shape styling and Geometric output      | A visual treatment versus drawn geometry (ellipse, path).                                                               | [Qt](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#classification-and-merge-rules)                                                          |
-| D6  | Drawing input and Graphics output       | Capturing strokes versus presenting a scene.                                                                            | [Qt](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#classification-and-merge-rules)                                                          |
-| D7  | Visual grouping and Choice coordination | A visible group versus nonvisual exclusivity (for example a button group).                                              | [Qt](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#classification-and-merge-rules)                                                          |
-| D8  | Tabs and Expandable panels              | One active page versus independently expandable sections.                                                               | [Qt](qt/scopes_proposal.md)                                                                                                               |
-| D9  | Menu and Dropdown                       | Commands versus choosing a value.                                                                                       | Taxonomy mapping; [Qt](qt/scopes_proposal.md)                                                                                             |
-| D10 | Button and Link                         | Performing an operation versus navigating. A button on an anchor keeps navigation semantics.                            | Glossary; [Angular Material](angular-material/inventory/TAXONOMY.md#cross-category-decisions)                                             |
-| D11 | Tree view and Route navigation          | Hierarchical data versus moving between routes.                                                                         | [Qt](qt/scopes_proposal.md); [Angular Material AM-E04](angular-material/scopes_proposal.md)                                               |
-| D12 | Progress, Measurement and Status        | Task progress (determinate or indeterminate) versus a scalar measurement (`meter`) versus attached status.              | [HTML](html5/scopes_proposal.md); [Angular Material AM-E06](angular-material/scopes_proposal.md)                                          |
-| D13 | Modality and Placement                  | A side or bottom sheet is not modal because of its edge placement.                                                      | [Angular Material AM-E05](angular-material/scopes_proposal.md)                                                                            |
-| D14 | Request and Completion                  | Dismissal or cancellation requested versus closure performed. A cancel event does not guarantee closure.                | [Schema report S4](schema_architecture_changes.md#consolidated-recommendations)                                                           |
-| D15 | Hover and Focus                         | Pointer state versus keyboard focus. Keep them distinct; a target must provide alternatives to hover-only interaction.  | [Qt D07](qt/openui_schema_proposal.md)                                                                                                    |
-| D16 | Form field, Form group and Form view    | One labeled control versus a named group of controls versus a business workflow.                                        | [Schema report](schema_architecture_changes.md#new-leaves-and-subcategories-under-existing-roots)                                         |
+### 4.4 Navigational elements
 
-## Part 5: Candidate new terms
+| #   | Add                   | Scope              | Level        | Evidence                              |
+| --- | --------------------- | ------------------ | ------------ | ------------------------------------- |
+| A31 | Menubar               | Menu widgets       | Alias        | [Qt](qt/scopes_proposal.md)           |
+| A32 | Column browser        | Navigation widgets | Alias        | [Qt](qt/scopes_proposal.md)           |
+| A33 | Filter bar            | Widgets            | Grouped leaf | [OpenUI5](openui5/scopes_proposal.md) |
+| A34 | Value help            | Widgets            | Grouped leaf | [OpenUI5](openui5/scopes_proposal.md) |
+| A35 | Personalization panel | Widgets            | Grouped leaf | [OpenUI5](openui5/scopes_proposal.md) |
 
-### Naming choices where surveys differ
+### 4.5 Container elements
 
-| Concept                                    | Candidate names                                                                                        | Recommendation under the part 1 rule                                                                                                                            |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Restricting interaction to a modal surface | Modal interaction (Qt P05, Angular Material AM-P03)                                                    | **Modal interaction.** Both surveys agree; HTML's "modal" supports it.                                                                                          |
-| Scrolling a region's viewport              | Viewport scrolling (Qt P06), Scrollable (Angular Material AM-P04)                                      | **Viewport scrolling**, with Scrollable as an alias. It names the outcome (rule 4), matching the other behavior names.                                          |
-| Assisting text entry with suggestions      | Text completion (Qt P03), Suggestion-backed combo box (Angular Material), Value help (OpenUI5)         | Keep **three terms**: Text completion (behavior), Suggestion-backed combo box (alias of Choice controls), Value help (host-bound widget that supplies a value). |
-| A card-like surface                        | Card (existing alias of Surface containers), Cards (OpenUI5 subcategory), Tile (OpenUI5 named variant) | Keep **Card** as the canonical term. Decide whether OpenUI5's Cards subcategory stays under Surface containers or moves to Widgets; Tile is a Card variant.     |
+| #   | Add                         | Scope                 | Level           | Evidence                                                                             |
+| --- | --------------------------- | --------------------- | --------------- | ------------------------------------------------------------------------------------ |
+| A36 | Toolbar surface             | Surface containers    | Alias           | [Angular Material AM-E08](angular-material/scopes_proposal.md)                       |
+| A37 | Labelled group              | Surface containers    | Alias           | [Qt](qt/scopes_proposal.md)                                                          |
+| A38 | Checkable group             | Surface containers    | Alias           | [Qt](qt/scopes_proposal.md)                                                          |
+| A39 | Main window                 | Surface containers    | Alias           | [Qt](qt/scopes_proposal.md)                                                          |
+| A40 | Dockable panel              | Surface containers    | Alias           | [Qt](qt/scopes_proposal.md) (optional runtime capability)                            |
+| A41 | Multiple-document workspace | Surface containers    | Alias           | [Qt](qt/scopes_proposal.md) (optional runtime capability)                            |
+| A42 | Form field                  | Containers (new leaf) | Proposed leaf   | [Angular Material AM-P01](angular-material/scopes_proposal.md)                       |
+| A43 | Form group                  | Containers (new leaf) | Proposed leaf   | [HTML P3](html5/scopes_proposal.md)                                                  |
+| A44 | Disclosure                  | Expandable panels     | Alias           | [HTML](html5/scopes_proposal.md)                                                     |
+| A45 | Progress dialog             | Dialog                | Alias           | [Qt](qt/scopes_proposal.md)                                                          |
+| A46 | Workflow stepper            | Stepper               | Existing object | [Angular Material](angular-material/scopes_proposal.md); [Qt](qt/scopes_proposal.md) |
+| A47 | Wizard                      | Stepper               | Alias           | [Qt](qt/scopes_proposal.md)                                                          |
 
-### Candidate terms by source
+### 4.6 Layout and structural elements
 
-These are the new taxonomy terms the surveys propose. All are candidates; accepting a
-term does not create a new scope or known type.
+| #   | Add                    | Scope                 | Level              | Evidence                                                                  |
+| --- | ---------------------- | --------------------- | ------------------ | ------------------------------------------------------------------------- |
+| A48 | Page stack             | Containers (new leaf) | Proposed leaf      | [Qt P01](qt/scopes_proposal.md)                                           |
+| A49 | Scroll container       | Containers (new leaf) | Proposed leaf      | [Qt P02](qt/scopes_proposal.md)                                           |
+| A50 | Splitter handle        | Splitters             | Alias              | [Qt](qt/scopes_proposal.md)                                               |
+| A51 | Flexible column layout | Containers            | Grouped leaf       | [OpenUI5](openui5/scopes_proposal.md)                                     |
+| A52 | Layered arrangement    | Layout                | Folder abstraction | [Qt](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#proposed-extension-tree) |
 
-- **Angular Material:** Form-field wrapper, Token collection, Editable chip collection,
-  Suggestion-backed combo box, Range slider, Workflow stepper, Modal interaction,
-  Scrollable and Scroll lock. See
-  [candidate mapping additions](angular-material/inventory/SCOPE_EXTENSION_PROPOSAL.md#candidate-canonical-mapping-additions).
-- **Qt (component terms):**
-  - Commands and entry: Tool button, Explanatory command choice, Rich text editor,
-    Keyboard shortcut field.
-  - Values and resources: Font-family selector, Rotary value control, Font picker,
-    Folder picker.
-  - Temporal entry: Date field, Time field, Combined date/time field.
-  - Output and collections: Linked document viewer, Segmented number display, Icon
-    collection, Action-history list, Collection header.
-  - Graphics: Custom graphics surface, Ellipse, Rectangle, Line, Polygon, Path, Graphics
-    scene, Graphics group, Scene-hosted UI region.
-  - Feedback: Startup feedback, Requested contextual help.
-  - Navigation and structure: Menubar, Cascading-column browser, Vertical page selector,
-    Labelled group, Checkable group, Multiple-document workspace, Splitter handle.
-  - Dialogs and sequences: Progress dialog, Suppressible-error dialog, Dialog action
-    group, Wizard, Guided step.
-  - Arrangement and treatments: Label-field arrangement, Shared-region layered
-    arrangement, Blur, Color tint, Focus outline, Provisional-selection outline.
-  - New leaves: Page stack, Scroll container, Text completion, Graphics viewport, Modal
-    interaction, Viewport scrolling, plus Exclusive selection coordination and Kinetic
-    scrolling.
+### 4.7 Behaviors
 
-  See the [proposed extension tree](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#proposed-extension-tree)
-  and the 245-row [taxonomy draft](qt/inventory/GENERIC_UI_TAXONOMY_DRAFT.md).
+| #   | Add                              | Scope                | Level         | Evidence                                                                                                                  |
+| --- | -------------------------------- | -------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| A53 | Modal interaction                | Behaviors (new leaf) | Proposed leaf | [Qt P05](qt/scopes_proposal.md); [Angular Material AM-P03](angular-material/scopes_proposal.md)                           |
+| A54 | Viewport scrolling               | Behaviors (new leaf) | Proposed leaf | [Qt P06](qt/scopes_proposal.md); alias **Scrollable** from [Angular Material AM-P04](angular-material/scopes_proposal.md) |
+| A55 | Scroll lock                      | Behaviors (new leaf) | Proposed leaf | [Angular Material AM-P05](angular-material/scopes_proposal.md)                                                            |
+| A56 | Text completion                  | Behaviors (new leaf) | Proposed leaf | [Qt P03](qt/scopes_proposal.md)                                                                                           |
+| A57 | Exclusive selection coordination | Choice controls      | Alias         | [Qt D04](qt/openui_schema_proposal.md)                                                                                    |
+| A58 | Constraint validation            | Behaviors (new leaf) | Proposed leaf | [HTML P4](html5/scopes_proposal.md)                                                                                       |
+| A59 | Focus management                 | Behaviors (new leaf) | Proposed leaf | [HTML P5](html5/scopes_proposal.md)                                                                                       |
 
-- **Qt (behavior terms):** 40 response labels in 8 groups: Presence and disclosure,
-  Interaction governance, Selection coordination, Entry and value change, Content
-  navigation and viewports, Geometry and workspace manipulation, Commands and task
-  progression, and Feedback delivery and suppression. Examples: "Show, hide and close a
-  surface", "Contain and restore modal focus", "Undo or redo recorded changes". See the
-  [behavior hierarchy](qt/inventory/BEHAVIOR_TAXONOMY_PROPOSAL.md#proposed-hierarchy)
-  and [contracts](qt/inventory/BEHAVIOR_CONTRACTS.md).
-- **HTML:**
-  - Calculated output (`output`) and Scalar measurement (`meter`), as aliases.
-  - Candidate leaves: Document metadata, Resource declarations, Form group, Constraint
-    validation and Focus management.
-  - Conditional folders: Accessibility and Composition.
+### 4.8 Presentation, Application, Pages and Widgets
 
-  See the [HTML scopes proposal](html5/scopes_proposal.md).
+| #   | Add               | Scope                  | Level              | Evidence                                                                  |
+| --- | ----------------- | ---------------------- | ------------------ | ------------------------------------------------------------------------- |
+| A60 | Backdrop          | Presentation           | Folder abstraction | [Angular Material AM-E12](angular-material/scopes_proposal.md)            |
+| A61 | Blur              | Presentation           | Folder abstraction | [Qt](qt/taxonomy_mapping.md)                                              |
+| A62 | Color tint        | Presentation           | Folder abstraction | [Qt](qt/taxonomy_mapping.md)                                              |
+| A63 | Focus outline     | Presentation           | Folder abstraction | [Qt](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#proposed-extension-tree) |
+| A64 | Shell bar         | Application            | Grouped leaf       | [OpenUI5](openui5/scopes_proposal.md)                                     |
+| A65 | Document metadata | Application (new leaf) | Proposed leaf      | [HTML P1](html5/scopes_proposal.md)                                       |
+| A66 | Object page       | Pages                  | Grouped leaf       | [OpenUI5](openui5/scopes_proposal.md)                                     |
+| A67 | Planning calendar | Widgets                | Grouped leaf       | [OpenUI5](openui5/scopes_proposal.md)                                     |
 
-- **OpenUI5:** Shell bar / App shell, Flexible column layout, Tile, Metadata-driven field,
-  Semantic / Object page, Cards, Filter bar, Value help, Personalization panels, File
-  upload, and Scheduling / Planning calendar. See the
-  [OpenUI5 scopes proposal](openui5/scopes_proposal.md).
+### Not added
 
-### Terms to reconcile against existing aliases
+- **Merge disposition** and **correspondence** labels stay survey vocabulary; they
+  describe proposals, not the specification.
+- **Notification-area presence** (Qt) waits on plan question Q9 (host integration).
+- **Accessibility** and **Composition** folders (HTML P6, P7) wait on plan question Q13.
+- **Resource declaration** (HTML P2) may merge into Document metadata.
+- **Cards** (OpenUI5) is already covered by the existing Card alias; its placement is a
+  structure decision, not a new term.
 
-- **Workflow stepper** is an alias of the existing Stepper; numeric steppers stay under
-  Range control (D4).
-- **Tool button** is an alias under Action controls. A reusable toolbar surface
-  (Angular Material AM-E08) is distinct from the Application Tool bars contract.
-- **Editable chip collection** and **Token collection** extend the existing passive Tag
-  alias; Tag remains valid for passive display.
-- **Range slider** is an alias under Range control.
-- **Menubar** is an alias under Menu widgets.
+## Appendix A: Canonical-term rule
 
-## Part 6: Cross-framework alias table
+Applied in order, with plan question Q5 still open for approval:
 
-The table lists, for each OpenUI scope, the canonical taxonomy terms and the names each
-surveyed framework uses for the same concept. It uses each entry's primary scope only.
+1. Keep an existing OpenUI term (glossary or taxonomy mapping).
+2. Otherwise use the HTML or WAI-ARIA name. HTML is the only surveyed source that is a
+   standard.
+3. Otherwise use the term most surveyed frameworks share.
+4. Otherwise use a neutral name for the purpose or outcome, as the Qt behavior labels do.
 
-- **Taxonomy terms** come from the canonical [taxonomy mapping](../scopes/taxonomy_mapping.md).
-- **HTML** names are the survey's HTML primitives for those terms.
-- **Qt** names are Qt classes.
-- **Angular Material** names are component families.
-- **OpenUI5** gives the number of matched classes and example class names.
+Framework class names, selectors and brands never become canonical terms; they stay as
+aliases. The glossary should also note these conflicting framework meanings, which need
+no term change: **Page** (OpenUI5 `sap.m.Page` is a container), **Control** (OpenUI5
+`sap.ui.core.Control` is a generic base class), **Element** (HTML element) and **Grid**
+(layout grid versus data grid).
 
-Full rows, including secondary scopes, are in each survey's `taxonomy_mapping.md`.
-Scopes that appear here only because of a survey (for example the Application folder
-for Qt's system-tray icon) are proposals, not canonical mappings.
+## Appendix B: Cross-framework alias table
+
+For each OpenUI scope: the canonical taxonomy terms (before the changes above) and the
+names each surveyed framework uses. Primary scopes only; full rows are in each survey's
+`taxonomy_mapping.md`. Scopes that appear only because of a survey entry (for example
+the Application folder for Qt's system-tray icon) are proposals.
 
 | OpenUI scope                                                                              | Taxonomy terms (canonical)                                                                                                                                                                        | HTML                                                                                                                                                        | Qt                                                                                                                    | Angular Material                                               | OpenUI5 (classes: examples)                                                                            |
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -258,11 +259,9 @@ for Qt's system-tray icon) are proposals, not canonical mappings.
 
 ## Decisions needed
 
-| Decision                                                                       | Plan item            |
-| ------------------------------------------------------------------------------ | -------------------- |
-| Accept or amend the canonical-term rule in part 1                              | Q5, W1 task 8        |
-| Add the conflicting-meaning notes in part 2 to the glossary                    | W1 task 9            |
-| Add the classification vocabulary in part 3, including Standalone / Host-bound | Q10, W1 task 8       |
-| Settle the four naming choices in part 5                                       | W1 task 9, W0 task 6 |
-| Accept, defer or reject each candidate term in part 5                          | W0 task 6, W1 task 8 |
-| Resolve the Stack wording discrepancy (D3)                                     | W1 task 9            |
+| Decision                                                             | Plan item      |
+| -------------------------------------------------------------------- | -------------- |
+| Approve the canonical-term rule (appendix A)                         | Q5, W1 task 8  |
+| Accept, amend or reject each Change, Replace and Delete              | W1 task 9      |
+| Accept glossary additions A1–A5, including Standalone and Host-bound | Q10, W1 task 8 |
+| Accept each proposed-leaf term together with its scope               | W0 task 6      |
