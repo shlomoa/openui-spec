@@ -1,18 +1,39 @@
 # HTML Standard survey
 
-Steps 1–3 are complete at the inventory and structural-classification level. Abstract naming and semantic descriptions remain pending steps 4–5.
+Survey of the [HTML Living Standard](https://html.spec.whatwg.org/multipage/) as a
+reference source for the OpenUI specification. The baseline is WHATWG commit
+`cd8ac6f1bbf86dd0bd09ef75d27dacaebe7b4c1d`, published 2026-09-22 and surveyed
+2026-09-23.
 
-- [Plan](PLAN.md)
-- [Baseline and scope](BASELINE.md)
-- [Coverage checklist](COVERAGE.md)
-- [Categories and subcategories](CATEGORIES.md)
-- [Index reconciliation](INDEX_RECONCILIATION.md)
-- [External dependencies](DEPENDENCIES.md)
-- [Exclusions and open decisions](EXCLUSIONS.md)
-- [Mapping to all existing taxonomy entries](TAXONOMY_MAPPING.md)
-- [HTML source sections to existing scopes](SURVEY_SCOPE_CROSSWALK.md)
-- [Proposed scope-tree extensions and future merge plan](SCOPE_TREE_PROPOSAL.md)
+**Status:** inventory and structural classification complete (plan steps 1–3), and the
+taxonomy mapping and scope-tree proposal complete. Abstract naming, semantic research
+and final validation (steps 4–7) are pending. Nothing here changes the canonical scope
+tree, taxonomy mapping, evidence register or generated catalog.
 
-The category map links to one inventory file per top-level category. Each file has section coverage and direct-object/subcategory tables using the four requested fields. “Pending step 4” is an explicit placeholder, not an abstract object name.
+## Contents
 
-The taxonomy crosswalk records 151 existing taxonomy entries and the reverse section crosswalk covers all 118 second-level HTML sections. The tree proposal distinguishes enrichment of current contracts from conditional additions and restructuring. These are proposals for a future merge; canonical scopes, evidence approvals, and the generated catalog remain unchanged. Individual definition naming and semantic research are still pending.
+| File                                                   | Content                                                                     |
+| ------------------------------------------------------ | --------------------------------------------------------------------------- |
+| [SUMMARY.md](SUMMARY.md)                               | Survey summary: baseline, steps, findings, decisions and reasoning          |
+| [PLAN.md](PLAN.md)                                     | The plan executed, with the status of each step                             |
+| [category.md](category.md)                             | Survey categories (HTML chapters) and subcategories, with counts            |
+| [taxonomy_mapping.md](taxonomy_mapping.md)             | All 151 OpenUI taxonomy entries mapped to HTML primitives and OpenUI scopes |
+| [architecture_proposal.md](architecture_proposal.md)   | Tree-shape alternatives and conditional new top-level folders               |
+| [scopes_proposal.md](scopes_proposal.md)               | Existing-leaf enrichments and proposed additions P1–P8                      |
+| [openui_schema_proposal.md](openui_schema_proposal.md) | Template, attribute and child-model clarifications raised by HTML           |
+| [opens.md](opens.md)                                   | Open and unresolved questions                                               |
+| [inventory/](inventory/README.md)                      | The complete survey data as produced by the survey                          |
+
+## Inventory
+
+The `inventory/` folder holds the survey data unchanged. Its main entry points are:
+
+- [Baseline and scope](inventory/BASELINE.md) and [coverage checklist](inventory/COVERAGE.md).
+- [Category map](inventory/CATEGORIES.md) and one [chapter inventory file](inventory/inventory/)
+  per category.
+- [Index reconciliation](inventory/INDEX_RECONCILIATION.md) and
+  [external dependencies](inventory/DEPENDENCIES.md).
+- [Exclusions and open decisions](inventory/EXCLUSIONS.md).
+- [Taxonomy crosswalk](inventory/TAXONOMY_MAPPING.md),
+  [source-section crosswalk](inventory/SURVEY_SCOPE_CROSSWALK.md) and
+  [scope-tree proposal](inventory/SCOPE_TREE_PROPOSAL.md).

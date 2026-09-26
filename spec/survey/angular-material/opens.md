@@ -1,0 +1,12 @@
+# Angular Material survey: open questions
+
+[Survey README](README.md) · Sources: [BEHAVIOR_REVIEW.md](inventory/BEHAVIOR_REVIEW.md#deferred-decisions-and-merge-readiness), [RESEARCH_NOTES.md](inventory/RESEARCH_NOTES.md)
+
+| #   | Open item                   | Detail                                                                                                                                 | Reference                                                                                            |
+| --- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| A1  | Deferred contract decisions | D01–D07 block treating the affected drafts as approved or implementation-ready.                                                        | [openui_schema_proposal.md](openui_schema_proposal.md)                                               |
+| A2  | Proposal acceptance         | AM-P01–P05 and AM-E01–E13 each need an accept, revise or reject decision; none is approved.                                            | [scopes_proposal.md](scopes_proposal.md)                                                             |
+| A3  | Cross-survey overlap        | Overlaps with Qt (modal, scrolling, completion, temporal, range, progress) and OpenUI5 (cards).                                        | Plan task 6                                                                                          |
+| A4  | Upstream theming exports    | `./theming` and `./_theming` point to a missing `./_theming.scss` in the published package; the intended upstream behavior is unknown. | [Package category](inventory/Package-and-style-distribution.survey.md)                               |
+| A5  | Live documentation build    | The live site contains local-change metadata; its exact source is unknown. Release-pinned evidence supports the survey claims.         | [BASELINE.md](inventory/BASELINE.md)                                                                 |
+| A6  | Research depth              | Symbol and member completeness, upstream test execution and accessibility certification are not claimed.                               | [Final report limitations](inventory/FINAL_REPORT.md#documented-limitations-and-acceptance-decision) |
