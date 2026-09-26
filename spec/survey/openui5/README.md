@@ -17,7 +17,7 @@ canonical scope tree, taxonomy mapping, evidence register or generated catalog.
 | [PLAN.md](PLAN.md)                                   | The plan executed, with the status of each phase                   |
 | [category.md](category.md)                           | Classification under the OpenUI top-level scopes, with counts      |
 | [taxonomy_mapping.md](taxonomy_mapping.md)           | All 424 matched classes mapped to OpenUI scopes                    |
-| [architecture_proposal.md](architecture_proposal.md) | No top-level restructuring; Standalone / Host-bound terminology    |
+| [architecture_proposal.md](architecture_proposal.md) | No top-level restructuring                                         |
 | [scopes_proposal.md](scopes_proposal.md)             | 11 proposed subcategories from 257 unmatched classes               |
 | [opens.md](opens.md)                                 | Open and unresolved questions                                      |
 | [inventory/](inventory/PLAN.md)                      | The complete survey data as produced by the survey                 |
