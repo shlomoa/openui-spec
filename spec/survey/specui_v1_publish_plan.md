@@ -91,36 +91,34 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 ### W9 Validation (first, runs throughout)
 
 1. Consolidate validation infrastructure.
-  1.1. Create a `spec/bin` folder.
-  1.2. Move `spec/to_json` into `spec/bin`.
-  1.3. Move tooling tools into `spec/bin`; create a tool for each tool in tooling just like `to_json`.
-  1.4. Update code, tests, and documents.
+   - 1.1 Create a `spec/bin` folder.
+   - 1.2 Move `spec/to_json` into `spec/bin`.
+   - 1.3 Move tooling tools into `spec/bin`; create a tool for each tool in tooling just like `to_json`.
+   - 1.4 Update code, tests, and documents.
 2. Add a spec-content linter (`spec/bin/lint_spec.py`) wired into pre-commit; implement its framework first, then enable terminology-dependent rules after W1 task 7:
-  2.1. after W1 task 7, every leaf `*.scope.md` matches `template.scope.md` sections;
-  2.2. every leaf has exactly one row in `evidence.md`;
-  2.3. after W1 task 7, glossary terms are defined once; other docs link instead of redefining;
-  2.4. ~~`openui.json` is up to date with the prose~~ — **done**: enforced by `check_grammar_consistency.py` since 2026-09-26. *Validate:* unit tests with passing and failing fixtures. *Demo:* HTML lint report page.
+   - 2.1 after W1 task 7, every leaf `*.scope.md` matches `template.scope.md` sections;
+   - 2.2 every leaf has exactly one row in `evidence.md`;
+   - 2.3 after W1 task 7, glossary terms are defined once; other docs link instead of redefining;
+   - 2.4 ~~`openui.json` is up to date with the prose~~ — **done**: enforced by `check_grammar_consistency.py` since 2026-09-26. *Validate:* unit tests with passing and failing fixtures. *Demo:* HTML lint report page.
 3. Add a Markdown link checker to pre-commit. *Validate:* zero broken internal links.
 
 ### W0 Survey consolidation
 
-### W0 Survey consolidation
+4. Choose a directory structure and content for all surveys.
+   References in markdown files must point to an existing file in inventory folder (once created and content moved) and section.
 
-4. Choose a directory structure and content for all surveys
-references in markdown files must point to an existing file in inventory folder (once created and content moved) and section.
-
-  4.1. inventory: a folderto include all the surveyed data
-    4.1.1. Move all surveyed data files into this folder 
-  4.2. taxonomy_mapping.md: content with references
-  4.3. category.md: content with references
-  4.4. README.md: summary and TOC
-  4.5. PLAN.md: The plan executed
-  4.6. SUMMARY.md a summary of the survey, the steps, findings, decisions, reasoning, etc.
-  4.7. architecture_proposal.md: contains a change proposal for the entire solution or part of it \[optional\]
-  4.8. scopes_proposal.md: scopes tree architectural and content change \[optional\]
-  4.9. openui_schema_proposal.md: proposal for schema change \[optional\]
-  4.10. opens.md: open and unresolved questions / issues / directions with references \[optional\]
-  4.11. scopes: a folder of structure not yet decided to include the consolidated surveyed specification
+   - 4.1 inventory: a folder to include all the surveyed data
+     - 4.1.1 Move all surveyed data files into this folder
+   - 4.2 taxonomy_mapping.md: content with references
+   - 4.3 category.md: content with references
+   - 4.4 README.md: summary and TOC
+   - 4.5 PLAN.md: The plan executed
+   - 4.6 SUMMARY.md a summary of the survey, the steps, findings, decisions, reasoning, etc.
+   - 4.7 architecture_proposal.md: contains a change proposal for the entire solution or part of it \[optional\]
+   - 4.8 scopes_proposal.md: scopes tree architectural and content change \[optional\]
+   - 4.9 openui_schema_proposal.md: proposal for schema change \[optional\]
+   - 4.10 opens.md: open and unresolved questions / issues / directions with references \[optional\]
+   - 4.11 scopes: a folder of structure not yet decided to include the consolidated surveyed specification
 
 5. Build `matrix.csv` by merging the four `TAXONOMY_MAPPING.md` files: concept × {HTML, WAI-ARIA, openui5, Qt, Angular Material}. Columns: name, category in that source, key properties, events, OpenUI scope. Flag each row: *same term/same meaning*, *same term/different meaning*, *different term/same meaning*, *unique*. *Validate:* script checks every catalog type appears in the matrix. *Demo:* sortable/filterable matrix web page.
 6. Reconcile the scope-extension proposals (Angular Material `proposed-scopes/`, Qt P01–P06, HTML P1–P8) into one accept / defer / reject list, de-duplicating overlaps such as `modal_interaction` and `collapsible`. *Demo:* proposal table on the matrix page.
@@ -128,13 +126,13 @@ references in markdown files must point to an existing file in inventory folder 
 ### W1 Terminology
 
 7. Create a separate local terminology / vocabulary / glossary section in `scope.md` files for terms local to the current scope level:
-  7.1. Move all terminology / glossary / vocabulary definitions from `spec/README.md`, `spec/scopes/evidence.md`, `spec/scopes/taxonomy_mapping.md`, and `spec/scopes/template.scope.md` into `spec/scopes/scope.md`.
-  7.2. Add appropriate references from the former locations to the moved content.
+   - 7.1 Move all terminology / glossary / vocabulary definitions from `spec/README.md`, `spec/scopes/evidence.md`, `spec/scopes/taxonomy_mapping.md`, and `spec/scopes/template.scope.md` into `spec/scopes/scope.md`.
+   - 7.2 Add appropriate references from the former locations to the moved content.
 8. Pick the canonical-term rule (e.g. W3C/ARIA name first, then majority across frameworks) and record it as a decision.
-  8.1. Collect all the terms from existing scopes and surveyed UI frameworks.
-  8.2. Create a canonical list of terms.
-  8.3. Add an alias table (canonical term → openui5 / Qt / Angular Material / ARIA names).
-  8.4. Catalog any conflict / duplicate / wrong aliased term.
+   - 8.1 Collect all the terms from existing scopes and surveyed UI frameworks.
+   - 8.2 Create a canonical list of terms.
+   - 8.3 Add an alias table (canonical term → openui5 / Qt / Angular Material / ARIA names).
+   - 8.4 Catalog any conflict / duplicate / wrong aliased term.
 9. Review and resolve conflicts in terminology.
 
 ### W2 Scope
