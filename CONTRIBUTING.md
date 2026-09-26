@@ -100,8 +100,9 @@ Repository validation has three root layers:
 2. **Documentation validation** (`pre-commit`, `mkdocs`, `git diff --check`) —
    protects Markdown formatting, link consistency, generated examples, and the
    published spec site. The `openui-grammar-consistency` pre-commit hook also
-   verifies that the EBNF format SSOT, JSON Schema projection, and README
-   enforcement boundaries remain aligned.
+   verifies EBNF/schema consistency, validates the committed catalog against
+   both formats, and ensures `spec/openui.json` is fresh from `spec/scopes/`
+   and `SCHEMA_VERSION`.
 3. **CI build workflow** (`.github/workflows/build.yml`) — runs root validation
    on code-review events. `tests/test_github_actions_build.py` asserts the
    workflow keeps running repository checks, Python validation tooling,

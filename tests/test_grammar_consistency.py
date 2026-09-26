@@ -1,4 +1,4 @@
-"""Regression coverage for the EBNF-to-schema grammar consistency checker."""
+"""Regression coverage for OpenUI format and catalog consistency checks."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from spec.tooling.check_grammar_consistency import check
 
 
 class GrammarConsistencyTest(unittest.TestCase):
-    def test_ebnf_schema_and_readme_remain_aligned(self) -> None:
+    def test_format_and_catalog_artifacts_remain_aligned(self) -> None:
         check()
 
 

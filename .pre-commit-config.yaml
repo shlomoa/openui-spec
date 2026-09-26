@@ -37,12 +37,12 @@ repos:
     hooks:
       - id: openui-grammar-consistency
         name: OpenUI grammar consistency
-        entry: python spec/tooling/check_grammar_consistency.py
+        entry: python -m spec.tooling.check_grammar_consistency
         language: python
         additional_dependencies:
           - jsonschema==4.26.0
           - TatSu==5.24.0
-        files: ^(spec/(EBNF\.txt|openui\.schema\.json|README\.md|tooling/check_grammar_consistency\.py)|tests/test_grammar_consistency\.py)$
+        files: ^(SCHEMA_VERSION|spec/(EBNF\.txt|openui\.json|openui\.schema\.json|README\.md|scopes/|to_json/converter\.py|tooling/check_grammar_consistency\.py)|tests/test_grammar_consistency\.py)$
         pass_filenames: false
       - id: markdownlint-cli2
         name: markdownlint-cli2

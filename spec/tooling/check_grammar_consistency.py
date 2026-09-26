@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from jsonschema import Draft202012Validator
+from spec.to_json.converter import build_openui_document
 from tatsu import parse
 from tatsu.exceptions import FailedParse
 
@@ -17,6 +18,7 @@ SPEC_DIR = REPO_ROOT / "spec"
 EBNF_PATH = SPEC_DIR / "EBNF.txt"
 README_PATH = SPEC_DIR / "README.md"
 SCHEMA_PATH = SPEC_DIR / "openui.schema.json"
+CATALOG_PATH = SPEC_DIR / "openui.json"
 
 ID_PATTERN = re.compile(r"^[a-z][A-Za-z0-9]*$")
 TYPE_PATTERN = re.compile(
@@ -142,7 +144,7 @@ def schema_accepts(text: str, validator: Draft202012Validator) -> bool:
 
 
 def check() -> None:
-    """Raise AssertionError when the EBNF, schema, or README contracts drift."""
+    """Raise AssertionError when OpenUI format or catalog artifacts drift."""
     grammar = EBNF_PATH.read_text(encoding="utf-8")
     schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     validator = Draft202012Validator(schema)
@@ -161,6 +163,19 @@ def check() -> None:
     ]
     if missing_statements:
         raise AssertionError(f"README is missing format-contract statements: {missing_statements}")
+
+    catalog_text = CATALOG_PATH.read_text(encoding="utf-8")
+    if not ebnf_accepts(catalog_text, grammar):
+        raise AssertionError("spec/openui.json does not satisfy spec/EBNF.txt")
+    if not schema_accepts(catalog_text, validator):
+        raise AssertionError("spec/openui.json does not satisfy spec/openui.schema.json")
+
+    catalog = _load_json_without_duplicate_members(catalog_text)
+    generated_catalog = build_openui_document(spec_dir=SPEC_DIR)
+    if catalog != generated_catalog:
+        raise AssertionError(
+            "spec/openui.json is stale; regenerate it from spec/scopes/ and SCHEMA_VERSION"
+        )
 
 
 def main() -> int:
