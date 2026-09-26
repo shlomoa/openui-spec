@@ -129,7 +129,7 @@ Linux or macOS (Bash):
 git diff --check
 ```
 
-CI runs this validation on both Windows and Linux.
+CI runs this validation on Ubuntu, Windows, and macOS.
 
 `spec/EBNF.txt` is the source of truth for the OpenUI document format, while
 `spec/scopes/` is the source of truth for catalog content. The schema, examples,
