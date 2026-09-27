@@ -196,8 +196,8 @@ added for them.
 ## Appendix A: UI element taxonomy
 
 The [UI element taxonomy](../../docs/ui-element-taxonomy.md#1-input-and-editing-elements)
-has 15 categories and 236 abstract types, of which about 176 are not taxonomy entries or
-approved terms. Decided (2026-09-27, plan question Q4): merge it into the canonical
+has 15 categories and 222 abstract types (221 distinct names; Coach Mark appears in two
+categories), of which 91 already match a taxonomy entry or an approved term. Decided (2026-09-27, plan question Q4): merge it into the canonical
 taxonomy, then retire it. The merge steps are W3 tasks 14.1–14.7 in the
 [v1 publish plan](specui_v1_publish_plan.md#w3-ui-categorization). Its categories fit the
 OpenUI categories as follows:
