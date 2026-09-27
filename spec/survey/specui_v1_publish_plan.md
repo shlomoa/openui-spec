@@ -237,7 +237,8 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 1 | Guard rails: tooling folder, spec-content lint framework, link checker | W9 1, 2 (framework, 2.2), 3 | — | Done in [PR #159](https://github.com/shlomoa/openui-spec/pull/159), merged |
 | 1 | Remove stale file references from `AGENTS.md` | W9 3.1 | — | Open |
 | 1 | Category decisions in [`category.md`](category.md#summary) | W3 13 | — | Done (2026-09-27) |
-| 1 | Cross-source matrix and scope reconciliation | W0 5, 6 | — | Open (6 done 2026-09-27) |
+| 1 | Cross-source matrix | W0 5 | — | Open |
+| 1 | Scope reconciliation | W0 6 | — | Done (2026-09-27) |
 | 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Open |
 | 2 | Move the glossary to its final location | W1 7 | — | Open |
 | 3 | Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, two new Behaviors scopes, Modal overlay decision, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Steps 2 | Open |
