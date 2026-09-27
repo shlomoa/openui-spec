@@ -30,10 +30,15 @@
 | ---------------------------------------------- | --------: |
 | Matched to an existing spec object             |       424 |
 | Clustered into 11 proposed subcategories       |       257 |
-| Unclustered leftovers, named for future review |       261 |
+| Unclustered leftovers, reviewed class by class |       261 |
 | Out of scope (non-UI infrastructure)           |       279 |
 | **Total primary classes**                      | **1,221** |
 
+- **Review of the leftovers:** the 261 unclustered classes were reviewed one by one. 150 map
+  to existing OpenUI terms (96 UI objects, 45 parts of UI objects, 9 behaviors), 17 are
+  layout, internationalization or interaction mechanisms, 6 have no term, 6 wait on plan
+  question Q13, 10 are base classes and 72 are out of scope. Routing and Resizable, which
+  had no match, are survey gaps. See [opens.md](opens.md#o3-261-unclustered-classes).
 - **Taxonomy fit:** the 424 matched classes land on 31 of the 42 spec objects. Native (95)
   and Action controls (61) are the largest; the Pages objects have no matches. See
   [taxonomy_mapping.md](taxonomy_mapping.md#summary) and [category.md](category.md#categories).

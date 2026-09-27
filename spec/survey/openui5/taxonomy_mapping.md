@@ -10,7 +10,7 @@ Scope paths are relative to `spec/scopes/`. The mapping records survey proposals
 
 ## Summary
 
-424 source entries map to 31 OpenUI scopes. Classification totals: Matched 424.
+424 source entries map to 31 OpenUI scopes. Classification totals: Matched 424. The [class-by-class review](#proposed-by-the-class-by-class-review) proposes 150 more rows, from the unclustered leftovers, on 31 scopes.
 
 | OpenUI scope                                                                                                  | Primary entries | All mentions |
 | ------------------------------------------------------------------------------------------------------------- | --------------: | -----------: |
@@ -628,3 +628,312 @@ The first scope listed is the primary destination used for grouping; further sco
 | sap.ui.table.RowAction        | Table            | —                   | Matched        | [Table](inventory/Widgets.survey.md#table) |
 | sap.ui.table.RowActionItem    | Table            | —                   | Matched        | [Table](inventory/Widgets.survey.md#table) |
 | sap.ui.table.Table            | Table            | —                   | Matched        | [Table](inventory/Widgets.survey.md#table) |
+
+## Proposed by the class-by-class review
+
+These 150 classes were unclustered leftovers of Phase B. The class-by-class review in [opens.md](opens.md#o3-261-unclustered-classes) maps them to existing OpenUI terms, as UI objects, parts of UI objects or behaviors. They are proposals at survey level, not Phase B matches, so their classification is _Proposed (review)_. Rows are grouped by the scope that holds the OpenUI term; approved terms without a scope file yet are grouped under their folder.
+
+### Proposed: Application/index_html.scope.md
+
+| Source entry         | Abstract concept         | Other OpenUI scopes | Classification                              | Source row                                            |
+| -------------------- | ------------------------ | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.ui.core.Manifest | index.html (Application) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Application/routing.scope.md
+
+| Source entry                             | Abstract concept                | Other OpenUI scopes | Classification                              | Source row                                            |
+| ---------------------------------------- | ------------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.ui.core.History                      | Route and Routing (Application) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.routing.HashChanger          | Route and Routing (Application) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.routing.HashChangerBase      | Route and Routing (Application) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.routing.Route                | Route and Routing (Application) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.routing.Router               | Route and Routing (Application) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.routing.RouterHashChanger    | Route and Routing (Application) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.routing.Target.TitleProvider | Route and Routing (Application) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.routing.TargetCache          | Route and Routing (Application) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.routing.Targets              | Route and Routing (Application) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.routing.Views                | Route and Routing (Application) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Application/scope.md
+
+| Source entry            | Abstract concept | Other OpenUI scopes | Classification                              | Source row                                            |
+| ----------------------- | ---------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.f.ProductSwitch     | Shell bar        | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.f.ProductSwitchItem | Shell bar        | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.f.SearchManager     | Shell bar        | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Behaviors/drag_and_drop.scope.md
+
+| Source entry                 | Abstract concept          | Other OpenUI scopes | Classification              | Source row                                            |
+| ---------------------------- | ------------------------- | ------------------- | --------------------------- | ----------------------------------------------------- |
+| sap.f.dnd.GridDragOver       | Drag and drop (Behaviors) | —                   | Proposed (review): behavior | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.dnd.DragDropBase | Drag and drop (Behaviors) | —                   | Proposed (review): behavior | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Behaviors/scope.md
+
+| Source entry                               | Abstract concept                                | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------------------------------ | ----------------------------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.f.delegate.GridContainerItemNavigation | Focus management (Viewport and focus control)   | —                   | Proposed (review): behavior                 | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.f.delegate.GridItemNavigation          | Focus management (Viewport and focus control)   | —                   | Proposed (review): behavior                 | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.HeaderContainerItemNavigator         | Focus management (Viewport and focus control)   | —                   | Proposed (review): behavior                 | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.MaskInputRule                        | Constraint validation (Input assistance)        | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.ValueStateHeader                     | Constraint validation (Input assistance)        | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.FocusHandler                   | Focus management (Viewport and focus control)   | —                   | Proposed (review): behavior                 | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.Popup                          | Modal overlay (Behaviors)                       | —                   | Proposed (review): behavior                 | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.delegate.ItemNavigation        | Focus management (Viewport and focus control)   | —                   | Proposed (review): behavior                 | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.delegate.ScrollEnablement      | Viewport scrolling (Viewport and focus control) | —                   | Proposed (review): behavior                 | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Containers/grid.scope.md
+
+| Source entry                                         | Abstract concept  | Other OpenUI scopes | Classification                              | Source row                                            |
+| ---------------------------------------------------- | ----------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.f.GridContainerItemLayoutData                    | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.f.GridContainerSettings                          | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.BlockLayout                            | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.BlockLayoutCell                        | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.BlockLayoutCellData                    | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.BlockLayoutRow                         | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.GridData                               | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.cssgrid.GridBasicLayout                | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.cssgrid.GridBoxLayout                  | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.cssgrid.GridItemLayoutData             | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.cssgrid.GridLayoutBase                 | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.cssgrid.GridLayoutDelegate             | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.cssgrid.GridResponsiveLayout           | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.cssgrid.GridSettings                   | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.cssgrid.ResponsiveColumnLayout         | Grid (Containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Containers/overlay_containers.scope.md
+
+| Source entry       | Abstract concept             | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------ | ---------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.LightBox     | Popover (Overlay containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.LightBoxItem | Popover (Overlay containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Containers/sheet_containers.scope.md
+
+| Source entry                     | Abstract concept              | Other OpenUI scopes | Classification                              | Source row                                            |
+| -------------------------------- | ----------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.f.SidePanelItem              | Side Sheet (Sheet containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.DynamicSideContent | Side Sheet (Sheet containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Containers/splitters.scope.md
+
+| Source entry                     | Abstract concept     | Other OpenUI scopes | Classification                              | Source row                                            |
+| -------------------------------- | -------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.ui.layout.SplitterLayoutData | Splitter (Splitters) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Containers/structural_containers.scope.md
+
+| Source entry                   | Abstract concept                         | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------------------ | ---------------------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.ScrollContainer          | Scroll container (Structural containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.HorizontalLayout | Stack (Structural containers)            | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Containers/surface_containers.scope.md
+
+| Source entry        | Abstract concept | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------- | ---------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.ContentConfig | Tile             | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Containers/tabs.scope.md
+
+| Source entry                   | Abstract concept  | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------------------ | ----------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.ui.unified.ContentSwitcher | Page stack (Tabs) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Controls/choice_controls.scope.md
+
+| Source entry                  | Abstract concept           | Other OpenUI scopes | Classification                              | Source row                                            |
+| ----------------------------- | -------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.MultiEditField          | Dropdown (Choice controls) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.semantic.SemanticSelect | Dropdown (Choice controls) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Controls/display_primitives.scope.md
+
+| Source entry                       | Abstract concept               | Other OpenUI scopes | Classification                              | Source row                                            |
+| ---------------------------------- | ------------------------------ | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.f.Illustration                 | Image (Display primitives)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.FormattedText                | Text (Display primitives)      | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.FormattedTextAnchorGenerator | Text (Display primitives)      | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.Illustration                 | Image (Display primitives)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.ImageCustomData              | Image (Display primitives)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.ObjectIdentifier             | Text (Display primitives)      | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.ToolbarSeparator             | Separator (Display primitives) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.Currency            | Text (Display primitives)      | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Controls/link_and_scroll_controls.scope.md
+
+| Source entry              | Abstract concept                | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------------- | ------------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.ui.mdc.link.LinkItem  | Link (Link and scroll controls) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.mdc.link.PanelItem | Link (Link and scroll controls) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Controls/picker_control.scope.md
+
+| Source entry               | Abstract concept              | Other OpenUI scopes | Classification                              | Source row                                            |
+| -------------------------- | ----------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.ColorPalette         | Color picker (Picker control) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.WheelSliderContainer | Wheel picker (Picker control) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Controls/range_control.scope.md
+
+| Source entry       | Abstract concept           | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------ | -------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.NumericInput | Step input (Range control) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Controls/status_indicator.scope.md
+
+| Source entry            | Abstract concept                 | Other OpenUI scopes | Classification                              | Source row                                            |
+| ----------------------- | -------------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.BadgeCustomData   | Tag and Badge (Status indicator) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.DraftIndicator    | Tag and Badge (Status indicator) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.GenericTag        | Tag and Badge (Status indicator) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.ObjectMarker      | Tag and Badge (Status indicator) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.Placeholder | Loader (Status indicator)        | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Controls/text_inputs.scope.md
+
+| Source entry                                              | Abstract concept                                     | Other OpenUI scopes | Classification                              | Source row                                            |
+| --------------------------------------------------------- | ---------------------------------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.f.gen.ui5.webcomponents_fiori.dist.Search             | Search field with Text completion (Input assistance) | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.f.gen.ui5.webcomponents_fiori.dist.SearchItem         | Search field with Text completion (Input assistance) | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.f.gen.ui5.webcomponents_fiori.dist.SearchItemGroup    | Search field with Text completion (Input assistance) | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.f.gen.ui5.webcomponents_fiori.dist.SearchItemShowMore | Search field with Text completion (Input assistance) | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.f.gen.ui5.webcomponents_fiori.dist.SearchMessageArea  | Search field with Text completion (Input assistance) | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.f.gen.ui5.webcomponents_fiori.dist.SearchScope        | Search field with Text completion (Input assistance) | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.FeedInput                                           | Text area (Text inputs)                              | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.SuggestionsList                                     | Search field with Text completion (Input assistance) | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.codeeditor.CodeEditor                              | Text area (Text inputs)                              | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.search.OpenSearchProvider                     | Search field with Text completion (Input assistance) | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.search.SearchProvider                         | Search field with Text completion (Input assistance) | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Pages/scope.md
+
+| Source entry                         | Abstract concept | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------------------------ | ---------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.ObjectHeader                   | Object page      | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.semantic.SemanticConfiguration | Object page      | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Views/form.scope.md
+
+| Source entry                            | Abstract concept | Other OpenUI scopes | Classification                              | Source row                                            |
+| --------------------------------------- | ---------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.ui.core.VariantLayoutData           | Form (Views)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.form.ColumnContainerData  | Form (Views)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.form.ColumnElementData    | Form (Views)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.form.ColumnLayout         | Form (Views)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.form.FormLayout           | Form (Views)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.form.GridContainerData    | Form (Views)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.form.GridElementData      | Form (Views)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.form.GridLayout           | Form (Views)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.form.ResponsiveGridLayout | Form (Views)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.layout.form.ResponsiveLayout     | Form (Views)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Widgets/chart.scope.md
+
+| Source entry                             | Abstract concept | Other OpenUI scopes | Classification                              | Source row                                            |
+| ---------------------------------------- | ---------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.SelectionDetailsItemLine           | Chart            | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.mdc.chart.DrillBreadcrumbs        | Chart            | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.mdc.chart.Item                    | Chart            | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.mdc.chart.SelectionButtonItem     | Chart            | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.mdc.chart.SelectionDetailsActions | Chart            | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Widgets/date_time_pickers.scope.md
+
+| Source entry                              | Abstract concept  | Other OpenUI scopes | Classification                              | Source row                                            |
+| ----------------------------------------- | ----------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.DateTimeInput                       | Date/Time pickers | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.DynamicDateOption                   | Date/Time pickers | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.DynamicDateRange                    | Date/Time pickers | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.DynamicDateValueHelpUIType          | Date/Time pickers | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.StandardDynamicDateOption           | Date/Time pickers | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.CalendarDateInterval       | Date/Time pickers | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.CalendarLegendItem         | Date/Time pickers | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.DateRange                  | Date/Time pickers | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.internal.CustomMonthPicker | Date/Time pickers | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.internal.CustomYearPicker  | Date/Time pickers | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Widgets/dialog.scope.md
+
+| Source entry       | Abstract concept         | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------ | ------------------------ | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.BusyDialog   | Progress dialog (Dialog) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.SelectDialog | Dialog                   | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Widgets/feedback_widgets.scope.md
+
+| Source entry                              | Abstract concept                   | Other OpenUI scopes | Classification                              | Source row                                            |
+| ----------------------------------------- | ---------------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.ui.core.InvisibleMessage              | Narration (Feedback widgets)       | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.Message                       | Alert (Feedback widgets)           | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.fieldhelp.FieldHelpCustomData | Contextual help (Feedback widgets) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Widgets/list.scope.md
+
+| Source entry                                   | Abstract concept        | Other OpenUI scopes | Classification                              | Source row                                            |
+| ---------------------------------------------- | ----------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.f.gen.ui5.webcomponents.dist.ListItemGroup | List                    | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.MultiInput                               | Token collection (List) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.OverflowToolbarTokenizer                 | Token collection (List) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.Token                                    | Token collection (List) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.Tokenizer                                | Token collection (List) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.mdc.list.ItemActionItem                 | List                    | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Widgets/media_widgets.scope.md
+
+| Source entry    | Abstract concept | Other OpenUI scopes | Classification                              | Source row                                            |
+| --------------- | ---------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.PDFViewer | Media widgets    | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Widgets/menu_widgets.scope.md
+
+| Source entry                                     | Abstract concept            | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------------------------------------ | --------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.ActionSheet                                | Menu (Menu widgets)         | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.mdc.table.menus.GroupHeaderRowContextMenu | Context menu (Menu widgets) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Widgets/navigation_widgets.scope.md
+
+| Source entry         | Abstract concept              | Other OpenUI scopes | Classification                              | Source row                                            |
+| -------------------- | ----------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.CarouselLayout | Carousel (Navigation widgets) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Widgets/scope.md
+
+| Source entry                                | Abstract concept  | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------------------------------- | ----------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.f.PlanningCalendarInCardLegend          | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.PlanningCalendarLegend                | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.PlanningCalendarRow                   | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.PlanningCalendarView                  | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.SinglePlanningCalendarDayView         | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.SinglePlanningCalendarGrid            | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.SinglePlanningCalendarMonthGrid       | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.SinglePlanningCalendarMonthView       | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.SinglePlanningCalendarView            | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.SinglePlanningCalendarWeekView        | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.SinglePlanningCalendarWorkWeekView    | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.mdc.util.InfoBar                     | Filter bar        | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.CalendarAppointment          | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.CalendarOneMonthInterval     | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.CalendarWeekInterval         | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.MonthlyRecurrenceRule        | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.NonWorkingPeriod             | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.RecurrenceRule               | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.RecurringCalendarAppointment | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.RecurringNonWorkingPeriod    | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.TimeRange                    | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.WeeklyRecurrenceRule         | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.unified.YearlyRecurrenceRule         | Planning calendar | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
+### Proposed: Widgets/table.scope.md
+
+| Source entry                                | Abstract concept    | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------------------------------- | ------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.ui.mdc.table.CreationRow                | Table and Data grid | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.mdc.table.RowActionItem              | Table and Data grid | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.mdc.table.menus.QuickActionContainer | Table and Data grid | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.table.RowSettings                    | Table and Data grid | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
