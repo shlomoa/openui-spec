@@ -17,7 +17,7 @@ becomes `application_scope/`); the top-level `scope.example.json` keeps the plai
 
 Fixture JSON copied from `spec/examples/` must stay synchronized with its linked
 authoritative example and use only exact
-[known object type](../../../../../spec/README.md#known-object-type) literals.
+[known object type](../../../../../spec/scopes/scope.md#known-object-type) literals.
 Fixture-specific identity and specialization belong in `id`, `attrs`, and
 known-type child composition, not aliases, selectors, or pseudo-types.
 

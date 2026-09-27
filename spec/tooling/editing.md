@@ -100,7 +100,7 @@ Every command validates the resulting document against two sources of truth:
   [`spec/openui.json`](https://github.com/shlomoa/openui-spec/blob/main/spec/openui.json)
   catalog. Unknown types, aliases, selectors, and implementation identifiers are
   rejected. The normative definition and instance-flexibility rules live in the
-  [`Known object type`](../README.md#known-object-type) glossary entry.
+  [`Known object type`](../scopes/scope.md#known-object-type) glossary entry.
 
 The tool also rejects duplicate object `id` values, so every object in the
 document remains uniquely addressable.

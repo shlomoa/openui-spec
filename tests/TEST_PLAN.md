@@ -8,10 +8,10 @@ Root Python tests protect the format SSOT in `spec/EBNF.txt`, the catalog-conten
 SSOT in `spec/scopes/`, their schema and catalog projections, examples, and
 published documentation. They read the spec sources directly and fail when a
 hand-authored source drifts from its own rules. Shared terminology is defined in
-[`spec/README.md` § Glossary](../spec/README.md#glossary), so tests should
+[`spec/scopes/scope.md` § Glossary](../spec/scopes/scope.md#glossary), so tests should
 reference that vocabulary instead of duplicating definitions.
 Exact concrete-document membership and instance flexibility are defined by the
-[`Known object type`](../spec/README.md#known-object-type) entry.
+[`Known object type`](../spec/scopes/scope.md#known-object-type) entry.
 
 Repository validation commands and the CI gate overview live in
 [`CONTRIBUTING.md` § Repository validation](../CONTRIBUTING.md#repository-validation).
