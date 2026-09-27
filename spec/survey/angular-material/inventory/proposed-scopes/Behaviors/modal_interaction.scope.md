@@ -1,6 +1,6 @@
 # Modal interaction
 
-Review draft only, pending the decision in the [extension proposal](../../SCOPE_EXTENSION_PROPOSAL.md) and [candidate evidence](../../PROPOSED_EVIDENCE.md). Follows the [leaf template](../../../../../scopes/template.scope.md) and [scope rules](../../../../../scopes/scope.md); shared meanings remain in the [spec glossary](../../../../../README.md#glossary). New keys below are explicit candidate neutral design decisions, not already approved framework-derived contracts.
+Review draft only, pending the decision in the [extension proposal](../../SCOPE_EXTENSION_PROPOSAL.md) and [candidate evidence](../../PROPOSED_EVIDENCE.md). Follows the [leaf template](../../../../../scopes/template.scope.md) and [scope rules](../../../../../scopes/scope.md); shared meanings remain in the [spec glossary](../../../../../scopes/scope.md#glossary). New keys below are explicit candidate neutral design decisions, not already approved framework-derived contracts.
 
 ## Identity
 

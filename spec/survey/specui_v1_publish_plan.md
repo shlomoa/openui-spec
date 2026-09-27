@@ -30,7 +30,7 @@ Re-checked on 2026-09-26 against `main` (19 commits after the first draft). The 
 | Language (*changed*) | `EBNF.txt` declared authoritative; JSON Schema is a projection; `spec/bin/check_grammar_consistency` (moved from `spec/tooling/` by PR #159) enforces EBNF ↔ schema ↔ README ↔ catalog in pre-commit. 0.3.0 added same-document element references (quoted ids in Uses attrs) | Still `string \| null` values and `[x]` / `(x)` keys; no data-binding, event-payload or i18n rules |
 | Catalog (*changed*) | 47 leaf `*.scope.md` files; 82 distinct type literals; new `Route`, `NavItem`, `NavGroup`, `ToolBar`, `ToolBarRow`, `ToolAction` contracts | Many leaves still Purpose-only; evidence register does not yet cite the survey |
 | Utilities | Python: `openui_spec`, `compare_openui_spec`, `to_json`, TatSu parser, grammar consistency checker. TS: `OpenUiJson`, `ng-openui-spec` CLI (ajv) | No shared conformance suite; no object model beyond the JSON tree |
-| Validation | pre-commit (prettier, markdownlint, ruff, yamllint, check-json, grammar/catalog consistency); unittest; CI on Ubuntu + Windows | Evidence-row lint and internal link check exist (PR #159); scope-template and glossary lint rules (W9 2.1, 2.3) wait on W1 task 7 |
+| Validation | pre-commit (prettier, markdownlint, ruff, yamllint, check-json, grammar/catalog consistency); unittest; CI on Ubuntu + Windows | Evidence-row lint and internal link check exist (PR #159); scope-template and glossary lint rules (W9 2.1, 2.3) not yet implemented |
 | Visibility | `generated-examples` Angular app with screenshots; Read the Docs via mkdocs | No single published page for the spec itself |
 
 ## Workstreams
@@ -120,9 +120,11 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W1 Terminology
 
-7. [ ] Create a separate local terminology / vocabulary / glossary section in `scope.md` files for terms local to the current scope level:
-   - 7.1 [ ] Move all terminology / glossary / vocabulary definitions from `spec/README.md`, `spec/scopes/evidence.md`, `spec/scopes/taxonomy_mapping.md`, and `spec/scopes/template.scope.md` into `spec/scopes/scope.md`.
-   - 7.2 [ ] Add appropriate references from the former locations to the moved content.
+7. [x] Create a separate local terminology / vocabulary / glossary section in `scope.md` files for terms local to the current scope level:
+   - 7.1 [x] Move all terminology / glossary / vocabulary definitions from `spec/README.md`, `spec/scopes/evidence.md`, `spec/scopes/taxonomy_mapping.md`, and `spec/scopes/template.scope.md` into `spec/scopes/scope.md`.
+   - 7.2 [x] Add appropriate references from the former locations to the moved content.
+
+   Implemented in [PR #161](https://github.com/shlomoa/openui-spec/pull/161): the glossary is in [`spec/scopes/scope.md`](../scopes/scope.md#glossary), and the former locations link to it.
 8. [ ] Pick the canonical-term rule (e.g. W3C/ARIA name first, then majority across frameworks) and record it as a decision.
    - 8.1 [x] Collect all the terms from existing scopes and surveyed UI frameworks.
    - 8.2 [x] Create a canonical list of terms.
@@ -225,7 +227,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 1 | Matrix decision (not built) | W0 5 | — | Done |
 | 1 | Scope reconciliation | W0 6 | — | Done |
 | 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Open |
-| 2 | Move the glossary to its final location | W1 7 | — | Open |
+| 2 | Move the glossary to its final location | W1 7 | — | Done |
 | 3 | Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, two new Behaviors scopes, Modal overlay decision, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Steps 2 | Open |
 | 4 | Regenerate, version and validate; release `0.x.0` | W1 9.7, 9.8; W3 14.7 | Step 3 | Open |
 | 4 | Retire `docs/ui-element-taxonomy.md` | W3 14.6 | Step 3 | Open |
