@@ -238,6 +238,10 @@ Approved (2026-09-27): none of these terms is added.
   scopes, not terms. Whether they belong in the project stays with plan question Q13.
 - **Resource declaration** (HTML P2): document data rather than UI, for the same reason as
   A68 Document metadata.
+- **Ruby annotation** (HTML `ruby`, `rt`, `rp`): left out at this stage, 2026-09-27. Support
+  for East Asian scripts has lower priority for now; HTML itself notes that CSS cannot yet
+  fully control ruby rendering; and no surveyed framework offers it as a control (OpenUI5
+  only wraps the raw element, `sap.html.Ruby`, under Native).
 - **Cards** (OpenUI5) is already covered by the existing Card alias; its placement is a
   structure decision, not a new term.
 
