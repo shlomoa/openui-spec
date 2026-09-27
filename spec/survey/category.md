@@ -27,7 +27,9 @@ one of four actions on a specific category or subcategory.
   [Qt Widgets](qt/category.md#categories)), their architecture proposals, and the Qt
   [proposed extension tree](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#proposed-extension-tree),
   the only survey output that proposes taxonomy subcategories.
-- **Status:** approved (2026-09-27), not yet applied. It answers plan question Q4 and
+- **Status:** approved (2026-09-27), not yet applied: the heading changes, the Behaviors
+  section, the 21 subcategories and the merge, then retirement, of the UI element taxonomy
+  (appendix A). It answers plan question Q4 and
   categorization workstream W3 task 13, and is applied with terminology step 9.3 in the
   [v1 publish plan](specui_v1_publish_plan.md#plan-completion).
 - **Naming rule used:** the approved [canonical-term rule](terminology.md#appendix-a-canonical-term-rule),
@@ -294,12 +296,3 @@ the [HTML categories](html5/category.md#subcategories).
 | 6.11 Drag and drop                                                                                                                               | Behaviors (Drag and drop)                                                                                                                                                                                    |
 | 6.12 The popover attribute                                                                                                                       | Container: Overlays and sheets                                                                                                                                                                               |
 | [15 Rendering](html5/inventory/CATEGORIES.md#rendering): 15.5 Widgets                                                                            | Presentation: Visual appearance and presentation rules                                                                                                                                                       |
-
-## Decisions needed
-
-| #   | Decision                                                                                                                                   | Status                        | Plan item       |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------- | --------------- |
-| 1   | Change the section headings of the generic UI taxonomy to the taxonomy mapping names, and make its seven subheadings subcategories (C1–C6) | Approved (2026-09-27)         | W1 step 9.3     |
-| 2   | Add the Behaviors section (A1)                                                                                                             | Approved (2026-09-27)         | Q4, W3 task 13  |
-| 3   | Add the 21 subcategories A2–A22 with their member lists, and the placements in 4.6                                                         | Approved (2026-09-27)         | Q4, W3 task 13  |
-| 4   | Keep, retire or merge the UI element taxonomy (appendix A)                                                                                 | Approved — merge, then retire | Q4 sub-question |
