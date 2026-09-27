@@ -22,7 +22,7 @@ specific term.
   row, the kept terms, the terms not added and the canonical-term rule. Rows A71 and A72
   name the two new scopes of the [structure change](structure_change.md#add).
   It answers terminology workstream W1, tasks 8 and 9, and plan questions Q5 and Q10 in the
-  [v1 publish plan](specui_v1_publish_plan.md#plan-completion).
+  [v1 publish plan](specui_v1_publish_plan.md#tasks).
 - **HTML citations:** Source URLs cite the living HTML Standard. The HTML survey's commit
   snapshot is only its pinned research baseline ([BASELINE.md](html5/inventory/BASELINE.md#survey-baseline-and-scope));
   the snapshot page itself says it must not be cited as authoritative.

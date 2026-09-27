@@ -31,7 +31,7 @@ one of four actions on a specific category or subcategory.
   section, the 21 subcategories and the merge, then retirement, of the UI element taxonomy
   (appendix A). It answers plan question Q4 and
   categorization workstream W3 task 13, and is applied with terminology step 9.3 in the
-  [v1 publish plan](specui_v1_publish_plan.md#plan-completion).
+  [v1 publish plan](specui_v1_publish_plan.md#tasks).
 - **Naming rule used:** the approved [canonical-term rule](terminology.md#appendix-a-canonical-term-rule),
   applied to category names: keep an existing OpenUI name (a scope, the taxonomy mapping
   or the UI element taxonomy); otherwise use the Qt survey's grouping name, which is
