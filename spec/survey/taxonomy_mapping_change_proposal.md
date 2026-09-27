@@ -24,7 +24,7 @@ recommendation is one of four actions on a specific mapping row.
   [OpenUI5](openui5/taxonomy_mapping.md#summary), [Qt Widgets](qt/taxonomy_mapping.md#summary))
   and the canonical scope tree. [Appendix A](#appendix-a-what-each-survey-mapping-contributes)
   lists what each survey mapping contributes.
-- **Status:** proposal for review. Nothing is applied. It is applied with terminology step
+- **Status:** approved (2026-09-27), not yet applied. It is applied with terminology step
   9.2 in the [v1 publish plan](specui_v1_publish_plan.md#w1-terminology).
 - **Naming rule used:** the approved [canonical-term rule](terminology.md#appendix-a-canonical-term-rule).
   New entries take the name of their existing scope object (rule 1).
@@ -137,8 +137,8 @@ it.
 
 ## Decisions needed
 
-| #   | Decision                                                                                                | Status           | Plan item               |
-| --- | ------------------------------------------------------------------------------------------------------- | ---------------- | ----------------------- |
-| 1   | Change the abstraction level of Drag handle and Resize handle, and the notes of Menu and Window (C1–C4) | Needs a decision | W1 step 9.2             |
-| 2   | Add the twelve entries for scope objects that have none (A1–A12), with their section and subcategory    | Needs a decision | W1 step 9.2, W3 task 14 |
-| 3   | Leave favicon.ico, index.html and Native without a taxonomy entry                                       | Needs a decision | W3 task 14              |
+| #   | Decision                                                                                                | Status                | Plan item               |
+| --- | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------- |
+| 1   | Change the abstraction level of Drag handle and Resize handle, and the notes of Menu and Window (C1–C4) | Approved (2026-09-27) | W1 step 9.2             |
+| 2   | Add the twelve entries for scope objects that have none (A1–A12), with their section and subcategory    | Approved (2026-09-27) | W1 step 9.2, W3 task 14 |
+| 3   | Leave favicon.ico, index.html and Native without a taxonomy entry                                       | Approved (2026-09-27) | W3 task 14              |
