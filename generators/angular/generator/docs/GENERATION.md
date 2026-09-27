@@ -32,19 +32,19 @@ generator fixtures and Angular target models — is a derived artifact that must
 not replace or redefine the golden source.
 
 The repository-local converter for the generated catalog lives in
-`spec/to_json/`. After changing scope prose or converter-relevant structure,
+`spec/bin/to_json/`. After changing scope prose or converter-relevant structure,
 regenerate the root catalog with:
 
 Windows (PowerShell):
 
 ```powershell
-.\.venv\Scripts\python -m spec.to_json --spec-dir spec --output .\spec\openui.json
+.\.venv\Scripts\python -m spec.bin.to_json --spec-dir spec --output .\spec\openui.json
 ```
 
 Linux or macOS (Bash):
 
 ```bash
-./.venv/bin/python -m spec.to_json --spec-dir spec --output ./spec/openui.json
+./.venv/bin/python -m spec.bin.to_json --spec-dir spec --output ./spec/openui.json
 ```
 
 The generated catalog keeps `attrs.scopeDocument` values relative to `spec/`,
@@ -85,10 +85,10 @@ OpenUI grammar and catalog, build a `DataModelApplication`, map that data model
 to an Angular project model, and reconcile generated files into an existing
 Angular workspace.
 
-The repository also has a Python scope catalog converter in `spec/to_json/`:
+The repository also has a Python scope catalog converter in `spec/bin/to_json/`:
 
 ```text
-spec/to_json/
+spec/bin/to_json/
 ├─ __init__.py
 ├─ __main__.py
 └─ converter.py
@@ -321,7 +321,7 @@ Avoid shortcuts that collapse these layers. For example, do not add a new OpenUI
 concept by string-building Angular output directly from raw source JSON. Instead:
 
 1. Update the golden source in `spec/README.md` and `spec/`.
-2. Regenerate `spec/openui.json` with `python -m spec.to_json`.
+2. Regenerate `spec/openui.json` with `python -m spec.bin.to_json`.
 3. Validate the golden source, generated catalog, and schema constraints.
 4. Adapt the native OpenUI source into `DataModelApplication`.
 5. Map the data model into Angular model fields.
@@ -547,7 +547,7 @@ the default and only supported target.
 The smallest useful generator slice should prove the documented `input.json`
 contract end to end:
 
-1. Keep regenerating `spec/openui.json` from `spec/to_json` after scope changes.
+1. Keep regenerating `spec/openui.json` from `spec/bin/to_json` after scope changes.
 2. Keep `spec/openui.schema.json` synchronized with the native `version` / `id` /
    `type` / `attrs` / `children` shape.
 3. Keep Python validation that checks `spec/openui.json`, schema rules,
@@ -768,7 +768,7 @@ The root Python test-module matrix lives in
 
 - Do not treat generator fixtures or `spec/openui.json` as hand-authored source.
 - Do not hand-edit generated catalog changes; update scope prose or converter
-  logic, then rerun `python -m spec.to_json`.
+  logic, then rerun `python -m spec.bin.to_json`.
 - Do not generate Angular files directly from raw `spec/openui.json` or `input.json`
   nodes.
 - Do not bypass the golden source → native extraction → data model → Angular
