@@ -2,17 +2,11 @@
 
 This document maps the abstract vocabulary in `docs/generic-ui-taxonomy.md` to the
 canonical scope objects under `spec/scopes/`. It keeps taxonomy aliases explicit while
-leaving detailed definitions in the [glossary](../README.md#glossary) and concrete
+leaving detailed definitions in the [glossary](scope.md#glossary) and concrete
 contracts in each linked scope file.
 
-Abstraction levels:
-
-- **Existing object** — the taxonomy entry already has a concrete scope object.
-- **Alias** — the taxonomy entry is a synonym, variant, or narrower term for a linked
-  scope object.
-- **Grouped leaf** — the taxonomy entry belongs to a new family-level leaf scope.
-- **Folder abstraction** — the taxonomy entry is a cross-cutting notion represented by
-  a folder-level scope instead of a concrete UI object leaf.
+The abstraction levels used in the tables below are defined in the
+[glossary](scope.md#abstraction-levels).
 
 ## Input elements
 
