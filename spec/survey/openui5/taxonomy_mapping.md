@@ -10,7 +10,7 @@ Scope paths are relative to `spec/scopes/`. The mapping records survey proposals
 
 ## Summary
 
-424 source entries map to 31 OpenUI scopes. Classification totals: Matched 424. The [class-by-class review](#proposed-by-the-class-by-class-review) proposes 150 more rows, from the unclustered leftovers, on 31 scopes.
+424 source entries map to 31 OpenUI scopes. Classification totals: Matched 424. The [class-by-class review](#proposed-by-the-class-by-class-review) proposes 156 more rows, from the unclustered leftovers, on 32 scopes.
 
 | OpenUI scope                                                                                                  | Primary entries | All mentions |
 | ------------------------------------------------------------------------------------------------------------- | --------------: | -----------: |
@@ -631,7 +631,7 @@ The first scope listed is the primary destination used for grouping; further sco
 
 ## Proposed by the class-by-class review
 
-These 150 classes were unclustered leftovers of Phase B. The class-by-class review in [opens.md](opens.md#o3-261-unclustered-classes) maps them to existing OpenUI terms, as UI objects, parts of UI objects or behaviors. They are proposals at survey level, not Phase B matches, so their classification is _Proposed (review)_. Rows are grouped by the scope that holds the OpenUI term; approved terms without a scope file yet are grouped under their folder.
+These 156 classes were unclustered leftovers of Phase B. The class-by-class review in [opens.md](opens.md#o3-261-unclustered-classes) maps them to existing OpenUI terms, as UI objects, parts of UI objects or behaviors. They are proposals at survey level, not Phase B matches, so their classification is _Proposed (review)_. Rows are grouped by the scope that holds the OpenUI term; approved terms without a scope file yet are grouped under their folder.
 
 ### Proposed: Application/index_html.scope.md
 
@@ -733,9 +733,11 @@ These 150 classes were unclustered leftovers of Phase B. The class-by-class revi
 
 ### Proposed: Containers/surface_containers.scope.md
 
-| Source entry        | Abstract concept | Other OpenUI scopes | Classification                              | Source row                                            |
-| ------------------- | ---------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
-| sap.m.ContentConfig | Tile             | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| Source entry                                      | Abstract concept                 | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------------------------------------- | -------------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.f.HeroBanner                                  | Hero banner (Surface containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.f.gen.ui5.webcomponents_fiori.dist.HeroBanner | Hero banner (Surface containers) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.ContentConfig                               | Tile                             | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
 
 ### Proposed: Containers/tabs.scope.md
 
@@ -809,6 +811,12 @@ These 150 classes were unclustered leftovers of Phase B. The class-by-class revi
 | sap.ui.core.search.OpenSearchProvider                     | Search field with Text completion (Input assistance) | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
 | sap.ui.core.search.SearchProvider                         | Search field with Text completion (Input assistance) | —                   | Proposed (review): part of an approved term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
 
+### Proposed: Interaction/scope.md
+
+| Source entry        | Abstract concept              | Other OpenUI scopes | Classification                              | Source row                                            |
+| ------------------- | ----------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.m.PullToRefresh | Pull to refresh (Interaction) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+
 ### Proposed: Pages/scope.md
 
 | Source entry                         | Abstract concept | Other OpenUI scopes | Classification                              | Source row                                            |
@@ -865,11 +873,14 @@ These 150 classes were unclustered leftovers of Phase B. The class-by-class revi
 
 ### Proposed: Widgets/feedback_widgets.scope.md
 
-| Source entry                              | Abstract concept                   | Other OpenUI scopes | Classification                              | Source row                                            |
-| ----------------------------------------- | ---------------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
-| sap.ui.core.InvisibleMessage              | Narration (Feedback widgets)       | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
-| sap.ui.core.Message                       | Alert (Feedback widgets)           | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
-| sap.ui.core.fieldhelp.FieldHelpCustomData | Contextual help (Feedback widgets) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| Source entry                                              | Abstract concept                       | Other OpenUI scopes | Classification                              | Source row                                            |
+| --------------------------------------------------------- | -------------------------------------- | ------------------- | ------------------------------------------- | ----------------------------------------------------- |
+| sap.f.IllustratedMessage                                  | Illustrated message (Feedback widgets) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.f.gen.ui5.webcomponents_fiori.dist.IllustratedMessage | Illustrated message (Feedback widgets) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.m.IllustratedMessage                                  | Illustrated message (Feedback widgets) | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.InvisibleMessage                              | Narration (Feedback widgets)           | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.Message                                       | Alert (Feedback widgets)               | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
+| sap.ui.core.fieldhelp.FieldHelpCustomData                 | Contextual help (Feedback widgets)     | —                   | Proposed (review): matches an existing term | [Appendix A](opens.md#appendix-a-unclustered-classes) |
 
 ### Proposed: Widgets/list.scope.md
 

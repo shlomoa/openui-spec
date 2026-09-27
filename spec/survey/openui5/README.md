@@ -16,7 +16,7 @@ canonical scope tree, taxonomy mapping, evidence register or generated catalog.
 | [SUMMARY.md](SUMMARY.md#baseline-and-scope)                                     | Survey summary: baseline, steps, findings, decisions and reasoning                                     |
 | [PLAN.md](PLAN.md#libraries)                                                    | The plan executed, with the status of each phase                                                       |
 | [category.md](category.md#categories)                                           | Classification under the OpenUI top-level scopes, with counts                                          |
-| [taxonomy_mapping.md](taxonomy_mapping.md#summary)                              | All 424 matched classes, and 150 more proposed by the review of the leftovers, mapped to OpenUI scopes |
+| [taxonomy_mapping.md](taxonomy_mapping.md#summary)                              | All 424 matched classes, and 156 more proposed by the review of the leftovers, mapped to OpenUI scopes |
 | [architecture_proposal.md](architecture_proposal.md#no-top-level-restructuring) | No top-level restructuring                                                                             |
 | [scopes_proposal.md](scopes_proposal.md#overlaps-with-other-surveys)            | 11 proposed subcategories from 257 unmatched classes                                                   |
 | [opens.md](opens.md#open-items)                                                 | Open and unresolved questions                                                                          |

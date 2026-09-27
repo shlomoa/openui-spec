@@ -16,7 +16,7 @@ The OpenUI5 survey does not define its own categories. It classifies OpenUI5 cla
 | [Views](inventory/Views.survey.md#form)                  |                       2 |                    1 |               5 |
 | [Widgets](inventory/Widgets.survey.md#chart)             |                      11 |                   11 |             142 |
 
-Totals: 1,221 primary classes from 12 core libraries at commit `5165c20`. 424 are matched to 31 of the 42 spec objects, 257 are clustered into 11 proposed subcategories, 261 are unclustered leftovers and 279 are out of scope (non-UI infrastructure). The review of the 261 leftovers maps 150 of them to existing OpenUI terms; see [opens.md](opens.md#o3-261-unclustered-classes).
+Totals: 1,221 primary classes from 12 core libraries at commit `5165c20`. 424 are matched to 31 of the 42 spec objects, 257 are clustered into 11 proposed subcategories, 261 are unclustered leftovers and 279 are out of scope (non-UI infrastructure). The review of the 261 leftovers maps 156 of them to existing OpenUI terms; see [opens.md](opens.md#o3-261-unclustered-classes).
 
 ## Subcategories
 
