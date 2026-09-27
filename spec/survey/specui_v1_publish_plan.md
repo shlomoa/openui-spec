@@ -76,24 +76,26 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W9 Validation (first, runs throughout)
 
-1. [ ] Consolidate validation infrastructure.
-   - 1.1 [x] Create a `spec/bin` folder. — **done**
-   - 1.2 [x] Move `spec/to_json` into `spec/bin`. — **done**
-   - 1.3 [ ] Move tooling tools into `spec/bin`; create a tool for each tool in tooling just like `to_json`. — **done**: `spec/bin/check_grammar_consistency/`; the guides `editing.md` and `comparison.md` stay in `spec/tooling/`.
-   - 1.4 [x] Update code, tests, and documents. — **done**
-2. [ ] Add a spec-content linter (`spec/bin/lint_spec.py`) wired into pre-commit; implement its framework first, then enable terminology-dependent rules after W1 task 7:
-   - 2.1 after W1 task 7, every leaf `*.scope.md` matches `template.scope.md` sections; — **open**: registered as `template-sections` but disabled and not implemented; implement and enable after W1 task 7 (execution order step 4);
-   - 2.2 [ ] every leaf has exactly one row in `evidence.md`; — **done** (`evidence-row`)
-   - 2.3 [ ] after W1 task 7, glossary terms are defined once; other docs link instead of redefining; — **open**: registered as `glossary-single-definition` but disabled and not implemented; implement and enable after W1 task 7 (execution order step 4);
-   - 2.4 [ ] ~~`openui.json` is up to date with the prose~~ — **done**: enforced by `check_grammar_consistency` since 2026-09-26. Framework, `--html` report and tests — **done**. *Validate:* unit tests with passing and failing fixtures. *Demo:* HTML lint report page.
-3. [ ] Add a Markdown link checker to pre-commit. *Validate:* zero broken internal links. — **done** (`spec/bin/check_links.py`)
-   - 3.1 [ ] Remove the plain-text references in `AGENTS.md` to `docs/TEST_PLAN.md` and `generators/angular/generator/docs/TDD.md`, which do not exist; the link checker checks links only, so it cannot catch them. — **open** (execution order step 1)
+1. [x] Consolidate validation infrastructure.
+   - 1.1 [x] Create a `spec/bin` folder.
+   - 1.2 [x] Move `spec/to_json` into `spec/bin`.
+   - 1.3 [x] Move tooling tools into `spec/bin`; create a tool for each tool in tooling just like `to_json`. Result: `spec/bin/check_grammar_consistency/`; the guides `editing.md` and `comparison.md` stay in `spec/tooling/`.
+   - 1.4 [x] Update code, tests, and documents.
+2. [ ] Add a spec-content linter (`spec/bin/lint_spec.py`) wired into pre-commit; implement its framework first, then enable terminology-dependent rules after W1 task 7. *Validate:* unit tests with passing and failing fixtures. *Demo:* HTML lint report page (`--html`).
+   - 2.1 [ ] after W1 task 7, every leaf `*.scope.md` matches `template.scope.md` sections. Registered as `template-sections`, disabled until implemented (execution order step 4).
+   - 2.2 [x] every leaf has exactly one row in `evidence.md` (`evidence-row`).
+   - 2.3 [ ] after W1 task 7, glossary terms are defined once; other docs link instead of redefining. Registered as `glossary-single-definition`, disabled until implemented (execution order step 4).
+   - 2.4 [x] `openui.json` is up to date with the prose; enforced by `check_grammar_consistency`.
+   - 2.5 [x] Linter framework, run by the `openui-spec-lint` pre-commit hook, with the `--html` report and unit tests.
+3. [ ] Check links and file references in the documentation. *Validate:* zero broken internal links.
+   - 3.1 [x] Add a Markdown link checker to pre-commit (`spec/bin/check_links.py`).
+   - 3.2 [ ] Remove the plain-text references in `AGENTS.md` to `docs/TEST_PLAN.md` and `generators/angular/generator/docs/TDD.md`, which do not exist; the link checker checks links only, so it cannot catch them (execution order step 1).
 
-   **Done (2026-09-27) for 1, 2 (framework and 2.2) and 3** in [PR #159](https://github.com/shlomoa/openui-spec/pull/159), merged 2026-09-27 and merged into this branch: tools moved to `spec/bin` (`python -m spec.bin.<tool>`), `lint_spec.py` with rule 2.2 and an `--html` report, and `check_links.py` in pre-commit; 9 broken internal links fixed. Still open: 2.1, 2.3 and 3.1.
+   Implemented in [PR #159](https://github.com/shlomoa/openui-spec/pull/159): tools run as `python -m spec.bin.<tool>`; the link checker fixed 9 broken internal links.
 
 ### W0 Survey consolidation
 
-4. [ ] Choose a directory structure and content for all surveys.
+4. [x] Choose a directory structure and content for all surveys.
    References in markdown files must point to an existing file in inventory folder (once created and content moved) and section.
 
    - 4.1 [x] inventory: a folder to include all the surveyed data
@@ -107,31 +109,28 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 4.8 [x] scopes_proposal.md: scopes tree architectural and content change \[optional\]
    - 4.9 [x] openui_schema_proposal.md: proposal for schema change \[optional\]
    - 4.10 [x] opens.md: open and unresolved questions / issues / directions with references \[optional\]
-   - 4.11 [ ] scopes: a folder of structure not yet decided to include the consolidated surveyed specification
 
-   **Done (2026-09-26) for 4.1–4.10** in all four surveys (`angular-material/`, `html5/`, `openui5/`, `qt/`). Each survey's original data moved unchanged into its `inventory/` folder, with relative links rewritten; `html5/inventory/inventory/` keeps the chapter files. `openui5/` has no `openui_schema_proposal.md` because that survey proposes no schema change. 4.11 is dropped (decided 2026-09-27): the consolidated outputs live in `spec/survey/`, and applying them is W1 and W3 work.
+   Applies to all four surveys (`angular-material/`, `html5/`, `openui5/`, `qt/`). Each survey's original data moved unchanged into its `inventory/` folder, with relative links rewritten; `html5/inventory/inventory/` keeps the chapter files. `openui5/` has no `openui_schema_proposal.md` because that survey proposes no schema change. A `scopes` folder for a consolidated specification was dropped (decided 2026-09-27): the consolidated outputs live in `spec/survey/`, and applying them is W1 and W3 work.
 
    **Consolidated proposals (2026-09-27):** [`terminology.md`](terminology.md#summary) (all decisions approved), [`schema_change.md`](schema_change.md#schema-change-proposal) (not needed) and [`structure_change.md`](structure_change.md#add) (two new Behaviors scopes). [`category.md`](category.md#summary) (2026-09-27) consolidates the four survey `category.md` files and is approved in full. [`taxonomy_mapping_change.md`](taxonomy_mapping_change.md#summary) (2026-09-27) consolidates the four survey `taxonomy_mapping.md` files and is approved in full. [`architecture_change.md`](architecture_change.md#summary) (2026-09-27) consolidates the four `architecture_proposal.md` files and is approved in full.
 
-5. Build `matrix.csv` by merging the four `TAXONOMY_MAPPING.md` files: concept × {HTML, WAI-ARIA, openui5, Qt, Angular Material}. Columns: name, category in that source, key properties, events, OpenUI scope. Flag each row: *same term/same meaning*, *same term/different meaning*, *different term/same meaning*, *unique*. *Validate:* script checks every catalog type appears in the matrix. *Demo:* sortable/filterable matrix web page.
-6. Reconcile the scope-extension proposals (Angular Material `proposed-scopes/`, Qt P01–P06, HTML P1–P8) into one accept / defer / reject list, de-duplicating overlaps such as `modal_interaction` and `collapsible`. *Demo:* proposal table on the matrix page.
-   **Done (2026-09-27):** the new-scope proposals are reconciled. Two new scopes are accepted in [`structure_change.md`](structure_change.md#add); every other proposed scope was remapped to an existing scope or dropped, as recorded in [`terminology.md`](terminology.md#49-terms-that-need-a-new-scope). The changes the surveys ask for in existing scopes are consolidated in [`scope_change.md`](scope_change.md#summary) (2026-09-27) and approved.
+5. [ ] Build `matrix.csv` by merging the four `TAXONOMY_MAPPING.md` files: concept × {HTML, WAI-ARIA, openui5, Qt, Angular Material}. Columns: name, category in that source, key properties, events, OpenUI scope. Flag each row: *same term/same meaning*, *same term/different meaning*, *different term/same meaning*, *unique*. *Validate:* script checks every catalog type appears in the matrix. *Demo:* sortable/filterable matrix web page.
+6. [x] Reconcile the scope-extension proposals (Angular Material `proposed-scopes/`, Qt P01–P06, HTML P1–P8) into one accept / defer / reject list, de-duplicating overlaps such as `modal_interaction` and `collapsible`. *Demo:* proposal table on the matrix page.
+   Two new scopes are accepted in [`structure_change.md`](structure_change.md#add); every other proposed scope was remapped to an existing scope or dropped, as recorded in [`terminology.md`](terminology.md#49-terms-that-need-a-new-scope). The changes the surveys ask for in existing scopes are in [`scope_change.md`](scope_change.md#summary) (approved).
 
 ### W1 Terminology
 
-7. [ ]Create a separate local terminology / vocabulary / glossary section in `scope.md` files for terms local to the current scope level:
+7. [ ] Create a separate local terminology / vocabulary / glossary section in `scope.md` files for terms local to the current scope level:
    - 7.1 [ ] Move all terminology / glossary / vocabulary definitions from `spec/README.md`, `spec/scopes/evidence.md`, `spec/scopes/taxonomy_mapping.md`, and `spec/scopes/template.scope.md` into `spec/scopes/scope.md`.
    - 7.2 [ ] Add appropriate references from the former locations to the moved content.
 8. [ ] Pick the canonical-term rule (e.g. W3C/ARIA name first, then majority across frameworks) and record it as a decision.
-   - 8.1 [ ] Collect all the terms from existing scopes and surveyed UI frameworks.
-   - 8.2 [ ] Create a canonical list of terms.
-   - 8.3 [ ] Add an alias table (canonical term → openui5 / Qt / Angular Material / ARIA names).
-   - 8.4 [ ] Catalog any conflict / duplicate / wrong aliased term.
+   - 8.1 [x] Collect all the terms from existing scopes and surveyed UI frameworks.
+   - 8.2 [x] Create a canonical list of terms.
+   - 8.3 [ ] Add an alias table (canonical term → openui5 / Qt / Angular Material / ARIA names). Built in task 9.9, with the final names.
+   - 8.4 [x] Catalog any conflict / duplicate / wrong aliased term.
 
-   **Done (2026-09-27) for 8, 8.1, 8.2 and 8.4** in [`terminology.md`](terminology.md#appendix-a-canonical-term-rule): the canonical-term rule is approved, and each term is recorded as a Change, Replace, Delete or Add. 8.3 is deferred to task 9.9, so the alias table uses the final names.
-9. [ ] Review and resolve conflicts in terminology.
-
-   **Done (2026-09-27):** [`terminology.md`](terminology.md#summary) is approved in full, including the terms not added.
+   The canonical-term rule and every term decision are in [`terminology.md`](terminology.md#appendix-a-canonical-term-rule) (approved).
+9. [ ] Review and resolve conflicts in terminology, then apply the result. The review is [`terminology.md`](terminology.md#summary) (approved in full, including the terms not added).
 
    Apply the approved terminology. These are specification changes, so they follow [`RELEASING.md`](../../RELEASING.md#schema-and-catalog-version-changes). Do task 7 first, so the glossary changes land in their final location.
    - 9.1 [ ] Glossary: add A1–A5 (Owner, Controlled element, Controlling element, Trigger, Window); apply C6 (move "component" and "UI component" from the Widget aliases to the Object aliases) and D2 (remove "widget instance" from the Element aliases); add the conflicting-meaning notes for Page, Control, Element and Grid ([appendix A](terminology.md#appendix-a-canonical-term-rule)).
@@ -146,15 +145,15 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W2 Scope
 
-10. [ ]Write the normative scope section: purpose, audience, in scope, out of scope, deferred to later editions.
+10. [ ] Write the normative scope section: purpose, audience, in scope, out of scope, deferred to later editions.
 11. [ ] Classify every catalog object and every survey concept as in / out / deferred. *Validate:* no catalog object is out of scope. *Demo:* scope map page.
 12. [ ] Split `docs/REQUIREMENTS.md` so spec requirements and generator requirements are separate.
 
 ### W3 UI categorization
 
-13. [ ] Choose the primary axis (see open questions) and define the category set with inclusion rules.
+13. [x] Choose the primary axis (see open questions) and define the category set with inclusion rules.
 
-   **Done (2026-09-27):** [`category.md`](category.md#summary) is approved: keep the nine sections, add a Behaviors section and 21 subcategories with inclusion rules and member lists. It is applied in W1 step 9.3 and W3 task 14.4.
+   Result: [`category.md`](category.md#summary) (approved): keep the nine sections, add a Behaviors section and 21 subcategories with inclusion rules and member lists. It is applied in W1 step 9.3 and W3 task 14.4.
 14. [ ] Re-map all 47 leaf scopes and all taxonomy entries to it; keep `docs/generic-ui-taxonomy.md` as an informative view of the mapping, and merge, then retire, `docs/ui-element-taxonomy.md` (decided 2026-09-27, Q4 sub-question):
     - 14.1 [ ] Merge proposal: write `spec/survey/ui_element_taxonomy_merge_proposal.md` with the same mechanism as [`terminology.md`](terminology.md#appendix-a-canonical-term-rule). For each of the about 176 abstract types that match no taxonomy entry or approved term, record Change, Replace, Delete or Add with section, subcategory, scope, abstraction level, evidence and source URL, or list it under "Not added" with the reason. Types for Accessibility wait on Q13. Depends on the decisions of task 13.
     - 14.2 [ ] Approve the merge proposal, decision by decision.
@@ -193,11 +192,6 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 30. [ ] Publish to Read the Docs. *Demo:* the site itself.
 31. [ ] After W6 task 27 and W8 task 35, notify downstream: angular-django2 (#98/#103 TS parser) and django-angular3.
 
-28. [ ] Update README, REQUIREMENTS, CONTRIBUTING, RELEASING, AGENTS.md / CLAUDE.md / GEMINI.md, `.github/copilot-instructions.md`, agent files under `.github/agents/`.
-29. [ ] Write CHANGELOG `1.0.0` with a 0.3 → 1.0 migration guide.
-30. [ ] Publish to Read the Docs. *Demo:* the site itself.
-31. [ ] After W6 task 27 and W8 task 35, notify downstream: angular-django2 (#98/#103 TS parser) and django-angular3.
-
 ### W8 Spec utilities
 
 32. [ ] Create a shared conformance suite (`spec/conformance/`: valid + invalid documents with expected diagnostics); create its fixture structure early and finalize the suite after W5 task 23 freezes the grammar and schema.
@@ -211,7 +205,7 @@ Five GitHub milestones, each ending with a tagged release and a visible web page
 
 | Milestone | Release | Tasks | Exit criterion | Visual demo |
 | --- | --- | --- | --- | --- |
-| M1 Guard rails | `0.4.0` | 1–3 | CI green on Linux and Windows with spec-content lint (1, 2.2 and 3 merged in PR #159; 2.1 and 2.3 wait on W1 task 7) | Lint report page |
+| M1 Guard rails | `0.4.0` | 1–3 | CI green on Linux and Windows with spec-content lint | Lint report page |
 | M2 Survey consolidated | `0.5.0` | 4–6 | Matrix covers all 82 catalog types | Survey matrix page |
 | M3 Foundations agreed | `0.6.0` | 7–19 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
 | M4 Language frozen | `0.7.0` | 20–24, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
@@ -225,11 +219,11 @@ The execution stack, top first. A step starts when the steps it depends on are d
 
 | # | Step | Plan tasks | Depends on | Status |
 | --- | --- | --- | --- | --- |
-| 1 | Guard rails: tooling folder, spec-content lint framework, link checker | W9 1, 2 (framework, 2.2), 3 | — | Done in [PR #159](https://github.com/shlomoa/openui-spec/pull/159), merged |
-| 1 | Remove stale file references from `AGENTS.md` | W9 3.1 | — | Open |
-| 1 | Category decisions in [`category.md`](category.md#summary) | W3 13 | — | Done (2026-09-27) |
+| 1 | Guard rails: tooling folder, spec-content lint framework, link checker | W9 1, 2.2, 2.4, 2.5, 3.1 | — | Done |
+| 1 | Remove stale file references from `AGENTS.md` | W9 3.2 | — | Open |
+| 1 | Category decisions in [`category.md`](category.md#summary) | W3 13 | — | Done |
 | 1 | Cross-source matrix | W0 5 | — | Open |
-| 1 | Scope reconciliation | W0 6 | — | Done (2026-09-27) |
+| 1 | Scope reconciliation | W0 6 | — | Done |
 | 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Open |
 | 2 | Move the glossary to its final location | W1 7 | — | Open |
 | 3 | Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, two new Behaviors scopes, Modal overlay decision, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Steps 2 | Open |
