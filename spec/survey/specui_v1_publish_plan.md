@@ -41,10 +41,10 @@ Re-checked on 2026-09-26 against `main` (19 commits after the first draft). The 
 | Scope | One-line purpose in `spec/README.md` and `docs/REQUIREMENTS.md` | No explicit in/out list. Qt and HTML surveys already defer host-shell integration, browser internals, storage, workers |
 | Categorization (*changed*) | 11 top-level scopes; purpose taxonomy (`docs/generic-ui-taxonomy.md`); 15-category `docs/ui-element-taxonomy.md`; openui5 7-category classification key. Qt and HTML proposals both recommend: keep the scope tree + purpose taxonomy as linked views, extend in place, no new tree | Decided in [`category_change_proposal.md`](category_change_proposal.md#decisions-needed), not yet applied; `ui-element-taxonomy.md` to be merged, then retired (W3 task 14) |
 | Structure | `spec/README.md` mixes glossary, artifact roles, format, grammar, incremental generation | No normative/informative split; generator content inside the spec |
-| Language (*changed*) | `EBNF.txt` declared authoritative; JSON Schema is a projection; `spec/tooling/check_grammar_consistency.py` enforces EBNF ↔ schema ↔ README ↔ catalog in pre-commit. 0.3.0 added same-document element references (quoted ids in Uses attrs) | Still `string \| null` values and `[x]` / `(x)` keys; no data-binding, event-payload or i18n rules |
+| Language (*changed*) | `EBNF.txt` declared authoritative; JSON Schema is a projection; `spec/bin/check_grammar_consistency` (moved from `spec/tooling/` by PR #159) enforces EBNF ↔ schema ↔ README ↔ catalog in pre-commit. 0.3.0 added same-document element references (quoted ids in Uses attrs) | Still `string \| null` values and `[x]` / `(x)` keys; no data-binding, event-payload or i18n rules |
 | Catalog (*changed*) | 47 leaf `*.scope.md` files; 82 distinct type literals; new `Route`, `NavItem`, `NavGroup`, `ToolBar`, `ToolBarRow`, `ToolAction` contracts | Many leaves still Purpose-only; evidence register does not yet cite the survey |
 | Utilities | Python: `openui_spec`, `compare_openui_spec`, `to_json`, TatSu parser, grammar consistency checker. TS: `OpenUiJson`, `ng-openui-spec` CLI (ajv) | No shared conformance suite; no object model beyond the JSON tree |
-| Validation | pre-commit (prettier, markdownlint, ruff, yamllint, check-json, grammar/catalog consistency); unittest; CI on Ubuntu + Windows | No scope-template / evidence / glossary-link lint |
+| Validation | pre-commit (prettier, markdownlint, ruff, yamllint, check-json, grammar/catalog consistency); unittest; CI on Ubuntu + Windows | Evidence-row lint and internal link check exist (PR #159); scope-template and glossary lint rules (W9 2.1, 2.3) wait on W1 task 7 |
 | Visibility | `generated-examples` Angular app with screenshots; Read the Docs via mkdocs | No single published page for the spec itself |
 
 ## Workstreams
@@ -91,18 +91,19 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 ### W9 Validation (first, runs throughout)
 
 1. Consolidate validation infrastructure.
-   - 1.1 Create a `spec/bin` folder.
-   - 1.2 Move `spec/to_json` into `spec/bin`.
-   - 1.3 Move tooling tools into `spec/bin`; create a tool for each tool in tooling just like `to_json`.
-   - 1.4 Update code, tests, and documents.
+   - 1.1 Create a `spec/bin` folder. — **done**
+   - 1.2 Move `spec/to_json` into `spec/bin`. — **done**
+   - 1.3 Move tooling tools into `spec/bin`; create a tool for each tool in tooling just like `to_json`. — **done**: `spec/bin/check_grammar_consistency/`; the guides `editing.md` and `comparison.md` stay in `spec/tooling/`.
+   - 1.4 Update code, tests, and documents. — **done**
 2. Add a spec-content linter (`spec/bin/lint_spec.py`) wired into pre-commit; implement its framework first, then enable terminology-dependent rules after W1 task 7:
-   - 2.1 after W1 task 7, every leaf `*.scope.md` matches `template.scope.md` sections;
-   - 2.2 every leaf has exactly one row in `evidence.md`;
-   - 2.3 after W1 task 7, glossary terms are defined once; other docs link instead of redefining;
-   - 2.4 ~~`openui.json` is up to date with the prose~~ — **done**: enforced by `check_grammar_consistency.py` since 2026-09-26. *Validate:* unit tests with passing and failing fixtures. *Demo:* HTML lint report page.
-3. Add a Markdown link checker to pre-commit. *Validate:* zero broken internal links.
+   - 2.1 after W1 task 7, every leaf `*.scope.md` matches `template.scope.md` sections; — **open**: registered as `template-sections` but disabled and not implemented; implement and enable after W1 task 7 (execution order step 4);
+   - 2.2 every leaf has exactly one row in `evidence.md`; — **done** (`evidence-row`)
+   - 2.3 after W1 task 7, glossary terms are defined once; other docs link instead of redefining; — **open**: registered as `glossary-single-definition` but disabled and not implemented; implement and enable after W1 task 7 (execution order step 4);
+   - 2.4 ~~`openui.json` is up to date with the prose~~ — **done**: enforced by `check_grammar_consistency` since 2026-09-26. Framework, `--html` report and tests — **done**. *Validate:* unit tests with passing and failing fixtures. *Demo:* HTML lint report page.
+3. Add a Markdown link checker to pre-commit. *Validate:* zero broken internal links. — **done** (`spec/bin/check_links.py`)
+   - 3.1 Remove the plain-text references in `AGENTS.md` to `docs/TEST_PLAN.md` and `generators/angular/generator/docs/TDD.md`, which do not exist; the link checker checks links only, so it cannot catch them. — **open** (execution order step 1)
 
-   **Done (2026-09-27) for 1, 2 (framework and 2.2) and 3** in [PR #159](https://github.com/shlomoa/openui-spec/pull/159), merged 2026-09-27: tools moved to `spec/bin` (`python -m spec.bin.<tool>`), `lint_spec.py` with rule 2.2 and an `--html` report, and `check_links.py` in pre-commit. Rules 2.1 and 2.3 are registered but disabled until W1 task 7.
+   **Done (2026-09-27) for 1, 2 (framework and 2.2) and 3** in [PR #159](https://github.com/shlomoa/openui-spec/pull/159), merged 2026-09-27 and merged into this branch: tools moved to `spec/bin` (`python -m spec.bin.<tool>`), `lint_spec.py` with rule 2.2 and an `--html` report, and `check_links.py` in pre-commit; 9 broken internal links fixed. Still open: 2.1, 2.3 and 3.1.
 
 ### W0 Survey consolidation
 
@@ -218,7 +219,7 @@ Five GitHub milestones, each ending with a tagged release and a visible web page
 
 | Milestone | Release | Tasks | Exit criterion | Visual demo |
 | --- | --- | --- | --- | --- |
-| M1 Guard rails | `0.4.0` | 1–3 | CI green on Linux and Windows with spec-content lint | Lint report page |
+| M1 Guard rails | `0.4.0` | 1–3 | CI green on Linux and Windows with spec-content lint (1, 2.2 and 3 merged in PR #159; 2.1 and 2.3 wait on W1 task 7) | Lint report page |
 | M2 Survey consolidated | `0.5.0` | 4–6 | Matrix covers all 82 catalog types | Survey matrix page |
 | M3 Foundations agreed | `0.6.0` | 7–19 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
 | M4 Language frozen | `0.7.0` | 20–24, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
@@ -233,6 +234,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | # | Step | Plan tasks | Depends on | Status |
 | --- | --- | --- | --- | --- |
 | 1 | Guard rails: tooling folder, spec-content lint framework, link checker | W9 1, 2 (framework, 2.2), 3 | — | Done in [PR #159](https://github.com/shlomoa/openui-spec/pull/159), merged |
+| 1 | Remove stale file references from `AGENTS.md` | W9 3.1 | — | Open |
 | 1 | Category decisions 1–3 of [`category_change_proposal.md`](category_change_proposal.md#decisions-needed) | W3 13 | — | Done (2026-09-27) |
 | 1 | Cross-source matrix and the rest of the scope reconciliation | W0 5, 6 | — | Open (6 partly done) |
 | 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Open |
@@ -240,7 +242,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 3 | Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, two new Behaviors scopes, Modal overlay decision | W1 9.1–9.5; W3 14.3–14.5 | Steps 2 | Open |
 | 4 | Regenerate, version and validate; release `0.x.0` | W1 9.6, 9.7; W3 14.7 | Step 3 | Open |
 | 4 | Retire `docs/ui-element-taxonomy.md` | W3 14.6 | Step 3 | Open |
-| 4 | Enable the terminology lint rules | W9 2.1, 2.3 | W1 7 | Open |
+| 4 | Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Open |
 | 5 | Alias table from the survey mappings, with the final names | W1 9.8 (8.3) | Steps 3, W0 5 | Open |
 | 5 | Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | W1 9 | Open |
 | 6 | Scope statement and in / out classification; answers Q9 and Q13 | W2 10–12 | W1 9, W0 6 | Open |
