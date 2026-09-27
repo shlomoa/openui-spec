@@ -5,11 +5,8 @@ Each leaf `*.scope.md` under `scopes/` has exactly one entry recording the
 approved source(s) that authorize its enrichment against the
 [leaf scope template](scope.md).
 
-Source kinds: requirement · `spec/README.md` rule · explicit decision · HTML
-standard primitive · external framework example. HTML primitives and
-`spec/README.md` rules are technology-neutral and recorded as the actual
-contract; framework examples (e.g., Angular Material) are reference patterns
-only.
+The source kinds used in the Source column are defined in the
+[glossary](scope.md#source-kinds).
 
 | Leaf scope                                          | Source                                                                                                                                     | Citation                                                                                                                            | Authorizes                                                                                                                                           |
 | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |

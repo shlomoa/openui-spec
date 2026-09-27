@@ -11,9 +11,9 @@ frameworks. The roles of `input.json`, `spec/openui.schema.json`, and
 `spec/openui.json` are defined once in
 [`spec/README.md` § Specification artifacts: grammar vs. catalog](../spec/README.md#specification-artifacts-grammar-vs-catalog).
 Shared vocabulary, aliases, and cross-framework term meanings are defined once in
-[`spec/README.md` § Glossary](../spec/README.md#glossary).
+[`spec/scopes/scope.md` § Glossary](../spec/scopes/scope.md#glossary).
 Concrete document type membership and instance flexibility follow the
-[`Known object type`](../spec/README.md#known-object-type) contract defined
+[`Known object type`](../spec/scopes/scope.md#known-object-type) contract defined
 there; requirements and implementations must not introduce parallel alias or
 per-type validation contracts.
 

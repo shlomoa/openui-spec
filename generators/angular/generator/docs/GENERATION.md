@@ -186,7 +186,7 @@ Concrete `input.json` validation should verify app documents against the catalog
 - concrete app nodes are not required to carry `attrs.scopeDocument`.
 
 The normative membership and instance-flexibility contract is the
-[`Known object type`](../../../../spec/README.md#known-object-type) glossary
+[`Known object type`](../../../../spec/scopes/scope.md#known-object-type) glossary
 entry. Angular selectors and generated identifiers are target implementation
 details, not OpenUI document types.
 

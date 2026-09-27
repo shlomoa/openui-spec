@@ -143,7 +143,7 @@ repository root with the virtual-environment Python (`python -m <module>`):
 `spec/EBNF.txt` is the source of truth for the OpenUI document format, while
 `spec/scopes/` is the source of truth for catalog content. The schema, examples,
 and generated catalog are checked projections or artifacts of those sources.
-Shared vocabulary is defined in the [spec glossary](spec/README.md#glossary);
+Shared vocabulary is defined in the [spec glossary](spec/scopes/scope.md#glossary);
 tests and docs should reference that vocabulary instead of duplicating
 definitions.
 
