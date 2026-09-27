@@ -48,7 +48,7 @@ repos:
         name: OpenUI spec-content lint
         entry: python -m spec.bin.lint_spec
         language: python
-        files: ^spec/(scopes/|bin/lint_spec\.py$)
+        files: ^spec/(scopes/|bin/lint_spec\.py$|(?!survey/).*\.md$)
         pass_filenames: false
       - id: markdown-internal-links
         name: Markdown internal links

@@ -81,10 +81,10 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 1.2 [x] Move `spec/to_json` into `spec/bin`.
    - 1.3 [x] Move tooling tools into `spec/bin`; create a tool for each tool in tooling just like `to_json`. Result: `spec/bin/check_grammar_consistency/`; the guides `editing.md` and `comparison.md` stay in `spec/tooling/`.
    - 1.4 [x] Update code, tests, and documents.
-2. [ ] Add a spec-content linter (`spec/bin/lint_spec.py`) wired into pre-commit; implement its framework first, then enable terminology-dependent rules after W1 task 7. *Validate:* unit tests with passing and failing fixtures. *Demo:* HTML lint report page (`--html`).
-   - 2.1 [ ] after W1 task 7, every leaf `*.scope.md` matches `template.scope.md` sections. Registered as `template-sections`, disabled until implemented (execution order step 4).
+2. [x] Add a spec-content linter (`spec/bin/lint_spec.py`) wired into pre-commit; implement its framework first, then enable terminology-dependent rules after W1 task 7. *Validate:* unit tests with passing and failing fixtures. *Demo:* HTML lint report page (`--html`).
+   - 2.1 [x] every leaf `*.scope.md` has the `template.scope.md` sections, in order; a leaf may omit only the sections the template marks "Omit the whole section" (`template-sections`).
    - 2.2 [x] every leaf has exactly one row in `evidence.md` (`evidence-row`).
-   - 2.3 [ ] after W1 task 7, glossary terms are defined once; other docs link instead of redefining. Registered as `glossary-single-definition`, disabled until implemented (execution order step 4).
+   - 2.3 [x] glossary terms are defined once in `spec/scopes/scope.md#glossary`, and no other spec document (outside `spec/survey/`) redefines one in glossary form (`glossary-single-definition`).
    - 2.4 [x] `openui.json` is up to date with the prose; enforced by `check_grammar_consistency`.
    - 2.5 [x] Linter framework, run by the `openui-spec-lint` pre-commit hook, with the `--html` report and unit tests.
 3. [x] Check links and file references in the documentation. *Validate:* zero broken internal links.
@@ -141,9 +141,16 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 9.4 [ ] New scopes: create `Behaviors/input_assistance.scope.md` and `Behaviors/viewport_and_focus_control.scope.md` from `template.scope.md`, list them in `Behaviors/scope.md`, and add one row each to `spec/scopes/evidence.md`.
    - 9.5 [ ] Decide whether Modal overlay, moved to Behaviors by C4, needs its own scope file or is covered by an existing leaf.
    - 9.6 [ ] Scope contracts: apply [`scope_change.md`](scope_change.md#summary) in the same pass: the Purpose texts, the behavior target references and the Validation notes rules. Apply [`architecture_change.md`](architecture_change.md#summary) with it: the Behaviors folder description, the Boundaries rules of the folder scopes and the tree rules in `spec/scopes/scope.md`.
-   - 9.7 [ ] Regenerate `spec/openui.json`, bump `SCHEMA_VERSION` and the package versions, and update examples, fixtures and `CHANGELOG.md`.
+   - 9.7 [ ] Regenerate `spec/openui.json`, bump `SCHEMA_VERSION` and the package versions, and update the fixtures and `CHANGELOG.md`. The examples are tasks 9.10–9.12.
    - 9.8 [ ] Validate: pre-commit, unit tests, `mkdocs build --strict` and the npm tests.
    - 9.9 [ ] Build the alias table (task 8.3) from the survey `taxonomy_mapping.md` files, using the final names.
+   - 9.10 [ ] Generate the examples for every new addition with the [Spec JSON File Generator](../../.github/agents/spec-json-file-generator.agent.md) agent, using the Add rows of the consolidated files as its input: [`terminology.md`](terminology.md#4-add), [`taxonomy_mapping_change.md`](taxonomy_mapping_change.md#4-add), [`structure_change.md`](structure_change.md#add) and the approved rows of [`ui_element_taxonomy_merge_proposal.md`](ui_element_taxonomy_merge_proposal.md#4-add). Each row gives the term, its scope and its level; the evidence it links to gives the attribute values and the child composition. The output:
+     - a leaf example for each new scope (`Behaviors/input_assistance.example.json`, `Behaviors/viewport_and_focus_control.example.json`), their entries in `Behaviors/scope.example.json` and the index in `spec/examples/README.md`;
+     - for each Alias and Grouped leaf addition, a node in its scope's example, with an id derived from the term (for example `highlightedText`) and the scope's catalog type;
+     - for the merge additions (Menu item, Date and time field, Captions), the same, once approved in W3 14.2.
+     Glossary-only terms (terminology A1–A5) get no example.
+   - 9.11 [ ] Regenerate the existing examples that the scope changes affect, with the same agent: behavior targets become references to the controlled element ([`scope_change.md`](scope_change.md#2-replace), R1), and each example meets the new Validation notes ([`scope_change.md`](scope_change.md#4-add), A1–A9).
+   - 9.12 [ ] Validate: add a test that reads the same Add rows and checks that each addition with a scope is shown in that scope's example (a node whose id matches the term), then run the examples tests (EBNF, catalog type literals, one example per leaf and per folder). *Demo:* the new examples in the `generated-examples` app, with screenshots.
 
 ### W2 Scope
 
@@ -229,9 +236,9 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Open |
 | 2 | Move the glossary to its final location | W1 7 | — | Done |
 | 3 | Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, two new Behaviors scopes, Modal overlay decision, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Steps 2 | Open |
-| 4 | Regenerate, version and validate; release `0.x.0` | W1 9.7, 9.8; W3 14.7 | Step 3 | Open |
+| 4 | Regenerate and version; generate the examples for the new additions from the consolidated data; validate; release `0.x.0` | W1 9.7, 9.10–9.12, 9.8; W3 14.7, in this order | Step 3 | Open |
 | 4 | Retire `docs/ui-element-taxonomy.md` | W3 14.6 | Step 3 | Open |
-| 4 | Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Open |
+| 4 | Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Done |
 | 5 | Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 3 | Open |
 | 5 | Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | W1 9 | Open |
 | 6 | Scope statement and in / out classification; answers Q9 and Q13 | W2 10–12 | W1 9, W0 6 | Open |
