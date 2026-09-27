@@ -600,7 +600,7 @@ unclustered leftovers named for future spot-review, 279 out of scope.
 proposals in `_taxonomy_findings.md` are recommendations awaiting your
 review/decision, not applied changes — nothing here has touched
 `taxonomy_mapping.md` or any `scope.md`. `TERMINOLOGY_PROPOSAL.md`
-(Standalone/Host-bound vocabulary) also remains open, independent of
+(Standalone/Controlling element vocabulary) also remains open, independent of
 Phase C. Next step is yours: review the findings and decide which
 proposals (if any) to fold into the taxonomy, or ask for a fresh pass
 over the 261 unclustered leftovers.

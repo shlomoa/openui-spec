@@ -201,7 +201,7 @@ and the [structure change proposal](structure_change_proposal.md) creates none.
 
 ### Not added
 
-- **Standalone** and **Host-bound** (OpenUI5 terminology proposal): Host-bound named the relationship after the wrong role, and "host" already means the host document. Standalone is the default, so it needs no label. Controlling element (A3) covers the exception.
+- **Standalone** (OpenUI5 terminology proposal): it is the default, so it needs no label. Controlling element (A3) covers the exception.
 - **Merge disposition** and **correspondence** labels stay survey vocabulary; they
   describe proposals, not the specification.
 - **Notification-area presence** (Qt) waits on plan question Q9 (host integration).
@@ -228,9 +228,18 @@ no term change: **Page** (OpenUI5 `sap.m.Page` is a container), **Control** (Ope
 
 ## Decisions needed
 
-| Decision                                                                                            | Plan item     |
-| --------------------------------------------------------------------------------------------------- | ------------- |
-| Approve the canonical-term rule (appendix A): **approved**                                          | Q5, W1 task 8 |
-| Accept, amend or reject each Change, Replace and Delete                                             | W1 task 9     |
-| Accept glossary additions A1–A5: Owner, Controlled element, Controlling element, Trigger and Window | W1 task 8     |
-| Decide what happens to the twelve terms that need a new scope, since none is planned                | W0 task 6     |
+| #   | Decision                                                                                                                                         | Status                                                                                       | Plan item            |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- | -------------------- |
+| 1   | Canonical-term rule (appendix A)                                                                                                                 | Approved                                                                                     | Q5, W1 task 8        |
+| 2   | R1: Table / Data grid → Table and Data grid                                                                                                      | Approved                                                                                     | W1 task 9            |
+| 3   | Keep Window unchanged                                                                                                                            | Approved                                                                                     | W1 task 9            |
+| 4   | C3 Menu button and C4 Modal overlay                                                                                                              | Revised after review; needs approval                                                         | W1 task 9            |
+| 5   | R2 to R4: Loader and Spinner, Spin box and Step input, Canvas and Drawing area                                                                   | Revised after review; needs approval                                                         | W1 task 9            |
+| 6   | Keep Stack, Toolbar and Dropdown unchanged, and add Bar, Selection mode and Progress mode                                                        | Revised after review; needs approval                                                         | W1 task 9            |
+| 7   | Glossary additions A1 to A3: Owner, Controlled element, Controlling element                                                                      | Revised after review; needs approval                                                         | Q10, W1 task 8       |
+| 8   | C1 View, C2 Geographic map                                                                                                                       | Open                                                                                         | W1 task 9            |
+| 9   | R5: split the other combined entries                                                                                                             | Open                                                                                         | W1 task 9            |
+| 10  | D1 to D4 deletions                                                                                                                               | Open                                                                                         | W1 task 9            |
+| 11  | Glossary additions A4 Trigger and A5 Window definition                                                                                           | Open                                                                                         | W1 task 8            |
+| 12  | The twelve terms that need a new scope: drop them, make each an alias of an existing scope, or add their scopes to the structure change proposal | Open; the [structure change proposal](structure_change_proposal.md) currently adds no scopes | W0 task 6, W1 task 8 |
+| 13  | The remaining Add terms                                                                                                                          | Open                                                                                         | W1 task 8            |

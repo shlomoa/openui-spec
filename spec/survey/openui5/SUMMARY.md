@@ -42,7 +42,7 @@
 - **Hierarchy:** the existing seven-way split of concrete-object scopes held. No new
   top-level category is needed.
 - **Terminology:** 3 of the 11 clusters (Filter bar, Personalization panels, Value help)
-  only have meaning attached to another object. This led to the Standalone / Host-bound
+  only have meaning attached to another object. This led to the Standalone / Controlling element
   terminology proposal.
 
 ## Decisions and reasoning
@@ -54,6 +54,6 @@
   being filed into the nearest object.
 - **Keep Widgets whole for now.** Six clusters land in Widgets. That is flagged as a
   growth risk, not a reason to split today.
-- **Terminology is approved but not yet applied.** Standalone / Host-bound was approved
+- **Terminology is approved but not yet applied.** Standalone / Controlling element was approved
   on 2026-09-23 as prose-only vocabulary. Applying it to the glossary is plan question
   Q10, deferred to terminology workstream W1.

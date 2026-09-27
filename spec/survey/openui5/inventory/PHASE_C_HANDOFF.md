@@ -86,7 +86,7 @@ proposed top-level restructuring, per §9. Source data:
   see below) are in `_raw/phaseB_leftover_pool.json`'s `b6_cluster` field.
 
 **3. Separately, not part of either output above:**
-`TERMINOLOGY_PROPOSAL.md` (Standalone/Host-bound vocabulary) is still an
+`TERMINOLOGY_PROPOSAL.md` (Standalone/Controlling element vocabulary) is still an
 open proposal awaiting your decision on its three open questions — it
 doesn't block B10 or Phase C, and isn't itself survey data.
 

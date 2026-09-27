@@ -6,7 +6,7 @@ libraries at commit `5165c20cff6de9d79604008a76c56322aa721bf5` (2026-09-21).
 
 **Status:** complete. The pilot and Phases A, B and C are finished, and all 1,221 primary
 classes are accounted for. What remains is judgment: reviewing the 11 proposed
-subcategories and the Standalone / Host-bound terminology. Nothing here changes the
+subcategories and the Standalone / Controlling element terminology. Nothing here changes the
 canonical scope tree, taxonomy mapping, evidence register or generated catalog.
 
 ## Contents

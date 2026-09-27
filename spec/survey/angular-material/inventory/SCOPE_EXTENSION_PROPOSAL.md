@@ -128,7 +128,7 @@ The [complete crosswalk](TAXONOMY_MAPPING.md) preserves existing mappings. On ac
 
 The [Qt extension proposal](../../qt/inventory/SCOPE_EXTENSION_PROPOSAL.md) is pending evidence, not approved taxonomy. Its temporal picker, range, progress and hierarchical-data changes overlap AM-E02/03/04/06; consolidate one amendment and one evidence row per canonical leaf. Its Text completion behavior remains a pending joint-review candidate; do not duplicate its type or silently adopt inline/string-only completion. Its Scroll container owns viewport/content, while AM-P04 references an existing viewport host; reconcile ownership and scrollbar policy before accepting either contract.
 
-The [OpenUI5 terminology proposal](../../openui5/inventory/TERMINOLOGY_PROPOSAL.md) is also pending. Do not silently adopt its standalone/host-bound terminology as a canonical abstraction level. In particular, reconcile any pending card family with the current canonical Card → Surface containers mapping before splitting it. Check all pending proposals for duplicate field/token meanings and identifier collisions at merge time.
+The [OpenUI5 terminology proposal](../../openui5/inventory/TERMINOLOGY_PROPOSAL.md) is also pending. Do not silently adopt its standalone/controlling-element terminology as a canonical abstraction level. In particular, reconcile any pending card family with the current canonical Card → Surface containers mapping before splitting it. Check all pending proposals for duplicate field/token meanings and identifier collisions at merge time.
 
 ## Future merge sequence
 

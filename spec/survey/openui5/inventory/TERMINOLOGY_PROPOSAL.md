@@ -1,4 +1,4 @@
-# Terminology proposal: Standalone / Host-bound
+# Terminology proposal: Standalone / Controlling element
 
 **Status: approved (2026-09-23).** The two term definitions below are
 adopted as-is. Decided prose-only, not a formal `template.scope.md`
@@ -24,15 +24,15 @@ without requiring a reference to an existing object of another type. Most
 OpenUI objects are standalone (List, Table, Dialog, Chart, and — per B6 —
 Cards, File upload, Tile, Scheduling/Planning calendar).
 
-**Host-bound** — a UI object that only has meaning when associated with an
+**Controlling element** — a UI object that only has meaning when associated with an
 existing object of another type; it does not display or operate
 independently. The term only claims that a host reference exists — not
 what kind. That was a deliberate correction mid-discussion: an earlier
 draft tried "Dependent," which invites exactly the wrong question ("dependent
-how?") without answering it. Host-bound is a claim about *whether* a
+how?") without answering it. Controlling element is a claim about *whether* a
 reference is required, nothing more.
 
-**What kind of reference** — recorded in the host-bound object's own
+**What kind of reference** — recorded in the controlling element's own
 Purpose text, not in a new formal category, using one of three relationship
 words:
 
@@ -80,7 +80,7 @@ name rather than five toolkit-specific ones.
 
 ## Applied to the B6 clusters
 
-| Cluster | Tag | Relationship word (if host-bound) |
+| Cluster | Tag | Relationship word (if a controlling element) |
 |---|---|---|
 | Cards | Standalone | — |
 | Shell bar / App shell | Standalone | — |
@@ -89,24 +89,24 @@ name rather than five toolkit-specific ones.
 | Semantic / Object page | Standalone | — |
 | Flexible column layout | Standalone | — |
 | Scheduling / Planning calendar | Standalone | — |
-| Filter bar | **Host-bound** | controls (a Table/Chart/List's visible data) |
-| Personalization (P13n) panels | **Host-bound** | controls (a Table/Chart's columns, sort, filter, group) |
-| Value help | **Host-bound** | supplies (a value to a Field) |
+| Filter bar | **Controlling element** | controls (a Table/Chart/List's visible data) |
+| Personalization (P13n) panels | **Controlling element** | controls (a Table/Chart's columns, sort, filter, group) |
+| Value help | **Controlling element** | supplies (a value to a Field) |
 | Metadata-driven field | n/a | not a host relationship — reconsidered in B7 as an alias of Controls/Text inputs, not its own object |
 
-3 of 11 clusters are host-bound. That's a real, small minority — consistent
+3 of 11 clusters are controlling elements. That's a real, small minority — consistent
 with the original flag being about Widgets' overall size, not about most of
 its new entries being this kind of thing.
 
 ## Open question — resolved
 
-**Resolved: prose-only.** Should Standalone/Host-bound be a *formal* field (a fourth key on
+**Resolved: prose-only.** Should Standalone/Controlling element be a *formal* field (a fourth key on
 `template.scope.md`'s Identity bullet, alongside `id`/`type`/`status`), or
 stay prose-only in each object's Purpose? A formal field is machine-bearing
 — it touches the leaf template, and whatever converts scope files into the
 catalog. Prose-only costs nothing to adopt. I'd default to prose-only
 unless there's a concrete reason the catalog needs to query this
-programmatically (e.g. a generator wanting to render host-bound objects
+programmatically (e.g. a generator wanting to render controlling elements
 differently) — that's a decision for whoever owns the converter, not
 something to assume here.
 
@@ -126,23 +126,23 @@ match the existing glossary entries, ready to paste — **not applied to
 
 ### Ready-to-paste glossary entries (for `spec/README.md`)
 
-Insert alphabetically into "Core specification terms": `Host-bound` between
-`Grammar` and `Known object type`; `Standalone` between `Scope` and `View`.
+Insert alphabetically into "Core specification terms": `Controlling element` between
+`Control` and `Element`; `Standalone` between `Scope` and `View`.
 
 ```
-#### Host-bound
+#### Controlling element
 
 **Aliases:** dependent object, attached object, companion widget.
 
-A host-bound object is a UI object that only has meaning when associated
+A controlling element is a UI object that only has meaning when associated
 with an existing object of another type — it does not display or operate
 independently. The relationship is not encoded in this term alone: each
-host-bound object's Purpose states which type of object it targets and how,
+controlling element's Purpose states which type of object it targets and how,
 typically using one of a small set of relationship words — targets (a
-general, unspecified reference), controls (the host-bound object adjusts
-the host's state or structure), or supplies (the host-bound object provides
-a value or candidate values to the host). Host-bound is the counterpart to
-Standalone, not a measure of structural complexity: a host-bound object can
+general, unspecified reference), controls (the controlling element adjusts
+the host's state or structure), or supplies (the controlling element provides
+a value or candidate values to the host). Controlling element is the counterpart to
+Standalone, not a measure of structural complexity: a controlling element can
 be as simple as a single control or as elaborate as a multi-part panel.
 ```
 
@@ -155,7 +155,7 @@ widget.
 A standalone object is a UI object that is meaningful and usable on its
 own, without requiring a reference to an existing object of another type.
 Most OpenUI objects are standalone. Standalone is the counterpart to
-Host-bound; the distinction concerns whether an object requires a host to
+Controlling element; the distinction concerns whether an object requires a host to
 be meaningful, not how visually or structurally complex the object is.
 ```
 
