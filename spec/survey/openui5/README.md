@@ -11,16 +11,16 @@ canonical scope tree, taxonomy mapping, evidence register or generated catalog.
 
 ## Contents
 
-| File                                                 | Content                                                            |
-| ---------------------------------------------------- | ------------------------------------------------------------------ |
-| [SUMMARY.md](SUMMARY.md)                             | Survey summary: baseline, steps, findings, decisions and reasoning |
-| [PLAN.md](PLAN.md)                                   | The plan executed, with the status of each phase                   |
-| [category.md](category.md)                           | Classification under the OpenUI top-level scopes, with counts      |
-| [taxonomy_mapping.md](taxonomy_mapping.md)           | All 424 matched classes mapped to OpenUI scopes                    |
-| [architecture_proposal.md](architecture_proposal.md) | No top-level restructuring                                         |
-| [scopes_proposal.md](scopes_proposal.md)             | 11 proposed subcategories from 257 unmatched classes               |
-| [opens.md](opens.md)                                 | Open and unresolved questions                                      |
-| [inventory/](inventory/PLAN.md)                      | The complete survey data as produced by the survey                 |
+| File                                                                            | Content                                                            |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| [SUMMARY.md](SUMMARY.md#baseline-and-scope)                                     | Survey summary: baseline, steps, findings, decisions and reasoning |
+| [PLAN.md](PLAN.md#libraries)                                                    | The plan executed, with the status of each phase                   |
+| [category.md](category.md#categories)                                           | Classification under the OpenUI top-level scopes, with counts      |
+| [taxonomy_mapping.md](taxonomy_mapping.md#summary)                              | All 424 matched classes mapped to OpenUI scopes                    |
+| [architecture_proposal.md](architecture_proposal.md#no-top-level-restructuring) | No top-level restructuring                                         |
+| [scopes_proposal.md](scopes_proposal.md#overlaps-with-other-surveys)            | 11 proposed subcategories from 257 unmatched classes               |
+| [opens.md](opens.md#open-items)                                                 | Open and unresolved questions                                      |
+| [inventory/](inventory/PLAN.md#1-objective)                                     | The complete survey data as produced by the survey                 |
 
 No schema change is proposed, so there is no `openui_schema_proposal.md`.
 
@@ -28,13 +28,13 @@ No schema change is proposed, so there is no `openui_schema_proposal.md`.
 
 The `inventory/` folder holds the survey data unchanged. Its main entry points are:
 
-- [Survey plan](inventory/PLAN.md), [pilot report](inventory/PHASE0_PILOT_REPORT.md) and
-  progress logs for [Phase A](inventory/PHASE_A_PROGRESS.md) and
-  [Phase B](inventory/PHASE_B_PROGRESS.md).
-- [Classification key](inventory/_classification_key.md) and seven category files such
-  as [Controls](inventory/Controls.survey.md).
-- [Taxonomy findings](inventory/_taxonomy_findings.md) and
-  [terminology proposal](inventory/TERMINOLOGY_PROPOSAL.md).
-- [Final check](inventory/C10_FINAL_CHECK.md).
-- Raw data in [inventory/\_raw/](inventory/_raw/): per-library extractions and the
+- [Survey plan](inventory/PLAN.md#1-objective), [pilot report](inventory/PHASE0_PILOT_REPORT.md#what-ran) and
+  progress logs for [Phase A](inventory/PHASE_A_PROGRESS.md#a1--snapshot) and
+  [Phase B](inventory/PHASE_B_PROGRESS.md#b1--build-the-classification-key--done).
+- [Classification key](inventory/_classification_key.md#application) and seven category files such
+  as [Controls](inventory/Controls.survey.md#native).
+- [Taxonomy findings](inventory/_taxonomy_findings.md#overall-finding-no-top-level-restructuring-needed) and
+  [terminology proposal](inventory/TERMINOLOGY_PROPOSAL.md#the-terms).
+- [Final check](inventory/C10_FINAL_CHECK.md#checks-run).
+- Raw data in `inventory/_raw/` (see [Phase A](inventory/PLAN.md#7-phase-a--scripted-inventory-extraction-mechanical-no-judgment-calls)): per-library extractions and the
   classified, grouped and leftover datasets.

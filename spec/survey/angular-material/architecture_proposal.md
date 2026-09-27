@@ -1,6 +1,6 @@
 # Angular Material survey: architecture proposal
 
-[Survey README](README.md) · Sources: [recommended structure](inventory/SCOPE_EXTENSION_PROPOSAL.md#recommended-structure), [structural decisions](inventory/BEHAVIOR_MAPPING.md#structural-decisions)
+[Survey README](README.md#contents) · Sources: [recommended structure](inventory/SCOPE_EXTENSION_PROPOSAL.md#recommended-structure), [structural decisions](inventory/BEHAVIOR_MAPPING.md#structural-decisions)
 
 Status: review proposal only. The canonical tree is unchanged.
 

@@ -1,6 +1,6 @@
 # HTML Standard survey: architecture proposal
 
-[Survey README](README.md) · Source: [SCOPE_TREE_PROPOSAL.md](inventory/SCOPE_TREE_PROPOSAL.md#tree-shape-and-restructuring-alternatives)
+[Survey README](README.md#contents) · Source: [SCOPE_TREE_PROPOSAL.md](inventory/SCOPE_TREE_PROPOSAL.md#tree-shape-and-restructuring-alternatives)
 
 Status: proposal for review. The canonical scope tree is unchanged.
 
@@ -30,4 +30,4 @@ Two cross-cutting notion folders are proposed, each conditional on a scope decis
   Add only if content reuse or projection is a specification requirement.
 
 Whether these enter the specification is plan question Q13, deferred to scope workstream
-W2. Details are in [scopes_proposal.md](scopes_proposal.md).
+W2. Details are in [scopes_proposal.md](scopes_proposal.md#enrich-or-clarify-existing-contracts-first).

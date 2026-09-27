@@ -1,6 +1,6 @@
 # Qt Widgets survey: summary
 
-[Survey README](README.md) · [Plan](PLAN.md)
+[Survey README](README.md#contents) · [Plan](PLAN.md#part-1-component-survey)
 
 ## Baseline and scope
 
@@ -24,18 +24,18 @@
 6. Revised the scope and taxonomy proposals together, validated them and prepared a
    merge handoff.
 
-See [PLAN.md](PLAN.md).
+See [PLAN.md](PLAN.md#part-1-component-survey).
 
 ## Findings
 
 - **Coverage:** 94 entries and 99 Qt names in 9 categories and 27 subcategories. All
-  376 descriptive aspects (94 × 4) are populated. See [category.md](category.md).
+  376 descriptive aspects (94 × 4) are populated. See [category.md](category.md#categories).
 - **Taxonomy fit:** all 94 entries map to 29 existing OpenUI scopes:
   - 71 enhance an existing leaf and 10 reuse one unchanged.
   - 4 are owned parts, 4 are folder notions and 4 motivate new leaves.
   - 1 (system-tray presence) is deferred.
 
-  See [taxonomy_mapping.md](taxonomy_mapping.md).
+  See [taxonomy_mapping.md](taxonomy_mapping.md#summary).
 
 - **Behaviors:** 40 response concepts in 8 categories and 21 subcategories, each with a
   contract. Applicability across the 94 × 40 matrix has 3,760 classified cells.
@@ -43,20 +43,20 @@ See [PLAN.md](PLAN.md).
   151 existing, 58 earlier additions and 36 new response terms.
 - **New leaves:** six gaps survive review: Page stack, Scroll container, Text
   completion, Graphics viewport, Modal interaction and Viewport scrolling. See
-  [scopes_proposal.md](scopes_proposal.md).
+  [scopes_proposal.md](scopes_proposal.md#new-leaves).
 
 ## Decisions and reasoning
 
 - **No replacement taxonomy tree and no Graphics top-level scope.** Graphics content
   still divides into output, composition, layout, input and behavior; one Graphics scope
-  would conflate those roles. See [architecture_proposal.md](architecture_proposal.md).
+  would conflate those roles. See [architecture_proposal.md](architecture_proposal.md#recommendation).
 - **The taxonomy and the scope tree are linked views of one vocabulary.** The taxonomy
   groups concepts by primary purpose, and the scope tree organizes contracts. One
   taxonomy subcategory may map to several scope leaves.
 - **Ownership stays in components.** Behaviors reference their targets by id instead of
   owning them (decision D01). See
-  [openui_schema_proposal.md](openui_schema_proposal.md).
+  [openui_schema_proposal.md](openui_schema_proposal.md#decisions).
 - **Classify behaviors by outcome.** Swipes, hover, key and pointer input and timers
   are trigger vocabulary mapped to explicit outcomes (D07).
 - **Host-shell presence is deferred.** MDI and docking are optional runtime
-  capabilities. See [opens.md](opens.md).
+  capabilities. See [opens.md](opens.md#open-items).

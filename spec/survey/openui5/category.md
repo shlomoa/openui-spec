@@ -1,20 +1,20 @@
 # OpenUI5 survey: categories
 
-[Survey README](README.md) · [Taxonomy mapping](taxonomy_mapping.md)
+[Survey README](README.md#contents) · [Taxonomy mapping](taxonomy_mapping.md#summary)
 
-The OpenUI5 survey does not define its own categories. It classifies OpenUI5 classes directly under the seven OpenUI top-level scopes that hold concrete UI objects: Application, Behaviors, Containers, Controls, Pages, Views and Widgets. The four folder-abstraction scopes (Interaction, Internationalization, Layout, Presentation) have no class-level matches. The matching key is [\_classification_key.md](inventory/_classification_key.md).
+The OpenUI5 survey does not define its own categories. It classifies OpenUI5 classes directly under the seven OpenUI top-level scopes that hold concrete UI objects: Application, Behaviors, Containers, Controls, Pages, Views and Widgets. The four folder-abstraction scopes (Interaction, Internationalization, Layout, Presentation) have no class-level matches. The matching key is [\_classification_key.md](inventory/_classification_key.md#application).
 
 ## Categories
 
-| Category                                       | Spec objects in the key | Objects with matches | Matched classes |
-| ---------------------------------------------- | ----------------------: | -------------------: | --------------: |
-| [Application](inventory/Application.survey.md) |                       5 |                    1 |               8 |
-| [Behaviors](inventory/Behaviors.survey.md)     |                       3 |                    1 |               7 |
-| [Containers](inventory/Containers.survey.md)   |                       8 |                    8 |              41 |
-| [Controls](inventory/Controls.survey.md)       |                      10 |                    9 |             221 |
-| [Pages](inventory/Pages.survey.md)             |                       3 |                    0 |               0 |
-| [Views](inventory/Views.survey.md)             |                       2 |                    1 |               5 |
-| [Widgets](inventory/Widgets.survey.md)         |                      11 |                   11 |             142 |
+| Category                                                 | Spec objects in the key | Objects with matches | Matched classes |
+| -------------------------------------------------------- | ----------------------: | -------------------: | --------------: |
+| [Application](inventory/Application.survey.md#tool-bars) |                       5 |                    1 |               8 |
+| [Behaviors](inventory/Behaviors.survey.md#drag-and-drop) |                       3 |                    1 |               7 |
+| [Containers](inventory/Containers.survey.md#grid)        |                       8 |                    8 |              41 |
+| [Controls](inventory/Controls.survey.md#native)          |                      10 |                    9 |             221 |
+| [Pages](inventory/Pages.survey.md#dashboard)             |                       3 |                    0 |               0 |
+| [Views](inventory/Views.survey.md#form)                  |                       2 |                    1 |               5 |
+| [Widgets](inventory/Widgets.survey.md#chart)             |                      11 |                   11 |             142 |
 
 Totals: 1,221 primary classes from 12 core libraries at commit `5165c20`. 424 are matched to 31 of the 42 spec objects, 257 are clustered into 11 proposed subcategories, 261 are unclustered leftovers and 279 are out of scope (non-UI infrastructure).
 

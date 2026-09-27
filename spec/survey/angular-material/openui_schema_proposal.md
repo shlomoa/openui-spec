@@ -1,10 +1,12 @@
 # Angular Material survey: OpenUI schema proposal
 
-[Survey README](README.md) · Source: [deferred decisions](inventory/BEHAVIOR_REVIEW.md#deferred-decisions-and-merge-readiness)
+[Survey README](README.md#contents) · Source: [deferred decisions](inventory/BEHAVIOR_REVIEW.md#deferred-decisions-and-merge-readiness)
 
 Status: decisions required, not proposed solutions. **No grammar or schema change is
 made.** The survey identifies what the language workstream (plan W5) must decide before
 the affected drafts become executable.
+
+## Decisions
 
 | Id  | Decision needed                                                                                                                                  | Affects                | Related plan item                     |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | ------------------------------------- |

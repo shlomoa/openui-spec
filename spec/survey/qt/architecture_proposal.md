@@ -1,18 +1,18 @@
 # Qt Widgets survey: architecture proposal
 
-[Survey README](README.md) · Sources: [TAXONOMY_STRUCTURE_PROPOSAL.md](inventory/TAXONOMY_STRUCTURE_PROPOSAL.md), [BEHAVIOR_TAXONOMY_PROPOSAL.md](inventory/BEHAVIOR_TAXONOMY_PROPOSAL.md)
+[Survey README](README.md#contents) · Sources: [TAXONOMY_STRUCTURE_PROPOSAL.md](inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#recommendation), [BEHAVIOR_TAXONOMY_PROPOSAL.md](inventory/BEHAVIOR_TAXONOMY_PROPOSAL.md#proposed-hierarchy)
 
 Status: proposal for review. The canonical taxonomy, scope tree and catalog are
 unchanged.
 
 ## Recommendation
 
-- Extend the existing [generic UI taxonomy](../../../docs/generic-ui-taxonomy.md) within
+- Extend the existing [generic UI taxonomy](../../../docs/generic-ui-taxonomy.md#input-elements) within
   its current nine main sections. A replacement taxonomy or a new top-level Graphics
   category is not required.
 - Keep the eleven top-level scopes. Six new leaves fit under existing roots; see
-  [scopes_proposal.md](scopes_proposal.md).
-- Treat the taxonomy and the [scope tree](../../scopes/scope.md) as **linked views of one
+  [scopes_proposal.md](scopes_proposal.md#new-leaves).
+- Treat the taxonomy and the [scope tree](../../scopes/scope.md#top-level-scopes) as **linked views of one
   vocabulary**, not identical hierarchies. The taxonomy groups concepts by primary
   purpose and the scope tree organizes specification contracts. A new browsing group in
   the taxonomy does not by itself authorize a new scope folder, type or contract.

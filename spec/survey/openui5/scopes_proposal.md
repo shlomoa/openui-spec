@@ -1,10 +1,12 @@
 # OpenUI5 survey: scopes proposal
 
-[Survey README](README.md) · Source: [\_taxonomy_findings.md](inventory/_taxonomy_findings.md)
+[Survey README](README.md#contents) · Source: [\_taxonomy_findings.md](inventory/_taxonomy_findings.md#overall-finding-no-top-level-restructuring-needed)
 
 Status: proposals for review. None has been applied to the scope tree or the taxonomy
 mapping. Cluster membership is in `inventory/_raw/phaseB_leftover_pool.json` (the
 `b6_cluster` field).
+
+## Clusters
 
 The 257 unmatched but related classes form 11 clusters:
 

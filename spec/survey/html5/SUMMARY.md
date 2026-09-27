@@ -1,18 +1,18 @@
 # HTML Standard survey: summary
 
-[Survey README](README.md) · [Plan](PLAN.md)
+[Survey README](README.md#contents) · [Plan](PLAN.md#steps)
 
 ## Baseline and scope
 
 - **Source:** HTML Living Standard, fixed at commit
   `cd8ac6f1bbf86dd0bd09ef75d27dacaebe7b4c1d` (published 2026-09-22) and surveyed
   2026-09-23. All links point to that commit snapshot, so later changes to the living
-  standard do not alter the baseline. See [BASELINE.md](inventory/BASELINE.md).
+  standard do not alter the baseline. See [BASELINE.md](inventory/BASELINE.md#scope).
 - **Surveyed:** the published specification's pages, sections, elements, attributes,
   interfaces, members, events, named concepts and named algorithms.
 - **Not surveyed:** WHATWG repository sources, third-party libraries, and the contents
   of external specifications. External specifications are recorded as
-  [dependencies](inventory/DEPENDENCIES.md) only.
+  [dependencies](inventory/DEPENDENCIES.md#external-dependencies) only.
 
 ## Steps
 
@@ -25,19 +25,19 @@
    second-level sections to OpenUI scopes, and proposed scope-tree changes.
 
 Abstract naming and semantic descriptions (plan steps 4–5) have not started. See
-[PLAN.md](PLAN.md).
+[PLAN.md](PLAN.md#steps).
 
 ## Findings
 
 - **Coverage:** 60 multipage source files, 1,234 sections, 7,427 definition
   occurrences (7,074 unique anchors and 353 without a standalone anchor), 118
-  subcategories and 228 bibliography entries. See [category.md](category.md) and
-  [COVERAGE.md](inventory/COVERAGE.md).
+  subcategories and 228 bibliography entries. See [category.md](category.md#categories) and
+  [COVERAGE.md](inventory/COVERAGE.md#source-page-checklist).
 - **Taxonomy fit:** every one of the 151 OpenUI taxonomy entries has a recorded HTML
   correspondence. 50 are external dependencies (defined outside HTML, such as ARIA or
   CSS), 17 are direct primitives, and most of the rest are partial matches. 7 have no
   direct match and 5 are semantic mismatches. See
-  [taxonomy_mapping.md](taxonomy_mapping.md).
+  [taxonomy_mapping.md](taxonomy_mapping.md#summary).
 - **UI relevance is concentrated:** chapter 4 (elements) and chapter 6 (user
   interaction) supply most UI-relevant evidence. Parsing, workers, worklets, storage
   and communication are browser implementation machinery, not UI taxonomy objects.
@@ -56,15 +56,15 @@ Abstract naming and semantic descriptions (plan steps 4–5) have not started. S
 - **Keep the eleven top-level scopes and enrich in place.** Mirroring HTML chapters
   would mix controls with parsers and browser algorithms, and would turn a
   technology-neutral model into an HTML implementation catalog. See
-  [architecture_proposal.md](architecture_proposal.md).
+  [architecture_proposal.md](architecture_proposal.md#recommendation).
 - **Add leaves only for distinct responsibilities.** HTML evidence identifies up to
   eight candidates (P1–P8), each gated on a review condition. See
-  [scopes_proposal.md](scopes_proposal.md).
+  [scopes_proposal.md](scopes_proposal.md#enrich-or-clarify-existing-contracts-first).
 - **Keep the grammar unchanged; clarify the template in prose.** See
-  [openui_schema_proposal.md](openui_schema_proposal.md).
+  [openui_schema_proposal.md](openui_schema_proposal.md#template-clarifications).
 - **Keep two axes apart:** the HTML correspondence strength and the canonical
   abstraction level are recorded separately. An alias does not become a new known
   type.
 - **Record rather than guess:** unanchored definitions, untyped definitions and the
   treatment of obsolete features are recorded as open decisions, not resolved by
-  inference. See [opens.md](opens.md).
+  inference. See [opens.md](opens.md#open-items).

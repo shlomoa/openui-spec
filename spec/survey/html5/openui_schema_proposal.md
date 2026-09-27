@@ -1,6 +1,6 @@
 # HTML Standard survey: OpenUI schema proposal
 
-[Survey README](README.md) · Source: [template and evidence-register proposals](inventory/SCOPE_TREE_PROPOSAL.md#template-and-evidence-register-proposals)
+[Survey README](README.md#contents) · Source: [template and evidence-register proposals](inventory/SCOPE_TREE_PROPOSAL.md#template-and-evidence-register-proposals)
 
 Status: proposal for review. **No change to the grammar (`EBNF.txt`), the JSON Schema or
 the scope converter is proposed.** The survey proposes clarifying the leaf template in

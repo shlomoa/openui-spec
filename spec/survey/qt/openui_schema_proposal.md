@@ -1,10 +1,12 @@
 # Qt Widgets survey: OpenUI schema proposal
 
-[Survey README](README.md) · Source: [BEHAVIOR_DECISIONS.md](inventory/BEHAVIOR_DECISIONS.md)
+[Survey README](README.md#contents) · Source: [BEHAVIOR_DECISIONS.md](inventory/BEHAVIOR_DECISIONS.md#remaining-acceptance-and-implementation-boundaries)
 
 Status: proposed neutral decisions. **No base-schema change is claimed.** The references
 and normalized values below are prose contracts until the language workstream (plan
 W5) chooses converter and schema support.
+
+## Decisions
 
 | Id  | Decision                                                                                                                                                               | Schema impact                                                                                                    |
 | --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |

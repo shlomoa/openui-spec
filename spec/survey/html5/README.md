@@ -12,28 +12,28 @@ tree, taxonomy mapping, evidence register or generated catalog.
 
 ## Contents
 
-| File                                                   | Content                                                                     |
-| ------------------------------------------------------ | --------------------------------------------------------------------------- |
-| [SUMMARY.md](SUMMARY.md)                               | Survey summary: baseline, steps, findings, decisions and reasoning          |
-| [PLAN.md](PLAN.md)                                     | The plan executed, with the status of each step                             |
-| [category.md](category.md)                             | Survey categories (HTML chapters) and subcategories, with counts            |
-| [taxonomy_mapping.md](taxonomy_mapping.md)             | All 151 OpenUI taxonomy entries mapped to HTML primitives and OpenUI scopes |
-| [architecture_proposal.md](architecture_proposal.md)   | Tree-shape alternatives and conditional new top-level folders               |
-| [scopes_proposal.md](scopes_proposal.md)               | Existing-leaf enrichments and proposed additions P1–P8                      |
-| [openui_schema_proposal.md](openui_schema_proposal.md) | Template, attribute and child-model clarifications raised by HTML           |
-| [opens.md](opens.md)                                   | Open and unresolved questions                                               |
-| [inventory/](inventory/README.md)                      | The complete survey data as produced by the survey                          |
+| File                                                                           | Content                                                                     |
+| ------------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+| [SUMMARY.md](SUMMARY.md#baseline-and-scope)                                    | Survey summary: baseline, steps, findings, decisions and reasoning          |
+| [PLAN.md](PLAN.md#steps)                                                       | The plan executed, with the status of each step                             |
+| [category.md](category.md#categories)                                          | Survey categories (HTML chapters) and subcategories, with counts            |
+| [taxonomy_mapping.md](taxonomy_mapping.md#summary)                             | All 151 OpenUI taxonomy entries mapped to HTML primitives and OpenUI scopes |
+| [architecture_proposal.md](architecture_proposal.md#recommendation)            | Tree-shape alternatives and conditional new top-level folders               |
+| [scopes_proposal.md](scopes_proposal.md#proposed-additions)                    | Existing-leaf enrichments and proposed additions P1–P8                      |
+| [openui_schema_proposal.md](openui_schema_proposal.md#template-clarifications) | Template, attribute and child-model clarifications raised by HTML           |
+| [opens.md](opens.md#open-items)                                                | Open and unresolved questions                                               |
+| [inventory/](inventory/README.md#html-standard-survey)                         | The complete survey data as produced by the survey                          |
 
 ## Inventory
 
 The `inventory/` folder holds the survey data unchanged. Its main entry points are:
 
-- [Baseline and scope](inventory/BASELINE.md) and [coverage checklist](inventory/COVERAGE.md).
-- [Category map](inventory/CATEGORIES.md) and one [chapter inventory file](inventory/inventory/)
+- [Baseline and scope](inventory/BASELINE.md#scope) and [coverage checklist](inventory/COVERAGE.md#source-page-checklist).
+- [Category map](inventory/CATEGORIES.md#introduction) and one [chapter inventory file](category.md#categories)
   per category.
-- [Index reconciliation](inventory/INDEX_RECONCILIATION.md) and
-  [external dependencies](inventory/DEPENDENCIES.md).
-- [Exclusions and open decisions](inventory/EXCLUSIONS.md).
-- [Taxonomy crosswalk](inventory/TAXONOMY_MAPPING.md),
-  [source-section crosswalk](inventory/SURVEY_SCOPE_CROSSWALK.md) and
-  [scope-tree proposal](inventory/SCOPE_TREE_PROPOSAL.md).
+- [Index reconciliation](inventory/INDEX_RECONCILIATION.md#elements) and
+  [external dependencies](inventory/DEPENDENCIES.md#external-dependencies).
+- [Exclusions and open decisions](inventory/EXCLUSIONS.md#explicit-exclusions-from-object-level-research).
+- [Taxonomy crosswalk](inventory/TAXONOMY_MAPPING.md#sources-and-interpretation),
+  [source-section crosswalk](inventory/SURVEY_SCOPE_CROSSWALK.md#1-introduction) and
+  [scope-tree proposal](inventory/SCOPE_TREE_PROPOSAL.md#recommendation).

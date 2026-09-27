@@ -1,48 +1,48 @@
 # Angular Material survey: taxonomy mapping
 
-[Survey README](README.md) · [Categories](category.md) · [Scopes proposal](scopes_proposal.md)
+[Survey README](README.md#contents) · [Categories](category.md#categories) · [Scopes proposal](scopes_proposal.md#new-leaves)
 
-This file normalizes the Angular Material survey's [taxonomy crosswalk](inventory/TAXONOMY_MAPPING.md). Each row is one component family mapped to an OpenUI scope. Category-level and artifact-role mappings stay in the source crosswalk; capability relationships are in [BEHAVIOR_MAPPING.md](inventory/BEHAVIOR_MAPPING.md).
+This file normalizes the Angular Material survey's [taxonomy crosswalk](inventory/TAXONOMY_MAPPING.md#mapping-rules). Each row is one component family mapped to an OpenUI scope. Category-level and artifact-role mappings stay in the source crosswalk; capability relationships are in [BEHAVIOR_MAPPING.md](inventory/BEHAVIOR_MAPPING.md#representation-and-decision-rules).
 
 The _Abstraction level_ column keeps the canonical labels (Existing object, Alias, Grouped leaf, Folder abstraction), with "proposed" marking candidate additions. Two families have no UI scope and are omitted here: `testing` (5 objects) and `schematics` (121 objects), which are implementation evidence only.
 
-Scope paths are relative to `spec/scopes/`. The mapping records survey proposals only; the canonical scope tree, [taxonomy mapping](../../scopes/taxonomy_mapping.md) and generated catalog are unchanged.
+Scope paths are relative to `spec/scopes/`. The mapping records survey proposals only; the canonical scope tree, [taxonomy mapping](../../scopes/taxonomy_mapping.md#input-elements) and generated catalog are unchanged.
 
 ## Summary
 
 37 source entries map to 29 OpenUI scopes. Abstraction level totals: Alias 22, Existing object 5, Existing object; Alias 3, Existing object; Folder abstraction 2, Grouped leaf (proposed); Alias (existing variants) 1, Grouped leaf (proposed) 1, Alias; Folder abstraction 1, Folder abstraction; Alias 1, Folder abstraction 1.
 
-| OpenUI scope                                                                                                | Primary entries | All mentions |
-| ----------------------------------------------------------------------------------------------------------- | --------------: | -----------: |
-| [Containers/form_field.scope.md (proposed)](inventory/proposed-scopes/Containers/form_field.scope.md)       |               1 |            1 |
-| [Widgets/token_collection.scope.md (proposed)](inventory/proposed-scopes/Widgets/token_collection.scope.md) |               1 |            1 |
-| [Application/navigation.scope.md](../../scopes/Application/navigation.scope.md)                             |               0 |            1 |
-| [Application/tool_bars.scope.md](../../scopes/Application/tool_bars.scope.md)                               |               1 |            1 |
-| [Containers/expandable_panels.scope.md](../../scopes/Containers/expandable_panels.scope.md)                 |               1 |            1 |
-| [Containers/grid.scope.md](../../scopes/Containers/grid.scope.md)                                           |               1 |            1 |
-| [Containers/overlay_containers.scope.md](../../scopes/Containers/overlay_containers.scope.md)               |               0 |            1 |
-| [Containers/sheet_containers.scope.md](../../scopes/Containers/sheet_containers.scope.md)                   |               2 |            2 |
-| [Containers/surface_containers.scope.md](../../scopes/Containers/surface_containers.scope.md)               |               1 |            2 |
-| [Containers/tabs.scope.md](../../scopes/Containers/tabs.scope.md)                                           |               1 |            1 |
-| [Controls/action_controls.scope.md](../../scopes/Controls/action_controls.scope.md)                         |               1 |            1 |
-| [Controls/choice_controls.scope.md](../../scopes/Controls/choice_controls.scope.md)                         |               5 |            9 |
-| [Controls/display_primitives.scope.md](../../scopes/Controls/display_primitives.scope.md)                   |               2 |            2 |
-| [Controls/link_and_scroll_controls.scope.md](../../scopes/Controls/link_and_scroll_controls.scope.md)       |               0 |            2 |
-| [Controls/range_control.scope.md](../../scopes/Controls/range_control.scope.md)                             |               1 |            1 |
-| [Controls/status_indicator.scope.md](../../scopes/Controls/status_indicator.scope.md)                       |               3 |            4 |
-| [Controls/text_inputs.scope.md](../../scopes/Controls/text_inputs.scope.md)                                 |               2 |            2 |
-| [Interaction/scope.md](../../scopes/Interaction/scope.md)                                                   |               0 |            2 |
-| [Internationalization/scope.md](../../scopes/Internationalization/scope.md)                                 |               0 |            1 |
-| [Layout/scope.md](../../scopes/Layout/scope.md)                                                             |               0 |            1 |
-| [Presentation/scope.md](../../scopes/Presentation/scope.md)                                                 |               2 |            3 |
-| [Widgets/date_time_pickers.scope.md](../../scopes/Widgets/date_time_pickers.scope.md)                       |               2 |            2 |
-| [Widgets/dialog.scope.md](../../scopes/Widgets/dialog.scope.md)                                             |               1 |            2 |
-| [Widgets/feedback_widgets.scope.md](../../scopes/Widgets/feedback_widgets.scope.md)                         |               2 |            2 |
-| [Widgets/list.scope.md](../../scopes/Widgets/list.scope.md)                                                 |               1 |            1 |
-| [Widgets/menu_widgets.scope.md](../../scopes/Widgets/menu_widgets.scope.md)                                 |               1 |            1 |
-| [Widgets/navigation_widgets.scope.md](../../scopes/Widgets/navigation_widgets.scope.md)                     |               2 |            3 |
-| [Widgets/stepper.scope.md](../../scopes/Widgets/stepper.scope.md)                                           |               1 |            1 |
-| [Widgets/table.scope.md](../../scopes/Widgets/table.scope.md)                                               |               2 |            2 |
+| OpenUI scope                                                                                                        | Primary entries | All mentions |
+| ------------------------------------------------------------------------------------------------------------------- | --------------: | -----------: |
+| [Containers/form_field.scope.md (proposed)](inventory/proposed-scopes/Containers/form_field.scope.md#purpose)       |               1 |            1 |
+| [Widgets/token_collection.scope.md (proposed)](inventory/proposed-scopes/Widgets/token_collection.scope.md#purpose) |               1 |            1 |
+| [Application/navigation.scope.md](../../scopes/Application/navigation.scope.md#purpose)                             |               0 |            1 |
+| [Application/tool_bars.scope.md](../../scopes/Application/tool_bars.scope.md#purpose)                               |               1 |            1 |
+| [Containers/expandable_panels.scope.md](../../scopes/Containers/expandable_panels.scope.md#purpose)                 |               1 |            1 |
+| [Containers/grid.scope.md](../../scopes/Containers/grid.scope.md#purpose)                                           |               1 |            1 |
+| [Containers/overlay_containers.scope.md](../../scopes/Containers/overlay_containers.scope.md#purpose)               |               0 |            1 |
+| [Containers/sheet_containers.scope.md](../../scopes/Containers/sheet_containers.scope.md#purpose)                   |               2 |            2 |
+| [Containers/surface_containers.scope.md](../../scopes/Containers/surface_containers.scope.md#purpose)               |               1 |            2 |
+| [Containers/tabs.scope.md](../../scopes/Containers/tabs.scope.md#purpose)                                           |               1 |            1 |
+| [Controls/action_controls.scope.md](../../scopes/Controls/action_controls.scope.md#purpose)                         |               1 |            1 |
+| [Controls/choice_controls.scope.md](../../scopes/Controls/choice_controls.scope.md#purpose)                         |               5 |            9 |
+| [Controls/display_primitives.scope.md](../../scopes/Controls/display_primitives.scope.md#purpose)                   |               2 |            2 |
+| [Controls/link_and_scroll_controls.scope.md](../../scopes/Controls/link_and_scroll_controls.scope.md#purpose)       |               0 |            2 |
+| [Controls/range_control.scope.md](../../scopes/Controls/range_control.scope.md#purpose)                             |               1 |            1 |
+| [Controls/status_indicator.scope.md](../../scopes/Controls/status_indicator.scope.md#purpose)                       |               3 |            4 |
+| [Controls/text_inputs.scope.md](../../scopes/Controls/text_inputs.scope.md#purpose)                                 |               2 |            2 |
+| [Interaction/scope.md](../../scopes/Interaction/scope.md#objects)                                                   |               0 |            2 |
+| [Internationalization/scope.md](../../scopes/Internationalization/scope.md#objects)                                 |               0 |            1 |
+| [Layout/scope.md](../../scopes/Layout/scope.md#objects)                                                             |               0 |            1 |
+| [Presentation/scope.md](../../scopes/Presentation/scope.md#objects)                                                 |               2 |            3 |
+| [Widgets/date_time_pickers.scope.md](../../scopes/Widgets/date_time_pickers.scope.md#purpose)                       |               2 |            2 |
+| [Widgets/dialog.scope.md](../../scopes/Widgets/dialog.scope.md#purpose)                                             |               1 |            2 |
+| [Widgets/feedback_widgets.scope.md](../../scopes/Widgets/feedback_widgets.scope.md#purpose)                         |               2 |            2 |
+| [Widgets/list.scope.md](../../scopes/Widgets/list.scope.md#purpose)                                                 |               1 |            1 |
+| [Widgets/menu_widgets.scope.md](../../scopes/Widgets/menu_widgets.scope.md#purpose)                                 |               1 |            1 |
+| [Widgets/navigation_widgets.scope.md](../../scopes/Widgets/navigation_widgets.scope.md#purpose)                     |               2 |            3 |
+| [Widgets/stepper.scope.md](../../scopes/Widgets/stepper.scope.md#purpose)                                           |               1 |            1 |
+| [Widgets/table.scope.md](../../scopes/Widgets/table.scope.md#purpose)                                               |               2 |            2 |
 
 ## Entries by primary OpenUI scope
 
@@ -56,15 +56,15 @@ The first scope listed is the primary destination used for grouping; further sco
 
 ### Proposed: angular-material:Widgets/token_collection.scope.md
 
-| Source entry       | Abstract concept                 | Other OpenUI scopes                                                                                                                                                        | Abstraction level                                  | Source row                                                         |
-| ------------------ | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------ |
-| chips (61 objects) | Token collection; Tag / List box | [Controls/status_indicator.scope.md](../../scopes/Controls/status_indicator.scope.md); [Controls/choice_controls.scope.md](../../scopes/Controls/choice_controls.scope.md) | Grouped leaf (proposed); Alias (existing variants) | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| Source entry       | Abstract concept                 | Other OpenUI scopes                                                                                                                                                                        | Abstraction level                                  | Source row                                                         |
+| ------------------ | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- | ------------------------------------------------------------------ |
+| chips (61 objects) | Token collection; Tag / List box | [Controls/status_indicator.scope.md](../../scopes/Controls/status_indicator.scope.md#purpose); [Controls/choice_controls.scope.md](../../scopes/Controls/choice_controls.scope.md#purpose) | Grouped leaf (proposed); Alias (existing variants) | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
 
 ### Application/tool_bars.scope.md
 
-| Source entry         | Abstract concept | Other OpenUI scopes                                                                           | Abstraction level      | Source row                                                         |
-| -------------------- | ---------------- | --------------------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------------------------ |
-| toolbar (24 objects) | Toolbar          | [Containers/surface_containers.scope.md](../../scopes/Containers/surface_containers.scope.md) | Existing object; Alias | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| Source entry         | Abstract concept | Other OpenUI scopes                                                                                   | Abstraction level      | Source row                                                         |
+| -------------------- | ---------------- | ----------------------------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------------------------ |
+| toolbar (24 objects) | Toolbar          | [Containers/surface_containers.scope.md](../../scopes/Containers/surface_containers.scope.md#purpose) | Existing object; Alias | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
 
 ### Containers/expandable_panels.scope.md
 
@@ -74,16 +74,16 @@ The first scope listed is the primary destination used for grouping; further sco
 
 ### Containers/grid.scope.md
 
-| Source entry           | Abstract concept        | Other OpenUI scopes                             | Abstraction level                   | Source row                                                         |
-| ---------------------- | ----------------------- | ----------------------------------------------- | ----------------------------------- | ------------------------------------------------------------------ |
-| grid-list (30 objects) | Grid / Sizing / Spacing | [Layout/scope.md](../../scopes/Layout/scope.md) | Existing object; Folder abstraction | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| Source entry           | Abstract concept        | Other OpenUI scopes                                     | Abstraction level                   | Source row                                                         |
+| ---------------------- | ----------------------- | ------------------------------------------------------- | ----------------------------------- | ------------------------------------------------------------------ |
+| grid-list (30 objects) | Grid / Sizing / Spacing | [Layout/scope.md](../../scopes/Layout/scope.md#objects) | Existing object; Folder abstraction | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
 
 ### Containers/sheet_containers.scope.md
 
-| Source entry              | Abstract concept                         | Other OpenUI scopes                                                                                                                                                      | Abstraction level | Source row                                                         |
-| ------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------- | ------------------------------------------------------------------ |
-| bottom-sheet (26 objects) | Bottom sheet                             | [Widgets/dialog.scope.md](../../scopes/Widgets/dialog.scope.md)                                                                                                          | Alias             | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
-| sidenav (32 objects)      | Sidebar / Side sheet / Navigation drawer | [Widgets/navigation_widgets.scope.md](../../scopes/Widgets/navigation_widgets.scope.md); [Application/navigation.scope.md](../../scopes/Application/navigation.scope.md) | Alias             | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| Source entry              | Abstract concept                         | Other OpenUI scopes                                                                                                                                                                      | Abstraction level | Source row                                                         |
+| ------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ------------------------------------------------------------------ |
+| bottom-sheet (26 objects) | Bottom sheet                             | [Widgets/dialog.scope.md](../../scopes/Widgets/dialog.scope.md#purpose)                                                                                                                  | Alias             | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| sidenav (32 objects)      | Sidebar / Side sheet / Navigation drawer | [Widgets/navigation_widgets.scope.md](../../scopes/Widgets/navigation_widgets.scope.md#purpose); [Application/navigation.scope.md](../../scopes/Application/navigation.scope.md#purpose) | Alias             | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
 
 ### Containers/surface_containers.scope.md
 
@@ -99,9 +99,9 @@ The first scope listed is the primary destination used for grouping; further sco
 
 ### Controls/action_controls.scope.md
 
-| Source entry        | Abstract concept            | Other OpenUI scopes                                                                                   | Abstraction level | Source row                                                         |
-| ------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------- | ------------------------------------------------------------------ |
-| button (36 objects) | Button / Icon button / Link | [Controls/link_and_scroll_controls.scope.md](../../scopes/Controls/link_and_scroll_controls.scope.md) | Alias             | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| Source entry        | Abstract concept            | Other OpenUI scopes                                                                                           | Abstraction level | Source row                                                         |
+| ------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------- | ------------------------------------------------------------------ |
+| button (36 objects) | Button / Icon button / Link | [Controls/link_and_scroll_controls.scope.md](../../scopes/Controls/link_and_scroll_controls.scope.md#purpose) | Alias             | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
 
 ### Controls/choice_controls.scope.md
 
@@ -115,10 +115,10 @@ The first scope listed is the primary destination used for grouping; further sco
 
 ### Controls/display_primitives.scope.md
 
-| Source entry         | Abstract concept    | Other OpenUI scopes                                         | Abstraction level         | Source row                                                         |
-| -------------------- | ------------------- | ----------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------ |
-| divider (23 objects) | Divider / Separator | —                                                           | Alias                     | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
-| icon (25 objects)    | Icon / Iconography  | [Presentation/scope.md](../../scopes/Presentation/scope.md) | Alias; Folder abstraction | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| Source entry         | Abstract concept    | Other OpenUI scopes                                                 | Abstraction level         | Source row                                                         |
+| -------------------- | ------------------- | ------------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------ |
+| divider (23 objects) | Divider / Separator | —                                                                   | Alias                     | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| icon (25 objects)    | Icon / Iconography  | [Presentation/scope.md](../../scopes/Presentation/scope.md#objects) | Alias; Folder abstraction | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
 
 ### Controls/range_control.scope.md
 
@@ -136,17 +136,17 @@ The first scope listed is the primary destination used for grouping; further sco
 
 ### Controls/text_inputs.scope.md
 
-| Source entry              | Abstract concept       | Other OpenUI scopes                                                                 | Abstraction level | Source row                                                         |
-| ------------------------- | ---------------------- | ----------------------------------------------------------------------------------- | ----------------- | ------------------------------------------------------------------ |
-| autocomplete (26 objects) | Text field / Combo box | [Controls/choice_controls.scope.md](../../scopes/Controls/choice_controls.scope.md) | Alias             | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
-| input (25 objects)        | Text field / Text area | —                                                                                   | Alias             | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| Source entry              | Abstract concept       | Other OpenUI scopes                                                                         | Abstraction level | Source row                                                         |
+| ------------------------- | ---------------------- | ------------------------------------------------------------------------------------------- | ----------------- | ------------------------------------------------------------------ |
+| autocomplete (26 objects) | Text field / Combo box | [Controls/choice_controls.scope.md](../../scopes/Controls/choice_controls.scope.md#purpose) | Alias             | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| input (25 objects)        | Text field / Text area | —                                                                                           | Alias             | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
 
 ### Presentation/scope.md
 
-| Source entry                 | Abstract concept                           | Other OpenUI scopes                                                                                                                                                                                                         | Abstraction level         | Source row                                                         |
-| ---------------------------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------ |
-| core (201 objects)           | Theme / Focus / Formatting / Shared option | [Interaction/scope.md](../../scopes/Interaction/scope.md); [Internationalization/scope.md](../../scopes/Internationalization/scope.md); [Controls/choice_controls.scope.md](../../scopes/Controls/choice_controls.scope.md) | Folder abstraction; Alias | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
-| prebuilt-themes (11 objects) | Theme                                      | —                                                                                                                                                                                                                           | Folder abstraction        | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| Source entry                 | Abstract concept                           | Other OpenUI scopes                                                                                                                                                                                                                                 | Abstraction level         | Source row                                                         |
+| ---------------------------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------ |
+| core (201 objects)           | Theme / Focus / Formatting / Shared option | [Interaction/scope.md](../../scopes/Interaction/scope.md#objects); [Internationalization/scope.md](../../scopes/Internationalization/scope.md#objects); [Controls/choice_controls.scope.md](../../scopes/Controls/choice_controls.scope.md#purpose) | Folder abstraction; Alias | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| prebuilt-themes (11 objects) | Theme                                      | —                                                                                                                                                                                                                                                   | Folder abstraction        | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
 
 ### Widgets/date_time_pickers.scope.md
 
@@ -157,9 +157,9 @@ The first scope listed is the primary destination used for grouping; further sco
 
 ### Widgets/dialog.scope.md
 
-| Source entry        | Abstract concept       | Other OpenUI scopes                                                                           | Abstraction level      | Source row                                                         |
-| ------------------- | ---------------------- | --------------------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------------------------ |
-| dialog (31 objects) | Dialog / Modal overlay | [Containers/overlay_containers.scope.md](../../scopes/Containers/overlay_containers.scope.md) | Existing object; Alias | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| Source entry        | Abstract concept       | Other OpenUI scopes                                                                                   | Abstraction level      | Source row                                                         |
+| ------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------------------------ |
+| dialog (31 objects) | Dialog / Modal overlay | [Containers/overlay_containers.scope.md](../../scopes/Containers/overlay_containers.scope.md#purpose) | Existing object; Alias | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
 
 ### Widgets/feedback_widgets.scope.md
 
@@ -170,9 +170,9 @@ The first scope listed is the primary destination used for grouping; further sco
 
 ### Widgets/list.scope.md
 
-| Source entry      | Abstract concept       | Other OpenUI scopes                                                                                                                                                                        | Abstraction level      | Source row                                                         |
-| ----------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | ------------------------------------------------------------------ |
-| list (42 objects) | List / List box / Link | [Controls/choice_controls.scope.md](../../scopes/Controls/choice_controls.scope.md); [Controls/link_and_scroll_controls.scope.md](../../scopes/Controls/link_and_scroll_controls.scope.md) | Existing object; Alias | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| Source entry      | Abstract concept       | Other OpenUI scopes                                                                                                                                                                                        | Abstraction level      | Source row                                                         |
+| ----------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------------------------ |
+| list (42 objects) | List / List box / Link | [Controls/choice_controls.scope.md](../../scopes/Controls/choice_controls.scope.md#purpose); [Controls/link_and_scroll_controls.scope.md](../../scopes/Controls/link_and_scroll_controls.scope.md#purpose) | Existing object; Alias | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
 
 ### Widgets/menu_widgets.scope.md
 
@@ -195,7 +195,7 @@ The first scope listed is the primary destination used for grouping; further sco
 
 ### Widgets/table.scope.md
 
-| Source entry       | Abstract concept      | Other OpenUI scopes                                       | Abstraction level                   | Source row                                                         |
-| ------------------ | --------------------- | --------------------------------------------------------- | ----------------------------------- | ------------------------------------------------------------------ |
-| sort (27 objects)  | Table sorting (facet) | [Interaction/scope.md](../../scopes/Interaction/scope.md) | Existing object; Folder abstraction | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
-| table (30 objects) | Table                 | —                                                         | Existing object                     | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| Source entry       | Abstract concept      | Other OpenUI scopes                                               | Abstraction level                   | Source row                                                         |
+| ------------------ | --------------------- | ----------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------------------------ |
+| sort (27 objects)  | Table sorting (facet) | [Interaction/scope.md](../../scopes/Interaction/scope.md#objects) | Existing object; Folder abstraction | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |
+| table (30 objects) | Table                 | —                                                                 | Existing object                     | [Family crosswalk](inventory/TAXONOMY_MAPPING.md#family-crosswalk) |

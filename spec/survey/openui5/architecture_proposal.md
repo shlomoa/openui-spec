@@ -1,6 +1,6 @@
 # OpenUI5 survey: architecture proposal
 
-[Survey README](README.md) · Sources: [overall finding](inventory/_taxonomy_findings.md#overall-finding-no-top-level-restructuring-needed), [B7_HIERARCHY_CHECK.md](inventory/B7_HIERARCHY_CHECK.md)
+[Survey README](README.md#contents) · Sources: [overall finding](inventory/_taxonomy_findings.md#overall-finding-no-top-level-restructuring-needed), [B7_HIERARCHY_CHECK.md](inventory/B7_HIERARCHY_CHECK.md#finding)
 
 Status: proposal for review. The canonical tree is unchanged.
 

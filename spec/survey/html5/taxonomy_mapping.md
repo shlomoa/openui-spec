@@ -1,56 +1,56 @@
 # HTML Standard survey: taxonomy mapping
 
-[Survey README](README.md) · [Categories](category.md) · [Scopes proposal](scopes_proposal.md)
+[Survey README](README.md#contents) · [Categories](category.md#categories) · [Scopes proposal](scopes_proposal.md#enrich-or-clarify-existing-contracts-first)
 
-This file normalizes the HTML survey's [taxonomy crosswalk](inventory/TAXONOMY_MAPPING.md). Each row is one entry of the existing OpenUI taxonomy mapping (TM-001–TM-151), matched to its HTML primitive and routed to an OpenUI scope. The reverse direction, from all 118 second-level HTML sections to scopes, is in the [source-section crosswalk](inventory/SURVEY_SCOPE_CROSSWALK.md).
+This file normalizes the HTML survey's [taxonomy crosswalk](inventory/TAXONOMY_MAPPING.md#sources-and-interpretation). Each row is one entry of the existing OpenUI taxonomy mapping (TM-001–TM-151), matched to its HTML primitive and routed to an OpenUI scope. The reverse direction, from all 118 second-level HTML sections to scopes, is in the [source-section crosswalk](inventory/SURVEY_SCOPE_CROSSWALK.md#1-introduction).
 
 The _HTML correspondence_ column keeps the survey's own labels (for example Direct primitive, Composed variant, Partial/composed, No direct match). It is a separate axis from the canonical abstraction level (Existing object, Alias, Grouped leaf, Folder abstraction).
 
-Scope paths are relative to `spec/scopes/`. The mapping records survey proposals only; the canonical scope tree, [taxonomy mapping](../../scopes/taxonomy_mapping.md) and generated catalog are unchanged.
+Scope paths are relative to `spec/scopes/`. The mapping records survey proposals only; the canonical scope tree, [taxonomy mapping](../../scopes/taxonomy_mapping.md#input-elements) and generated catalog are unchanged.
 
 ## Summary
 
 151 source entries map to 37 OpenUI scopes. HTML correspondence totals: External dependency 50, Partial pattern 24, Direct primitive 17, Partial structure 10, Partial notions 10, No direct match 7, Composed variant 6, Semantic mismatch 5, Direct notion 5, Partial notion 4, Partial family 3, Behavior evidence 2, Direct primitive / partial presentation 2, Direct event evidence 2, Direct table / partial grid 1, Partial view 1, Direct disclosure / partial accordion 1, Direct behavior 1.
 
-| OpenUI scope                                                                                          | Primary entries | All mentions |
-| ----------------------------------------------------------------------------------------------------- | --------------: | -----------: |
-| [Application/navigation.scope.md](../../scopes/Application/navigation.scope.md)                       |               1 |            1 |
-| [Application/tool_bars.scope.md](../../scopes/Application/tool_bars.scope.md)                         |               1 |            1 |
-| [Behaviors/drag_and_drop.scope.md](../../scopes/Behaviors/drag_and_drop.scope.md)                     |               2 |            2 |
-| [Behaviors/resizable.scope.md](../../scopes/Behaviors/resizable.scope.md)                             |               1 |            1 |
-| [Containers/expandable_panels.scope.md](../../scopes/Containers/expandable_panels.scope.md)           |               1 |            1 |
-| [Containers/grid.scope.md](../../scopes/Containers/grid.scope.md)                                     |               1 |            1 |
-| [Containers/overlay_containers.scope.md](../../scopes/Containers/overlay_containers.scope.md)         |               2 |            2 |
-| [Containers/scope.md](../../scopes/Containers/scope.md)                                               |               1 |            1 |
-| [Containers/sheet_containers.scope.md](../../scopes/Containers/sheet_containers.scope.md)             |               4 |            4 |
-| [Containers/splitters.scope.md](../../scopes/Containers/splitters.scope.md)                           |               1 |            1 |
-| [Containers/structural_containers.scope.md](../../scopes/Containers/structural_containers.scope.md)   |               5 |            5 |
-| [Containers/surface_containers.scope.md](../../scopes/Containers/surface_containers.scope.md)         |               3 |            3 |
-| [Containers/tabs.scope.md](../../scopes/Containers/tabs.scope.md)                                     |               2 |            2 |
-| [Controls/action_controls.scope.md](../../scopes/Controls/action_controls.scope.md)                   |               2 |            2 |
-| [Controls/choice_controls.scope.md](../../scopes/Controls/choice_controls.scope.md)                   |               6 |            6 |
-| [Controls/display_primitives.scope.md](../../scopes/Controls/display_primitives.scope.md)             |               6 |            6 |
-| [Controls/drawing_and_capture.scope.md](../../scopes/Controls/drawing_and_capture.scope.md)           |               3 |            3 |
-| [Controls/link_and_scroll_controls.scope.md](../../scopes/Controls/link_and_scroll_controls.scope.md) |               2 |            2 |
-| [Controls/picker_control.scope.md](../../scopes/Controls/picker_control.scope.md)                     |               3 |            3 |
-| [Controls/range_control.scope.md](../../scopes/Controls/range_control.scope.md)                       |               3 |            3 |
-| [Controls/status_indicator.scope.md](../../scopes/Controls/status_indicator.scope.md)                 |               5 |            5 |
-| [Controls/text_inputs.scope.md](../../scopes/Controls/text_inputs.scope.md)                           |               4 |            4 |
-| [Interaction/scope.md](../../scopes/Interaction/scope.md)                                             |              30 |           30 |
-| [Internationalization/scope.md](../../scopes/Internationalization/scope.md)                           |              16 |           16 |
-| [Layout/scope.md](../../scopes/Layout/scope.md)                                                       |               9 |            9 |
-| [Presentation/scope.md](../../scopes/Presentation/scope.md)                                           |              12 |           12 |
-| [Views/form.scope.md](../../scopes/Views/form.scope.md)                                               |               1 |            1 |
-| [Views/scope.md](../../scopes/Views/scope.md)                                                         |               1 |            1 |
-| [Widgets/data_grid.scope.md](../../scopes/Widgets/data_grid.scope.md)                                 |               0 |            1 |
-| [Widgets/date_time_pickers.scope.md](../../scopes/Widgets/date_time_pickers.scope.md)                 |               2 |            2 |
-| [Widgets/dialog.scope.md](../../scopes/Widgets/dialog.scope.md)                                       |               1 |            1 |
-| [Widgets/feedback_widgets.scope.md](../../scopes/Widgets/feedback_widgets.scope.md)                   |               5 |            5 |
-| [Widgets/list.scope.md](../../scopes/Widgets/list.scope.md)                                           |               1 |            1 |
-| [Widgets/media_widgets.scope.md](../../scopes/Widgets/media_widgets.scope.md)                         |               3 |            3 |
-| [Widgets/menu_widgets.scope.md](../../scopes/Widgets/menu_widgets.scope.md)                           |               3 |            3 |
-| [Widgets/navigation_widgets.scope.md](../../scopes/Widgets/navigation_widgets.scope.md)               |               7 |            7 |
-| [Widgets/table.scope.md](../../scopes/Widgets/table.scope.md)                                         |               1 |            1 |
+| OpenUI scope                                                                                                  | Primary entries | All mentions |
+| ------------------------------------------------------------------------------------------------------------- | --------------: | -----------: |
+| [Application/navigation.scope.md](../../scopes/Application/navigation.scope.md#purpose)                       |               1 |            1 |
+| [Application/tool_bars.scope.md](../../scopes/Application/tool_bars.scope.md#purpose)                         |               1 |            1 |
+| [Behaviors/drag_and_drop.scope.md](../../scopes/Behaviors/drag_and_drop.scope.md#purpose)                     |               2 |            2 |
+| [Behaviors/resizable.scope.md](../../scopes/Behaviors/resizable.scope.md#purpose)                             |               1 |            1 |
+| [Containers/expandable_panels.scope.md](../../scopes/Containers/expandable_panels.scope.md#purpose)           |               1 |            1 |
+| [Containers/grid.scope.md](../../scopes/Containers/grid.scope.md#purpose)                                     |               1 |            1 |
+| [Containers/overlay_containers.scope.md](../../scopes/Containers/overlay_containers.scope.md#purpose)         |               2 |            2 |
+| [Containers/scope.md](../../scopes/Containers/scope.md#objects)                                               |               1 |            1 |
+| [Containers/sheet_containers.scope.md](../../scopes/Containers/sheet_containers.scope.md#purpose)             |               4 |            4 |
+| [Containers/splitters.scope.md](../../scopes/Containers/splitters.scope.md#purpose)                           |               1 |            1 |
+| [Containers/structural_containers.scope.md](../../scopes/Containers/structural_containers.scope.md#purpose)   |               5 |            5 |
+| [Containers/surface_containers.scope.md](../../scopes/Containers/surface_containers.scope.md#purpose)         |               3 |            3 |
+| [Containers/tabs.scope.md](../../scopes/Containers/tabs.scope.md#purpose)                                     |               2 |            2 |
+| [Controls/action_controls.scope.md](../../scopes/Controls/action_controls.scope.md#purpose)                   |               2 |            2 |
+| [Controls/choice_controls.scope.md](../../scopes/Controls/choice_controls.scope.md#purpose)                   |               6 |            6 |
+| [Controls/display_primitives.scope.md](../../scopes/Controls/display_primitives.scope.md#purpose)             |               6 |            6 |
+| [Controls/drawing_and_capture.scope.md](../../scopes/Controls/drawing_and_capture.scope.md#purpose)           |               3 |            3 |
+| [Controls/link_and_scroll_controls.scope.md](../../scopes/Controls/link_and_scroll_controls.scope.md#purpose) |               2 |            2 |
+| [Controls/picker_control.scope.md](../../scopes/Controls/picker_control.scope.md#purpose)                     |               3 |            3 |
+| [Controls/range_control.scope.md](../../scopes/Controls/range_control.scope.md#purpose)                       |               3 |            3 |
+| [Controls/status_indicator.scope.md](../../scopes/Controls/status_indicator.scope.md#purpose)                 |               5 |            5 |
+| [Controls/text_inputs.scope.md](../../scopes/Controls/text_inputs.scope.md#purpose)                           |               4 |            4 |
+| [Interaction/scope.md](../../scopes/Interaction/scope.md#objects)                                             |              30 |           30 |
+| [Internationalization/scope.md](../../scopes/Internationalization/scope.md#objects)                           |              16 |           16 |
+| [Layout/scope.md](../../scopes/Layout/scope.md#objects)                                                       |               9 |            9 |
+| [Presentation/scope.md](../../scopes/Presentation/scope.md#objects)                                           |              12 |           12 |
+| [Views/form.scope.md](../../scopes/Views/form.scope.md#purpose)                                               |               1 |            1 |
+| [Views/scope.md](../../scopes/Views/scope.md#objects)                                                         |               1 |            1 |
+| [Widgets/data_grid.scope.md](../../scopes/Widgets/data_grid.scope.md#purpose)                                 |               0 |            1 |
+| [Widgets/date_time_pickers.scope.md](../../scopes/Widgets/date_time_pickers.scope.md#purpose)                 |               2 |            2 |
+| [Widgets/dialog.scope.md](../../scopes/Widgets/dialog.scope.md#purpose)                                       |               1 |            1 |
+| [Widgets/feedback_widgets.scope.md](../../scopes/Widgets/feedback_widgets.scope.md#purpose)                   |               5 |            5 |
+| [Widgets/list.scope.md](../../scopes/Widgets/list.scope.md#purpose)                                           |               1 |            1 |
+| [Widgets/media_widgets.scope.md](../../scopes/Widgets/media_widgets.scope.md#purpose)                         |               3 |            3 |
+| [Widgets/menu_widgets.scope.md](../../scopes/Widgets/menu_widgets.scope.md#purpose)                           |               3 |            3 |
+| [Widgets/navigation_widgets.scope.md](../../scopes/Widgets/navigation_widgets.scope.md#purpose)               |               7 |            7 |
+| [Widgets/table.scope.md](../../scopes/Widgets/table.scope.md#purpose)                                         |               1 |            1 |
 
 ## Entries by primary OpenUI scope
 
@@ -383,6 +383,6 @@ The first scope listed is the primary destination used for grouping; further sco
 
 ### Widgets/table.scope.md
 
-| Source entry                                    | Abstract concept  | Other OpenUI scopes                                                   | HTML correspondence         | Source row                                                       |
-| ----------------------------------------------- | ----------------- | --------------------------------------------------------------------- | --------------------------- | ---------------------------------------------------------------- |
-| table; caption; thead; tbody; tfoot; tr; th; td | Table / Data grid | [Widgets/data_grid.scope.md](../../scopes/Widgets/data_grid.scope.md) | Direct table / partial grid | [Output elements](inventory/TAXONOMY_MAPPING.md#output-elements) |
+| Source entry                                    | Abstract concept  | Other OpenUI scopes                                                           | HTML correspondence         | Source row                                                       |
+| ----------------------------------------------- | ----------------- | ----------------------------------------------------------------------------- | --------------------------- | ---------------------------------------------------------------- |
+| table; caption; thead; tbody; tfoot; tr; th; td | Table / Data grid | [Widgets/data_grid.scope.md](../../scopes/Widgets/data_grid.scope.md#purpose) | Direct table / partial grid | [Output elements](inventory/TAXONOMY_MAPPING.md#output-elements) |

@@ -1,6 +1,6 @@
 # OpenUI5 survey: summary
 
-[Survey README](README.md) · [Plan](PLAN.md)
+[Survey README](README.md#contents) · [Plan](PLAN.md#libraries)
 
 ## Baseline and scope
 
@@ -8,7 +8,7 @@
   `5165c20cff6de9d79604008a76c56322aa721bf5` (2026-09-21). Every table links to GitHub at
   that commit and to the official UI5 API reference.
 - **Surveyed:** twelve core UI libraries, excluding tests, themes, design-time and
-  flexibility files and vendored third-party code. See [PLAN.md](PLAN.md).
+  flexibility files and vendored third-party code. See [PLAN.md](PLAN.md#libraries).
 - **Goal:** add OpenUI5 as a second real-world framework to the OpenUI evidence base.
   Mapping to the existing taxonomy was attempted, not forced; finding gaps was an
   explicit goal.
@@ -36,9 +36,9 @@
 
 - **Taxonomy fit:** the 424 matched classes land on 31 of the 42 spec objects. Native (95)
   and Action controls (61) are the largest; the Pages objects have no matches. See
-  [taxonomy_mapping.md](taxonomy_mapping.md) and [category.md](category.md).
+  [taxonomy_mapping.md](taxonomy_mapping.md#summary) and [category.md](category.md#categories).
 - **Gaps:** 11 clusters: 9 new subcategories, 1 named variant (Tile) and 1 alias-level
-  note (Metadata-driven field). See [scopes_proposal.md](scopes_proposal.md).
+  note (Metadata-driven field). See [scopes_proposal.md](scopes_proposal.md#overlaps-with-other-surveys).
 - **Hierarchy:** the existing seven-way split of concrete-object scopes held. No new
   top-level category is needed.
 - **Terminology:** 3 of the 11 clusters (Filter bar, Personalization panels, Value help)
@@ -49,7 +49,7 @@
 
 - **Place clusters by purpose, not by name.** Each cluster was checked against the target
   scope's own Purpose and Boundaries text (step B7). See
-  [architecture_proposal.md](architecture_proposal.md).
+  [architecture_proposal.md](architecture_proposal.md#no-top-level-restructuring).
 - **Do not force placement.** Leftovers with no cluster stay unclassified rather than
   being filed into the nearest object.
 - **Keep Widgets whole for now.** Six clusters land in Widgets. That is flagged as a
