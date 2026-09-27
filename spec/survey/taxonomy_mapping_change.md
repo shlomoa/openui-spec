@@ -24,7 +24,7 @@ recommendation is one of four actions on a specific mapping row.
   [OpenUI5](openui5/taxonomy_mapping.md#summary), [Qt Widgets](qt/taxonomy_mapping.md#summary))
   and the canonical scope tree. [Appendix A](#appendix-a-what-each-survey-mapping-contributes)
   lists what each survey mapping contributes.
-- **Status:** approved (2026-09-27), not yet applied: C1–C4, A1–A12 and the entries not
+- **Status:** approved (2026-09-27), not yet applied: C1–C4, A1–A14 and the entries not
   added. It is applied with terminology step
   9.2 in the [v1 publish plan](specui_v1_publish_plan.md#w1-terminology).
 - **Naming rule used:** the approved [canonical-term rule](terminology.md#appendix-a-canonical-term-rule).
@@ -34,12 +34,12 @@ recommendation is one of four actions on a specific mapping row.
 
 ## Summary
 
-| Action  | Count | Examples                                                                          |
-| ------- | ----: | --------------------------------------------------------------------------------- |
-| Change  |     4 | Drag handle and Resize handle: Existing object → Alias; notes for Menu and Window |
-| Replace |     0 | Not needed.                                                                       |
-| Delete  |     0 | Not needed.                                                                       |
-| Add     |    12 | Chart, Collapsible, Report, Dashboard, Route, Navigation item, Tool action        |
+| Action  | Count | Examples                                                                                    |
+| ------- | ----: | ------------------------------------------------------------------------------------------- |
+| Change  |     4 | Drag handle and Resize handle: Existing object → Alias; notes for Menu and Window           |
+| Replace |     0 | Not needed.                                                                                 |
+| Delete  |     0 | Not needed.                                                                                 |
+| Add     |    14 | Chart, Collapsible, Report, Dashboard, Route, Navigation item, Tool action, Tree, Tree grid |
 
 After these changes every leaf scope has at least one taxonomy entry, except favicon.ico,
 index.html and Native. Today 16 of the 47 leaves have none; see [section 4](#4-add).
@@ -110,6 +110,17 @@ stepper (terminology A48). Twelve get an entry here; the other three are under
 Navigation item and group, Route and Routing join Navigation bar, and Tool action and Tool
 bar row join Toolbar, so each part sits in the same subcategory as the element that owns
 it.
+
+### Data trees
+
+Approved (2026-09-27). Tree view covers trees used to navigate. A tree that only shows
+hierarchical data is presentation, so it gets its own entry next to List and Table. The
+names are the WAI-ARIA role names (canonical-term rule 2).
+
+| #   | Add       | Spec object                                               | Level | Section: subcategory                               | Evidence                                                                                                                                                                                                                                                              | Source URL                                                             |
+| --- | --------- | --------------------------------------------------------- | ----- | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| A13 | Tree      | [List](../scopes/Widgets/list.scope.md#purpose)           | Alias | Output elements: Collections and data presentation | [OpenUI5 List](openui5/taxonomy_mapping.md#widgetslistscopemd) (`sap.m.StandardTreeItem`, `sap.m.CustomTreeItem`); [OpenUI5 Navigation widgets](openui5/taxonomy_mapping.md#widgetsnavigation_widgetsscopemd) (`sap.m.Tree`, built on the list base `sap.m.ListBase`) | [WAI-ARIA 1.2: tree](https://www.w3.org/TR/wai-aria-1.2/#tree)         |
+| A14 | Tree grid | [Data grid](../scopes/Widgets/data_grid.scope.md#purpose) | Alias | Output elements: Collections and data presentation | [OpenUI5 Data grid](openui5/taxonomy_mapping.md#widgetsdata_gridscopemd) (`sap.ui.table.TreeTable`)                                                                                                                                                                   | [WAI-ARIA 1.2: treegrid](https://www.w3.org/TR/wai-aria-1.2/#treegrid) |
 
 ### Not added
 
