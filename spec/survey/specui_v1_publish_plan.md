@@ -37,7 +37,7 @@ Re-checked on 2026-09-26 against `main` (19 commits after the first draft). The 
 | Area | What exists | Gap for v1.0 |
 | --- | --- | --- |
 | Survey (*changed*) | `spec/survey/` with 4 sources: `angular-material/`, `html5/` (WHATWG HTML), `openui5/`, `qt/`. Each has its own taxonomy mapping, proposed evidence and scope-extension proposal | No cross-source matrix; proposals overlap (e.g. `modal_interaction` in both Angular Material and Qt); `spec/survey/` is excluded from pre-commit, markdownlint and mkdocs |
-| Terminology (*changed*) | Glossary in `spec/README.md` (23 term entries). Standalone / Controlling element terms approved 2026-09-23 in `openui5/TERMINOLOGY_PROPOSAL.md`, not yet applied | No alias table across the 4 sources |
+| Terminology (*changed*) | Glossary in `spec/README.md` (23 term entries). All terminology decisions approved 2026-09-27 in [`terminology_proposal.md`](terminology_proposal.md#decisions-needed), not yet applied | No alias table across the 4 sources |
 | Scope | One-line purpose in `spec/README.md` and `docs/REQUIREMENTS.md` | No explicit in/out list. Qt and HTML surveys already defer host-shell integration, browser internals, storage, workers |
 | Categorization (*changed*) | 11 top-level scopes; purpose taxonomy (`docs/generic-ui-taxonomy.md`); 15-category `docs/ui-element-taxonomy.md`; openui5 7-category classification key. Qt and HTML proposals both recommend: keep the scope tree + purpose taxonomy as linked views, extend in place, no new tree | Decision not yet recorded; role of `ui-element-taxonomy.md` undecided |
 | Structure | `spec/README.md` mixes glossary, artifact roles, format, grammar, incremental generation | No normative/informative split; generator content inside the spec |
@@ -122,8 +122,11 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
    **Done (2026-09-26) for 4.1–4.10** in all four surveys (`angular-material/`, `html5/`, `openui5/`, `qt/`). Each survey's original data moved unchanged into its `inventory/` folder, with relative links rewritten; `html5/inventory/inventory/` keeps the chapter files. `openui5/` has no `openui_schema_proposal.md` because that survey proposes no schema change. 4.11 is not created while its structure is undecided.
 
+   **Consolidated proposals (2026-09-27):** [`terminology_proposal.md`](terminology_proposal.md#decisions-needed) (all decisions approved), [`schema_change_proposal.md`](schema_change_proposal.md#schema-change-proposal) (not needed) and [`structure_change_proposal.md`](structure_change_proposal.md#add) (two new Behaviors scopes).
+
 5. Build `matrix.csv` by merging the four `TAXONOMY_MAPPING.md` files: concept × {HTML, WAI-ARIA, openui5, Qt, Angular Material}. Columns: name, category in that source, key properties, events, OpenUI scope. Flag each row: *same term/same meaning*, *same term/different meaning*, *different term/same meaning*, *unique*. *Validate:* script checks every catalog type appears in the matrix. *Demo:* sortable/filterable matrix web page.
 6. Reconcile the scope-extension proposals (Angular Material `proposed-scopes/`, Qt P01–P06, HTML P1–P8) into one accept / defer / reject list, de-duplicating overlaps such as `modal_interaction` and `collapsible`. *Demo:* proposal table on the matrix page.
+   **Partly done (2026-09-27):** the new-scope proposals are reconciled. Two new scopes are accepted in [`structure_change_proposal.md`](structure_change_proposal.md#add); every other proposed scope was remapped to an existing scope or dropped, as recorded in [`terminology_proposal.md`](terminology_proposal.md#49-terms-that-need-a-new-scope). The accept / defer / reject list for existing-leaf enhancements is still open.
 
 ### W1 Terminology
 
@@ -135,7 +138,21 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 8.2 Create a canonical list of terms.
    - 8.3 Add an alias table (canonical term → openui5 / Qt / Angular Material / ARIA names).
    - 8.4 Catalog any conflict / duplicate / wrong aliased term.
+
+   **Done (2026-09-27) for 8, 8.1, 8.2 and 8.4** in [`terminology_proposal.md`](terminology_proposal.md#appendix-a-canonical-term-rule): the canonical-term rule is approved, and each term is recorded as a Change, Replace, Delete or Add. 8.3 is deferred to task 9.8, so the alias table uses the final names.
 9. Review and resolve conflicts in terminology.
+
+   **Done (2026-09-27):** all four decisions in [`terminology_proposal.md`](terminology_proposal.md#decisions-needed) are approved.
+
+   Apply the approved terminology. These are specification changes, so they follow [`RELEASING.md`](../../RELEASING.md#schema-and-catalog-version-changes). Do task 7 first, so the glossary changes land in their final location.
+   - 9.1 Glossary: add A1–A5 (Owner, Controlled element, Controlling element, Trigger, Window); apply C6 (move "component" and "UI component" from the Widget aliases to the Object aliases) and D2 (remove "widget instance" from the Element aliases); add the conflicting-meaning notes for Page, Control, Element and Grid ([appendix A](terminology_proposal.md#appendix-a-canonical-term-rule)).
+   - 9.2 Taxonomy mapping: apply C1–C6, R1–R11 and D1 in `spec/scopes/taxonomy_mapping.md`, and add A6–A72 with their scope and abstraction level.
+   - 9.3 Generic taxonomy: make the same renames and additions in `docs/generic-ui-taxonomy.md`, which the taxonomy mapping is based on.
+   - 9.4 New scopes: create `Behaviors/input_assistance.scope.md` and `Behaviors/viewport_and_focus_control.scope.md` from `template.scope.md`, list them in `Behaviors/scope.md`, and add one row each to `spec/scopes/evidence.md`.
+   - 9.5 Decide whether Modal overlay, moved to Behaviors by C4, needs its own scope file or is covered by an existing leaf.
+   - 9.6 Regenerate `spec/openui.json`, bump `SCHEMA_VERSION` and the package versions, and update examples, fixtures and `CHANGELOG.md`.
+   - 9.7 Validate: pre-commit, unit tests, `mkdocs build --strict` and the npm tests.
+   - 9.8 Build the alias table (task 8.3) from the survey `taxonomy_mapping.md` files, using the final names.
 
 ### W2 Scope
 
@@ -208,13 +225,13 @@ Re-validated 2026-09-26: of the original 9, 2 are answered by the repo, 3 are pa
 | Q2 | Where are the survey results? | Decided | `spec/survey/` on `main` since commit 215f2e7 |
 | Q3 | Is the first edition `1.0.0`, or a `0.x` candidate with `1.0.0` later? | Decided — continue `0.x.0` / `0.x.y` releases; defer any release candidate | Validate the spec in downstream tools and packages before attempting a release candidate |
 | Q4 | Adopt the surveys' categorization: 11-scope contract tree + purpose taxonomy as linked views, extend in place? | Deferred — W3 task 13, informed by W0 tasks 5–6 | Qt `TAXONOMY_STRUCTURE_PROPOSAL.md` and HTML `SCOPE_TREE_PROPOSAL.md` both say yes, no new tree. Sub-question: retire, merge or keep `docs/ui-element-taxonomy.md` (15 categories)? |
-| Q5 | Canonical-term rule: HTML/ARIA name wins, or majority across sources? | Deferred — W1 task 7, decide through review with the project owner | — |
+| Q5 | Canonical-term rule: HTML/ARIA name wins, or majority across sources? | Decided — keep the existing OpenUI term; otherwise the HTML or WAI-ARIA name; otherwise the majority across frameworks; otherwise a neutral descriptive name | [`terminology_proposal.md`](terminology_proposal.md#appendix-a-canonical-term-rule) |
 | Q6 | Attribute values: keep `string \| null`, or add typed values? | Decided — introduce typed values in a later W5 grammar revision | Current grammar permits `string \| null`; 0.3.0 element references are quoted strings |
 | Q7 | Attribute keys: keep `[x]` / `(x)`, or neutral keys (`uses.x`, `produces.x`, `behaves.x`)? | Deferred — blocks W5 task 20 | Still Angular syntax in `spec/README.md` and the leaf template |
 | Q8 | Does the Angular generator stay in openui-spec for v1.0, or move to angular-django2? | Deferred — no workstream currently blocked | Still at `generators/angular/` |
 | Q9 | Qt desktop-only concepts: confirm host-shell presence deferred, MDI / docking as optional runtime capabilities? | Deferred — W2 tasks 10–11, informed by W0 task 6 | Already proposed so in Qt `SCOPE_EXTENSION_PROPOSAL.md` |
-| Q10 | Apply the approved Standalone / Controlling element glossary entries now, or inside W1? | Deferred — irrelevant at the current planning stage; revisit in W1 | Approved 2026-09-23, glossary diff held in `openui5/TERMINOLOGY_PROPOSAL.md` |
-| Q11 | Which proposed scopes enter v1.0? | Decided — include all scopes resulting from W0 survey consolidation | Angular Material `proposed-scopes/`, Qt P01–P06, HTML P1–P8 (task 6) |
+| Q10 | Apply the approved Standalone / Controlling element glossary entries now, or inside W1? | Superseded — Standalone is not added; Owner, Controlled element and Controlling element are approved instead and applied in W1 task 9.1 | [`terminology_proposal.md`](terminology_proposal.md#41-glossary-terms) |
+| Q11 | Which proposed scopes enter v1.0? | Decided — include all scopes resulting from W0 survey consolidation: `Behaviors/input_assistance` and `Behaviors/viewport_and_focus_control` | [`structure_change_proposal.md`](structure_change_proposal.md#add) |
 | Q12 | Where do the plan and consolidated outputs live? | Superseded — the current plan location is defined; W0 task 4 will define the consolidated-output location | The current plan is `spec/survey/specui_v1_publish_plan.md`; once W0 defines the output location, this combined question is obsolete |
 | Q13 | Add HTML's conditional Accessibility and Composition top-level scopes in v1.0, or defer? | Deferred — W2 tasks 10–11 determine whether they are in this project's scope | HTML P6 / P7 |
 
