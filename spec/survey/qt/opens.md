@@ -14,7 +14,7 @@ consolidated file has since settled an item, the outcome is linked.
 | [Q3](#q3-the-six-proposed-leaves)       | The six proposed leaves P01–P06                | Settled: two became new Behaviors scopes, four became terms of existing scopes |
 | [Q4](#q4-overlap-with-angular-material) | Overlap with Angular Material                  | Settled: one term and one scope per concept                                    |
 | [Q5](#q5-serialization-of-values)       | Serialization of temporal and rich-text values | Deferred to the language workstream W5                                         |
-| [Q6](#q6-stack-wording)                 | Stack defined with a depth axis                | Settled in terminology; the generic taxonomy text still needs the change       |
+| [Q6](#q6-stack-wording)                 | Stack defined with a depth axis                | Settled: Stack stays linear; the generic taxonomy drops "or depth"             |
 | [Q7](#q7-adapter-capability-handling)   | Adapter capability handling                    | Open; a generator concern (W8)                                                 |
 | [Q8](#q8-survey-decisions-d01d09)       | The survey's own decisions D01–D09             | Five settled, four wait on W5 or W6                                            |
 
@@ -71,9 +71,8 @@ defines Stack as "a structure that arranges child elements sequentially along a
 horizontal, vertical, or depth axis", while the canonical taxonomy mapping calls it a
 "Linear arrangement container". Consolidated outcome: Stack is kept as a linear
 arrangement, and depth-layered stacking is the new term Layered arrangement
-([terminology: Kept](../terminology.md#kept-with-a-sharper-definition), A55). **Still to
-do:** the generic taxonomy sentence must drop "or depth" when the terminology is applied
-(plan W1 step 9.3).
+([terminology: Kept](../terminology.md#kept-with-a-sharper-definition), A55). The generic taxonomy sentence drops "or depth" when the terminology is applied (plan W1
+step 9.3), as recorded in the Stack row of [terminology: Kept](../terminology.md#kept-with-a-sharper-definition).
 
 ## Q7 Adapter capability handling
 
