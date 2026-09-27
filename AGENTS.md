@@ -29,9 +29,8 @@ Angular TypeScript generator that applies the specification to an existing Angul
 - `generators/angular/generator/` - Angular TypeScript generator implementation.
 - `generators/angular/generator/docs/GENERATION.md` - Angular generator architecture,
   implementation details, code-generation flow, and validation strategy.
-- `generators/angular/generator/docs/TDD.md` - Angular Material Code Generator
-  test-driven design-to-implementation workflow.
-- `docs/TEST_PLAN.md` - Spec-contract and repository CI validation strategy.
+- [`tests/TEST_PLAN.md`](tests/TEST_PLAN.md#root-test-suite-plan) - Spec-contract test-suite
+  strategy and test-module matrix.
 
 ## Repository-specific rules
 
