@@ -129,7 +129,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 5. Build `matrix.csv` by merging the four `TAXONOMY_MAPPING.md` files: concept × {HTML, WAI-ARIA, openui5, Qt, Angular Material}. Columns: name, category in that source, key properties, events, OpenUI scope. Flag each row: *same term/same meaning*, *same term/different meaning*, *different term/same meaning*, *unique*. *Validate:* script checks every catalog type appears in the matrix. *Demo:* sortable/filterable matrix web page.
 6. Reconcile the scope-extension proposals (Angular Material `proposed-scopes/`, Qt P01–P06, HTML P1–P8) into one accept / defer / reject list, de-duplicating overlaps such as `modal_interaction` and `collapsible`. *Demo:* proposal table on the matrix page.
-   **Done (2026-09-27):** the new-scope proposals are reconciled. Two new scopes are accepted in [`structure_change.md`](structure_change.md#add); every other proposed scope was remapped to an existing scope or dropped, as recorded in [`terminology.md`](terminology.md#49-terms-that-need-a-new-scope). The changes the surveys ask for in existing scopes are consolidated in [`scope_change_proposal.md`](scope_change_proposal.md#decisions-needed) (2026-09-27) and approved.
+   **Done (2026-09-27):** the new-scope proposals are reconciled. Two new scopes are accepted in [`structure_change.md`](structure_change.md#add); every other proposed scope was remapped to an existing scope or dropped, as recorded in [`terminology.md`](terminology.md#49-terms-that-need-a-new-scope). The changes the surveys ask for in existing scopes are consolidated in [`scope_change.md`](scope_change.md#summary) (2026-09-27) and approved.
 
 ### W1 Terminology
 
@@ -153,7 +153,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 9.3 Generic taxonomy: make the same renames and additions in `docs/generic-ui-taxonomy.md`, which the taxonomy mapping is based on.
    - 9.4 New scopes: create `Behaviors/input_assistance.scope.md` and `Behaviors/viewport_and_focus_control.scope.md` from `template.scope.md`, list them in `Behaviors/scope.md`, and add one row each to `spec/scopes/evidence.md`.
    - 9.5 Decide whether Modal overlay, moved to Behaviors by C4, needs its own scope file or is covered by an existing leaf.
-   - 9.6 Scope contracts: apply [`scope_change_proposal.md`](scope_change_proposal.md#decisions-needed) in the same pass: the Purpose texts, the behavior target references and the Validation notes rules.
+   - 9.6 Scope contracts: apply [`scope_change.md`](scope_change.md#summary) in the same pass: the Purpose texts, the behavior target references and the Validation notes rules.
    - 9.7 Regenerate `spec/openui.json`, bump `SCHEMA_VERSION` and the package versions, and update examples, fixtures and `CHANGELOG.md`.
    - 9.8 Validate: pre-commit, unit tests, `mkdocs build --strict` and the npm tests.
    - 9.9 Build the alias table (task 8.3) from the survey `taxonomy_mapping.md` files, using the final names.
