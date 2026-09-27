@@ -196,8 +196,7 @@ details, not OpenUI document types.
 generators/angular/
 ├─ generator/
 │  ├─ docs/
-│  │  ├─ GENERATION.md
-│  │  └─ TDD.md
+│  │  └─ GENERATION.md
 │  ├─ src/
 │  │  ├─ main.ts
 │  │  ├─ spec/
