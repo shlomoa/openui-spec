@@ -14,7 +14,7 @@ The Angular generator lives in `generators/angular/generator/`. Keep it
 structured as a **compiler pipeline**, not as a template script.
 
 Repository-level validation commands and CI gate ownership live in
-[`README.md` § Repository validation](../../../../README.md#repository-validation).
+[`CONTRIBUTING.md` § Repository validation](../../../../CONTRIBUTING.md#repository-validation).
 The root Python test-module matrix lives in
 [`tests/TEST_PLAN.md`](../../../../tests/TEST_PLAN.md). This document only owns
 generator-specific validation details.
@@ -760,7 +760,7 @@ That script runs TypeScript compilation first and then the Node test suite from
 `dist/tests/*.test.js`.
 
 Run repository Python and documentation validation from the root as documented
-in [`README.md` § Repository validation](../../../../README.md#repository-validation).
+in [`CONTRIBUTING.md` § Repository validation](../../../../CONTRIBUTING.md#repository-validation).
 The root Python test-module matrix lives in
 [`tests/TEST_PLAN.md`](../../../../tests/TEST_PLAN.md).
 

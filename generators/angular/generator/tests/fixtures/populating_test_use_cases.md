@@ -156,7 +156,7 @@ The following table maps scenarios to test fixtures:
 
 ### Step 9 - Full validation
 
-9.1. **Run full validation** - Add the generator validation tests to the output fixture workspace. - Add the generator validation command to the repo validation recipe. - Add the generator validation command to the CI build.yml. - Run repository validation as described in [spec/README.md § Validation](../../../../../spec/README.md#validation)
+9.1. **Run full validation** - Add the generator validation tests to the output fixture workspace. - Add the generator validation command to the repo validation recipe. - Add the generator validation command to the CI build.yml. - Run repository validation as described in [CONTRIBUTING.md § Repository validation](../../../../../CONTRIBUTING.md#repository-validation)
 
 ### Step 10 - Maintain test fixtures
 

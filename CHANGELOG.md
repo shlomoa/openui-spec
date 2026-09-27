@@ -3,6 +3,23 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [Unreleased]
+
+### Validation tooling
+
+- Moved the scope converter to `spec/bin/to_json/` (`python -m spec.bin.to_json`)
+  and the grammar consistency check to `spec/bin/check_grammar_consistency/`
+  (`python -m spec.bin.check_grammar_consistency`). The `spec/tooling/` folder
+  now holds only the tooling guides.
+- Added the `spec/bin/lint_spec.py` spec-content linter, run by pre-commit. It
+  checks that every leaf scope has exactly one `evidence.md` row and can write an
+  HTML report with `--html`. Template-section and glossary rules are registered
+  but disabled until the glossary moves into `spec/scopes/scope.md`.
+- Added the `spec/bin/check_links.py` Markdown internal link checker, run by
+  pre-commit, and fixed the broken internal links it found.
+- The `openui-grammar-consistency` pre-commit hook now also runs when only scope
+  sources or its tool code change.
+
 ## [0.3.1] - 2026-09-25
 
 ### Fixed
