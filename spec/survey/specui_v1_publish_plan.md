@@ -129,7 +129,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 5. Build `matrix.csv` by merging the four `TAXONOMY_MAPPING.md` files: concept × {HTML, WAI-ARIA, openui5, Qt, Angular Material}. Columns: name, category in that source, key properties, events, OpenUI scope. Flag each row: *same term/same meaning*, *same term/different meaning*, *different term/same meaning*, *unique*. *Validate:* script checks every catalog type appears in the matrix. *Demo:* sortable/filterable matrix web page.
 6. Reconcile the scope-extension proposals (Angular Material `proposed-scopes/`, Qt P01–P06, HTML P1–P8) into one accept / defer / reject list, de-duplicating overlaps such as `modal_interaction` and `collapsible`. *Demo:* proposal table on the matrix page.
-   **Partly done (2026-09-27):** the new-scope proposals are reconciled. Two new scopes are accepted in [`structure_change.md`](structure_change.md#add); every other proposed scope was remapped to an existing scope or dropped, as recorded in [`terminology.md`](terminology.md#49-terms-that-need-a-new-scope). The accept / defer / reject list for existing-leaf enhancements is still open.
+   **Partly done (2026-09-27):** the new-scope proposals are reconciled. Two new scopes are accepted in [`structure_change.md`](structure_change.md#add); every other proposed scope was remapped to an existing scope or dropped, as recorded in [`terminology.md`](terminology.md#49-terms-that-need-a-new-scope). The changes the surveys ask for in existing scopes are consolidated in [`scope_change_proposal.md`](scope_change_proposal.md#decisions-needed) (2026-09-27); its three decisions are open.
 
 ### W1 Terminology
 
@@ -142,7 +142,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 8.3 Add an alias table (canonical term → openui5 / Qt / Angular Material / ARIA names).
    - 8.4 Catalog any conflict / duplicate / wrong aliased term.
 
-   **Done (2026-09-27) for 8, 8.1, 8.2 and 8.4** in [`terminology.md`](terminology.md#appendix-a-canonical-term-rule): the canonical-term rule is approved, and each term is recorded as a Change, Replace, Delete or Add. 8.3 is deferred to task 9.8, so the alias table uses the final names.
+   **Done (2026-09-27) for 8, 8.1, 8.2 and 8.4** in [`terminology.md`](terminology.md#appendix-a-canonical-term-rule): the canonical-term rule is approved, and each term is recorded as a Change, Replace, Delete or Add. 8.3 is deferred to task 9.9, so the alias table uses the final names.
 9. Review and resolve conflicts in terminology.
 
    **Done (2026-09-27):** [`terminology.md`](terminology.md#summary) is approved in full, including the terms not added.
@@ -153,9 +153,10 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 9.3 Generic taxonomy: make the same renames and additions in `docs/generic-ui-taxonomy.md`, which the taxonomy mapping is based on.
    - 9.4 New scopes: create `Behaviors/input_assistance.scope.md` and `Behaviors/viewport_and_focus_control.scope.md` from `template.scope.md`, list them in `Behaviors/scope.md`, and add one row each to `spec/scopes/evidence.md`.
    - 9.5 Decide whether Modal overlay, moved to Behaviors by C4, needs its own scope file or is covered by an existing leaf.
-   - 9.6 Regenerate `spec/openui.json`, bump `SCHEMA_VERSION` and the package versions, and update examples, fixtures and `CHANGELOG.md`.
-   - 9.7 Validate: pre-commit, unit tests, `mkdocs build --strict` and the npm tests.
-   - 9.8 Build the alias table (task 8.3) from the survey `taxonomy_mapping.md` files, using the final names.
+   - 9.6 Scope contracts: apply [`scope_change_proposal.md`](scope_change_proposal.md#decisions-needed) in the same pass: the Purpose texts, the behavior target references and the Validation notes rules.
+   - 9.7 Regenerate `spec/openui.json`, bump `SCHEMA_VERSION` and the package versions, and update examples, fixtures and `CHANGELOG.md`.
+   - 9.8 Validate: pre-commit, unit tests, `mkdocs build --strict` and the npm tests.
+   - 9.9 Build the alias table (task 8.3) from the survey `taxonomy_mapping.md` files, using the final names.
 
 ### W2 Scope
 
@@ -239,11 +240,11 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 1 | Cross-source matrix and the rest of the scope reconciliation | W0 5, 6 | — | Open (6 partly done) |
 | 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Open |
 | 2 | Move the glossary to its final location | W1 7 | — | Open |
-| 3 | Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, two new Behaviors scopes, Modal overlay decision | W1 9.1–9.5; W3 14.3–14.5 | Steps 2 | Open |
-| 4 | Regenerate, version and validate; release `0.x.0` | W1 9.6, 9.7; W3 14.7 | Step 3 | Open |
+| 3 | Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, two new Behaviors scopes, Modal overlay decision, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Steps 2 | Open |
+| 4 | Regenerate, version and validate; release `0.x.0` | W1 9.7, 9.8; W3 14.7 | Step 3 | Open |
 | 4 | Retire `docs/ui-element-taxonomy.md` | W3 14.6 | Step 3 | Open |
 | 4 | Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Open |
-| 5 | Alias table from the survey mappings, with the final names | W1 9.8 (8.3) | Steps 3, W0 5 | Open |
+| 5 | Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Steps 3, W0 5 | Open |
 | 5 | Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | W1 9 | Open |
 | 6 | Scope statement and in / out classification; answers Q9 and Q13 | W2 10–12 | W1 9, W0 6 | Open |
 | 7 | Accessibility types of the merge, if Q13 puts them in scope | W3 14.1–14.5 (remainder) | Step 6 | Open |
