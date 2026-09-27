@@ -102,6 +102,8 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 2.4 ~~`openui.json` is up to date with the prose~~ — **done**: enforced by `check_grammar_consistency.py` since 2026-09-26. *Validate:* unit tests with passing and failing fixtures. *Demo:* HTML lint report page.
 3. Add a Markdown link checker to pre-commit. *Validate:* zero broken internal links.
 
+   **Done (2026-09-27) for 1, 2 (framework and 2.2) and 3** in [PR #159](https://github.com/shlomoa/openui-spec/pull/159), not yet merged: tools moved to `spec/bin` (`python -m spec.bin.<tool>`), `lint_spec.py` with rule 2.2 and an `--html` report, and `check_links.py` in pre-commit. Rules 2.1 and 2.3 are registered but disabled until W1 task 7.
+
 ### W0 Survey consolidation
 
 4. Choose a directory structure and content for all surveys.
@@ -230,7 +232,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 
 | # | Step | Plan tasks | Depends on | Status |
 | --- | --- | --- | --- | --- |
-| 1 | Guard rails: tooling folder, spec-content lint framework, link checker | W9 1, 2 (framework, 2.2), 3 | — | Open |
+| 1 | Guard rails: tooling folder, spec-content lint framework, link checker | W9 1, 2 (framework, 2.2), 3 | — | Done in [PR #159](https://github.com/shlomoa/openui-spec/pull/159), awaiting merge |
 | 1 | Category decisions 1–3 of [`category_change_proposal.md`](category_change_proposal.md#decisions-needed) | W3 13 | — | Open (decision 4 approved) |
 | 1 | Cross-source matrix and the rest of the scope reconciliation | W0 5, 6 | — | Open (6 partly done) |
 | 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Open |
