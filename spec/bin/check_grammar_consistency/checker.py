@@ -9,11 +9,12 @@ from pathlib import Path
 from typing import Any
 
 from jsonschema import Draft202012Validator
-from spec.to_json.converter import build_openui_document
 from tatsu import parse
 from tatsu.exceptions import FailedParse
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+from spec.bin.to_json.converter import build_openui_document
+
+REPO_ROOT = Path(__file__).resolve().parents[3]
 SPEC_DIR = REPO_ROOT / "spec"
 EBNF_PATH = SPEC_DIR / "EBNF.txt"
 README_PATH = SPEC_DIR / "README.md"

@@ -26,9 +26,7 @@ The canonical, framework-independent worked examples live under
 [`spec/examples/`](../../../spec/examples/README.md) — one OpenUI document per
 scope, mirroring [`spec/scopes/`](../../../spec/scopes). Those documents are the
 source of truth for what this app documents; the app manifests them, it does not
-regenerate them. The planned restructure that maps each `spec/examples/**`
-document to an app entry one-to-one is tracked in
-[generated-examples-app-update-plan.md](generated-examples-app-update-plan.md).
+regenerate them.
 
 ## Incremental generation
 

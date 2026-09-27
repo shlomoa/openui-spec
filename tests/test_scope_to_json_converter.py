@@ -3,7 +3,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from spec.to_json.converter import build_openui_document, build_scope_tree, main, parse_leaf_scope
+from spec.bin.to_json.converter import (
+    build_openui_document,
+    build_scope_tree,
+    main,
+    parse_leaf_scope,
+)
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SPEC_DIR = REPO_ROOT / "spec"

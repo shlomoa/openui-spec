@@ -2,6 +2,8 @@ import re
 import unittest
 from pathlib import Path
 
+from spec.bin.lint_spec import check_evidence_rows
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SPEC_DIR = REPO_ROOT / "spec"
 SCOPES_DIR = SPEC_DIR / "scopes"
@@ -23,13 +25,7 @@ class ScopeEvidenceRegisterTest(unittest.TestCase):
         return rows
 
     def test_register_covers_every_leaf_one_to_one(self) -> None:
-        actual_leaves = {
-            path.relative_to(SPEC_DIR).as_posix()
-            for path in SCOPES_DIR.rglob("*.scope.md")
-            if path.name != "template.scope.md"
-        }
-
-        self.assertEqual(set(self.rows), actual_leaves)
+        self.assertEqual(check_evidence_rows(SPEC_DIR), [])
 
     def test_every_entry_cites_a_source_and_citation(self) -> None:
         for leaf, cells in self.rows.items():

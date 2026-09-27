@@ -2,7 +2,7 @@ import unittest
 from pathlib import Path
 from typing import cast
 
-from spec.to_json.converter import parse_leaf_scope
+from spec.bin.to_json.converter import parse_leaf_scope
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCOPES_DIR = REPO_ROOT / "spec" / "scopes"

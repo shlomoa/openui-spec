@@ -677,7 +677,7 @@ source of truth. Every leaf
 _machine-bearing_ — **Identity**, **Attributes**, **Child model** — and follow
 fixed line patterns; **Purpose**, **Accessibility**, and **Validation notes** are
 free prose and are not parsed. The converter lives in
-`to_json/` and walks the tree.
+`bin/to_json/` and walks the tree.
 
 ### Field mapping
 
