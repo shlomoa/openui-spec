@@ -248,9 +248,9 @@ no term change: **Page** (OpenUI5 `sap.m.Page` is a container), **Control** (Ope
 
 ## Decisions needed
 
-| #   | Decision                                                                                 | Status                                                                                                        | Plan item            |
-| --- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------------------- |
-| 1   | Canonical-term rule (appendix A)                                                         | Approved                                                                                                      | Q5, W1 task 8        |
-| 2   | Glossary additions A1–A5                                                                 | Approved                                                                                                      | Q10, W1 task 8       |
-| 3   | Term changes: C1–C6, R1–R11, D1–D2 and the kept terms (Stack, Toolbar, Dropdown, Window) | Approved                                                                                                      | W1 task 9            |
-| 4   | Added terms A6–A72 (A68 dropped)                                                         | Open. A71 and A72 name new scopes, both in the [structure change proposal](structure_change_proposal.md#add). | W0 task 6, W1 task 8 |
+| #   | Decision                                                                                 | Status                                                                                                            | Plan item            |
+| --- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------- |
+| 1   | Canonical-term rule (appendix A)                                                         | Approved                                                                                                          | Q5, W1 task 8        |
+| 2   | Glossary additions A1–A5                                                                 | Approved                                                                                                          | Q10, W1 task 8       |
+| 3   | Term changes: C1–C6, R1–R11, D1–D2 and the kept terms (Stack, Toolbar, Dropdown, Window) | Approved                                                                                                          | W1 task 9            |
+| 4   | Added terms A6–A72 (A68 dropped)                                                         | Approved. A71 and A72 name new scopes, both in the [structure change proposal](structure_change_proposal.md#add). | W0 task 6, W1 task 8 |
