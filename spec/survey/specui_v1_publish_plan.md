@@ -123,7 +123,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 4.10 opens.md: open and unresolved questions / issues / directions with references \[optional\]
    - 4.11 scopes: a folder of structure not yet decided to include the consolidated surveyed specification
 
-   **Done (2026-09-26) for 4.1–4.10** in all four surveys (`angular-material/`, `html5/`, `openui5/`, `qt/`). Each survey's original data moved unchanged into its `inventory/` folder, with relative links rewritten; `html5/inventory/inventory/` keeps the chapter files. `openui5/` has no `openui_schema_proposal.md` because that survey proposes no schema change. 4.11 is not created while its structure is undecided.
+   **Done (2026-09-26) for 4.1–4.10** in all four surveys (`angular-material/`, `html5/`, `openui5/`, `qt/`). Each survey's original data moved unchanged into its `inventory/` folder, with relative links rewritten; `html5/inventory/inventory/` keeps the chapter files. `openui5/` has no `openui_schema_proposal.md` because that survey proposes no schema change. 4.11 is dropped (decided 2026-09-27): the consolidated outputs live in `spec/survey/`, and applying them is W1 and W3 work.
 
    **Consolidated proposals (2026-09-27):** [`terminology.md`](terminology.md#summary) (all decisions approved), [`schema_change.md`](schema_change.md#schema-change-proposal) (not needed) and [`structure_change.md`](structure_change.md#add) (two new Behaviors scopes). [`category.md`](category.md#summary) (2026-09-27) consolidates the four survey `category.md` files and is approved in full. [`taxonomy_mapping_change.md`](taxonomy_mapping_change.md#summary) (2026-09-27) consolidates the four survey `taxonomy_mapping.md` files and is approved in full.
 
