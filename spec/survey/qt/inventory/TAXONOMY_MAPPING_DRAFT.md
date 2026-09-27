@@ -4,7 +4,7 @@ Review copy: existing rows and abstraction levels are preserved, with links relo
 
 This document maps the abstract vocabulary in `docs/generic-ui-taxonomy.md` to the
 canonical scope objects under `spec/scopes/`. It keeps taxonomy aliases explicit while
-leaving detailed definitions in the [glossary](../../../README.md#glossary) and concrete
+leaving detailed definitions in the [glossary](../../../scopes/scope.md#glossary) and concrete
 contracts in each linked scope file.
 
 Abstraction levels:

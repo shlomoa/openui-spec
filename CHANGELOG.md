@@ -5,6 +5,18 @@ published packages.
 
 ## [Unreleased]
 
+### Specification documentation
+
+- Moved the spec glossary from `spec/README.md` into a new Glossary section of
+  `spec/scopes/scope.md`, together with the taxonomy abstraction levels from
+  `spec/scopes/taxonomy_mapping.md` and the evidence source kinds from
+  `spec/scopes/evidence.md`. Definitions are unchanged; the former locations
+  now link to `spec/scopes/scope.md#glossary`, and links to
+  `spec/README.md#glossary` and `spec/README.md#known-object-type` now point at
+  `spec/scopes/scope.md`. The regenerated `spec/openui.json` differs only in the
+  glossary link inside the `scopes` node `purpose` text; no object, type,
+  attribute, or child changed.
+
 ### Validation tooling
 
 - Moved the scope converter to `spec/bin/to_json/` (`python -m spec.bin.to_json`)

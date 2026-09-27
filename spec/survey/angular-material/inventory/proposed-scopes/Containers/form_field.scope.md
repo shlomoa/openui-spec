@@ -1,6 +1,6 @@
 # Form field
 
-Review draft only; not part of the canonical catalog. Follows the [leaf template](../../../../../scopes/template.scope.md) and [scope rules](../../../../../scopes/scope.md). Shared terms retain the [spec glossary](../../../../../README.md#glossary) meanings. See the [proposal](../../SCOPE_EXTENSION_PROPOSAL.md) and [candidate evidence](../../PROPOSED_EVIDENCE.md) before any merge.
+Review draft only; not part of the canonical catalog. Follows the [leaf template](../../../../../scopes/template.scope.md) and [scope rules](../../../../../scopes/scope.md). Shared terms retain the [spec glossary](../../../../../scopes/scope.md#glossary) meanings. See the [proposal](../../SCOPE_EXTENSION_PROPOSAL.md) and [candidate evidence](../../PROPOSED_EVIDENCE.md) before any merge.
 
 ## Identity
 

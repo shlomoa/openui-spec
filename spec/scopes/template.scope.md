@@ -4,7 +4,7 @@ Source-of-truth template for every leaf `*.scope.md` (a scope with no child
 objects). Copy this file, rename it to `<object_name>.scope.md`, and fill in each
 section. The sections below are the **formal structure**: the converter in `../bin/to_json/` parses them deterministically into a scope node plus
 its `<scopeId>Instance` (see the section EBNF in [`../README.md`](../README.md)).
-Use the [spec glossary](../README.md#glossary) for canonical vocabulary and
+Use the [spec glossary](scope.md#glossary) for canonical vocabulary and
 aliases. Leaf prose may specialize a glossary term for the object contract, but
 must not create a competing definition for shared terms.
 
@@ -30,7 +30,7 @@ Where:
 - `type` — the exact semantic-category literal the scope materializes (e.g.
   `dialog`, `input`, `table`, or a PascalCase category). This becomes the
   `<scopeId>Instance` node `type` and therefore a literal member of the generated
-  catalog's [known-type set](../README.md#known-object-type); do not use a
+  catalog's [known-type set](scope.md#known-object-type); do not use a
   framework selector, implementation identifier, or alias.
 - `status` — the scope's lifecycle status, serialized verbatim.
 
