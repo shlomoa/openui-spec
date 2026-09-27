@@ -125,7 +125,7 @@ it.
   they describe the survey evidence, not the specification.
 - **OpenUI5 clusters and the proposed scopes** of Qt and Angular Material: settled by the
   approved terminology Add rows and the
-  [structure change proposal](structure_change_proposal.md#add).
+  [structure change](structure_change.md#add).
 
 ## Appendix A: What each survey mapping contributes
 
