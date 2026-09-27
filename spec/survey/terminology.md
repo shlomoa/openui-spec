@@ -18,8 +18,10 @@ specific term.
   ([Angular Material](angular-material/README.md#contents), [HTML Standard](html5/README.md#contents),
   [OpenUI5](openui5/README.md#contents), [Qt Widgets](qt/README.md#contents)). Each survey's
   `taxonomy_mapping.md` lists the names that framework uses for every OpenUI scope.
-- **Status:** proposal for review. Nothing is applied. It feeds terminology workstream
-  W1, tasks 8 and 9, and plan questions Q5 and Q10 in the
+- **Status:** approved (2026-09-27), not yet applied: every Change, Replace, Delete and Add
+  row, the kept terms, the terms not added and the canonical-term rule. Rows A71 and A72
+  name the two new scopes of the [structure change proposal](structure_change_proposal.md#add).
+  It answers terminology workstream W1, tasks 8 and 9, and plan questions Q5 and Q10 in the
   [v1 publish plan](specui_v1_publish_plan.md#plan-completion).
 - **Naming rule used:** keep an existing OpenUI term; otherwise use the HTML or ARIA name;
   otherwise the name most surveyed frameworks use; otherwise a neutral descriptive
@@ -251,13 +253,3 @@ aliases. The glossary should also note these conflicting framework meanings, whi
 no term change: **Page** (OpenUI5 `sap.m.Page` is a container), **Control** (OpenUI5
 `sap.ui.core.Control` is a generic base class), **Element** (HTML element) and **Grid**
 (layout grid versus data grid).
-
-## Decisions needed
-
-| #   | Decision                                                                                 | Status                                                                                                            | Plan item            |
-| --- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------- |
-| 1   | Canonical-term rule (appendix A)                                                         | Approved                                                                                                          | Q5, W1 task 8        |
-| 2   | Glossary additions A1–A5                                                                 | Approved                                                                                                          | Q10, W1 task 8       |
-| 3   | Term changes: C1–C6, R1–R11, D1–D2 and the kept terms (Stack, Toolbar, Dropdown, Window) | Approved                                                                                                          | W1 task 9            |
-| 4   | Added terms A6–A72 (A68 dropped)                                                         | Approved. A71 and A72 name new scopes, both in the [structure change proposal](structure_change_proposal.md#add). | W0 task 6, W1 task 8 |
-| 5   | Terms not added (see [Not added](#not-added))                                            | Approved (2026-09-27)                                                                                             | W1 task 8            |
