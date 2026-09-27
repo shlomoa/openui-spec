@@ -26,7 +26,7 @@ leaves the workspace unchanged (the **Match** scenario in
 
 App-level validation tests assert that the generated workspace reflects the
 example JSON. They are wired with the same Angular unit-test setup used by the
-[`generated-examples`](../../../../generated-examples/) app:
+[`generated-examples`](../../../../../generated-examples/) app:
 
 - `package.json` — adds the `test` script (`ng test --watch=false`) and the
   `vitest` + `jsdom` dev dependencies.

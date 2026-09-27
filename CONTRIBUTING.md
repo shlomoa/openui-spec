@@ -6,12 +6,11 @@
 - [Spec artifacts: grammar vs. catalog](spec/README.md#specification-artifacts-grammar-vs-catalog)
   — how the authoritative `EBNF.txt`, its `openui.schema.json` projection, and
   `openui.json` catalog differ.
-- Angular generator: [generation architecture, flow, and validation](generators/angular/generator/docs/GENERATION.md)
-  and [AMCG TDD workflow](generators/angular/generator/docs/TDD.md).
+- Angular generator: [generation architecture, flow, and validation](generators/angular/generator/docs/GENERATION.md).
 - [Root Python test-suite plan](tests/TEST_PLAN.md) — implemented Python test
   modules under `tests/` and their local run command.
-- [Validation routing note](docs/TEST_PLAN.md) — pointers to the validation
-  documentation sources of truth.
+- [Repository validation](#repository-validation) — validation layers, commands,
+  and the CI gate overview.
 - AI-agent guides: [AGENTS.md](AGENTS.md), [CLAUDE.md](CLAUDE.md), [GEMINI.md](GEMINI.md),
   and [copilot-instructions.md](.github/copilot-instructions.md).
 
@@ -99,10 +98,8 @@ Repository validation has three root layers:
    [root Python test-suite plan](tests/TEST_PLAN.md).
 2. **Documentation validation** (`pre-commit`, `mkdocs`, `git diff --check`) —
    protects Markdown formatting, link consistency, generated examples, and the
-   published spec site. The `openui-grammar-consistency` pre-commit hook also
-   verifies EBNF/schema consistency, validates the committed catalog against
-   both formats, and ensures `spec/openui.json` is fresh from `spec/scopes/`
-   and `SCHEMA_VERSION`.
+   published spec site. The local pre-commit hooks run the validation tools in
+   `spec/bin/` (see [Spec tools](#spec-tools)).
 3. **CI build workflow** (`.github/workflows/build.yml`) — runs root validation
    on code-review events. `tests/test_github_actions_build.py` asserts the
    workflow keeps running repository checks, Python validation tooling,
@@ -130,6 +127,18 @@ git diff --check
 ```
 
 CI runs this validation on Ubuntu, Windows, and macOS.
+
+### Spec tools
+
+The spec converter and validators live in `spec/bin/`. Run each one from the
+repository root with the virtual-environment Python (`python -m <module>`):
+
+| Module                               | Pre-commit hook              | What it does                                                                                                                                                                                                                      |
+| ------------------------------------ | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `spec.bin.to_json`                   | —                            | Regenerates `spec/openui.json` from `spec/scopes/` (`--spec-dir spec --output spec/openui.json`).                                                                                                                                 |
+| `spec.bin.check_grammar_consistency` | `openui-grammar-consistency` | Verifies EBNF/schema consistency, validates the committed catalog against both formats, and ensures `spec/openui.json` is fresh from `spec/scopes/` and `SCHEMA_VERSION`.                                                         |
+| `spec.bin.lint_spec`                 | `openui-spec-lint`           | Spec-content lint: every leaf `*.scope.md` has exactly one `evidence.md` row. `--html <path>` also writes an HTML report. Template-section and glossary rules stay disabled until the glossary moves into `spec/scopes/scope.md`. |
+| `spec.bin.check_links`               | `markdown-internal-links`    | Checks that relative Markdown links and `#anchors` (GitHub heading slugs) resolve. External links are not fetched. With no arguments it checks every tracked Markdown file.                                                       |
 
 `spec/EBNF.txt` is the source of truth for the OpenUI document format, while
 `spec/scopes/` is the source of truth for catalog content. The schema, examples,

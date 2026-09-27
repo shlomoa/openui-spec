@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unittest
 
-from spec.tooling.check_grammar_consistency import check
+from spec.bin.check_grammar_consistency import check
 
 
 class GrammarConsistencyTest(unittest.TestCase):

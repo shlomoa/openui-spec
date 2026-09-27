@@ -97,7 +97,7 @@ def build_openui_document(
 ) -> dict[str, Any]:
     """Build the full OpenUI JSON document from the prose scope tree."""
     resolved_spec_dir = (
-        Path(spec_dir) if spec_dir is not None else Path(__file__).resolve().parents[1]
+        Path(spec_dir) if spec_dir is not None else Path(__file__).resolve().parents[2]
     ).resolve()
     resolved_version = (
         version or (resolved_spec_dir.parent / "SCHEMA_VERSION").read_text(encoding="utf-8").strip()
@@ -131,7 +131,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--spec-dir",
         type=Path,
-        default=Path(__file__).resolve().parents[1],
+        default=Path(__file__).resolve().parents[2],
         help="Path to the spec directory that contains README.md and scopes/.",
     )
     parser.add_argument(

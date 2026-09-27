@@ -96,7 +96,7 @@ cannot be released or merged under an unchanged version:
   the specification changes.
 - **Catalog alignment**: Update the root `version` of
   [`spec/openui.json`](spec/openui.json) (or regenerate it with
-  `python -m spec.to_json --spec-dir spec --output .\spec\openui.json`), ensuring
+  `python -m spec.bin.to_json --spec-dir spec --output .\spec\openui.json`), ensuring
   it matches `SCHEMA_VERSION`.
 - **Examples and fixtures**: Update all affected examples under `spec/examples/`
   and generator fixtures under `generators/angular/generator/tests/fixtures/` to
