@@ -87,11 +87,11 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 2.3 [ ] after W1 task 7, glossary terms are defined once; other docs link instead of redefining. Registered as `glossary-single-definition`, disabled until implemented (execution order step 4).
    - 2.4 [x] `openui.json` is up to date with the prose; enforced by `check_grammar_consistency`.
    - 2.5 [x] Linter framework, run by the `openui-spec-lint` pre-commit hook, with the `--html` report and unit tests.
-3. [ ] Check links and file references in the documentation. *Validate:* zero broken internal links.
+3. [x] Check links and file references in the documentation. *Validate:* zero broken internal links.
    - 3.1 [x] Add a Markdown link checker to pre-commit (`spec/bin/check_links.py`).
-   - 3.2 [ ] Remove the plain-text references in `AGENTS.md` to `docs/TEST_PLAN.md` and `generators/angular/generator/docs/TDD.md`, which do not exist; the link checker checks links only, so it cannot catch them (execution order step 1).
+   - 3.2 [x] Remove the plain-text references in `AGENTS.md` to `docs/TEST_PLAN.md` and `generators/angular/generator/docs/TDD.md`, which do not exist; the link checker checks links only, so it cannot catch them (execution order step 1).
 
-   Implemented in [PR #159](https://github.com/shlomoa/openui-spec/pull/159): tools run as `python -m spec.bin.<tool>`; the link checker fixed 9 broken internal links.
+   Implemented in [PR #159](https://github.com/shlomoa/openui-spec/pull/159) and, for 3.2, [PR #160](https://github.com/shlomoa/openui-spec/pull/160): tools run as `python -m spec.bin.<tool>`; the link checker fixed 9 broken internal links.
 
 ### W0 Survey consolidation
 
@@ -220,7 +220,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | # | Step | Plan tasks | Depends on | Status |
 | --- | --- | --- | --- | --- |
 | 1 | Guard rails: tooling folder, spec-content lint framework, link checker | W9 1, 2.2, 2.4, 2.5, 3.1 | — | Done |
-| 1 | Remove stale file references from `AGENTS.md` | W9 3.2 | — | Open |
+| 1 | Remove stale file references from `AGENTS.md` | W9 3.2 | — | Done |
 | 1 | Category decisions in [`category.md`](category.md#summary) | W3 13 | — | Done |
 | 1 | Matrix decision (not built) | W0 5 | — | Done |
 | 1 | Scope reconciliation | W0 6 | — | Done |
