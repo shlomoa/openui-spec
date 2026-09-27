@@ -22,7 +22,7 @@ Re-checked on 2026-09-26 against `main` (19 commits after the first draft). The 
 
 | Area | What exists | Gap for v1.0 |
 | --- | --- | --- |
-| Survey (*changed*) | `spec/survey/` with 4 sources: `angular-material/`, `html5/` (WHATWG HTML), `openui5/`, `qt/`. Each has its own taxonomy mapping, proposed evidence and scope-extension proposal | No cross-source matrix; proposals overlap (e.g. `modal_interaction` in both Angular Material and Qt); `spec/survey/` is excluded from pre-commit, markdownlint and mkdocs |
+| Survey (*changed*) | `spec/survey/` with 4 sources: `angular-material/`, `html5/` (WHATWG HTML), `openui5/`, `qt/`. Each has its own taxonomy mapping, proposed evidence and scope-extension proposal | Consolidated into approved change files in `spec/survey/`, not yet applied; `spec/survey/` is excluded from pre-commit, markdownlint and mkdocs |
 | Terminology (*changed*) | Glossary in `spec/README.md` (23 term entries). All terminology decisions approved 2026-09-27 in [`terminology.md`](terminology.md#summary), not yet applied | No alias table across the 4 sources |
 | Scope | One-line purpose in `spec/README.md` and `docs/REQUIREMENTS.md` | No explicit in/out list. Qt and HTML surveys already defer host-shell integration, browser internals, storage, workers |
 | Categorization (*changed*) | 11 top-level scopes; purpose taxonomy (`docs/generic-ui-taxonomy.md`); 15-category `docs/ui-element-taxonomy.md`; openui5 7-category classification key. Qt and HTML proposals both recommend: keep the scope tree + purpose taxonomy as linked views, extend in place, no new tree | Decided in [`category.md`](category.md#summary), not yet applied; `ui-element-taxonomy.md` to be merged, then retired (W3 task 14) |
@@ -39,7 +39,7 @@ Ten workstreams in three layers: consolidate the foundations (W1–W5), write th
 
 | # | Workstream | Question it answers | Main deliverable |
 | --- | --- | --- | --- |
-| W0 | Survey consolidation | What do HTML, openui5, Qt and Angular Material call and group each UI artifact, and which proposed scopes are accepted? | Cross-source comparison matrix (4 surveys) + reconciled scope-extension list |
+| W0 | Survey consolidation | What do HTML, openui5, Qt and Angular Material call and group each UI artifact, and which proposed scopes are accepted? | Approved change files in `spec/survey/` (terminology, category, taxonomy mapping, scope, architecture, structure, schema) |
 | W1 | Terminology | Which word does OpenUI use, and what does it mean? | Glossary v1 + cross-framework alias table |
 | W2 | Scope | What is the spec, what is in, what is out? | Normative scope statement (in / out / deferred) |
 | W3 | UI categorization | What is the single most natural way to group UI artifacts? | One taxonomy; the other two re-expressed as informative views |
@@ -114,8 +114,8 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
    **Consolidated proposals (2026-09-27):** [`terminology.md`](terminology.md#summary) (all decisions approved), [`schema_change.md`](schema_change.md#schema-change-proposal) (not needed) and [`structure_change.md`](structure_change.md#add) (two new Behaviors scopes). [`category.md`](category.md#summary) (2026-09-27) consolidates the four survey `category.md` files and is approved in full. [`taxonomy_mapping_change.md`](taxonomy_mapping_change.md#summary) (2026-09-27) consolidates the four survey `taxonomy_mapping.md` files and is approved in full. [`architecture_change.md`](architecture_change.md#summary) (2026-09-27) consolidates the four `architecture_proposal.md` files and is approved in full.
 
-5. [ ] Build `matrix.csv` by merging the four `TAXONOMY_MAPPING.md` files: concept × {HTML, WAI-ARIA, openui5, Qt, Angular Material}. Columns: name, category in that source, key properties, events, OpenUI scope. Flag each row: *same term/same meaning*, *same term/different meaning*, *different term/same meaning*, *unique*. *Validate:* script checks every catalog type appears in the matrix. *Demo:* sortable/filterable matrix web page.
-6. [x] Reconcile the scope-extension proposals (Angular Material `proposed-scopes/`, Qt P01–P06, HTML P1–P8) into one accept / defer / reject list, de-duplicating overlaps such as `modal_interaction` and `collapsible`. *Demo:* proposal table on the matrix page.
+5. [x] Decide whether to build a cross-source matrix (`matrix.csv`: concept × HTML, WAI-ARIA, openui5, Qt, Angular Material). Decided 2026-09-27: not built. Its name, category and scope columns would repeat the approved [`terminology.md`](terminology.md#summary), [`category.md`](category.md#summary) and [`taxonomy_mapping_change.md`](taxonomy_mapping_change.md#summary); the per-framework names come from the four survey mappings in the alias table (W1 task 9.9); properties and events are read from the survey inventories in W6 task 25.
+6. [x] Reconcile the scope-extension proposals (Angular Material `proposed-scopes/`, Qt P01–P06, HTML P1–P8) into one accept / defer / reject list, de-duplicating overlaps such as `modal_interaction` and `collapsible`. *Demo:* the tables of [`structure_change.md`](structure_change.md#add) and [`scope_change.md`](scope_change.md#summary).
    Two new scopes are accepted in [`structure_change.md`](structure_change.md#add); every other proposed scope was remapped to an existing scope or dropped, as recorded in [`terminology.md`](terminology.md#49-terms-that-need-a-new-scope). The changes the surveys ask for in existing scopes are in [`scope_change.md`](scope_change.md#summary) (approved).
 
 ### W1 Terminology
@@ -181,7 +181,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 ### W6 Draft first spec
 
 24. [ ] Rewrite the spec per W4 outline, using W1–W5 outputs.
-25. [ ] Enrich each leaf scope (Attributes, Child model) from the survey matrix; add evidence rows.
+25. [ ] Enrich each leaf scope (Attributes, Child model) from the survey inventories and the alias table (W1 task 9.9); add evidence rows.
 26. [ ] Regenerate `openui.json`, bump to `1.0.0-rc.1`, migrate all examples and fixtures.
 27. [ ] Review period, then coordinate the M5 `1.0.0` release with W8 task 35. *Validate:* full CI + conformance suite. *Demo:* published spec site with a rendered example per object (reuse `generated-examples`).
 
@@ -206,7 +206,7 @@ Five GitHub milestones, each ending with a tagged release and a visible web page
 | Milestone | Release | Tasks | Exit criterion | Visual demo |
 | --- | --- | --- | --- | --- |
 | M1 Guard rails | `0.4.0` | 1–3 | CI green on Linux and Windows with spec-content lint | Lint report page |
-| M2 Survey consolidated | `0.5.0` | 4–6 | Matrix covers all 82 catalog types | Survey matrix page |
+| M2 Survey consolidated | `0.5.0` | 4–6 | All consolidated change files approved | The change files in `spec/survey/` |
 | M3 Foundations agreed | `0.6.0` | 7–19 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
 | M4 Language frozen | `0.7.0` | 20–24, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
 | M5 v1.0.0 published | `1.0.0` | 25–31, 35 | Packages at 1.0.0 on PyPI + npm; docs live | Published spec site with rendered examples |
@@ -222,7 +222,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 1 | Guard rails: tooling folder, spec-content lint framework, link checker | W9 1, 2.2, 2.4, 2.5, 3.1 | — | Done |
 | 1 | Remove stale file references from `AGENTS.md` | W9 3.2 | — | Open |
 | 1 | Category decisions in [`category.md`](category.md#summary) | W3 13 | — | Done |
-| 1 | Cross-source matrix | W0 5 | — | Open |
+| 1 | Matrix decision (not built) | W0 5 | — | Done |
 | 1 | Scope reconciliation | W0 6 | — | Done |
 | 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Open |
 | 2 | Move the glossary to its final location | W1 7 | — | Open |
@@ -230,13 +230,13 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 4 | Regenerate, version and validate; release `0.x.0` | W1 9.7, 9.8; W3 14.7 | Step 3 | Open |
 | 4 | Retire `docs/ui-element-taxonomy.md` | W3 14.6 | Step 3 | Open |
 | 4 | Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Open |
-| 5 | Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Steps 3, W0 5 | Open |
+| 5 | Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 3 | Open |
 | 5 | Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | W1 9 | Open |
 | 6 | Scope statement and in / out classification; answers Q9 and Q13 | W2 10–12 | W1 9, W0 6 | Open |
 | 7 | Accessibility types of the merge, if Q13 puts them in scope | W3 14.1–14.5 (remainder) | Step 6 | Open |
 | 7 | Map leaf scopes to the categories; rename or move scope folders | W3 14, 15 | Steps 4, 6 | Open |
 | 8 | Specification outline and normative split | W4 16–18 | Step 7 | Open |
-| 9 | Draft the spec, enrich leaves from the matrix, `1.0.0-rc.1` | W6 24–26 | Steps 5, 8 | Open |
+| 9 | Draft the spec, enrich leaves from the survey inventories, `1.0.0-rc.1` | W6 24–26 | Steps 5, 8 | Open |
 | 9 | Conformance suite and Python / TypeScript utilities | W8 32–34 | W5 23 | Open |
 | 10 | Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 9 | Open |
 
