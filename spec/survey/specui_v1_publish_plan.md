@@ -129,7 +129,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 5. Build `matrix.csv` by merging the four `TAXONOMY_MAPPING.md` files: concept × {HTML, WAI-ARIA, openui5, Qt, Angular Material}. Columns: name, category in that source, key properties, events, OpenUI scope. Flag each row: *same term/same meaning*, *same term/different meaning*, *different term/same meaning*, *unique*. *Validate:* script checks every catalog type appears in the matrix. *Demo:* sortable/filterable matrix web page.
 6. Reconcile the scope-extension proposals (Angular Material `proposed-scopes/`, Qt P01–P06, HTML P1–P8) into one accept / defer / reject list, de-duplicating overlaps such as `modal_interaction` and `collapsible`. *Demo:* proposal table on the matrix page.
-   **Partly done (2026-09-27):** the new-scope proposals are reconciled. Two new scopes are accepted in [`structure_change.md`](structure_change.md#add); every other proposed scope was remapped to an existing scope or dropped, as recorded in [`terminology.md`](terminology.md#49-terms-that-need-a-new-scope). The changes the surveys ask for in existing scopes are consolidated in [`scope_change_proposal.md`](scope_change_proposal.md#decisions-needed) (2026-09-27); its three decisions are open.
+   **Done (2026-09-27):** the new-scope proposals are reconciled. Two new scopes are accepted in [`structure_change.md`](structure_change.md#add); every other proposed scope was remapped to an existing scope or dropped, as recorded in [`terminology.md`](terminology.md#49-terms-that-need-a-new-scope). The changes the surveys ask for in existing scopes are consolidated in [`scope_change_proposal.md`](scope_change_proposal.md#decisions-needed) (2026-09-27) and approved.
 
 ### W1 Terminology
 
@@ -237,7 +237,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 1 | Guard rails: tooling folder, spec-content lint framework, link checker | W9 1, 2 (framework, 2.2), 3 | — | Done in [PR #159](https://github.com/shlomoa/openui-spec/pull/159), merged |
 | 1 | Remove stale file references from `AGENTS.md` | W9 3.1 | — | Open |
 | 1 | Category decisions in [`category.md`](category.md#summary) | W3 13 | — | Done (2026-09-27) |
-| 1 | Cross-source matrix and the rest of the scope reconciliation | W0 5, 6 | — | Open (6 partly done) |
+| 1 | Cross-source matrix and scope reconciliation | W0 5, 6 | — | Open (6 done 2026-09-27) |
 | 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Open |
 | 2 | Move the glossary to its final location | W1 7 | — | Open |
 | 3 | Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, two new Behaviors scopes, Modal overlay decision, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Steps 2 | Open |

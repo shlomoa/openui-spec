@@ -22,7 +22,7 @@ one of four actions on a specific part of a scope file.
   [OpenUI5](openui5/scopes_proposal.md#clusters) and
   [Qt Widgets](qt/scopes_proposal.md#enhancements-to-existing-leaves), with the Qt
   [enhancement table](qt/inventory/SCOPE_EXTENSION_PROPOSAL.md#enhance-existing-leaves-before-splitting-more-families).
-- **Status:** proposal for review. Nothing is applied. It is applied with terminology step
+- **Status:** approved (2026-09-27), not yet applied. It is applied with terminology step
   9 in the [v1 publish plan](specui_v1_publish_plan.md#w1-terminology).
 - **Naming rule used:** the approved [canonical-term rule](terminology.md#appendix-a-canonical-term-rule).
   Purpose texts use the approved names only.
@@ -137,8 +137,8 @@ add no attribute.
 
 ## Decisions needed
 
-| #   | Decision                                                                             | Status           | Plan item             |
-| --- | ------------------------------------------------------------------------------------ | ---------------- | --------------------- |
-| 1   | Change the Purpose texts C1–C26                                                      | Needs a decision | W1 step 9             |
-| 2   | Replace the behavior target children with a reference to the controlled element (R1) | Needs a decision | W1 step 9, W5 task 21 |
-| 3   | Add the Validation notes rules A1–A9                                                 | Needs a decision | W1 step 9             |
+| #   | Decision                                                                             | Status                | Plan item             |
+| --- | ------------------------------------------------------------------------------------ | --------------------- | --------------------- |
+| 1   | Change the Purpose texts C1–C26                                                      | Approved (2026-09-27) | W1 step 9             |
+| 2   | Replace the behavior target children with a reference to the controlled element (R1) | Approved (2026-09-27) | W1 step 9, W5 task 21 |
+| 3   | Add the Validation notes rules A1–A9                                                 | Approved (2026-09-27) | W1 step 9             |
