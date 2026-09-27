@@ -1,19 +1,5 @@
 # openui-spec v1 — Publish first edition: plan
 
-Sep 23, 2026 · @Shlomo Anglister
-
-## Plan completion
-
-This plan is a draft. Before execution it needs three passes, in order:
-
-- [x] 1\. Resolve or defer the open questions (Q1–Q13) to their owning workstreams
-  - [x] 1.1 Validate correctness and freshness of the plan (re-checked 2026-09-26 against v0.3.1)
-  - [x] 1.2 Validate the questions are still valid
-  - [x] 1.3 Enumerate the questions
-  - [x] 1.4 Record a decision or owning-workstream deferral for each question
-- [ ] 2\. Additional structure
-- [ ] 3\. Step elaboration and refinement
-
 ## Goal and definition of done
 
 Publish openui-spec **v1.0.0** as the first stable edition: one vocabulary, one categorization, one document structure and one UI-description language that downstream work (angular-django2, django-angular3) can build on without expecting breaking churn.
@@ -90,38 +76,38 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W9 Validation (first, runs throughout)
 
-1. Consolidate validation infrastructure.
-   - 1.1 Create a `spec/bin` folder. — **done**
-   - 1.2 Move `spec/to_json` into `spec/bin`. — **done**
-   - 1.3 Move tooling tools into `spec/bin`; create a tool for each tool in tooling just like `to_json`. — **done**: `spec/bin/check_grammar_consistency/`; the guides `editing.md` and `comparison.md` stay in `spec/tooling/`.
-   - 1.4 Update code, tests, and documents. — **done**
-2. Add a spec-content linter (`spec/bin/lint_spec.py`) wired into pre-commit; implement its framework first, then enable terminology-dependent rules after W1 task 7:
+1. [ ] Consolidate validation infrastructure.
+   - 1.1 [x] Create a `spec/bin` folder. — **done**
+   - 1.2 [x] Move `spec/to_json` into `spec/bin`. — **done**
+   - 1.3 [ ] Move tooling tools into `spec/bin`; create a tool for each tool in tooling just like `to_json`. — **done**: `spec/bin/check_grammar_consistency/`; the guides `editing.md` and `comparison.md` stay in `spec/tooling/`.
+   - 1.4 [x] Update code, tests, and documents. — **done**
+2. [ ] Add a spec-content linter (`spec/bin/lint_spec.py`) wired into pre-commit; implement its framework first, then enable terminology-dependent rules after W1 task 7:
    - 2.1 after W1 task 7, every leaf `*.scope.md` matches `template.scope.md` sections; — **open**: registered as `template-sections` but disabled and not implemented; implement and enable after W1 task 7 (execution order step 4);
-   - 2.2 every leaf has exactly one row in `evidence.md`; — **done** (`evidence-row`)
-   - 2.3 after W1 task 7, glossary terms are defined once; other docs link instead of redefining; — **open**: registered as `glossary-single-definition` but disabled and not implemented; implement and enable after W1 task 7 (execution order step 4);
-   - 2.4 ~~`openui.json` is up to date with the prose~~ — **done**: enforced by `check_grammar_consistency` since 2026-09-26. Framework, `--html` report and tests — **done**. *Validate:* unit tests with passing and failing fixtures. *Demo:* HTML lint report page.
-3. Add a Markdown link checker to pre-commit. *Validate:* zero broken internal links. — **done** (`spec/bin/check_links.py`)
-   - 3.1 Remove the plain-text references in `AGENTS.md` to `docs/TEST_PLAN.md` and `generators/angular/generator/docs/TDD.md`, which do not exist; the link checker checks links only, so it cannot catch them. — **open** (execution order step 1)
+   - 2.2 [ ] every leaf has exactly one row in `evidence.md`; — **done** (`evidence-row`)
+   - 2.3 [ ] after W1 task 7, glossary terms are defined once; other docs link instead of redefining; — **open**: registered as `glossary-single-definition` but disabled and not implemented; implement and enable after W1 task 7 (execution order step 4);
+   - 2.4 [ ] ~~`openui.json` is up to date with the prose~~ — **done**: enforced by `check_grammar_consistency` since 2026-09-26. Framework, `--html` report and tests — **done**. *Validate:* unit tests with passing and failing fixtures. *Demo:* HTML lint report page.
+3. [ ] Add a Markdown link checker to pre-commit. *Validate:* zero broken internal links. — **done** (`spec/bin/check_links.py`)
+   - 3.1 [ ] Remove the plain-text references in `AGENTS.md` to `docs/TEST_PLAN.md` and `generators/angular/generator/docs/TDD.md`, which do not exist; the link checker checks links only, so it cannot catch them. — **open** (execution order step 1)
 
    **Done (2026-09-27) for 1, 2 (framework and 2.2) and 3** in [PR #159](https://github.com/shlomoa/openui-spec/pull/159), merged 2026-09-27 and merged into this branch: tools moved to `spec/bin` (`python -m spec.bin.<tool>`), `lint_spec.py` with rule 2.2 and an `--html` report, and `check_links.py` in pre-commit; 9 broken internal links fixed. Still open: 2.1, 2.3 and 3.1.
 
 ### W0 Survey consolidation
 
-4. Choose a directory structure and content for all surveys.
+4. [ ] Choose a directory structure and content for all surveys.
    References in markdown files must point to an existing file in inventory folder (once created and content moved) and section.
 
-   - 4.1 inventory: a folder to include all the surveyed data
-     - 4.1.1 Move all surveyed data files into this folder
-   - 4.2 taxonomy_mapping.md: content with references
-   - 4.3 category.md: content with references
-   - 4.4 README.md: summary and TOC
-   - 4.5 PLAN.md: The plan executed
-   - 4.6 SUMMARY.md a summary of the survey, the steps, findings, decisions, reasoning, etc.
-   - 4.7 architecture_proposal.md: contains a change proposal for the entire solution or part of it \[optional\]
-   - 4.8 scopes_proposal.md: scopes tree architectural and content change \[optional\]
-   - 4.9 openui_schema_proposal.md: proposal for schema change \[optional\]
-   - 4.10 opens.md: open and unresolved questions / issues / directions with references \[optional\]
-   - 4.11 scopes: a folder of structure not yet decided to include the consolidated surveyed specification
+   - 4.1 [x] inventory: a folder to include all the surveyed data
+     - 4.1.1 [x] Move all surveyed data files into this folder
+   - 4.2 [x] taxonomy_mapping.md: content with references
+   - 4.3 [x] category.md: content with references
+   - 4.4 [x] README.md: summary and TOC
+   - 4.5 [x] PLAN.md: The plan executed
+   - 4.6 [x] SUMMARY.md a summary of the survey, the steps, findings, decisions, reasoning, etc.
+   - 4.7 [x] architecture_proposal.md: contains a change proposal for the entire solution or part of it \[optional\]
+   - 4.8 [x] scopes_proposal.md: scopes tree architectural and content change \[optional\]
+   - 4.9 [x] openui_schema_proposal.md: proposal for schema change \[optional\]
+   - 4.10 [x] opens.md: open and unresolved questions / issues / directions with references \[optional\]
+   - 4.11 [ ] scopes: a folder of structure not yet decided to include the consolidated surveyed specification
 
    **Done (2026-09-26) for 4.1–4.10** in all four surveys (`angular-material/`, `html5/`, `openui5/`, `qt/`). Each survey's original data moved unchanged into its `inventory/` folder, with relative links rewritten; `html5/inventory/inventory/` keeps the chapter files. `openui5/` has no `openui_schema_proposal.md` because that survey proposes no schema change. 4.11 is dropped (decided 2026-09-27): the consolidated outputs live in `spec/survey/`, and applying them is W1 and W3 work.
 
@@ -133,86 +119,91 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W1 Terminology
 
-7. Create a separate local terminology / vocabulary / glossary section in `scope.md` files for terms local to the current scope level:
-   - 7.1 Move all terminology / glossary / vocabulary definitions from `spec/README.md`, `spec/scopes/evidence.md`, `spec/scopes/taxonomy_mapping.md`, and `spec/scopes/template.scope.md` into `spec/scopes/scope.md`.
-   - 7.2 Add appropriate references from the former locations to the moved content.
-8. Pick the canonical-term rule (e.g. W3C/ARIA name first, then majority across frameworks) and record it as a decision.
-   - 8.1 Collect all the terms from existing scopes and surveyed UI frameworks.
-   - 8.2 Create a canonical list of terms.
-   - 8.3 Add an alias table (canonical term → openui5 / Qt / Angular Material / ARIA names).
-   - 8.4 Catalog any conflict / duplicate / wrong aliased term.
+7. [ ]Create a separate local terminology / vocabulary / glossary section in `scope.md` files for terms local to the current scope level:
+   - 7.1 [ ] Move all terminology / glossary / vocabulary definitions from `spec/README.md`, `spec/scopes/evidence.md`, `spec/scopes/taxonomy_mapping.md`, and `spec/scopes/template.scope.md` into `spec/scopes/scope.md`.
+   - 7.2 [ ] Add appropriate references from the former locations to the moved content.
+8. [ ] Pick the canonical-term rule (e.g. W3C/ARIA name first, then majority across frameworks) and record it as a decision.
+   - 8.1 [ ] Collect all the terms from existing scopes and surveyed UI frameworks.
+   - 8.2 [ ] Create a canonical list of terms.
+   - 8.3 [ ] Add an alias table (canonical term → openui5 / Qt / Angular Material / ARIA names).
+   - 8.4 [ ] Catalog any conflict / duplicate / wrong aliased term.
 
    **Done (2026-09-27) for 8, 8.1, 8.2 and 8.4** in [`terminology.md`](terminology.md#appendix-a-canonical-term-rule): the canonical-term rule is approved, and each term is recorded as a Change, Replace, Delete or Add. 8.3 is deferred to task 9.9, so the alias table uses the final names.
-9. Review and resolve conflicts in terminology.
+9. [ ] Review and resolve conflicts in terminology.
 
    **Done (2026-09-27):** [`terminology.md`](terminology.md#summary) is approved in full, including the terms not added.
 
    Apply the approved terminology. These are specification changes, so they follow [`RELEASING.md`](../../RELEASING.md#schema-and-catalog-version-changes). Do task 7 first, so the glossary changes land in their final location.
-   - 9.1 Glossary: add A1–A5 (Owner, Controlled element, Controlling element, Trigger, Window); apply C6 (move "component" and "UI component" from the Widget aliases to the Object aliases) and D2 (remove "widget instance" from the Element aliases); add the conflicting-meaning notes for Page, Control, Element and Grid ([appendix A](terminology.md#appendix-a-canonical-term-rule)).
-   - 9.2 Taxonomy mapping: apply C1–C6, R1–R11 and D1 in `spec/scopes/taxonomy_mapping.md`, and add A6–A76 with their scope and abstraction level. Apply [`taxonomy_mapping_change.md`](taxonomy_mapping_change.md#summary) in the same pass.
-   - 9.3 Generic taxonomy: make the same renames and additions in `docs/generic-ui-taxonomy.md`, which the taxonomy mapping is based on.
-   - 9.4 New scopes: create `Behaviors/input_assistance.scope.md` and `Behaviors/viewport_and_focus_control.scope.md` from `template.scope.md`, list them in `Behaviors/scope.md`, and add one row each to `spec/scopes/evidence.md`.
-   - 9.5 Decide whether Modal overlay, moved to Behaviors by C4, needs its own scope file or is covered by an existing leaf.
-   - 9.6 Scope contracts: apply [`scope_change.md`](scope_change.md#summary) in the same pass: the Purpose texts, the behavior target references and the Validation notes rules. Apply [`architecture_change.md`](architecture_change.md#summary) with it: the Behaviors folder description, the Boundaries rules of the folder scopes and the tree rules in `spec/scopes/scope.md`.
-   - 9.7 Regenerate `spec/openui.json`, bump `SCHEMA_VERSION` and the package versions, and update examples, fixtures and `CHANGELOG.md`.
-   - 9.8 Validate: pre-commit, unit tests, `mkdocs build --strict` and the npm tests.
-   - 9.9 Build the alias table (task 8.3) from the survey `taxonomy_mapping.md` files, using the final names.
+   - 9.1 [ ] Glossary: add A1–A5 (Owner, Controlled element, Controlling element, Trigger, Window); apply C6 (move "component" and "UI component" from the Widget aliases to the Object aliases) and D2 (remove "widget instance" from the Element aliases); add the conflicting-meaning notes for Page, Control, Element and Grid ([appendix A](terminology.md#appendix-a-canonical-term-rule)).
+   - 9.2 [ ] Taxonomy mapping: apply C1–C6, R1–R11 and D1 in `spec/scopes/taxonomy_mapping.md`, and add A6–A76 with their scope and abstraction level. Apply [`taxonomy_mapping_change.md`](taxonomy_mapping_change.md#summary) in the same pass.
+   - 9.3 [ ] Generic taxonomy: make the same renames and additions in `docs/generic-ui-taxonomy.md`, which the taxonomy mapping is based on.
+   - 9.4 [ ] New scopes: create `Behaviors/input_assistance.scope.md` and `Behaviors/viewport_and_focus_control.scope.md` from `template.scope.md`, list them in `Behaviors/scope.md`, and add one row each to `spec/scopes/evidence.md`.
+   - 9.5 [ ] Decide whether Modal overlay, moved to Behaviors by C4, needs its own scope file or is covered by an existing leaf.
+   - 9.6 [ ] Scope contracts: apply [`scope_change.md`](scope_change.md#summary) in the same pass: the Purpose texts, the behavior target references and the Validation notes rules. Apply [`architecture_change.md`](architecture_change.md#summary) with it: the Behaviors folder description, the Boundaries rules of the folder scopes and the tree rules in `spec/scopes/scope.md`.
+   - 9.7 [ ] Regenerate `spec/openui.json`, bump `SCHEMA_VERSION` and the package versions, and update examples, fixtures and `CHANGELOG.md`.
+   - 9.8 [ ] Validate: pre-commit, unit tests, `mkdocs build --strict` and the npm tests.
+   - 9.9 [ ] Build the alias table (task 8.3) from the survey `taxonomy_mapping.md` files, using the final names.
 
 ### W2 Scope
 
-10. Write the normative scope section: purpose, audience, in scope, out of scope, deferred to later editions.
-11. Classify every catalog object and every survey concept as in / out / deferred. *Validate:* no catalog object is out of scope. *Demo:* scope map page.
-12. Split `docs/REQUIREMENTS.md` so spec requirements and generator requirements are separate.
+10. [ ]Write the normative scope section: purpose, audience, in scope, out of scope, deferred to later editions.
+11. [ ] Classify every catalog object and every survey concept as in / out / deferred. *Validate:* no catalog object is out of scope. *Demo:* scope map page.
+12. [ ] Split `docs/REQUIREMENTS.md` so spec requirements and generator requirements are separate.
 
 ### W3 UI categorization
 
-13. Choose the primary axis (see open questions) and define the category set with inclusion rules.
+13. [ ] Choose the primary axis (see open questions) and define the category set with inclusion rules.
 
    **Done (2026-09-27):** [`category.md`](category.md#summary) is approved: keep the nine sections, add a Behaviors section and 21 subcategories with inclusion rules and member lists. It is applied in W1 step 9.3 and W3 task 14.4.
-14. Re-map all 47 leaf scopes and all taxonomy entries to it; keep `docs/generic-ui-taxonomy.md` as an informative view of the mapping, and merge, then retire, `docs/ui-element-taxonomy.md` (decided 2026-09-27, Q4 sub-question):
-    - 14.1 Merge proposal: write `spec/survey/ui_element_taxonomy_merge_proposal.md` with the same mechanism as [`terminology.md`](terminology.md#appendix-a-canonical-term-rule). For each of the about 176 abstract types that match no taxonomy entry or approved term, record Change, Replace, Delete or Add with section, subcategory, scope, abstraction level, evidence and source URL, or list it under "Not added" with the reason. Types for Accessibility wait on Q13. Depends on the decisions of task 13.
-    - 14.2 Approve the merge proposal, decision by decision.
-    - 14.3 Classification rules: move the "Classification rules" section of `docs/ui-element-taxonomy.md` into `spec/scopes/taxonomy_mapping.md` as the inclusion rules of the sections and subcategories.
-    - 14.4 Apply the category changes: the heading changes, the Behaviors section and the subcategories of [`category.md`](category.md#summary) in `spec/scopes/taxonomy_mapping.md` and `docs/generic-ui-taxonomy.md`. Done in the same pass as W1 tasks 9.2 and 9.3.
-    - 14.5 Apply the approved merge additions from 14.1 in the same pass.
-    - 14.6 Retire `docs/ui-element-taxonomy.md`: delete it, fix every link to it, and record in the merge proposal where each of its categories and abstract types went.
-    - 14.7 Validate: pre-commit, link check, `mkdocs build --strict` and unit tests; every taxonomy entry belongs to exactly one section and at most one subcategory.
-15. Rename or move scope folders to match. *Validate:* every object has exactly one primary category; catalog regenerates. *Demo:* interactive taxonomy tree with per-framework overlay.
+14. [ ] Re-map all 47 leaf scopes and all taxonomy entries to it; keep `docs/generic-ui-taxonomy.md` as an informative view of the mapping, and merge, then retire, `docs/ui-element-taxonomy.md` (decided 2026-09-27, Q4 sub-question):
+    - 14.1 [ ] Merge proposal: write `spec/survey/ui_element_taxonomy_merge_proposal.md` with the same mechanism as [`terminology.md`](terminology.md#appendix-a-canonical-term-rule). For each of the about 176 abstract types that match no taxonomy entry or approved term, record Change, Replace, Delete or Add with section, subcategory, scope, abstraction level, evidence and source URL, or list it under "Not added" with the reason. Types for Accessibility wait on Q13. Depends on the decisions of task 13.
+    - 14.2 [ ] Approve the merge proposal, decision by decision.
+    - 14.3 [ ] Classification rules: move the "Classification rules" section of `docs/ui-element-taxonomy.md` into `spec/scopes/taxonomy_mapping.md` as the inclusion rules of the sections and subcategories.
+    - 14.4 [ ] Apply the category changes: the heading changes, the Behaviors section and the subcategories of [`category.md`](category.md#summary) in `spec/scopes/taxonomy_mapping.md` and `docs/generic-ui-taxonomy.md`. Done in the same pass as W1 tasks 9.2 and 9.3.
+    - 14.5 [ ] Apply the approved merge additions from 14.1 in the same pass.
+    - 14.6 [ ] Retire `docs/ui-element-taxonomy.md`: delete it, fix every link to it, and record in the merge proposal where each of its categories and abstract types went.
+    - 14.7 [ ] Validate: pre-commit, link check, `mkdocs build --strict` and unit tests; every taxonomy entry belongs to exactly one section and at most one subcategory.
+15. [ ] Rename or move scope folders to match. *Validate:* every object has exactly one primary category; catalog regenerates. *Demo:* interactive taxonomy tree with per-framework overlay.
 
 ### W4 Specification structure
 
-16. Define the v1.0 outline, e.g.: 1 Introduction & scope · 2 Conformance · 3 Terminology · 4 Document model & language · 5 Categories & objects · 6 Catalog · Annex A Grammar · Annex B Survey mapping · Annex C Examples.
-17. Define RFC 2119 keyword use (MUST/SHOULD/MAY) and mark normative vs. informative sections.
-18. Move incremental-generation and generator content out of `spec/README.md` into the generator docs.
+16. [ ] Define the v1.0 outline, e.g.: 1 Introduction & scope · 2 Conformance · 3 Terminology · 4 Document model & language · 5 Categories & objects · 6 Catalog · Annex A Grammar · Annex B Survey mapping · Annex C Examples.
+17. [ ] Define RFC 2119 keyword use (MUST/SHOULD/MAY) and mark normative vs. informative sections.
+18. [ ] Move incremental-generation and generator content out of `spec/README.md` into the generator docs.
 
 ### W5 UI description language
 
-19. Decide attribute value typing (string/null only vs. typed values).
-20. Replace the Angular-flavoured `[x]` / `(x)` key syntax with a framework-neutral one for Uses / Produces / Behaves, or formally adopt it.
-21. Define data-binding references, event payloads and i18n string references. Same-document element references already exist (0.3.0); extend, don't replace.
-22. Define versioning and compatibility policy (SemVer for the spec; how documents declare the version).
-23. Update `EBNF.txt` (authoritative) and regenerate the JSON Schema projection; `check_grammar_consistency.py` already enforces agreement. *Validate:* both accept/reject the same conformance fixtures. *Demo:* live playground page — paste JSON, see validation and rendered tree.
+19. [ ] Decide attribute value typing (string/null only vs. typed values).
+20. [ ] Replace the Angular-flavoured `[x]` / `(x)` key syntax with a framework-neutral one for Uses / Produces / Behaves, or formally adopt it.
+21. [ ] Define data-binding references, event payloads and i18n string references. Same-document element references already exist (0.3.0); extend, don't replace.
+22. [ ] Define versioning and compatibility policy (SemVer for the spec; how documents declare the version).
+23. [ ] Update `EBNF.txt` (authoritative) and regenerate the JSON Schema projection; `check_grammar_consistency.py` already enforces agreement. *Validate:* both accept/reject the same conformance fixtures. *Demo:* live playground page — paste JSON, see validation and rendered tree.
 
 ### W6 Draft first spec
 
-24. Rewrite the spec per W4 outline, using W1–W5 outputs.
-25. Enrich each leaf scope (Attributes, Child model) from the survey matrix; add evidence rows.
-26. Regenerate `openui.json`, bump to `1.0.0-rc.1`, migrate all examples and fixtures.
-27. Review period, then coordinate the M5 `1.0.0` release with W8 task 35. *Validate:* full CI + conformance suite. *Demo:* published spec site with a rendered example per object (reuse `generated-examples`).
+24. [ ] Rewrite the spec per W4 outline, using W1–W5 outputs.
+25. [ ] Enrich each leaf scope (Attributes, Child model) from the survey matrix; add evidence rows.
+26. [ ] Regenerate `openui.json`, bump to `1.0.0-rc.1`, migrate all examples and fixtures.
+27. [ ] Review period, then coordinate the M5 `1.0.0` release with W8 task 35. *Validate:* full CI + conformance suite. *Demo:* published spec site with a rendered example per object (reuse `generated-examples`).
 
 ### W7 Documentation
 
-28. Update README, REQUIREMENTS, CONTRIBUTING, RELEASING, AGENTS.md / CLAUDE.md / GEMINI.md, `.github/copilot-instructions.md`, agent files under `.github/agents/`.
-29. Write CHANGELOG `1.0.0` with a 0.3 → 1.0 migration guide.
-30. Publish to Read the Docs. *Demo:* the site itself.
-31. After W6 task 27 and W8 task 35, notify downstream: angular-django2 (#98/#103 TS parser) and django-angular3.
+28. [ ] Update README, REQUIREMENTS, CONTRIBUTING, RELEASING, AGENTS.md / CLAUDE.md / GEMINI.md, `.github/copilot-instructions.md`, agent files under `.github/agents/`.
+29. [ ] Write CHANGELOG `1.0.0` with a 0.3 → 1.0 migration guide.
+30. [ ] Publish to Read the Docs. *Demo:* the site itself.
+31. [ ] After W6 task 27 and W8 task 35, notify downstream: angular-django2 (#98/#103 TS parser) and django-angular3.
+
+28. [ ] Update README, REQUIREMENTS, CONTRIBUTING, RELEASING, AGENTS.md / CLAUDE.md / GEMINI.md, `.github/copilot-instructions.md`, agent files under `.github/agents/`.
+29. [ ] Write CHANGELOG `1.0.0` with a 0.3 → 1.0 migration guide.
+30. [ ] Publish to Read the Docs. *Demo:* the site itself.
+31. [ ] After W6 task 27 and W8 task 35, notify downstream: angular-django2 (#98/#103 TS parser) and django-angular3.
 
 ### W8 Spec utilities
 
-32. Create a shared conformance suite (`spec/conformance/`: valid + invalid documents with expected diagnostics); create its fixture structure early and finalize the suite after W5 task 23 freezes the grammar and schema.
-33. After W5 task 23 and task 32, Python: parse (EBNF + JSON) → typed object model → validate (grammar, catalog membership, scope contract).
-34. After W5 task 23 and task 32, TypeScript: same API surface in `@shlomoa/openui-spec`.
-35. Both packages pass the same suite; publish `1.0.0` to PyPI and npm as part of the M5 release. *Demo:* the W5 playground uses the TS validator.
+32. [ ] Create a shared conformance suite (`spec/conformance/`: valid + invalid documents with expected diagnostics); create its fixture structure early and finalize the suite after W5 task 23 freezes the grammar and schema.
+33. [ ] After W5 task 23 and task 32, Python: parse (EBNF + JSON) → typed object model → validate (grammar, catalog membership, scope contract).
+34. [ ] After W5 task 23 and task 32, TypeScript: same API surface in `@shlomoa/openui-spec`.
+35. [ ] Both packages pass the same suite; publish `1.0.0` to PyPI and npm as part of the M5 release. *Demo:* the W5 playground uses the TS validator.
 
 ## Milestones
 
