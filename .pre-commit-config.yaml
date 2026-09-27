@@ -44,6 +44,12 @@ repos:
           - TatSu==5.24.0
         files: ^(SCHEMA_VERSION|spec/(EBNF\.txt|openui\.json|openui\.schema\.json|README\.md|scopes/.*|bin/to_json/.*|bin/check_grammar_consistency/.*)|tests/test_grammar_consistency\.py)$
         pass_filenames: false
+      - id: openui-spec-lint
+        name: OpenUI spec-content lint
+        entry: python -m spec.bin.lint_spec
+        language: python
+        files: ^spec/(scopes/|bin/lint_spec\.py$)
+        pass_filenames: false
       - id: markdownlint-cli2
         name: markdownlint-cli2
         entry: markdownlint-cli2
