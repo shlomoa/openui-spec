@@ -145,7 +145,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    **Done (2026-09-27) for 8, 8.1, 8.2 and 8.4** in [`terminology_proposal.md`](terminology_proposal.md#appendix-a-canonical-term-rule): the canonical-term rule is approved, and each term is recorded as a Change, Replace, Delete or Add. 8.3 is deferred to task 9.8, so the alias table uses the final names.
 9. Review and resolve conflicts in terminology.
 
-   **Done (2026-09-27):** all four decisions in [`terminology_proposal.md`](terminology_proposal.md#decisions-needed) are approved.
+   **Done (2026-09-27):** all five decisions in [`terminology_proposal.md`](terminology_proposal.md#decisions-needed) are approved.
 
    Apply the approved terminology. These are specification changes, so they follow [`RELEASING.md`](../../RELEASING.md#schema-and-catalog-version-changes). Do task 7 first, so the glossary changes land in their final location.
    - 9.1 Glossary: add A1–A5 (Owner, Controlled element, Controlling element, Trigger, Window); apply C6 (move "component" and "UI component" from the Widget aliases to the Object aliases) and D2 (remove "widget instance" from the Element aliases); add the conflicting-meaning notes for Page, Control, Element and Grid ([appendix A](terminology_proposal.md#appendix-a-canonical-term-rule)).

@@ -220,13 +220,19 @@ summarizes what the surveys propose.
 
 ### Not added
 
+Approved (2026-09-27): none of these terms is added.
+
 - **A68 Document metadata** (HTML P1): document data rather than UI. Its UI-visible parts are already covered by `Application/index_html` (`[title]`, `[lang]`, `[dir]`) and `Application/favicon`.
 - **Standalone** (OpenUI5 terminology proposal): it is the default, so it needs no label. Controlling element (A3) covers the exception.
 - **Merge disposition** and **correspondence** labels stay survey vocabulary; they
   describe proposals, not the specification.
-- **Notification-area presence** (Qt) waits on plan question Q9 (host integration).
-- **Accessibility** and **Composition** folders (HTML P6, P7) wait on plan question Q13.
-- **Resource declaration** (HTML P2) may merge into Document metadata.
+- **Notification-area presence** (Qt): a host-shell (desktop) capability, not a UI element
+  of the application. Host integration stays with plan question Q9; accepting it later
+  would need a new terminology proposal.
+- **Accessibility** and **Composition** folders (HTML P6, P7): they would be new top-level
+  scopes, not terms. Whether they belong in the project stays with plan question Q13.
+- **Resource declaration** (HTML P2): document data rather than UI, for the same reason as
+  A68 Document metadata.
 - **Cards** (OpenUI5) is already covered by the existing Card alias; its placement is a
   structure decision, not a new term.
 
@@ -254,3 +260,4 @@ no term change: **Page** (OpenUI5 `sap.m.Page` is a container), **Control** (Ope
 | 2   | Glossary additions A1–A5                                                                 | Approved                                                                                                          | Q10, W1 task 8       |
 | 3   | Term changes: C1–C6, R1–R11, D1–D2 and the kept terms (Stack, Toolbar, Dropdown, Window) | Approved                                                                                                          | W1 task 9            |
 | 4   | Added terms A6–A72 (A68 dropped)                                                         | Approved. A71 and A72 name new scopes, both in the [structure change proposal](structure_change_proposal.md#add). | W0 task 6, W1 task 8 |
+| 5   | Terms not added (see [Not added](#not-added))                                            | Approved (2026-09-27)                                                                                             | W1 task 8            |
