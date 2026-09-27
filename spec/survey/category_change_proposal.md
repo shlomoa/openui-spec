@@ -176,9 +176,11 @@ added for them.
 ## Appendix A: UI element taxonomy
 
 The [UI element taxonomy](../../docs/ui-element-taxonomy.md#1-input-and-editing-elements)
-has 15 categories and many abstract types that are not taxonomy entries. This proposal
-does not change it. Whether to retire, merge or keep it is the open sub-question of plan
-question Q4. Its categories fit the OpenUI categories as follows:
+has 15 categories and 236 abstract types, of which about 176 are not taxonomy entries or
+approved terms. Decided (2026-09-27, plan question Q4): merge it into the canonical
+taxonomy, then retire it. The merge steps are W3 tasks 14.1–14.7 in the
+[v1 publish plan](specui_v1_publish_plan.md#w3-ui-categorization). Its categories fit the
+OpenUI categories as follows:
 
 | UI element taxonomy category                                                                                                             | OpenUI section: subcategory                                                                       |
 | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
@@ -279,9 +281,9 @@ the [HTML categories](html5/category.md#subcategories).
 
 ## Decisions needed
 
-| #   | Decision                                                                                                                                   | Status           | Plan item       |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- | --------------- |
-| 1   | Change the section headings of the generic UI taxonomy to the taxonomy mapping names, and make its seven subheadings subcategories (C1–C6) | Needs a decision | W1 step 9.3     |
-| 2   | Add the Behaviors section (A1)                                                                                                             | Needs a decision | Q4, W3 task 13  |
-| 3   | Add the 21 subcategories A2–A22 with their member lists, and the placements in 4.6                                                         | Needs a decision | Q4, W3 task 13  |
-| 4   | Keep, retire or merge the UI element taxonomy (appendix A)                                                                                 | Needs a decision | Q4 sub-question |
+| #   | Decision                                                                                                                                   | Status                        | Plan item       |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------- | --------------- |
+| 1   | Change the section headings of the generic UI taxonomy to the taxonomy mapping names, and make its seven subheadings subcategories (C1–C6) | Needs a decision              | W1 step 9.3     |
+| 2   | Add the Behaviors section (A1)                                                                                                             | Needs a decision              | Q4, W3 task 13  |
+| 3   | Add the 21 subcategories A2–A22 with their member lists, and the placements in 4.6                                                         | Needs a decision              | Q4, W3 task 13  |
+| 4   | Keep, retire or merge the UI element taxonomy (appendix A)                                                                                 | Approved — merge, then retire | Q4 sub-question |

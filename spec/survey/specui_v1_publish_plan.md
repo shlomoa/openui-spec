@@ -39,7 +39,7 @@ Re-checked on 2026-09-26 against `main` (19 commits after the first draft). The 
 | Survey (*changed*) | `spec/survey/` with 4 sources: `angular-material/`, `html5/` (WHATWG HTML), `openui5/`, `qt/`. Each has its own taxonomy mapping, proposed evidence and scope-extension proposal | No cross-source matrix; proposals overlap (e.g. `modal_interaction` in both Angular Material and Qt); `spec/survey/` is excluded from pre-commit, markdownlint and mkdocs |
 | Terminology (*changed*) | Glossary in `spec/README.md` (23 term entries). All terminology decisions approved 2026-09-27 in [`terminology_proposal.md`](terminology_proposal.md#decisions-needed), not yet applied | No alias table across the 4 sources |
 | Scope | One-line purpose in `spec/README.md` and `docs/REQUIREMENTS.md` | No explicit in/out list. Qt and HTML surveys already defer host-shell integration, browser internals, storage, workers |
-| Categorization (*changed*) | 11 top-level scopes; purpose taxonomy (`docs/generic-ui-taxonomy.md`); 15-category `docs/ui-element-taxonomy.md`; openui5 7-category classification key. Qt and HTML proposals both recommend: keep the scope tree + purpose taxonomy as linked views, extend in place, no new tree | Decision not yet recorded; role of `ui-element-taxonomy.md` undecided |
+| Categorization (*changed*) | 11 top-level scopes; purpose taxonomy (`docs/generic-ui-taxonomy.md`); 15-category `docs/ui-element-taxonomy.md`; openui5 7-category classification key. Qt and HTML proposals both recommend: keep the scope tree + purpose taxonomy as linked views, extend in place, no new tree | Proposed in [`category_change_proposal.md`](category_change_proposal.md#decisions-needed); `ui-element-taxonomy.md` to be merged, then retired (W3 task 14) |
 | Structure | `spec/README.md` mixes glossary, artifact roles, format, grammar, incremental generation | No normative/informative split; generator content inside the spec |
 | Language (*changed*) | `EBNF.txt` declared authoritative; JSON Schema is a projection; `spec/tooling/check_grammar_consistency.py` enforces EBNF ↔ schema ↔ README ↔ catalog in pre-commit. 0.3.0 added same-document element references (quoted ids in Uses attrs) | Still `string \| null` values and `[x]` / `(x)` keys; no data-binding, event-payload or i18n rules |
 | Catalog (*changed*) | 47 leaf `*.scope.md` files; 82 distinct type literals; new `Route`, `NavItem`, `NavGroup`, `ToolBar`, `ToolBarRow`, `ToolAction` contracts | Many leaves still Purpose-only; evidence register does not yet cite the survey |
@@ -165,7 +165,14 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 13. Choose the primary axis (see open questions) and define the category set with inclusion rules.
 
    **Proposed (2026-09-27)** in [`category_change_proposal.md`](category_change_proposal.md#4-add): keep the nine sections, add a Behaviors section and 21 subcategories with inclusion rules and member lists. Waiting on its [decisions](category_change_proposal.md#decisions-needed).
-14. Re-map all 47 leaf scopes and all taxonomy entries to it; turn the other two taxonomies into informative views generated from the mapping.
+14. Re-map all 47 leaf scopes and all taxonomy entries to it; keep `docs/generic-ui-taxonomy.md` as an informative view of the mapping, and merge, then retire, `docs/ui-element-taxonomy.md` (decided 2026-09-27, Q4 sub-question):
+    - 14.1 Merge proposal: write `spec/survey/ui_element_taxonomy_merge_proposal.md` with the same mechanism as [`terminology_proposal.md`](terminology_proposal.md#appendix-a-canonical-term-rule). For each of the about 176 abstract types that match no taxonomy entry or approved term, record Change, Replace, Delete or Add with section, subcategory, scope, abstraction level, evidence and source URL, or list it under "Not added" with the reason. Types for Accessibility wait on Q13. Depends on the decisions of task 13.
+    - 14.2 Approve the merge proposal, decision by decision.
+    - 14.3 Classification rules: move the "Classification rules" section of `docs/ui-element-taxonomy.md` into `spec/scopes/taxonomy_mapping.md` as the inclusion rules of the sections and subcategories.
+    - 14.4 Apply the category changes: the heading changes, the Behaviors section and the subcategories of [`category_change_proposal.md`](category_change_proposal.md#decisions-needed) in `spec/scopes/taxonomy_mapping.md` and `docs/generic-ui-taxonomy.md`. Done in the same pass as W1 tasks 9.2 and 9.3.
+    - 14.5 Apply the approved merge additions from 14.1 in the same pass.
+    - 14.6 Retire `docs/ui-element-taxonomy.md`: delete it, fix every link to it, and record in the merge proposal where each of its categories and abstract types went.
+    - 14.7 Validate: pre-commit, link check, `mkdocs build --strict` and unit tests; every taxonomy entry belongs to exactly one section and at most one subcategory.
 15. Rename or move scope folders to match. *Validate:* every object has exactly one primary category; catalog regenerates. *Demo:* interactive taxonomy tree with per-framework overlay.
 
 ### W4 Specification structure
@@ -217,6 +224,33 @@ Five GitHub milestones, each ending with a tagged release and a visible web page
 
 M2 and M1 can run in parallel. M4 can start as soon as W1 terminology is settled (task 9); it does not need the taxonomy.
 
+## Execution order
+
+The execution stack, top first. A step starts when the steps it depends on are done; steps with the same number can run in parallel. The order puts decisions before edits, and collects every change to the glossary, the taxonomy mapping and the generic taxonomy into one application pass and one release.
+
+| # | Step | Plan tasks | Depends on | Status |
+| --- | --- | --- | --- | --- |
+| 1 | Guard rails: tooling folder, spec-content lint framework, link checker | W9 1, 2 (framework, 2.2), 3 | — | Open |
+| 1 | Category decisions 1–3 of [`category_change_proposal.md`](category_change_proposal.md#decisions-needed) | W3 13 | — | Open (decision 4 approved) |
+| 1 | Cross-source matrix and the rest of the scope reconciliation | W0 5, 6 | — | Open (6 partly done) |
+| 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Open |
+| 2 | Move the glossary to its final location | W1 7 | — | Open |
+| 3 | Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, two new Behaviors scopes, Modal overlay decision | W1 9.1–9.5; W3 14.3–14.5 | Steps 2 | Open |
+| 4 | Regenerate, version and validate; release `0.x.0` | W1 9.6, 9.7; W3 14.7 | Step 3 | Open |
+| 4 | Retire `docs/ui-element-taxonomy.md` | W3 14.6 | Step 3 | Open |
+| 4 | Enable the terminology lint rules | W9 2.1, 2.3 | W1 7 | Open |
+| 5 | Alias table from the survey mappings, with the final names | W1 9.8 (8.3) | Steps 3, W0 5 | Open |
+| 5 | Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | W1 9 | Open |
+| 6 | Scope statement and in / out classification; answers Q9 and Q13 | W2 10–12 | W1 9, W0 6 | Open |
+| 7 | Accessibility types of the merge, if Q13 puts them in scope | W3 14.1–14.5 (remainder) | Step 6 | Open |
+| 7 | Map leaf scopes to the categories; rename or move scope folders | W3 14, 15 | Steps 4, 6 | Open |
+| 8 | Specification outline and normative split | W4 16–18 | Step 7 | Open |
+| 9 | Draft the spec, enrich leaves from the matrix, `1.0.0-rc.1` | W6 24–26 | Steps 5, 8 | Open |
+| 9 | Conformance suite and Python / TypeScript utilities | W8 32–34 | W5 23 | Open |
+| 10 | Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 9 | Open |
+
+Priority: step 3 is the first specification change and unblocks the language work (step 5), so the decisions and proposals feeding it (steps 1–2) come first. The categorization of scope folders (step 7) waits on the scope statement, as the workstream graph requires.
+
 ## Open questions
 
 Re-validated 2026-09-26: of the original 9, 2 are answered by the repo, 3 are partly answered by the survey proposals and reframed, 4 stand as asked, and 4 are new. A question blocks only the workstream task that depends on its decision; unrelated work may proceed.
@@ -226,7 +260,7 @@ Re-validated 2026-09-26: of the original 9, 2 are answered by the repo, 3 are pa
 | Q1 | Which is the fourth surveyed source? | Decided | HTML (WHATWG Living Standard), `spec/survey/html5/` |
 | Q2 | Where are the survey results? | Decided | `spec/survey/` on `main` since commit 215f2e7 |
 | Q3 | Is the first edition `1.0.0`, or a `0.x` candidate with `1.0.0` later? | Decided — continue `0.x.0` / `0.x.y` releases; defer any release candidate | Validate the spec in downstream tools and packages before attempting a release candidate |
-| Q4 | Adopt the surveys' categorization: 11-scope contract tree + purpose taxonomy as linked views, extend in place? | Deferred — W3 task 13, informed by W0 tasks 5–6 | Qt `TAXONOMY_STRUCTURE_PROPOSAL.md` and HTML `SCOPE_TREE_PROPOSAL.md` both say yes, no new tree; [`category_change_proposal.md`](category_change_proposal.md#kept) proposes it. Sub-question: retire, merge or keep `docs/ui-element-taxonomy.md` (15 categories)? |
+| Q4 | Adopt the surveys' categorization: 11-scope contract tree + purpose taxonomy as linked views, extend in place? | Deferred — W3 task 13, informed by W0 tasks 5–6 | Qt `TAXONOMY_STRUCTURE_PROPOSAL.md` and HTML `SCOPE_TREE_PROPOSAL.md` both say yes, no new tree; [`category_change_proposal.md`](category_change_proposal.md#kept) proposes it. Sub-question decided 2026-09-27: merge `docs/ui-element-taxonomy.md` (15 categories) into the canonical taxonomy, then retire it (W3 tasks 14.1–14.7) |
 | Q5 | Canonical-term rule: HTML/ARIA name wins, or majority across sources? | Decided — keep the existing OpenUI term; otherwise the HTML or WAI-ARIA name; otherwise the majority across frameworks; otherwise a neutral descriptive name | [`terminology_proposal.md`](terminology_proposal.md#appendix-a-canonical-term-rule) |
 | Q6 | Attribute values: keep `string \| null`, or add typed values? | Decided — introduce typed values in a later W5 grammar revision | Current grammar permits `string \| null`; 0.3.0 element references are quoted strings |
 | Q7 | Attribute keys: keep `[x]` / `(x)`, or neutral keys (`uses.x`, `produces.x`, `behaves.x`)? | Deferred — blocks W5 task 20 | Still Angular syntax in `spec/README.md` and the leaf template |
