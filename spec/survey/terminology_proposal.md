@@ -166,14 +166,14 @@ and the [structure change proposal](structure_change_proposal.md) creates none.
 
 ### 4.6 Layout and structural elements
 
-| #   | Add                    | Scope                  | Level                                             | Evidence                                                                                                                                                                                                                                             |
-| --- | ---------------------- | ---------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| A51 | Bar                    | Structural containers  | Grouped leaf                                      | An edge-attached strip that arranges items along one axis. Toolbar, Navigation bar, Tab Bar, Status bar, Menubar and Filter bar are bars with a specific purpose; a Sidebar is a panel, not a bar. [Taxonomy mapping](../scopes/taxonomy_mapping.md) |
-| A52 | Page stack             | Containers (new scope) | Needs a new scope [Qt P01](qt/scopes_proposal.md) |
-| A53 | Scroll container       | Containers (new scope) | Needs a new scope [Qt P02](qt/scopes_proposal.md) |
-| A54 | Splitter handle        | Splitters              | Alias                                             | [Qt](qt/scopes_proposal.md)                                                                                                                                                                                                                          |
-| A55 | Flexible column layout | Containers             | Grouped leaf                                      | [OpenUI5](openui5/scopes_proposal.md)                                                                                                                                                                                                                |
-| A56 | Layered arrangement    | Layout                 | Folder abstraction                                | [Qt](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#proposed-extension-tree)                                                                                                                                                                            |
+| #   | Add                    | Scope                  | Level              | Evidence                                                                                                                                                                                                                                             |
+| --- | ---------------------- | ---------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A51 | Bar                    | Structural containers  | Grouped leaf       | An edge-attached strip that arranges items along one axis. Toolbar, Navigation bar, Tab Bar, Status bar, Menubar and Filter bar are bars with a specific purpose; a Sidebar is a panel, not a bar. [Taxonomy mapping](../scopes/taxonomy_mapping.md) |
+| A52 | Page stack             | Containers (new scope) | Needs a new scope  | [Qt P01](qt/scopes_proposal.md)                                                                                                                                                                                                                      |
+| A53 | Scroll container       | Containers (new scope) | Needs a new scope  | [Qt P02](qt/scopes_proposal.md)                                                                                                                                                                                                                      |
+| A54 | Splitter handle        | Splitters              | Alias              | [Qt](qt/scopes_proposal.md)                                                                                                                                                                                                                          |
+| A55 | Flexible column layout | Containers             | Grouped leaf       | [OpenUI5](openui5/scopes_proposal.md)                                                                                                                                                                                                                |
+| A56 | Layered arrangement    | Layout                 | Folder abstraction | [Qt](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#proposed-extension-tree)                                                                                                                                                                            |
 
 ### 4.7 Behaviors
 
@@ -189,16 +189,16 @@ and the [structure change proposal](structure_change_proposal.md) creates none.
 
 ### 4.8 Presentation, Application, Pages and Widgets
 
-| #   | Add               | Scope                   | Level                                                 | Evidence                                                                  |
-| --- | ----------------- | ----------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------- |
-| A64 | Backdrop          | Presentation            | Folder abstraction                                    | [Angular Material AM-E12](angular-material/scopes_proposal.md)            |
-| A65 | Blur              | Presentation            | Folder abstraction                                    | [Qt](qt/taxonomy_mapping.md)                                              |
-| A66 | Color tint        | Presentation            | Folder abstraction                                    | [Qt](qt/taxonomy_mapping.md)                                              |
-| A67 | Focus outline     | Presentation            | Folder abstraction                                    | [Qt](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#proposed-extension-tree) |
-| A68 | Shell bar         | Application             | Grouped leaf                                          | [OpenUI5](openui5/scopes_proposal.md)                                     |
-| A69 | Document metadata | Application (new scope) | Needs a new scope [HTML P1](html5/scopes_proposal.md) |
-| A70 | Object page       | Pages                   | Grouped leaf                                          | [OpenUI5](openui5/scopes_proposal.md)                                     |
-| A71 | Planning calendar | Widgets                 | Grouped leaf                                          | [OpenUI5](openui5/scopes_proposal.md)                                     |
+| #   | Add               | Scope                   | Level              | Evidence                                                                  |
+| --- | ----------------- | ----------------------- | ------------------ | ------------------------------------------------------------------------- |
+| A64 | Backdrop          | Presentation            | Folder abstraction | [Angular Material AM-E12](angular-material/scopes_proposal.md)            |
+| A65 | Blur              | Presentation            | Folder abstraction | [Qt](qt/taxonomy_mapping.md)                                              |
+| A66 | Color tint        | Presentation            | Folder abstraction | [Qt](qt/taxonomy_mapping.md)                                              |
+| A67 | Focus outline     | Presentation            | Folder abstraction | [Qt](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#proposed-extension-tree) |
+| A68 | Shell bar         | Application             | Grouped leaf       | [OpenUI5](openui5/scopes_proposal.md)                                     |
+| A69 | Document metadata | Application (new scope) | Needs a new scope  | [HTML P1](html5/scopes_proposal.md)                                       |
+| A70 | Object page       | Pages                   | Grouped leaf       | [OpenUI5](openui5/scopes_proposal.md)                                     |
+| A71 | Planning calendar | Widgets                 | Grouped leaf       | [OpenUI5](openui5/scopes_proposal.md)                                     |
 
 ### Not added
 
