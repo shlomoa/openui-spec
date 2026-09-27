@@ -54,7 +54,7 @@ own proposal.
 | [Terminology: Change](terminology.md#1-change)       | C1–C5                | Renames or moves five rows (C6 changes the glossary only).                          |
 | [Terminology: Replace](terminology.md#2-replace)     | R1–R11               | Splits eleven "A / B" rows.                                                         |
 | [Terminology: Delete](terminology.md#3-delete)       | D1                   | Removes Biometric prompt (D2 changes the glossary only).                            |
-| [Terminology: Add](terminology.md#42-input-elements) | A6–A72 (A68 dropped) | Adds the new entries with their scope and level (A1–A5 are glossary terms).         |
+| [Terminology: Add](terminology.md#42-input-elements) | A6–A73 (A68 dropped) | Adds the new entries with their scope and level (A1–A5 are glossary terms).         |
 | [Category: Change](category.md#1-change)             | C1–C6                | Splits the four folder-abstraction sections into their subcategory tables.          |
 | [Category: Add](category.md#4-add)                   | A1–A22               | Adds the Behaviors section and splits the element sections into subcategory tables. |
 

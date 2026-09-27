@@ -9,17 +9,17 @@ consolidated file has since settled an item, the outcome is linked. Counts come 
 
 ## Open items
 
-| #                                               | Open item                                       | Consolidated outcome                                                       |
-| ----------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------------------- |
-| [H1](#h1-abstract-names-and-descriptions)       | All 8,661 inventory rows read "Pending step 4"  | Open at survey level; the consolidated files do not depend on it           |
-| [H2](#h2-obsolete-features)                     | 348 definitions of obsolete features            | Open at survey level; not placed in any OpenUI category                    |
-| [H3](#h3-untyped-definitions)                   | 4,750 definitions without a type                | Open at survey level                                                       |
-| [H4](#h4-definitions-without-anchors)           | 353 definitions without their own anchor        | Open at survey level                                                       |
-| [H5](#h5-accessibility-and-composition-folders) | Accessibility and Composition top-level folders | Not added; plan question Q13                                               |
-| [H6](#h6-behavior-target-representation)        | Behavior targets: references or owned children  | Settled: references                                                        |
-| [H7](#h7-table-model-depth)                     | Table cells or a tabular primitive family       | Settled: cells in Table                                                    |
-| [H8](#h8-sources-beyond-html)                   | Sources beyond HTML                             | Settled for the consolidated files                                         |
-| [H9](#h9-element-coverage)                      | Do all HTML elements have an OpenUI term?       | Checked: all UI elements do, except `mark`; ruby is left out at this stage |
+| #                                               | Open item                                       | Consolidated outcome                                                                       |
+| ----------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| [H1](#h1-abstract-names-and-descriptions)       | All 8,661 inventory rows read "Pending step 4"  | Open at survey level; the consolidated files do not depend on it                           |
+| [H2](#h2-obsolete-features)                     | 348 definitions of obsolete features            | Open at survey level; not placed in any OpenUI category                                    |
+| [H3](#h3-untyped-definitions)                   | 4,750 definitions without a type                | Open at survey level                                                                       |
+| [H4](#h4-definitions-without-anchors)           | 353 definitions without their own anchor        | Open at survey level                                                                       |
+| [H5](#h5-accessibility-and-composition-folders) | Accessibility and Composition top-level folders | Not added; plan question Q13                                                               |
+| [H6](#h6-behavior-target-representation)        | Behavior targets: references or owned children  | Settled: references                                                                        |
+| [H7](#h7-table-model-depth)                     | Table cells or a tabular primitive family       | Settled: cells in Table                                                                    |
+| [H8](#h8-sources-beyond-html)                   | Sources beyond HTML                             | Settled for the consolidated files                                                         |
+| [H9](#h9-element-coverage)                      | Do all HTML elements have an OpenUI term?       | Checked: all UI elements do; `mark` added as Highlighted text, ruby left out at this stage |
 
 ## H1 Abstract names and descriptions
 
@@ -142,8 +142,7 @@ and the 21 input states.
 | `canvas`                                                                                                                                                                                                              | Canvas (Drawing and capture controls)                                                                                                |
 | `template`, `slot`                                                                                                                                                                                                    | Composition; waits on plan question Q13                                                                                              |
 | `ruby`, `rt`, `rp`                                                                                                                                                                                                    | Not added at this stage ([terminology: Not added](../terminology.md#not-added))                                                      |
-| `mark`                                                                                                                                                                                                                | **No term.** Text highlighted for reference, for example a search hit                                                                |
+| `mark`                                                                                                                                                                                                                | Highlighted text (Display primitives), [terminology A73](../terminology.md#43-output-elements)                                       |
 
-Finding: the approved vocabulary covers every HTML UI element except highlighted text
-(`mark`); ruby annotations are left out at this stage. Adding `mark` would be a terminology
-decision.
+Finding: with Highlighted text (terminology A73) added for `mark`, the approved vocabulary
+covers every HTML UI element; ruby annotations are left out at this stage.
