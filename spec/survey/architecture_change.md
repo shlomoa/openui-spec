@@ -22,7 +22,8 @@ Each recommendation is one of four actions on a specific part of the tree.
   [HTML Standard](html5/architecture_proposal.md#recommendation),
   [OpenUI5](openui5/architecture_proposal.md#no-top-level-restructuring) and
   [Qt Widgets](qt/architecture_proposal.md#recommendation).
-- **Status:** approved (2026-09-27), not yet applied. It is applied with terminology step
+- **Status:** approved (2026-09-27), not yet applied: C1 and A1–A6. It is applied with
+  terminology step
   9 in the [v1 publish plan](specui_v1_publish_plan.md#w1-terminology).
 - **Naming rule used:** the approved [canonical-term rule](terminology.md#appendix-a-canonical-term-rule).
 - **Already decided:** the new scopes and the taxonomy groupings are settled elsewhere and
@@ -99,11 +100,3 @@ Rules added to the Boundaries section of the named `scope.md`.
   evidence fits existing roots and the approved Behaviors scopes.
 - **A tree that mirrors HTML chapters or framework categories:** it would mix UI with
   browser internals, packaging and tooling.
-
-## Decisions needed
-
-| #   | Decision                                                             | Status                | Plan item     |
-| --- | -------------------------------------------------------------------- | --------------------- | ------------- |
-| 1   | Change the Behaviors folder description (C1)                         | Approved (2026-09-27) | W1 step 9     |
-| 2   | Add the Boundaries rules A1–A4 to the four folder-abstraction scopes | Approved (2026-09-27) | W1 step 9     |
-| 3   | Add the tree rules A5 and A6 to the top-level `scope.md`             | Approved (2026-09-27) | W1 step 9, W4 |
