@@ -242,7 +242,6 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 5 | Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 3 | Open |
 | 5 | Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | W1 9 | Open |
 | 6 | Scope statement and in / out classification; answers Q9 and Q13 | W2 10–12 | W1 9, W0 6 | Open |
-| 7 | Accessibility types of the merge, if Q13 puts them in scope | W3 14.1–14.5 (remainder) | Step 6 | Open |
 | 7 | Map leaf scopes to the categories; rename or move scope folders | W3 14, 15 | Steps 4, 6 | Open |
 | 8 | Specification outline and normative split | W4 16–18 | Step 7 | Open |
 | 9 | Draft the spec, enrich leaves from the survey inventories, `1.0.0-rc.1` | W6 24–26 | Steps 5, 8 | Open |
