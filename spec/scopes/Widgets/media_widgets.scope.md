@@ -9,8 +9,9 @@ spatial widget aliases from the generic UI taxonomy.
 
 ## Purpose
 
-Media widgets cover media players, camera previews, and map surfaces that present
-rich visual, audio, video, or spatial content with widget-level behavior.
+Media widgets cover media players, camera previews, geographic maps, custom
+graphics surfaces and graphics viewports that present rich visual, audio, video,
+or spatial content with widget-level behavior.
 
 ## Attributes
 

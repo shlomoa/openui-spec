@@ -9,8 +9,9 @@ layout aliases from the generic UI taxonomy.
 
 ## Purpose
 
-Structural containers cover panes, rails, stacks, scaffolds, and regions that organize
-page or view content without prescribing a concrete layout engine.
+Structural containers cover panes, rails, stacks, scaffolds, regions, bars and scroll
+containers that organize page or view content without prescribing a concrete layout
+engine.
 
 ## Attributes
 

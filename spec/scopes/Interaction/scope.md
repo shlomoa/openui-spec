@@ -15,4 +15,7 @@ The Interaction scope describes user-facing interaction vocabulary; it does not 
 a browser event API, gesture recognizer, state-management library, or target framework
 binding syntax.
 
+Focus, activation, selection and input modality are interaction state. Visual feedback of
+an interaction is presentation, not a behavior.
+
 Interaction objects follow the shared [scope folder and attribute category rules](../scope.md).

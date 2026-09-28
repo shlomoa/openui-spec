@@ -9,8 +9,10 @@ container aliases from the generic UI taxonomy.
 
 ## Purpose
 
-Surface containers cover windows, screens, views, panels, cards, and toolbar surfaces
-when they are modeled as visual regions that hold related content or controls.
+Surface containers cover windows, main windows, panels, dockable panels,
+multiple-document workspaces, cards, tiles, labelled groups, checkable groups, hero
+banners and toolbar surfaces when they are modeled as visual regions that hold
+related content or controls.
 
 ## Attributes
 

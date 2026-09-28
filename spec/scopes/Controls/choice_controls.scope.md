@@ -9,8 +9,9 @@ selection-oriented control aliases from the generic UI taxonomy.
 
 ## Purpose
 
-Choice controls cover checkboxes, radio buttons, switches, toggles, dropdowns,
-list boxes, and combo boxes that let users select one or more values.
+Choice controls cover checkboxes, radio buttons, switches, dropdowns, list boxes
+and combo boxes, including suggestion-backed, multi-select and font-family
+variants, that let users select one or more values.
 
 ## Attributes
 
@@ -30,3 +31,4 @@ consistent with the chosen single-select, multi-select, or on/off interaction.
 
 - Use this family for selectable input controls; use menu widgets when the primary
   behavior is command selection from an application menu.
+- The selection mode is single or multiple. Exclusive selection coordination needs no visible wrapper element.

@@ -10,7 +10,8 @@ side-surface aliases from the generic UI taxonomy.
 ## Purpose
 
 Sheet containers cover sidebars, sheets, side sheets, and bottom sheets that reveal
-supplemental content from an edge or layered surface.
+supplemental content from an edge or layered surface. Edge placement, navigation
+content and modality are independent.
 
 ## Attributes
 

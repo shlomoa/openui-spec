@@ -11,12 +11,9 @@ drawn from the `spec/README.md` scope rule, recorded technology-independently.
 
 A behavior that lets the user change the size of an element within a page or view.
 
-## Child model
+## Attributes
 
-The behavior applies to the scopes it can resize elements within:
-
-- targetPage — page — 0..n — a page the behavior applies to.
-- targetView — view — 0..n — a view the behavior applies to.
+- `[target]` — Uses — element reference to the element the behavior resizes (the [controlled element](../scope.md#controlled-element)).
 
 ## Accessibility
 
@@ -27,6 +24,7 @@ The behavior applies to the scopes it can resize elements within:
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
-- Only applicability is authorized by current evidence; resize handle, min/max,
+- The behavior acts on its target and does not own it; it declares no Child model.
+- Only the target reference is authorized by current evidence; resize handle, min/max,
   and default-size attributes require an explicit owner decision before they are
   added.

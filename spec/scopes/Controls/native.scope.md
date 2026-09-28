@@ -10,8 +10,8 @@ recorded technology-independently.
 
 ## Purpose
 
-A standard browser, framework, or runtime presentation and input capability that
-supports the user interface without requiring a custom OpenUI control definition.
+A standard platform input, identified by its `[type]`, used where no more
+specific control family applies.
 
 ## Attributes
 

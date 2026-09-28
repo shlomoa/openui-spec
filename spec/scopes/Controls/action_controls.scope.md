@@ -11,7 +11,8 @@ the shared glossary term for button.
 ## Purpose
 
 Action controls cover controls that trigger commands or state transitions, including
-button and icon button aliases when they are not modeled as a more specific widget.
+buttons, icon buttons, tool buttons, hamburger buttons and toggle buttons when they
+are not modeled as a more specific widget.
 
 ## Attributes
 

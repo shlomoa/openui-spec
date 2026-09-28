@@ -11,7 +11,9 @@ recorded technology-independently.
 ## Purpose
 
 A modal or non-modal interaction surface that overlays the page with a title,
-content, and actions.
+content and actions. Message, prompt, picker and progress dialogs are
+compositions of these regions. Modal focus and dismissal follow the Modal
+overlay behavior.
 
 ## Attributes
 
@@ -44,3 +46,4 @@ A dialog owns three ordered regions:
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
 - Children follow the ordered title → content → actions sequence.
+- Dismissal, rejection, a cancellation request and completion are different outcomes.

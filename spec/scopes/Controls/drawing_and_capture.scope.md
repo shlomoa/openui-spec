@@ -9,8 +9,8 @@ capture and drawing aliases from the generic UI taxonomy.
 
 ## Purpose
 
-Drawing and capture controls cover canvas or drawing areas, microphone input, and
-biometric prompts that collect non-text user input.
+Drawing and capture controls cover canvases or drawing areas and microphone input
+that collect non-text user input.
 
 ## Attributes
 

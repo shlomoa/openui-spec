@@ -17,4 +17,7 @@ The Presentation scope describes technology-independent visual tokens and states
 does not require CSS variables, a design-token format, animation library, or component
 library theme system.
 
+Theme tokens, density, typography and the appearance of interaction feedback, such as a
+ripple, are presentation. How themes are packaged and named is outside the scope tree.
+
 Presentation objects follow the shared [scope folder and attribute category rules](../scope.md).

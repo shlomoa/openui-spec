@@ -10,8 +10,9 @@ scope rule.
 
 ## Purpose
 
-A tabular presentation of data with column definitions, row models, and optional
-sorting, filtering, and pagination.
+A tabular presentation of data with columns, rows, cells, a caption and header
+associations, and optional sorting, filtering and pagination. Interactive cell
+focus and editing belong to Data grid.
 
 ## Attributes
 

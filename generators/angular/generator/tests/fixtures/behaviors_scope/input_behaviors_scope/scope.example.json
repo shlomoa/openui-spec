@@ -37,6 +37,28 @@
           }
         }
       ]
+    },
+    {
+      "id": "searchQuery",
+      "type": "TextInputs",
+      "attrs": {
+        "[label]": "\"Search\"",
+        "[value]": "query"
+      }
+    },
+    {
+      "id": "searchCompletion",
+      "type": "InputAssistance",
+      "attrs": {
+        "[target]": "\"searchQuery\""
+      }
+    },
+    {
+      "id": "workspaceFocus",
+      "type": "ViewportAndFocusControl",
+      "attrs": {
+        "[target]": "\"workspacePanel\""
+      }
     }
   ]
 }

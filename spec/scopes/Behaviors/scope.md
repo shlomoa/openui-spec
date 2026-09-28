@@ -1,6 +1,6 @@
 # Behaviors
 
-Behaviors define reusable interaction capabilities that can be applied to pages, views, containers, and widgets.
+Behaviors define reusable interaction capabilities that can be applied to any element, which a behavior references as its controlled element and does not own.
 
 ## Objects
 

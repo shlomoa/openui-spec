@@ -9,8 +9,9 @@ and scalar-value control aliases from the generic UI taxonomy.
 
 ## Purpose
 
-A range control covers sliders, spin boxes, stepper inputs, and rating controls that
-select or present a value within a bounded or discrete range.
+A range control covers sliders, range sliders, rotary value controls, spin boxes,
+step inputs and rating controls that select or present a value within a bounded or
+discrete range.
 
 ## Attributes
 
@@ -31,3 +32,4 @@ increment/decrement behavior appropriate to the selected platform control.
 
 - Use this object for value controls; use status indicators when the value is
   display-only progress or loading feedback.
+- Bounds, step and wrapping are optional capabilities. A range slider selects an interval with two thumbs.

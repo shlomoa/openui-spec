@@ -10,8 +10,9 @@ recorded technology-independently.
 
 ## Purpose
 
-An ordered or unordered collection of items with optional sorting, filtering, and
-pagination, following the HTML `ul`/`li` model.
+An ordered, unordered or description list of items, including icon collections,
+token collections and editable chip collections, with optional selection, links,
+sorting, filtering and pagination. Existing `ul`/`li` instances stay valid.
 
 ## Attributes
 

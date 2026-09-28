@@ -10,7 +10,8 @@ drawn from the native HTML `details`/`summary` disclosure model and the
 
 ## Purpose
 
-A container that expands or collapses to show or hide its content.
+A container, such as an accordion or a disclosure, that expands or collapses to
+show or hide its content while its summary stays visible.
 
 ## Attributes
 

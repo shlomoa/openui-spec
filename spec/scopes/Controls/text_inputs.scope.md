@@ -9,8 +9,8 @@ control aliases from the generic UI taxonomy.
 
 ## Purpose
 
-Text inputs cover single-line, multi-line, password, and search entry controls that
-accept textual user input.
+Text inputs cover single-line, multi-line, password, search, rich text, keyboard
+shortcut and metadata-driven entry controls that accept textual user input.
 
 ## Attributes
 
@@ -30,3 +30,4 @@ keyboard text-entry behavior for the selected platform control.
 
 - Map text field, text area, password field, and search field aliases here unless a
   more specialized scope defines the concrete contract.
+- A keyboard shortcut field records a key combination; it does not run it. Rich text content needs a representation decision before it gets a value attribute.

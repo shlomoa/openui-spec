@@ -313,8 +313,9 @@ whole document, not just among the referring node's siblings.
 
 `Routing[defaultRoute]` and `NavItem[route]` reference a `Route`;
 `Route[redirectTo]` references a `Route`; and `Route[target]` references the
-page or content element selected by that route. `InputAssistance[target]` and
-`ViewportAndFocusControl[target]` reference the
+page or content element selected by that route. The `[target]` of every
+behavior (`DragAndDrop`, `Resizable`, `Collapsible`, `InputAssistance` and
+`ViewportAndFocusControl`) references the
 [controlled element](scopes/scope.md#controlled-element) the behavior acts on. The referenced contract defines
 any additional permitted type. The base grammar, catalog validator, and
 `OpenUiJson.validate()` do not currently parse, resolve, or type-check reference

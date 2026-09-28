@@ -9,8 +9,9 @@ drawn from the `spec/README.md` scope rule, recorded technology-independently.
 
 ## Purpose
 
-A read-write data view that lets the user enter and edit business data with
-validation, submission, and dirty-state tracking.
+A read-write data view, made of form fields and form groups, that lets the user
+enter and edit business data with validation, submission and dirty-state
+tracking.
 
 ## Attributes
 

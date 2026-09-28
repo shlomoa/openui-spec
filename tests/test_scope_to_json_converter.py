@@ -28,7 +28,9 @@ class ScopeToJsonConverterTest(unittest.TestCase):
                 "title": "Dialog",
                 "purpose": (
                     "A modal or non-modal interaction surface that overlays the page with a "
-                    "title, content, and actions."
+                    "title, content and actions. Message, prompt, picker and progress dialogs "
+                    "are compositions of these regions. Modal focus and dismissal follow the "
+                    "Modal overlay behavior."
                 ),
                 "scopeDocument": "scopes/Widgets/dialog.scope.md",
                 "status": "draft",
@@ -76,19 +78,14 @@ class ScopeToJsonConverterTest(unittest.TestCase):
 
     def test_child_model_ids_are_scoped_when_needed(self) -> None:
         node = parse_leaf_scope(
-            SCOPES_DIR / "Behaviors" / "drag_and_drop.scope.md",
+            SCOPES_DIR / "Pages" / "shell_page.scope.md",
             scopes_dir=SCOPES_DIR,
         )
 
         instance = node["children"][0]
         self.assertEqual(
             [child["id"] for child in instance["children"]],
-            [
-                "dragAndDropTargetPage",
-                "dragAndDropTargetView",
-                "dragAndDropTargetContainer",
-                "dragAndDropTargetWidget",
-            ],
+            ["shellPageRouting", "shellPageNavigation"],
         )
 
     def test_build_openui_document_uses_schema_version_and_scopes_tree(self) -> None:

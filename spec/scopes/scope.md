@@ -8,12 +8,15 @@ those terms for concrete object contracts rather than redefining them.
 The [taxonomy mapping](taxonomy_mapping.md) maps entries from
 `docs/generic-ui-taxonomy.md` to these scope objects and records whether each
 entry is an existing object, alias, grouped leaf, or folder-level abstraction.
+The taxonomy and the scope tree are linked views of one vocabulary. The taxonomy
+groups terms by purpose; the scope tree organizes contracts. A new taxonomy section
+or subcategory does not create a scope folder, type or contract.
 
 ## Top-level scopes
 
 - [Application](Application/scope.md): application-level bootstrap artifacts and implementation-independent concepts such as routing, navigation, tool bars, `favicon.ico`, and `index.html`.
 - [Controls](Controls/scope.md): browser, framework, or runtime-provided native controls and presentation capabilities.
-- [Behaviors](Behaviors/scope.md): reusable behaviors that can be applied to pages, views, containers, and widgets.
+- [Behaviors](Behaviors/scope.md): reusable behaviors that can be applied to any element, which the behavior references and does not own.
 - [Pages](Pages/scope.md): predefined page-level layouts and page shells.
 - [Views](Views/scope.md): user-facing views of business objects and workflows.
 - [Containers](Containers/scope.md): layout containers that arrange child content.
@@ -35,6 +38,10 @@ A leaf object with no child objects is represented as:
 - `<object_name>.scope.md`, where `<object_name>` is the snake_case object name.
 
 Top-level scope folder names use Pascal Case. Leaf filenames use snake_case.
+
+A broad grouped leaf may become a family folder with its own child contracts only with
+an explicit map from old to new paths, ids and types. A folder and a leaf with the same
+name must not produce the same id.
 
 ## Object serialization rules
 
