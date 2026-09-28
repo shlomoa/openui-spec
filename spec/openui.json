@@ -384,6 +384,44 @@
                   ]
                 }
               ]
+            },
+            {
+              "id": "inputAssistance",
+              "type": "InputAssistance",
+              "attrs": {
+                "title": "Input assistance",
+                "purpose": "Reusable behaviors that help or check what the user enters, and can attach to any input control: text completion (offering and accepting suggestions while the user types) and constraint validation (checking a value against declared rules and reporting the result).",
+                "scopeDocument": "scopes/Behaviors/input_assistance.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "inputAssistanceInstance",
+                  "type": "InputAssistance",
+                  "attrs": {
+                    "[target]": null
+                  }
+                }
+              ]
+            },
+            {
+              "id": "viewportAndFocusControl",
+              "type": "ViewportAndFocusControl",
+              "attrs": {
+                "title": "Viewport and focus control",
+                "purpose": "Reusable behaviors a control applies to something outside itself: viewport scrolling (moving the visible part of a viewport, with optional momentum and a reveal action that brings an element into view without moving focus), scroll lock (stopping the page background from scrolling while a feature asks for it, then restoring the position) and focus management (moving focus to a chosen element and restoring it afterwards).",
+                "scopeDocument": "scopes/Behaviors/viewport_and_focus_control.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "viewportAndFocusControlInstance",
+                  "type": "ViewportAndFocusControl",
+                  "attrs": {
+                    "[target]": null
+                  }
+                }
+              ]
             }
           ]
         },

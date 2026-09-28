@@ -43,6 +43,8 @@ nav:
           - Drag and drop: scopes/Behaviors/drag_and_drop.scope.md
           - Resizable: scopes/Behaviors/resizable.scope.md
           - Collapsible: scopes/Behaviors/collapsible.scope.md
+          - Input assistance: scopes/Behaviors/input_assistance.scope.md
+          - Viewport and focus control: scopes/Behaviors/viewport_and_focus_control.scope.md
       - Pages:
           - Overview: scopes/Pages/scope.md
           - Dashboard: scopes/Pages/dashboard.scope.md

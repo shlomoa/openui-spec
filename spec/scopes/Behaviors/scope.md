@@ -7,6 +7,8 @@ Behaviors define reusable interaction capabilities that can be applied to pages,
 - [Drag and drop](drag_and_drop.scope.md): A behavior that allows users to drag and drop elements within a page or view.
 - [Resizable](resizable.scope.md): A behavior that allows users to resize elements within a page or view.
 - [Collapsible](collapsible.scope.md): A behavior that allows users to collapse and expand elements within a page or view.
+- [Input assistance](input_assistance.scope.md): Behaviors that help or check what the user enters, such as text completion and constraint validation.
+- [Viewport and focus control](viewport_and_focus_control.scope.md): Behaviors a control applies to something outside itself: viewport scrolling, scroll lock and focus management.
 
 ## Boundaries
 

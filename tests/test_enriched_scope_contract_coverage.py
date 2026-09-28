@@ -94,6 +94,8 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
         (),
         (("collapsibleTargetPage", "page"), ("collapsibleTargetView", "view")),
     ),
+    "Behaviors/input_assistance.scope.md": ("InputAssistance", ("[target]",), ()),
+    "Behaviors/viewport_and_focus_control.scope.md": ("ViewportAndFocusControl", ("[target]",), ()),
     "Behaviors/drag_and_drop.scope.md": (
         "DragAndDrop",
         (),

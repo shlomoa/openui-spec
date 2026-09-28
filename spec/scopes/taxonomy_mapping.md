@@ -476,10 +476,17 @@ Holds: Low-level pointer, touch, keyboard, focus and value events.
 
 Holds: Reusable behaviors that act on an existing element without being a visible element themselves.
 
-| Taxonomy entry                   | Spec object                                                  | Abstraction level | Notes                                                                                  |
-| -------------------------------- | ------------------------------------------------------------ | ----------------- | -------------------------------------------------------------------------------------- |
-| Drag and drop                    | [Drag and drop](Behaviors/drag_and_drop.scope.md)            | Existing object   | Reusable behavior object.                                                              |
-| Collapsible                      | [Collapsible](Behaviors/collapsible.scope.md)                | Existing object   | Reusable behavior object.                                                              |
-| Modal overlay                    | [Overlay containers](Containers/overlay_containers.scope.md) | Alias             | Modal behavior; dialog semantics use Dialog. Its scope is decided by plan task W1 9.5. |
-| Modal interaction                | [Overlay containers](Containers/overlay_containers.scope.md) | Alias             | Alias of Modal overlay, the name Qt and Angular Material use.                          |
-| Exclusive selection coordination | [Choice controls](Controls/choice_controls.scope.md)         | Alias             | Keeps its Choice controls scope.                                                       |
+| Taxonomy entry                   | Spec object                                                                 | Abstraction level | Notes                                                                                  |
+| -------------------------------- | --------------------------------------------------------------------------- | ----------------- | -------------------------------------------------------------------------------------- |
+| Drag and drop                    | [Drag and drop](Behaviors/drag_and_drop.scope.md)                           | Existing object   | Reusable behavior object.                                                              |
+| Collapsible                      | [Collapsible](Behaviors/collapsible.scope.md)                               | Existing object   | Reusable behavior object.                                                              |
+| Modal overlay                    | [Overlay containers](Containers/overlay_containers.scope.md)                | Alias             | Modal behavior; dialog semantics use Dialog. Its scope is decided by plan task W1 9.5. |
+| Modal interaction                | [Overlay containers](Containers/overlay_containers.scope.md)                | Alias             | Alias of Modal overlay, the name Qt and Angular Material use.                          |
+| Input assistance                 | [Input assistance](Behaviors/input_assistance.scope.md)                     | Existing object   | Reusable behaviors that help or check what the user enters.                            |
+| Text completion                  | [Input assistance](Behaviors/input_assistance.scope.md)                     | Alias             | Offers and accepts suggestions while the user types.                                   |
+| Constraint validation            | [Input assistance](Behaviors/input_assistance.scope.md)                     | Alias             | Checks a value against declared rules; form-wide validation stays with Form.           |
+| Viewport and focus control       | [Viewport and focus control](Behaviors/viewport_and_focus_control.scope.md) | Existing object   | Reusable behaviors a control applies to something outside itself.                      |
+| Viewport scrolling               | [Viewport and focus control](Behaviors/viewport_and_focus_control.scope.md) | Alias             | Moves the visible part of a referenced viewport.                                       |
+| Scroll lock                      | [Viewport and focus control](Behaviors/viewport_and_focus_control.scope.md) | Alias             | Stops background scrolling while a feature asks for it.                                |
+| Focus management                 | [Viewport and focus control](Behaviors/viewport_and_focus_control.scope.md) | Alias             | Moves focus and restores it, outside the modal case.                                   |
+| Exclusive selection coordination | [Choice controls](Controls/choice_controls.scope.md)                        | Alias             | Keeps its Choice controls scope.                                                       |
