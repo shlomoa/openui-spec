@@ -165,8 +165,8 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    Result: [`category.md`](category.md#summary) (approved): keep the nine sections, add a Behaviors section and 21 subcategories with inclusion rules and member lists. It is applied in W1 step 9.3 and W3 task 14.4.
 14. [ ] Re-map all 47 leaf scopes and all taxonomy entries to it; keep `docs/generic-ui-taxonomy.md` as an informative view of the mapping, and merge, then retire, `docs/ui-element-taxonomy.md` (decided 2026-09-27, Q4 sub-question):
     - 14.1 [x] Merge proposal: write [`spec/survey/ui_element_taxonomy_merge_proposal.md`](ui_element_taxonomy_merge_proposal.md#summary) with the same mechanism as [`terminology.md`](terminology.md#appendix-a-canonical-term-rule). For each of the 222 abstract types (221 distinct names) that matches no taxonomy entry or approved term (91 already match), record Change, Replace, Delete or Add with section, subcategory, scope, abstraction level, evidence and source URL, or list it under "Not added" with the reason. Types for Accessibility wait on Q13. Depends on the decisions of task 13.
-    - 14.2 [ ] Approve the merge proposal, decision by decision.
-    - 14.3 [ ] Classification rules: move the "Classification rules" section of `docs/ui-element-taxonomy.md` into `spec/scopes/taxonomy_mapping.md` as the inclusion rules of the sections and subcategories.
+    - 14.2 [x] Approve the merge proposal, decision by decision ([decisions](ui_element_taxonomy_merge_proposal.md#decisions), 2026-09-28).
+    - 14.3 [ ] Classification rules: write the rules the approved changes already define into `spec/scopes/taxonomy_mapping.md` ([merge proposal section 5](ui_element_taxonomy_merge_proposal.md#5-classification-rules)): each subcategory's Holds text from [`category.md`](category.md#4-add) as its inclusion rule, one subcategory per entry, and secondary roles in the notes. Done in the same pass as 14.4.
     - 14.4 [ ] Apply the category changes: the heading changes, the Behaviors section and the subcategories of [`category.md`](category.md#summary) in `spec/scopes/taxonomy_mapping.md` and `docs/generic-ui-taxonomy.md`. Done in the same pass as W1 tasks 9.2 and 9.3.
     - 14.5 [ ] Apply the approved merge additions from 14.1 in the same pass.
     - 14.6 [ ] Retire `docs/ui-element-taxonomy.md`: delete it, fix every link to it, and record in the merge proposal where each of its categories and abstract types went.
@@ -233,7 +233,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 1 | Category decisions in [`category.md`](category.md#summary) | W3 13 | — | Done |
 | 1 | Matrix decision (not built) | W0 5 | — | Done |
 | 1 | Scope reconciliation | W0 6 | — | Done |
-| 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Open |
+| 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Done |
 | 2 | Move the glossary to its final location | W1 7 | — | Done |
 | 3 | Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, two new Behaviors scopes, Modal overlay decision, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Steps 2 | Open |
 | 4 | Regenerate and version; generate the examples for the new additions from the consolidated data; validate; release `0.x.0` | W1 9.7, 9.10–9.12, 9.8; W3 14.7, in this order | Step 3 | Open |
