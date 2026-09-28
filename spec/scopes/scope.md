@@ -181,16 +181,40 @@ control may be interactive, such as an input or button, or structural/rendering
 oriented, such as native table tags. A control is classified by primitive
 semantics, not by whether it is visually simple.
 
+Framework meanings differ: OpenUI5 `sap.ui.core.Control` is the generic base
+class of every UI class, not a primitive.
+
+#### Controlled element
+
+**Aliases:** controlled target, `aria-controls` target.
+
+A controlled element is the element another element acts on. It is named by an
+id reference and is not owned by the element that acts on it, such as the table
+a Filter bar filters. See [Controlling element](#controlling-element) and
+[Owner](#owner).
+
+#### Controlling element
+
+**Aliases:** controller.
+
+A controlling element only makes sense acting on a
+[controlled element](#controlled-element) it references. Its Purpose states how
+it acts, for example filters, configures or supplies a value to. Examples:
+Filter bar, Personalization panel, Value help.
+
 #### Element
 
-**Aliases:** UI element, node, object instance, component instance, widget
-instance.
+**Aliases:** UI element, node, object instance, component instance.
 
 An element is one node in an OpenUI document tree. Every element has an `id` and
 `type`, may have `attrs`, and may have `children`. Element is the generic word
 for any concrete occurrence in a document. Its `type` is a semantic category
 from the catalog; its `id`, `attrs`, and `children` describe that particular
 instance.
+
+Framework meanings differ: an HTML element is one markup tag, and OpenUI5
+`sap.ui.core.Element` is a base class. An OpenUI element may be implemented by
+many HTML elements.
 
 #### Grammar
 
@@ -251,7 +275,7 @@ necessarily appearing as a concrete emitted component.
 #### Object
 
 **Aliases:** OpenUI object, spec object, vocabulary object, component contract,
-scope object.
+scope object, component, UI component.
 
 An object is a named contract in the OpenUI vocabulary. Objects are authored in
 `spec/scopes/**` prose and generated into the catalog. An object defines an
@@ -260,6 +284,15 @@ accessibility expectations, and validation notes. In a concrete UI document, an
 element whose `type` exactly matches a known object type is an instance of that
 semantic category. Catalog descriptions do not restrict concrete instances to
 per-type attribute or child allowlists.
+
+#### Owner
+
+**Aliases:** owning element, form owner.
+
+An owner is the element that owns content and its lifecycle, such as a Dialog
+that owns its title, content and actions and decides when it opens and closes.
+Owned content is a child of its owner; content that is only acted on is a
+[controlled element](#controlled-element) instead.
 
 #### Page
 
@@ -270,6 +303,9 @@ containers, widgets, controls, and behaviors, and may participate in routing and
 navigation. A page is broader than a DOM page or framework route component: it is
 the implementation-independent contract for a user-perceived screen or shell.
 
+Framework meanings differ: OpenUI5 `sap.m.Page` is a container with a header, a
+content area and a footer, which can appear inside a page.
+
 #### Scope
 
 **Aliases:** specification scope, category, domain, namespace, scope folder.
@@ -279,6 +315,14 @@ Application, Controls, Behaviors, Pages, Views, Containers, or Widgets. Scope
 folders organize source prose, determine catalog hierarchy, and provide
 `attrs.scopeDocument` traceability. A scope is not necessarily a concrete object
 that appears in an app; it may be a grouping node for the vocabulary catalog.
+
+#### Trigger
+
+**Aliases:** activator, input trigger.
+
+A trigger is an input or condition (gesture, key, pointer, hover, timer) that
+starts a behavior. Behaviors are classified by their outcome, not by their
+trigger.
 
 #### View
 
@@ -292,7 +336,7 @@ or workflow state.
 
 #### Widget
 
-**Aliases:** component, reusable component, UI component, composite control.
+**Aliases:** reusable component, composite control.
 
 A widget is a reusable UI object that can appear across pages or views and
 usually combines controls, structure, behavior, state, and accessibility
@@ -400,6 +444,15 @@ data semantics.
 In OpenUI, the Widgets/Table object (`table`) names a unified tabular data widget
 that encapsulates column definitions, row models, cells, sorting, filtering, and pagination.
 For interactive spreadsheet-like grids with cell selection and editing, see Data grid.
+
+#### Window
+
+**Aliases:** application window, framed window.
+
+A window is a framed UI surface with its own title and window controls, for
+example move, resize, minimize and close. In a web UI it is drawn by the
+application; it is not the browser `Window` object. Main window, dockable panel
+and multiple-document workspace are its variants.
 
 ### Abstraction levels
 
