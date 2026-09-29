@@ -14,7 +14,8 @@
         "[open]": "isOpen",
         "[ariaLabel]": "\"Confirm deletion\"",
         "[restoreFocus]": "true",
-        "(close)": "onClose($event)"
+        "(close)": "onClose($event)",
+        "(cancel)": "onCancel($event)"
       },
       "children": [
         {
