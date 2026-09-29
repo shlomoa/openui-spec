@@ -4,7 +4,7 @@ Status: proposed extension for a future merge. This refines the [scope extension
 
 ## Recommendation
 
-Extend the existing [generic UI taxonomy](../../../../docs/generic-ui-taxonomy.md) within its current nine main sections. A replacement taxonomy tree or a new top-level Graphics category is not required by the Qt findings. Add subcategories for the concepts below and retain all existing entries, including entries for which the Qt survey has no example.
+Extend the existing [generic UI taxonomy](../../../generic-ui-taxonomy.md) within its current nine main sections. A replacement taxonomy tree or a new top-level Graphics category is not required by the Qt findings. Add subcategories for the concepts below and retain all existing entries, including entries for which the Qt survey has no example.
 
 The taxonomy organizes concepts by primary purpose. The [scope tree](../../../scopes/scope.md) organizes specification contracts. They are linked views of the same vocabulary, not identical folder hierarchies: one taxonomy subcategory may map to several existing scope leaves. A new browsing category does not by itself authorize a new scope folder, type or contract.
 

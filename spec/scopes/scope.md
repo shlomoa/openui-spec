@@ -6,7 +6,7 @@ element, control, widget, view, container, behavior, table, grid, and button are
 defined in the [glossary](#glossary). Scope files specialize
 those terms for concrete object contracts rather than redefining them.
 The [taxonomy mapping](taxonomy_mapping.md) maps entries from
-`docs/generic-ui-taxonomy.md` to these scope objects and records whether each
+the [generic UI taxonomy](../generic-ui-taxonomy.md) to these scope objects and records whether each
 entry is an existing object, alias, grouped leaf, or folder-level abstraction.
 The [terminology](terminology.md) records the approved term changes, with their
 evidence and the canonical-term rule. The taxonomy and the scope tree are linked views of one vocabulary. The taxonomy

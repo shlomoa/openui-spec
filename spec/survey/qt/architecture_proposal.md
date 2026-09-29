@@ -7,7 +7,7 @@ unchanged.
 
 ## Recommendation
 
-- Extend the existing [generic UI taxonomy](../../../docs/generic-ui-taxonomy.md#input-elements) within
+- Extend the existing [generic UI taxonomy](../../generic-ui-taxonomy.md#input-elements) within
   its current nine main sections. A replacement taxonomy or a new top-level Graphics
   category is not required.
 - Keep the eleven top-level scopes. Six new leaves fit under existing roots; see

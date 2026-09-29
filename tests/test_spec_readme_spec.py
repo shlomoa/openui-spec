@@ -14,6 +14,7 @@ TOP_LEVEL_SCOPE_LINK_PATTERN = re.compile(r"^- \[([^\]]+)\]\(([^)]+/scope\.md)\)
 EXPECTED_SPEC_MARKDOWN = [
     "README.md",
     "examples/README.md",
+    "generic-ui-taxonomy.md",
     "scopes/Application/favicon.scope.md",
     "scopes/Application/index_html.scope.md",
     "scopes/Application/nav_group.scope.md",
@@ -82,6 +83,7 @@ EXPECTED_SPEC_MARKDOWN = [
     "scopes/terminology.md",
     "tooling/comparison.md",
     "tooling/editing.md",
+    "ui-element-taxonomy.md",
 ]
 
 

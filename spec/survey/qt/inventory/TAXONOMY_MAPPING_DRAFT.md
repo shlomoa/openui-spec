@@ -2,7 +2,7 @@
 
 Review copy: existing rows and abstraction levels are preserved, with links relocated. The proposed rows at the end are conditional on the [merge review](TAXONOMY_MERGE_REVIEW.md). References to new leaves point to review drafts, not nonexistent canonical files.
 
-This document maps the abstract vocabulary in `docs/generic-ui-taxonomy.md` to the
+This document maps the abstract vocabulary in `spec/generic-ui-taxonomy.md` to the
 canonical scope objects under `spec/scopes/`. It keeps taxonomy aliases explicit while
 leaving detailed definitions in the [glossary](../../../scopes/scope.md#glossary) and concrete
 contracts in each linked scope file.
