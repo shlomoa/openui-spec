@@ -4,9 +4,6 @@
   "type": "Form",
   "attrs": {
     "title": "\"Customer form\"",
-    "uses.dirty": "form.dirty",
-    "uses.loading": "isSaving",
-    "uses.error": "saveError",
     "behaves.submit": "onSubmit(form.value)"
   },
   "children": [
@@ -26,9 +23,7 @@
       "type": "TextInputs",
       "attrs": {
         "uses.label": "\"Email\"",
-        "uses.required": true,
-        "uses.pattern": "\"^.+@.+$\"",
-        "uses.error": "\"Enter a valid email\""
+        "uses.required": true
       }
     },
     {
@@ -36,16 +31,16 @@
       "type": "ActionControls",
       "attrs": {
         "uses.disabled": "form.invalid",
-        "text": "\"Save\"",
-        "produces.click": "onSubmit(form.value)"
+        "uses.label": "\"Save\"",
+        "produces.activate": "onSubmit(form.value)"
       }
     },
     {
       "id": "cancelButton",
       "type": "ActionControls",
       "attrs": {
-        "text": "\"Cancel\"",
-        "produces.click": "onReset()"
+        "uses.label": "\"Cancel\"",
+        "produces.activate": "onReset()"
       }
     },
     {

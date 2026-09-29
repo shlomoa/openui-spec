@@ -10,13 +10,24 @@
       "id": "workspaceSplitter",
       "type": "Splitters",
       "attrs": {
-        "uses.orientation": "\"horizontal\"",
-        "uses.position": 320
-      }
+        "uses.orientation": "\"horizontal\""
+      },
+      "children": [
+        {
+          "id": "workspaceSplitterPane",
+          "type": "section"
+        }
+      ]
     },
     {
       "id": "splitterHandle",
-      "type": "Splitters"
+      "type": "Splitters",
+      "children": [
+        {
+          "id": "splitterHandlePane",
+          "type": "section"
+        }
+      ]
     }
   ]
 }

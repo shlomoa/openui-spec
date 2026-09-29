@@ -8,11 +8,7 @@
   "children": [
     {
       "id": "responsiveLayout",
-      "type": "Layout",
-      "attrs": {
-        "uses.flow": "\"responsive\"",
-        "uses.breakpoints": "\"compact medium expanded\""
-      }
+      "type": "Layout"
     }
   ]
 }

@@ -10,9 +10,8 @@
       "id": "ordersGrid",
       "type": "DataGrid",
       "attrs": {
-        "uses.data": "orders",
         "uses.selection": "\"multiple\"",
-        "uses.sortable": true,
+        "behaves.sort": null,
         "produces.selectionChange": "onOrderSelection($event)"
       }
     },

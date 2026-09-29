@@ -10,25 +10,11 @@
       "id": "revenueChart",
       "type": "Chart",
       "attrs": {
-        "uses.chartType": "\"bar\"",
+        "uses.kind": "\"comparison\"",
         "uses.series": "revenueSeries",
-        "uses.xAxis": "\"month\"",
-        "uses.yAxis": "\"revenue\"",
         "uses.legend": true,
-        "uses.tooltip": true,
-        "uses.loading": "isLoading",
-        "uses.error": "loadError",
-        "uses.ariaLabel": "\"Monthly revenue bar chart\""
-      },
-      "children": [
-        {
-          "id": "chartEmpty",
-          "type": "FeedbackWidgets",
-          "attrs": {
-            "uses.message": "\"No data to chart.\""
-          }
-        }
-      ]
+        "uses.title": "\"Monthly revenue bar chart\""
+      }
     }
   ]
 }

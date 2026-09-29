@@ -10,49 +10,29 @@
       "id": "salesChart",
       "type": "Chart",
       "attrs": {
-        "uses.chartType": "\"bar\"",
+        "uses.kind": "\"comparison\"",
         "uses.series": "salesSeries",
-        "uses.ariaLabel": "\"Sales by month\""
+        "uses.title": "\"Sales by month\""
       }
     },
     {
       "id": "salesTable",
-      "type": "table",
-      "attrs": {
-        "uses.data": "sales"
-      },
-      "children": [
-        {
-          "id": "colMonth",
-          "type": "Table",
-          "attrs": {
-            "uses.field": "\"month\"",
-            "uses.header": "\"Month\""
-          }
-        }
-      ]
+      "type": "table"
     },
     {
       "id": "ordersGrid",
       "type": "DataGrid",
       "attrs": {
-        "uses.data": "orders",
-        "uses.sortable": true
+        "behaves.sort": null
       }
     },
     {
       "id": "recentList",
       "type": "List",
-      "attrs": {
-        "uses.items": "recent"
-      },
       "children": [
         {
           "id": "recentItem",
-          "type": "li",
-          "attrs": {
-            "uses.label": "item.title"
-          }
+          "type": "li"
         }
       ]
     },
@@ -88,28 +68,7 @@
     },
     {
       "id": "rangePicker",
-      "type": "DateTimePicker",
-      "attrs": {
-        "uses.rangePicker": "\"picker\""
-      },
-      "children": [
-        {
-          "id": "rangeStart",
-          "type": "input",
-          "attrs": {
-            "matStartDate": null,
-            "placeholder": "\"Start\""
-          }
-        },
-        {
-          "id": "rangeEnd",
-          "type": "input",
-          "attrs": {
-            "matEndDate": null,
-            "placeholder": "\"End\""
-          }
-        }
-      ]
+      "type": "DateTimePicker"
     },
     {
       "id": "wizard",
@@ -120,10 +79,7 @@
       "children": [
         {
           "id": "stepOne",
-          "type": "step",
-          "attrs": {
-            "uses.label": "\"Step 1\""
-          }
+          "type": "step"
         }
       ]
     },
@@ -141,6 +97,10 @@
           "attrs": {
             "text": "\"Info\""
           }
+        },
+        {
+          "id": "infoDialogDialogContent",
+          "type": "section"
         }
       ]
     },

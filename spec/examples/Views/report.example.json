@@ -3,48 +3,19 @@
   "version": "0.10.0",
   "type": "Report",
   "attrs": {
-    "title": "\"Sales report\"",
-    "uses.readOnly": true,
-    "uses.loading": "isLoading",
-    "uses.error": "loadError"
+    "title": "\"Sales report\""
   },
   "children": [
     {
       "id": "reportFilters",
-      "type": "ToolBar",
-      "attrs": {
-        "uses.fields": "\"region,period\"",
-        "produces.filterChange": "onFilter($event)"
-      }
+      "type": "ToolBar"
     },
     {
       "id": "reportTable",
       "type": "table",
       "attrs": {
-        "uses.data": "rows",
-        "uses.sort": "\"revenue desc\"",
-        "uses.groupBy": "\"region\""
-      },
-      "children": [
-        {
-          "id": "colRegion",
-          "type": "Table",
-          "attrs": {
-            "uses.field": "\"region\"",
-            "uses.header": "\"Region\"",
-            "uses.sortable": true
-          }
-        },
-        {
-          "id": "colRevenue",
-          "type": "Table",
-          "attrs": {
-            "uses.field": "\"revenue\"",
-            "uses.header": "\"Revenue\"",
-            "uses.sortable": true
-          }
-        }
-      ]
+        "behaves.sort": null
+      }
     },
     {
       "id": "reportPaging",

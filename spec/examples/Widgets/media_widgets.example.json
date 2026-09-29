@@ -11,7 +11,6 @@
       "type": "MediaWidgets",
       "attrs": {
         "uses.src": "\"/media/product.mp4\"",
-        "uses.caption": "\"Product walkthrough\"",
         "uses.controls": true
       }
     },

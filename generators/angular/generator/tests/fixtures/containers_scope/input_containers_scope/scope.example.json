@@ -10,16 +10,12 @@
       "id": "layoutGrid",
       "type": "Grid",
       "attrs": {
-        "uses.columns": 12,
-        "uses.responsive": true
+        "uses.columns": 12
       },
       "children": [
         {
           "id": "mainItem",
           "type": "section",
-          "attrs": {
-            "uses.colSpan": 8
-          },
           "children": [
             {
               "id": "detailTabs",
@@ -30,10 +26,7 @@
               "children": [
                 {
                   "id": "overviewTab",
-                  "type": "tab",
-                  "attrs": {
-                    "uses.label": "\"Overview\""
-                  }
+                  "type": "tab"
                 }
               ]
             }
@@ -42,17 +35,19 @@
         {
           "id": "sideItem",
           "type": "section",
-          "attrs": {
-            "uses.colSpan": 4
-          },
           "children": [
             {
               "id": "filtersPanel",
               "type": "ExpandablePanels",
               "attrs": {
-                "uses.heading": "\"Filters\"",
                 "uses.expanded": true
-              }
+              },
+              "children": [
+                {
+                  "id": "filtersPanelSummary",
+                  "type": "summary"
+                }
+              ]
             }
           ]
         }
@@ -62,8 +57,7 @@
       "id": "summaryCard",
       "type": "SurfaceContainers",
       "attrs": {
-        "uses.label": "\"Summary\"",
-        "uses.elevation": 2
+        "uses.title": "\"Summary\""
       }
     },
     {
@@ -91,18 +85,20 @@
     },
     {
       "id": "mainArticle",
-      "type": "StructuralContainers",
-      "attrs": {
-        "uses.role": "\"article\""
-      }
+      "type": "StructuralContainers"
     },
     {
       "id": "workspaceSplitter",
       "type": "Splitters",
       "attrs": {
-        "uses.orientation": "\"horizontal\"",
-        "uses.position": 320
-      }
+        "uses.orientation": "\"horizontal\""
+      },
+      "children": [
+        {
+          "id": "workspaceSplitterPane",
+          "type": "section"
+        }
+      ]
     },
     {
       "id": "flexibleColumnLayout",

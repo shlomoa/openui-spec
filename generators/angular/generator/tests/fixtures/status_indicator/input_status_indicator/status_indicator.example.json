@@ -10,7 +10,7 @@
       "id": "syncStatus",
       "type": "StatusIndicator",
       "attrs": {
-        "uses.state": "\"loading\"",
+        "uses.mode": "\"indeterminate\"",
         "uses.label": "\"Syncing\""
       }
     },

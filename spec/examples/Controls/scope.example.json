@@ -8,23 +8,7 @@
   "children": [
     {
       "id": "nativeControls",
-      "type": "Native",
-      "children": [
-        {
-          "id": "colorScheme",
-          "type": "Native",
-          "attrs": {
-            "uses.supported": "\"light dark\""
-          }
-        },
-        {
-          "id": "scrollRegion",
-          "type": "Native",
-          "attrs": {
-            "uses.overflow": "\"auto\""
-          }
-        }
-      ]
+      "type": "Native"
     },
     {
       "id": "primaryAction",
@@ -67,10 +51,7 @@
     },
     {
       "id": "signatureCapture",
-      "type": "DrawingAndCapture",
-      "attrs": {
-        "uses.mode": "\"draw\""
-      }
+      "type": "DrawingAndCapture"
     },
     {
       "id": "statusLabel",
@@ -83,14 +64,14 @@
       "id": "syncStatus",
       "type": "StatusIndicator",
       "attrs": {
-        "uses.state": "\"loading\""
+        "uses.mode": "\"indeterminate\""
       }
     },
     {
       "id": "skipToContent",
       "type": "LinkAndScrollControls",
       "attrs": {
-        "uses.target": "\"#main\""
+        "uses.href": "\"#main\""
       }
     },
     {
@@ -103,10 +84,7 @@
           "children": [
             {
               "id": "summaryHeader",
-              "type": "DisplayPrimitives",
-              "attrs": {
-                "uses.scope": "\"row\""
-              }
+              "type": "DisplayPrimitives"
             },
             {
               "id": "summaryValue",

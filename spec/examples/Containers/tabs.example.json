@@ -11,17 +11,12 @@
       "type": "Tabs",
       "attrs": {
         "uses.selectedIndex": 0,
-        "uses.keyboardNavigation": true,
         "produces.selectedTabChange": "onTabChange($event)"
       },
       "children": [
         {
           "id": "overviewTab",
           "type": "tab",
-          "attrs": {
-            "uses.label": "\"Overview\"",
-            "uses.order": 1
-          },
           "children": [
             {
               "id": "overviewPanel",
@@ -35,10 +30,6 @@
         {
           "id": "historyTab",
           "type": "tab",
-          "attrs": {
-            "uses.label": "\"History\"",
-            "uses.order": 2
-          },
           "children": [
             {
               "id": "historyPanel",
@@ -51,12 +42,7 @@
         },
         {
           "id": "auditTab",
-          "type": "tab",
-          "attrs": {
-            "uses.label": "\"Audit\"",
-            "uses.disabled": true,
-            "uses.order": 3
-          }
+          "type": "tab"
         }
       ]
     },

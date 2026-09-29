@@ -91,29 +91,8 @@
       "id": "ordersReport",
       "type": "Report",
       "attrs": {
-        "title": "\"Orders\"",
-        "uses.readOnly": true
-      },
-      "children": [
-        {
-          "id": "ordersTable",
-          "type": "table",
-          "attrs": {
-            "uses.data": "orders"
-          },
-          "children": [
-            {
-              "id": "colOrderId",
-              "type": "Table",
-              "attrs": {
-                "uses.field": "\"id\"",
-                "uses.header": "\"Order\"",
-                "uses.sortable": true
-              }
-            }
-          ]
-        }
-      ]
+        "title": "\"Orders\""
+      }
     }
   ]
 }

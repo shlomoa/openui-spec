@@ -9,52 +9,22 @@
     {
       "id": "settingsAccordion",
       "type": "ExpandablePanels",
-      "attrs": {
-        "uses.multi": false
-      },
       "children": [
         {
-          "id": "generalPanel",
-          "type": "ExpandablePanels",
-          "attrs": {
-            "uses.heading": "\"General\"",
-            "uses.expanded": true,
-            "uses.defaultExpanded": true,
-            "produces.expandedChange": "onToggle('general', $event)"
-          },
-          "children": [
-            {
-              "id": "generalContent",
-              "type": "section",
-              "attrs": {
-                "text": "\"General settings\""
-              }
-            }
-          ]
-        },
-        {
-          "id": "advancedPanel",
-          "type": "ExpandablePanels",
-          "attrs": {
-            "uses.heading": "\"Advanced\"",
-            "uses.expanded": false,
-            "uses.ariaControls": "\"advancedContent\""
-          },
-          "children": [
-            {
-              "id": "advancedContent",
-              "type": "section",
-              "attrs": {
-                "text": "\"Advanced settings\""
-              }
-            }
-          ]
+          "id": "settingsAccordionSummary",
+          "type": "summary"
         }
       ]
     },
     {
       "id": "disclosure",
-      "type": "ExpandablePanels"
+      "type": "ExpandablePanels",
+      "children": [
+        {
+          "id": "disclosureSummary",
+          "type": "summary"
+        }
+      ]
     }
   ]
 }

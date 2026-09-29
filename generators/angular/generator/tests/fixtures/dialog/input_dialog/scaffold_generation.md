@@ -14,14 +14,14 @@ Angular Material app that already contains the manifestation described by
 modal. Every `type` is an exact catalog literal; stable ids identify the dialog
 regions and action instances:
 
-| Example node                       | Attributes                                                                                                                             | Derived Angular Material manifestation                               |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| `confirmDialog` (`Dialog`)         | `uses.modal=true`, `uses.open=isOpen`, `uses.ariaLabel="Confirm deletion"`, `uses.restoreFocus=true`, `produces.close=onClose($event)` | `MatDialog.open(...)` with `ariaLabel` + `restoreFocus` config       |
-| `dialogTitle` (`header`)           | `text="Delete item?"`                                                                                                                  | `<h2 mat-dialog-title>`                                              |
-| `dialogContent` (`section`)        | `text="This action cannot be undone."`                                                                                                 | `<mat-dialog-content>`                                               |
-| `dialogActions` (`footer`)         | —                                                                                                                                      | `<mat-dialog-actions>`                                               |
-| `cancelDialog` (`ActionControls`)  | `text="Cancel"`, `produces.click=close('cancel')`                                                                                      | `<button mat-button (click)="close('cancel')">`                      |
-| `confirmDelete` (`ActionControls`) | `text="Delete"`, `produces.click=close('confirm')`                                                                                     | `<button mat-raised-button color="warn" (click)="close('confirm')">` |
+| Example node                       | Attributes                                                                                                  | Derived Angular Material manifestation                               |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `confirmDialog` (`Dialog`)         | `uses.modal=true`, `uses.open=isOpen`, `produces.close=onClose($event)`, `produces.cancel=onCancel($event)` | `MatDialog.open(...)` with `ariaLabel` + `restoreFocus` config       |
+| `dialogTitle` (`header`)           | `text="Delete item?"`                                                                                       | `<h2 mat-dialog-title>`                                              |
+| `dialogContent` (`section`)        | `text="This action cannot be undone."`                                                                      | `<mat-dialog-content>`                                               |
+| `dialogActions` (`footer`)         | —                                                                                                           | `<mat-dialog-actions>`                                               |
+| `cancelDialog` (`ActionControls`)  | `uses.label="Cancel"`, `produces.activate=close('cancel')`                                                  | `<button mat-button (click)="close('cancel')">`                      |
+| `confirmDelete` (`ActionControls`) | `uses.label="Delete"`, `produces.activate=close('confirm')`                                                 | `<button mat-raised-button color="warn" (click)="close('confirm')">` |
 
 `MatDialogTitle`, `MatDialogContent`, `MatDialogActions`, and the generated
 component selector are Angular Material implementation details, not OpenUI

@@ -10,8 +10,7 @@
       "id": "statusLabel",
       "type": "DisplayPrimitives",
       "attrs": {
-        "uses.text": "\"Ready\"",
-        "uses.variant": "\"caption\""
+        "uses.text": "\"Ready\""
       }
     },
     {

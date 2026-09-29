@@ -11,7 +11,7 @@
       "type": "LinkAndScrollControls",
       "attrs": {
         "uses.label": "\"Skip to content\"",
-        "uses.target": "\"#main\"",
+        "uses.href": "\"#main\"",
         "produces.activate": "scrollToMain()"
       }
     }

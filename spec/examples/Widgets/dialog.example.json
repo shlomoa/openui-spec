@@ -12,8 +12,6 @@
       "attrs": {
         "uses.modal": true,
         "uses.open": "isOpen",
-        "uses.ariaLabel": "\"Confirm deletion\"",
-        "uses.restoreFocus": true,
         "produces.close": "onClose($event)",
         "produces.cancel": "onCancel($event)"
       },
@@ -40,16 +38,16 @@
               "id": "cancelDialog",
               "type": "ActionControls",
               "attrs": {
-                "text": "\"Cancel\"",
-                "produces.click": "close('cancel')"
+                "uses.label": "\"Cancel\"",
+                "produces.activate": "close('cancel')"
               }
             },
             {
               "id": "confirmDelete",
               "type": "ActionControls",
               "attrs": {
-                "text": "\"Delete\"",
-                "produces.click": "close('confirm')"
+                "uses.label": "\"Delete\"",
+                "produces.activate": "close('confirm')"
               }
             }
           ]

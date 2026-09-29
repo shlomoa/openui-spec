@@ -12,44 +12,21 @@
       "attrs": {
         "uses.linear": true,
         "uses.selectedIndex": 0,
-        "produces.stepChange": "onStepChange($event)",
-        "produces.completed": "onComplete()"
+        "produces.selectionChange": "onStepChange($event)",
+        "produces.complete": "onComplete()"
       },
       "children": [
         {
           "id": "cartStep",
-          "type": "step",
-          "attrs": {
-            "uses.label": "\"Cart\"",
-            "uses.order": 1,
-            "uses.completed": true
-          }
+          "type": "step"
         },
         {
           "id": "shippingStep",
-          "type": "step",
-          "attrs": {
-            "uses.label": "\"Shipping\"",
-            "uses.order": 2,
-            "uses.invalid": "shippingForm.invalid"
-          }
+          "type": "step"
         },
         {
           "id": "paymentStep",
-          "type": "step",
-          "attrs": {
-            "uses.label": "\"Payment\"",
-            "uses.order": 3
-          }
-        },
-        {
-          "id": "stepperSubmit",
-          "type": "ActionControls",
-          "attrs": {
-            "text": "\"Place order\"",
-            "uses.disabled": "!allStepsValid",
-            "produces.click": "submit()"
-          }
+          "type": "step"
         }
       ]
     },
