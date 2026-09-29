@@ -3,6 +3,24 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.6.0] - 2026-09-29
+
+### Specification structure
+
+- Generator content moved out of `spec/README.md`. The Incremental generation
+  section (its scenarios and algorithm) and the list of how generators use the
+  grammar, the schema and the catalog are now in
+  `generators/angular/generator/docs/GENERATION.md#incremental-generation`.
+  The spec README keeps only the specification. The generator stays in this
+  repository.
+
+### Upgrading to 0.6.0
+
+1. Upgrade the Python or npm package to `0.6.0` and set concrete document
+   `version` fields to `0.6.0`.
+2. Change links to `spec/README.md#incremental-generation` to
+   `generators/angular/generator/docs/GENERATION.md#incremental-generation`.
+
 ## [0.5.0] - 2026-09-29
 
 ### Taxonomy documents
@@ -214,3 +232,4 @@ and enforced rather than adding or removing catalog types.
 [0.3.1]: https://github.com/shlomoa/openui-spec/compare/v0.3.0...v0.3.1
 [0.4.0]: https://github.com/shlomoa/openui-spec/compare/v0.3.1...v0.4.0
 [0.5.0]: https://github.com/shlomoa/openui-spec/compare/v0.4.0...v0.5.0
+[0.6.0]: https://github.com/shlomoa/openui-spec/compare/v0.5.0...v0.6.0
