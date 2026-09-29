@@ -22,6 +22,10 @@ Categories are defined in [`../scope.md`](../scope.md):
 - `produces.dirtyChange` — Produces — emitted when the unsaved-changes (dirty) state
   changes.
 
+## Child model
+
+- group — fieldset — 0..n — a form group: a labelled set of related form fields.
+
 ## Accessibility
 
 - Associates each field with its label and exposes validation state and messages
@@ -32,5 +36,5 @@ Categories are defined in [`../scope.md`](../scope.md):
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
-- The view is read-write; field-level constraints and a field child model require
-  an explicit owner decision before they are added.
+- The view is read-write. Form fields are the controls placed in the form or its
+  groups; their constraints are attributes of those controls and of Input assistance.

@@ -294,7 +294,7 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     "Views/form.scope.md": (
         "Form",
         ("behaves.submit", "behaves.validate", "produces.dirtyChange"),
-        (),
+        (("formGroup", "fieldset"),),
     ),
     "Views/report.scope.md": (
         "Report",

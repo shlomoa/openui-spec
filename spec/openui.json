@@ -1085,7 +1085,13 @@
                     "behaves.validate": null,
                     "behaves.submit": null,
                     "produces.dirtyChange": null
-                  }
+                  },
+                  "children": [
+                    {
+                      "id": "formGroup",
+                      "type": "fieldset"
+                    }
+                  ]
                 }
               ]
             }
