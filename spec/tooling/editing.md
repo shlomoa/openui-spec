@@ -33,8 +33,9 @@ npm install @shlomoa/openui-spec
 - **Bundled canonical assets** — includes `spec/openui.schema.json` and
   `spec/openui.json` directly within the distribution; no external path configuration
   is required.
-- **Strict document validation** — validates against both the Draft 2020-12 schema
-  and exact known-type membership in the catalog.
+- **Strict document validation** — validates the grammar, unique ids, the spec
+  version, exact known-type membership in the catalog and the declared attribute
+  value types ([what it validates](#what-it-validates)).
 - **Safe programmatic mutations** — provides strongly-typed methods to add, remove,
   modify attributes, and replace objects in OpenUI documents.
 - **Command-line interface** — installs the `ng-openui-spec` binary for
@@ -112,15 +113,19 @@ Each problem is a diagnostic: a stage-prefixed code (such as
 
 ## Parse, model and validate API
 
-The Python package exposes this API, and it passes the
-[conformance suite](../conformance/README.md#conformance-suite):
+The Python and TypeScript packages expose the same API, and both pass the
+[conformance suite](../conformance/README.md#conformance-suite) with identical
+diagnostics:
 
-| Python (`bin.openui_document`) | What it does                                                                              |
-| ------------------------------ | ----------------------------------------------------------------------------------------- |
-| `parse(text)`                  | Parses the text into a `Document`, or raises `OpenUiParseError` with grammar diagnostics. |
-| `validate(document, catalog)`  | Runs the document, catalog and contract stages; returns diagnostics.                      |
-| `validate_text(text, catalog)` | Runs every stage on text; a grammar diagnostic stops it.                                  |
-| `Catalog.load(path)`           | Loads a catalog; the default is the bundled `spec/openui.json`.                           |
+| Python (`bin.openui_document`) | TypeScript (`@shlomoa/openui-spec`) | What it does                                                                              |
+| ------------------------------ | ----------------------------------- | ----------------------------------------------------------------------------------------- |
+| `parse(text)`                  | `parse(text)`                       | Parses the text into a `Document`, or raises `OpenUiParseError` with grammar diagnostics. |
+| `validate(document, catalog)`  | `validate(document, catalog)`       | Runs the document, catalog and contract stages; returns diagnostics.                      |
+| `validate_text(text, catalog)` | `validateText(text, catalog)`       | Runs every stage on text; a grammar diagnostic stops it.                                  |
+| `Catalog.load(path)`           | `Catalog.load(path)`                | Loads a catalog; the default is the bundled `spec/openui.json`.                           |
+
+`OpenUiJson.validate()` in both packages runs the same pipeline and raises
+`OpenUiValidationError` with the diagnostics.
 
 A `Document` has a `version` and a `root` `Element`. An `Element` has an `id`, a
 `type`, a JSON Pointer `path`, its `attributes` and its `children`. An `Attribute`
@@ -133,6 +138,16 @@ from bin.openui_document import parse, validate
 document = parse(open("input.json", encoding="utf-8").read())
 for diagnostic in validate(document):
     print(diagnostic.code, diagnostic.path, diagnostic.message)
+```
+
+```typescript
+import { readFileSync } from "node:fs";
+import { parse, validate } from "@shlomoa/openui-spec";
+
+const document = parse(readFileSync("input.json", "utf8"));
+for (const diagnostic of validate(document)) {
+  console.log(diagnostic.code, diagnostic.path, diagnostic.message);
+}
 ```
 
 ## Usage

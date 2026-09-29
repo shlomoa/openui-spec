@@ -4,6 +4,22 @@ import path from "node:path";
 import Ajv2020 from "ajv/dist/2020";
 import type { ErrorObject, ValidateFunction } from "ajv";
 
+import { Catalog, validateValue } from "./document";
+
+export {
+  Attribute,
+  Catalog,
+  type Declaration,
+  Diagnostic,
+  Document,
+  Element,
+  OpenUiParseError,
+  defaultCatalog,
+  parse,
+  validate,
+  validateText,
+} from "./document";
+
 export type JsonObject = Record<string, any>;
 
 export type OpenUiAttributeScalar = string | number | boolean | null;
@@ -101,23 +117,10 @@ export class OpenUiJson {
       throw new OpenUiValidationError("the root object has been removed");
     }
 
-    const schema = this.loadJson(this.options.schema, this.options.schemaPath, "schema");
-    const catalog = this.loadJson(this.options.catalog, this.options.catalogPath, "catalog");
-    const validator = this.createValidator(schema, OpenUiValidationError);
-    if (!validator(this.document)) {
-      throw new OpenUiValidationError(formatValidationErrors(validator.errors));
-    }
-
-    const knownTypes = this.catalogTypes(catalog);
-    const seenIds = new Set<string>();
-    for (const node of this.walk(this.document)) {
-      if (seenIds.has(node.id)) {
-        throw new OpenUiValidationError(`duplicate object id: ${node.id}`);
-      }
-      seenIds.add(node.id);
-      if (!knownTypes.has(node.type)) {
-        throw new OpenUiValidationError(`unknown OpenUI object type: ${node.type}`);
-      }
+    const catalog = Catalog.fromValue(this.loadJson(this.options.catalog, this.options.catalogPath, "catalog"));
+    const diagnostics = validateValue(this.document, catalog);
+    if (diagnostics.length > 0) {
+      throw new OpenUiValidationError(diagnostics.map(String).join("\n"));
     }
   }
 

@@ -85,7 +85,9 @@ contract diagnostic.
   invalid document whose diagnostics are not `grammar/`, and both must reject
   every document with a `grammar/` diagnostic.
 - `tests/test_openui_document.py` runs the Python pipeline, `bin.openui_document`,
-  on every case and requires exactly the expected diagnostics.
+  on every case and requires exactly the expected diagnostics;
+  `tests/openui-document.test.ts` does the same for the TypeScript pipeline in
+  `@shlomoa/openui-spec` (`npm test`).
 - `tests/test_conformance_suite.py` checks the layout: every file is in its
   place, every invalid document has its expected diagnostics, every
   expected-diagnostics file validates against the schema, every code has an
