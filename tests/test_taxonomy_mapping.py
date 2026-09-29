@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DOCS_TAXONOMY = REPO_ROOT / "spec" / "generic-ui-taxonomy.md"
+DOCS_TAXONOMY = REPO_ROOT / "spec" / "taxonomy" / "generic-ui-taxonomy.md"
 SPEC_DIR = REPO_ROOT / "spec"
 SCOPES_DIR = SPEC_DIR / "scopes"
 TAXONOMY_MAPPING = SCOPES_DIR / "taxonomy_mapping.md"

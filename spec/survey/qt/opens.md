@@ -66,7 +66,7 @@ representation decision) and A8 (locale, value format and time zone first).
 
 ## Q6 Stack wording
 
-The [generic UI taxonomy](../../generic-ui-taxonomy.md#layout-and-structural-elements)
+The [generic UI taxonomy](../../taxonomy/generic-ui-taxonomy.md#layout-and-structural-elements)
 defines Stack as "a structure that arranges child elements sequentially along a
 horizontal, vertical, or depth axis", while the canonical taxonomy mapping calls it a
 "Linear arrangement container". Consolidated outcome: Stack is kept as a linear

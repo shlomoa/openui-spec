@@ -1,6 +1,6 @@
 # Taxonomy mapping
 
-This document maps the abstract vocabulary in `spec/generic-ui-taxonomy.md` to the
+This document maps the abstract vocabulary in `spec/taxonomy/generic-ui-taxonomy.md` to the
 canonical scope objects under `spec/scopes/`. It keeps taxonomy aliases explicit while
 leaving detailed definitions in the [glossary](scope.md#glossary) and concrete
 contracts in each linked scope file.

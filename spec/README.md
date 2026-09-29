@@ -150,8 +150,8 @@ Generators use the three artifacts together:
 
 The `scopes` folder is structured hierarchically. Each top-level scope is a folder; each object is either a child scope folder or a snake_case `*.scope.md` leaf file.
 The [taxonomy mapping](scopes/taxonomy_mapping.md) maps the abstract entries in
-the [generic UI taxonomy](generic-ui-taxonomy.md) to the concrete scope object or alias that owns
-each term. The [UI element taxonomy](ui-element-taxonomy.md) is a part of the specification too.
+the [generic UI taxonomy](taxonomy/generic-ui-taxonomy.md) to the concrete scope object or alias that owns
+each term. The [UI element taxonomy](taxonomy/ui-element-taxonomy.md) is a part of the specification too.
 The [terminology](scopes/terminology.md) records the approved term changes behind
 the glossary and the taxonomy mapping, with their evidence.
 

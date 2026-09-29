@@ -56,7 +56,7 @@ repos:
         language: python
         additional_dependencies:
           - Markdown==3.11
-        files: ^(spec/generic-ui-taxonomy\.(md|html)|spec/images/.*\.svg|spec/bin/render_taxonomy_html\.py)$
+        files: ^(spec/taxonomy/generic-ui-taxonomy\.(md|html)|spec/taxonomy/images/.*\.svg|spec/bin/render_taxonomy_html\.py)$
         pass_filenames: false
       - id: markdown-internal-links
         name: Markdown internal links

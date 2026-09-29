@@ -1,4 +1,4 @@
-"""Render ``spec/generic-ui-taxonomy.md`` as a self-contained HTML page.
+"""Render ``spec/taxonomy/generic-ui-taxonomy.md`` as a self-contained HTML page.
 
 The HTML page is a convenience view of the Markdown source: the same content, with
 every ``images/*.svg`` illustration embedded so the page opens on its own. The page
@@ -19,8 +19,8 @@ from pathlib import Path
 import markdown
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-SOURCE = REPO_ROOT / "spec" / "generic-ui-taxonomy.md"
-TARGET = REPO_ROOT / "spec" / "generic-ui-taxonomy.html"
+SOURCE = REPO_ROOT / "spec" / "taxonomy" / "generic-ui-taxonomy.md"
+TARGET = REPO_ROOT / "spec" / "taxonomy" / "generic-ui-taxonomy.html"
 IMG_RE = re.compile(r'<img alt="(?P<alt>[^"]*)" src="(?P<src>images/[^"]+\.svg)"\s*/?>')
 TITLE_RE = re.compile(r"<title>.*?</title>", re.S)
 
