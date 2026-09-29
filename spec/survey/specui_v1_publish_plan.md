@@ -24,7 +24,7 @@ Re-checked on 2026-09-29 on the PR #163 branch, after execution step 3 and miles
 
 | Area | What exists | Gap for v1.0 |
 | --- | --- | --- |
-| Survey | `spec/survey/` with 4 sources: `angular-material/`, `html5/` (WHATWG HTML), `openui5/`, `qt/`. The consolidated change files are applied and named `*.done.md`; content not yet applied is in `*.notdone.md`. `spec/survey/` is excluded from pre-commit, markdownlint and mkdocs | Each `*.notdone.md` item is assigned to a task (W1 9.11, 9.13; W3 14.6; W6 25) or is out of v1 by Q9 |
+| Survey | `spec/survey/` with 4 sources: `angular-material/`, `html5/` (WHATWG HTML), `openui5/`, `qt/`. The consolidated change files are applied and named `*.done.md`; content not yet applied is in `*.notdone.md`. `spec/survey/` is excluded from pre-commit, markdownlint and mkdocs | Each `*.notdone.md` item is assigned to a task (W1 9.13; W3 14.6; W6 25) or is out of v1 by Q9 |
 | Terminology | Glossary in [`spec/scopes/scope.md`](../scopes/scope.md#glossary); the approved decisions in [`terminology.md`](../scopes/terminology.md#summary) are applied and verified (2026-09-29), except A41–A43, which are out of v1 (Q9) | No alias table across the 4 sources (W1 9.9) |
 | Scope | One-line purpose in `spec/README.md` | No explicit in / out list (W2). Decided: host-shell presence, docking and multiple-document workspaces are out of v1 (Q9); the Accessibility and Composition top-level scopes are deferred (Q13). The surveys also defer browser internals, storage and workers |
 | Categorization | 11 top-level scopes. The taxonomy is specified by three spec documents: `spec/generic-ui-taxonomy.md` (with its generated HTML), `spec/ui-element-taxonomy.md` and [`spec/scopes/taxonomy_mapping.md`](../scopes/taxonomy_mapping.md#classification-rules). Nine sections plus Behaviors and 21 subcategories, with classification rules | The three documents repeat and contradict each other in places (W3 14.13); move, refresh and extend the two taxonomy documents (W3 14.6, 14.8–14.11); give each leaf scope one primary category (W3 14.12); rename or move scope folders (W3 15) |
@@ -152,7 +152,8 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 9.8 [ ] Validate: pre-commit, unit tests, `mkdocs build --strict` and the npm tests.
    - 9.9 [ ] Build the alias table (task 8.3) from the survey `taxonomy_mapping.md` files, using the final names.
    - 9.10 [ ] Generate the examples for every new addition with the [Spec JSON File Generator](../../.github/agents/spec-json-file-generator.agent.md) agent, using the Add rows of the consolidated files as its input: [`terminology.md`](../scopes/terminology.md#4-add), [`taxonomy_mapping_change.md`](taxonomy_mapping_change.done.md#4-add) and the approved rows of [`ui_element_taxonomy_merge_proposal.md`](ui_element_taxonomy_merge_proposal.done.md#4-add). Each row gives the term, its scope and its level; the evidence it links to gives the attribute values and the child composition. The output: for each Alias and Grouped leaf addition, including the merge additions (Menu item, Date and time field, Captions), a node in its scope's example, with an id derived from the term (for example `highlightedText`) and the scope's catalog type. Glossary-only terms (terminology A1–A5) get no example. The three new Behaviors scopes (`input_assistance`, `viewport_and_focus_control`, `modal_overlay`) already have their leaf examples, their entries in `Behaviors/scope.example.json` and the index rows in `spec/examples/README.md` (tasks 9.4, 9.5).
-   - 9.11 [ ] Regenerate the existing examples that the scope changes affect, with the same agent: behavior targets become references to the controlled element ([`scope_change.md`](scope_change.done.md#2-replace), R1), and each example meets the new Validation notes ([`scope_change.md`](scope_change.done.md#4-add), A1–A9).
+   - 9.11 [ ] Regenerate the existing examples that the scope changes affect, with the same agent, so that each example meets the new Validation notes ([`scope_change.md`](scope_change.done.md#4-add), A1–A9).
+     - 9.11.1 [x] Behavior targets (pulled forward, 2026-09-29): the Collapsible, Resizable and Drag and drop examples and the Behaviors folder example now reference their controlled element with `[target]` and own no children ([`scope_change.md`](scope_change.done.md#2-replace), R1). The attributes their Validation notes do not authorize are removed. `tests/test_spec_examples_format.py` checks that every behavior node in every example has a `[target]` that names another element of the same document, and no children.
    - 9.12 [ ] Validate: add a test that reads the same Add rows and checks that each addition with a scope is shown in that scope's example (a node whose id matches the term), then run the examples tests (EBNF, catalog type literals, one example per leaf and per folder). *Demo:* the new examples in the `generated-examples` app, with screenshots.
    - 9.13 [ ] Add the approved terms that are missing from their scope Purposes: Menu item and Captions ([`ui_element_taxonomy_merge_proposal.notdone.md`](ui_element_taxonomy_merge_proposal.notdone.md#scope-purposes-new-content)), Tree and Tree grid ([`taxonomy_mapping_change.notdone.md`](taxonomy_mapping_change.notdone.md#scope-purposes-new-content)); regenerate `spec/openui.json`.
 
@@ -160,7 +161,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 10. [ ] Write the normative scope section: purpose, audience, in scope, out of scope, deferred to later editions. *Directive (Q9, decided 2026-09-29):* host-shell presence (such as a notification-area icon), docking and multiple-document workspaces are out of v1 and deferred to a later edition; Main window, Dockable panel and Multiple-document workspace (terminology A41–A43) stay out of the taxonomy and the glossary. *Directive (Q13, decided 2026-09-29):* the Accessibility and Composition top-level scopes (HTML P6, P7) are deferred: accessibility is a property of every element, not an element, and content projection is not a requirement.
 11. [ ] Classify every catalog object and every survey concept as in / out / deferred. *Validate:* no catalog object is out of scope. *Demo:* scope map page.
-12. [ ] Split `docs/REQUIREMENTS.md` so spec requirements and generator requirements are separate. *Directive:* `docs/REQUIREMENTS.md` lists the requirements for the solution as the user and owner perceive them, not requirements for the spec; spec content (artifact roles, vocabulary, catalog rules) belongs in `spec/` and is only linked from it.
+12. [ ] *Lowest priority:* `docs/REQUIREMENTS.md` does not affect the spec. Split `docs/REQUIREMENTS.md` so spec requirements and generator requirements are separate. *Directive:* `docs/REQUIREMENTS.md` lists the requirements for the solution as the user and owner perceive them, not requirements for the spec; spec content (artifact roles, vocabulary, catalog rules) belongs in `spec/` and is only linked from it.
 
 ### W3 UI categorization
 
@@ -219,7 +220,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W7 Documentation
 
-28. [ ] Update README, REQUIREMENTS, CONTRIBUTING, RELEASING, AGENTS.md / CLAUDE.md / GEMINI.md, `.github/copilot-instructions.md`, agent files under `.github/agents/`.
+28. [ ] Update README, REQUIREMENTS (*lowest priority*, as task 12), CONTRIBUTING, RELEASING, AGENTS.md / CLAUDE.md / GEMINI.md, `.github/copilot-instructions.md`, agent files under `.github/agents/`.
 29. [ ] Write CHANGELOG `1.0.0` with a 0.3 → 1.0 migration guide. *Directive (Q3):* written for the `1.0.0` release, after downstream validation.
 30. [ ] Publish to Read the Docs. *Demo:* the site itself.
 31. [ ] After W6 task 27 and W8 task 35, notify downstream: angular-django2 (#98/#103 TS parser) and django-angular3.
@@ -245,7 +246,7 @@ Five GitHub milestones, each ending with a tagged release and a visible web page
 
 *Directive (Q3):* M5's `1.0.0` release waits on downstream validation; until then each milestone ships a `0.x.0` release.
 
-M1 and M2 are complete: their tasks are done and their exit criteria hold. Their `0.4.0` and `0.5.0` releases were not tagged; their content ships in the next `0.x.0` release (execution step 4). M4 can start as soon as W1 terminology is settled (task 9); it does not need the taxonomy.
+M1 and M2 are complete: their tasks are done and their exit criteria hold. Their `0.4.0` and `0.5.0` releases were not tagged; their content ships in the next `0.x.0` release (execution step 4). M4 can start as soon as the terminology is applied (W1 9.1–9.6, execution step 3, done); it does not need the taxonomy or the rest of task 9.
 
 ## Execution order
 
@@ -265,8 +266,8 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 4 | [ ] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, in this order | Step 3 | Open |
 | 4 | [x] Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Done |
 | 5 | [ ] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 3 | Open |
-| 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | W1 9 | Open |
-| 6 | [ ] Scope statement and in / out classification | W2 10–12 | W1 9, W0 6 | Open |
+| 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | Step 3 | Open |
+| 6 | [ ] Scope statement and in / out classification | W2 10–12 | Step 3 | Open |
 | 7 | [ ] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, 15 | Steps 4, 6 | Open |
 | 8 | [ ] Specification outline and normative split | W4 16–18 | Step 7 | Open |
 | 9 | [ ] Draft the spec, enrich leaves from the survey inventories, `1.0.0-rc.1` | W6 24–26 | Steps 5, 8 | Open |

@@ -11,32 +11,28 @@
       "type": "SurfaceContainers",
       "attrs": {
         "[title]": "\"Workspace\""
-      },
-      "children": [
-        {
-          "id": "panelCollapsible",
-          "type": "Collapsible",
-          "attrs": {
-            "[expanded]": "true"
-          }
-        },
-        {
-          "id": "panelResizable",
-          "type": "Resizable",
-          "attrs": {
-            "[handles]": "\"right\"",
-            "[minSize]": "\"240x160\""
-          }
-        },
-        {
-          "id": "panelDnd",
-          "type": "DragAndDrop",
-          "attrs": {
-            "[itemType]": "\"panel\"",
-            "[ariaLabel]": "\"Move panel\""
-          }
-        }
-      ]
+      }
+    },
+    {
+      "id": "panelCollapsible",
+      "type": "Collapsible",
+      "attrs": {
+        "[target]": "\"workspacePanel\""
+      }
+    },
+    {
+      "id": "panelResizable",
+      "type": "Resizable",
+      "attrs": {
+        "[target]": "\"workspacePanel\""
+      }
+    },
+    {
+      "id": "panelDnd",
+      "type": "DragAndDrop",
+      "attrs": {
+        "[target]": "\"workspacePanel\""
+      }
     },
     {
       "id": "searchQuery",

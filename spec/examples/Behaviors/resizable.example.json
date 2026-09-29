@@ -8,26 +8,17 @@
   "children": [
     {
       "id": "resizablePanel",
+      "type": "SurfaceContainers",
+      "attrs": {
+        "[title]": "\"Resizable panel\""
+      }
+    },
+    {
+      "id": "panelResize",
       "type": "Resizable",
       "attrs": {
-        "[handles]": "\"right bottom\"",
-        "[minSize]": "\"200x120\"",
-        "[maxSize]": "\"800x600\"",
-        "[defaultSize]": "\"400x300\"",
-        "[ariaLabel]": "\"Resize panel\"",
-        "(resizeStart)": "onResizeStart($event)",
-        "(resize)": "onResize($event)",
-        "(resizeEnd)": "onResizeEnd($event)"
-      },
-      "children": [
-        {
-          "id": "resizableContent",
-          "type": "section",
-          "attrs": {
-            "text": "\"Resizable content region\""
-          }
-        }
-      ]
+        "[target]": "\"resizablePanel\""
+      }
     }
   ]
 }

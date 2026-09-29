@@ -7,34 +7,18 @@
   },
   "children": [
     {
-      "id": "collapsibleSection",
+      "id": "detailsSection",
+      "type": "section",
+      "attrs": {
+        "text": "\"Collapsible content\""
+      }
+    },
+    {
+      "id": "detailsCollapsible",
       "type": "Collapsible",
       "attrs": {
-        "[expanded]": "false",
-        "[defaultExpanded]": "false",
-        "(expandedChange)": "onToggle($event)"
-      },
-      "children": [
-        {
-          "id": "collapseTrigger",
-          "type": "ActionControls",
-          "attrs": {
-            "[ariaExpanded]": "isExpanded",
-            "[ariaControls]": "\"collapseContent\"",
-            "text": "\"Details\"",
-            "(click)": "toggle()"
-          }
-        },
-        {
-          "id": "collapseContent",
-          "type": "section",
-          "attrs": {
-            "role": "\"region\"",
-            "[hidden]": "!isExpanded",
-            "text": "\"Collapsible content\""
-          }
-        }
-      ]
+        "[target]": "\"detailsSection\""
+      }
     }
   ]
 }
