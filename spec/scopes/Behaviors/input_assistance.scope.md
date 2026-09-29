@@ -17,6 +17,10 @@ reporting the result).
 ## Attributes
 
 - `uses.target` — Uses — reference — element reference to the input control the behavior assists or checks (the [controlled element](../scope.md#controlled-element)).
+- `uses.suggestions` — Uses — list(string) — the candidates offered while the user types.
+- `uses.pattern` — Uses — string — a regular expression the value must match.
+- `produces.suggestionSelect` — Produces — emitted when the user accepts a suggestion.
+- `produces.invalid` — Produces — emitted when the value fails a declared rule.
 
 ## Accessibility
 
@@ -31,5 +35,4 @@ reporting the result).
 - Dismissing a suggestion keeps the typed value; accepting one does not submit or
   navigate.
 - Form-wide validation stays with the `behaves.validate` action on Form.
-- Other attributes, such as the candidate source or the rules to check, need an
-  explicit owner decision before they are added.
+- Whether a value is required is `uses.required` of the controlled input.

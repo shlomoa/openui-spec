@@ -15,13 +15,10 @@ engine.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This family inherits concrete
-region name, orientation, slot, order, and responsive attributes from the selected
-container implementation.
+Categories are defined in [`../scope.md`](../scope.md):
 
-## Child model
-
-Structural containers do not define a fixed child model at this abstraction level.
+- `uses.ariaLabel` — Uses — string — accessible name of a region that is meaningful to users.
+- `uses.orientation` — Uses — enum(horizontal|vertical) — the direction in which a stack, rail or bar arranges its content.
 
 ## Accessibility
 

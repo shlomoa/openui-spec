@@ -16,13 +16,12 @@ backdrop from Presentation.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This family inherits concrete
-open state, anchor, modality, backdrop, and dismissal attributes from the selected
-overlay implementation.
+Categories are defined in [`../scope.md`](../scope.md):
 
-## Child model
-
-Overlay containers do not define a fixed child model at this abstraction level.
+- `uses.open` — Uses — boolean — whether the overlay is shown.
+- `uses.anchor` — Uses — reference — the element the overlay is positioned against.
+- `uses.placement` — Uses — enum(top|bottom|start|end|auto) — where the overlay appears relative to its anchor.
+- `produces.close` — Produces — emitted when the overlay closes.
 
 ## Accessibility
 

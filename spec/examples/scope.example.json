@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "type": "Application",
   "attrs": {
     "size": "\"1960x1080\""

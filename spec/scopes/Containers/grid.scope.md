@@ -11,6 +11,14 @@ drawn from the `spec/README.md` scope rule, recorded technology-independently.
 
 A layout container that arranges its child content in rows and columns.
 
+## Attributes
+
+Categories are defined in [`../scope.md`](../scope.md):
+
+- `uses.columns` — Uses — integer — the number of columns.
+- `uses.rowGap` — Uses — string — the space between rows, as a CSS length.
+- `uses.columnGap` — Uses — string — the space between columns, as a CSS length.
+
 ## Child model
 
 A grid owns the items it arranges in rows and columns:
@@ -28,5 +36,5 @@ A grid owns the items it arranges in rows and columns:
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
-- Children are arranged in rows and columns; row/column structure and spans
-  require an explicit owner decision before they are added as attributes.
+- Children are arranged in rows and columns. The row and column span of an item
+  belongs to the item, not to the grid contract.

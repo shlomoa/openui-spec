@@ -1,7 +1,7 @@
 {
   "id": "root",
   "type": "html",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "attrs": {
     "name": "OpenUI",
     "description": "Technology-independent Web UI framework specification",
@@ -313,7 +313,10 @@
                   "id": "dragAndDropInstance",
                   "type": "DragAndDrop",
                   "attrs": {
-                    "uses.target": "reference"
+                    "uses.target": "reference",
+                    "uses.dropEffect": "enum(move|copy|link)",
+                    "uses.disabled": "boolean",
+                    "produces.drop": null
                   }
                 }
               ]
@@ -332,7 +335,9 @@
                   "id": "resizableInstance",
                   "type": "Resizable",
                   "attrs": {
-                    "uses.target": "reference"
+                    "uses.target": "reference",
+                    "uses.axis": "enum(horizontal|vertical|both)",
+                    "produces.resize": null
                   }
                 }
               ]
@@ -351,7 +356,10 @@
                   "id": "collapsibleInstance",
                   "type": "Collapsible",
                   "attrs": {
-                    "uses.target": "reference"
+                    "uses.target": "reference",
+                    "uses.trigger": "reference",
+                    "uses.expanded": "boolean",
+                    "produces.expandedChange": null
                   }
                 }
               ]
@@ -370,7 +378,11 @@
                   "id": "inputAssistanceInstance",
                   "type": "InputAssistance",
                   "attrs": {
-                    "uses.target": "reference"
+                    "uses.target": "reference",
+                    "uses.suggestions": "list(string)",
+                    "uses.pattern": "string",
+                    "produces.suggestionSelect": null,
+                    "produces.invalid": null
                   }
                 }
               ]
@@ -389,7 +401,11 @@
                   "id": "modalOverlayInstance",
                   "type": "ModalOverlay",
                   "attrs": {
-                    "uses.target": "reference"
+                    "uses.target": "reference",
+                    "uses.initialFocus": "reference",
+                    "uses.restoreFocus": "boolean",
+                    "uses.dismissOnEscape": "boolean",
+                    "produces.dismissRequest": null
                   }
                 }
               ]
@@ -408,7 +424,14 @@
                   "id": "viewportAndFocusControlInstance",
                   "type": "ViewportAndFocusControl",
                   "attrs": {
-                    "uses.target": "reference"
+                    "uses.target": "reference",
+                    "uses.axis": "enum(horizontal|vertical|both)",
+                    "uses.kinetic": "boolean",
+                    "uses.scrollLock": "boolean",
+                    "behaves.scrollTo": null,
+                    "behaves.reveal": null,
+                    "behaves.focus": null,
+                    "produces.scroll": null
                   }
                 }
               ]
@@ -438,6 +461,11 @@
                 {
                   "id": "gridInstance",
                   "type": "Grid",
+                  "attrs": {
+                    "uses.columns": "integer",
+                    "uses.rowGap": "string",
+                    "uses.columnGap": "string"
+                  },
                   "children": [
                     {
                       "id": "gridItem",
@@ -461,9 +489,21 @@
                   "id": "expandablePanelsInstance",
                   "type": "details",
                   "attrs": {
+                    "uses.expanded": "boolean",
                     "behaves.expand": null,
-                    "behaves.collapse": null
-                  }
+                    "behaves.collapse": null,
+                    "produces.expandedChange": null
+                  },
+                  "children": [
+                    {
+                      "id": "expandablePanelsSummary",
+                      "type": "summary"
+                    },
+                    {
+                      "id": "expandablePanelsContent",
+                      "type": "section"
+                    }
+                  ]
                 }
               ]
             },
@@ -480,6 +520,11 @@
                 {
                   "id": "tabsInstance",
                   "type": "Tabs",
+                  "attrs": {
+                    "uses.selectedIndex": "integer",
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "produces.selectedTabChange": null
+                  },
                   "children": [
                     {
                       "id": "tabsTab",
@@ -501,7 +546,22 @@
               "children": [
                 {
                   "id": "surfaceContainersInstance",
-                  "type": "SurfaceContainers"
+                  "type": "SurfaceContainers",
+                  "attrs": {
+                    "uses.title": "string",
+                    "uses.checkable": "boolean",
+                    "uses.checked": "boolean"
+                  },
+                  "children": [
+                    {
+                      "id": "surfaceContainersContent",
+                      "type": "section"
+                    },
+                    {
+                      "id": "surfaceContainersActions",
+                      "type": "footer"
+                    }
+                  ]
                 }
               ]
             },
@@ -517,7 +577,12 @@
               "children": [
                 {
                   "id": "sheetContainersInstance",
-                  "type": "SheetContainers"
+                  "type": "SheetContainers",
+                  "attrs": {
+                    "uses.open": "boolean",
+                    "uses.position": "enum(start|end|top|bottom)",
+                    "produces.close": null
+                  }
                 }
               ]
             },
@@ -533,7 +598,13 @@
               "children": [
                 {
                   "id": "overlayContainersInstance",
-                  "type": "OverlayContainers"
+                  "type": "OverlayContainers",
+                  "attrs": {
+                    "uses.open": "boolean",
+                    "uses.anchor": "reference",
+                    "uses.placement": "enum(top|bottom|start|end|auto)",
+                    "produces.close": null
+                  }
                 }
               ]
             },
@@ -549,7 +620,11 @@
               "children": [
                 {
                   "id": "structuralContainersInstance",
-                  "type": "StructuralContainers"
+                  "type": "StructuralContainers",
+                  "attrs": {
+                    "uses.ariaLabel": "string",
+                    "uses.orientation": "enum(horizontal|vertical)"
+                  }
                 }
               ]
             },
@@ -565,7 +640,21 @@
               "children": [
                 {
                   "id": "splittersInstance",
-                  "type": "Splitters"
+                  "type": "Splitters",
+                  "attrs": {
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "produces.resize": null
+                  },
+                  "children": [
+                    {
+                      "id": "splittersPane",
+                      "type": "section"
+                    },
+                    {
+                      "id": "splittersHandle",
+                      "type": "separator"
+                    }
+                  ]
                 }
               ]
             }
@@ -615,7 +704,15 @@
               "children": [
                 {
                   "id": "actionControlsInstance",
-                  "type": "ActionControls"
+                  "type": "ActionControls",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.icon": "string",
+                    "uses.disabled": "boolean",
+                    "uses.pressed": "boolean",
+                    "uses.autoRepeat": "boolean",
+                    "produces.activate": null
+                  }
                 }
               ]
             },
@@ -631,7 +728,19 @@
               "children": [
                 {
                   "id": "textInputsInstance",
-                  "type": "TextInputs"
+                  "type": "TextInputs",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.value": "string",
+                    "uses.placeholder": "string",
+                    "uses.type": "enum(text|password|search|email|tel|url)",
+                    "uses.multiline": "boolean",
+                    "uses.maxLength": "integer",
+                    "uses.readOnly": "boolean",
+                    "uses.required": "boolean",
+                    "uses.disabled": "boolean",
+                    "produces.valueChange": null
+                  }
                 }
               ]
             },
@@ -647,7 +756,23 @@
               "children": [
                 {
                   "id": "choiceControlsInstance",
-                  "type": "ChoiceControls"
+                  "type": "ChoiceControls",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.value": "string",
+                    "uses.checked": "boolean",
+                    "uses.indeterminate": "boolean",
+                    "uses.selection": "enum(single|multiple)",
+                    "uses.required": "boolean",
+                    "uses.disabled": "boolean",
+                    "produces.selectionChange": null
+                  },
+                  "children": [
+                    {
+                      "id": "choiceControlsOption",
+                      "type": "option"
+                    }
+                  ]
                 }
               ]
             },
@@ -663,7 +788,16 @@
               "children": [
                 {
                   "id": "pickerControlInstance",
-                  "type": "PickerControl"
+                  "type": "PickerControl",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.kind": "enum(wheel|color|file|folder|font)",
+                    "uses.value": "string",
+                    "uses.accept": "string",
+                    "uses.multiple": "boolean",
+                    "uses.disabled": "boolean",
+                    "produces.valueChange": null
+                  }
                 }
               ]
             },
@@ -679,7 +813,20 @@
               "children": [
                 {
                   "id": "rangeControlInstance",
-                  "type": "RangeControl"
+                  "type": "RangeControl",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.value": "number",
+                    "uses.min": "number",
+                    "uses.max": "number",
+                    "uses.step": "number",
+                    "uses.start": "number",
+                    "uses.end": "number",
+                    "uses.wrapping": "boolean",
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "uses.disabled": "boolean",
+                    "produces.valueChange": null
+                  }
                 }
               ]
             },
@@ -695,7 +842,12 @@
               "children": [
                 {
                   "id": "drawingAndCaptureInstance",
-                  "type": "DrawingAndCapture"
+                  "type": "DrawingAndCapture",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.width": "integer",
+                    "uses.height": "integer"
+                  }
                 }
               ]
             },
@@ -711,7 +863,15 @@
               "children": [
                 {
                   "id": "displayPrimitivesInstance",
-                  "type": "DisplayPrimitives"
+                  "type": "DisplayPrimitives",
+                  "attrs": {
+                    "uses.text": "string",
+                    "uses.src": "url",
+                    "uses.alt": "string",
+                    "uses.decorative": "boolean",
+                    "uses.for": "reference",
+                    "uses.orientation": "enum(horizontal|vertical)"
+                  }
                 }
               ]
             },
@@ -727,7 +887,15 @@
               "children": [
                 {
                   "id": "statusIndicatorInstance",
-                  "type": "StatusIndicator"
+                  "type": "StatusIndicator",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.value": "number",
+                    "uses.min": "number",
+                    "uses.max": "number",
+                    "uses.mode": "enum(determinate|indeterminate)",
+                    "uses.severity": "enum(none|information|success|warning|error)"
+                  }
                 }
               ]
             },
@@ -743,7 +911,16 @@
               "children": [
                 {
                   "id": "linkAndScrollControlsInstance",
-                  "type": "LinkAndScrollControls"
+                  "type": "LinkAndScrollControls",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.href": "url",
+                    "uses.value": "number",
+                    "uses.min": "number",
+                    "uses.max": "number",
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "produces.activate": null
+                  }
                 }
               ]
             }
@@ -908,7 +1085,13 @@
                     "behaves.validate": null,
                     "behaves.submit": null,
                     "produces.dirtyChange": null
-                  }
+                  },
+                  "children": [
+                    {
+                      "id": "formGroup",
+                      "type": "fieldset"
+                    }
+                  ]
                 }
               ]
             }
@@ -936,7 +1119,19 @@
               "children": [
                 {
                   "id": "chartInstance",
-                  "type": "Chart"
+                  "type": "Chart",
+                  "attrs": {
+                    "uses.kind": "enum(comparison|trend|composition|distribution|relationship|hierarchy|network|flow)",
+                    "uses.series": "list(number)",
+                    "uses.title": "string",
+                    "uses.legend": "boolean"
+                  },
+                  "children": [
+                    {
+                      "id": "chartAnnotation",
+                      "type": "annotation"
+                    }
+                  ]
                 }
               ]
             },
@@ -960,6 +1155,14 @@
                   },
                   "children": [
                     {
+                      "id": "tableCaption",
+                      "type": "caption"
+                    },
+                    {
+                      "id": "tableHeader",
+                      "type": "thead"
+                    },
+                    {
                       "id": "tableRow",
                       "type": "tr"
                     }
@@ -979,7 +1182,27 @@
               "children": [
                 {
                   "id": "dataGridInstance",
-                  "type": "DataGrid"
+                  "type": "DataGrid",
+                  "attrs": {
+                    "uses.selection": "enum(none|single|multiple)",
+                    "uses.editable": "boolean",
+                    "uses.resizableColumns": "boolean",
+                    "uses.reorderableColumns": "boolean",
+                    "behaves.sort": null,
+                    "behaves.filter": null,
+                    "behaves.paginate": null,
+                    "produces.selectionChange": null
+                  },
+                  "children": [
+                    {
+                      "id": "dataGridHeader",
+                      "type": "thead"
+                    },
+                    {
+                      "id": "dataGridRow",
+                      "type": "tr"
+                    }
+                  ]
                 }
               ]
             },
@@ -997,9 +1220,11 @@
                   "id": "listInstance",
                   "type": "ul",
                   "attrs": {
+                    "uses.selection": "enum(none|single|multiple)",
                     "behaves.sort": null,
                     "behaves.filter": null,
-                    "behaves.paginate": null
+                    "behaves.paginate": null,
+                    "produces.selectionChange": null
                   },
                   "children": [
                     {
@@ -1022,7 +1247,14 @@
               "children": [
                 {
                   "id": "feedbackWidgetsInstance",
-                  "type": "FeedbackWidgets"
+                  "type": "FeedbackWidgets",
+                  "attrs": {
+                    "uses.message": "string",
+                    "uses.severity": "enum(none|information|success|warning|error)",
+                    "uses.duration": "integer",
+                    "uses.anchor": "reference",
+                    "produces.close": null
+                  }
                 }
               ]
             },
@@ -1038,7 +1270,17 @@
               "children": [
                 {
                   "id": "mediaWidgetsInstance",
-                  "type": "MediaWidgets"
+                  "type": "MediaWidgets",
+                  "attrs": {
+                    "uses.src": "url",
+                    "uses.controls": "boolean"
+                  },
+                  "children": [
+                    {
+                      "id": "mediaWidgetsCaptions",
+                      "type": "track"
+                    }
+                  ]
                 }
               ]
             },
@@ -1054,7 +1296,16 @@
               "children": [
                 {
                   "id": "navigationWidgetsInstance",
-                  "type": "NavigationWidgets"
+                  "type": "NavigationWidgets",
+                  "attrs": {
+                    "uses.ariaLabel": "string",
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "uses.selected": "string",
+                    "uses.pageSize": "integer",
+                    "uses.total": "integer",
+                    "produces.selectionChange": null,
+                    "produces.pageChange": null
+                  }
                 }
               ]
             },
@@ -1070,7 +1321,24 @@
               "children": [
                 {
                   "id": "menuWidgetsInstance",
-                  "type": "MenuWidgets"
+                  "type": "MenuWidgets",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.open": "boolean",
+                    "uses.anchor": "reference",
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "produces.select": null
+                  },
+                  "children": [
+                    {
+                      "id": "menuWidgetsItem",
+                      "type": "menuitem"
+                    },
+                    {
+                      "id": "menuWidgetsSubmenu",
+                      "type": "MenuWidgets"
+                    }
+                  ]
                 }
               ]
             },
@@ -1088,8 +1356,10 @@
                   "id": "dateTimePickersInstance",
                   "type": "DateTimePicker",
                   "attrs": {
+                    "uses.label": "string",
                     "uses.start": "string",
                     "uses.end": "string",
+                    "uses.disabled": "boolean",
                     "produces.dateChange": null
                   }
                 }
@@ -1108,6 +1378,14 @@
                 {
                   "id": "stepperInstance",
                   "type": "Stepper",
+                  "attrs": {
+                    "uses.selectedIndex": "integer",
+                    "uses.linear": "boolean",
+                    "uses.branching": "boolean",
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "produces.selectionChange": null,
+                    "produces.complete": null
+                  },
                   "children": [
                     {
                       "id": "stepperStep",

@@ -14,6 +14,19 @@ technology-independently.
 A visual representation of data — such as a bar, line, or pie chart — that
 summarizes a data series for the user.
 
+## Attributes
+
+Categories are defined in [`../scope.md`](../scope.md):
+
+- `uses.kind` — Uses — enum(comparison|trend|composition|distribution|relationship|hierarchy|network|flow) — the kind of chart.
+- `uses.series` — Uses — list(number) — the data series the chart shows.
+- `uses.title` — Uses — string — the chart title, which also labels it.
+- `uses.legend` — Uses — boolean — whether the chart shows a legend.
+
+## Child model
+
+- annotation — annotation — 0..n — a marker or reference line drawn on the chart.
+
 ## Accessibility
 
 - Exposes an accessible role and a textual alternative describing the data the
@@ -24,5 +37,5 @@ summarizes a data series for the user.
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
-- Only the Purpose is authorized by current evidence; attribute and child
-  contracts require an explicit owner decision before they are added.
+- A bar chart is a comparison chart, a line chart is a trend chart and a pie chart
+  is a composition chart.

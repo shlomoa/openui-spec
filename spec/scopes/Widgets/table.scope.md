@@ -24,8 +24,8 @@ Categories are defined in [`../scope.md`](../scope.md):
 
 ## Child model
 
-A table defines its structural rows and column specifications:
-
+- caption — caption — 0..1 — the table caption.
+- header — thead — 0..1 — the header rows, whose cells label the columns.
 - tableRow — tr — 0..n — a row of data or header cells.
 
 ## Accessibility

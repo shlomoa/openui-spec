@@ -14,12 +14,14 @@ loaders and spinners that communicate state without requiring user activation.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This object inherits concrete
-status text, value, severity, and visibility attributes from the selected indicator.
+Categories are defined in [`../scope.md`](../scope.md):
 
-## Child model
-
-A status indicator does not define a fixed child model at this abstraction level.
+- `uses.label` — Uses — string — the visible status text or accessible name.
+- `uses.value` — Uses — number — the measured value or the progress made.
+- `uses.min` — Uses — number — the lower bound of a meter or progress bar.
+- `uses.max` — Uses — number — the upper bound of a meter or progress bar.
+- `uses.mode` — Uses — enum(determinate|indeterminate) — the progress mode.
+- `uses.severity` — Uses — enum(none|information|success|warning|error) — the kind of status shown.
 
 ## Accessibility
 
@@ -30,4 +32,4 @@ meaningful text alternatives for non-text visual feedback.
 
 - Use this object for passive status feedback; use feedback widgets for transient
   messages such as alerts, toasts, or notifications.
-- Progress is determinate or indeterminate (progress mode). A meter shows a measured value, not task progress; a badge or tag shows status attached to another element.
+- Progress is determinate or indeterminate (progress mode, `uses.mode`); indeterminate progress has no `uses.value`. A meter shows a measured value, not task progress; a badge or tag shows status attached to another element.

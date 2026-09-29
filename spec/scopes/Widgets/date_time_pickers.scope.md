@@ -16,11 +16,12 @@ range. A calendar is optional.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). The Angular Material
-`mat-date-range-input` inputs/outputs are shown only as reference patterns:
+Categories are defined in [`../scope.md`](../scope.md):
 
+- `uses.label` — Uses — string — accessible name of the control.
 - `uses.start` — Uses — string — the selected start date (Angular Material `matStartDate`).
 - `uses.end` — Uses — string — the selected end date (Angular Material `matEndDate`).
+- `uses.disabled` — Uses — boolean — whether the control is unavailable.
 - `produces.dateChange` — Produces — emitted when the selected date or range changes.
 
 ## Accessibility

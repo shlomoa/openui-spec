@@ -19,6 +19,10 @@ locking is Viewport and focus control.
 ## Attributes
 
 - `uses.target` — Uses — reference — element reference to the surface the behavior makes modal (the [controlled element](../scope.md#controlled-element)).
+- `uses.initialFocus` — Uses — reference — element reference to the element inside the surface that receives focus first.
+- `uses.restoreFocus` — Uses — boolean — whether focus returns to the previously focused element when the behavior ends.
+- `uses.dismissOnEscape` — Uses — boolean — whether the Escape key requests dismissal.
+- `produces.dismissRequest` — Produces — emitted when the user asks to dismiss the surface; the target decides whether it closes.
 
 ## Accessibility
 
@@ -34,5 +38,3 @@ locking is Viewport and focus control.
 - The behavior acts on its target and does not own it; it declares no Child model.
 - The target decides whether a dismissal request closes it; the behavior does not keep
   its own open state.
-- Other attributes, such as initial focus, focus restoration or dismissal options,
-  need an explicit owner decision before they are added.

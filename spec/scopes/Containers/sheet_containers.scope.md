@@ -15,13 +15,11 @@ content and modality are independent.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This family inherits concrete
-open state, side, modality, breakpoint, and dismissal attributes from the selected
-sheet implementation.
+Categories are defined in [`../scope.md`](../scope.md):
 
-## Child model
-
-Sheet containers do not define a fixed child model at this abstraction level.
+- `uses.open` — Uses — boolean — whether the sheet is shown.
+- `uses.position` — Uses — enum(start|end|top|bottom) — the edge the sheet is attached to.
+- `produces.close` — Produces — emitted when the sheet closes.
 
 ## Accessibility
 

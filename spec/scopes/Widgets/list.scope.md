@@ -18,9 +18,11 @@ selection, links, sorting, filtering and pagination. Existing `ul`/`li` instance
 
 Categories are defined in [`../scope.md`](../scope.md):
 
+- `uses.selection` — Uses — enum(none|single|multiple) — the item selection mode.
 - `behaves.sort` — Behaves — orders the items by a chosen key.
 - `behaves.filter` — Behaves — narrows the visible items by a predicate.
 - `behaves.paginate` — Behaves — splits the items into navigable pages.
+- `produces.selectionChange` — Produces — emitted when the selected items change.
 
 ## Child model
 

@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "type": "Containers",
   "attrs": {
     "title": "\"Containers example\""
@@ -80,6 +80,13 @@
       "attrs": {
         "uses.anchor": "\"helpButton\"",
         "uses.open": "showHelp"
+      }
+    },
+    {
+      "id": "helpButton",
+      "type": "ActionControls",
+      "attrs": {
+        "uses.label": "\"Help\""
       }
     },
     {

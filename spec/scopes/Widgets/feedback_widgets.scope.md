@@ -15,13 +15,13 @@ audio-description surfaces that communicate contextual or transient information.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This family inherits concrete
-message, severity, duration, announcement, and dismissal attributes from the selected
-widget implementation.
+Categories are defined in [`../scope.md`](../scope.md):
 
-## Child model
-
-Feedback widgets do not define a fixed child model at this abstraction level.
+- `uses.message` — Uses — string — the text of the message.
+- `uses.severity` — Uses — enum(none|information|success|warning|error) — the message severity.
+- `uses.duration` — Uses — integer — how long a transient message stays, in milliseconds.
+- `uses.anchor` — Uses — reference — the element a tooltip or contextual help describes.
+- `produces.close` — Produces — emitted when the message is dismissed or its time runs out.
 
 ## Accessibility
 
@@ -33,3 +33,4 @@ urgency and modality of the message.
 - Use status indicators for passive state display; use this family for message
   surfaces that appear, announce, or dismiss.
 - Contextual help is requested and can be interactive; a tooltip is passive.
+- Confirmation, warning and error are the severity of one message, not separate widgets.

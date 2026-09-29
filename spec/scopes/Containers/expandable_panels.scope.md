@@ -17,8 +17,15 @@ show or hide its content while its summary stays visible.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
+- `uses.expanded` — Uses — boolean — whether the content is shown.
 - `behaves.expand` — Behaves — reveals the panel's content.
 - `behaves.collapse` — Behaves — hides the panel's content.
+- `produces.expandedChange` — Produces — emitted when the panel expands or collapses.
+
+## Child model
+
+- summary — summary — 1 — the summary or header that stays visible and toggles the panel.
+- content — section — 0..1 — the content the panel shows or hides.
 
 ## Accessibility
 
@@ -30,5 +37,5 @@ Categories are defined in [`../scope.md`](../scope.md):
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
-- Only expand/collapse behavior is authorized by current evidence; default state
-  and grouping require an explicit owner decision before they are added.
+- The summary comes first. Whether one panel of an accordion closes when another
+  opens needs an explicit owner decision before it gets an attribute.

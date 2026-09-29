@@ -14,13 +14,11 @@ that collect non-text user input.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This family inherits concrete
-capture permissions, accepted media, and value attributes from the selected control.
+Categories are defined in [`../scope.md`](../scope.md):
 
-## Child model
-
-Drawing and capture controls do not define a fixed child model at this abstraction
-level.
+- `uses.label` — Uses — string — accessible name of the drawing area or capture control.
+- `uses.width` — Uses — integer — width of a drawing area, in CSS pixels.
+- `uses.height` — Uses — integer — height of a drawing area, in CSS pixels.
 
 ## Accessibility
 

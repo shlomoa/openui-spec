@@ -15,13 +15,14 @@ video, or spatial content with widget-level behavior.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This family inherits concrete
-source, playback, preview, viewport, and permission attributes from the selected media
-widget implementation.
+Categories are defined in [`../scope.md`](../scope.md):
+
+- `uses.src` — Uses — url — the source of the media.
+- `uses.controls` — Uses — boolean — whether the widget shows playback controls.
 
 ## Child model
 
-Media widgets do not define a fixed child model at this abstraction level.
+- captions — track — 0..n — a captions or subtitles track of the media.
 
 ## Accessibility
 

@@ -15,13 +15,14 @@ content without owning a complex interaction model.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This family inherits concrete
-content, source, alternative text, and decorative-state attributes from the selected
-primitive.
+Categories are defined in [`../scope.md`](../scope.md):
 
-## Child model
-
-Display primitives do not define a fixed child model at this abstraction level.
+- `uses.text` — Uses — string — the text a label, text, highlighted text or calculated output shows.
+- `uses.src` — Uses — url — the source of an image, icon or avatar picture.
+- `uses.alt` — Uses — string — the text alternative of an image, icon or avatar.
+- `uses.decorative` — Uses — boolean — whether the primitive is decoration that assistive technology ignores.
+- `uses.for` — Uses — reference — the element a label names.
+- `uses.orientation` — Uses — enum(horizontal|vertical) — the direction of a separator.
 
 ## Accessibility
 

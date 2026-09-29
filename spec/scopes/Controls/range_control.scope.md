@@ -15,13 +15,19 @@ discrete range.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This object inherits concrete
-minimum, maximum, step, current value, and orientation attributes from the selected
-control implementation.
+Categories are defined in [`../scope.md`](../scope.md):
 
-## Child model
-
-A range control does not define a fixed child model at this abstraction level.
+- `uses.label` — Uses — string — accessible name of the control.
+- `uses.value` — Uses — number — the current value.
+- `uses.min` — Uses — number — the lower bound.
+- `uses.max` — Uses — number — the upper bound.
+- `uses.step` — Uses — number — the increment between allowed values.
+- `uses.start` — Uses — number — the lower end of the interval a range slider selects.
+- `uses.end` — Uses — number — the upper end of the interval a range slider selects.
+- `uses.wrapping` — Uses — boolean — whether stepping past one bound continues from the other.
+- `uses.orientation` — Uses — enum(horizontal|vertical) — the direction of a slider.
+- `uses.disabled` — Uses — boolean — whether the control is unavailable.
+- `produces.valueChange` — Produces — emitted when the value or the interval changes.
 
 ## Accessibility
 
