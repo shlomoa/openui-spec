@@ -3,6 +3,41 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.9.0] - 2026-09-29
+
+### Specification text
+
+- `spec/README.md` follows the numbered outline: 1 Introduction and scope,
+  2 Conformance, 3 Terminology, 4 Document model and language, 5 Categories
+  and objects, 6 Catalog, and Annexes A–C. Every section heading is numbered,
+  so the section anchors changed (for example `#value-types` is now
+  `#46-value-types`). No file moved.
+- Part 2 names what conforms: a concrete UI document, the catalog and a
+  validator.
+- Each rule is written once. The attribute categories, the object
+  serialization rules and the scope and instance representation are no longer
+  repeated in `spec/scopes/scope.md`; it links parts 4 and 6 instead. The
+  README links the folder convention of `spec/scopes/scope.md`, and its object
+  table leaves the descriptions to the folder `scope.md` files.
+- Stale text is removed: the Angular `[name]` / `(name)` note (the Angular
+  mapping is now in the generator's `GENERATION.md`), the sentence that
+  attribute names follow the target framework's naming, the note that contract
+  validation is not specified yet, and the Angular-flavoured app.json example
+  (the worked examples of Annex C replace it).
+- Requirements in normative parts are written with BCP 14 keywords in capitals:
+  the README, the conformance suite, the scopes index and glossary, the leaf
+  template and the taxonomy documents.
+
+### Upgrading to 0.9.0
+
+1. Upgrade the Python or npm package to `0.9.0` and set concrete document
+   `version` fields to `0.9.0`.
+2. Update links to `spec/README.md` sections to the numbered anchors, for
+   example `#specification-artifacts-grammar-vs-catalog` to
+   `#41-specification-artifacts`, and links to
+   `spec/scopes/scope.md#attribute-categories` to
+   `spec/README.md#45-attributes-and-their-categories`.
+
 ## [0.8.0] - 2026-09-29
 
 ### Scope
@@ -368,3 +403,4 @@ and enforced rather than adding or removing catalog types.
 [0.6.0]: https://github.com/shlomoa/openui-spec/compare/v0.5.0...v0.6.0
 [0.7.0]: https://github.com/shlomoa/openui-spec/compare/v0.6.0...v0.7.0
 [0.8.0]: https://github.com/shlomoa/openui-spec/compare/v0.7.0...v0.8.0
+[0.9.0]: https://github.com/shlomoa/openui-spec/compare/v0.8.0...v0.9.0
