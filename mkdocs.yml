@@ -1,5 +1,6 @@
 site_name: OpenUI Specification
 site_description: Documentation for the OpenUI specification.
+site_url: https://openui-spec.readthedocs.io/en/latest/
 repo_url: https://github.com/shlomoa/openui-spec
 edit_uri: edit/main/spec/
 theme:
@@ -7,6 +8,8 @@ theme:
 docs_dir: spec
 exclude_docs: |
   survey/**
+hooks:
+  - mkdocs_hooks.py
 nav:
   - Specification (parts 1, 2, 4, 6 and annexes): README.md
   - 2 Conformance:
@@ -14,8 +17,10 @@ nav:
   - 3 Terminology and 5 Categories and objects:
       - 3 Glossary and 5.4 Scope tree: scopes/scope.md
       - 5.1 Generic UI taxonomy: taxonomy/generic-ui-taxonomy.md
+      - 5.1 Generic UI taxonomy (HTML view): taxonomy/generic-ui-taxonomy.html
       - 5.2 UI element taxonomy: taxonomy/ui-element-taxonomy.md
       - 5.3 Taxonomy mapping: scopes/taxonomy_mapping.md
+      - 5.3 Taxonomy tree: taxonomy/taxonomy-tree.html
       - Application:
           - Overview: scopes/Application/scope.md
           - Routing: scopes/Application/routing.scope.md
@@ -95,5 +100,6 @@ nav:
       - Terminology: scopes/terminology.md
   - Annex C Examples: examples/README.md
   - Tooling:
+      - Playground: playground.html
       - OpenUI JSON editing: tooling/editing.md
       - OpenUI JSON comparison: tooling/comparison.md
