@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "TextInputs",
   "attrs": {
     "title": "\"Text inputs example\""
@@ -10,11 +10,23 @@
       "id": "searchText",
       "type": "TextInputs",
       "attrs": {
-        "[label]": "\"Search\"",
-        "[placeholder]": "\"Type to search\"",
-        "[value]": "query",
-        "(valueChange)": "onQueryChange($event)"
+        "uses.label": "\"Search\"",
+        "uses.placeholder": "\"Type to search\"",
+        "uses.value": "query",
+        "produces.valueChange": "onQueryChange($event)"
       }
+    },
+    {
+      "id": "richTextEditor",
+      "type": "TextInputs"
+    },
+    {
+      "id": "keyboardShortcutField",
+      "type": "TextInputs"
+    },
+    {
+      "id": "metadataDrivenField",
+      "type": "TextInputs"
     }
   ]
 }

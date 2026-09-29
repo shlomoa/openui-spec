@@ -43,14 +43,19 @@ concept it represents. Free prose; not parsed.
 
 One bullet per attribute. Fixed pattern, `—` (em dash) separated:
 
-- `` `<key>` — <Category> — <free prose description> ``
+- `` `uses.<name>` — Uses — <value type> — <free prose description> ``
+- `` `produces.<name>` — Produces — <free prose description> ``
+- `` `behaves.<name>` — Behaves — <free prose description> ``
 
-Where `<key>` carries its category in its own syntax — Uses `[name]`, Produces
-`(name)`, Behaves `(name)` — and `<Category>` is the matching word `Uses`,
-`Produces`, or `Behaves`. The converter reads the **key** and **category** only;
-the description (and any value-type note) is prose. The emitted instance
-attr carries just the key with value `null`. List only attributes supported by
-approved source material. Omit the whole section if the object has no attributes.
+Where `<key>` carries its category in its own syntax — Uses `uses.name`, Produces
+`produces.name`, Behaves `behaves.name` — and `<Category>` is the matching word
+`Uses`, `Produces`, or `Behaves`. A Uses attribute declares one
+[value type](../README.md#value-types), for example `boolean`, `enum(ltr|rtl|auto)`
+or `reference(Route)`; a Produces or Behaves attribute declares none. The converter
+reads the **key**, **category** and **value type**; the description is prose. The
+emitted instance attr carries the key with the value type as its value, or `null`
+for Produces and Behaves. List only attributes supported by approved source
+material. Omit the whole section if the object has no attributes.
 
 ## Child model
 

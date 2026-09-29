@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "Behaviors",
   "attrs": {
     "title": "\"Behaviors example\""
@@ -10,57 +10,57 @@
       "id": "workspacePanel",
       "type": "SurfaceContainers",
       "attrs": {
-        "[title]": "\"Workspace\""
+        "uses.title": "\"Workspace\""
       }
     },
     {
       "id": "panelCollapsible",
       "type": "Collapsible",
       "attrs": {
-        "[target]": "\"workspacePanel\""
+        "uses.target": "\"workspacePanel\""
       }
     },
     {
       "id": "panelResizable",
       "type": "Resizable",
       "attrs": {
-        "[target]": "\"workspacePanel\""
+        "uses.target": "\"workspacePanel\""
       }
     },
     {
       "id": "panelDnd",
       "type": "DragAndDrop",
       "attrs": {
-        "[target]": "\"workspacePanel\""
+        "uses.target": "\"workspacePanel\""
       }
     },
     {
       "id": "searchQuery",
       "type": "TextInputs",
       "attrs": {
-        "[label]": "\"Search\"",
-        "[value]": "query"
+        "uses.label": "\"Search\"",
+        "uses.value": "query"
       }
     },
     {
       "id": "searchCompletion",
       "type": "InputAssistance",
       "attrs": {
-        "[target]": "\"searchQuery\""
+        "uses.target": "\"searchQuery\""
       }
     },
     {
       "id": "workspaceFocus",
       "type": "ViewportAndFocusControl",
       "attrs": {
-        "[target]": "\"workspacePanel\""
+        "uses.target": "\"workspacePanel\""
       }
     },
     {
       "id": "workspaceModality",
       "type": "ModalOverlay",
       "attrs": {
-        "[target]": "\"workspacePanel\""
+        "uses.target": "\"workspacePanel\""
       }
     }
   ]

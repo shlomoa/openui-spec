@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "MenuWidgets",
   "attrs": {
     "title": "\"Menu widgets example\""
@@ -10,10 +10,18 @@
       "id": "rowActionsMenu",
       "type": "MenuWidgets",
       "attrs": {
-        "[label]": "\"Row actions\"",
-        "[open]": "isMenuOpen",
-        "(select)": "onMenuSelect($event)"
+        "uses.label": "\"Row actions\"",
+        "uses.open": "isMenuOpen",
+        "produces.select": "onMenuSelect($event)"
       }
+    },
+    {
+      "id": "menubar",
+      "type": "MenuWidgets"
+    },
+    {
+      "id": "menuItem",
+      "type": "MenuWidgets"
     }
   ]
 }

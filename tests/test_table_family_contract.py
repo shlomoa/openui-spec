@@ -17,7 +17,7 @@ ALWAYS_SECTIONS = (
     "## Accessibility",
     "## Validation notes",
 )
-EXPECTED_BEHAVES_KEYS = ("(sort)", "(filter)", "(paginate)")
+EXPECTED_BEHAVES_KEYS = ("behaves.sort", "behaves.filter", "behaves.paginate")
 
 
 class TableContractTest(unittest.TestCase):

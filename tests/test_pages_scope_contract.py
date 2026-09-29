@@ -104,6 +104,8 @@ class PagesScopeContractTest(unittest.TestCase):
                 },
                 {"id": "homeDashboard", "type": "DashboardPage"},
                 {"id": "notFound", "type": "EmptyPage"},
+                # Object page is a grouped leaf of the Pages folder (terminology A69).
+                {"id": "objectPage", "type": "Pages"},
             ],
         )
 

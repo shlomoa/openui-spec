@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "FeedbackWidgets",
   "attrs": {
     "title": "\"Feedback widgets example\""
@@ -10,9 +10,21 @@
       "id": "saveFeedback",
       "type": "FeedbackWidgets",
       "attrs": {
-        "[message]": "\"Saved successfully.\"",
-        "[severity]": "\"success\""
+        "uses.message": "\"Saved successfully.\"",
+        "uses.severity": "\"success\""
       }
+    },
+    {
+      "id": "contextualHelp",
+      "type": "FeedbackWidgets"
+    },
+    {
+      "id": "startupScreen",
+      "type": "FeedbackWidgets"
+    },
+    {
+      "id": "illustratedMessage",
+      "type": "FeedbackWidgets"
     }
   ]
 }

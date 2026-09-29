@@ -19,9 +19,9 @@ range. A calendar is optional.
 Categories are defined in [`../scope.md`](../scope.md). The Angular Material
 `mat-date-range-input` inputs/outputs are shown only as reference patterns:
 
-- `[start]` — Uses — the selected start date (Angular Material `matStartDate`).
-- `[end]` — Uses — the selected end date (Angular Material `matEndDate`).
-- `(dateChange)` — Produces — emitted when the selected date or range changes.
+- `uses.start` — Uses — string — the selected start date (Angular Material `matStartDate`).
+- `uses.end` — Uses — string — the selected end date (Angular Material `matEndDate`).
+- `produces.dateChange` — Produces — emitted when the selected date or range changes.
 
 ## Accessibility
 

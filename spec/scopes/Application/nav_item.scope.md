@@ -17,10 +17,10 @@ destination.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `[label]` — Uses — required visible text and accessible name for the destination.
-- `[route]` — Uses — reference to the `Route` selected by this item.
-- `[icon]` — Uses — optional technology-independent icon token for the destination.
-- `[disabled]` — Uses — boolean: whether the destination is unavailable.
+- `uses.label` — Uses — string — required visible text and accessible name for the destination.
+- `uses.route` — Uses — reference(Route) — reference to the `Route` selected by this item.
+- `uses.icon` — Uses — string — optional technology-independent icon token for the destination.
+- `uses.disabled` — Uses — boolean — whether the destination is unavailable.
 
 ## Accessibility
 
@@ -30,5 +30,5 @@ Categories are defined in [`../scope.md`](../scope.md):
 
 ## Validation notes
 
-- `[route]` references a `Route`; external URLs are outside this application-route
+- `uses.route` references a `Route`; external URLs are outside this application-route
   contract and use a link control instead.

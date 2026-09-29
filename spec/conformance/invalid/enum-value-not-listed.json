@@ -1,0 +1,14 @@
+{
+  "id": "root",
+  "version": "0.7.0",
+  "type": "html",
+  "children": [
+    {
+      "id": "hostDocument",
+      "type": "html",
+      "attrs": {
+        "uses.dir": "\"up\""
+      }
+    }
+  ]
+}

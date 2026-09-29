@@ -16,8 +16,8 @@ A navigation group labels and organizes related navigation destinations.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `[label]` — Uses — required visible and accessible name for the group.
-- `[expanded]` — Uses — boolean: initial state of the group's contained entries.
+- `uses.label` — Uses — string — required visible and accessible name for the group.
+- `uses.expanded` — Uses — boolean — initial state of the group's contained entries.
 
 ## Child model
 

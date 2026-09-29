@@ -1,39 +1,39 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "Application",
   "children": [
     {
       "id": "reportsRoute",
       "type": "Route",
       "attrs": {
-        "[path]": "\"reports\"",
-        "[target]": "\"reportsPage\"",
-        "[title]": "\"Reports\""
+        "uses.path": "\"reports\"",
+        "uses.target": "\"reportsPage\"",
+        "uses.title": "\"Reports\""
       }
     },
     {
       "id": "navReports",
       "type": "NavGroup",
       "attrs": {
-        "[label]": "\"Reports\"",
-        "[expanded]": "true"
+        "uses.label": "\"Reports\"",
+        "uses.expanded": true
       },
       "children": [
         {
           "id": "navSales",
           "type": "NavItem",
           "attrs": {
-            "[label]": "\"Sales\"",
-            "[route]": "\"reportsRoute\""
+            "uses.label": "\"Sales\"",
+            "uses.route": "\"reportsRoute\""
           }
         },
         {
           "id": "navArchived",
           "type": "NavGroup",
           "attrs": {
-            "[label]": "\"Archived\"",
-            "[expanded]": "false"
+            "uses.label": "\"Archived\"",
+            "uses.expanded": false
           }
         }
       ]

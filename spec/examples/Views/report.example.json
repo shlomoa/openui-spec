@@ -1,47 +1,47 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "Report",
   "attrs": {
     "title": "\"Sales report\"",
-    "[readOnly]": "true",
-    "[loading]": "isLoading",
-    "[error]": "loadError"
+    "uses.readOnly": true,
+    "uses.loading": "isLoading",
+    "uses.error": "loadError"
   },
   "children": [
     {
       "id": "reportFilters",
       "type": "ToolBar",
       "attrs": {
-        "[fields]": "\"region,period\"",
-        "(filterChange)": "onFilter($event)"
+        "uses.fields": "\"region,period\"",
+        "produces.filterChange": "onFilter($event)"
       }
     },
     {
       "id": "reportTable",
       "type": "table",
       "attrs": {
-        "[data]": "rows",
-        "[sort]": "\"revenue desc\"",
-        "[groupBy]": "\"region\""
+        "uses.data": "rows",
+        "uses.sort": "\"revenue desc\"",
+        "uses.groupBy": "\"region\""
       },
       "children": [
         {
           "id": "colRegion",
           "type": "Table",
           "attrs": {
-            "[field]": "\"region\"",
-            "[header]": "\"Region\"",
-            "[sortable]": "true"
+            "uses.field": "\"region\"",
+            "uses.header": "\"Region\"",
+            "uses.sortable": true
           }
         },
         {
           "id": "colRevenue",
           "type": "Table",
           "attrs": {
-            "[field]": "\"revenue\"",
-            "[header]": "\"Revenue\"",
-            "[sortable]": "true"
+            "uses.field": "\"revenue\"",
+            "uses.header": "\"Revenue\"",
+            "uses.sortable": true
           }
         }
       ]
@@ -50,16 +50,16 @@
       "id": "reportPaging",
       "type": "NavigationWidgets",
       "attrs": {
-        "[pageSize]": "25",
-        "[total]": "rowCount",
-        "(pageChange)": "onPage($event)"
+        "uses.pageSize": 25,
+        "uses.total": "rowCount",
+        "produces.pageChange": "onPage($event)"
       }
     },
     {
       "id": "reportEmpty",
       "type": "FeedbackWidgets",
       "attrs": {
-        "[message]": "\"No data for the selected filters.\""
+        "uses.message": "\"No data for the selected filters.\""
       }
     }
   ]

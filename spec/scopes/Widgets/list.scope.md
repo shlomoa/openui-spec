@@ -10,17 +10,17 @@ recorded technology-independently.
 
 ## Purpose
 
-An ordered, unordered or description list of items, including icon collections,
-token collections and editable chip collections, with optional selection, links,
-sorting, filtering and pagination. Existing `ul`/`li` instances stay valid.
+An ordered, unordered or description list of items, including trees, icon
+collections, token collections and editable chip collections, with optional
+selection, links, sorting, filtering and pagination. Existing `ul`/`li` instances stay valid.
 
 ## Attributes
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `(sort)` — Behaves — orders the items by a chosen key.
-- `(filter)` — Behaves — narrows the visible items by a predicate.
-- `(paginate)` — Behaves — splits the items into navigable pages.
+- `behaves.sort` — Behaves — orders the items by a chosen key.
+- `behaves.filter` — Behaves — narrows the visible items by a predicate.
+- `behaves.paginate` — Behaves — splits the items into navigable pages.
 
 ## Child model
 

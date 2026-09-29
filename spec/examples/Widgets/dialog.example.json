@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "Dialog",
   "attrs": {
     "title": "\"Dialog example\""
@@ -10,11 +10,12 @@
       "id": "confirmDialog",
       "type": "Dialog",
       "attrs": {
-        "[modal]": "true",
-        "[open]": "isOpen",
-        "[ariaLabel]": "\"Confirm deletion\"",
-        "[restoreFocus]": "true",
-        "(close)": "onClose($event)"
+        "uses.modal": true,
+        "uses.open": "isOpen",
+        "uses.ariaLabel": "\"Confirm deletion\"",
+        "uses.restoreFocus": true,
+        "produces.close": "onClose($event)",
+        "produces.cancel": "onCancel($event)"
       },
       "children": [
         {
@@ -40,7 +41,7 @@
               "type": "ActionControls",
               "attrs": {
                 "text": "\"Cancel\"",
-                "(click)": "close('cancel')"
+                "produces.click": "close('cancel')"
               }
             },
             {
@@ -48,8 +49,24 @@
               "type": "ActionControls",
               "attrs": {
                 "text": "\"Delete\"",
-                "(click)": "close('confirm')"
+                "produces.click": "close('confirm')"
               }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "progressDialog",
+      "type": "Dialog",
+      "children": [
+        {
+          "id": "progressDialogContent",
+          "type": "section",
+          "children": [
+            {
+              "id": "progressDialogIndicator",
+              "type": "StatusIndicator"
             }
           ]
         }

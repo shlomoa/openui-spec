@@ -13,6 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ExamplePreview } from '../../documentation/documentation-items';
+import { SPEC_ADDITIONS, SpecAddition } from '../../documentation/spec-additions';
 
 interface PreviewOrder {
   readonly order: string;
@@ -66,6 +67,16 @@ const VIRTUAL_ORDERS: readonly PreviewOrder[] = Array.from({ length: 200 }, (_, 
 })
 export class ExamplePreviewComponent {
   @Input({ required: true }) preview!: ExamplePreview;
+
+  /** The spec example node this preview renders, when it shows an approved term. */
+  protected get addition(): SpecAddition | undefined {
+    return SPEC_ADDITIONS.find((addition) => addition.preview === this.preview);
+  }
+
+  /** The node's attributes as written in its spec example, such as a behavior's uses.target. */
+  protected attrs(addition: SpecAddition): string[] {
+    return Object.entries(addition.node.attrs ?? {}).map(([key, value]) => `${key}: ${value}`);
+  }
 
   protected readonly orders = PREVIEW_ORDERS;
   protected readonly boundOrders = PREVIEW_ORDERS;

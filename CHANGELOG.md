@@ -3,43 +3,103 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.7.0] - 2026-09-29
+
+### Scope Purposes
+
+- The Purposes now name four approved terms: Menu item (Menu widgets),
+  Captions (Media widgets), Tree (List) and Tree grid (Data grid).
+
+### Alias table
+
+- The taxonomy mapping has four new columns: HTML / WAI-ARIA, OpenUI5, Qt and
+  Angular Material. They give the names each source uses for every entry, or
+  "—" where a source has none. The HTML and WAI-ARIA names that sat in the
+  mapping notes moved into them.
+- Every OpenUI5 class of the survey is matched to one taxonomy entry, or listed
+  as fitting none with the reason.
+
+### Examples
+
+- Every Alias and Grouped leaf addition of the terminology, the taxonomy
+  mapping change and the UI element taxonomy merge has a node in its scope's
+  example. The node id comes from the term (for example `highlightedText`),
+  and its type is the scope's catalog type. The nodes carry no new attributes:
+  attribute names for the new capabilities wait on a later release.
+- In the Input assistance, Viewport and focus control and Modal overlay
+  examples, the nodes `emailCompletion`, `messageLogScrolling` and
+  `confirmDeleteModality` are renamed `textCompletion`, `viewportScrolling`
+  and `modalInteraction`.
+- The Date/time pickers example binds a range with `uses.start`, `uses.end`
+  and `produces.dateChange`. It no longer uses single-value binding,
+  value-format or Angular-only attributes, as its Validation notes require.
+- The Dialog example handles a cancellation request with `produces.cancel`,
+  apart from `produces.close`.
+
+### Example tests
+
+- A new test checks that every Alias and Grouped leaf addition is shown in its
+  scope's example, and that the `generated-examples` app shows each such node
+  as written.
+- The taxonomy mapping test checks that every row has the four alias columns.
+
+### Generated examples app
+
+- The app shows each new example node on the Examples tab of its component,
+  as a Material card with the node's JSON as its source. New Controls,
+  Widgets, Containers and Behaviors components hold the nodes that no existing
+  component covers. New screenshots are `example-11-*-examples.png`.
+
+### Upgrading to 0.7.0
+
+1. Upgrade the Python or npm package to `0.7.0` and set concrete document
+   `version` fields to `0.7.0`.
+2. If you reference the renamed example node ids, use the new ids.
+
 ## [0.6.0] - 2026-09-29
 
-### Scope
+### Typed attributes
 
-- `spec/README.md` has a new Scope section. It defines out of scope (not
-  addressed) and deferred (a later edition may address it), and lists what is
-  in scope, out of scope and deferred. Every catalog object is in scope.
-- Generators, browser and framework machinery, platform prompts,
-  implementation techniques, data that is not UI and immersive views are out of
-  scope. Host-shell presence, docking, multiple-document workspaces, the
-  Accessibility and Composition top-level scopes, ruby annotation, duration
-  selection and index navigation are deferred.
+- Attribute keys carry their category in a framework-neutral form:
+  `uses.name`, `produces.name` and `behaves.name` replace `[name]` and
+  `(name)`. A key without a prefix still carries no category.
+- Attribute values are typed: a string, number, `true`, `false`, `null`, or a
+  list of these. A literal string stays quoted inside the string
+  (`"\"Orders\""`); an unquoted string stays a binding or target-language
+  expression. `null` still means present without a value.
+- Every Uses attribute declares a value type in its scope's Attributes line:
+  `string`, `boolean`, `integer`, `number`, `url`, `enum(a|b)`, `reference`,
+  `reference(Type)` or `list(type)`. The catalog carries the type as the
+  attribute's value.
+- Element references keep their quoted-id form and are now typed, so tools
+  resolve them and check the referenced type.
+- The spec README has a Versioning section: a document declares the spec
+  version it is written for, and a tool accepts only the version it implements.
+- The decisions and their sources are in
+  `spec/survey/language_change.done.md`.
 
-### Categorization
+### Conformance suite and utilities
 
-- The taxonomy mapping has a new section, Primary categories of the leaf
-  scopes. Each leaf scope with taxonomy entries has one primary section and
-  subcategory, chosen by three stated rules, and lists its secondary roles.
-  favicon.ico, index.html and Native have no taxonomy entry and are not placed.
-- No scope folder or leaf moved: the taxonomy and the scope tree stay linked
-  views, and every scope id, type and path is unchanged.
-
-### Specification structure
-
-- Generator content moved out of `spec/README.md`. The Incremental generation
-  section (its scenarios and algorithm) and the list of how generators use the
-  grammar, the schema and the catalog are now in
-  `generators/angular/generator/docs/GENERATION.md#incremental-generation`.
-  The spec README keeps only the specification. The generator stays in this
-  repository.
+- New shared conformance suite in `spec/conformance/`: valid documents,
+  invalid documents and the diagnostics a tool must report for each, in four
+  stages (grammar, document, catalog, contract).
+- New Python API `bin.openui_document` and TypeScript API in
+  `@shlomoa/openui-spec`: `parse`, `validate`, `validate_text` /
+  `validateText` and `Catalog`, with a typed `Document`, `Element` and
+  `Attribute` model. Both pass the suite with identical diagnostics, and
+  `OpenUiJson.validate()` and both CLIs use them.
+- New tool `python -m spec.bin.migrate` converts 0.5 documents to the typed
+  form. The worked examples and generator fixtures were regenerated with it.
+- New demo page `spec/playground.html`: paste a document, see its diagnostics
+  and element tree.
 
 ### Upgrading to 0.6.0
 
-1. Upgrade the Python or npm package to `0.6.0` and set concrete document
-   `version` fields to `0.6.0`.
-2. Change links to `spec/README.md#incremental-generation` to
-   `generators/angular/generator/docs/GENERATION.md#incremental-generation`.
+1. Upgrade the Python or npm package to `0.6.0`.
+2. Run `python -m spec.bin.migrate <folder or file>` on your documents, then
+   set their `version` fields to `0.6.0`.
+3. Code that reads `[name]` or `(name)` keys reads `uses.name`,
+   `produces.name` or `behaves.name` instead, and accepts non-string values.
 
 ## [0.5.0] - 2026-09-29
 
@@ -253,3 +313,4 @@ and enforced rather than adding or removing catalog types.
 [0.4.0]: https://github.com/shlomoa/openui-spec/compare/v0.3.1...v0.4.0
 [0.5.0]: https://github.com/shlomoa/openui-spec/compare/v0.4.0...v0.5.0
 [0.6.0]: https://github.com/shlomoa/openui-spec/compare/v0.5.0...v0.6.0
+[0.7.0]: https://github.com/shlomoa/openui-spec/compare/v0.6.0...v0.7.0

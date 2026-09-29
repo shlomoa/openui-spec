@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "DragAndDrop",
   "attrs": {
     "title": "\"Drag and drop example\""
@@ -14,14 +14,14 @@
           "id": "todoColumn",
           "type": "StructuralContainers",
           "attrs": {
-            "[label]": "\"To do\""
+            "uses.label": "\"To do\""
           },
           "children": [
             {
               "id": "taskCard",
               "type": "SurfaceContainers",
               "attrs": {
-                "[title]": "\"Write the spec\""
+                "uses.title": "\"Write the spec\""
               }
             }
           ]
@@ -30,7 +30,7 @@
           "id": "doneColumn",
           "type": "StructuralContainers",
           "attrs": {
-            "[label]": "\"Done\""
+            "uses.label": "\"Done\""
           }
         }
       ]
@@ -39,7 +39,7 @@
       "id": "taskBoardDragAndDrop",
       "type": "DragAndDrop",
       "attrs": {
-        "[target]": "\"taskBoard\""
+        "uses.target": "\"taskBoard\""
       }
     }
   ]

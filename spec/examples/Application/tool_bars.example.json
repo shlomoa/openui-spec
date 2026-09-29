@@ -1,13 +1,13 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "Application",
   "children": [
     {
       "id": "appToolbar",
       "type": "ToolBar",
       "attrs": {
-        "[ariaLabel]": "\"Application commands\""
+        "uses.ariaLabel": "\"Application commands\""
       },
       "children": [
         {
@@ -18,18 +18,18 @@
               "id": "newAction",
               "type": "ToolAction",
               "attrs": {
-                "[label]": "\"New\"",
-                "[icon]": "\"add\"",
-                "(activate)": "createNew()"
+                "uses.label": "\"New\"",
+                "uses.icon": "\"add\"",
+                "produces.activate": "createNew()"
               }
             },
             {
               "id": "saveAction",
               "type": "ToolAction",
               "attrs": {
-                "[label]": "\"Save\"",
-                "[icon]": "\"save\"",
-                "(activate)": "save()"
+                "uses.label": "\"Save\"",
+                "uses.icon": "\"save\"",
+                "produces.activate": "save()"
               }
             }
           ]
@@ -42,10 +42,10 @@
               "id": "deleteAction",
               "type": "ToolAction",
               "attrs": {
-                "[label]": "\"Delete\"",
-                "[icon]": "\"delete\"",
-                "[disabled]": "true",
-                "(activate)": "deleteSelected()"
+                "uses.label": "\"Delete\"",
+                "uses.icon": "\"delete\"",
+                "uses.disabled": true,
+                "produces.activate": "deleteSelected()"
               }
             }
           ]

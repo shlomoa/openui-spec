@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "Tabs",
   "attrs": {
     "title": "\"Tabs example\""
@@ -10,17 +10,17 @@
       "id": "detailTabs",
       "type": "Tabs",
       "attrs": {
-        "[selectedIndex]": "0",
-        "[keyboardNavigation]": "true",
-        "(selectedTabChange)": "onTabChange($event)"
+        "uses.selectedIndex": 0,
+        "uses.keyboardNavigation": true,
+        "produces.selectedTabChange": "onTabChange($event)"
       },
       "children": [
         {
           "id": "overviewTab",
           "type": "tab",
           "attrs": {
-            "[label]": "\"Overview\"",
-            "[order]": "1"
+            "uses.label": "\"Overview\"",
+            "uses.order": 1
           },
           "children": [
             {
@@ -36,8 +36,8 @@
           "id": "historyTab",
           "type": "tab",
           "attrs": {
-            "[label]": "\"History\"",
-            "[order]": "2"
+            "uses.label": "\"History\"",
+            "uses.order": 2
           },
           "children": [
             {
@@ -53,10 +53,20 @@
           "id": "auditTab",
           "type": "tab",
           "attrs": {
-            "[label]": "\"Audit\"",
-            "[disabled]": "true",
-            "[order]": "3"
+            "uses.label": "\"Audit\"",
+            "uses.disabled": true,
+            "uses.order": 3
           }
+        }
+      ]
+    },
+    {
+      "id": "pageStack",
+      "type": "Tabs",
+      "children": [
+        {
+          "id": "pageStackPage",
+          "type": "tab"
         }
       ]
     }

@@ -11,6 +11,7 @@ interactive data-grid taxonomy alias from standard tabular data presentation.
 
 A data grid is an interactive tabular-data widget that may support cell focus,
 selection, editing, sorting, filtering, pagination, or keyboard grid navigation.
+A tree grid is a data grid whose rows can expand and collapse.
 
 ## Attributes
 

@@ -10,7 +10,14 @@ from typing import Any
 
 from jsonschema import Draft202012Validator
 
+if __package__:
+    from .openui_document import Catalog, validate_value
+else:
+    from openui_document import Catalog, validate_value
+
 JsonObject = dict[str, Any]
+AttributeScalar = str | int | float | bool | None
+AttributeValue = AttributeScalar | list[AttributeScalar]
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCHEMA_PATH = REPOSITORY_ROOT / "spec" / "openui.schema.json"
 DEFAULT_CATALOG_PATH = REPOSITORY_ROOT / "spec" / "openui.json"
@@ -64,36 +71,18 @@ class OpenUiJson:
         output_path.write_text(json.dumps(self.document, indent=2) + "\n", encoding="utf-8")
 
     def validate(self) -> None:
-        """Validate the document against the OpenUI schema and catalog."""
+        """Validate the document with every stage of `bin.openui_document`.
+
+        The stages are the grammar, the document rules (unique ids and the spec
+        version), catalog membership and the declared attribute value types.
+        """
         if self.document is None:
             raise OpenUiValidationError("the root object has been removed")
 
-        schema = self._load_json(self.schema_path, "schema")
-        catalog = self._load_json(self.catalog_path, "catalog")
-        try:
-            Draft202012Validator.check_schema(schema)
-        except Exception as error:
-            raise OpenUiValidationError(f"invalid OpenUI schema: {error}") from error
-
-        validator = Draft202012Validator(schema)
-        errors = sorted(
-            validator.iter_errors(self.document), key=lambda error: list(error.absolute_path)
-        )
-        if errors:
-            messages = [
-                f"{self._json_path(error.absolute_path)}: {error.message}" for error in errors
-            ]
-            raise OpenUiValidationError("\n".join(messages))
-
-        known_types = self._catalog_types(catalog)
-        seen_ids: set[str] = set()
-        for node in self._walk(self.document):
-            object_id = node["id"]
-            if object_id in seen_ids:
-                raise OpenUiValidationError(f"duplicate object id: {object_id}")
-            seen_ids.add(object_id)
-            if node["type"] not in known_types:
-                raise OpenUiValidationError(f"unknown OpenUI object type: {node['type']}")
+        catalog = Catalog.from_value(self._load_json(self.catalog_path, "catalog"))
+        diagnostics = validate_value(self.document, catalog)
+        if diagnostics:
+            raise OpenUiValidationError("\n".join(str(diagnostic) for diagnostic in diagnostics))
 
     def add(self, parent_id: str, child: Mapping[str, Any]) -> None:
         """Validate and append *child* to the children of *parent_id*."""
@@ -149,16 +138,18 @@ class OpenUiJson:
             raise OpenUiJsonError(f"object {object_id} does not belong to parent {parent_id}")
         parent["children"][index] = candidate
 
-    def update_attributes(self, object_id: str, attributes: Mapping[str, str | None]) -> None:
+    def update_attributes(self, object_id: str, attributes: Mapping[str, AttributeValue]) -> None:
         """Change attributes on *object_id* without replacing its children."""
         node = self._find(object_id)
         if node is None:
             raise OpenUiJsonError(f"object not found: {object_id}")
         if not all(
-            isinstance(key, str) and (value is None or isinstance(value, str))
-            for key, value in attributes.items()
+            isinstance(key, str) and _is_attribute_value(value) for key, value in attributes.items()
         ):
-            raise OpenUiJsonError("attribute changes must map strings to strings or null")
+            raise OpenUiJsonError(
+                "attribute changes must map strings to strings, numbers, booleans, null, "
+                "or lists of these"
+            )
         updated = copy.deepcopy(node)
         updated.setdefault("attrs", {}).update(attributes)
         self._validate_node(updated, is_root=node is self.document)
@@ -233,3 +224,9 @@ class OpenUiJson:
     def _json_path(path: Iterator[Any]) -> str:
         values = list(path)
         return "$" if not values else "$." + ".".join(str(value) for value in values)
+
+
+def _is_attribute_value(value: Any) -> bool:
+    """Return whether *value* is a typed attribute value: a scalar or a list of scalars."""
+    items = value if isinstance(value, list) else [value]
+    return all(item is None or isinstance(item, (str, int, float, bool)) for item in items)

@@ -1,7 +1,7 @@
 {
   "id": "root",
   "type": "html",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "attrs": {
     "name": "OpenUI",
     "description": "Technology-independent Web UI framework specification",
@@ -43,7 +43,7 @@
                   "id": "routingInstance",
                   "type": "Routing",
                   "attrs": {
-                    "[defaultRoute]": null
+                    "uses.defaultRoute": "reference(Route)"
                   },
                   "children": [
                     {
@@ -68,11 +68,11 @@
                   "id": "routeInstance",
                   "type": "Route",
                   "attrs": {
-                    "[path]": null,
-                    "[target]": null,
-                    "[title]": null,
-                    "[redirectTo]": null,
-                    "[access]": null
+                    "uses.path": "string",
+                    "uses.target": "reference",
+                    "uses.title": "string",
+                    "uses.redirectTo": "reference(Route)",
+                    "uses.access": "string"
                   },
                   "children": [
                     {
@@ -97,7 +97,7 @@
                   "id": "navigationInstance",
                   "type": "Navigation",
                   "attrs": {
-                    "[ariaLabel]": null
+                    "uses.ariaLabel": "string"
                   },
                   "children": [
                     {
@@ -126,10 +126,10 @@
                   "id": "navItemInstance",
                   "type": "NavItem",
                   "attrs": {
-                    "[label]": null,
-                    "[route]": null,
-                    "[icon]": null,
-                    "[disabled]": null
+                    "uses.label": "string",
+                    "uses.route": "reference(Route)",
+                    "uses.icon": "string",
+                    "uses.disabled": "boolean"
                   }
                 }
               ]
@@ -148,8 +148,8 @@
                   "id": "navGroupInstance",
                   "type": "NavGroup",
                   "attrs": {
-                    "[label]": null,
-                    "[expanded]": null
+                    "uses.label": "string",
+                    "uses.expanded": "boolean"
                   },
                   "children": [
                     {
@@ -178,7 +178,7 @@
                   "id": "toolBarsInstance",
                   "type": "ToolBar",
                   "attrs": {
-                    "[ariaLabel]": null
+                    "uses.ariaLabel": "string"
                   },
                   "children": [
                     {
@@ -225,10 +225,10 @@
                   "id": "toolActionInstance",
                   "type": "ToolAction",
                   "attrs": {
-                    "[label]": null,
-                    "[icon]": null,
-                    "[disabled]": null,
-                    "(activate)": null
+                    "uses.label": "string",
+                    "uses.icon": "string",
+                    "uses.disabled": "boolean",
+                    "produces.activate": null
                   }
                 }
               ]
@@ -247,11 +247,11 @@
                   "id": "faviconInstance",
                   "type": "link",
                   "attrs": {
-                    "[rel]": null,
-                    "[href]": null,
-                    "[type]": null,
-                    "[sizes]": null,
-                    "[media]": null
+                    "uses.rel": "string",
+                    "uses.href": "url",
+                    "uses.type": "string",
+                    "uses.sizes": "string",
+                    "uses.media": "string"
                   }
                 }
               ]
@@ -270,9 +270,9 @@
                   "id": "indexHtmlInstance",
                   "type": "html",
                   "attrs": {
-                    "[lang]": null,
-                    "[dir]": null,
-                    "[title]": null
+                    "uses.lang": "string",
+                    "uses.dir": "enum(ltr|rtl|auto)",
+                    "uses.title": "string"
                   },
                   "children": [
                     {
@@ -313,7 +313,7 @@
                   "id": "dragAndDropInstance",
                   "type": "DragAndDrop",
                   "attrs": {
-                    "[target]": null
+                    "uses.target": "reference"
                   }
                 }
               ]
@@ -332,7 +332,7 @@
                   "id": "resizableInstance",
                   "type": "Resizable",
                   "attrs": {
-                    "[target]": null
+                    "uses.target": "reference"
                   }
                 }
               ]
@@ -351,7 +351,7 @@
                   "id": "collapsibleInstance",
                   "type": "Collapsible",
                   "attrs": {
-                    "[target]": null
+                    "uses.target": "reference"
                   }
                 }
               ]
@@ -370,7 +370,7 @@
                   "id": "inputAssistanceInstance",
                   "type": "InputAssistance",
                   "attrs": {
-                    "[target]": null
+                    "uses.target": "reference"
                   }
                 }
               ]
@@ -389,7 +389,7 @@
                   "id": "modalOverlayInstance",
                   "type": "ModalOverlay",
                   "attrs": {
-                    "[target]": null
+                    "uses.target": "reference"
                   }
                 }
               ]
@@ -408,7 +408,7 @@
                   "id": "viewportAndFocusControlInstance",
                   "type": "ViewportAndFocusControl",
                   "attrs": {
-                    "[target]": null
+                    "uses.target": "reference"
                   }
                 }
               ]
@@ -461,8 +461,8 @@
                   "id": "expandablePanelsInstance",
                   "type": "details",
                   "attrs": {
-                    "(expand)": null,
-                    "(collapse)": null
+                    "behaves.expand": null,
+                    "behaves.collapse": null
                   }
                 }
               ]
@@ -586,7 +586,7 @@
               "type": "Native",
               "attrs": {
                 "title": "Native",
-                "purpose": "A standard platform input, identified by its `[type]`, used where no more specific control family applies.",
+                "purpose": "A standard platform input, identified by its `uses.type`, used where no more specific control family applies.",
                 "scopeDocument": "scopes/Controls/native.scope.md",
                 "status": "draft"
               },
@@ -595,10 +595,10 @@
                   "id": "nativeInstance",
                   "type": "input",
                   "attrs": {
-                    "[type]": null,
-                    "[value]": null,
-                    "[placeholder]": null,
-                    "[disabled]": null
+                    "uses.type": "string",
+                    "uses.value": "string",
+                    "uses.placeholder": "string",
+                    "uses.disabled": "boolean"
                   }
                 }
               ]
@@ -883,10 +883,10 @@
                   "id": "reportInstance",
                   "type": "Report",
                   "attrs": {
-                    "(filter)": null,
-                    "(sort)": null,
-                    "(group)": null,
-                    "(paginate)": null
+                    "behaves.filter": null,
+                    "behaves.sort": null,
+                    "behaves.group": null,
+                    "behaves.paginate": null
                   }
                 }
               ]
@@ -905,9 +905,9 @@
                   "id": "formInstance",
                   "type": "Form",
                   "attrs": {
-                    "(validate)": null,
-                    "(submit)": null,
-                    "(dirtyChange)": null
+                    "behaves.validate": null,
+                    "behaves.submit": null,
+                    "produces.dirtyChange": null
                   }
                 }
               ]
@@ -954,9 +954,9 @@
                   "id": "tableInstance",
                   "type": "table",
                   "attrs": {
-                    "(sort)": null,
-                    "(filter)": null,
-                    "(paginate)": null
+                    "behaves.sort": null,
+                    "behaves.filter": null,
+                    "behaves.paginate": null
                   },
                   "children": [
                     {
@@ -972,7 +972,7 @@
               "type": "DataGrid",
               "attrs": {
                 "title": "Data grid",
-                "purpose": "A data grid is an interactive tabular-data widget that may support cell focus, selection, editing, sorting, filtering, pagination, or keyboard grid navigation.",
+                "purpose": "A data grid is an interactive tabular-data widget that may support cell focus, selection, editing, sorting, filtering, pagination, or keyboard grid navigation. A tree grid is a data grid whose rows can expand and collapse.",
                 "scopeDocument": "scopes/Widgets/data_grid.scope.md",
                 "status": "draft"
               },
@@ -988,7 +988,7 @@
               "type": "List",
               "attrs": {
                 "title": "List",
-                "purpose": "An ordered, unordered or description list of items, including icon collections, token collections and editable chip collections, with optional selection, links, sorting, filtering and pagination. Existing `ul`/`li` instances stay valid.",
+                "purpose": "An ordered, unordered or description list of items, including trees, icon collections, token collections and editable chip collections, with optional selection, links, sorting, filtering and pagination. Existing `ul`/`li` instances stay valid.",
                 "scopeDocument": "scopes/Widgets/list.scope.md",
                 "status": "draft"
               },
@@ -997,9 +997,9 @@
                   "id": "listInstance",
                   "type": "ul",
                   "attrs": {
-                    "(sort)": null,
-                    "(filter)": null,
-                    "(paginate)": null
+                    "behaves.sort": null,
+                    "behaves.filter": null,
+                    "behaves.paginate": null
                   },
                   "children": [
                     {
@@ -1031,7 +1031,7 @@
               "type": "MediaWidgets",
               "attrs": {
                 "title": "Media widgets",
-                "purpose": "Media widgets cover media players, camera previews, geographic maps, custom graphics surfaces and graphics viewports that present rich visual, audio, video, or spatial content with widget-level behavior.",
+                "purpose": "Media widgets cover media players, captions, camera previews, geographic maps, custom graphics surfaces and graphics viewports that present rich visual, audio, video, or spatial content with widget-level behavior.",
                 "scopeDocument": "scopes/Widgets/media_widgets.scope.md",
                 "status": "draft"
               },
@@ -1063,7 +1063,7 @@
               "type": "MenuWidgets",
               "attrs": {
                 "title": "Menu widgets",
-                "purpose": "Menu widgets cover menus, menu buttons, menubars and context menus, including nested menus that present command or choice lists in a menu pattern.",
+                "purpose": "Menu widgets cover menus, menu items, menu buttons, menubars and context menus, including nested menus that present command or choice lists in a menu pattern.",
                 "scopeDocument": "scopes/Widgets/menu_widgets.scope.md",
                 "status": "draft"
               },
@@ -1088,9 +1088,9 @@
                   "id": "dateTimePickersInstance",
                   "type": "DateTimePicker",
                   "attrs": {
-                    "[start]": null,
-                    "[end]": null,
-                    "(dateChange)": null
+                    "uses.start": "string",
+                    "uses.end": "string",
+                    "produces.dateChange": null
                   }
                 }
               ]
@@ -1131,10 +1131,10 @@
                   "id": "dialogInstance",
                   "type": "dialog",
                   "attrs": {
-                    "[open]": null,
-                    "[modal]": null,
-                    "(close)": null,
-                    "(cancel)": null
+                    "uses.open": "boolean",
+                    "uses.modal": "boolean",
+                    "produces.close": null,
+                    "produces.cancel": null
                   },
                   "children": [
                     {

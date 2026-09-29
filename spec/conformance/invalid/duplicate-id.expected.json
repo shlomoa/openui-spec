@@ -1,0 +1,3 @@
+{
+  "diagnostics": [{ "code": "document/duplicate-id", "path": "/children/1/id" }]
+}

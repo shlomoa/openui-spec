@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "DrawingAndCapture",
   "attrs": {
     "title": "\"Drawing and capture example\""
@@ -10,9 +10,9 @@
       "id": "signatureCapture",
       "type": "DrawingAndCapture",
       "attrs": {
-        "[label]": "\"Signature\"",
-        "[mode]": "\"draw\"",
-        "(capture)": "saveSignature($event)"
+        "uses.label": "\"Signature\"",
+        "uses.mode": "\"draw\"",
+        "produces.capture": "saveSignature($event)"
       }
     }
   ]

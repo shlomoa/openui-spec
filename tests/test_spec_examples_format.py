@@ -1,4 +1,5 @@
 import json
+import re
 import subprocess
 import sys
 import unittest
@@ -103,10 +104,126 @@ class SpecExamplesFormatTest(unittest.TestCase):
                     path=path.relative_to(EXAMPLES_DIR).as_posix(), id=node.get("id")
                 ):
                     attrs = cast(dict[str, object], node.get("attrs", {}))
-                    target = attrs.get("[target]")
+                    target = attrs.get("uses.target")
                     self.assertIsInstance(target, str, "a behavior needs a [target] reference")
                     self.assertIn(cast(str, target).strip('"'), ids - {node.get("id")})
                     self.assertNotIn("children", node, "a behavior does not own children")
+
+    def test_every_addition_is_shown_in_its_scope_example(self) -> None:
+        """Each Alias or Grouped leaf addition has a node named after it (plan W1 9.10)."""
+        scope_of = _mapping_scopes()
+        additions = _addition_terms()
+        self.assertGreater(len(additions), 0)
+
+        for term in additions:
+            scope_path = scope_of.get(term)
+            if scope_path is None:
+                continue  # Not a taxonomy entry: out of v1 (plan Q9).
+            example_path = EXAMPLES_DIR / scope_path.replace(".scope.md", ".example.json").replace(
+                "scope.md", "scope.example.json"
+            )
+            with self.subTest(term=term, example=example_path.relative_to(EXAMPLES_DIR).as_posix()):
+                document = json.loads(example_path.read_text(encoding="utf-8"))
+                self.assertIn(_term_id(term), _document_ids(document))
+
+    def test_generated_examples_app_shows_every_addition_node(self) -> None:
+        """The app's addition data mirrors the nodes of the spec examples (plan W1 9.12)."""
+        app_data = GENERATED_EXAMPLES_ADDITIONS.read_text(encoding="utf-8")
+        scope_of = _mapping_scopes()
+        checked = 0
+        for term in _addition_terms():
+            scope_path = scope_of.get(term)
+            if scope_path is None:
+                continue
+            source = "spec/examples/" + scope_path.replace(".scope.md", ".example.json").replace(
+                "scope.md", "scope.example.json"
+            )
+            document = json.loads((REPO_ROOT / source).read_text(encoding="utf-8"))
+            node = next(n for n in _descendants(document) if n["id"] == _term_id(term))
+            with self.subTest(term=term):
+                pattern = (
+                    rf"term: '{re.escape(term)}',\s+preview: '[a-z0-9-]+',\s+"
+                    rf"source: '{re.escape(source)}',\s+node: \{{\s*"
+                    rf"id: '{node['id']}',\s+type: '{node['type']}'"
+                )
+                self.assertRegex(app_data, pattern)
+                checked += 1
+        self.assertEqual(app_data.count("    term: '"), checked)
+
+
+ADDITION_SOURCES = (
+    SCOPES_DIR / "terminology.md",
+    SPEC_DIR / "survey" / "taxonomy_mapping_change.done.md",
+    SPEC_DIR / "survey" / "ui_element_taxonomy_merge_proposal.done.md",
+)
+EXAMPLE_LEVELS = ("Alias", "Grouped leaf")
+GENERATED_EXAMPLES_ADDITIONS = (
+    REPO_ROOT
+    / "generators"
+    / "angular"
+    / "generated-examples"
+    / "src"
+    / "app"
+    / "documentation"
+    / "spec-additions.ts"
+)
+MARKDOWN_LINK_RE = re.compile(r"\[([^\]]*)\]\(([^)]*)\)")
+
+
+def _table_cells(line: str) -> list[str]:
+    return [cell.strip() for cell in line.strip().strip("|").split("|")]
+
+
+def _plain(text: str) -> str:
+    return MARKDOWN_LINK_RE.sub(r"\1", text).replace("**", "").replace("`", "").strip()
+
+
+def _addition_terms() -> list[str]:
+    """Terms of the Add rows whose level is Alias or Grouped leaf."""
+    terms: list[str] = []
+    for source in ADDITION_SOURCES:
+        in_add = False
+        header: list[str] | None = None
+        for line in source.read_text(encoding="utf-8").splitlines():
+            if line.startswith("## "):
+                in_add = line.startswith("## 4. Add")
+            if not in_add:
+                continue
+            if line.startswith("### "):
+                header = None
+                in_add = not line.startswith("### Not added")
+                continue
+            if not line.startswith("|"):
+                continue
+            cells = _table_cells(line)
+            if header is None:
+                header = cells
+            elif not set(cells[0]) <= set("-: ") and "Level" in header:
+                row = dict(zip(header, cells, strict=True))
+                term = _plain(row.get("Add") or row.get("Term", ""))
+                if _plain(row["Level"]).startswith(EXAMPLE_LEVELS):
+                    terms.append(term)
+    return terms
+
+
+def _mapping_scopes() -> dict[str, str]:
+    """Each taxonomy mapping entry and the scope file it links to."""
+    scopes: dict[str, str] = {}
+    mapping = (SCOPES_DIR / "taxonomy_mapping.md").read_text(encoding="utf-8")
+    for line in mapping.splitlines():
+        if not line.startswith("|"):
+            continue
+        cells = _table_cells(line)
+        link = MARKDOWN_LINK_RE.search(cells[1]) if len(cells) > 1 else None
+        if link and link.group(2).endswith("scope.md"):
+            scopes[_plain(cells[0])] = link.group(2).split("#")[0]
+    return scopes
+
+
+def _term_id(term: str) -> str:
+    """The camelCase id derived from a term, for example Highlighted text -> highlightedText."""
+    words = re.findall(r"[A-Za-z0-9]+", term)
+    return words[0].lower() + "".join(word.capitalize() for word in words[1:])
 
 
 def _leaf_scope_paths() -> set[str]:

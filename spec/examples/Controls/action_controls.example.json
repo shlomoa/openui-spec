@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "ActionControls",
   "attrs": {
     "title": "\"Action controls example\""
@@ -10,10 +10,14 @@
       "id": "primaryAction",
       "type": "ActionControls",
       "attrs": {
-        "[label]": "\"Save\"",
-        "[disabled]": "isSaving",
-        "(activate)": "save()"
+        "uses.label": "\"Save\"",
+        "uses.disabled": "isSaving",
+        "produces.activate": "save()"
       }
+    },
+    {
+      "id": "toolButton",
+      "type": "ActionControls"
     }
   ]
 }

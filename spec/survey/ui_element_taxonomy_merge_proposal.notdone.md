@@ -30,10 +30,3 @@ specification (plan task W3 14.6).
 ## Action controls contract
 
 - **Repeating Action** (category 3): Repeating while pressed is a capability of a button (Qt `autoRepeat`), not an element type. Any attribute for it belongs to the Action controls contract in W6 task 25.
-
-## Scope Purposes (new content)
-
-The Purpose of each scope lists the aliases it covers. These approved additions are missing from it:
-
-- **Menu item** (A2): add to the [Menu widgets](../scopes/Widgets/menu_widgets.scope.md#purpose) Purpose.
-- **Captions** (A3): add to the [Media widgets](../scopes/Widgets/media_widgets.scope.md#purpose) Purpose.

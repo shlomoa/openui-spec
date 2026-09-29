@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "ModalOverlay",
   "attrs": {
     "title": "\"Modal overlay example\""
@@ -10,9 +10,9 @@
       "id": "confirmDeleteDialog",
       "type": "Dialog",
       "attrs": {
-        "[open]": "isConfirmOpen",
-        "[modal]": "true",
-        "(close)": "onConfirmClose($event)"
+        "uses.open": "isConfirmOpen",
+        "uses.modal": true,
+        "produces.close": "onConfirmClose($event)"
       },
       "children": [
         {
@@ -32,10 +32,10 @@
       ]
     },
     {
-      "id": "confirmDeleteModality",
+      "id": "modalInteraction",
       "type": "ModalOverlay",
       "attrs": {
-        "[target]": "\"confirmDeleteDialog\""
+        "uses.target": "\"confirmDeleteDialog\""
       }
     }
   ]

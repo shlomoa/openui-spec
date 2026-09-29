@@ -1,0 +1,13 @@
+{
+  "id": "root",
+  "version": "0.7.0",
+  "type": "html",
+  "attrs": {
+    "uses.sizes": [
+      [
+        16,
+        32
+      ]
+    ]
+  }
+}

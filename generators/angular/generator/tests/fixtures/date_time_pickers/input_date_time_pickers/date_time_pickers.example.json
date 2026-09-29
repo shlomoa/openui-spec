@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "DateTimePickers",
   "attrs": {
     "title": "\"Date/time picker example\""
@@ -10,37 +10,22 @@
       "id": "appointmentPicker",
       "type": "DateTimePicker",
       "attrs": {
-        "[min]": "\"2026-01-01\"",
-        "[max]": "\"2026-12-31\"",
-        "[matDatepickerFilter]": "isBusinessDay",
-        "[displayFormat]": "\"yyyy-MM-dd HH:mm\"",
-        "[parseFormat]": "\"yyyy-MM-dd HH:mm\"",
-        "[required]": "true",
-        "[ariaLabel]": "\"Appointment date and time\"",
-        "(dateChange)": "onDateChange($event)"
-      },
-      "children": [
-        {
-          "id": "appointmentDate",
-          "type": "input",
-          "attrs": {
-            "matInput": null,
-            "type": "\"date\"",
-            "placeholder": "\"Date\"",
-            "formControlName": "\"date\""
-          }
-        },
-        {
-          "id": "appointmentTime",
-          "type": "input",
-          "attrs": {
-            "matInput": null,
-            "type": "\"time\"",
-            "placeholder": "\"Time\"",
-            "formControlName": "\"time\""
-          }
-        }
-      ]
+        "uses.start": "appointmentStart",
+        "uses.end": "appointmentEnd",
+        "produces.dateChange": "onDateChange($event)"
+      }
+    },
+    {
+      "id": "dateField",
+      "type": "DateTimePicker"
+    },
+    {
+      "id": "timeField",
+      "type": "DateTimePicker"
+    },
+    {
+      "id": "dateAndTimeField",
+      "type": "DateTimePicker"
     }
   ]
 }

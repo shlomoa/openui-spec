@@ -1,0 +1,3 @@
+{
+  "diagnostics": [{ "code": "grammar/invalid-key", "path": "/attrs/[open]" }]
+}

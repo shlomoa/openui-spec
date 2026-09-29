@@ -1,0 +1,33 @@
+{
+  "id": "root",
+  "version": "0.7.0",
+  "type": "html",
+  "children": [
+    {
+      "id": "hostDocument",
+      "type": "html",
+      "attrs": {
+        "uses.lang": "\"he\"",
+        "uses.dir": "\"rtl\"",
+        "uses.title": "\"Orders\""
+      }
+    },
+    {
+      "id": "appIcon",
+      "type": "link",
+      "attrs": {
+        "uses.rel": "\"icon\"",
+        "uses.href": "\"favicon.ico\"",
+        "uses.sizes": null
+      }
+    },
+    {
+      "id": "deleteDialog",
+      "type": "dialog",
+      "attrs": {
+        "uses.open": false,
+        "uses.modal": true
+      }
+    }
+  ]
+}

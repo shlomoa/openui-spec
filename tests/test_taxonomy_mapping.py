@@ -18,6 +18,26 @@ ALLOWED_ABSTRACTION_LEVELS = {
     "Grouped leaf",
     "Folder abstraction",
 }
+MAPPING_COLUMNS = (
+    "entry",
+    "spec_object",
+    "level",
+    "html_aria",
+    "openui5",
+    "qt",
+    "angular_material",
+    "notes",
+)
+ALIAS_HEADER = (
+    "Taxonomy entry",
+    "Spec object",
+    "Abstraction level",
+    "HTML / WAI-ARIA",
+    "OpenUI5",
+    "Qt",
+    "Angular Material",
+    "Notes",
+)
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 LINK_TEXT_RE = re.compile(r"\[([^\]]+)\]\([^)]+\)")
 PRIMARY_HEADING = "## Primary categories of the leaf scopes"
@@ -46,6 +66,22 @@ class TaxonomyMappingTest(unittest.TestCase):
 
     def test_mapping_document_does_not_disable_markdownlint(self) -> None:
         self.assertNotIn("markdownlint-disable", self.mapping_text)
+
+    def test_every_mapping_row_has_the_four_alias_columns(self) -> None:
+        """Every table has the HTML / WAI-ARIA, OpenUI5, Qt and Angular Material columns."""
+        headers = [
+            tuple(_table_cells(line))
+            for line in self.mapping_text.splitlines()
+            if line.startswith("| Taxonomy entry")
+        ]
+        self.assertGreater(len(headers), 0)
+        for header in headers:
+            self.assertEqual(header, ALIAS_HEADER)
+        self.assertGreater(len(self.mapping_rows), 0)
+        for row in self.mapping_rows:
+            with self.subTest(entry=row["entry"]):
+                for column in ("html_aria", "openui5", "qt", "angular_material"):
+                    self.assertRegex(row[column], r"^(—|`[^`]+`(, `[^`]+`)*)$")
 
     def test_mapping_uses_only_declared_abstraction_levels(self) -> None:
         levels = {row["level"] for row in self.mapping_rows}
@@ -141,6 +177,8 @@ class LeafPrimaryCategoryTest(unittest.TestCase):
         by_leaf: dict[str, list[tuple[str, str, str]]] = {}
         for leaf, section, subcategory, level in _linked_entries(self.entry_text):
             by_leaf.setdefault(leaf, []).append((section, subcategory, level))
+        placed = {leaf for leaf, row in self.table.items() if row[0] != "Not placed"}
+        self.assertEqual(set(by_leaf), placed)
         for leaf, rows in by_leaf.items():
             with self.subTest(leaf=leaf):
                 primary = _derived_primary(leaf, rows)
@@ -182,7 +220,9 @@ def _linked_entries(text: str) -> list[tuple[str, str, str, str]]:
         elif line.startswith("### "):
             subcategory = line[4:].strip()
         cells = _table_cells(line)
-        if len(cells) != 4 or cells[0] == "Taxonomy entry" or _is_separator_row(cells):
+        if len(cells) != len(MAPPING_COLUMNS) or cells[0] == "Taxonomy entry":
+            continue
+        if _is_separator_row(cells):
             continue
         match = LEAF_LINK_RE.search(cells[1])
         if match:
@@ -263,16 +303,9 @@ def _taxonomy_mapping_rows(text: str) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     for line in text.splitlines():
         cells = _table_cells(line)
-        if len(cells) != 4 or cells[0] == "Taxonomy entry" or _is_separator_row(cells):
+        if not cells or cells[0] == "Taxonomy entry" or _is_separator_row(cells):
             continue
-        rows.append(
-            {
-                "entry": cells[0],
-                "spec_object": cells[1],
-                "level": cells[2],
-                "notes": cells[3],
-            }
-        )
+        rows.append(dict(zip(MAPPING_COLUMNS, cells, strict=True)))
     return rows
 
 
