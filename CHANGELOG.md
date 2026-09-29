@@ -3,10 +3,38 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
-## [Unreleased]
+## [0.4.0] - 2026-09-29
+
+### New Behaviors
+
+- Added three Behaviors: Input assistance (text completion and constraint
+  validation for any input control), Modal overlay (blocks interaction outside
+  a referenced surface until its task completes or is dismissed), and Viewport
+  and focus control (viewport scrolling, scroll lock, and focus management).
+- Added the Controlled element and Controlling element glossary terms:
+  a controlled element is named by an id reference and acted on without being
+  owned by the element that acts on it.
+
+### Behaviors contract restructuring (breaking)
+
+- Drag and drop, Collapsible, and Resizable no longer own
+  `targetPage`/`targetView`/`targetContainer`/`targetWidget` children. Each now
+  declares a single `[target]` — Uses — attribute that references its
+  [controlled element](spec/scopes/scope.md#controlled-element) by id, and
+  none of the six Behaviors (including the three new ones above) declares a
+  Child model.
 
 ### Specification documentation
 
+- Applied the terminology changes approved in `spec/scopes/terminology.md`
+  (moved from `spec/survey/`) to the glossary, the taxonomy mapping, and scope
+  descriptions across Containers and Behaviors. No known object type or
+  attribute was renamed; only vocabulary, aliases, and purpose text changed.
+- Moved the generic UI taxonomy and its illustrations from `docs/` to `spec/`
+  so the taxonomy is part of the published spec site, and restructured it into
+  the approved sections and subcategories. `docs/ui-element-taxonomy.md` is
+  removed; its content is superseded by the taxonomy mapping and the moved
+  generic UI taxonomy.
 - Moved the spec glossary from `spec/README.md` into a new Glossary section of
   `spec/scopes/scope.md`, together with the taxonomy abstraction levels from
   `spec/scopes/taxonomy_mapping.md` and the evidence source kinds from
@@ -33,6 +61,20 @@ published packages.
   pre-commit, and fixed the broken internal links it found.
 - The `openui-grammar-consistency` pre-commit hook now also runs when only scope
   sources or its tool code change.
+- Fixed the `glossary-single-definition` lint rule to sort scanned Markdown
+  paths by their POSIX-relative path instead of raw `Path` objects, which
+  compare case-insensitively on Windows and case-sensitively on POSIX; finding
+  order (and pass/fail on ties) no longer depends on the host OS.
+
+### Upgrading to 0.4.0
+
+1. Upgrade the Python or npm package to `0.4.0` and set concrete document
+   `version` fields to `0.4.0`.
+2. Replace any Drag and drop, Collapsible, or Resizable target-page, -view,
+   -container, or -widget children with a single `[target]` Uses attribute
+   naming the controlled element by id.
+3. Adopt Input assistance, Modal overlay, or Viewport and focus control where
+   applicable; each is attached the same way, with a `[target]` Uses attribute.
 
 ## [0.3.1] - 2026-09-25
 

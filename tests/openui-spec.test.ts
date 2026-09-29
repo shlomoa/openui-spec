@@ -8,7 +8,7 @@ import { OpenUiJson, OpenUiJsonError, OpenUiValidationError } from "../src/index
 
 function documentWith(childType = "Table"): Record<string, any> {
   return {
-    version: "0.3.1",
+    version: "0.4.0",
     id: "root",
     type: "html",
     children: [{ id: "target", type: childType }],
