@@ -313,7 +313,10 @@
                   "id": "dragAndDropInstance",
                   "type": "DragAndDrop",
                   "attrs": {
-                    "uses.target": "reference"
+                    "uses.target": "reference",
+                    "uses.dropEffect": "enum(move|copy|link)",
+                    "uses.disabled": "boolean",
+                    "produces.drop": null
                   }
                 }
               ]
@@ -332,7 +335,9 @@
                   "id": "resizableInstance",
                   "type": "Resizable",
                   "attrs": {
-                    "uses.target": "reference"
+                    "uses.target": "reference",
+                    "uses.axis": "enum(horizontal|vertical|both)",
+                    "produces.resize": null
                   }
                 }
               ]
@@ -351,7 +356,10 @@
                   "id": "collapsibleInstance",
                   "type": "Collapsible",
                   "attrs": {
-                    "uses.target": "reference"
+                    "uses.target": "reference",
+                    "uses.trigger": "reference",
+                    "uses.expanded": "boolean",
+                    "produces.expandedChange": null
                   }
                 }
               ]
@@ -370,7 +378,11 @@
                   "id": "inputAssistanceInstance",
                   "type": "InputAssistance",
                   "attrs": {
-                    "uses.target": "reference"
+                    "uses.target": "reference",
+                    "uses.suggestions": "list(string)",
+                    "uses.pattern": "string",
+                    "produces.suggestionSelect": null,
+                    "produces.invalid": null
                   }
                 }
               ]
@@ -389,7 +401,11 @@
                   "id": "modalOverlayInstance",
                   "type": "ModalOverlay",
                   "attrs": {
-                    "uses.target": "reference"
+                    "uses.target": "reference",
+                    "uses.initialFocus": "reference",
+                    "uses.restoreFocus": "boolean",
+                    "uses.dismissOnEscape": "boolean",
+                    "produces.dismissRequest": null
                   }
                 }
               ]
@@ -408,7 +424,14 @@
                   "id": "viewportAndFocusControlInstance",
                   "type": "ViewportAndFocusControl",
                   "attrs": {
-                    "uses.target": "reference"
+                    "uses.target": "reference",
+                    "uses.axis": "enum(horizontal|vertical|both)",
+                    "uses.kinetic": "boolean",
+                    "uses.scrollLock": "boolean",
+                    "behaves.scrollTo": null,
+                    "behaves.reveal": null,
+                    "behaves.focus": null,
+                    "produces.scroll": null
                   }
                 }
               ]

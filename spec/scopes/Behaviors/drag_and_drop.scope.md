@@ -15,6 +15,9 @@ dragging and dropping them.
 ## Attributes
 
 - `uses.target` — Uses — reference — element reference to the page, view, container or widget whose elements the behavior moves (the [controlled element](../scope.md#controlled-element)).
+- `uses.dropEffect` — Uses — enum(move|copy|link) — what a drop does with the dragged element.
+- `uses.disabled` — Uses — boolean — whether dragging is turned off.
+- `produces.drop` — Produces — emitted when an element is dropped on a valid place.
 
 ## Accessibility
 
@@ -26,5 +29,3 @@ dragging and dropping them.
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
 - The behavior acts on its target and does not own it; it declares no Child model.
-- Only the target reference is authorized by current evidence; drag/drop attribute keys
-  require an explicit owner decision before they are added.

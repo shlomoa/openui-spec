@@ -14,6 +14,9 @@ A behavior that lets the user collapse and expand elements within a page or view
 ## Attributes
 
 - `uses.target` — Uses — reference — element reference to the element the behavior collapses and expands (the [controlled element](../scope.md#controlled-element)).
+- `uses.trigger` — Uses — reference — element reference to the element the user operates to collapse or expand the target (the [controlling element](../scope.md#controlling-element)).
+- `uses.expanded` — Uses — boolean — whether the target is expanded.
+- `produces.expandedChange` — Produces — emitted when the target expands or collapses.
 
 ## Accessibility
 
@@ -25,5 +28,3 @@ A behavior that lets the user collapse and expand elements within a page or view
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
 - The behavior acts on its target and does not own it; it declares no Child model.
-- Only the target reference is authorized by current evidence; default state and trigger
-  attributes require an explicit owner decision before they are added.

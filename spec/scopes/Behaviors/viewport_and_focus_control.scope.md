@@ -19,6 +19,13 @@ restoring it afterwards).
 ## Attributes
 
 - `uses.target` — Uses — reference — element reference to the viewport, page or element the behavior acts on (the [controlled element](../scope.md#controlled-element)).
+- `uses.axis` — Uses — enum(horizontal|vertical|both) — the directions in which the viewport scrolls.
+- `uses.kinetic` — Uses — boolean — whether scrolling continues with momentum after the user lets go.
+- `uses.scrollLock` — Uses — boolean — whether the page background is kept from scrolling.
+- `behaves.scrollTo` — Behaves — moves the viewport to a position.
+- `behaves.reveal` — Behaves — scrolls an element into view without moving focus.
+- `behaves.focus` — Behaves — moves focus to an element.
+- `produces.scroll` — Produces — emitted when the viewport position changes.
 
 ## Accessibility
 
@@ -33,5 +40,4 @@ restoring it afterwards).
 
 - The behavior acts on its target and does not own it; it declares no Child model.
 - Focus management here is outside the modal case, which Modal overlay covers.
-- Other attributes, such as axes, positions or restore options, need an explicit
-  owner decision before they are added.
+- Releasing the scroll lock restores the previous scroll position.
