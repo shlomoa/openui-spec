@@ -59,20 +59,30 @@ flowchart LR
   W0 --> W3[W3 Categorization]
   W1 --> W2
   W1 --> W3
-  W2 -- "14.12, 15 only" --> W3
-  W3 --> W4[W4 Structure]
+  W3 -- "9.9, 9.10, 9.13" --> W1
+  W2 -- "14.12, 15" --> W3
+  W3 -- "16" --> W4[W4 Structure]
   W1 --> W5[W5 Language]
-  W4 --> W6[W6 Draft spec]
+  W8 -- "32 fixtures, for 23" --> W5
+  W4 -- "24" --> W6[W6 Draft spec]
+  W1 -- "25" --> W6
   W5 --> W6
   W6 --> W7[W7 Docs]
   W5 --> W8[W8 Utilities]
-  W6 -- "task 35 only" --> W8
+  W6 -- "35" --> W8
   W8 --> W7
-  W9[W9 Validation] -.-> W6
-  W9 -.-> W8
+  W9[W9 Validation, done]
 ```
 
-W9 starts first and runs alongside everything else; dashed arrows mean it gates W6 and W8 rather than feeding content. A labelled arrow holds only for the named tasks: W3 waits on W2 only for 14.12 and 15, and W8 waits on W6 only for task 35 (the joint release); W8 32–34 need only W5 task 23. W7 waits on W8 because task 31 notifies downstream after W8 task 35.
+W9 is done: it ran first, and its checks now run on every change. An arrow without a label holds for the whole workstream; a labelled arrow holds only for the named tasks of the workstream it points to:
+
+- W1 waits on W3 for 9.9, 9.10 and 9.13, which use the merged taxonomy (W3 14.1–14.5, 14.9, 14.13).
+- W3 waits on W2 only for 14.12 and 15 (14.12 needs W2 11).
+- W4 waits on W3 only for 16; 17 needs 16, and 18 needs nothing.
+- W5 waits on W8 for 23, which is validated against the fixtures of 32; the fixture structure of 32 needs nothing.
+- W6 waits on W4 only for 24, and on W1 for 25 (the alias table, 9.9); 25 and 26 also need W5.
+- W8 waits on W6 only for 35 (the joint release); the finished suite of 32, and 33–34, need W5 23.
+- W7 waits on W8 because task 31 notifies downstream after W8 task 35.
 
 ## Tasks
 
@@ -275,18 +285,21 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 3 | [x] Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Done |
 | 4 | [ ] Add the missing terms to their scope Purposes; generate the examples for the new additions from the consolidated data; validate; release the next `0.x.0` | W1 9.13, 9.10–9.12, 9.8, in this order | Step 3 | Open |
 | 4 | [x] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy; validate all of W3 14 | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, 14.7, in this order | Step 3 | Done — PR #164 |
+| 4 | [ ] Move incremental-generation and generator content out of `spec/README.md` | W4 18 | — | Open |
 | 5 | [ ] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 4 taxonomy row (W3 14.9 decides which names go in the alias columns; 14.13 sets the final entry names) | Open |
 | 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19 and 20 (together), 21, 22 and W8 32 fixture structure (independent of each other); then W5 23 | Step 3; W5 23 needs 19–22 | Open |
 | 6 | [ ] Scope statement and in / out classification | W2 10, then 11; W2 12 (lowest priority) | Step 3 | Open |
-| 7 | [ ] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, 15 | Steps 4, 6 (W3 14.12 needs W2 11) | Open |
-| 8 | [ ] Specification outline and normative split | W4 16–18 | Step 7 | Open |
-| 9 | [ ] Draft the spec, enrich leaves from the survey inventories, `1.0.0-rc.1` | W6 24–26 | Steps 5, 8 | Open |
-| 9 | [ ] Conformance suite and Python / TypeScript utilities | W8 32–34 | W5 23 | Open |
-| 10 | [ ] Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 9 | Open |
+| 6 | [ ] Enrich each leaf scope from the survey inventories and the alias table | W6 25 | W1 9.9 (step 5); W5 19–23 (step 5) | Open |
+| 7 | [ ] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, then 15 | Step 4 taxonomy row; W2 11 (step 6) | Open |
+| 8 | [ ] Specification outline and normative split | W4 16, then 17 | Step 7 | Open |
+| 9 | [ ] Draft the spec per the outline | W6 24 | Step 8 | Open |
+| 9 | [ ] Conformance suite and Python / TypeScript utilities | W8 32 (finish the suite), 33, 34 | W5 23 | Open |
+| 10 | [ ] Regenerate, migrate all examples and fixtures, `1.0.0-rc.1` | W6 26 | W6 24, 25; W5 23 | Open |
+| 11 | [ ] Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 10; step 9 utilities | Open |
 
 Rows marked In progress are taken by a sub-agent; other agents take other rows.
 
-*Directive (Q3):* the `1.0.0-rc.1` of step 9 and the `1.0.0` of step 10 wait on downstream validation; until then each release is `0.x.0` / `0.x.y`.
+*Directive (Q3):* the `1.0.0-rc.1` of step 10 and the `1.0.0` of step 11 wait on downstream validation; until then each release is `0.x.0` / `0.x.y`.
 
 Priority: step 3 is the first specification change and unblocks the language work (step 5), so the decisions and proposals feeding it (steps 1–2) come first. The categorization of scope folders (step 7) waits on the scope statement, as the workstream graph requires.
 
