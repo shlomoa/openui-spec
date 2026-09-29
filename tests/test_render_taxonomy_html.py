@@ -21,7 +21,8 @@ class RenderTaxonomyHtmlTest(unittest.TestCase):
             source = base / "page.md"
             source.write_text(
                 "# Fixture page\n\n| Name | Example image |\n| --- | --- |\n"
-                "| Dot | ![Dot example](images/dot.svg) |\n",
+                "| Dot | ![Dot example](images/dot.svg) |\n\n"
+                "[a](../scopes/scope.md#glossary) [b](other.md) [c](https://example.com/x.md)\n",
                 encoding="utf-8",
             )
             target = base / "page.html"
@@ -33,10 +34,14 @@ class RenderTaxonomyHtmlTest(unittest.TestCase):
             page = render(source, target)
 
         self.assertIn("<title>Fixture page</title>", page)
+        self.assertIn('<h1 id="fixture-page">Fixture page</h1>', page)
         self.assertIn("<style>x{}</style>", page)
         self.assertIn('src="data:image/svg+xml;base64,PHN2Zy8+" alt="Dot example"', page)
         self.assertNotIn('src="images/', page)
         self.assertNotIn(">old<", page)
+        self.assertIn('href="../scopes/scope/#glossary"', page)
+        self.assertIn('href="other/"', page)
+        self.assertIn('href="https://example.com/x.md"', page)
 
     def test_source_is_the_generic_taxonomy(self) -> None:
         self.assertEqual(SOURCE.name, "generic-ui-taxonomy.md")

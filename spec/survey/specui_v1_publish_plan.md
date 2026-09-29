@@ -243,7 +243,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 28. [x] Update README, REQUIREMENTS (*lowest priority*, as task 12), CONTRIBUTING, RELEASING, AGENTS.md / CLAUDE.md / GEMINI.md, `.github/copilot-instructions.md`, agent files under `.github/agents/`. Result: the documents describe the current spec, typed language, tools, tests and release process, each fact in one place ([PR #173](https://github.com/shlomoa/openui-spec/pull/173)); REQUIREMENTS, CLAUDE.md and `.github/copilot-instructions.md` needed no change.
 29. [ ] Write CHANGELOG `1.0.0` with a 0.3 → 1.0 migration guide. *Directive (Q3):* written for the `1.0.0` release, after downstream validation.
-30. [ ] Publish to Read the Docs. *Demo:* the site itself.
+30. [x] Publish to Read the Docs. *Demo:* the site itself. Result: <https://openui-spec.readthedocs.io/en/latest/> matches `main` (all 208 published files); the nav now lists the playground and both taxonomy HTML pages, links to unpublished survey files point to GitHub, and `site_url` fixes the sitemap and the 404 page ([PR #176](https://github.com/shlomoa/openui-spec/pull/176)).
 31. [ ] After W6 task 27 and W8 task 35, notify downstream: angular-django2 (#98/#103 TS parser) and django-angular3.
 
 ### W8 Spec utilities
