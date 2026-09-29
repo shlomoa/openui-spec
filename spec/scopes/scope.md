@@ -209,8 +209,8 @@ control may be interactive, such as an input or button, or structural/rendering
 oriented, such as native table tags. A control is classified by primitive
 semantics, not by whether it is visually simple.
 
-Framework meanings differ: OpenUI5 `sap.ui.core.Control` is the generic base
-class of every UI class, not a primitive.
+Same name, different meaning: in OpenUI5, `sap.ui.core.Control` is the base
+class of every UI class. In OpenUI, a control is a primitive.
 
 #### Controlled element
 
@@ -240,9 +240,9 @@ for any concrete occurrence in a document. Its `type` is a semantic category
 from the catalog; its `id`, `attrs`, and `children` describe that particular
 instance.
 
-Framework meanings differ: an HTML element is one markup tag, and OpenUI5
-`sap.ui.core.Element` is a base class. An OpenUI element may be implemented by
-many HTML elements.
+Same name, different meaning: in HTML, an element is one markup tag, and in
+OpenUI5, `sap.ui.core.Element` is a base class. In OpenUI, an element is one node
+of the document tree and may be built from many HTML elements.
 
 #### Grammar
 
@@ -331,8 +331,9 @@ containers, widgets, controls, and behaviors, and may participate in routing and
 navigation. A page is broader than a DOM page or framework route component: it is
 the implementation-independent contract for a user-perceived screen or shell.
 
-Framework meanings differ: OpenUI5 `sap.m.Page` is a container with a header, a
-content area and a footer, which can appear inside a page.
+Same name, different meaning: in OpenUI5, `sap.m.Page` is a container with a
+header, a content area and a footer, which can sit inside a page. In OpenUI, a
+page is a top-level navigable surface.
 
 #### Scope
 
