@@ -68,6 +68,20 @@ class TaxonomyMappingTest(unittest.TestCase):
         self.assertEqual(sorted(set(mapping) - set(taxonomy)), [], "missing from the taxonomy")
         self.assertEqual(mapping, taxonomy)
 
+    def test_every_taxonomy_entry_has_an_image_or_needs_none(self) -> None:
+        image_re = re.compile(r"!\[[^\]]+\]\((images/[^)]+\.svg)\)")
+        for line in DOCS_TAXONOMY.read_text(encoding="utf-8").splitlines():
+            cells = _table_cells(line)
+            if len(cells) < 2 or cells[0] == "Name" or _is_separator_row(cells):
+                continue
+            with self.subTest(entry=cells[0]):
+                match = image_re.fullmatch(cells[-1])
+                if cells[-1] != "Not applicable":
+                    self.assertIsNotNone(match, cells[-1])
+                    self.assertTrue(
+                        (DOCS_TAXONOMY.parent / match.group(1)).is_file(), match.group(1)
+                    )
+
     def test_each_entry_is_listed_once(self) -> None:
         for path in (DOCS_TAXONOMY, TAXONOMY_MAPPING):
             with self.subTest(document=path.name):
