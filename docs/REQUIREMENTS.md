@@ -7,23 +7,23 @@ authored against that specification to an existing Angular workspace.
 ## 1. Specification
 
 The OpenUI specification is a technology-independent contract for Web UI
-frameworks. The roles of `input.json`, `spec/openui.schema.json`, and
-`spec/openui.json` are defined once in
-[`spec/README.md` § Specification artifacts: grammar vs. catalog](../spec/README.md#specification-artifacts-grammar-vs-catalog).
-Shared vocabulary, aliases, and cross-framework term meanings are defined once in
-[`spec/scopes/scope.md` § Glossary](../spec/scopes/scope.md#glossary).
-Concrete document type membership and instance flexibility follow the
-[`Known object type`](../spec/scopes/scope.md#known-object-type) contract defined
-there; requirements and implementations must not introduce parallel alias or
-per-type validation contracts.
+frameworks. It defines _what_ a compliant Web UI must provide, never _how_ it is
+implemented.
 
-The hand-authored prose under `spec/scopes/` is the specification source of truth
-for each object's purpose, attributes, and child model. The generated catalog
-links back to that prose through `attrs.scopeDocument`; content is kept unique
-through cross-referencing rather than duplication.
+The specification is its own source of truth, in [`spec/`](../spec/README.md).
+This document states only what the solution needs from it and links to it:
 
-The specification defines _what_ a compliant Web UI must provide; it never
-prescribes _how_ it is implemented.
+- **Scope:** what the specification covers, leaves out and defers —
+  [`spec/README.md` § Scope](../spec/README.md#scope).
+- **Artifacts:** the roles of `input.json`, `spec/openui.schema.json` and
+  `spec/openui.json` —
+  [`spec/README.md` § Specification artifacts](../spec/README.md#specification-artifacts-grammar-vs-catalog).
+- **Vocabulary:** terms, aliases and their meanings —
+  [`spec/scopes/scope.md` § Glossary](../spec/scopes/scope.md#glossary), including the
+  [known object type](../spec/scopes/scope.md#known-object-type) contract that the
+  generator and the tools follow.
+- **Object contracts:** the purpose, attributes and child model of each object — the
+  scope files under [`spec/scopes/`](../spec/scopes/scope.md#top-level-scopes).
 
 ## 2. Angular TypeScript Generator
 

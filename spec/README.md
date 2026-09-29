@@ -6,6 +6,113 @@ OpenUI is a technology-independent specification for a Web UI framework. It defi
 
 It serves application developers, designers and UX owners, framework maintainers, and generator/tooling authors, who all consume the same public contract.
 
+## Outline
+
+The specification has six parts and three annexes:
+
+1. **Introduction and scope:** this page's introduction, [Scope](#scope) and
+   [How to read this spec](#how-to-read-this-spec).
+2. **Conformance:** the [requirement keywords and the normative and informative parts](#conformance),
+   and the [conformance suite](conformance/README.md).
+3. **Terminology:** the [glossary](scopes/scope.md#glossary).
+4. **Document model and language:**
+   [Specification artifacts](#specification-artifacts-grammar-vs-catalog) and
+   [Spec format](#spec-format).
+5. **Categories and objects:**
+   1. [Generic UI taxonomy](taxonomy/generic-ui-taxonomy.md)
+   2. [UI element taxonomy](taxonomy/ui-element-taxonomy.md)
+   3. [Taxonomy mapping](scopes/taxonomy_mapping.md)
+   4. Scope tree: the [top-level scopes](scopes/scope.md#top-level-scopes) and the
+      [spec folder structure](#spec-folder-structure)
+   5. Object contracts: the scope files listed in the
+      [spec folder structure](#spec-folder-structure)
+6. **Catalog:** the generated `openui.json`, its
+   [leaf scope source format](#leaf-scope-source-format-scopemd) and the
+   [leaf scope template](scopes/template.scope.md).
+
+- **Annex A, Grammar:** [`EBNF.txt`](EBNF.txt) and its JSON Schema projection
+  [`openui.schema.json`](openui.schema.json).
+- **Annex B, Survey mapping:** the [evidence register](scopes/evidence.md) and the
+  [terminology decisions](scopes/terminology.md).
+- **Annex C, Examples:** the [worked examples](examples/README.md) and the
+  [app.json example](#appjson-examples).
+
+The [packages and tooling](#packages-and-tooling) are not part of the specification.
+
+## Scope
+
+**Out of scope** means the specification does not address it. **Deferred** means a later
+edition may address it.
+
+### In scope
+
+- **Terminology:** the [glossary](scopes/scope.md#glossary), with one definition for each term.
+- **Catalog:** the eleven [top-level scopes](scopes/scope.md#top-level-scopes) and their leaf
+  scopes, each with its contract. Every catalog object is in scope.
+- **Categorization:** the three [taxonomy documents](scopes/scope.md#taxonomy-documents).
+- **Language:** the document format ([`EBNF.txt`](EBNF.txt) and its JSON Schema projection),
+  including element, data-binding and event references.
+- **Survey traceability:** the [evidence register](scopes/evidence.md), which links each
+  leaf scope to the surveyed sources.
+- **Utilities:** the Python and TypeScript [packages](#packages-and-tooling) that parse and
+  validate OpenUI documents.
+- **Compositions:** a UI pattern built from existing objects is in scope as a composition of
+  them, for example a transfer list (two list boxes and buttons), a preview (an Image, a
+  Media player or a Dialog), a walkthrough (Popovers) or a query builder (Value help).
+
+### Out of scope
+
+- **Generators:** they consume the specification and are not part of it.
+- **Browser and framework machinery:** HTML parsing, scheduling, storage, workers and
+  communication; framework infrastructure and tooling classes.
+- **Platform prompts:** prompts the browser or the operating system shows, such as a
+  biometric or permission prompt, and speech entry.
+- **Implementation techniques:** rendering content outside its place in the tree (a portal)
+  and rendering only the visible part of a collection (virtualization).
+- **Data that is not UI:** document metadata and resource declarations beyond
+  `index.html` and `favicon.ico`, and stored application data such as a saved query.
+- **Immersive views:** panoramic, AR and VR views.
+
+### Deferred
+
+- **Host-shell presence, docking and multiple-document workspaces:** for example a
+  notification-area icon, a main window, a dockable panel or a multiple-document workspace.
+- **Accessibility and Composition top-level scopes.** Accessibility stays in scope as a
+  property of every element: each leaf contract has an Accessibility section.
+- **Ruby annotation.**
+- **Duration selection** and **index navigation** (an A to Z rail).
+
+## Conformance
+
+### Requirement keywords
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+"SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
+specification are to be interpreted as described in BCP 14
+([RFC 2119](https://www.rfc-editor.org/rfc/rfc2119),
+[RFC 8174](https://www.rfc-editor.org/rfc/rfc8174)) when, and only when, they appear
+in all capitals, as shown here.
+
+- The keywords appear only in normative parts.
+- The same words in lower case carry no requirement.
+- Notes and examples inside a normative part are informative.
+
+### Normative and informative parts
+
+| Part                          | Where                                                                                                                                              | Status      |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| 1 Introduction and scope      | This page's introduction, [Outline](#outline), [How to read this spec](#how-to-read-this-spec)                                                     | Informative |
+| 1 Introduction and scope      | [Scope](#scope)                                                                                                                                    | Normative   |
+| 2 Conformance                 | This section; the [conformance suite](conformance/README.md)                                                                                       | Normative   |
+| 3 Terminology                 | The [glossary](scopes/scope.md#glossary)                                                                                                           | Normative   |
+| 4 Document model and language | [Specification artifacts](#specification-artifacts-grammar-vs-catalog), [Spec format](#spec-format)                                                | Normative   |
+| 5 Categories and objects      | The three taxonomy documents, the scope tree and the scope files (the [Outline](#outline) lists them)                                              | Normative   |
+| 6 Catalog                     | [Leaf scope source format](#leaf-scope-source-format-scopemd), the [leaf scope template](scopes/template.scope.md) and the generated `openui.json` | Normative   |
+| Annex A Grammar               | [`EBNF.txt`](EBNF.txt), which is authoritative, and its JSON Schema projection                                                                     | Normative   |
+| Annex B Survey mapping        | The [evidence register](scopes/evidence.md) and the [terminology decisions](scopes/terminology.md)                                                 | Informative |
+| Annex C Examples              | The [worked examples](examples/README.md) and [app.json examples](#appjson-examples)                                                               | Informative |
+| Not a part                    | [Packages and tooling](#packages-and-tooling)                                                                                                      | Informative |
+
 ## Packages and Tooling
 
 - **TypeScript / Node.js**: The [`@shlomoa/openui-spec`](https://www.npmjs.com/package/@shlomoa/openui-spec) package on npm provides the `OpenUiJson` document API, bundled canonical catalog/schema, TypeScript types, and the `ng-openui-spec` CLI. See the [OpenUI JSON editing guide](tooling/editing.md) for full usage.
@@ -139,15 +246,6 @@ target-type constraints documented by individual object contracts. Consumers
 that need those checks must implement them for their target until
 catalog-driven contract validation is specified.
 
-Generators use the three artifacts together:
-
-- define and maintain `input.json` format against `EBNF.txt`,
-- validate `input.json` against the executable projection in
-  `spec/openui.schema.json`,
-- validate every `input.json` node's exact `type` literal against the object
-  catalog defined by `spec/openui.json`, and
-- generate target-framework output from the validated `input.json`.
-
 ## Spec folder structure
 
 The `scopes` folder is structured hierarchically. Each top-level scope is a folder; each object is either a child scope folder or a snake_case `*.scope.md` leaf file.
@@ -244,7 +342,7 @@ rules:
 
 - `"id"` MUST be `"root"`.
 - `"version"` is REQUIRED (top-level only) and MUST equal the current value in
-  the repository-root `SCHEMA_VERSION` file (currently `0.7.0`).
+  the repository-root `SCHEMA_VERSION` file (currently `0.8.0`).
 - `"type"` MUST be `"html"`.
 
 `EBNF.txt` defines the required root fields, literal root id, version syntax,
@@ -389,7 +487,7 @@ The format itself is in [EBNF](./EBNF.txt)
 
 ### Syntax rules
 
-- **Version field (top-level only):** Required semantic version string (e.g., "0.7.0") identifying the spec version
+- **Version field (top-level only):** Required semantic version string (e.g., "0.8.0") identifying the spec version
 - **ID field:** Must be a camelCase alphanumeric string (starts with lowercase letter, can contain uppercase letters and digits)
 - **Type field:** Must satisfy the grammar's HTML/kebab-case/PascalCase syntax and, in a concrete UI document, exactly match a literal `type` in `spec/openui.json`
 - **Attributes field:** Key-value pairs. A key is `uses.<name>`, `produces.<name>`, `behaves.<name>` or a plain `<name>` (camelCase); the prefix identifies the input, output, or behavior category, and all such categories must stay inside the `attrs` object. A value is a string, number, `true`, `false`, `null`, or a list of these.
@@ -509,7 +607,7 @@ the `scopes` tree: a `<object>.example.json` for each leaf scope and a composite
 ```json
 {
   "id": "root",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "type": "Pages",
   "attrs": {
     "size": "1960x1080",
@@ -549,39 +647,6 @@ the `scopes` tree: a `<object>.example.json` for each leaf scope and a composite
   ]
 }
 ```
-
----
-
-## Incremental generation
-
-Generation is usually incremental: given a JSON specification file and an existing
-workspace, the generator reconciles the workspace to match the specification
-rather than regenerating from scratch every time.
-
-### Scenarios
-
-| JSON | Workspace | Scenario     | Details                                                                                     |
-| :--- | :-------- | :----------- | :------------------------------------------------------------------------------------------ |
-| Yes  | No        | Add          | Implement the object as a child of the current parent and wire it in                        |
-| No   | Yes       | Delete       | Delete the object and the reference from parent                                             |
-| Yes  | Yes       | Match        | Do nothing — the node content including children is identical                               |
-| Yes  | Yes       | Not matching | Fix those non-matching parts (attribute added/removed/changed, child added/removed/changed) |
-
-### Algorithm
-
-The JSON is traversed parent (node) to child (node) starting at the root.
-Having no root is an invalid case.
-
-1. First node is defined to be the root.
-2. Compare each JSON node with the manifestation in the workspace:
-   - **Add** — the generator generates the object as defined.
-   - **Modify** — either make the modification if simple (e.g. a rename), or
-     delete and re-add.
-   - **Delete** — remove the part and the references to it.
-   - **Match** — do nothing.
-
-Generation from scratch is the special case where the workspace is empty.
-Deletion is the special case where objects are removed from the JSON file.
 
 ## How to read this spec
 

@@ -22,14 +22,14 @@ Example is in generators\angular\generator\tests\fixtures\example_incremental
 - output_app-file-select contains the expected workspace after incremental generation:
   both `app-file-select` (added) and `app-file-upload` (preserved) are present.
 - This demonstrates the incremental reconciliation algorithm (see
-  [spec/README.md § Incremental generation](../../../../../spec/README.md#incremental-generation)):
+  [GENERATION.md § Incremental generation](../../docs/GENERATION.md#incremental-generation)):
   - Existing components not in the JSON diff are preserved (Match).
   - New components described in the JSON are added (Add).
 
 ## Incremental generation scenarios
 
 The reconciliation algorithm is defined in
-[spec/README.md § Incremental generation](../../../../../spec/README.md#incremental-generation).
+[GENERATION.md § Incremental generation](../../docs/GENERATION.md#incremental-generation).
 The following table maps scenarios to test fixtures:
 
 | Scenario     | Test fixture                                            |

@@ -3,6 +3,59 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.8.0] - 2026-09-29
+
+### Scope
+
+- `spec/README.md` has a new Scope section. It defines out of scope (not
+  addressed) and deferred (a later edition may address it), and lists what is
+  in scope, out of scope and deferred. Every catalog object is in scope.
+- Generators, browser and framework machinery, platform prompts,
+  implementation techniques, data that is not UI and immersive views are out of
+  scope. Host-shell presence, docking, multiple-document workspaces, the
+  Accessibility and Composition top-level scopes, ruby annotation, duration
+  selection and index navigation are deferred.
+
+### Specification structure
+
+- `spec/README.md` has a numbered Outline: six parts (introduction and scope,
+  conformance, terminology, document model and language, categories and
+  objects, catalog) and three annexes (grammar, survey mapping, examples). The
+  documentation site navigation follows it. No file moved.
+- A new Conformance section defines the requirement keywords by BCP 14
+  (RFC 2119, RFC 8174): they apply only in capitals and only in normative parts.
+  It marks each part normative or informative; the survey mapping, the examples
+  and the tooling are informative.
+- Generator content moved out of `spec/README.md`. The Incremental generation
+  section (its scenarios and algorithm) and the list of how generators use the
+  grammar, the schema and the catalog are now in
+  `generators/angular/generator/docs/GENERATION.md#incremental-generation`.
+
+### Categorization
+
+- The taxonomy mapping has a new section, Primary categories of the leaf
+  scopes. Each leaf scope with taxonomy entries has one primary section and
+  subcategory, chosen by three stated rules, and lists its secondary roles.
+  favicon.ico, index.html and Native have no taxonomy entry and are not placed.
+- No scope folder or leaf moved: the taxonomy and the scope tree stay linked
+  views, and every scope id, type and path is unchanged.
+- New interactive taxonomy tree, `spec/taxonomy/taxonomy-tree.html`, generated
+  from the taxonomy mapping by `python -m spec.bin.render_taxonomy_tree`. The
+  four alias columns are a per-source name overlay. A pre-commit check keeps it
+  up to date.
+
+### Documentation
+
+- `docs/REQUIREMENTS.md` now states only what the solution needs from the
+  specification and links to it, instead of repeating spec rules.
+
+### Upgrading to 0.8.0
+
+1. Upgrade the Python or npm package to `0.8.0` and set concrete document
+   `version` fields to `0.8.0`.
+2. Change links to `spec/README.md#incremental-generation` to
+   `generators/angular/generator/docs/GENERATION.md#incremental-generation`.
+
 ## [0.7.0] - 2026-09-29
 
 ### Scope Purposes
@@ -314,3 +367,4 @@ and enforced rather than adding or removing catalog types.
 [0.5.0]: https://github.com/shlomoa/openui-spec/compare/v0.4.0...v0.5.0
 [0.6.0]: https://github.com/shlomoa/openui-spec/compare/v0.5.0...v0.6.0
 [0.7.0]: https://github.com/shlomoa/openui-spec/compare/v0.6.0...v0.7.0
+[0.8.0]: https://github.com/shlomoa/openui-spec/compare/v0.7.0...v0.8.0

@@ -3,7 +3,8 @@
 This document maps each entry of the [generic UI taxonomy](../taxonomy/generic-ui-taxonomy.md)
 to its canonical scope object under `spec/scopes/`. It is one of the three
 [taxonomy documents](scope.md#taxonomy-documents). For each entry it owns the scope
-object, the abstraction level and the scope-specific notes. Its section and subcategory
+object, the abstraction level and the scope-specific notes; for each leaf scope, its
+primary section and subcategory. Its section and subcategory
 headings and its entries mirror the generic UI taxonomy, which owns the sections, the
 subcategories with their inclusion rules (Holds) and the placement of each entry; a test
 keeps the two equal. The [UI element taxonomy](../taxonomy/ui-element-taxonomy.md) owns
@@ -14,6 +15,8 @@ The abstraction levels used in the tables below are defined in the
 [glossary](scope.md#abstraction-levels). Each row names one spec object. A note holds
 only scope-specific information, such as the entry's secondary roles or the object a
 related term maps to; it does not repeat the entry description. "—" means no note.
+The [last section](#primary-categories-of-the-leaf-scopes) gives each leaf scope its
+primary section and subcategory.
 
 The alias columns give the names that the surveyed sources use for the same entry
 (plan task W1 9.9; "—" where a source has no name):
@@ -30,6 +33,10 @@ The alias columns give the names that the surveyed sources use for the same entr
   matched to the entry they mean.
 - **Angular Material:** the component families of the
   [Angular Material survey mapping](../survey/angular-material/taxonomy_mapping.md#entries-by-primary-openui-scope).
+
+The [taxonomy tree](../taxonomy/taxonomy-tree.html) is an interactive view of this document,
+generated from it: the sections, subcategories and entries as a collapsible tree, with the
+alias columns as a per-source name overlay.
 
 A framework name spelled like an OpenUI term but meaning something else is not an alias;
 it stays in the glossary note "Same name, different meaning:" of that term.
@@ -443,3 +450,76 @@ it stays in the glossary note "Same name, different meaning:" of that term.
 | Scroll lock                      | [Viewport and focus control](Behaviors/viewport_and_focus_control.scope.md) | Alias             | —                               | —                                                                                                                                                                                                                                                                                     | —              | —                | —                                                              |
 | Focus management                 | [Viewport and focus control](Behaviors/viewport_and_focus_control.scope.md) | Alias             | —                               | `sap.f.delegate.GridContainerItemNavigation`, `sap.f.delegate.GridItemNavigation`, `sap.m.HeaderContainerItemNavigator`, `sap.ui.core.delegate.ItemNavigation`, `sap.ui.core.FocusHandler`                                                                                            | —              | —                | The modal case is Modal overlay.                               |
 | Exclusive selection coordination | [Choice controls](Controls/choice_controls.scope.md)                        | Alias             | `role=radiogroup`               | `sap.m.RadioButtonGroup`, `sap.m.SegmentedButton`, `sap.m.SegmentedButtonItem`                                                                                                                                                                                                        | `QButtonGroup` | —                | Keeps its Choice controls scope.                               |
+
+## Primary categories of the leaf scopes
+
+Each leaf scope has one primary section and at most one primary subcategory, taken from
+the taxonomy entries above that link to it. The other places its entries fall in are its
+secondary roles. The primary place is chosen by these rules, in order:
+
+1. The place of the entry whose abstraction level is Existing object: that entry is the
+   leaf's own object.
+2. For a leaf of the Behaviors folder, the Behaviors section: reusable behaviors are
+   entries of Behaviors, as the
+   [generic UI taxonomy](../taxonomy/generic-ui-taxonomy.md#generic-ui-taxonomy) states.
+3. Otherwise, the place that holds most of the leaf's entries. A tie goes to the place of
+   its Grouped leaf entry.
+
+favicon.ico, index.html and Native have no taxonomy entry, so they are not placed: they
+are content or a marker for a standard platform capability, not UI elements
+([taxonomy mapping change: Not added](../survey/taxonomy_mapping_change.done.md#not-added)).
+Placing a leaf in a section does not move its scope file: the taxonomy and the scope tree
+are linked views of one vocabulary.
+
+| Leaf scope                                                                  | Primary section                | Primary subcategory                | Secondary roles                                                                                      |
+| --------------------------------------------------------------------------- | ------------------------------ | ---------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| [favicon.ico](Application/favicon.scope.md)                                 | Not placed                     | —                                  | —                                                                                                    |
+| [index.html](Application/index_html.scope.md)                               | Not placed                     | —                                  | —                                                                                                    |
+| [Navigation group](Application/nav_group.scope.md)                          | Navigational elements          | Application navigation             | —                                                                                                    |
+| [Navigation item](Application/nav_item.scope.md)                            | Navigational elements          | Application navigation             | —                                                                                                    |
+| [Navigation](Application/navigation.scope.md)                               | Navigational elements          | Application navigation             | —                                                                                                    |
+| [Route](Application/route.scope.md)                                         | Navigational elements          | Application navigation             | —                                                                                                    |
+| [Routing](Application/routing.scope.md)                                     | Navigational elements          | Application navigation             | —                                                                                                    |
+| [Tool action](Application/tool_action.scope.md)                             | Container elements             | Workspace surfaces                 | —                                                                                                    |
+| [Tool bar row](Application/tool_bar_row.scope.md)                           | Container elements             | Workspace surfaces                 | —                                                                                                    |
+| [Tool bars](Application/tool_bars.scope.md)                                 | Container elements             | Workspace surfaces                 | —                                                                                                    |
+| [Collapsible](Behaviors/collapsible.scope.md)                               | Behaviors                      | —                                  | —                                                                                                    |
+| [Drag and drop](Behaviors/drag_and_drop.scope.md)                           | Behaviors                      | —                                  | Input elements: Manipulation handles                                                                 |
+| [Input assistance](Behaviors/input_assistance.scope.md)                     | Behaviors                      | —                                  | —                                                                                                    |
+| [Modal overlay](Behaviors/modal_overlay.scope.md)                           | Behaviors                      | —                                  | —                                                                                                    |
+| [Resizable](Behaviors/resizable.scope.md)                                   | Behaviors                      | —                                  | Input elements: Manipulation handles                                                                 |
+| [Viewport and focus control](Behaviors/viewport_and_focus_control.scope.md) | Behaviors                      | —                                  | —                                                                                                    |
+| [Expandable panels](Containers/expandable_panels.scope.md)                  | Container elements             | Grouping surfaces                  | —                                                                                                    |
+| [Grid](Containers/grid.scope.md)                                            | Layout and structural elements | —                                  | —                                                                                                    |
+| [Overlay containers](Containers/overlay_containers.scope.md)                | Container elements             | Overlays and sheets                | —                                                                                                    |
+| [Sheet containers](Containers/sheet_containers.scope.md)                    | Container elements             | Overlays and sheets                | —                                                                                                    |
+| [Splitters](Containers/splitters.scope.md)                                  | Layout and structural elements | —                                  | —                                                                                                    |
+| [Structural containers](Containers/structural_containers.scope.md)          | Layout and structural elements | —                                  | —                                                                                                    |
+| [Surface containers](Containers/surface_containers.scope.md)                | Container elements             | Grouping surfaces                  | Container elements: Workspace surfaces                                                               |
+| [Tabs](Containers/tabs.scope.md)                                            | Navigational elements          | Content selection and position     | Layout and structural elements                                                                       |
+| [Action controls](Controls/action_controls.scope.md)                        | Input elements                 | Command activation                 | —                                                                                                    |
+| [Choice controls](Controls/choice_controls.scope.md)                        | Input elements                 | Value and resource selection       | Behaviors                                                                                            |
+| [Display primitives](Controls/display_primitives.scope.md)                  | Output elements                | Document and numeric display       | Output elements: Graphics presentation                                                               |
+| [Drawing and capture controls](Controls/drawing_and_capture.scope.md)       | Input elements                 | Drawing and capture                | —                                                                                                    |
+| [Link and scroll controls](Controls/link_and_scroll_controls.scope.md)      | Navigational elements          | Application navigation             | Navigational elements: Content selection and position                                                |
+| [Native](Controls/native.scope.md)                                          | Not placed                     | —                                  | —                                                                                                    |
+| [Picker control](Controls/picker_control.scope.md)                          | Input elements                 | Value and resource selection       | —                                                                                                    |
+| [Range control](Controls/range_control.scope.md)                            | Input elements                 | Value and resource selection       | —                                                                                                    |
+| [Status indicator](Controls/status_indicator.scope.md)                      | Output elements                | Feedback and assistance            | —                                                                                                    |
+| [Text inputs](Controls/text_inputs.scope.md)                                | Input elements                 | Text and shortcut entry            | Navigational elements: Search, filtering and sorting                                                 |
+| [Dashboard](Pages/dashboard.scope.md)                                       | Container elements             | Workspace surfaces                 | —                                                                                                    |
+| [Empty page](Pages/empty_page.scope.md)                                     | Container elements             | Workspace surfaces                 | —                                                                                                    |
+| [Shell page](Pages/shell_page.scope.md)                                     | Container elements             | Workspace surfaces                 | —                                                                                                    |
+| [Form](Views/form.scope.md)                                                 | Container elements             | Forms                              | —                                                                                                    |
+| [Report](Views/report.scope.md)                                             | Container elements             | Workspace surfaces                 | —                                                                                                    |
+| [Chart](Widgets/chart.scope.md)                                             | Output elements                | Collections and data presentation  | —                                                                                                    |
+| [Data grid](Widgets/data_grid.scope.md)                                     | Output elements                | Collections and data presentation  | —                                                                                                    |
+| [Date/Time pickers](Widgets/date_time_pickers.scope.md)                     | Input elements                 | Temporal entry                     | —                                                                                                    |
+| [Dialog](Widgets/dialog.scope.md)                                           | Container elements             | Focused tasks and guided sequences | —                                                                                                    |
+| [Feedback widgets](Widgets/feedback_widgets.scope.md)                       | Output elements                | Feedback and assistance            | —                                                                                                    |
+| [List](Widgets/list.scope.md)                                               | Output elements                | Collections and data presentation  | Input elements: Value and resource selection                                                         |
+| [Media widgets](Widgets/media_widgets.scope.md)                             | Output elements                | Media playback                     | Output elements: Graphics presentation; Output elements: Collections and data presentation           |
+| [Menu widgets](Widgets/menu_widgets.scope.md)                               | Navigational elements          | Command menus                      | —                                                                                                    |
+| [Navigation widgets](Widgets/navigation_widgets.scope.md)                   | Navigational elements          | Hierarchy browsing                 | Navigational elements: Content selection and position; Navigational elements: Application navigation |
+| [Stepper](Widgets/stepper.scope.md)                                         | Container elements             | Focused tasks and guided sequences | —                                                                                                    |
+| [Table](Widgets/table.scope.md)                                             | Output elements                | Collections and data presentation  | —                                                                                                    |

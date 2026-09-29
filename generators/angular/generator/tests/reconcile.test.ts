@@ -84,7 +84,7 @@ function manifestedWidgetNode(id: string, selector: string): OpenUiElement {
 
 /** Wrap manifested widget nodes in a minimal valid OpenUI input document. */
 function inputDocument(children: OpenUiElement[]): OpenUiDocument {
-  return { id: "root", version: "0.7.0", type: "Application", children };
+  return { id: "root", version: "0.8.0", type: "Application", children };
 }
 
 function deletionFor(plan: Awaited<ReturnType<typeof reconcileGeneratedFiles>>, relativePath: string) {
@@ -180,7 +180,7 @@ test("a changed existing file is reconciled as modify", async () => {
 
 // Issue-driven validation: the JSON specification itself drives each Add / Delete /
 // Modify scenario by genuinely differing from the workspace it reconciles against.
-// See spec/README.md § Incremental generation and generator/docs/GENERATION.md.
+// See generator/docs/GENERATION.md § Incremental generation.
 
 test("removal — an empty JSON deletes every previously generated component", async () => {
   // JSON with no component templates: nothing is emitted, so every existing

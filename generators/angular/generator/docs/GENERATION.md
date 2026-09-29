@@ -156,6 +156,15 @@ Do not duplicate the OpenUI artifact role definitions here. Use the canonical
 definition in
 [`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
 
+The generator uses the three artifacts together:
+
+- define and maintain `input.json` format against `EBNF.txt`,
+- validate `input.json` against the executable projection in
+  `spec/openui.schema.json`,
+- validate every `input.json` node's exact `type` literal against the object
+  catalog defined by `spec/openui.json`, and
+- generate target-framework output from the validated `input.json`.
+
 Test fixtures that stand in for the catalog must use the generated catalog
 scope-tree shape. Fixtures that stand in for `input.json` must be valid concrete
 app documents and must not need catalog traceability fields such as
@@ -412,8 +421,36 @@ compiles generated apps through Angular tooling.
 
 ## Incremental generation
 
-The generator supports incremental operation as defined in
-[spec/README.md § Incremental generation](../../../../spec/README.md#incremental-generation).
+Generation is usually incremental: given a JSON specification file and an existing
+workspace, the generator reconciles the workspace to match the specification
+rather than regenerating from scratch every time.
+
+### Scenarios
+
+| JSON | Workspace | Scenario     | Details                                                                                     |
+| :--- | :-------- | :----------- | :------------------------------------------------------------------------------------------ |
+| Yes  | No        | Add          | Implement the object as a child of the current parent and wire it in                        |
+| No   | Yes       | Delete       | Delete the object and the reference from parent                                             |
+| Yes  | Yes       | Match        | Do nothing — the node content including children is identical                               |
+| Yes  | Yes       | Not matching | Fix those non-matching parts (attribute added/removed/changed, child added/removed/changed) |
+
+### Algorithm
+
+The JSON is traversed parent (node) to child (node) starting at the root.
+Having no root is an invalid case.
+
+1. First node is defined to be the root.
+2. Compare each JSON node with the manifestation in the workspace:
+   - **Add** — the generator generates the object as defined.
+   - **Modify** — either make the modification if simple (e.g. a rename), or
+     delete and re-add.
+   - **Delete** — remove the part and the references to it.
+   - **Match** — do nothing.
+
+Generation from scratch is the special case where the workspace is empty.
+Deletion is the special case where objects are removed from the JSON file.
+
+### Reconciliation pipeline
 
 The generator extends the base pipeline to compare emitted files with workspace
 manifestations before writing changes. This reconciliation is the default
@@ -663,9 +700,7 @@ reflected in the workflow and will be caught by that contract test if it is not.
 
 ### Incremental generation test strategy
 
-Incremental generation (defined in
-[spec/README.md § Incremental generation](../../../../spec/README.md#incremental-generation))
-is covered by both committed input/expected-output fixtures and runtime
+[Incremental generation](#incremental-generation) is covered by both committed input/expected-output fixtures and runtime
 workspace mutations under `tmp/`. The fixtures under
 `generators/angular/generator/tests/fixtures/` capture reusable baseline states.
 

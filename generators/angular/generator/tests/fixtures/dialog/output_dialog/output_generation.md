@@ -20,7 +20,7 @@ For the `dialog` example this copy is the expected generated result: the input
 workspace was hand-authored in Step 3 to already manifest the confirm-deletion
 dialog described by `dialog.example.json`, so an idempotent generation run
 leaves the workspace unchanged (the **Match** scenario in
-[spec/README.md § Incremental generation](../../../../../../../spec/README.md#incremental-generation)).
+[GENERATION.md § Incremental generation](../../../../docs/GENERATION.md#incremental-generation)).
 
 ## 5.2 Add app validation tests
 
