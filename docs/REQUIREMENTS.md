@@ -14,10 +14,10 @@ The specification is its own source of truth, in [`spec/`](../spec/README.md).
 This document states only what the solution needs from it and links to it:
 
 - **Scope:** what the specification covers, leaves out and defers —
-  [`spec/README.md` § Scope](../spec/README.md#scope).
+  [`spec/README.md` § Scope](../spec/README.md#12-scope).
 - **Artifacts:** the roles of `input.json`, `spec/openui.schema.json` and
   `spec/openui.json` —
-  [`spec/README.md` § Specification artifacts](../spec/README.md#specification-artifacts-grammar-vs-catalog).
+  [`spec/README.md` § Specification artifacts](../spec/README.md#41-specification-artifacts).
 - **Vocabulary:** terms, aliases and their meanings —
   [`spec/scopes/scope.md` § Glossary](../spec/scopes/scope.md#glossary), including the
   [known object type](../spec/scopes/scope.md#known-object-type) contract that the

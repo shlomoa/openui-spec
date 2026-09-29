@@ -1,12 +1,12 @@
 # Scope statement
 
 This record gives the source of every item in the normative
-[scope section](../README.md#scope) of the specification: what is in scope, what is out of
+[scope section](../README.md#12-scope) of the specification: what is in scope, what is out of
 scope and what is deferred to a later edition. It answers W2 task 10 in the
 [v1 publish plan](specui_v1_publish_plan.md#w2-scope). Its [classification](#classification)
 answers W2 task 11.
 
-- **Where it applies:** the [`## Scope`](../README.md#scope) section at the top of
+- **Where it applies:** the [`## Scope`](../README.md#12-scope) section at the top of
   `spec/README.md`, right after the Purpose and the audience, which it reuses unchanged. The
   W4 16 outline places the section in part 1, "Introduction & scope".
 - **Inputs:** the plan's [goal and definition of done](specui_v1_publish_plan.md#goal-and-definition-of-done)

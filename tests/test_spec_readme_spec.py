@@ -11,6 +11,22 @@ OPENUI_JSON = REPO_ROOT / "spec" / "openui.json"
 MKDOCS_CONFIG = REPO_ROOT / "mkdocs.yml"
 NAV_ENTRY_PATTERN = re.compile(r"^\s*-\s+.*?:\s+(.+\.md)$")
 TOP_LEVEL_SCOPE_LINK_PATTERN = re.compile(r"^- \[([^\]]+)\]\(([^)]+/scope\.md)\):", re.MULTILINE)
+README_OUTLINE_HEADINGS = (
+    "## Outline",
+    "## 1. Introduction and scope",
+    "### 1.2 Scope",
+    "### 1.3 How to read this specification",
+    "## 2. Conformance",
+    "## 3. Terminology",
+    "## 4. Document model and language",
+    "## 5. Categories and objects",
+    "### 5.4 Scope tree and folder rules",
+    "### 5.5 Object contracts",
+    "## 6. Catalog",
+    "## Annex A. Grammar",
+    "## Annex B. Survey mapping",
+    "## Annex C. Examples",
+)
 EXPECTED_SPEC_MARKDOWN = [
     "README.md",
     "conformance/README.md",
@@ -102,17 +118,15 @@ class SpecReadmeSpecTest(unittest.TestCase):
         content = SPEC_README.read_text(encoding="utf-8")
 
         self.assertIn("# OpenUI Specification", content)
-        self.assertIn("## Spec folder structure", content)
-        self.assertIn("## Spec format", content)
-        self.assertIn("### EBNF notation", content)
-        self.assertIn("### Syntax rules", content)
-        self.assertIn("## How to read this spec", content)
+        for heading in README_OUTLINE_HEADINGS:
+            with self.subTest(heading=heading):
+                self.assertIn(f"\n{heading}\n", content)
         self.assertNotIn("section documents listed below", content)
 
     def test_spec_readme_scope_table_links_every_scope_document(self) -> None:
         content = SPEC_README.read_text(encoding="utf-8")
 
-        # The "Spec folder structure" table links every top-level scope, its
+        # The "5.5 Object contracts" table links every top-level scope, its
         # direct leaves, and each family index — but not individual family tag
         # leaves (those are reached by drilling into the family index). It also
         # excludes the README itself, the scopes index, and the evidence register.

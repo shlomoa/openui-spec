@@ -2,23 +2,25 @@
 
 Source-of-truth template for every leaf `*.scope.md` (a scope with no child
 objects). Copy this file, rename it to `<object_name>.scope.md`, and fill in each
-section. The sections below are the **formal structure**: the converter in `../bin/to_json/` parses them deterministically into a scope node plus
-its `<scopeId>Instance` (see the section EBNF in [`../README.md`](../README.md)).
+section. The sections below are the **formal structure**: the converter in
+`../bin/to_json/` parses them into a scope node plus its `<scopeId>Instance`, as
+[part 6 of the specification](../README.md#6-catalog) states, with the
+[section grammar](../README.md#64-section-grammar).
 Use the [spec glossary](scope.md#glossary) for canonical vocabulary and
-aliases. Leaf prose may specialize a glossary term for the object contract, but
-must not create a competing definition for shared terms.
+aliases. Leaf prose MAY specialize a glossary term for the object contract, but
+MUST NOT create a competing definition for a shared term.
 
-Three sections are **machine-bearing** and follow fixed line patterns — Identity,
-Attributes, Child model. The rest is free prose. Do not re-list machine fields in
-the prose sections: the machine-bearing sections are the sole enumerators of ids,
-keys, types, categories, and multiplicity. Prose may _reference_ a name to add new
-information, but must never restate the set; the shared category definitions
-live in [`scope.md`](scope.md) and are referenced by link, never copied.
+Three sections are **machine-bearing** and follow fixed line patterns: Identity,
+Attributes and Child model. The rest is free prose. The machine-bearing sections
+are the only place that lists ids, keys, types, categories and multiplicity. Prose
+MAY _reference_ a name to add new information, but MUST NOT list the set again.
+The [attribute categories](../README.md#45-attributes-and-their-categories) are
+defined once in the specification and are linked, never copied.
 
 ## Identity
 
 A single bullet of fixed `key: value` fields separated by `·` (middot). All three
-keys are required, in this order:
+keys are REQUIRED, in this order:
 
 - id: `<camelCaseId>` · type: `<instanceType>` · status: `<draft|review|stable>`
 
@@ -50,7 +52,7 @@ One bullet per attribute. Fixed pattern, `—` (em dash) separated:
 Where `<key>` carries its category in its own syntax — Uses `uses.name`, Produces
 `produces.name`, Behaves `behaves.name` — and `<Category>` is the matching word
 `Uses`, `Produces`, or `Behaves`. A Uses attribute declares one
-[value type](../README.md#value-types), for example `boolean`, `enum(ltr|rtl|auto)`
+[value type](../README.md#46-value-types), for example `boolean`, `enum(ltr|rtl|auto)`
 or `reference(Route)`; a Produces or Behaves attribute declares none. The converter
 reads the **key**, **category** and **value type**; the description is prose. The
 emitted instance attr carries the key with the value type as its value, or `null`
@@ -77,11 +79,11 @@ the generated catalog's known-type set.
 ## Accessibility
 
 Role, label, focus, and keyboard expectations for interactive scopes, stated
-technology-independently. Free prose; not parsed. May reference attribute or child
-names defined above to attach behavior, but must not re-enumerate them.
+technology-independently. Free prose; not parsed. It MAY reference attribute or child
+names defined above to attach behavior, but MUST NOT list them again.
 
 ## Validation notes
 
 Constraints on `id`, `type`, `attrs`, and `children` specific to this scope, beyond
-the base `openui.schema.json` grammar. Free prose; not parsed. Must not restate the
+the base `openui.schema.json` grammar. Free prose; not parsed. It MUST NOT restate the
 keys, types, or regions the machine-bearing sections already own.

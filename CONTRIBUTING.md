@@ -3,7 +3,7 @@
 ## Repository documentation structure
 
 - [Requirements and goals](docs/REQUIREMENTS.md).
-- [Spec artifacts: grammar vs. catalog](spec/README.md#specification-artifacts-grammar-vs-catalog)
+- [Spec artifacts](spec/README.md#41-specification-artifacts)
   — how the authoritative `EBNF.txt`, its `openui.schema.json` projection, and
   `openui.json` catalog differ.
 - Angular generator: [generation architecture, flow, and validation](generators/angular/generator/docs/GENERATION.md).

@@ -105,7 +105,7 @@ Every command validates the resulting document in the four stages of the
   rejected. The normative definition and instance-flexibility rules live in the
   [`Known object type`](../scopes/scope.md#known-object-type) glossary entry.
 - **Contract** — every attribute an object's type declares fits its
-  [value type](../README.md#value-types), and every literal element reference
+  [value type](../README.md#46-value-types), and every literal element reference
   names an element of an allowed type.
 
 Each problem is a diagnostic: a stage-prefixed code (such as
