@@ -35,7 +35,7 @@ Chapter 16 has 348 definition occurrences in its sections 16.1 Obsolete but conf
 features, 16.2 Non-conforming features and 16.3 Requirements for implementations
 ([16-obsolete-scope-review.md](inventory/inventory/16-obsolete-scope-review.md#section-coverage)).
 Step 1.4, which would research them, was removed. The consolidated
-[category](../category.md#html-standard) does not place chapter 16.
+[category](../category.done.md#html-standard) does not place chapter 16.
 
 ## H3 Untyped definitions
 
@@ -73,26 +73,26 @@ section. Some are examples or repeated occurrences. The full list is in
 
 The survey's proposals P6 and P7 would add two top-level scopes. Consolidated outcome: not
 added ([terminology: Not added](../../scopes/terminology.md#not-added),
-[architecture change: Not added](../architecture_change.md#not-added)); whether they belong in
+[architecture change: Not added](../architecture_change.done.md#not-added)); whether they belong in
 the project stays with plan question Q13.
 
 ## H6 Behavior target representation
 
 Consolidated outcome: behaviors reference their controlled element by id and do not own it
-([scope change R1](../scope_change.md#2-replace), [architecture change C1](../architecture_change.md#1-change)).
+([scope change R1](../scope_change.done.md#2-replace), [architecture change C1](../architecture_change.done.md#1-change)).
 
 ## H7 Table model depth
 
 Consolidated outcome: Table gets cells, a caption and header associations in its own
-contract ([scope change C10](../scope_change.md#1-change)); the tabular primitive family P8
-is not added ([scope change: Not added](../scope_change.md#not-added)).
+contract ([scope change C10](../scope_change.done.md#1-change)); the tabular primitive family P8
+is not added ([scope change: Not added](../scope_change.done.md#not-added)).
 
 ## H8 Sources beyond HTML
 
 The survey needs sources beyond HTML for accessibility patterns, gestures, layout and
 composite widgets before a merge. The consolidated files use WAI-ARIA 1.2 and the Qt,
 Angular Material and OpenUI5 surveys for these; see the Source URL columns of
-[terminology](../../scopes/terminology.md#summary) and [category](../category.md#summary).
+[terminology](../../scopes/terminology.md#summary) and [category](../category.done.md#summary).
 
 ## H9 Element coverage
 
@@ -111,7 +111,7 @@ and the 21 input states.
 | `hr`                                                                                                                                                                                                                  | Separator (Display primitives)                                                                                                       |
 | `ol`, `ul`, `li`                                                                                                                                                                                                      | List                                                                                                                                 |
 | `dl`, `dt`, `dd`                                                                                                                                                                                                      | Description list                                                                                                                     |
-| `menu`                                                                                                                                                                                                                | List of commands; not the Menu widget (see the note on Menu in [taxonomy mapping change C3](../taxonomy_mapping_change.md#1-change)) |
+| `menu`                                                                                                                                                                                                                | List of commands; not the Menu widget (see the note on Menu in [taxonomy mapping change C3](../taxonomy_mapping_change.done.md#1-change)) |
 | `figure`, `figcaption`, `picture`, `source`, `img`, `map`, `area`                                                                                                                                                     | Image and Label (Display primitives); image-map areas are Links                                                                      |
 | `div`                                                                                                                                                                                                                 | Container                                                                                                                            |
 | `a`                                                                                                                                                                                                                   | Link                                                                                                                                 |

@@ -234,22 +234,19 @@ Group, structure, and organize related content or other UI elements.
 
 ### Workspace surfaces
 
-| Name                        | Description — how the user interfaces with it                                                                     | Viewable? | Device-dependent? | Example image                           |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | --------------------------------------- |
-| Window                      | A top-level application or document area. The user moves, resizes, minimizes, maximizes, or closes it.            |    Yes    |        No         | ![Window example](images/window.svg)    |
-| View                        | A complete application page or state. The user navigates to it and interacts with its contents.                   |    Yes    |        No         | ![View example](images/screen-view.svg) |
-| Toolbar                     | A row or column of frequently used actions. The user activates its buttons or menus.                              |    Yes    |        No         | ![Toolbar example](images/toolbar.svg)  |
-| Main window                 | An application's primary window. It frames a central area with menus, toolbars, dockable panels and a status bar. |    Yes    |        No         | None yet                                |
-| Dockable panel              | A panel the user can move, dock to an edge of the main window or float as its own window.                         |    Yes    |        No         | None yet                                |
-| Multiple-document workspace | An area that holds several document windows, which the user can arrange, tile or cascade.                         |    Yes    |        No         | None yet                                |
-| Shell bar                   | The top bar of an application, with its logo and title, search, notifications and a user menu.                    |    Yes    |        No         | None yet                                |
-| Object page                 | A page that shows one business object, with a header of key facts and sections the user reaches by anchors.       |    Yes    |        No         | None yet                                |
-| Report                      | A read-only view that presents data for reading, printing or export.                                              |    Yes    |        No         | None yet                                |
-| Dashboard                   | A page that brings together summary widgets such as charts, key figures and lists.                                |    Yes    |        No         | None yet                                |
-| Shell page                  | A page that frames the application's content with shared regions such as a header, navigation and footer.         |    Yes    |        No         | None yet                                |
-| Empty page                  | A page with no content, used as a starting point or a placeholder.                                                |    Yes    |        No         | None yet                                |
-| Tool action                 | One command in a tool bar row. The user activates it.                                                             |    Yes    |        No         | None yet                                |
-| Tool bar row                | One row of tool actions inside a tool bar.                                                                        |    Yes    |        No         | None yet                                |
+| Name         | Description — how the user interfaces with it                                                               | Viewable? | Device-dependent? | Example image                           |
+| ------------ | ----------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | --------------------------------------- |
+| Window       | A top-level application or document area. The user moves, resizes, minimizes, maximizes, or closes it.      |    Yes    |        No         | ![Window example](images/window.svg)    |
+| View         | A complete application page or state. The user navigates to it and interacts with its contents.             |    Yes    |        No         | ![View example](images/screen-view.svg) |
+| Toolbar      | A row or column of frequently used actions. The user activates its buttons or menus.                        |    Yes    |        No         | ![Toolbar example](images/toolbar.svg)  |
+| Shell bar    | The top bar of an application, with its logo and title, search, notifications and a user menu.              |    Yes    |        No         | None yet                                |
+| Object page  | A page that shows one business object, with a header of key facts and sections the user reaches by anchors. |    Yes    |        No         | None yet                                |
+| Report       | A read-only view that presents data for reading, printing or export.                                        |    Yes    |        No         | None yet                                |
+| Dashboard    | A page that brings together summary widgets such as charts, key figures and lists.                          |    Yes    |        No         | None yet                                |
+| Shell page   | A page that frames the application's content with shared regions such as a header, navigation and footer.   |    Yes    |        No         | None yet                                |
+| Empty page   | A page with no content, used as a starting point or a placeholder.                                          |    Yes    |        No         | None yet                                |
+| Tool action  | One command in a tool bar row. The user activates it.                                                       |    Yes    |        No         | None yet                                |
+| Tool bar row | One row of tool actions inside a tool bar.                                                                  |    Yes    |        No         | None yet                                |
 
 ### Overlays and sheets
 

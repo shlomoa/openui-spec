@@ -24,7 +24,7 @@ consolidated file has since settled an item, the outcome is linked.
 ([taxonomy mapping](taxonomy_mapping.md#applicationscopemd)). Notification delivery and
 native floating windows are deferred with it. Consolidated outcome: Notification-area
 presence is not added ([terminology: Not added](../../scopes/terminology.md#not-added)) and there is no
-Host integration branch ([architecture change: Not added](../architecture_change.md#not-added));
+Host integration branch ([architecture change: Not added](../architecture_change.done.md#not-added));
 host integration stays with plan question Q9.
 
 ## Q2 MDI and docking
@@ -32,7 +32,7 @@ host integration stays with plan question Q9.
 Classes: `QMdiArea`, `QMdiSubWindow`, `QDockWidget`. Consolidated outcome: Dockable panel
 (A42) and Multiple-document workspace (A43) are approved terms of Surface containers
 ([terminology: Container elements](../../scopes/terminology.md#45-container-elements)). Whether they
-are optional runtime capabilities waits on Q9 ([scope change: Not added](../scope_change.md#not-added)).
+are optional runtime capabilities waits on Q9 ([scope change: Not added](../scope_change.done.md#not-added)).
 
 ## Q3 The six proposed leaves
 
@@ -40,10 +40,10 @@ are optional runtime capabilities waits on Q9 ([scope change: Not added](../scop
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | P01 Page stack         | Alias of Tabs ([terminology A51](../../scopes/terminology.md#46-layout-and-structural-elements))                                                                    |
 | P02 Scroll container   | Alias of Structural containers ([terminology A52](../../scopes/terminology.md#46-layout-and-structural-elements))                                                   |
-| P03 Text completion    | Term of the new Input assistance scope ([terminology A59, A71](../../scopes/terminology.md#47-behaviors); [structure change](../structure_change.md#add))           |
+| P03 Text completion    | Term of the new Input assistance scope ([terminology A59, A71](../../scopes/terminology.md#47-behaviors); [structure change](../structure_change.done.md#add))           |
 | P04 Graphics viewport  | Alias of Media widgets ([terminology A28](../../scopes/terminology.md#43-output-elements))                                                                          |
 | P05 Modal interaction  | Alias of Modal overlay, moved to Behaviors ([terminology A56, C4](../../scopes/terminology.md#47-behaviors))                                                        |
-| P06 Viewport scrolling | Term of the new Viewport and focus control scope ([terminology A57, A72](../../scopes/terminology.md#47-behaviors); [structure change](../structure_change.md#add)) |
+| P06 Viewport scrolling | Term of the new Viewport and focus control scope ([terminology A57, A72](../../scopes/terminology.md#47-behaviors); [structure change](../structure_change.done.md#add)) |
 
 Evidence approval, generator support and accessibility conformance of the two new scopes
 are part of applying them (plan W1 step 9.4).
@@ -55,13 +55,13 @@ are part of applying them (plan W1 step 9.4).
 | P05 Modal interaction                                | AM-P03 Modal interaction              | One term, Modal overlay, with Modal interaction as its alias                                                |
 | P02 Scroll container, P06 Viewport scrolling         | AM-P04 Scrollable, AM-P05 Scroll lock | Scroll container in Structural containers; Viewport scrolling and Scroll lock in Viewport and focus control |
 | P03 Text completion                                  | AM-E01 suggestion-backed choice       | Text completion in Input assistance; Suggestion-backed combo box in Choice controls                         |
-| Temporal, range, progress and hierarchy enhancements | AM-E02, E03, E04, E06                 | One change per scope in [scope change](../scope_change.md#1-change): C3, C9, C12, C8                        |
+| Temporal, range, progress and hierarchy enhancements | AM-E02, E03, E04, E06                 | One change per scope in [scope change](../scope_change.done.md#1-change): C3, C9, C12, C8                        |
 
 ## Q5 Serialization of values
 
 Temporal values and rich-text content have no universal format. Consolidated outcome:
 typed values come in a later W5 grammar revision (plan Q6), and the approved
-[scope change](../scope_change.md#4-add) records the preconditions: A4 (rich text needs a
+[scope change](../scope_change.done.md#4-add) records the preconditions: A4 (rich text needs a
 representation decision) and A8 (locale, value format and time zone first).
 
 ## Q6 Stack wording
@@ -85,12 +85,12 @@ generator and adapter concern (plan W8), not specification vocabulary.
 
 | Id  | Decision                                                          | Consolidated outcome                                                                                                                |
 | --- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| D01 | Behavior targets are id references, not owned children            | Settled: [scope change R1](../scope_change.md#2-replace); the encoding is W5 task 21                                                |
+| D01 | Behavior targets are id references, not owned children            | Settled: [scope change R1](../scope_change.done.md#2-replace); the encoding is W5 task 21                                                |
 | D02 | Modal restriction and modal focus in one leaf                     | Settled: Modal overlay behavior ([terminology C4, A56](../../scopes/terminology.md#1-change))                                                 |
 | D03 | Scroll position as a normalized fraction per axis                 | Open: needs typed values (plan Q6, W5)                                                                                              |
-| D04 | Reuse existing behavior leaves, add only P05 and P06              | Superseded: the two new scopes are Input assistance and Viewport and focus control ([structure change](../structure_change.md#add)) |
+| D04 | Reuse existing behavior leaves, add only P05 and P06              | Superseded: the two new scopes are Input assistance and Viewport and focus control ([structure change](../structure_change.done.md#add)) |
 | D05 | Text completion references an input; ordered string candidates    | Settled as a term (A59); the value shape waits on W5                                                                                |
 | D06 | Graphics viewport borrows scene data by resource reference        | Open: needs a resource-reference value kind (W5)                                                                                    |
 | D07 | Triggers are vocabulary mapped to outcomes                        | Settled: glossary term Trigger ([terminology A4](../../scopes/terminology.md#41-glossary-terms))                                              |
-| D08 | Live preview is application-supplied; cancellation reports intent | Open: event semantics (W5 task 21); see [scope change A7](../scope_change.md#4-add)                                                 |
+| D08 | Live preview is application-supplied; cancellation reports intent | Open: event semantics (W5 task 21); see [scope change A7](../scope_change.done.md#4-add)                                                 |
 | D09 | One controlling policy per target and capability                  | Open: a validation rule for W6 task 25                                                                                              |

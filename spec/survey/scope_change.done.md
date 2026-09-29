@@ -2,8 +2,8 @@
 
 This proposal turns the scope findings of the four UI surveys into concrete changes to the
 existing scope contracts under [`spec/scopes/`](../scopes/scope.md#top-level-scopes). It
-uses the approved [terminology](../scopes/terminology.md#summary), [categories](category.md#summary)
-and [taxonomy mapping change](taxonomy_mapping_change.md#summary). Each recommendation is
+uses the approved [terminology](../scopes/terminology.md#summary), [categories](category.done.md#summary)
+and [taxonomy mapping change](taxonomy_mapping_change.done.md#summary). Each recommendation is
 one of four actions on a specific part of a scope file.
 
 | Action               | Meaning                                                                             |
@@ -47,11 +47,11 @@ more surveys ask for.
 
 | Survey proposal                                       | Decided in                                                                                                                                                                                                                                                                                                                                 |
 | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| New leaves AM-P01–AM-P05, Qt P01–P06, HTML P3–P5      | Two new scopes, Input assistance and Viewport and focus control, in the [structure change](structure_change.md#add); every other proposed leaf became a term of an existing scope, see [terminology: Behaviors](../scopes/terminology.md#47-behaviors) and [terminology: Terms that need a new scope](../scopes/terminology.md#49-terms-that-need-a-new-scope) |
+| New leaves AM-P01–AM-P05, Qt P01–P06, HTML P3–P5      | Two new scopes, Input assistance and Viewport and focus control, in the [structure change](structure_change.done.md#add); every other proposed leaf became a term of an existing scope, see [terminology: Behaviors](../scopes/terminology.md#47-behaviors) and [terminology: Terms that need a new scope](../scopes/terminology.md#49-terms-that-need-a-new-scope) |
 | HTML P1, P2, P6, P7                                   | Not added; see [terminology: Not added](../scopes/terminology.md#not-added)                                                                                                                                                                                                                                                                          |
 | OpenUI5 clusters                                      | Added as terms (Shell bar, Flexible column layout, Tile, Metadata-driven field, Object page, Filter bar, Value help, Personalization panel, File upload, Planning calendar; Cards as the Card alias); see [terminology: Add](../scopes/terminology.md#42-input-elements)                                                                             |
-| Angular Material "new taxonomy entries on acceptance" | Approved terms and mapping rows; see [taxonomy mapping change](taxonomy_mapping_change.md#0-already-decided)                                                                                                                                                                                                                               |
-| Evidence rows for new leaves                          | Required for each new scope by the [structure change](structure_change.md#add)                                                                                                                                                                                                                                                             |
+| Angular Material "new taxonomy entries on acceptance" | Approved terms and mapping rows; see [taxonomy mapping change](taxonomy_mapping_change.done.md#0-already-decided)                                                                                                                                                                                                                               |
+| Evidence rows for new leaves                          | Required for each new scope by the [structure change](structure_change.done.md#add)                                                                                                                                                                                                                                                             |
 
 ## 1. Change
 

@@ -494,7 +494,7 @@
               "type": "SurfaceContainers",
               "attrs": {
                 "title": "Surface containers",
-                "purpose": "Surface containers cover windows, main windows, panels, dockable panels, multiple-document workspaces, cards, tiles, labelled groups, checkable groups, hero banners and toolbar surfaces when they are modeled as visual regions that hold related content or controls.",
+                "purpose": "Surface containers cover windows, panels, cards, tiles, labelled groups, checkable groups, hero banners and toolbar surfaces when they are modeled as visual regions that hold related content or controls.",
                 "scopeDocument": "scopes/Containers/surface_containers.scope.md",
                 "status": "draft"
               },

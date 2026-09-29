@@ -273,22 +273,19 @@ Holds: Regions that hold related content or controls, including ones the user ca
 
 Holds: Application work areas: windows, views, pages and the bars and panels that frame them.
 
-| Taxonomy entry              | Spec object                                                  | Abstraction level | Notes                                                                                                         |
-| --------------------------- | ------------------------------------------------------------ | ----------------- | ------------------------------------------------------------------------------------------------------------- |
-| Window                      | [Surface containers](Containers/surface_containers.scope.md) | Grouped leaf      | Top-level or sub-window surface; see the glossary term Window. Not the HTML `Window` browsing-context object. |
-| View                        | [Views](Views/scope.md)                                      | Existing object   | User-facing workflow representation; Pages cover route-level screens.                                         |
-| Toolbar                     | [Tool bars](Application/tool_bars.scope.md)                  | Existing object   | Application-level command surface.                                                                            |
-| Main window                 | [Surface containers](Containers/surface_containers.scope.md) | Alias             | Window with menus, toolbars, status bar and a central area.                                                   |
-| Dockable panel              | [Surface containers](Containers/surface_containers.scope.md) | Alias             | Panel the user can dock or float.                                                                             |
-| Multiple-document workspace | [Surface containers](Containers/surface_containers.scope.md) | Alias             | Area holding several document windows.                                                                        |
-| Shell bar                   | [Application](Application/scope.md)                          | Grouped leaf      | Top application bar.                                                                                          |
-| Object page                 | [Pages](Pages/scope.md)                                      | Grouped leaf      | Page showing one business object.                                                                             |
-| Report                      | [Report](Views/report.scope.md)                              | Existing object   | Read-only data view.                                                                                          |
-| Dashboard                   | [Dashboard](Pages/dashboard.scope.md)                        | Existing object   | Page of summary widgets.                                                                                      |
-| Shell page                  | [Shell page](Pages/shell_page.scope.md)                      | Existing object   | Page frame with shared regions.                                                                               |
-| Empty page                  | [Empty page](Pages/empty_page.scope.md)                      | Existing object   | Page with no content yet.                                                                                     |
-| Tool action                 | [Tool action](Application/tool_action.scope.md)              | Existing object   | One command in a tool bar row.                                                                                |
-| Tool bar row                | [Tool bar row](Application/tool_bar_row.scope.md)            | Existing object   | One row of a tool bar.                                                                                        |
+| Taxonomy entry | Spec object                                                  | Abstraction level | Notes                                                                                                         |
+| -------------- | ------------------------------------------------------------ | ----------------- | ------------------------------------------------------------------------------------------------------------- |
+| Window         | [Surface containers](Containers/surface_containers.scope.md) | Grouped leaf      | Top-level or sub-window surface; see the glossary term Window. Not the HTML `Window` browsing-context object. |
+| View           | [Views](Views/scope.md)                                      | Existing object   | User-facing workflow representation; Pages cover route-level screens.                                         |
+| Toolbar        | [Tool bars](Application/tool_bars.scope.md)                  | Existing object   | Application-level command surface.                                                                            |
+| Shell bar      | [Application](Application/scope.md)                          | Grouped leaf      | Top application bar.                                                                                          |
+| Object page    | [Pages](Pages/scope.md)                                      | Grouped leaf      | Page showing one business object.                                                                             |
+| Report         | [Report](Views/report.scope.md)                              | Existing object   | Read-only data view.                                                                                          |
+| Dashboard      | [Dashboard](Pages/dashboard.scope.md)                        | Existing object   | Page of summary widgets.                                                                                      |
+| Shell page     | [Shell page](Pages/shell_page.scope.md)                      | Existing object   | Page frame with shared regions.                                                                               |
+| Empty page     | [Empty page](Pages/empty_page.scope.md)                      | Existing object   | Page with no content yet.                                                                                     |
+| Tool action    | [Tool action](Application/tool_action.scope.md)              | Existing object   | One command in a tool bar row.                                                                                |
+| Tool bar row   | [Tool bar row](Application/tool_bar_row.scope.md)            | Existing object   | One row of a tool bar.                                                                                        |
 
 ### Overlays and sheets
 

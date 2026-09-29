@@ -40,7 +40,7 @@ one of four actions on a specific category or subcategory.
   [section 4](#4-add).
 - **Terms:** member lists use only existing taxonomy entries and approved terms. Terms in
   **bold** are new or renamed by the [terminology](../scopes/terminology.md#summary), or, for Tree and
-  Tree grid, added by the [taxonomy mapping change](taxonomy_mapping_change.md#data-trees).
+  Tree grid, added by the [taxonomy mapping change](taxonomy_mapping_change.done.md#data-trees).
 
 ## Summary
 
@@ -107,7 +107,7 @@ Where the names come from, following the naming rule:
 
 | #   | Add                                                      | Holds                                                                                                                                                                                                                    | Members                                                                                                                                                                                                                                                                                                                                                 | Evidence                                                                                                                                                                                                                                                                                                                   | Source URL                                                                                                                                                                         |
 | --- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| A1  | Behaviors (tenth section, after Interaction definitions) | Reusable behaviors that act on an existing element without being a visible element themselves. All members belong to the Behaviors scope except Exclusive selection coordination, which keeps its Choice controls scope. | Drag and drop (moved from Interaction definitions); **Modal overlay** (moved from Container elements, terminology C4); **Modal interaction**; **Input assistance**; **Text completion**; **Constraint validation**; **Viewport and focus control**; **Viewport scrolling**; **Scroll lock**; **Focus management**; **Exclusive selection coordination** | [Terminology: Behaviors](../scopes/terminology.md#47-behaviors); [Structure change proposal](structure_change.md#add); [Qt reusable behaviors](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#category-definitions-and-scope-destinations); [Angular Material behaviors](angular-material/inventory/BEHAVIORS.survey.md#direct-objects) | [HTML: drag and drop](https://html.spec.whatwg.org/#dnd); [HTML: inert subtrees](https://html.spec.whatwg.org/#inert-subtrees); [HTML: focus](https://html.spec.whatwg.org/#focus) |
+| A1  | Behaviors (tenth section, after Interaction definitions) | Reusable behaviors that act on an existing element without being a visible element themselves. All members belong to the Behaviors scope except Exclusive selection coordination, which keeps its Choice controls scope. | Drag and drop (moved from Interaction definitions); **Modal overlay** (moved from Container elements, terminology C4); **Modal interaction**; **Input assistance**; **Text completion**; **Constraint validation**; **Viewport and focus control**; **Viewport scrolling**; **Scroll lock**; **Focus management**; **Exclusive selection coordination** | [Terminology: Behaviors](../scopes/terminology.md#47-behaviors); [Structure change proposal](structure_change.done.md#add); [Qt reusable behaviors](qt/inventory/TAXONOMY_STRUCTURE_PROPOSAL.md#category-definitions-and-scope-destinations); [Angular Material behaviors](angular-material/inventory/BEHAVIORS.survey.md#direct-objects) | [HTML: drag and drop](https://html.spec.whatwg.org/#dnd); [HTML: inert subtrees](https://html.spec.whatwg.org/#inert-subtrees); [HTML: focus](https://html.spec.whatwg.org/#focus) |
 
 ### 4.2 Input elements
 
@@ -190,11 +190,11 @@ added for them.
   region, Label-field arrangement and Provisional-selection outline.
 - **Data visualization:** not a subcategory of its own. The visualizations (Table, Tree,
   Chart, Geographic map) are in Collections and data presentation (A10); Chart's entry comes
-  from [taxonomy mapping change A1](taxonomy_mapping_change.md#4-add).
+  from [taxonomy mapping change A1](taxonomy_mapping_change.done.md#4-add).
 - **Identity and account, and Accessibility** (UI element taxonomy categories 14 and 15):
   no taxonomy entry belongs there. Identity entries are compound widgets built from existing
   elements; accessibility entries are properties of other elements
-  ([merge proposal: Decisions](ui_element_taxonomy_merge_proposal.md#decisions)).
+  ([merge proposal: Decisions](ui_element_taxonomy_merge_proposal.done.md#decisions)).
 
 ## Appendix A: UI element taxonomy
 

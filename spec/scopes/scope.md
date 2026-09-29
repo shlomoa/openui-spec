@@ -460,8 +460,7 @@ For interactive spreadsheet-like grids with cell selection and editing, see Data
 
 A window is a framed UI surface with its own title and window controls, for
 example move, resize, minimize and close. In a web UI it is drawn by the
-application; it is not the browser `Window` object. Main window, dockable panel
-and multiple-document workspace are its variants.
+application; it is not the browser `Window` object.
 
 ### Abstraction levels
 

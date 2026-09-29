@@ -4,7 +4,7 @@ This proposal turns the taxonomy mapping findings of the four UI surveys into co
 changes to the canonical [taxonomy mapping](../scopes/taxonomy_mapping.md#input-elements).
 It uses the terms approved in the [terminology proposal](../scopes/terminology.md#summary)
 and the categories approved in the
-[category change proposal](category.md#summary). Each
+[category change proposal](category.done.md#summary). Each
 recommendation is one of four actions on a specific mapping row.
 
 | Action               | Meaning                                                                                            |
@@ -55,8 +55,8 @@ own proposal.
 | [Terminology: Replace](../scopes/terminology.md#2-replace)     | R1–R11               | Splits eleven "A / B" rows.                                                         |
 | [Terminology: Delete](../scopes/terminology.md#3-delete)       | D1                   | Removes Biometric prompt (D2 changes the glossary only).                            |
 | [Terminology: Add](../scopes/terminology.md#42-input-elements) | A6–A76 (A68 dropped) | Adds the new entries with their scope and level (A1–A5 are glossary terms).         |
-| [Category: Change](category.md#1-change)             | C1–C6                | Splits the four folder-abstraction sections into their subcategory tables.          |
-| [Category: Add](category.md#4-add)                   | A1–A22               | Adds the Behaviors section and splits the element sections into subcategory tables. |
+| [Category: Change](category.done.md#1-change)             | C1–C6                | Splits the four folder-abstraction sections into their subcategory tables.          |
+| [Category: Add](category.done.md#4-add)                   | A1–A22               | Adds the Behaviors section and splits the element sections into subcategory tables. |
 
 ## 1. Change
 
@@ -94,7 +94,7 @@ stepper (terminology A48). Twelve get an entry here; the other three are under
 
 | #   | Add              | Spec object                                                          | Level           | Section: subcategory                               | Evidence                                                                                                                                                                                                                                                                           | Source URL                                                                                           |
 | --- | ---------------- | -------------------------------------------------------------------- | --------------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| A1  | Chart            | [Chart](../scopes/Widgets/chart.scope.md#purpose)                    | Existing object | Output elements: Collections and data presentation | [OpenUI5 Chart](openui5/inventory/Widgets.survey.md#chart); [UI element taxonomy: Data-Visualization](../ui-element-taxonomy.md#7-data-visualization-elements); [Category: Not added](category.md#not-added)                                                               | Not needed.                                                                                          |
+| A1  | Chart            | [Chart](../scopes/Widgets/chart.scope.md#purpose)                    | Existing object | Output elements: Collections and data presentation | [OpenUI5 Chart](openui5/inventory/Widgets.survey.md#chart); [UI element taxonomy: Data-Visualization](../ui-element-taxonomy.md#7-data-visualization-elements); [Category: Not added](category.done.md#not-added)                                                               | Not needed.                                                                                          |
 | A2  | Collapsible      | [Collapsible](../scopes/Behaviors/collapsible.scope.md#purpose)      | Existing object | Behaviors                                          | [Angular Material: Disclosure and content activation](angular-material/inventory/BEHAVIORS.survey.md#subcategory-disclosure-and-content-activation); [OpenUI5 Behaviors](openui5/category.md#subcategories)                                                                        | [HTML: details element](https://html.spec.whatwg.org/#the-details-element)                           |
 | A3  | Report           | [Report](../scopes/Views/report.scope.md#purpose)                    | Existing object | Container elements: Workspace surfaces             | [OpenUI5 Views](openui5/category.md#subcategories)                                                                                                                                                                                                                                 | Not needed.                                                                                          |
 | A4  | Dashboard        | [Dashboard](../scopes/Pages/dashboard.scope.md#purpose)              | Existing object | Container elements: Workspace surfaces             | [OpenUI5 Pages: Dashboard](openui5/inventory/Pages.survey.md#dashboard)                                                                                                                                                                                                            | Not needed.                                                                                          |
@@ -136,7 +136,7 @@ names are the WAI-ARIA role names (canonical-term rule 2).
   they describe the survey evidence, not the specification.
 - **OpenUI5 clusters and the proposed scopes** of Qt and Angular Material: settled by the
   approved terminology Add rows and the
-  [structure change](structure_change.md#add).
+  [structure change](structure_change.done.md#add).
 
 ## Appendix A: What each survey mapping contributes
 

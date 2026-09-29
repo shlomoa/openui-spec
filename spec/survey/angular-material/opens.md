@@ -20,12 +20,12 @@ consolidated file has since settled an item, the outcome is linked.
 
 | Id  | Decision                                                                            | Affects                | Consolidated outcome                                                                                                                      |
 | --- | ----------------------------------------------------------------------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| D01 | Neutral encoding for target references and activation bindings                      | AM-P03–P05             | Settled in principle: targets are references by id ([scope change R1](../scope_change.md#2-replace)); the encoding is W5 task 21          |
-| D02 | Event representation: dismissal reasons, scroll position, request versus completion | AM-P03, AM-P04, AM-E11 | Open: W5 task 21; [scope change A7](../scope_change.md#4-add) separates the ways a dialog closes                                          |
+| D01 | Neutral encoding for target references and activation bindings                      | AM-P03–P05             | Settled in principle: targets are references by id ([scope change R1](../scope_change.done.md#2-replace)); the encoding is W5 task 21          |
+| D02 | Event representation: dismissal reasons, scroll position, request versus completion | AM-P03, AM-P04, AM-E11 | Open: W5 task 21; [scope change A7](../scope_change.done.md#4-add) separates the ways a dialog closes                                          |
 | D03 | Nested or replacement surfaces: focus owner, lock participation, handover           | AM-P03, AM-P05         | Open: contract of Modal overlay and Viewport and focus control (W6 task 25)                                                               |
 | D04 | Cleanup when a host disappears; fallback when a restore target is gone              | AM-P03, AM-P05         | Open: same as D03                                                                                                                         |
-| D05 | Behavior targets as children versus the rule that children own UI                   | AM-E10                 | Settled: [scope change R1](../scope_change.md#2-replace)                                                                                  |
-| D06 | Form field ownership; Token collection value, mode and events                       | AM-P01, AM-P02         | Terms settled (Form field A44, Token collection A20); machine fields wait on W5 ([scope change: Not added](../scope_change.md#not-added)) |
+| D05 | Behavior targets as children versus the rule that children own UI                   | AM-E10                 | Settled: [scope change R1](../scope_change.done.md#2-replace)                                                                                  |
+| D06 | Form field ownership; Token collection value, mode and events                       | AM-P01, AM-P02         | Terms settled (Form field A44, Token collection A20); machine fields wait on W5 ([scope change: Not added](../scope_change.done.md#not-added)) |
 | D07 | Reconcile Qt Scroll container and Text completion                                   | AM-P04, AM-E01         | Settled: [terminology A52, A59](../../scopes/terminology.md#47-behaviors); evidence for virtualization and autosizing is still open                 |
 
 ## A2 Proposal acceptance
@@ -37,7 +37,7 @@ consolidated file has since settled an item, the outcome is linked.
 | AM-P03 Modal interaction  | Alias of Modal overlay in Behaviors ([terminology A56](../../scopes/terminology.md#47-behaviors))       |
 | AM-P04 Scrollable         | Alias of Viewport scrolling ([terminology A57](../../scopes/terminology.md#47-behaviors))               |
 | AM-P05 Scroll lock        | Scroll lock in Viewport and focus control ([terminology A58](../../scopes/terminology.md#47-behaviors)) |
-| AM-E01 Choice controls    | [Scope change](../scope_change.md#1-change) C2 and A3                                         |
+| AM-E01 Choice controls    | [Scope change](../scope_change.done.md#1-change) C2 and A3                                         |
 | AM-E02 Range control      | Scope change C3 and A2                                                                        |
 | AM-E03 Date/time pickers  | Scope change C9 and A8                                                                        |
 | AM-E04 Navigation widgets | Scope change C12                                                                              |
@@ -56,7 +56,7 @@ consolidated file has since settled an item, the outcome is linked.
 Qt (modal, scrolling, completion, temporal, range, progress): see
 [Qt Q4](../qt/opens.md#q4-overlap-with-angular-material). OpenUI5 Cards: covered by the
 existing Card alias ([terminology: Not added](../../scopes/terminology.md#not-added)); card composition
-is in [scope change C18](../scope_change.md#1-change).
+is in [scope change C18](../scope_change.done.md#1-change).
 
 ## A4 Upstream theming exports
 
