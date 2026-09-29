@@ -57,20 +57,22 @@ flowchart LR
   W0[W0 Survey] --> W1[W1 Terminology]
   W0 --> W2[W2 Scope]
   W0 --> W3[W3 Categorization]
-  W1 --> W2[W2 Scope]
-  W2 --> W3
+  W1 --> W2
+  W1 --> W3
+  W2 -- "14.12, 15 only" --> W3
   W3 --> W4[W4 Structure]
   W1 --> W5[W5 Language]
   W4 --> W6[W6 Draft spec]
   W5 --> W6
   W6 --> W7[W7 Docs]
   W5 --> W8[W8 Utilities]
-  W6 --> W8
+  W6 -- "task 35 only" --> W8
+  W8 --> W7
   W9[W9 Validation] -.-> W6
   W9 -.-> W8
 ```
 
-W9 starts first and runs alongside everything else; dashed arrows mean it gates W6 and W8 rather than feeding content.
+W9 starts first and runs alongside everything else; dashed arrows mean it gates W6 and W8 rather than feeding content. A labelled arrow holds only for the named tasks: W3 waits on W2 only for 14.12 and 15, and W8 waits on W6 only for task 35 (the joint release); W8 32–34 need only W5 task 23. W7 waits on W8 because task 31 notifies downstream after W8 task 35.
 
 ## Tasks
 
@@ -239,15 +241,15 @@ Five GitHub milestones, each ending with a tagged release and a visible web page
 
 | Milestone | Release | Tasks | Exit criterion | Visual demo |
 | --- | --- | --- | --- | --- |
-| [x] M1 Guard rails | `0.4.0` | 1–3 | CI green on Linux and Windows with spec-content lint | Lint report page |
-| [x] M2 Survey consolidated | `0.5.0` | 4–6 | All consolidated change files approved | The change files in `spec/survey/` |
-| [ ] M3 Foundations agreed | `0.6.0` | 7–19 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
-| [ ] M4 Language frozen | `0.7.0` | 20–24, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
-| [ ] M5 v1.0.0 published | `1.0.0` | 25–31, 35 | Packages at 1.0.0 on PyPI + npm; docs live | Published spec site with rendered examples |
+| [x] M1 Guard rails | Not tagged; ships in the step 4 release | 1–3 | CI green on Linux and Windows with spec-content lint | Lint report page |
+| [x] M2 Survey consolidated | Not tagged; ships in the step 4 release | 4–6 | All consolidated change files approved | The change files in `spec/survey/` |
+| [ ] M3 Foundations agreed | Next `0.x.0` | 7–18 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
+| [ ] M4 Language frozen | Next `0.x.0` | 19–23, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
+| [ ] M5 v1.0.0 published | `1.0.0` | 24–31, 35 | Packages at 1.0.0 on PyPI + npm; docs live | Published spec site with rendered examples |
 
 *Directive (Q3):* M5's `1.0.0` release waits on downstream validation; until then each milestone ships a `0.x.0` release.
 
-M1 and M2 are complete: their tasks are done and their exit criteria hold. Their `0.4.0` and `0.5.0` releases were not tagged; their content ships in the next `0.x.0` release (execution step 4). M4 can start as soon as the terminology is applied (W1 9.1–9.6, execution step 3, done); it does not need the taxonomy or the rest of task 9.
+M1 and M2 are complete: their tasks are done and their exit criteria hold. They were not tagged; their content ships in the next `0.x.0` release (execution step 4). Milestones carry no fixed version number: each release takes the next free `0.x.0` (directive Q3), and only M5 has a fixed number, `1.0.0`. M4 can start as soon as the terminology is applied (W1 9.1–9.6, execution step 3, done); it does not need the taxonomy or the rest of task 9.
 
 ## Execution order
 
@@ -263,9 +265,9 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 2 | [x] UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Done |
 | 2 | [x] Move the glossary to its final location | W1 7 | — | Done |
 | 3 | [x] Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, three new Behaviors scopes, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Step 2 | Done |
+| 3 | [x] Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Done |
 | 4 | [ ] Add the missing terms to their scope Purposes; regenerate and version; generate the examples for the new additions from the consolidated data; validate; release `0.x.0` | W1 9.13, 9.7, 9.10–9.12, 9.8; W3 14.7, in this order | Step 3 | Open |
 | 4 | [ ] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, in this order | Step 3 | Open |
-| 4 | [x] Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Done |
 | 5 | [ ] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 3 | Open |
 | 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | Step 3 | Open |
 | 6 | [ ] Scope statement and in / out classification | W2 10–12 | Step 3 | Open |
