@@ -186,7 +186,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 20. [ ] Replace the Angular-flavoured `[x]` / `(x)` key syntax with a framework-neutral one for Uses / Produces / Behaves, or formally adopt it.
 21. [ ] Define data-binding references, event payloads and i18n string references. Same-document element references already exist (0.3.0); extend, don't replace.
 22. [ ] Define versioning and compatibility policy (SemVer for the spec; how documents declare the version).
-23. [ ] Update `EBNF.txt` (authoritative) and regenerate the JSON Schema projection; `check_grammar_consistency.py` already enforces agreement. *Validate:* both accept/reject the same conformance fixtures. *Demo:* live playground page — paste JSON, see validation and rendered tree.
+23. [ ] Update `EBNF.txt` (authoritative) and regenerate the JSON Schema projection; `spec/bin/check_grammar_consistency` already enforces agreement. *Validate:* both accept/reject the same conformance fixtures. *Demo:* live playground page — paste JSON, see validation and rendered tree.
 
 ### W6 Draft first spec
 
@@ -236,7 +236,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 1 | Scope reconciliation | W0 6 | — | Done |
 | 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Done |
 | 2 | Move the glossary to its final location | W1 7 | — | Done |
-| 3 | Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, two new Behaviors scopes, Modal overlay decision, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Steps 2 | Open |
+| 3 | Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, two new Behaviors scopes, Modal overlay decision, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Steps 2 | Done |
 | 4 | Regenerate and version; generate the examples for the new additions from the consolidated data; validate; release `0.x.0` | W1 9.7, 9.10–9.12, 9.8; W3 14.7, in this order | Step 3 | Open |
 | 4 | Retire `docs/ui-element-taxonomy.md` | W3 14.6 | Step 3 | Open |
 | 4 | Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Done |
