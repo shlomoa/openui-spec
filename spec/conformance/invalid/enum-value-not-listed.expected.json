@@ -1,0 +1,8 @@
+{
+  "diagnostics": [
+    {
+      "code": "contract/wrong-value-type",
+      "path": "/children/0/attrs/uses.dir"
+    }
+  ]
+}

@@ -16,6 +16,8 @@ EXPECTED_SUFFIX = ".expected.json"
 CASE_NAME = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 TOP_LEVEL_ENTRIES = {"README.md", "diagnostics.schema.json", "valid", "invalid"}
 CODE_STAGES = ("grammar/", "document/", "catalog/", "contract/")
+VERSION_CODES = {"grammar/invalid-version", "document/unsupported-version"}
+VERSION_MEMBER = re.compile(r'"version"\s*:\s*"([^"]*)"')
 
 
 def _case_name(path: Path) -> str:
@@ -63,6 +65,34 @@ class ConformanceSuiteLayoutTest(unittest.TestCase):
                 expected = json.loads(path.read_text(encoding="utf-8"))
                 errors = [error.message for error in validator.iter_errors(expected)]
                 self.assertEqual(errors, [])
+
+    def test_every_code_has_an_invalid_case(self) -> None:
+        schema = json.loads(DIAGNOSTICS_SCHEMA.read_text(encoding="utf-8"))
+        codes = {option["const"] for option in schema["$defs"]["code"]["oneOf"]}
+        used = {
+            diagnostic["code"]
+            for path in (CONFORMANCE_DIR / "invalid").glob(f"*{EXPECTED_SUFFIX}")
+            for diagnostic in json.loads(path.read_text(encoding="utf-8"))["diagnostics"]
+        }
+        self.assertEqual(codes, used)
+
+    def test_documents_carry_the_current_spec_version(self) -> None:
+        version = (REPO_ROOT / "SCHEMA_VERSION").read_text(encoding="utf-8").strip()
+        for folder in ("valid", "invalid"):
+            for path in sorted((CONFORMANCE_DIR / folder).glob("*.json")):
+                if path.name.endswith(EXPECTED_SUFFIX):
+                    continue
+                expected = path.with_name(f"{_case_name(path)}{EXPECTED_SUFFIX}")
+                diagnostics = (
+                    json.loads(expected.read_text(encoding="utf-8"))["diagnostics"]
+                    if expected.is_file()
+                    else []
+                )
+                if VERSION_CODES & {diagnostic["code"] for diagnostic in diagnostics}:
+                    continue
+                with self.subTest(path=f"{folder}/{path.name}"):
+                    for found in VERSION_MEMBER.findall(path.read_text(encoding="utf-8")):
+                        self.assertEqual(found, version)
 
     def test_every_code_names_its_stage(self) -> None:
         schema = json.loads(DIAGNOSTICS_SCHEMA.read_text(encoding="utf-8"))

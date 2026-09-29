@@ -78,8 +78,24 @@
           "description": "An id is used by more than one element of the document; the path points to each use after the first, in document order."
         },
         {
+          "const": "document/unsupported-version",
+          "description": "The root version is not the spec version the tool implements."
+        },
+        {
           "const": "catalog/unknown-type",
           "description": "A type is not a known object type of the catalog, spec/openui.json."
+        },
+        {
+          "const": "contract/wrong-value-type",
+          "description": "A declared attribute's value does not fit its declared value type, or a Produces or Behaves value is not a string or null."
+        },
+        {
+          "const": "contract/unresolved-reference",
+          "description": "A literal element reference names no element of the document."
+        },
+        {
+          "const": "contract/wrong-reference-type",
+          "description": "A literal element reference names an element whose type the declared reference(Type) does not list."
         }
       ]
     }

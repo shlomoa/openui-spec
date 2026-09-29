@@ -1,0 +1,8 @@
+{
+  "diagnostics": [
+    {
+      "code": "document/unsupported-version",
+      "path": "/version"
+    }
+  ]
+}

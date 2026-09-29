@@ -338,6 +338,11 @@ and `null` means the attribute is present without a value. A value that does not
 fit its declared type is invalid. A value of an attribute the contract does not
 declare is not type-checked.
 
+The contract of a known type is the Attributes section of the leaf scope whose
+scope type or instance type it is; in the catalog, those are the category-prefixed
+attributes of the instance node. A literal `reference` value must name an element
+of the same document, and, for `reference(A|B)`, an element whose `type` is listed.
+
 ### Element references
 
 An element reference is a Uses-attribute value that identifies another element in

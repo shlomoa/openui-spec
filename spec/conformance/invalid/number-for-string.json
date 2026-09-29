@@ -1,0 +1,14 @@
+{
+  "id": "root",
+  "version": "0.5.0",
+  "type": "html",
+  "children": [
+    {
+      "id": "ordersItem",
+      "type": "NavItem",
+      "attrs": {
+        "uses.label": 42
+      }
+    }
+  ]
+}

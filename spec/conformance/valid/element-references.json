@@ -1,0 +1,57 @@
+{
+  "id": "root",
+  "version": "0.5.0",
+  "type": "html",
+  "children": [
+    {
+      "id": "appRouting",
+      "type": "Routing",
+      "attrs": {
+        "uses.defaultRoute": "\"ordersRoute\""
+      },
+      "children": [
+        {
+          "id": "ordersRoute",
+          "type": "Route",
+          "attrs": {
+            "uses.path": "\"orders\"",
+            "uses.target": "\"ordersPage\""
+          }
+        },
+        {
+          "id": "homeRoute",
+          "type": "Route",
+          "attrs": {
+            "uses.path": "\"\"",
+            "uses.redirectTo": "\"ordersRoute\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "ordersPage",
+      "type": "EmptyPage"
+    },
+    {
+      "id": "mainNavigation",
+      "type": "Navigation",
+      "children": [
+        {
+          "id": "ordersItem",
+          "type": "NavItem",
+          "attrs": {
+            "uses.label": "\"Orders\"",
+            "uses.route": "\"ordersRoute\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "ordersResize",
+      "type": "Resizable",
+      "attrs": {
+        "uses.target": "\"ordersPage\""
+      }
+    }
+  ]
+}
