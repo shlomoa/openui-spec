@@ -10,6 +10,15 @@ published packages.
 - The Purposes now name four approved terms: Menu item (Menu widgets),
   Captions (Media widgets), Tree (List) and Tree grid (Data grid).
 
+### Alias table
+
+- The taxonomy mapping has four new columns: HTML / WAI-ARIA, OpenUI5, Qt and
+  Angular Material. They give the names each source uses for every entry, or
+  "—" where a source has none. The HTML and WAI-ARIA names that sat in the
+  mapping notes moved into them.
+- Every OpenUI5 class of the survey is matched to one taxonomy entry, or listed
+  as fitting none with the reason.
+
 ### Examples
 
 - Every Alias and Grouped leaf addition of the terminology, the taxonomy
@@ -32,6 +41,7 @@ published packages.
 - A new test checks that every Alias and Grouped leaf addition is shown in its
   scope's example, and that the `generated-examples` app shows each such node
   as written.
+- The taxonomy mapping test checks that every row has the four alias columns.
 
 ### Generated examples app
 
