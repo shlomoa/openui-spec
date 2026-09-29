@@ -8,6 +8,7 @@ Behaviors define reusable interaction capabilities that can be applied to any el
 - [Resizable](resizable.scope.md): A behavior that allows users to resize elements within a page or view.
 - [Collapsible](collapsible.scope.md): A behavior that allows users to collapse and expand elements within a page or view.
 - [Input assistance](input_assistance.scope.md): Behaviors that help or check what the user enters, such as text completion and constraint validation.
+- [Modal overlay](modal_overlay.scope.md): A behavior that makes a referenced surface modal, blocking interaction outside it until its task is completed or dismissed.
 - [Viewport and focus control](viewport_and_focus_control.scope.md): Behaviors a control applies to something outside itself: viewport scrolling, scroll lock and focus management.
 
 ## Boundaries

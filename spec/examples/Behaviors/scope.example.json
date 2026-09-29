@@ -59,6 +59,13 @@
       "attrs": {
         "[target]": "\"workspacePanel\""
       }
+    },
+    {
+      "id": "workspaceModality",
+      "type": "ModalOverlay",
+      "attrs": {
+        "[target]": "\"workspacePanel\""
+      }
     }
   ]
 }

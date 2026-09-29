@@ -58,6 +58,7 @@ part of this generated inventory and are maintained separately.
 | `list/`                       | [`spec/examples/Widgets/list.example.json`](../../../../../spec/examples/Widgets/list.example.json)                                                 |
 | `media_widgets/`              | [`spec/examples/Widgets/media_widgets.example.json`](../../../../../spec/examples/Widgets/media_widgets.example.json)                               |
 | `menu_widgets/`               | [`spec/examples/Widgets/menu_widgets.example.json`](../../../../../spec/examples/Widgets/menu_widgets.example.json)                                 |
+| `modal_overlay/`              | [`spec/examples/Behaviors/modal_overlay.example.json`](../../../../../spec/examples/Behaviors/modal_overlay.example.json)                           |
 | `native/`                     | [`spec/examples/Controls/native.example.json`](../../../../../spec/examples/Controls/native.example.json)                                           |
 | `navigation/`                 | [`spec/examples/Application/navigation.example.json`](../../../../../spec/examples/Application/navigation.example.json)                             |
 | `navigation_widgets/`         | [`spec/examples/Widgets/navigation_widgets.example.json`](../../../../../spec/examples/Widgets/navigation_widgets.example.json)                     |

@@ -50,6 +50,7 @@ that assembles its child objects into a realistic whole.
 | [Resizable](../scopes/Behaviors/resizable.scope.md)                                   | [Behaviors/resizable.example.json](Behaviors/resizable.example.json)                                   |
 | [Collapsible](../scopes/Behaviors/collapsible.scope.md)                               | [Behaviors/collapsible.example.json](Behaviors/collapsible.example.json)                               |
 | [Input assistance](../scopes/Behaviors/input_assistance.scope.md)                     | [Behaviors/input_assistance.example.json](Behaviors/input_assistance.example.json)                     |
+| [Modal overlay](../scopes/Behaviors/modal_overlay.scope.md)                           | [Behaviors/modal_overlay.example.json](Behaviors/modal_overlay.example.json)                           |
 | [Viewport and focus control](../scopes/Behaviors/viewport_and_focus_control.scope.md) | [Behaviors/viewport_and_focus_control.example.json](Behaviors/viewport_and_focus_control.example.json) |
 | [Pages](../scopes/Pages/scope.md)                                                     | [Pages/scope.example.json](Pages/scope.example.json)                                                   |
 | [Dashboard](../scopes/Pages/dashboard.scope.md)                                       | [Pages/dashboard.example.json](Pages/dashboard.example.json)                                           |

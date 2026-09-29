@@ -28,6 +28,7 @@ EXPECTED_SPEC_MARKDOWN = [
     "scopes/Behaviors/collapsible.scope.md",
     "scopes/Behaviors/drag_and_drop.scope.md",
     "scopes/Behaviors/input_assistance.scope.md",
+    "scopes/Behaviors/modal_overlay.scope.md",
     "scopes/Behaviors/resizable.scope.md",
     "scopes/Behaviors/scope.md",
     "scopes/Behaviors/viewport_and_focus_control.scope.md",

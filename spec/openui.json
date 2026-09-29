@@ -376,6 +376,25 @@
               ]
             },
             {
+              "id": "modalOverlay",
+              "type": "ModalOverlay",
+              "attrs": {
+                "title": "Modal overlay",
+                "purpose": "A behavior that makes a referenced surface modal: while it is active, interaction outside that surface is blocked until its task is completed or dismissed, and focus stays inside the surface. Modal interaction is another name for it. The dimming layer behind the surface is appearance (Backdrop, in Presentation), and background scroll locking is Viewport and focus control.",
+                "scopeDocument": "scopes/Behaviors/modal_overlay.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "modalOverlayInstance",
+                  "type": "ModalOverlay",
+                  "attrs": {
+                    "[target]": null
+                  }
+                }
+              ]
+            },
+            {
               "id": "viewportAndFocusControl",
               "type": "ViewportAndFocusControl",
               "attrs": {

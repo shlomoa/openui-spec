@@ -91,6 +91,7 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     ),
     "Behaviors/collapsible.scope.md": ("Collapsible", ("[target]",), ()),
     "Behaviors/input_assistance.scope.md": ("InputAssistance", ("[target]",), ()),
+    "Behaviors/modal_overlay.scope.md": ("ModalOverlay", ("[target]",), ()),
     "Behaviors/viewport_and_focus_control.scope.md": ("ViewportAndFocusControl", ("[target]",), ()),
     "Behaviors/drag_and_drop.scope.md": ("DragAndDrop", ("[target]",), ()),
     "Behaviors/resizable.scope.md": ("Resizable", ("[target]",), ()),

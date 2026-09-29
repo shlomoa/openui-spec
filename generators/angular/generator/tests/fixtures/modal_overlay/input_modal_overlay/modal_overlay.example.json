@@ -1,0 +1,42 @@
+{
+  "id": "root",
+  "version": "0.3.1",
+  "type": "ModalOverlay",
+  "attrs": {
+    "title": "\"Modal overlay example\""
+  },
+  "children": [
+    {
+      "id": "confirmDeleteDialog",
+      "type": "Dialog",
+      "attrs": {
+        "[open]": "isConfirmOpen",
+        "[modal]": "true",
+        "(close)": "onConfirmClose($event)"
+      },
+      "children": [
+        {
+          "id": "confirmDeleteTitle",
+          "type": "header",
+          "attrs": {
+            "text": "\"Delete file?\""
+          }
+        },
+        {
+          "id": "confirmDeleteText",
+          "type": "section",
+          "attrs": {
+            "text": "\"This cannot be undone.\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "confirmDeleteModality",
+      "type": "ModalOverlay",
+      "attrs": {
+        "[target]": "\"confirmDeleteDialog\""
+      }
+    }
+  ]
+}

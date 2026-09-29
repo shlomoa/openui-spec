@@ -139,7 +139,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 9.2 [x] Taxonomy mapping: apply C1–C6, R1–R11 and D1 in `spec/scopes/taxonomy_mapping.md`, and add A6–A76 with their scope and abstraction level. Apply [`taxonomy_mapping_change.md`](taxonomy_mapping_change.md#summary) in the same pass.
    - 9.3 [x] Generic taxonomy: make the same renames and additions in `docs/generic-ui-taxonomy.md`, which the taxonomy mapping is based on.
    - 9.4 [x] New scopes: create `Behaviors/input_assistance.scope.md` and `Behaviors/viewport_and_focus_control.scope.md` from `template.scope.md`, list them in `Behaviors/scope.md`, and add one row each to `spec/scopes/evidence.md`.
-   - 9.5 [ ] Decide whether Modal overlay, moved to Behaviors by C4, needs its own scope file or is covered by an existing leaf.
+   - 9.5 [x] Decide whether Modal overlay, moved to Behaviors by C4, needs its own scope file or is covered by an existing leaf. Decided 2026-09-29: its own scope, `Behaviors/modal_overlay`, with Modal interaction as its alias.
    - 9.6 [x] Scope contracts: apply [`scope_change.md`](scope_change.md#summary) in the same pass: the Purpose texts, the behavior target references and the Validation notes rules. Apply [`architecture_change.md`](architecture_change.md#summary) with it: the Behaviors folder description, the Boundaries rules of the folder scopes and the tree rules in `spec/scopes/scope.md`.
    - 9.7 [ ] Regenerate `spec/openui.json`, bump `SCHEMA_VERSION` and the package versions, and update the fixtures and `CHANGELOG.md`. The examples are tasks 9.10–9.12.
    - 9.8 [ ] Validate: pre-commit, unit tests, `mkdocs build --strict` and the npm tests.
@@ -267,7 +267,7 @@ Re-validated 2026-09-26: of the original 9, 2 are answered by the repo, 3 are pa
 | Q8 | Does the Angular generator stay in openui-spec for v1.0, or move to angular-django2? | Deferred — no workstream currently blocked | Still at `generators/angular/` |
 | Q9 | Qt desktop-only concepts: confirm host-shell presence deferred, MDI / docking as optional runtime capabilities? | Deferred — W2 tasks 10–11, informed by W0 task 6 | Already proposed so in Qt `SCOPE_EXTENSION_PROPOSAL.md` |
 | Q10 | Apply the approved Standalone / Controlling element glossary entries now, or inside W1? | Superseded — Standalone is not added; Owner, Controlled element and Controlling element are approved instead and applied in W1 task 9.1 | [`terminology.md`](terminology.md#41-glossary-terms) |
-| Q11 | Which proposed scopes enter v1.0? | Decided — include all scopes resulting from W0 survey consolidation: `Behaviors/input_assistance` and `Behaviors/viewport_and_focus_control` | [`structure_change.md`](structure_change.md#add) |
+| Q11 | Which proposed scopes enter v1.0? | Decided — include all scopes resulting from W0 survey consolidation: `Behaviors/input_assistance` and `Behaviors/viewport_and_focus_control`, plus `Behaviors/modal_overlay` (W1 9.5) | [`structure_change.md`](structure_change.md#add) |
 | Q12 | Where do the plan and consolidated outputs live? | Superseded — the current plan location is defined; W0 task 4 placed the consolidated outputs in `spec/survey/` | The current plan is `spec/survey/specui_v1_publish_plan.md`; W0 task 4 defined the output location, so this combined question is obsolete |
 | Q13 | Add HTML's conditional Accessibility and Composition top-level scopes in v1.0, or defer? | Deferred — W2 tasks 10–11 determine whether they are in this project's scope | HTML P6 / P7 |
 

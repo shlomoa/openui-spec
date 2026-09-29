@@ -182,6 +182,7 @@ each term.
 |                                                                  | [Resizable](scopes/Behaviors/resizable.scope.md)                                   | Resize elements within a page or view.                                                                |
 |                                                                  | [Collapsible](scopes/Behaviors/collapsible.scope.md)                               | Collapse and expand elements within a page or view.                                                   |
 |                                                                  | [Input assistance](scopes/Behaviors/input_assistance.scope.md)                     | Help or check what the user enters in an input control.                                               |
+|                                                                  | [Modal overlay](scopes/Behaviors/modal_overlay.scope.md)                           | Make a referenced surface modal until its task is completed or dismissed.                             |
 |                                                                  | [Viewport and focus control](scopes/Behaviors/viewport_and_focus_control.scope.md) | Move a viewport, lock background scrolling or move focus on a referenced element.                     |
 | **[Pages](scopes/Pages/scope.md)**                               |                                                                                    | Predefined page-level layouts and page shells.                                                        |
 |                                                                  | [Dashboard](scopes/Pages/dashboard.scope.md)                                       | Overview metrics and summary content layout.                                                          |
@@ -314,8 +315,8 @@ whole document, not just among the referring node's siblings.
 `Routing[defaultRoute]` and `NavItem[route]` reference a `Route`;
 `Route[redirectTo]` references a `Route`; and `Route[target]` references the
 page or content element selected by that route. The `[target]` of every
-behavior (`DragAndDrop`, `Resizable`, `Collapsible`, `InputAssistance` and
-`ViewportAndFocusControl`) references the
+behavior (`DragAndDrop`, `Resizable`, `Collapsible`, `InputAssistance`,
+`ModalOverlay` and `ViewportAndFocusControl`) references the
 [controlled element](scopes/scope.md#controlled-element) the behavior acts on. The referenced contract defines
 any additional permitted type. The base grammar, catalog validator, and
 `OpenUiJson.validate()` do not currently parse, resolve, or type-check reference
