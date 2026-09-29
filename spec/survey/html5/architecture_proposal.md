@@ -29,5 +29,4 @@ Two cross-cutting notion folders are proposed, each conditional on a scope decis
 - **Composition** (P7): reusable content, named insertion points and fallback content.
   Add only if content reuse or projection is a specification requirement.
 
-Whether these enter the specification is plan question Q13, deferred to scope workstream
-W2. Details are in [scopes_proposal.md](scopes_proposal.md#enrich-or-clarify-existing-contracts-first).
+Both are deferred by plan question Q13 (decided 2026-09-29: deferred). Details are in [scopes_proposal.md](scopes_proposal.md#enrich-or-clarify-existing-contracts-first).

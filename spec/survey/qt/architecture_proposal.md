@@ -33,8 +33,8 @@ delta trees, not replacement lists:
 If the specification later accepts desktop or host-shell integration, add an optional
 **Host integration → Application presence** branch (identity icon, activation, context
 actions, notification delivery) under the existing `Application` scope. Until that
-decision, system-tray presence stays Deferred and must not be mapped to favicon. This is
-plan question Q9, deferred to scope workstream W2.
+decision, system-tray presence stays Deferred and must not be mapped to favicon. Host integration is
+out of v1 by plan question Q9 (decided 2026-09-29: out of v1).
 
 ## When a new tree would be justified
 
