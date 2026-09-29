@@ -8,7 +8,7 @@ import type { GeneratedFile } from "../writers/file-writer";
 /**
  * Per-file action chosen by the incremental reconciler, following the
  * Add / Match / Modify / Delete scenarios of
- * [spec/README.md § Incremental generation](../../../../spec/README.md#incremental-generation).
+ * [GENERATION.md § Incremental generation](../../docs/GENERATION.md#incremental-generation).
  *
  * - `add`: the spec declares the file but the workspace does not have it yet.
  * - `match`: the workspace already has the file with identical content.

@@ -137,15 +137,6 @@ target-type constraints documented by individual object contracts. Consumers
 that need those checks must implement them for their target until
 catalog-driven contract validation is specified.
 
-Generators use the three artifacts together:
-
-- define and maintain `input.json` format against `EBNF.txt`,
-- validate `input.json` against the executable projection in
-  `spec/openui.schema.json`,
-- validate every `input.json` node's exact `type` literal against the object
-  catalog defined by `spec/openui.json`, and
-- generate target-framework output from the validated `input.json`.
-
 ## Spec folder structure
 
 The `scopes` folder is structured hierarchically. Each top-level scope is a folder; each object is either a child scope folder or a snake_case `*.scope.md` leaf file.
@@ -492,39 +483,6 @@ the `scopes` tree: a `<object>.example.json` for each leaf scope and a composite
   ]
 }
 ```
-
----
-
-## Incremental generation
-
-Generation is usually incremental: given a JSON specification file and an existing
-workspace, the generator reconciles the workspace to match the specification
-rather than regenerating from scratch every time.
-
-### Scenarios
-
-| JSON | Workspace | Scenario     | Details                                                                                     |
-| :--- | :-------- | :----------- | :------------------------------------------------------------------------------------------ |
-| Yes  | No        | Add          | Implement the object as a child of the current parent and wire it in                        |
-| No   | Yes       | Delete       | Delete the object and the reference from parent                                             |
-| Yes  | Yes       | Match        | Do nothing — the node content including children is identical                               |
-| Yes  | Yes       | Not matching | Fix those non-matching parts (attribute added/removed/changed, child added/removed/changed) |
-
-### Algorithm
-
-The JSON is traversed parent (node) to child (node) starting at the root.
-Having no root is an invalid case.
-
-1. First node is defined to be the root.
-2. Compare each JSON node with the manifestation in the workspace:
-   - **Add** — the generator generates the object as defined.
-   - **Modify** — either make the modification if simple (e.g. a rename), or
-     delete and re-add.
-   - **Delete** — remove the part and the references to it.
-   - **Match** — do nothing.
-
-Generation from scratch is the special case where the workspace is empty.
-Deletion is the special case where objects are removed from the JSON file.
 
 ## How to read this spec
 

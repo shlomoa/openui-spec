@@ -31,7 +31,7 @@ regenerate them.
 ## Incremental generation
 
 The Angular generator supports incremental operation as defined in
-[spec/README.md § Incremental generation](../../../spec/README.md#incremental-generation).
+[GENERATION.md § Incremental generation](../generator/docs/GENERATION.md#incremental-generation).
 The test fixtures in `generators/angular/generator/tests/fixtures/` demonstrate
 both generation modes (from-scratch and incremental reconciliation).
 

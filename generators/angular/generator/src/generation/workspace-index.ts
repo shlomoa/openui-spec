@@ -55,7 +55,7 @@ async function collectFiles(root: string, current: string, files: Map<string, st
  * Reads an existing workspace directory into a {@link WorkspaceIndex}. A
  * missing directory is treated as an empty workspace, which is the
  * generation-from-scratch special case described in
- * spec/README.md § Incremental generation.
+ * generator/docs/GENERATION.md § Incremental generation.
  */
 export async function readWorkspaceIndex(root: string): Promise<WorkspaceIndex> {
   const resolvedRoot = path.resolve(root);

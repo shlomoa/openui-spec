@@ -221,7 +221,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 16. [ ] Define the v1.0 outline; the three taxonomy documents are part of it (section 5). For example: 1 Introduction & scope · 2 Conformance · 3 Terminology · 4 Document model & language · 5 Categories & objects · 6 Catalog · Annex A Grammar · Annex B Survey mapping · Annex C Examples.
 17. [ ] Define RFC 2119 keyword use (MUST/SHOULD/MAY) and mark normative vs. informative sections.
-18. [ ] Move incremental-generation and generator content out of `spec/README.md` into the generator docs. *Directive (Q8, decided 2026-09-29):* the Angular generator stays in openui-spec for v1.0, in `generators/angular/`, as [`docs/REQUIREMENTS.md`](../../docs/REQUIREMENTS.md#2-angular-typescript-generator) states. *In progress — chain 3, branch claude/chain-3-scope-structure.*
+18. [x] Move incremental-generation and generator content out of `spec/README.md` into the generator docs. *Directive (Q8, decided 2026-09-29):* the Angular generator stays in openui-spec for v1.0, in `generators/angular/`, as [`docs/REQUIREMENTS.md`](../../docs/REQUIREMENTS.md#2-angular-typescript-generator) states. Result: the Incremental generation section (scenarios and algorithm) and the list of how generators use the three artifacts moved from `spec/README.md` to [`GENERATION.md`](../../generators/angular/generator/docs/GENERATION.md#incremental-generation); every link and code comment now points there.
 
 ### W5 UI description language
 
@@ -285,7 +285,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 3 | [x] Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Done |
 | 4 | [ ] Add the missing terms to their scope Purposes; generate the examples for the new additions from the consolidated data; validate; release the next `0.x.0` | W1 9.13, 9.10–9.12, 9.8, in this order | Step 3 | Open |
 | 4 | [x] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy; validate all of W3 14 | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, 14.7, in this order | Step 3 | Done — PR #164 |
-| 4 | [ ] Move incremental-generation and generator content out of `spec/README.md` | W4 18 | — | Open |
+| 4 | [x] Move incremental-generation and generator content out of `spec/README.md` | W4 18 | — | Done |
 | 5 | [ ] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 4 taxonomy row (W3 14.9 decides which names go in the alias columns; 14.13 sets the final entry names) | Open |
 | 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19 and 20 (together), 21, 22 and W8 32 fixture structure (independent of each other); then W5 23 | Step 3; W5 23 needs 19–22 and the fixture structure of W8 32 | Open |
 | 6 | [ ] Scope statement and in / out classification | W2 10, then 11; W2 12 (lowest priority) | Step 3 | Open |
