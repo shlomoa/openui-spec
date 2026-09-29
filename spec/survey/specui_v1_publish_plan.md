@@ -4,6 +4,8 @@
 
 Publish openui-spec **v1.0.0** as the first stable edition: one vocabulary, one categorization, one document structure and one UI-description language that downstream work (angular-django2, django-angular3) can build on without expecting breaking churn.
 
+*Directive (Q3, decided):* release as `0.x.0` / `0.x.y` versions until the spec is validated in downstream tools and packages; no release candidate before then. Every `1.0.0-rc.1` and `1.0.0` target in this plan waits on that validation.
+
 The edition is done when all of these hold:
 
 1. **Terminology** — every normative term is defined once in the glossary, with a cross-framework alias table (HTML/ARIA, openui5, Qt, Angular Material). No other doc redefines a term.
@@ -45,7 +47,7 @@ Ten workstreams in three layers: consolidate the foundations (W1–W5), write th
 | W3 | UI categorization | What is the single most natural way to group UI artifacts? | One taxonomy; the other two re-expressed as informative views |
 | W4 | Specification structure | How is the spec document organized? | Numbered outline with normative/informative parts; file layout |
 | W5 | UI description language | How does an author describe a UI? | Grammar v1.0 (EBNF + JSON Schema), binding/event/i18n rules, versioning policy |
-| W6 | Draft first spec | — | v1.0.0-rc.1 spec text + regenerated catalog |
+| W6 | Draft first spec | — | v1.0.0-rc.1 spec text + regenerated catalog (*directive, Q3:* released as `0.x.0` until downstream validation) |
 | W7 | Documentation | — | Updated README, REQUIREMENTS, CONTRIBUTING, AGENTS/CLAUDE, CHANGELOG, Read the Docs site |
 | W8 | Spec utilities | Can tools parse, model and validate v1.0? | Python + TS parse/model/validate APIs passing one conformance suite |
 | W9 | Validation | Is every change checked the same way everywhere? | Format + lint + spec-content lint + tests in CI on Linux and Windows |
@@ -95,6 +97,8 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W0 Survey consolidation
 
+*Directive:* the four surveyed sources are Angular Material, HTML (the WHATWG Living Standard, `spec/survey/html5/`), OpenUI5 and Qt Widgets. The survey results live in `spec/survey/` (on `main` since commit 215f2e7), and so do this plan and the consolidated change records. A change record moves next to the spec once it is applied, as [`terminology.md`](../scopes/terminology.md#summary) did.
+
 4. [x] Choose a directory structure and content for all surveys.
    References in markdown files must point to an existing file in inventory folder (once created and content moved) and section.
 
@@ -116,6 +120,8 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 5. [x] Decide whether to build a cross-source matrix (`matrix.csv`: concept × HTML, WAI-ARIA, openui5, Qt, Angular Material). Decided 2026-09-27: not built. Its name, category and scope columns would repeat the approved [`terminology.md`](../scopes/terminology.md#summary), [`category.md`](category.md#summary) and [`taxonomy_mapping_change.md`](taxonomy_mapping_change.md#summary); the per-framework names come from the four survey mappings in the alias table (W1 task 9.9); properties and events are read from the survey inventories in W6 task 25.
 6. [x] Reconcile the scope-extension proposals (Angular Material `proposed-scopes/`, Qt P01–P06, HTML P1–P8) into one accept / defer / reject list, de-duplicating overlaps such as `modal_interaction` and `collapsible`. *Demo:* the tables of [`structure_change.md`](structure_change.md#add) and [`scope_change.md`](scope_change.md#summary).
+   - 6.1 [x] Decide which proposed scopes enter v1.0 (2026-09-27, 2026-09-29): `Behaviors/input_assistance`, `Behaviors/viewport_and_focus_control` and `Behaviors/modal_overlay`. Applied in W1 tasks 9.4 and 9.5.
+
    Two new scopes are accepted in [`structure_change.md`](structure_change.md#add); every other proposed scope was remapped to an existing scope or dropped, as recorded in [`terminology.md`](../scopes/terminology.md#49-terms-that-need-a-new-scope). The changes the surveys ask for in existing scopes are in [`scope_change.md`](scope_change.md#summary) (approved).
 
 ### W1 Terminology
@@ -130,12 +136,13 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 8.2 [x] Create a canonical list of terms.
    - 8.3 [ ] Add an alias table (canonical term → openui5 / Qt / Angular Material / ARIA names). Built in task 9.9, with the final names.
    - 8.4 [x] Catalog any conflict / duplicate / wrong aliased term.
+   - 8.5 [x] Decide the canonical-term rule (2026-09-27) and apply it: keep the existing OpenUI term; otherwise the HTML or WAI-ARIA name; otherwise the name most surveyed frameworks share; otherwise a neutral descriptive name. Applied in the glossary and the taxonomy mapping (W1 9.1–9.3).
 
    The canonical-term rule and every term decision are in [`terminology.md`](../scopes/terminology.md#appendix-a-canonical-term-rule) (approved).
 9. [ ] Review and resolve conflicts in terminology, then apply the result. The review is [`terminology.md`](../scopes/terminology.md#summary) (approved in full, including the terms not added).
 
    Apply the approved terminology. These are specification changes, so they follow [`RELEASING.md`](../../RELEASING.md#schema-and-catalog-version-changes). Do task 7 first, so the glossary changes land in their final location.
-   - 9.1 [x] Glossary: add A1–A5 (Owner, Controlled element, Controlling element, Trigger, Window); apply C6 (move "component" and "UI component" from the Widget aliases to the Object aliases) and D2 (remove "widget instance" from the Element aliases); add the conflicting-meaning notes for Page, Control, Element and Grid ([appendix A](../scopes/terminology.md#appendix-a-canonical-term-rule)).
+   - 9.1 [x] Glossary: add A1–A5 (Owner, Controlled element, Controlling element, Trigger, Window); apply C6 (move "component" and "UI component" from the Widget aliases to the Object aliases) and D2 (remove "widget instance" from the Element aliases); add the conflicting-meaning notes for Page, Control, Element and Grid ([appendix A](../scopes/terminology.md#appendix-a-canonical-term-rule)). Owner, Controlled element and Controlling element replace the proposed Standalone entry, which is not added.
    - 9.2 [x] Taxonomy mapping: apply C1–C6, R1–R11 and D1 in `spec/scopes/taxonomy_mapping.md`, and add A6–A76 with their scope and abstraction level. Apply [`taxonomy_mapping_change.md`](taxonomy_mapping_change.md#summary) in the same pass.
    - 9.3 [x] Generic taxonomy: make the same renames and additions in `docs/generic-ui-taxonomy.md`, which the taxonomy mapping is based on.
    - 9.4 [x] New scopes: create `Behaviors/input_assistance.scope.md` and `Behaviors/viewport_and_focus_control.scope.md` from `template.scope.md`, list them in `Behaviors/scope.md`, and add one row each to `spec/scopes/evidence.md`.
@@ -160,16 +167,16 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W3 UI categorization
 
-13. [x] Choose the primary axis (see open questions) and define the category set with inclusion rules.
+13. [x] Choose the primary axis and define the category set with inclusion rules.
 
-   Result: [`category.md`](category.md#summary) (approved): keep the nine sections, add a Behaviors section and 21 subcategories with inclusion rules and member lists. It is applied in W1 step 9.3 and W3 task 14.4.
+   Result: [`category.md`](category.md#summary) (approved 2026-09-27): keep the 11-scope contract tree and the purpose taxonomy as linked views of one vocabulary and extend them in place, with no new tree; keep the nine sections, add a Behaviors section and 21 subcategories with inclusion rules and member lists. Applied in W1 task 9.3 and W3 task 14.4.
 14. [ ] Re-map all 47 leaf scopes and all taxonomy entries to it; keep `docs/generic-ui-taxonomy.md` as an informative view of the mapping, and merge, then retire, `docs/ui-element-taxonomy.md` (decided 2026-09-27, Q4 sub-question):
     - 14.1 [x] Merge proposal: write [`spec/survey/ui_element_taxonomy_merge_proposal.md`](ui_element_taxonomy_merge_proposal.md#summary) with the same mechanism as [`terminology.md`](../scopes/terminology.md#appendix-a-canonical-term-rule). For each of the 222 abstract types (221 distinct names) that matches no taxonomy entry or approved term (91 already match), record Change, Replace, Delete or Add with section, subcategory, scope, abstraction level, evidence and source URL, or list it under "Not added" with the reason. Types for Accessibility wait on Q13. Depends on the decisions of task 13.
     - 14.2 [x] Approve the merge proposal, decision by decision ([decisions](ui_element_taxonomy_merge_proposal.md#decisions), 2026-09-28).
     - 14.3 [x] Classification rules: write the rules the approved changes already define into `spec/scopes/taxonomy_mapping.md` ([merge proposal section 5](ui_element_taxonomy_merge_proposal.md#5-classification-rules)): each subcategory's Holds text from [`category.md`](category.md#4-add) as its inclusion rule, one subcategory per entry, and secondary roles in the notes. Done in the same pass as 14.4.
     - 14.4 [x] Apply the category changes: the heading changes, the Behaviors section and the subcategories of [`category.md`](category.md#summary) in `spec/scopes/taxonomy_mapping.md` and `docs/generic-ui-taxonomy.md`. Done in the same pass as W1 tasks 9.2 and 9.3.
     - 14.5 [x] Apply the approved merge additions from 14.1 in the same pass.
-    - 14.6 [ ] Retire `docs/ui-element-taxonomy.md`: delete it, fix every link to it, and record in the merge proposal where each of its categories and abstract types went.
+    - 14.6 [ ] Retire `docs/ui-element-taxonomy.md`: delete it, fix every link to it, and record in the merge proposal where each of its categories and abstract types went. *Directive (Q4 sub-question, decided 2026-09-27):* merge `docs/ui-element-taxonomy.md` into the canonical taxonomy (done in 14.1–14.5), then retire it.
     - 14.8 [ ] Draw the example images of the generic UI taxonomy entries marked "None yet" (81 entries added in W1 tasks 9.2–9.4 and W3 14.5), in the style of `docs/images/`.
     - 14.7 [ ] Validate: pre-commit, link check, `mkdocs build --strict` and unit tests; every taxonomy entry belongs to exactly one section and at most one subcategory.
 15. [ ] Rename or move scope folders to match. *Validate:* every object has exactly one primary category; catalog regenerates. *Demo:* interactive taxonomy tree with per-framework overlay.
@@ -182,7 +189,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W5 UI description language
 
-19. [ ] Decide attribute value typing (string/null only vs. typed values).
+19. [ ] Decide attribute value typing (string/null only vs. typed values). *Directive (Q6, decided):* introduce typed values in a W5 grammar revision; this task defines which types, and task 23 adds them to the grammar.
 20. [ ] Replace the Angular-flavoured `[x]` / `(x)` key syntax with a framework-neutral one for Uses / Produces / Behaves, or formally adopt it.
 21. [ ] Define data-binding references, event payloads and i18n string references. Same-document element references already exist (0.3.0); extend, don't replace.
 22. [ ] Define versioning and compatibility policy (SemVer for the spec; how documents declare the version).
@@ -192,13 +199,13 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 24. [ ] Rewrite the spec per W4 outline, using W1–W5 outputs.
 25. [ ] Enrich each leaf scope (Attributes, Child model) from the survey inventories and the alias table (W1 task 9.9); add evidence rows.
-26. [ ] Regenerate `openui.json`, bump to `1.0.0-rc.1`, migrate all examples and fixtures.
-27. [ ] Review period, then coordinate the M5 `1.0.0` release with W8 task 35. *Validate:* full CI + conformance suite. *Demo:* published spec site with a rendered example per object (reuse `generated-examples`).
+26. [ ] Regenerate `openui.json`, bump to `1.0.0-rc.1`, migrate all examples and fixtures. *Directive (Q3):* bump to the next `0.x.0` instead; `1.0.0-rc.1` waits on downstream validation.
+27. [ ] Review period, then coordinate the M5 `1.0.0` release with W8 task 35. *Directive (Q3):* `1.0.0` waits on downstream validation; until then each release is `0.x.0` / `0.x.y`. *Validate:* full CI + conformance suite. *Demo:* published spec site with a rendered example per object (reuse `generated-examples`).
 
 ### W7 Documentation
 
 28. [ ] Update README, REQUIREMENTS, CONTRIBUTING, RELEASING, AGENTS.md / CLAUDE.md / GEMINI.md, `.github/copilot-instructions.md`, agent files under `.github/agents/`.
-29. [ ] Write CHANGELOG `1.0.0` with a 0.3 → 1.0 migration guide.
+29. [ ] Write CHANGELOG `1.0.0` with a 0.3 → 1.0 migration guide. *Directive (Q3):* written for the `1.0.0` release, after downstream validation.
 30. [ ] Publish to Read the Docs. *Demo:* the site itself.
 31. [ ] After W6 task 27 and W8 task 35, notify downstream: angular-django2 (#98/#103 TS parser) and django-angular3.
 
@@ -207,7 +214,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 32. [ ] Create a shared conformance suite (`spec/conformance/`: valid + invalid documents with expected diagnostics); create its fixture structure early and finalize the suite after W5 task 23 freezes the grammar and schema.
 33. [ ] After W5 task 23 and task 32, Python: parse (EBNF + JSON) → typed object model → validate (grammar, catalog membership, scope contract).
 34. [ ] After W5 task 23 and task 32, TypeScript: same API surface in `@shlomoa/openui-spec`.
-35. [ ] Both packages pass the same suite; publish `1.0.0` to PyPI and npm as part of the M5 release. *Demo:* the W5 playground uses the TS validator.
+35. [ ] Both packages pass the same suite; publish `1.0.0` to PyPI and npm as part of the M5 release. *Directive (Q3):* publish `0.x.0` versions until downstream validation clears `1.0.0`. *Demo:* the W5 playground uses the TS validator.
 
 ## Milestones
 
@@ -220,6 +227,8 @@ Five GitHub milestones, each ending with a tagged release and a visible web page
 | M3 Foundations agreed | `0.6.0` | 7–19 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
 | M4 Language frozen | `0.7.0` | 20–24, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
 | M5 v1.0.0 published | `1.0.0` | 25–31, 35 | Packages at 1.0.0 on PyPI + npm; docs live | Published spec site with rendered examples |
+
+*Directive (Q3):* M5's `1.0.0` release waits on downstream validation; until then each milestone ships a `0.x.0` release.
 
 M2 and M1 can run in parallel. M4 can start as soon as W1 terminology is settled (task 9); it does not need the taxonomy.
 
@@ -249,26 +258,19 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 9 | Conformance suite and Python / TypeScript utilities | W8 32–34 | W5 23 | Open |
 | 10 | Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 9 | Open |
 
+*Directive (Q3):* the `1.0.0-rc.1` of step 9 and the `1.0.0` of step 10 wait on downstream validation; until then each release is `0.x.0` / `0.x.y`.
+
 Priority: step 3 is the first specification change and unblocks the language work (step 5), so the decisions and proposals feeding it (steps 1–2) come first. The categorization of scope folders (step 7) waits on the scope statement, as the workstream graph requires.
 
 ## Open questions
 
-Re-validated 2026-09-26: of the original 9, 2 are answered by the repo, 3 are partly answered by the survey proposals and reframed, 4 stand as asked, and 4 are new. A question blocks only the workstream task that depends on its decision; unrelated work may proceed.
+Only the questions still open are listed. Answered questions became directives where they apply; decisions already applied are recorded as completed tasks (W0 6.1, W1 8.5 and 9.1, W3 13); decisions not yet applied are directives on the tasks they affect (Q3, the Q4 sub-question, Q6). A question blocks only the workstream task that depends on its decision; unrelated work may proceed.
 
 | # | Question | Status | Evidence / options |
 | --- | --- | --- | --- |
-| Q1 | Which is the fourth surveyed source? | Decided | HTML (WHATWG Living Standard), `spec/survey/html5/` |
-| Q2 | Where are the survey results? | Decided | `spec/survey/` on `main` since commit 215f2e7 |
-| Q3 | Is the first edition `1.0.0`, or a `0.x` candidate with `1.0.0` later? | Decided — continue `0.x.0` / `0.x.y` releases; defer any release candidate | Validate the spec in downstream tools and packages before attempting a release candidate |
-| Q4 | Adopt the surveys' categorization: 11-scope contract tree + purpose taxonomy as linked views, extend in place? | Decided — keep the scope tree and the purpose taxonomy as linked views and extend in place: nine sections plus Behaviors, with 21 subcategories ([`category.md`](category.md#summary)) | Qt `TAXONOMY_STRUCTURE_PROPOSAL.md` and HTML `SCOPE_TREE_PROPOSAL.md` both say yes, no new tree; [`category.md`](category.md#kept) proposes it. Sub-question decided 2026-09-27: merge `docs/ui-element-taxonomy.md` (15 categories) into the canonical taxonomy, then retire it (W3 tasks 14.1–14.7) |
-| Q5 | Canonical-term rule: HTML/ARIA name wins, or majority across sources? | Decided — keep the existing OpenUI term; otherwise the HTML or WAI-ARIA name; otherwise the majority across frameworks; otherwise a neutral descriptive name | [`terminology.md`](../scopes/terminology.md#appendix-a-canonical-term-rule) |
-| Q6 | Attribute values: keep `string \| null`, or add typed values? | Decided — introduce typed values in a later W5 grammar revision | Current grammar permits `string \| null`; 0.3.0 element references are quoted strings |
 | Q7 | Attribute keys: keep `[x]` / `(x)`, or neutral keys (`uses.x`, `produces.x`, `behaves.x`)? | Deferred — blocks W5 task 20 | Still Angular syntax in `spec/README.md` and the leaf template |
 | Q8 | Does the Angular generator stay in openui-spec for v1.0, or move to angular-django2? | Deferred — no workstream currently blocked | Still at `generators/angular/` |
 | Q9 | Qt desktop-only concepts: confirm host-shell presence deferred, MDI / docking as optional runtime capabilities? | Deferred — W2 tasks 10–11, informed by W0 task 6 | Already proposed so in Qt `SCOPE_EXTENSION_PROPOSAL.md` |
-| Q10 | Apply the approved Standalone / Controlling element glossary entries now, or inside W1? | Superseded — Standalone is not added; Owner, Controlled element and Controlling element are approved instead and applied in W1 task 9.1 | [`terminology.md`](../scopes/terminology.md#41-glossary-terms) |
-| Q11 | Which proposed scopes enter v1.0? | Decided — include all scopes resulting from W0 survey consolidation: `Behaviors/input_assistance` and `Behaviors/viewport_and_focus_control`, plus `Behaviors/modal_overlay` (W1 9.5) | [`structure_change.md`](structure_change.md#add) |
-| Q12 | Where do the plan and consolidated outputs live? | Superseded — the current plan location is defined; W0 task 4 placed the consolidated outputs in `spec/survey/` | The current plan is `spec/survey/specui_v1_publish_plan.md`; W0 task 4 defined the output location, so this combined question is obsolete |
 | Q13 | Add HTML's conditional Accessibility and Composition top-level scopes in v1.0, or defer? | Deferred — W2 tasks 10–11 determine whether they are in this project's scope | HTML P6 / P7 |
 
 ## Sources
