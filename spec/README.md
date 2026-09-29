@@ -304,8 +304,14 @@ their appearance as attribute data does not make them valid types.
 
 For example, `Routing` `uses.defaultRoute`, `NavItem` `uses.route` and `Route`
 `uses.redirectTo` are `reference(Route)`; the `uses.target` of every behavior references the
-[controlled element](scopes/scope.md#controlled-element) the behavior acts on. Each leaf
-contract declares the types its references accept.
+[controlled element](scopes/scope.md#controlled-element) the behavior acts on. The
+following are `reference`, to an element of any type: `OverlayContainers`,
+`FeedbackWidgets` and `MenuWidgets` `uses.anchor` (the element the overlay, the tooltip or
+contextual help, or the menu is attached to), `DisplayPrimitives` `uses.for` (the element a
+label names), `Collapsible` `uses.trigger` (the
+[controlling element](scopes/scope.md#controlling-element)) and `ModalOverlay`
+`uses.initialFocus` (the element inside the modal surface that receives focus first). Each
+leaf contract declares the types its references accept.
 
 ### 4.8 Versioning
 
