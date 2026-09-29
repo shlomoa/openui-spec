@@ -40,7 +40,7 @@ Collect data from users or allow users to trigger actions and change values.
 | Resize handle            | Provides a drag target for resizing an object or region.                                                                         |    Yes    |        No         | ![Resize handle example](../../../images/resize-handle.svg)                     |
 | Canvas / Drawing area    | Accepts free-form drawing or graphical manipulation through pointer, touch, stylus, or keyboard.                                 |    Yes    |        No         | ![Canvas / Drawing area example](../../../images/canvas-drawing-area.svg)       |
 | Microphone input         | Captures audio after the user starts recording and grants permission.                                                            | Sometimes |        Yes        | ![Microphone input example](../../../images/microphone-input.svg)               |
-| Biometric prompt         | Requests fingerprint, face, or another biometric method supported by the device.                                                 |    Yes    |        Yes        | ![Biometric prompt example](../../../images/biometric-prompt.svg)               |
+| Biometric prompt         | Requests fingerprint, face, or another biometric method supported by the device.                                                 |    Yes    |        Yes        | ~~Biometric prompt example~~ Image removed with the term ([terminology D1](../../../scopes/terminology.md#3-delete))               |
 
 ### Command activation — proposed additions
 
