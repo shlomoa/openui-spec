@@ -10,7 +10,7 @@ examples. The [generic UI taxonomy](generic-ui-taxonomy.md) owns the sections,
 subcategories and entries that the OpenUI terms belong to, and the
 [taxonomy mapping](../scopes/taxonomy_mapping.md) owns their scope objects. Term
 definitions and aliases live in the [glossary](../scopes/scope.md#glossary), and object
-contracts in the scope files; a type description may not contradict them.
+contracts in the scope files; a type description MUST NOT contradict them.
 
 There is no universally standardized “complete” taxonomy. The following model aims to cover the element types used across web, desktop, mobile, touch, TV, embedded, voice-assisted, and mixed-interface applications.
 
@@ -415,7 +415,7 @@ Accessibility and alternative interaction are properties of other elements, not 
 
 ## Classification Rules
 
-Many concrete components belong to more than one abstract category. Classification should therefore be based on the element’s **primary purpose in its current context**.
+Many concrete components belong to more than one abstract category. Classification SHOULD therefore be based on the element’s **primary purpose in its current context**.
 
 Examples:
 
