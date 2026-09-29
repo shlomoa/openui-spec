@@ -18,22 +18,22 @@ The edition is done when all of these hold:
 8. **Validation** — CI runs format, lint, spec-content lint and conformance tests on Linux and Windows.
 9. **Visibility** — a published web page shows the v1.0 spec: taxonomy browser, per-object pages and live rendered examples.
 
-## Current state (2026-09-29, v0.4.0)
+## Current state (2026-09-29, v0.8.0)
 
-Re-checked on 2026-09-29, after execution step 3 and the `0.4.0` release (milestones M1 and M2). Earlier snapshots: `main` at `1c90f5c` (2026-09-26) and `b97f3f8` (2026-09-23).
+Re-checked on 2026-09-29 on `main` after PR #170 (`0.8.0`): workstreams W0–W5 and W9 are done, and so are W8 tasks 32–34. Earlier snapshots: `0.4.0` (2026-09-29), `main` at `1c90f5c` (2026-09-26) and `b97f3f8` (2026-09-23).
 
 | Area | What exists | Gap for v1.0 |
 | --- | --- | --- |
-| Survey | `spec/survey/` with 4 sources: `angular-material/`, `html5/` (WHATWG HTML), `openui5/`, `qt/`. The consolidated change files are applied and named `*.done.md`; content not yet applied is in `*.notdone.md`. `spec/survey/` is excluded from pre-commit, markdownlint and mkdocs | Each `*.notdone.md` item is assigned to a task (W1 9.13; W6 25) or is out of v1 by Q9 |
-| Terminology | Glossary in [`spec/scopes/scope.md`](../scopes/scope.md#glossary); the approved decisions in [`terminology.md`](../scopes/terminology.md#summary) are applied and verified (2026-09-29), except A41–A43, which are out of v1 (Q9) | None: the alias table is four columns of the taxonomy mapping (W1 9.9) |
-| Scope | One-line purpose in `spec/README.md` | No explicit in / out list (W2). Decided: host-shell presence, docking and multiple-document workspaces are out of v1 (Q9); the Accessibility and Composition top-level scopes are deferred (Q13). The surveys also defer browser internals, storage and workers |
-| Categorization | 11 top-level scopes. The taxonomy is specified by three spec documents, with one owner for each fact ([Taxonomy documents](../scopes/scope.md#taxonomy-documents)): `spec/taxonomy/generic-ui-taxonomy.md` (with its generated HTML and an image for every entry with a visual form), `spec/taxonomy/ui-element-taxonomy.md` (237 abstract types, each with its OpenUI term) and [`spec/scopes/taxonomy_mapping.md`](../scopes/taxonomy_mapping.md#taxonomy-mapping). Nine sections plus Behaviors and 21 subcategories, with classification rules; a test keeps the generic taxonomy and the mapping equal | Give each leaf scope one primary category (W3 14.12); rename or move scope folders (W3 15) |
-| Structure | `spec/README.md` mixes glossary pointer, artifact roles, format, grammar, incremental generation | No normative / informative split; generator content inside the spec (the generator itself stays in this repository, Q8) |
-| Language | `EBNF.txt` declared authoritative; JSON Schema is a projection; `spec/bin/check_grammar_consistency` enforces EBNF ↔ schema ↔ README ↔ catalog in pre-commit. Same-document element references (quoted ids in Uses attrs); behaviors reference their controlled element with `[target]` | Still `string \| null` values and `[x]` / `(x)` keys; no data-binding, event-payload or i18n rules |
-| Catalog | 50 leaf `*.scope.md` files, including the new `Behaviors/input_assistance`, `viewport_and_focus_control` and `modal_overlay`; every leaf has an evidence row; `spec/openui.json` regenerated | Many leaves still have no Attributes or Child model (W6 25); examples not yet generated for the new additions (W1 9.10–9.12) |
-| Utilities | Python: `openui_spec`, `compare_openui_spec`, TatSu parser, and the `spec/bin` tools `to_json`, `check_grammar_consistency`, `lint_spec`, `check_links`, `render_taxonomy_html`. TS: `OpenUiJson`, `ng-openui-spec` CLI (ajv) | No shared conformance suite; no object model beyond the JSON tree |
-| Validation | pre-commit (prettier, markdownlint, ruff, yamllint, check-json, grammar / catalog consistency, spec-content lint with all three rules, internal link check, taxonomy HTML check); unittest; npm tests; CI on Ubuntu + Windows | No conformance tests (W8) |
-| Visibility | `generated-examples` Angular app with screenshots; Read the Docs via mkdocs | No single published page for the spec itself |
+| Survey | `spec/survey/` with 4 sources: `angular-material/`, `html5/` (WHATWG HTML), `openui5/`, `qt/`. The applied change files are named `*.done.md`; what is not applied yet is in `*.notdone.md`. `spec/survey/` is excluded from pre-commit, markdownlint and mkdocs | The `*.notdone.md` items go to W6 25 or are out of v1 (Q9) |
+| Terminology | Glossary in [`spec/scopes/scope.md`](../scopes/scope.md#glossary), with "Same name, different meaning" notes; the approved [`terminology.md`](../scopes/terminology.md#summary) is applied; the alias table is four columns of the taxonomy mapping (HTML / WAI-ARIA, OpenUI5, Qt, Angular Material) | None |
+| Scope | The `## Scope` section of `spec/README.md` (in scope, out of scope, deferred) and the classification in [`scope_statement.md`](scope_statement.md#scope-statement) | None |
+| Categorization | One taxonomy in three spec documents with one owner for each fact; one primary category for each placed leaf scope; the interactive taxonomy tree (`spec/taxonomy/taxonomy-tree.html`) with a per-framework overlay | None |
+| Structure | A numbered outline (six parts, three annexes), the Conformance section with BCP 14 keywords and the normative / informative marking, in `spec/README.md` and [`outline.done.md`](outline.done.md) | The spec text is not rewritten per the outline yet (W6 24) |
+| Language | Typed attributes: `uses.x` / `produces.x` / `behaves.x` keys and typed values, in `EBNF.txt`, the JSON Schema and the catalog ([`language_change.done.md`](language_change.done.md)); `spec/bin/migrate.py`; the playground page | None for v1 (internationalization postponed) |
+| Catalog | 50 leaf scopes, each with an evidence row, a worked example and generator fixtures; 17 leaves have no Child model and 8 no Attributes section | Enrich the leaves (W6 25) |
+| Utilities | Python `bin/openui_document.py` and TypeScript `src/document.ts` parse, model and validate with identical results on the conformance suite (`spec/conformance/`) | Publish `1.0.0` (W8 35) |
+| Validation | pre-commit, the spec-content lint, the link check, the taxonomy page checks, unit tests, npm tests and the `generated-examples` app checks; CI on Ubuntu, macOS and Windows | None |
+| Visibility | `generated-examples` app with screenshots, the taxonomy pages and the playground; Read the Docs via mkdocs | The published spec site with a rendered example per object (W6 27, W7 30) |
 
 ## Workstreams
 
@@ -43,10 +43,10 @@ Ten workstreams in three layers: consolidate the foundations (W1–W5), write th
 | --- | --- | --- | --- |
 | W0 | [x] Survey consolidation | What do HTML, openui5, Qt and Angular Material call and group each UI artifact, and which proposed scopes are accepted? | Approved change files in `spec/survey/` (terminology, category, taxonomy mapping, scope, architecture, structure, schema) |
 | W1 | [x] Terminology | Which word does OpenUI use, and what does it mean? | Glossary v1 + cross-framework alias table |
-| W2 | [ ] Scope | What is the spec, what is in, what is out? | Normative scope statement (in / out / deferred) |
-| W3 | [ ] UI categorization | What is the single most natural way to group UI artifacts? | One taxonomy in three spec documents (generic UI taxonomy, UI element taxonomy, taxonomy mapping), one owner for each fact |
-| W4 | [ ] Specification structure | How is the spec document organized? | Numbered outline with normative/informative parts; file layout |
-| W5 | [ ] UI description language | How does an author describe a UI? | Grammar v1.0 (EBNF + JSON Schema), binding/event/i18n rules, versioning policy |
+| W2 | [x] Scope | What is the spec, what is in, what is out? | Normative scope statement (in / out / deferred) |
+| W3 | [x] UI categorization | What is the single most natural way to group UI artifacts? | One taxonomy in three spec documents (generic UI taxonomy, UI element taxonomy, taxonomy mapping), one owner for each fact |
+| W4 | [x] Specification structure | How is the spec document organized? | Numbered outline with normative/informative parts; file layout |
+| W5 | [x] UI description language | How does an author describe a UI? | Grammar v1.0 (EBNF + JSON Schema), binding/event/i18n rules, versioning policy |
 | W6 | [ ] Draft first spec | — | v1.0.0-rc.1 spec text + regenerated catalog (*directive, Q3:* released as `0.x.0` until downstream validation) |
 | W7 | [ ] Documentation | — | Updated README, REQUIREMENTS, CONTRIBUTING, AGENTS/CLAUDE, CHANGELOG, Read the Docs site |
 | W8 | [ ] Spec utilities | Can tools parse, model and validate v1.0? | Python + TS parse/model/validate APIs passing one conformance suite |
@@ -262,13 +262,13 @@ Five GitHub milestones, each ending with a tagged release and a visible web page
 | --- | --- | --- | --- | --- |
 | [x] M1 Guard rails | `0.4.0` | 1–3 | CI green on Linux and Windows with spec-content lint | Lint report page |
 | [x] M2 Survey consolidated | `0.4.0` | 4–6 | All consolidated change files approved | The change files in `spec/survey/` |
-| [ ] M3 Foundations agreed | Next `0.x.0` | 7–18 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
-| [ ] M4 Language frozen | Next `0.x.0` | 19–23, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
+| [x] M3 Foundations agreed | `0.5.0`–`0.8.0` | 7–18 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
+| [x] M4 Language frozen | `0.6.0` | 19–23, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
 | [ ] M5 v1.0.0 published | `1.0.0` | 24–31, 35 | Packages at 1.0.0 on PyPI + npm; docs live | Published spec site with rendered examples |
 
 *Directive (Q3):* M5's `1.0.0` release waits on downstream validation; until then each milestone ships a `0.x.0` release.
 
-M1 and M2 are complete: their tasks are done and their exit criteria hold. They were released as `0.4.0` (tag `v0.4.0`, 2026-09-29), together with the step 3 changes. Milestones carry no fixed version number: each release takes the next free `0.x.0` (directive Q3), and only M5 has a fixed number, `1.0.0`. M4 can start as soon as the terminology is applied (W1 9.1–9.6, execution step 3, done); it does not need the taxonomy or the rest of task 9.
+M1 and M2 are complete: they were released as `0.4.0` (tag `v0.4.0`, 2026-09-29), together with the step 3 changes. M4 is complete: the typed grammar, the conformance suite and the Python and TypeScript validators were released as `0.6.0` (PR #169). M3 is complete: its tasks were released across `0.5.0` (PR #164), `0.7.0` (PR #168) and `0.8.0` (PR #170). The releases `0.5.0` and `0.6.0` have no git tag; `v0.4.0` and `v0.7.0` do. Milestones carry no fixed version number: each release takes the next free `0.x.0` (directive Q3), and only M5 has a fixed number, `1.0.0`.
 
 ## Execution order
 
