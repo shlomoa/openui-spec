@@ -7,9 +7,9 @@
       "id": "appHost",
       "type": "html",
       "attrs": {
-        "[lang]": "\"en\"",
-        "[dir]": "\"ltr\"",
-        "[title]": "\"Application bootstrap example\""
+        "uses.lang": "\"en\"",
+        "uses.dir": "\"ltr\"",
+        "uses.title": "\"Application bootstrap example\""
       },
       "children": [
         {
@@ -26,24 +26,24 @@
       "id": "appFavicon",
       "type": "link",
       "attrs": {
-        "[rel]": "\"icon\"",
-        "[href]": "\"/favicon.ico\""
+        "uses.rel": "\"icon\"",
+        "uses.href": "\"/favicon.ico\""
       }
     },
     {
       "id": "appRouting",
       "type": "Routing",
       "attrs": {
-        "[defaultRoute]": "\"homeRoute\""
+        "uses.defaultRoute": "\"homeRoute\""
       },
       "children": [
         {
           "id": "homeRoute",
           "type": "Route",
           "attrs": {
-            "[path]": "\"home\"",
-            "[target]": "\"homePage\"",
-            "[title]": "\"Home\""
+            "uses.path": "\"home\"",
+            "uses.target": "\"homePage\"",
+            "uses.title": "\"Home\""
           }
         }
       ]
@@ -52,16 +52,16 @@
       "id": "appNavigation",
       "type": "Navigation",
       "attrs": {
-        "[ariaLabel]": "\"Primary\""
+        "uses.ariaLabel": "\"Primary\""
       },
       "children": [
         {
           "id": "navHome",
           "type": "NavItem",
           "attrs": {
-            "[label]": "\"Home\"",
-            "[route]": "\"homeRoute\"",
-            "[icon]": "\"home\""
+            "uses.label": "\"Home\"",
+            "uses.route": "\"homeRoute\"",
+            "uses.icon": "\"home\""
           }
         }
       ]
@@ -70,7 +70,7 @@
       "id": "appToolbar",
       "type": "ToolBar",
       "attrs": {
-        "[ariaLabel]": "\"Application commands\""
+        "uses.ariaLabel": "\"Application commands\""
       },
       "children": [
         {
@@ -81,9 +81,9 @@
               "id": "helpAction",
               "type": "ToolAction",
               "attrs": {
-                "[label]": "\"Help\"",
-                "[icon]": "\"help\"",
-                "(activate)": "openHelp()"
+                "uses.label": "\"Help\"",
+                "uses.icon": "\"help\"",
+                "produces.activate": "openHelp()"
               }
             },
             {

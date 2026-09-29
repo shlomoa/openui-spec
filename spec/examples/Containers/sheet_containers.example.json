@@ -10,8 +10,8 @@
       "id": "filterSheet",
       "type": "SheetContainers",
       "attrs": {
-        "[position]": "\"bottom\"",
-        "[open]": "showFilters"
+        "uses.position": "\"bottom\"",
+        "uses.open": "showFilters"
       }
     }
   ]

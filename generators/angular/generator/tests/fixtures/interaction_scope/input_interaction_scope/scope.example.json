@@ -10,9 +10,9 @@
       "id": "dragInteraction",
       "type": "Interaction",
       "attrs": {
-        "[state]": "\"dragging\"",
-        "[gesture]": "\"drag\"",
-        "(complete)": "onDragComplete($event)"
+        "uses.state": "\"dragging\"",
+        "uses.gesture": "\"drag\"",
+        "produces.complete": "onDragComplete($event)"
       }
     }
   ]

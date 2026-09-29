@@ -85,19 +85,19 @@ Scope objects follow the JSON shape defined in `../README.md`:
   example `dialog`, `input`, `table`, or a PascalCase category). The generated
   literal is a known catalog type; framework selectors and aliases are not
   substituted for it.
-- `attrs` carry the contract attributes by category — Uses `[name]`, Produces `(name)`, Behaves `(name)` — using the Attribute categories below.
+- `attrs` carry the contract attributes by category — Uses `uses.name`, Produces `produces.name`, Behaves `behaves.name` — using the Attribute categories below. A Uses attribute's value is its declared [value type](../README.md#value-types); a Produces or Behaves attribute's value is `null`.
 - `children` carry the instance's typed child model.
 - The instance node has no `scopeDocument`; scope-document traceability stays on the scope node.
 
 ## Attribute categories
 
-Scope object attributes are represented through `attrs` key syntax:
+Scope object attributes are represented through `attrs` key syntax; the key prefix names the category:
 
-- **Uses:** input attributes. These provide data, configuration, state, or references consumed by the object.
-- **Produces:** output attributes. These expose events, emitted values, notifications, or callbacks produced by the object.
-- **Behaves:** behavior attributes. These describe actions or side effects, such as setting another attribute value, running a callback, or invoking target-framework logic.
+- **Uses** (`uses.name`): input attributes. These provide data, configuration, state, or references consumed by the object. A Uses attribute declares its [value type](../README.md#value-types).
+- **Produces** (`produces.name`): output attributes. These expose events, emitted values, notifications, or callbacks produced by the object.
+- **Behaves** (`behaves.name`): behavior attributes. These describe actions or side effects, such as setting another attribute value, running a callback, or invoking target-framework logic.
 
-For Angular Material examples, `[name]` represents a Uses/input binding and `(name)` represents a Produces/output or Behaves/action binding. The base OpenUI scope model records those keys as strings and does not execute their values.
+A generator maps each category to its target framework; for example, an Angular generator emits `[name]` for a Uses attribute and `(name)` for a Produces or Behaves attribute. The base OpenUI scope model does not execute attribute values.
 
 ## Leaf scope template
 
@@ -144,11 +144,12 @@ technology or framework project structure.
 **Aliases:** property, input, output, event, binding, parameter, option.
 
 An attribute is non-hierarchical configuration or behavior metadata stored under
-an element's `attrs` object. OpenUI distinguishes Uses attributes (`[name]`),
-Produces attributes (`(name)`), and Behaves attributes (`(name)` with action or
-side-effect meaning). The base format records attribute keys and string-or-null
-values; target generators may interpret values as framework expressions, static
-literals, events, callbacks, or bindings.
+an element's `attrs` object. OpenUI distinguishes Uses attributes (`uses.name`),
+Produces attributes (`produces.name`), and Behaves attributes (`behaves.name`,
+with action or side-effect meaning). A Uses attribute declares its value type.
+The base format records attribute keys and typed values (strings, numbers,
+booleans, `null`, or lists of these); target generators may interpret string
+values as framework expressions, static literals, events, callbacks, or bindings.
 
 #### Behavior
 
@@ -275,7 +276,7 @@ generated framework selectors and class names are implementation details.
 
 Known type membership does not impose per-type attribute or child restrictions.
 Any number of elements may use the same known type while differing in globally
-unique `id`, string-or-null `attrs`, and compositions of known-type `children`,
+unique `id`, typed `attrs`, and compositions of known-type `children`,
 subject only to the common OpenUI grammar. Specialized or complex UI is modeled
 by selecting the closest known semantic categories and preserving distinctions
 through instance ids, attributes, and composition rather than inventing types.

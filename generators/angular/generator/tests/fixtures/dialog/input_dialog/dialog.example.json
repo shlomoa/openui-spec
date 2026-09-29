@@ -10,11 +10,11 @@
       "id": "confirmDialog",
       "type": "Dialog",
       "attrs": {
-        "[modal]": "true",
-        "[open]": "isOpen",
-        "[ariaLabel]": "\"Confirm deletion\"",
-        "[restoreFocus]": "true",
-        "(close)": "onClose($event)"
+        "uses.modal": true,
+        "uses.open": "isOpen",
+        "uses.ariaLabel": "\"Confirm deletion\"",
+        "uses.restoreFocus": true,
+        "produces.close": "onClose($event)"
       },
       "children": [
         {
@@ -40,7 +40,7 @@
               "type": "ActionControls",
               "attrs": {
                 "text": "\"Cancel\"",
-                "(click)": "close('cancel')"
+                "produces.click": "close('cancel')"
               }
             },
             {
@@ -48,7 +48,7 @@
               "type": "ActionControls",
               "attrs": {
                 "text": "\"Delete\"",
-                "(click)": "close('confirm')"
+                "produces.click": "close('confirm')"
               }
             }
           ]

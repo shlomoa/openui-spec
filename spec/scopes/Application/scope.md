@@ -50,7 +50,7 @@ single `ShellPage` when the shell presents it, but it MUST NOT define the same
 model in both places. The two placements use the same contracts; neither creates
 a second source of route paths, navigation labels, icons, or access requirements.
 
-The application document title belongs to the `index.html` `[title]` attribute,
+The application document title belongs to the `index.html` `uses.title` attribute,
 not to the Application folder scope or a toolbar. A concrete toolbar child uses
 the `ToolBar` literal; `ToolBars` is catalog-scope metadata only.
 

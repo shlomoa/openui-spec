@@ -11,23 +11,23 @@
       "type": "Report",
       "attrs": {
         "title": "\"Customers\"",
-        "[readOnly]": "true"
+        "uses.readOnly": true
       },
       "children": [
         {
           "id": "customerTable",
           "type": "table",
           "attrs": {
-            "[data]": "customers"
+            "uses.data": "customers"
           },
           "children": [
             {
               "id": "colName",
               "type": "Table",
               "attrs": {
-                "[field]": "\"name\"",
-                "[header]": "\"Name\"",
-                "[sortable]": "true"
+                "uses.field": "\"name\"",
+                "uses.header": "\"Name\"",
+                "uses.sortable": true
               }
             }
           ]
@@ -39,16 +39,16 @@
       "type": "Form",
       "attrs": {
         "title": "\"Edit customer\"",
-        "[dirty]": "form.dirty",
-        "(submit)": "onSubmit(form.value)"
+        "uses.dirty": "form.dirty",
+        "behaves.submit": "onSubmit(form.value)"
       },
       "children": [
         {
           "id": "nameField",
           "type": "TextInputs",
           "attrs": {
-            "[label]": "\"Name\"",
-            "[required]": "true"
+            "uses.label": "\"Name\"",
+            "uses.required": true
           }
         }
       ]

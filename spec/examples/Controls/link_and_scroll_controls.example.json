@@ -10,9 +10,9 @@
       "id": "skipToContent",
       "type": "LinkAndScrollControls",
       "attrs": {
-        "[label]": "\"Skip to content\"",
-        "[target]": "\"#main\"",
-        "(activate)": "scrollToMain()"
+        "uses.label": "\"Skip to content\"",
+        "uses.target": "\"#main\"",
+        "produces.activate": "scrollToMain()"
       }
     }
   ]

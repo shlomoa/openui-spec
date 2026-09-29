@@ -1,1 +1,1 @@
-{ "id": "root", "version": "0.5.0", "type": "html", "attrs": { "count": 1 } }
+{ "id": "root", "version": "0.5.0", "type": "html", "attrs": { "uses.count": { "value": 1 } } }

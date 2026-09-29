@@ -10,11 +10,11 @@
       "id": "volumeRange",
       "type": "RangeControl",
       "attrs": {
-        "[label]": "\"Volume\"",
-        "[min]": "0",
-        "[max]": "100",
-        "[value]": "volume",
-        "(valueChange)": "setVolume($event)"
+        "uses.label": "\"Volume\"",
+        "uses.min": 0,
+        "uses.max": 100,
+        "uses.value": "volume",
+        "produces.valueChange": "setVolume($event)"
       }
     }
   ]

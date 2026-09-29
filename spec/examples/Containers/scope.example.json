@@ -10,29 +10,29 @@
       "id": "layoutGrid",
       "type": "Grid",
       "attrs": {
-        "[columns]": "12",
-        "[responsive]": "true"
+        "uses.columns": 12,
+        "uses.responsive": true
       },
       "children": [
         {
           "id": "mainItem",
           "type": "section",
           "attrs": {
-            "[colSpan]": "8"
+            "uses.colSpan": 8
           },
           "children": [
             {
               "id": "detailTabs",
               "type": "Tabs",
               "attrs": {
-                "[selectedIndex]": "0"
+                "uses.selectedIndex": 0
               },
               "children": [
                 {
                   "id": "overviewTab",
                   "type": "tab",
                   "attrs": {
-                    "[label]": "\"Overview\""
+                    "uses.label": "\"Overview\""
                   }
                 }
               ]
@@ -43,15 +43,15 @@
           "id": "sideItem",
           "type": "section",
           "attrs": {
-            "[colSpan]": "4"
+            "uses.colSpan": 4
           },
           "children": [
             {
               "id": "filtersPanel",
               "type": "ExpandablePanels",
               "attrs": {
-                "[heading]": "\"Filters\"",
-                "[expanded]": "true"
+                "uses.heading": "\"Filters\"",
+                "uses.expanded": true
               }
             }
           ]
@@ -62,39 +62,39 @@
       "id": "summaryCard",
       "type": "SurfaceContainers",
       "attrs": {
-        "[label]": "\"Summary\"",
-        "[elevation]": "2"
+        "uses.label": "\"Summary\"",
+        "uses.elevation": 2
       }
     },
     {
       "id": "filterSheet",
       "type": "SheetContainers",
       "attrs": {
-        "[position]": "\"bottom\"",
-        "[open]": "showFilters"
+        "uses.position": "\"bottom\"",
+        "uses.open": "showFilters"
       }
     },
     {
       "id": "helpOverlay",
       "type": "OverlayContainers",
       "attrs": {
-        "[anchor]": "\"helpButton\"",
-        "[open]": "showHelp"
+        "uses.anchor": "\"helpButton\"",
+        "uses.open": "showHelp"
       }
     },
     {
       "id": "mainArticle",
       "type": "StructuralContainers",
       "attrs": {
-        "[role]": "\"article\""
+        "uses.role": "\"article\""
       }
     },
     {
       "id": "workspaceSplitter",
       "type": "Splitters",
       "attrs": {
-        "[orientation]": "\"horizontal\"",
-        "[position]": "320"
+        "uses.orientation": "\"horizontal\"",
+        "uses.position": 320
       }
     }
   ]

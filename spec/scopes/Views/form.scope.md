@@ -17,9 +17,9 @@ tracking.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `(validate)` — Behaves — checks the entered data against its rules.
-- `(submit)` — Behaves — commits the entered data.
-- `(dirtyChange)` — Produces — emitted when the unsaved-changes (dirty) state
+- `behaves.validate` — Behaves — checks the entered data against its rules.
+- `behaves.submit` — Behaves — commits the entered data.
+- `produces.dirtyChange` — Produces — emitted when the unsaved-changes (dirty) state
   changes.
 
 ## Accessibility

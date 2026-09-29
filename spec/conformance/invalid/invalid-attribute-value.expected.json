@@ -1,5 +1,5 @@
 {
   "diagnostics": [
-    { "code": "grammar/invalid-attribute-value", "path": "/attrs/count" }
+    { "code": "grammar/invalid-attribute-value", "path": "/attrs/uses.count" }
   ]
 }

@@ -10,10 +10,10 @@
       "id": "searchText",
       "type": "TextInputs",
       "attrs": {
-        "[label]": "\"Search\"",
-        "[placeholder]": "\"Type to search\"",
-        "[value]": "query",
-        "(valueChange)": "onQueryChange($event)"
+        "uses.label": "\"Search\"",
+        "uses.placeholder": "\"Type to search\"",
+        "uses.value": "query",
+        "produces.valueChange": "onQueryChange($event)"
       }
     }
   ]

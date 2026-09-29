@@ -11,6 +11,8 @@ from typing import Any
 from jsonschema import Draft202012Validator
 
 JsonObject = dict[str, Any]
+AttributeScalar = str | int | float | bool | None
+AttributeValue = AttributeScalar | list[AttributeScalar]
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCHEMA_PATH = REPOSITORY_ROOT / "spec" / "openui.schema.json"
 DEFAULT_CATALOG_PATH = REPOSITORY_ROOT / "spec" / "openui.json"
@@ -149,16 +151,18 @@ class OpenUiJson:
             raise OpenUiJsonError(f"object {object_id} does not belong to parent {parent_id}")
         parent["children"][index] = candidate
 
-    def update_attributes(self, object_id: str, attributes: Mapping[str, str | None]) -> None:
+    def update_attributes(self, object_id: str, attributes: Mapping[str, AttributeValue]) -> None:
         """Change attributes on *object_id* without replacing its children."""
         node = self._find(object_id)
         if node is None:
             raise OpenUiJsonError(f"object not found: {object_id}")
         if not all(
-            isinstance(key, str) and (value is None or isinstance(value, str))
-            for key, value in attributes.items()
+            isinstance(key, str) and _is_attribute_value(value) for key, value in attributes.items()
         ):
-            raise OpenUiJsonError("attribute changes must map strings to strings or null")
+            raise OpenUiJsonError(
+                "attribute changes must map strings to strings, numbers, booleans, null, "
+                "or lists of these"
+            )
         updated = copy.deepcopy(node)
         updated.setdefault("attrs", {}).update(attributes)
         self._validate_node(updated, is_root=node is self.document)
@@ -233,3 +237,9 @@ class OpenUiJson:
     def _json_path(path: Iterator[Any]) -> str:
         values = list(path)
         return "$" if not values else "$." + ".".join(str(value) for value in values)
+
+
+def _is_attribute_value(value: Any) -> bool:
+    """Return whether *value* is a typed attribute value: a scalar or a list of scalars."""
+    items = value if isinstance(value, list) else [value]
+    return all(item is None or isinstance(item, (str, int, float, bool)) for item in items)

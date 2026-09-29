@@ -7,19 +7,19 @@
       "id": "dashboardRoute",
       "type": "Route",
       "attrs": {
-        "[path]": "\"dashboard\"",
-        "[target]": "\"dashboardPage\"",
-        "[title]": "\"Dashboard\"",
-        "[access]": "\"authenticated\""
+        "uses.path": "\"dashboard\"",
+        "uses.target": "\"dashboardPage\"",
+        "uses.title": "\"Dashboard\"",
+        "uses.access": "\"authenticated\""
       },
       "children": [
         {
           "id": "dashboardSettingsRoute",
           "type": "Route",
           "attrs": {
-            "[path]": "\"settings\"",
-            "[target]": "\"settingsPage\"",
-            "[title]": "\"Settings\""
+            "uses.path": "\"settings\"",
+            "uses.target": "\"settingsPage\"",
+            "uses.title": "\"Settings\""
           }
         }
       ]

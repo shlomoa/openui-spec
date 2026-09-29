@@ -19,10 +19,10 @@ overlay behavior.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `[open]` — Uses — boolean: whether the dialog is shown.
-- `[modal]` — Uses — boolean: modal vs non-modal.
-- `(close)` — Produces — emitted when the dialog closes.
-- `(cancel)` — Produces — emitted when the dialog is dismissed (e.g. via Escape).
+- `uses.open` — Uses — boolean — whether the dialog is shown.
+- `uses.modal` — Uses — boolean — modal vs non-modal.
+- `produces.close` — Produces — emitted when the dialog closes.
+- `produces.cancel` — Produces — emitted when the dialog is dismissed (e.g. via Escape).
 
 ## Child model
 
@@ -39,7 +39,7 @@ A dialog owns three ordered regions:
   `aria-describedby`.
 - Sets `aria-modal` while modal; focus moves into the dialog and is trapped until
   it closes.
-- `Escape` dismisses the dialog, emitting `(cancel)`.
+- `Escape` dismisses the dialog, emitting `produces.cancel`.
 
 ## Validation notes
 

@@ -10,8 +10,8 @@
       "id": "responsiveLayout",
       "type": "Layout",
       "attrs": {
-        "[flow]": "\"responsive\"",
-        "[breakpoints]": "\"compact medium expanded\""
+        "uses.flow": "\"responsive\"",
+        "uses.breakpoints": "\"compact medium expanded\""
       }
     }
   ]

@@ -41,42 +41,42 @@ NEW_GROUPED_LEAF_SCOPES = {
 EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     "Application/favicon.scope.md": (
         "link",
-        ("[href]", "[media]", "[rel]", "[sizes]", "[type]"),
+        ("uses.href", "uses.media", "uses.rel", "uses.sizes", "uses.type"),
         (),
     ),
     "Application/index_html.scope.md": (
         "html",
-        ("[dir]", "[lang]", "[title]"),
+        ("uses.dir", "uses.lang", "uses.title"),
         (("indexHtmlDocumentHead", "head"), ("indexHtmlDocumentBody", "body")),
     ),
     "Application/navigation.scope.md": (
         "Navigation",
-        ("[ariaLabel]",),
+        ("uses.ariaLabel",),
         (("navigationItem", "NavItem"), ("navigationGroup", "NavGroup")),
     ),
     "Application/nav_group.scope.md": (
         "NavGroup",
-        ("[expanded]", "[label]"),
+        ("uses.expanded", "uses.label"),
         (("navGroupNavigationItem", "NavItem"), ("navGroupNavigationGroup", "NavGroup")),
     ),
     "Application/nav_item.scope.md": (
         "NavItem",
-        ("[disabled]", "[icon]", "[label]", "[route]"),
+        ("uses.disabled", "uses.icon", "uses.label", "uses.route"),
         (),
     ),
     "Application/route.scope.md": (
         "Route",
-        ("[access]", "[path]", "[redirectTo]", "[target]", "[title]"),
+        ("uses.access", "uses.path", "uses.redirectTo", "uses.target", "uses.title"),
         (("routeChildRoute", "Route"),),
     ),
     "Application/routing.scope.md": (
         "Routing",
-        ("[defaultRoute]",),
+        ("uses.defaultRoute",),
         (("routingRoute", "Route"),),
     ),
     "Application/tool_action.scope.md": (
         "ToolAction",
-        ("(activate)", "[disabled]", "[icon]", "[label]"),
+        ("produces.activate", "uses.disabled", "uses.icon", "uses.label"),
         (),
     ),
     "Application/tool_bar_row.scope.md": (
@@ -86,18 +86,22 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     ),
     "Application/tool_bars.scope.md": (
         "ToolBar",
-        ("[ariaLabel]",),
+        ("uses.ariaLabel",),
         (("toolBarsToolBarRow", "ToolBarRow"),),
     ),
-    "Behaviors/collapsible.scope.md": ("Collapsible", ("[target]",), ()),
-    "Behaviors/input_assistance.scope.md": ("InputAssistance", ("[target]",), ()),
-    "Behaviors/modal_overlay.scope.md": ("ModalOverlay", ("[target]",), ()),
-    "Behaviors/viewport_and_focus_control.scope.md": ("ViewportAndFocusControl", ("[target]",), ()),
-    "Behaviors/drag_and_drop.scope.md": ("DragAndDrop", ("[target]",), ()),
-    "Behaviors/resizable.scope.md": ("Resizable", ("[target]",), ()),
+    "Behaviors/collapsible.scope.md": ("Collapsible", ("uses.target",), ()),
+    "Behaviors/input_assistance.scope.md": ("InputAssistance", ("uses.target",), ()),
+    "Behaviors/modal_overlay.scope.md": ("ModalOverlay", ("uses.target",), ()),
+    "Behaviors/viewport_and_focus_control.scope.md": (
+        "ViewportAndFocusControl",
+        ("uses.target",),
+        (),
+    ),
+    "Behaviors/drag_and_drop.scope.md": ("DragAndDrop", ("uses.target",), ()),
+    "Behaviors/resizable.scope.md": ("Resizable", ("uses.target",), ()),
     "Containers/expandable_panels.scope.md": (
         "details",
-        ("(collapse)", "(expand)"),
+        ("behaves.collapse", "behaves.expand"),
         (),
     ),
     "Containers/grid.scope.md": ("Grid", (), (("gridItem", "section"),)),
@@ -114,7 +118,7 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     "Controls/link_and_scroll_controls.scope.md": ("LinkAndScrollControls", (), ()),
     "Controls/native.scope.md": (
         "input",
-        ("[disabled]", "[placeholder]", "[type]", "[value]"),
+        ("uses.disabled", "uses.placeholder", "uses.type", "uses.value"),
         (),
     ),
     "Controls/picker_control.scope.md": ("PickerControl", (), ()),
@@ -130,24 +134,24 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     ),
     "Views/form.scope.md": (
         "Form",
-        ("(dirtyChange)", "(submit)", "(validate)"),
+        ("behaves.submit", "behaves.validate", "produces.dirtyChange"),
         (),
     ),
     "Views/report.scope.md": (
         "Report",
-        ("(filter)", "(group)", "(paginate)", "(sort)"),
+        ("behaves.filter", "behaves.group", "behaves.paginate", "behaves.sort"),
         (),
     ),
     "Widgets/chart.scope.md": ("Chart", (), ()),
     "Widgets/data_grid.scope.md": ("DataGrid", (), ()),
     "Widgets/date_time_pickers.scope.md": (
         "DateTimePicker",
-        ("(dateChange)", "[end]", "[start]"),
+        ("produces.dateChange", "uses.end", "uses.start"),
         (),
     ),
     "Widgets/dialog.scope.md": (
         "dialog",
-        ("(cancel)", "(close)", "[modal]", "[open]"),
+        ("produces.cancel", "produces.close", "uses.modal", "uses.open"),
         (
             ("dialogTitle", "header"),
             ("dialogContent", "section"),
@@ -157,7 +161,7 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     "Widgets/feedback_widgets.scope.md": ("FeedbackWidgets", (), ()),
     "Widgets/list.scope.md": (
         "ul",
-        ("(filter)", "(paginate)", "(sort)"),
+        ("behaves.filter", "behaves.paginate", "behaves.sort"),
         (("listItem", "li"),),
     ),
     "Widgets/media_widgets.scope.md": ("MediaWidgets", (), ()),
@@ -166,7 +170,7 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     "Widgets/stepper.scope.md": ("Stepper", (), (("stepperStep", "step"),)),
     "Widgets/table.scope.md": (
         "table",
-        ("(filter)", "(paginate)", "(sort)"),
+        ("behaves.filter", "behaves.paginate", "behaves.sort"),
         (("tableRow", "tr"),),
     ),
 }

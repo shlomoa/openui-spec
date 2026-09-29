@@ -6,18 +6,21 @@ import type { ErrorObject, ValidateFunction } from "ajv";
 
 export type JsonObject = Record<string, any>;
 
+export type OpenUiAttributeScalar = string | number | boolean | null;
+export type OpenUiAttributeValue = OpenUiAttributeScalar | OpenUiAttributeScalar[];
+
 export interface OpenUiDocument {
   version: string;
   id: "root";
   type: string;
-  attrs?: Record<string, string | null>;
+  attrs?: Record<string, OpenUiAttributeValue>;
   children?: OpenUiElement[];
 }
 
 export interface OpenUiElement {
   id: string;
   type: string;
-  attrs?: Record<string, string | null>;
+  attrs?: Record<string, OpenUiAttributeValue>;
   children?: OpenUiElement[];
 }
 
@@ -183,17 +186,19 @@ export class OpenUiJson {
     parent.node.children![parent.index] = candidate;
   }
 
-  updateAttributes(objectId: string, attributes: Record<string, string | null>): void {
+  updateAttributes(objectId: string, attributes: Record<string, OpenUiAttributeValue>): void {
     const node = this.find(objectId);
     if (node === undefined) {
       throw new OpenUiJsonError(`object not found: ${objectId}`);
     }
     if (
       !Object.entries(attributes).every(
-        ([key, value]) => typeof key === "string" && (value === null || typeof value === "string"),
+        ([key, value]) => typeof key === "string" && isAttributeValue(value),
       )
     ) {
-      throw new OpenUiJsonError("attribute changes must map strings to strings or null");
+      throw new OpenUiJsonError(
+        "attribute changes must map strings to strings, numbers, booleans, null, or lists of these",
+      );
     }
     const updated = structuredClone(node);
     if (!Object.hasOwn(updated, "attrs")) {
@@ -300,6 +305,11 @@ function isJsonObject(value: unknown): value is JsonObject {
 
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
+}
+
+function isAttributeValue(value: unknown): boolean {
+  const items = Array.isArray(value) ? value : [value];
+  return items.every((item) => item === null || ["string", "number", "boolean"].includes(typeof item));
 }
 
 function formatValidationErrors(errors: ErrorObject[] | null | undefined): string {

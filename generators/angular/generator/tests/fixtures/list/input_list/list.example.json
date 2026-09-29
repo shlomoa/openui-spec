@@ -10,36 +10,36 @@
       "id": "taskList",
       "type": "List",
       "attrs": {
-        "[items]": "tasks",
-        "[sort]": "\"dueDate asc\"",
-        "[filter]": "searchTerm",
-        "[selection]": "\"single\"",
-        "[loading]": "isLoading",
-        "[error]": "loadError",
-        "(selectionChange)": "onSelect($event)"
+        "uses.items": "tasks",
+        "uses.sort": "\"dueDate asc\"",
+        "uses.filter": "searchTerm",
+        "uses.selection": "\"single\"",
+        "uses.loading": "isLoading",
+        "uses.error": "loadError",
+        "produces.selectionChange": "onSelect($event)"
       },
       "children": [
         {
           "id": "taskItem",
           "type": "li",
           "attrs": {
-            "[label]": "item.title",
-            "[description]": "item.due"
+            "uses.label": "item.title",
+            "uses.description": "item.due"
           }
         },
         {
           "id": "listMore",
           "type": "ActionControls",
           "attrs": {
-            "[hasMore]": "hasMore",
-            "(loadMore)": "onLoadMore()"
+            "uses.hasMore": "hasMore",
+            "produces.loadMore": "onLoadMore()"
           }
         },
         {
           "id": "listEmpty",
           "type": "FeedbackWidgets",
           "attrs": {
-            "[message]": "\"No tasks.\""
+            "uses.message": "\"No tasks.\""
           }
         }
       ]

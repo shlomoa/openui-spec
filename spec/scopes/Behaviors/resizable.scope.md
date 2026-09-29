@@ -13,7 +13,7 @@ A behavior that lets the user change the size of an element within a page or vie
 
 ## Attributes
 
-- `[target]` — Uses — element reference to the element the behavior resizes (the [controlled element](../scope.md#controlled-element)).
+- `uses.target` — Uses — reference — element reference to the element the behavior resizes (the [controlled element](../scope.md#controlled-element)).
 
 ## Accessibility
 

@@ -18,11 +18,11 @@ identity.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `[rel]` — Uses — link relationship identifying the resource as an icon.
-- `[href]` — Uses — URL or path of the icon resource.
-- `[type]` — Uses — optional MIME type hint for the icon resource.
-- `[sizes]` — Uses — optional icon dimensions or scalable icon marker.
-- `[media]` — Uses — optional media condition for choosing an icon variant.
+- `uses.rel` — Uses — string — link relationship identifying the resource as an icon.
+- `uses.href` — Uses — url — URL or path of the icon resource.
+- `uses.type` — Uses — string — optional MIME type hint for the icon resource.
+- `uses.sizes` — Uses — string — optional icon dimensions or scalable icon marker.
+- `uses.media` — Uses — string — optional media condition for choosing an icon variant.
 
 ## Accessibility
 

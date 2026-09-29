@@ -18,7 +18,7 @@ application routes, pages, views, and major work areas.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `[ariaLabel]` — Uses — accessible label for the navigation landmark or region.
+- `uses.ariaLabel` — Uses — string — accessible label for the navigation landmark or region.
 
 ## Child model
 

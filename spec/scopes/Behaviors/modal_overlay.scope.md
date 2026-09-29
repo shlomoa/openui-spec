@@ -18,7 +18,7 @@ locking is Viewport and focus control.
 
 ## Attributes
 
-- `[target]` — Uses — element reference to the surface the behavior makes modal (the [controlled element](../scope.md#controlled-element)).
+- `uses.target` — Uses — reference — element reference to the surface the behavior makes modal (the [controlled element](../scope.md#controlled-element)).
 
 ## Accessibility
 

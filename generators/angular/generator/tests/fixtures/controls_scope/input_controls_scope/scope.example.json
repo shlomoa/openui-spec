@@ -14,14 +14,14 @@
           "id": "colorScheme",
           "type": "Native",
           "attrs": {
-            "[supported]": "\"light dark\""
+            "uses.supported": "\"light dark\""
           }
         },
         {
           "id": "scrollRegion",
           "type": "Native",
           "attrs": {
-            "[overflow]": "\"auto\""
+            "uses.overflow": "\"auto\""
           }
         }
       ]
@@ -30,67 +30,67 @@
       "id": "primaryAction",
       "type": "ActionControls",
       "attrs": {
-        "[label]": "\"Save\"",
-        "(activate)": "save()"
+        "uses.label": "\"Save\"",
+        "produces.activate": "save()"
       }
     },
     {
       "id": "searchText",
       "type": "TextInputs",
       "attrs": {
-        "[placeholder]": "\"Search\"",
-        "[value]": "query"
+        "uses.placeholder": "\"Search\"",
+        "uses.value": "query"
       }
     },
     {
       "id": "shippingChoice",
       "type": "ChoiceControls",
       "attrs": {
-        "[value]": "shippingSpeed"
+        "uses.value": "shippingSpeed"
       }
     },
     {
       "id": "accentPicker",
       "type": "PickerControl",
       "attrs": {
-        "[value]": "accentColor"
+        "uses.value": "accentColor"
       }
     },
     {
       "id": "volumeRange",
       "type": "RangeControl",
       "attrs": {
-        "[min]": "0",
-        "[max]": "100",
-        "[value]": "volume"
+        "uses.min": 0,
+        "uses.max": 100,
+        "uses.value": "volume"
       }
     },
     {
       "id": "signatureCapture",
       "type": "DrawingAndCapture",
       "attrs": {
-        "[mode]": "\"draw\""
+        "uses.mode": "\"draw\""
       }
     },
     {
       "id": "statusLabel",
       "type": "DisplayPrimitives",
       "attrs": {
-        "[text]": "\"Ready\""
+        "uses.text": "\"Ready\""
       }
     },
     {
       "id": "syncStatus",
       "type": "StatusIndicator",
       "attrs": {
-        "[state]": "\"loading\""
+        "uses.state": "\"loading\""
       }
     },
     {
       "id": "skipToContent",
       "type": "LinkAndScrollControls",
       "attrs": {
-        "[target]": "\"#main\""
+        "uses.target": "\"#main\""
       }
     },
     {
@@ -105,7 +105,7 @@
               "id": "summaryHeader",
               "type": "DisplayPrimitives",
               "attrs": {
-                "[scope]": "\"row\""
+                "uses.scope": "\"row\""
               }
             },
             {

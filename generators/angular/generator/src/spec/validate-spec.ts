@@ -14,6 +14,7 @@ const ID_PATTERN = /^[a-z][A-Za-z0-9]*$/;
 const VERSION_PATTERN = /^[0-9]+\.[0-9]+\.[0-9]+$/;
 const KEBAB_TYPE_PATTERN = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
 const PASCAL_TYPE_PATTERN = /^[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?$/;
+const ATTR_KEY_PATTERN = /^(?:(?:uses|produces|behaves)\.)?[a-z][A-Za-z0-9]*$/;
 
 export function validateOpenUiSpec(document: OpenUiDocument, options: ValidateOpenUiSpecOptions = {}): void {
   const diagnostics: Diagnostic[] = [];
@@ -105,8 +106,18 @@ function validateElement(
       diagnostics.push({ path: `${path}.attrs`, message: "attrs must be an object." });
     } else {
       for (const [key, attrValue] of Object.entries(value.attrs)) {
-        if (attrValue !== null && typeof attrValue !== "string") {
-          diagnostics.push({ path: `${path}.attrs.${key}`, message: "Attribute values must be strings or null." });
+        if (!ATTR_KEY_PATTERN.test(key)) {
+          diagnostics.push({
+            path: `${path}.attrs.${key}`,
+            message: "Attribute keys must be uses.<name>, produces.<name>, behaves.<name> or a camelCase <name>.",
+          });
+        }
+        const items = Array.isArray(attrValue) ? attrValue : [attrValue];
+        if (!items.every(isAttributeScalar)) {
+          diagnostics.push({
+            path: `${path}.attrs.${key}`,
+            message: "Attribute values must be strings, numbers, booleans, null, or lists of these.",
+          });
         }
       }
     }
@@ -193,6 +204,10 @@ function toCatalogIndex(catalog: OpenUiCatalogIndex | OpenUiDocument): OpenUiCat
 
 function isValidType(type: string): boolean {
   return KEBAB_TYPE_PATTERN.test(type) || PASCAL_TYPE_PATTERN.test(type);
+}
+
+function isAttributeScalar(value: unknown): boolean {
+  return value === null || ["string", "number", "boolean"].includes(typeof value);
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

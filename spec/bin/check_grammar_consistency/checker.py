@@ -26,6 +26,7 @@ TYPE_PATTERN = re.compile(
     r"^(?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?)$"
 )
 VERSION_PATTERN = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+$")
+ATTR_KEY_PATTERN = re.compile(r"^(?:(?:uses|produces|behaves)\.)?[a-z][A-Za-z0-9]*$")
 REQUIRED_README_STATEMENTS = (
     "`EBNF.txt` is the authoritative definition of the OpenUI document format.",
     "`spec/openui.schema.json` is an executable JSON Schema projection of that format.",
@@ -69,7 +70,14 @@ def _load_json_without_duplicate_members(text: str) -> Any:
             value[key] = item
         return value
 
-    return json.loads(text, object_pairs_hook=object_from_pairs)
+    def reject_constant(name: str) -> Any:
+        raise ValueError(f"not a JSON number: {name}")
+
+    return json.loads(text, object_pairs_hook=object_from_pairs, parse_constant=reject_constant)
+
+
+def _is_scalar(value: Any) -> bool:
+    return value is None or isinstance(value, (str, bool, int, float))
 
 
 def _validate_ebnf_semantics(value: Any, *, is_root: bool) -> None:
@@ -103,11 +111,14 @@ def _validate_ebnf_semantics(value: Any, *, is_root: bool) -> None:
 
     if "attrs" in value:
         attrs = value["attrs"]
-        if not isinstance(attrs, dict) or any(
-            not isinstance(attribute_value, str) and attribute_value is not None
-            for attribute_value in attrs.values()
-        ):
-            raise ValueError("attrs values must be strings or null")
+        if not isinstance(attrs, dict):
+            raise ValueError("attrs must be an object")
+        for key, attribute_value in attrs.items():
+            if not ATTR_KEY_PATTERN.fullmatch(key):
+                raise ValueError(f"attribute key is invalid: {key}")
+            items = attribute_value if isinstance(attribute_value, list) else [attribute_value]
+            if not all(_is_scalar(item) for item in items):
+                raise ValueError(f"attribute value is invalid: {key}")
     if "children" in value:
         children = value["children"]
         if not isinstance(children, list):

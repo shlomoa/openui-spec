@@ -10,9 +10,9 @@
       "id": "productMedia",
       "type": "MediaWidgets",
       "attrs": {
-        "[src]": "\"/media/product.mp4\"",
-        "[caption]": "\"Product walkthrough\"",
-        "[controls]": "true"
+        "uses.src": "\"/media/product.mp4\"",
+        "uses.caption": "\"Product walkthrough\"",
+        "uses.controls": true
       }
     }
   ]

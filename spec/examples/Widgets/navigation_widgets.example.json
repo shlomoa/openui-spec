@@ -10,8 +10,8 @@
       "id": "sectionNavigation",
       "type": "NavigationWidgets",
       "attrs": {
-        "[ariaLabel]": "\"Sections\"",
-        "[selected]": "\"overview\""
+        "uses.ariaLabel": "\"Sections\"",
+        "uses.selected": "\"overview\""
       }
     }
   ]

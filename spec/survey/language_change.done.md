@@ -36,9 +36,9 @@ Each change is one of four actions on a rule of the language.
   [Qt Q5](qt/opens.md#q5-serialization-of-values); the approved
   [scope change](scope_change.done.md#4-add) (A4, A7, A8 and "Not added"); and the current
   spec, measured below.
-- **Status:** approved (2026-09-29). Every decision is answered by the owner or by the spec
-  itself ([Decisions](#decisions)); nothing is open. It is applied by W5 task 23, which
-  converts the grammar, the schema, the catalog, the examples, the fixtures and the tools.
+- **Status:** approved and applied (2026-09-29). Every decision is answered by the owner or by the spec
+  itself ([Decisions](#decisions)); nothing is open. W5 task 23 converted
+  the grammar, the schema, the catalog, the examples, the fixtures and the tools to it.
 - **Guiding rule:** extend the current language; do not replace what the spec already
   defines. The key keeps carrying its category, literals stay quoted, and element references
   keep their 0.3.0 form.

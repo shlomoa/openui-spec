@@ -10,8 +10,8 @@
       "id": "saveFeedback",
       "type": "FeedbackWidgets",
       "attrs": {
-        "[message]": "\"Saved successfully.\"",
-        "[severity]": "\"success\""
+        "uses.message": "\"Saved successfully.\"",
+        "uses.severity": "\"success\""
       }
     }
   ]

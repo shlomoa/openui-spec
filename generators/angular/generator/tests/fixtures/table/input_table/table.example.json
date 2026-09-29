@@ -10,9 +10,9 @@
       "id": "ordersTable",
       "type": "table",
       "attrs": {
-        "(sort)": "sortOrders($event)",
-        "(filter)": "filterOrders($event)",
-        "(paginate)": "paginateOrders($event)"
+        "behaves.sort": "sortOrders($event)",
+        "behaves.filter": "filterOrders($event)",
+        "behaves.paginate": "paginateOrders($event)"
       },
       "children": [
         {

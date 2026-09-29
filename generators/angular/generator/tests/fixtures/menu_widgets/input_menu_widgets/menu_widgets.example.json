@@ -10,9 +10,9 @@
       "id": "rowActionsMenu",
       "type": "MenuWidgets",
       "attrs": {
-        "[label]": "\"Row actions\"",
-        "[open]": "isMenuOpen",
-        "(select)": "onMenuSelect($event)"
+        "uses.label": "\"Row actions\"",
+        "uses.open": "isMenuOpen",
+        "produces.select": "onMenuSelect($event)"
       }
     }
   ]

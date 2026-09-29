@@ -10,14 +10,14 @@
       "id": "resizablePanel",
       "type": "SurfaceContainers",
       "attrs": {
-        "[title]": "\"Resizable panel\""
+        "uses.title": "\"Resizable panel\""
       }
     },
     {
       "id": "panelResize",
       "type": "Resizable",
       "attrs": {
-        "[target]": "\"resizablePanel\""
+        "uses.target": "\"resizablePanel\""
       }
     }
   ]

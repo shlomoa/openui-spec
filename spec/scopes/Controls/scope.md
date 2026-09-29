@@ -4,7 +4,7 @@ Controls define reusable interaction and rendering primitives that can appear in
 
 ## Objects
 
-- [Native](native.scope.md): A standard platform input, identified by its `[type]`, used where no more specific control family applies.
+- [Native](native.scope.md): A standard platform input, identified by its `uses.type`, used where no more specific control family applies.
 - [Action controls](action_controls.scope.md): Controls that trigger commands or state transitions, such as buttons, icon buttons, tool buttons, hamburger buttons, and toggle buttons.
 - [Text inputs](text_inputs.scope.md): Single-line, multi-line, password, search, rich text, keyboard shortcut, and metadata-driven entry controls for textual input.
 - [Choice controls](choice_controls.scope.md): Checkboxes, radio buttons, switches, dropdowns, list boxes, and combo boxes that let users select one or more values.

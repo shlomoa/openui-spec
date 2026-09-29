@@ -10,9 +10,9 @@
       "id": "visualTheme",
       "type": "Presentation",
       "attrs": {
-        "[colorScheme]": "\"light\"",
-        "[density]": "\"comfortable\"",
-        "[typography]": "\"system\""
+        "uses.colorScheme": "\"light\"",
+        "uses.density": "\"comfortable\"",
+        "uses.typography": "\"system\""
       }
     }
   ]

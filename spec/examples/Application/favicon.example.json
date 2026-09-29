@@ -7,9 +7,9 @@
       "id": "appFavicon",
       "type": "link",
       "attrs": {
-        "[rel]": "\"icon\"",
-        "[href]": "\"/favicon.ico\"",
-        "[type]": "\"image/x-icon\""
+        "uses.rel": "\"icon\"",
+        "uses.href": "\"/favicon.ico\"",
+        "uses.type": "\"image/x-icon\""
       }
     }
   ]

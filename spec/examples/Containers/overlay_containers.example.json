@@ -10,8 +10,8 @@
       "id": "helpOverlay",
       "type": "OverlayContainers",
       "attrs": {
-        "[anchor]": "\"helpButton\"",
-        "[open]": "showHelp"
+        "uses.anchor": "\"helpButton\"",
+        "uses.open": "showHelp"
       }
     }
   ]

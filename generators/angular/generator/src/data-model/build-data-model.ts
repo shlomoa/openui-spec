@@ -116,7 +116,7 @@ function findDirectChildById(parent: OpenUiElement, id: string): OpenUiElement |
  */
 function buildDialogAction(action: OpenUiElement): DataModelDialogAction {
   const text = unquote(stringAttr(action, "text")) ?? titleFromName(action.id);
-  const result = resultFromClick(stringAttr(action, "(click)")) ?? normalizeRoute(action.id);
+  const result = resultFromClick(stringAttr(action, "produces.click")) ?? normalizeRoute(action.id);
   const lowerText = text.toLowerCase();
   return {
     id: action.id,

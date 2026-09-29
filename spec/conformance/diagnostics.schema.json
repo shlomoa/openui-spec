@@ -66,8 +66,12 @@
           "description": "The root version is not a MAJOR.MINOR.PATCH string."
         },
         {
+          "const": "grammar/invalid-key",
+          "description": "An attribute key is not uses.<name>, produces.<name>, behaves.<name> or a plain camelCase <name>."
+        },
+        {
           "const": "grammar/invalid-attribute-value",
-          "description": "An attribute value is not allowed by the grammar."
+          "description": "An attribute value is not a string, number, true, false, null or a list of those."
         },
         {
           "const": "document/duplicate-id",

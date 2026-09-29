@@ -18,7 +18,7 @@ restoring it afterwards).
 
 ## Attributes
 
-- `[target]` — Uses — element reference to the viewport, page or element the behavior acts on (the [controlled element](../scope.md#controlled-element)).
+- `uses.target` — Uses — reference — element reference to the viewport, page or element the behavior acts on (the [controlled element](../scope.md#controlled-element)).
 
 ## Accessibility
 

@@ -18,9 +18,9 @@ metadata.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `[lang]` — Uses — document language tag for the application host document.
-- `[dir]` — Uses — document text direction for the application host document.
-- `[title]` — Uses — application document title.
+- `uses.lang` — Uses — string — document language tag for the application host document.
+- `uses.dir` — Uses — enum(ltr|rtl|auto) — document text direction for the application host document.
+- `uses.title` — Uses — string — application document title.
 
 ## Child model
 
