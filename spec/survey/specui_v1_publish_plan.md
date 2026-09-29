@@ -216,7 +216,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 ### W5 UI description language
 
 19. [ ] Decide attribute value typing (string/null only vs. typed values). *Directive (Q6, decided):* introduce typed values in a W5 grammar revision; this task defines which types, and task 23 adds them to the grammar.
-20. [ ] Replace the Angular-flavoured `[x]` / `(x)` key syntax with a framework-neutral one for Uses / Produces / Behaves, or formally adopt it.
+20. [ ] Replace the Angular-flavoured `[x]` / `(x)` key syntax with a framework-neutral one for Uses / Produces / Behaves. *Directive (Q7, decided 2026-09-29):* attribute keys and values change into typed attributes, as planned; this task designs the new key syntax together with the value types of task 19, and task 23 converts the grammar. Until then, keys and values stay strings, and no other task waits on this one.
 21. [ ] Define data-binding references, event payloads and i18n string references. Same-document element references already exist (0.3.0); extend, don't replace.
 22. [ ] Define versioning and compatibility policy (SemVer for the spec; how documents declare the version).
 23. [ ] Update `EBNF.txt` (authoritative) and regenerate the JSON Schema projection; `spec/bin/check_grammar_consistency` already enforces agreement. *Validate:* both accept/reject the same conformance fixtures. *Demo:* live playground page — paste JSON, see validation and rendered tree.
@@ -276,7 +276,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 4 | [ ] Add the missing terms to their scope Purposes; generate the examples for the new additions from the consolidated data; validate; release the next `0.x.0` | W1 9.13, 9.10–9.12, 9.8, in this order | Step 3 | Open |
 | 4 | [x] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy; validate all of W3 14 | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, 14.7, in this order | Step 3 | Done — PR #164 |
 | 5 | [ ] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 4 taxonomy row (W3 14.9 decides which names go in the alias columns; 14.13 sets the final entry names) | Open |
-| 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19, 21, 22 and W8 32 fixture structure (independent of each other); then W5 20; then W5 23 | Step 3; W5 20 waits on Q7; W5 23 needs 19–22 | Open |
+| 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19 and 20 (together), 21, 22 and W8 32 fixture structure (independent of each other); then W5 23 | Step 3; W5 23 needs 19–22 | Open |
 | 6 | [ ] Scope statement and in / out classification | W2 10, then 11; W2 12 (lowest priority) | Step 3 | Open |
 | 7 | [ ] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, 15 | Steps 4, 6 (W3 14.12 needs W2 11) | Open |
 | 8 | [ ] Specification outline and normative split | W4 16–18 | Step 7 | Open |
@@ -292,11 +292,9 @@ Priority: step 3 is the first specification change and unblocks the language wor
 
 ## Open questions
 
-Only the questions still open are listed. Answered questions became directives where they apply; decisions already applied are recorded as completed tasks (W0 6.1, W1 8.5 and 9.1, W3 13); decisions not yet applied are directives on the tasks they affect (Q3, the Q4 sub-question, Q6, Q8 on W4 task 18, Q9 and Q13 on W2 task 10). A question blocks only the workstream task that depends on its decision; unrelated work may proceed.
+Only the questions still open are listed. Answered questions became directives where they apply; decisions already applied are recorded as completed tasks (W0 6.1, W1 8.5 and 9.1, W3 13); decisions not yet applied are directives on the tasks they affect (Q3, the Q4 sub-question, Q6, Q7 on W5 task 20, Q8 on W4 task 18, Q9 and Q13 on W2 task 10). A question blocks only the workstream task that depends on its decision; unrelated work may proceed.
 
-| # | Question | Status | Evidence / options |
-| --- | --- | --- | --- |
-| Q7 | Attribute keys: keep `[x]` / `(x)`, or neutral keys (`uses.x`, `produces.x`, `behaves.x`)? | Deferred — blocks W5 task 20 | Still Angular syntax in `spec/README.md` and the leaf template |
+None.
 
 ## Sources
 
