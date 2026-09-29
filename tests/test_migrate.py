@@ -93,7 +93,12 @@ class MigrateTest(unittest.TestCase):
             self.assertEqual(json.loads(path.read_text(encoding="utf-8"))["attrs"], {"uses.a": 1})
 
     def _fit(self, *children: dict[str, object]) -> dict[str, object]:
-        document = {"id": "root", "version": "0.10.0", "type": "Widgets", "children": children}
+        document = {
+            "id": "root",
+            "version": self.catalog.version,
+            "type": "Widgets",
+            "children": children,
+        }
         document = json.loads(json.dumps(document))
         fit_document(document, self.contracts)
         return document

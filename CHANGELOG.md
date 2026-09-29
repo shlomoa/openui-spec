@@ -3,6 +3,63 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.11.0] - 2026-09-29
+
+### Worked examples and fixtures
+
+- Every worked example, and every generator input fixture copied from one,
+  follows the leaf contracts. Every category-prefixed attribute is declared by
+  its element's type, with a value of the declared type. Below the root, the
+  children of a leaf type are the ones its Child model allows, within their
+  multiplicity. Plain keys carry no category and are not part of a contract, so
+  they stay.
+- Attributes that a contract declares under another name are renamed:
+  - Action controls: `text` and `produces.click` (and `produces.loadMore`)
+    become `uses.label` and `produces.activate`.
+  - Chart: `uses.chartType` becomes `uses.kind` (`bar` is `comparison`) and
+    `uses.ariaLabel` becomes `uses.title`.
+  - Data grid: `uses.sortable` becomes `behaves.sort`.
+  - Link and scroll controls: `uses.target` becomes `uses.href`.
+  - List: `uses.filter` and `uses.sort` become `behaves.filter` and
+    `behaves.sort`; Table: `uses.sort` becomes `behaves.sort`.
+  - Status indicator: `uses.state` `loading` becomes `uses.mode`
+    `indeterminate`.
+  - Stepper: `produces.stepChange` and `produces.completed` become
+    `produces.selectionChange` and `produces.complete`.
+  - Structural containers: `uses.label` becomes `uses.ariaLabel`; Surface
+    containers: `uses.label` becomes `uses.title`.
+- Attributes that no contract declares are removed, for example the axes,
+  tooltip and loading state of Chart, the data of Data grid and Table, the
+  column spans of Grid items, the labels and order of `tab` and `step`
+  elements, and every attribute of the Layout, Presentation,
+  Internationalization and Interaction examples.
+- Children that a Child model does not allow are removed, for example the
+  empty-state message of Chart and List, the accordion panels inside an
+  Expandable panel, the columns of a Report and the inputs of the Date range
+  picker. The `homePage` of the Application example, which a route names, moves
+  to the root. Required children that were missing are added: the `summary` of
+  Expandable panels, the pane `section` of Splitters and the content `section`
+  of a Dialog.
+
+### Tools
+
+- `python -m spec.bin.migrate` also fits worked examples (`*.example.json`) to
+  the leaf contracts. `tests/test_example_contracts.py` fails when an example
+  uses an undeclared attribute, a value of the wrong type or a child the Child
+  model does not allow.
+- The Angular generator reads the label and result of a dialog action from
+  `uses.label` and `produces.activate`.
+
+### Upgrading to 0.11.0
+
+1. Upgrade the Python or npm package to `0.11.0` and set concrete document
+   `version` fields to `0.11.0`.
+2. Rename the attributes listed above in your documents. For a worked example
+   (`*.example.json`), `python -m spec.bin.migrate <file or folder>` does it and
+   also removes the undeclared attributes and fits the children.
+3. For the Angular generator, give each dialog action `uses.label` and
+   `produces.activate` instead of `text` and `produces.click`.
+
 ## [0.10.0] - 2026-09-29
 
 ### Leaf scope contracts
@@ -446,3 +503,4 @@ and enforced rather than adding or removing catalog types.
 [0.8.0]: https://github.com/shlomoa/openui-spec/compare/v0.7.0...v0.8.0
 [0.9.0]: https://github.com/shlomoa/openui-spec/compare/v0.8.0...v0.9.0
 [0.10.0]: https://github.com/shlomoa/openui-spec/compare/v0.9.0...v0.10.0
+[0.11.0]: https://github.com/shlomoa/openui-spec/compare/v0.10.0...v0.11.0
