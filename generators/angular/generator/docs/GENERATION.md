@@ -175,7 +175,7 @@ input document:
 
 - document `version`, `id`, `type`, `attrs`, and `children`,
 - element id/type rules,
-- `attrs` values as strings or `null`,
+- `attrs` keys and values (category-prefixed keys; typed values),
 - parent/child relationships, and
 - validation constraints documented in the spec.
 
