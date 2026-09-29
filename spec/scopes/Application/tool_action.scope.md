@@ -16,10 +16,10 @@ A tool action is a labelled application command exposed from a tool bar.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `[label]` — Uses — required visible text or accessible name for the command.
-- `[icon]` — Uses — optional technology-independent icon token for the command.
-- `[disabled]` — Uses — boolean: whether the command is unavailable.
-- `(activate)` — Produces — emitted when the command is invoked.
+- `uses.label` — Uses — string — required visible text or accessible name for the command.
+- `uses.icon` — Uses — string — optional technology-independent icon token for the command.
+- `uses.disabled` — Uses — boolean — whether the command is unavailable.
+- `produces.activate` — Produces — emitted when the command is invoked.
 
 ## Accessibility
 

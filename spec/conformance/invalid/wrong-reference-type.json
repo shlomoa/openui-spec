@@ -1,0 +1,18 @@
+{
+  "id": "root",
+  "version": "0.6.0",
+  "type": "html",
+  "children": [
+    {
+      "id": "salesChart",
+      "type": "Chart"
+    },
+    {
+      "id": "ordersItem",
+      "type": "NavItem",
+      "attrs": {
+        "uses.route": "\"salesChart\""
+      }
+    }
+  ]
+}

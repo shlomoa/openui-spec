@@ -10,9 +10,9 @@
       "id": "localeRules",
       "type": "Internationalization",
       "attrs": {
-        "[locale]": "\"en-US\"",
-        "[direction]": "\"ltr\"",
-        "[dateFormat]": "\"mediumDate\""
+        "uses.locale": "\"en-US\"",
+        "uses.direction": "\"ltr\"",
+        "uses.dateFormat": "\"mediumDate\""
       }
     }
   ]

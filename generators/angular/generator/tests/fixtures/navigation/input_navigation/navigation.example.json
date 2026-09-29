@@ -7,59 +7,59 @@
       "id": "homeRoute",
       "type": "Route",
       "attrs": {
-        "[path]": "\"home\"",
-        "[target]": "\"homePage\"",
-        "[title]": "\"Home\""
+        "uses.path": "\"home\"",
+        "uses.target": "\"homePage\"",
+        "uses.title": "\"Home\""
       }
     },
     {
       "id": "reportsRoute",
       "type": "Route",
       "attrs": {
-        "[path]": "\"reports\"",
-        "[target]": "\"reportsPage\"",
-        "[title]": "\"Reports\""
+        "uses.path": "\"reports\"",
+        "uses.target": "\"reportsPage\"",
+        "uses.title": "\"Reports\""
       }
     },
     {
       "id": "primaryNav",
       "type": "Navigation",
       "attrs": {
-        "[ariaLabel]": "\"Primary\""
+        "uses.ariaLabel": "\"Primary\""
       },
       "children": [
         {
           "id": "navHome",
           "type": "NavItem",
           "attrs": {
-            "[label]": "\"Home\"",
-            "[route]": "\"homeRoute\"",
-            "[icon]": "\"home\""
+            "uses.label": "\"Home\"",
+            "uses.route": "\"homeRoute\"",
+            "uses.icon": "\"home\""
           }
         },
         {
           "id": "navReportsGroup",
           "type": "NavGroup",
           "attrs": {
-            "[label]": "\"Reports\"",
-            "[expanded]": "true"
+            "uses.label": "\"Reports\"",
+            "uses.expanded": true
           },
           "children": [
             {
               "id": "navSalesReport",
               "type": "NavItem",
               "attrs": {
-                "[label]": "\"Sales\"",
-                "[route]": "\"reportsRoute\""
+                "uses.label": "\"Sales\"",
+                "uses.route": "\"reportsRoute\""
               }
             },
             {
               "id": "navAuditReport",
               "type": "NavItem",
               "attrs": {
-                "[label]": "\"Audit\"",
-                "[route]": "\"reportsRoute\"",
-                "[disabled]": "true"
+                "uses.label": "\"Audit\"",
+                "uses.route": "\"reportsRoute\"",
+                "uses.disabled": true
               }
             }
           ]
@@ -68,9 +68,9 @@
           "id": "navAdmin",
           "type": "NavItem",
           "attrs": {
-            "[label]": "\"Administration\"",
-            "[route]": "\"homeRoute\"",
-            "[icon]": "\"settings\""
+            "uses.label": "\"Administration\"",
+            "uses.route": "\"homeRoute\"",
+            "uses.icon": "\"settings\""
           }
         }
       ]

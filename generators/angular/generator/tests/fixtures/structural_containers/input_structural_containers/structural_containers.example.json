@@ -10,8 +10,8 @@
       "id": "mainArticle",
       "type": "StructuralContainers",
       "attrs": {
-        "[role]": "\"article\"",
-        "[label]": "\"Release notes\""
+        "uses.role": "\"article\"",
+        "uses.label": "\"Release notes\""
       }
     },
     {

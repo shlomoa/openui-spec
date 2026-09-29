@@ -629,7 +629,7 @@ test("generates scope-specific Angular Material details from the generated OpenU
     assert.match(controlsTemplate, /aria-label="Component metadata contract"/);
     assert.match(
       controlsTemplate,
-      /Native: A standard platform input, identified by its `\[type\]`/,
+      /Native: A standard platform input, identified by its `uses\.type`/,
     );
 
     const actionControlsTemplate = await readFile(
@@ -674,7 +674,7 @@ test("validates catalog root values, attrs, and scoped document uniqueness", asy
   firstScope.attrs = {
     ...firstScope.attrs,
     scopeDocument: "scopes/Controls/scope.md",
-    invalidAttr: 42 as never,
+    invalidAttr: { value: 42 } as never,
   };
 
   assert.throws(
@@ -682,7 +682,7 @@ test("validates catalog root values, attrs, and scoped document uniqueness", asy
     (error: unknown) => {
       assert.match(
         specValidationMessage(error),
-        /Attribute values must be strings or null/,
+        /Attribute values must be strings, numbers, booleans, null, or lists of these/,
       );
       return true;
     },

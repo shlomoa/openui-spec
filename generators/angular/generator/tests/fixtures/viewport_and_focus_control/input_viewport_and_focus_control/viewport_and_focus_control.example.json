@@ -10,28 +10,28 @@
       "id": "messageLog",
       "type": "StructuralContainers",
       "attrs": {
-        "[ariaLabel]": "\"Message log\""
+        "uses.ariaLabel": "\"Message log\""
       }
     },
     {
       "id": "viewportScrolling",
       "type": "ViewportAndFocusControl",
       "attrs": {
-        "[target]": "\"messageLog\""
+        "uses.target": "\"messageLog\""
       }
     },
     {
       "id": "scrollLock",
       "type": "ViewportAndFocusControl",
       "attrs": {
-        "[target]": "\"messageLog\""
+        "uses.target": "\"messageLog\""
       }
     },
     {
       "id": "focusManagement",
       "type": "ViewportAndFocusControl",
       "attrs": {
-        "[target]": "\"messageLog\""
+        "uses.target": "\"messageLog\""
       }
     }
   ]

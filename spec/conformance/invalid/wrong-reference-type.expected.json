@@ -1,0 +1,8 @@
+{
+  "diagnostics": [
+    {
+      "code": "contract/wrong-reference-type",
+      "path": "/children/1/attrs/uses.route"
+    }
+  ]
+}

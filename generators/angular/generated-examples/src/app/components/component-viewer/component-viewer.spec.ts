@@ -92,7 +92,7 @@ describe('Component documentation routing', () => {
     expect(root.textContent).toContain('Text completion');
     expect(root.textContent).toContain('type: InputAssistance');
     expect(root.textContent).toContain('id: modalInteraction');
-    expect(root.textContent).toContain('[target]: "confirmDeleteDialog"');
+    expect(root.textContent).toContain('uses.target: "confirmDeleteDialog"');
     expect(root.textContent).toContain('spec/examples/Behaviors/modal_overlay.example.json');
   });
 

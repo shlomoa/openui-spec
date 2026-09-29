@@ -17,7 +17,7 @@ Tool bars define application-level command surfaces for frequently used actions.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `[ariaLabel]` — Uses — accessible label for the toolbar command surface.
+- `uses.ariaLabel` — Uses — string — accessible label for the toolbar command surface.
 
 ## Child model
 

@@ -73,7 +73,7 @@ export class ExamplePreviewComponent {
     return SPEC_ADDITIONS.find((addition) => addition.preview === this.preview);
   }
 
-  /** The node's attributes as written in its spec example, such as a behavior's [target]. */
+  /** The node's attributes as written in its spec example, such as a behavior's uses.target. */
   protected attrs(addition: SpecAddition): string[] {
     return Object.entries(addition.node.attrs ?? {}).map(([key, value]) => `${key}: ${value}`);
   }

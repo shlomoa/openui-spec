@@ -7,19 +7,19 @@
       "id": "dashboardRoute",
       "type": "Route",
       "attrs": {
-        "[path]": "\"dashboard\"",
-        "[target]": "\"dashboardPage\"",
-        "[title]": "\"Dashboard\""
+        "uses.path": "\"dashboard\"",
+        "uses.target": "\"dashboardPage\"",
+        "uses.title": "\"Dashboard\""
       }
     },
     {
       "id": "navDashboard",
       "type": "NavItem",
       "attrs": {
-        "[label]": "\"Dashboard\"",
-        "[route]": "\"dashboardRoute\"",
-        "[icon]": "\"dashboard\"",
-        "[disabled]": "false"
+        "uses.label": "\"Dashboard\"",
+        "uses.route": "\"dashboardRoute\"",
+        "uses.icon": "\"dashboard\"",
+        "uses.disabled": false
       }
     },
     {

@@ -1216,7 +1216,7 @@ export class SaveActionComponent {
             'Each example is one node that a spec example shows for an approved term.',
             'The node id comes from the term and the node type is the catalog type of its scope.',
             'The nodes carry no new attributes: attribute names for the new capabilities come in a later release.',
-            'A behavior node names its controlled element with [target] and owns no children.',
+            'A behavior node names its controlled element with uses.target and owns no children.',
           ],
           jsonMapping: 'the Behaviors scope in /spec/openui.json',
         },

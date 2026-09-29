@@ -10,9 +10,9 @@
       "id": "accentPicker",
       "type": "PickerControl",
       "attrs": {
-        "[label]": "\"Accent color\"",
-        "[value]": "accentColor",
-        "(valueChange)": "onAccentColorChange($event)"
+        "uses.label": "\"Accent color\"",
+        "uses.value": "accentColor",
+        "produces.valueChange": "onAccentColorChange($event)"
       }
     },
     {

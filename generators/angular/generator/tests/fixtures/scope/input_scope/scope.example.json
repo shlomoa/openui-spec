@@ -10,25 +10,25 @@
       "id": "appRouting",
       "type": "Routing",
       "attrs": {
-        "[defaultRoute]": "\"dashboardRoute\""
+        "uses.defaultRoute": "\"dashboardRoute\""
       },
       "children": [
         {
           "id": "dashboardRoute",
           "type": "Route",
           "attrs": {
-            "[path]": "\"dashboard\"",
-            "[target]": "\"dashboardPage\"",
-            "[title]": "\"Dashboard\""
+            "uses.path": "\"dashboard\"",
+            "uses.target": "\"dashboardPage\"",
+            "uses.title": "\"Dashboard\""
           }
         },
         {
           "id": "ordersRoute",
           "type": "Route",
           "attrs": {
-            "[path]": "\"orders\"",
-            "[target]": "\"ordersReport\"",
-            "[title]": "\"Orders\""
+            "uses.path": "\"orders\"",
+            "uses.target": "\"ordersReport\"",
+            "uses.title": "\"Orders\""
           }
         }
       ]
@@ -37,24 +37,24 @@
       "id": "appNavigation",
       "type": "Navigation",
       "attrs": {
-        "[ariaLabel]": "\"Primary\""
+        "uses.ariaLabel": "\"Primary\""
       },
       "children": [
         {
           "id": "navDashboard",
           "type": "NavItem",
           "attrs": {
-            "[label]": "\"Dashboard\"",
-            "[route]": "\"dashboardRoute\"",
-            "[icon]": "\"dashboard\""
+            "uses.label": "\"Dashboard\"",
+            "uses.route": "\"dashboardRoute\"",
+            "uses.icon": "\"dashboard\""
           }
         },
         {
           "id": "navOrders",
           "type": "NavItem",
           "attrs": {
-            "[label]": "\"Orders\"",
-            "[route]": "\"ordersRoute\""
+            "uses.label": "\"Orders\"",
+            "uses.route": "\"ordersRoute\""
           }
         }
       ]
@@ -63,7 +63,7 @@
       "id": "appToolbar",
       "type": "ToolBar",
       "attrs": {
-        "[ariaLabel]": "\"Order commands\""
+        "uses.ariaLabel": "\"Order commands\""
       },
       "children": [
         {
@@ -74,9 +74,9 @@
               "id": "newOrderAction",
               "type": "ToolAction",
               "attrs": {
-                "[label]": "\"New order\"",
-                "[icon]": "\"add\"",
-                "(activate)": "onNewOrder()"
+                "uses.label": "\"New order\"",
+                "uses.icon": "\"add\"",
+                "produces.activate": "onNewOrder()"
               }
             }
           ]
@@ -92,23 +92,23 @@
       "type": "Report",
       "attrs": {
         "title": "\"Orders\"",
-        "[readOnly]": "true"
+        "uses.readOnly": true
       },
       "children": [
         {
           "id": "ordersTable",
           "type": "table",
           "attrs": {
-            "[data]": "orders"
+            "uses.data": "orders"
           },
           "children": [
             {
               "id": "colOrderId",
               "type": "Table",
               "attrs": {
-                "[field]": "\"id\"",
-                "[header]": "\"Order\"",
-                "[sortable]": "true"
+                "uses.field": "\"id\"",
+                "uses.header": "\"Order\"",
+                "uses.sortable": true
               }
             }
           ]

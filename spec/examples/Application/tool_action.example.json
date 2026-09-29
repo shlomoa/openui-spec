@@ -7,10 +7,10 @@
       "id": "refreshAction",
       "type": "ToolAction",
       "attrs": {
-        "[label]": "\"Refresh\"",
-        "[icon]": "\"refresh\"",
-        "[disabled]": "false",
-        "(activate)": "refresh()"
+        "uses.label": "\"Refresh\"",
+        "uses.icon": "\"refresh\"",
+        "uses.disabled": false,
+        "produces.activate": "refresh()"
       }
     }
   ]

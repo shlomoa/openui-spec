@@ -10,23 +10,23 @@
       "id": "emailField",
       "type": "TextInputs",
       "attrs": {
-        "[label]": "\"E-mail\"",
-        "[value]": "email",
-        "(valueChange)": "onEmailChange($event)"
+        "uses.label": "\"E-mail\"",
+        "uses.value": "email",
+        "produces.valueChange": "onEmailChange($event)"
       }
     },
     {
       "id": "textCompletion",
       "type": "InputAssistance",
       "attrs": {
-        "[target]": "\"emailField\""
+        "uses.target": "\"emailField\""
       }
     },
     {
       "id": "constraintValidation",
       "type": "InputAssistance",
       "attrs": {
-        "[target]": "\"emailField\""
+        "uses.target": "\"emailField\""
       }
     }
   ]

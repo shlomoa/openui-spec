@@ -13,7 +13,7 @@ A behavior that lets the user collapse and expand elements within a page or view
 
 ## Attributes
 
-- `[target]` — Uses — element reference to the element the behavior collapses and expands (the [controlled element](../scope.md#controlled-element)).
+- `uses.target` — Uses — reference — element reference to the element the behavior collapses and expands (the [controlled element](../scope.md#controlled-element)).
 
 ## Accessibility
 

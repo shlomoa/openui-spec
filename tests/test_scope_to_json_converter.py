@@ -44,10 +44,10 @@ class ScopeToJsonConverterTest(unittest.TestCase):
         self.assertEqual(
             instance["attrs"],
             {
-                "[open]": None,
-                "[modal]": None,
-                "(close)": None,
-                "(cancel)": None,
+                "uses.open": "boolean",
+                "uses.modal": "boolean",
+                "produces.close": None,
+                "produces.cancel": None,
             },
         )
         self.assertEqual(
@@ -209,12 +209,79 @@ class ScopeToJsonConverterTest(unittest.TestCase):
                 "\n"
                 "## Attributes\n"
                 "\n"
-                "- `(close)` — Uses — output attributes cannot use Uses.\n",
+                "- `produces.close` — Uses — string — output attributes cannot use Uses.\n",
                 encoding="utf-8",
             )
 
-            with self.assertRaisesRegex(ValueError, "must use Produces or Behaves"):
+            with self.assertRaisesRegex(ValueError, "must use Produces"):
                 parse_leaf_scope(invalid_scope, scopes_dir=scopes_dir)
+
+    def test_attribute_value_types_are_checked(self) -> None:
+        cases = {
+            "- `uses.open` — Uses — whether the dialog is shown.\n": "needs a valid value type",
+            "- `uses.open` — Uses — bool — whether the dialog is shown.\n": (
+                "needs a valid value type"
+            ),
+            "- `produces.close` — Produces — string — emitted on close.\n": (
+                "declares no value type"
+            ),
+            "- `uses.x` — Uses — string — one.\n- `uses.x` — Uses — string — two.\n": (
+                "duplicate attribute"
+            ),
+        }
+        for attributes, message in cases.items():
+            with self.subTest(attributes=attributes), tempfile.TemporaryDirectory() as directory:
+                scope = Path(directory) / "typed.scope.md"
+                scope.write_text(
+                    "# Typed\n\n## Identity\n\n- id: typed · type: Typed · status: draft\n\n"
+                    f"## Attributes\n\n{attributes}",
+                    encoding="utf-8",
+                )
+                with self.assertRaisesRegex(ValueError, message):
+                    parse_leaf_scope(scope, scopes_dir=Path(directory))
+
+    def test_accepted_value_types_reach_the_instance(self) -> None:
+        value_types = [
+            "string",
+            "boolean",
+            "integer",
+            "number",
+            "url",
+            "enum(ltr|rtl|auto)",
+            "reference",
+            "reference(Route|Page)",
+            "list(integer)",
+        ]
+        lines = "".join(
+            f"- `uses.value{index}` — Uses — {value_type} — a value.\n"
+            for index, value_type in enumerate(value_types)
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            scope = Path(directory) / "typed.scope.md"
+            scope.write_text(
+                "# Typed\n\n## Identity\n\n- id: typed · type: Typed · status: draft\n\n"
+                f"## Attributes\n\n{lines}- `behaves.sort` — Behaves — sorts.\n",
+                encoding="utf-8",
+            )
+            instance = parse_leaf_scope(scope, scopes_dir=Path(directory))["children"][0]
+
+        expected = {f"uses.value{index}": value for index, value in enumerate(value_types)}
+        expected["behaves.sort"] = None
+        self.assertEqual(instance["attrs"], expected)
+
+    def test_reference_to_unknown_type_fails_the_build(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            spec_dir = Path(directory)
+            scopes_dir = spec_dir / "scopes"
+            scopes_dir.mkdir()
+            (scopes_dir / "scope.md").write_text("# Scopes\n\nRoot.\n", encoding="utf-8")
+            (scopes_dir / "link.scope.md").write_text(
+                "# Link\n\n## Identity\n\n- id: link · type: Link · status: draft\n\n"
+                "## Attributes\n\n- `uses.to` — Uses — reference(NoSuchType) — target.\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "unknown types"):
+                build_openui_document(spec_dir=spec_dir, version="0.0.0")
 
     def test_malformed_identity_section_raises_value_error(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:

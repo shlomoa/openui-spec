@@ -225,11 +225,11 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W5 UI description language
 
-19. [ ] Decide attribute value typing (string/null only vs. typed values). *Directive (Q6, decided):* introduce typed values in a W5 grammar revision; this task defines which types, and task 23 adds them to the grammar.
-20. [ ] Replace the Angular-flavoured `[x]` / `(x)` key syntax with a framework-neutral one for Uses / Produces / Behaves. *Directive (Q7, decided 2026-09-29):* attribute keys and values change into typed attributes, as planned; this task designs the new key syntax together with the value types of task 19, and task 23 converts the grammar. Until then, keys and values stay strings, and no other task waits on this one.
-21. [ ] Define data-binding references, event payloads and i18n string references. Same-document element references already exist (0.3.0); extend, don't replace.
-22. [ ] Define versioning and compatibility policy (SemVer for the spec; how documents declare the version).
-23. [ ] Update `EBNF.txt` (authoritative) and regenerate the JSON Schema projection; `spec/bin/check_grammar_consistency` already enforces agreement. *Validate:* both accept/reject the same conformance fixtures. *Demo:* live playground page — paste JSON, see validation and rendered tree.
+19. [x] Decide attribute value typing (string/null only vs. typed values). *Directive (Q6, decided):* introduce typed values in a W5 grammar revision; this task defines which types, and task 23 adds them to the grammar. Result (2026-09-29, [language change](language_change.done.md#decisions)): string, boolean, integer, number, url, enum, reference and list; no temporal type until scope change A8's locale, format and time zone are decided.
+20. [x] Replace the Angular-flavoured `[x]` / `(x)` key syntax with a framework-neutral one for Uses / Produces / Behaves. *Directive (Q7, decided 2026-09-29):* attribute keys and values change into typed attributes, as planned; this task designs the new key syntax together with the value types of task 19, and task 23 converts the grammar. Until then, keys and values stay strings, and no other task waits on this one. Result (2026-09-29, [language change](language_change.done.md#decisions)): keys `uses.x`, `produces.x` and `behaves.x`; a Uses attribute declares its value type in the Attributes line, and the catalog carries it.
+21. [x] Define data-binding references, event payloads and i18n string references. Same-document element references already exist (0.3.0); extend, don't replace. Result (2026-09-29, [language change](language_change.done.md#decisions)): bindings stay unquoted strings and literals quoted strings; event and behavior values stay target-language expressions; element references keep the quoted id and gain `reference(Type)` typing; i18n string references are postponed by the owner.
+22. [x] Define versioning and compatibility policy (SemVer for the spec; how documents declare the version). Result (2026-09-29, [language change](language_change.done.md#decisions)): Semantic Versioning; every spec change is a new, breaking version; a tool accepts only the spec version it implements; no deprecation period and no pre-release versions in documents; package versions stay separate.
+23. [x] Update `EBNF.txt` (authoritative) and regenerate the JSON Schema projection; `spec/bin/check_grammar_consistency` already enforces agreement. *Validate:* both accept/reject the same conformance fixtures. *Demo:* live playground page — paste JSON, see validation and rendered tree. Result (2026-09-29): the EBNF, the JSON Schema, the checker, the converter, the 58 leaf Attributes lines, the catalog, the README format rules, the template and the glossary use typed keys and values ([language change](language_change.done.md#summary)); `spec.bin.migrate` regenerated every example and generator fixture; both formats agree on every conformance case; demo: [`spec/playground.html`](../playground.html).
 
 ### W6 Draft first spec
 
@@ -247,9 +247,11 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W8 Spec utilities
 
-32. [ ] Create a shared conformance suite (`spec/conformance/`: valid + invalid documents with expected diagnostics); create its fixture structure early and finalize the suite after W5 task 23 freezes the grammar and schema.
-33. [ ] After W5 task 23 and task 32, Python: parse (EBNF + JSON) → typed object model → validate (grammar, catalog membership, scope contract).
-34. [ ] After W5 task 23 and task 32, TypeScript: same API surface in `@shlomoa/openui-spec`.
+32. [x] Create a shared conformance suite (`spec/conformance/`: valid + invalid documents with expected diagnostics); create its fixture structure early and finalize the suite after W5 task 23 freezes the grammar and schema.
+    - 32.1 [x] Fixture structure. Result: [`spec/conformance/`](../conformance/README.md#conformance-suite) holds `valid/<case>.json`, `invalid/<case>.json` and `invalid/<case>.expected.json`; `diagnostics.schema.json` defines the expected-diagnostics format (a `code` with a stage prefix, `grammar/`, `document/`, `catalog/` or `contract/`, and a JSON Pointer `path`) and is the only list of codes. The ten former inline cases of `check_grammar_consistency` are now fixtures, and the checker reads them; two more show a duplicate id and an unknown type; `tests/test_conformance_suite.py` checks the layout.
+    - 32.2 [x] Finish the suite after W5 task 23. Result: every diagnostic code has an invalid case (22 cases, now including `document/unsupported-version` and the three `contract/` codes), five valid documents cover typed literals, expressions and element references, the README defines the stage order, and a test keeps every document at the current spec version.
+33. [x] After W5 task 23 and task 32, Python: parse (EBNF + JSON) → typed object model → validate (grammar, catalog membership, scope contract). Result: `bin/openui_document.py` parses text (JSON with duplicate-member detection, the grammar rules and the TatSu-compiled EBNF) into `Document`, `Element` and `Attribute` objects and validates the document, catalog and contract stages; it passes every conformance case, finds no problem in the catalog or the examples, and now backs `OpenUiJson.validate()`, `check_grammar_consistency` and `spec.bin.migrate`.
+34. [x] After W5 task 23 and task 32, TypeScript: same API surface in `@shlomoa/openui-spec`. Result: `src/document.ts` mirrors `bin/openui_document.py` (`parse`, `validate`, `validateText`, `Catalog`, `Document`, `Element`, `Attribute`, `Diagnostic`, `OpenUiParseError`), is exported from `@shlomoa/openui-spec`, backs `OpenUiJson.validate()` and the `ng-openui-spec` CLI, and reports the same diagnostics as Python on every conformance case, the catalog and the examples.
 35. [ ] Both packages pass the same suite; publish `1.0.0` to PyPI and npm as part of the M5 release. *Directive (Q3):* publish `0.x.0` versions until downstream validation clears `1.0.0`. *Demo:* the W5 playground uses the TS validator.
 
 ## Milestones
@@ -287,13 +289,13 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 4 | [x] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy; validate all of W3 14 | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, 14.7, in this order | Step 3 | Done — PR #164 |
 | 4 | [ ] Move incremental-generation and generator content out of `spec/README.md` | W4 18 | — | Open |
 | 5 | [x] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 4 taxonomy row (W3 14.9 decides which names go in the alias columns; 14.13 sets the final entry names) | Done — PR #168 |
-| 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19 and 20 (together), 21, 22 and W8 32 fixture structure (independent of each other); then W5 23 | Step 3; W5 23 needs 19–22 and the fixture structure of W8 32 | Open |
+| 5 | [x] Language decisions and grammar (M4 may start here) | W5 19 and 20 (together), 21, 22 and W8 32 fixture structure (independent of each other); then W5 23 | Step 3; W5 23 needs 19–22 and the fixture structure of W8 32 | Done — PR #169 (`0.6.0`) |
 | 6 | [ ] Scope statement and in / out classification | W2 10, then 11; W2 12 (lowest priority) | Step 3 | Open |
 | 6 | [ ] Enrich each leaf scope from the survey inventories and the alias table | W6 25 | W1 9.9 (step 5); W5 19–23 (step 5) | Open |
 | 7 | [ ] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, then 15 | Step 4 taxonomy row; W2 11 (step 6) | Open |
 | 8 | [ ] Specification outline and normative split | W4 16, then 17 | Step 7 | Open |
 | 9 | [ ] Draft the spec per the outline | W6 24 | Step 8; step 5 language row (W5 19–23) | Open |
-| 9 | [ ] Conformance suite and Python / TypeScript utilities | W8 32 (finish the suite), 33, 34 | W5 23 | Open |
+| 9 | [x] Conformance suite and Python / TypeScript utilities | W8 32 (finish the suite), 33, 34 | W5 23 | Done — PR #169 (`0.6.0`) |
 | 10 | [ ] Regenerate, migrate all examples and fixtures, `1.0.0-rc.1` | W6 26 | W6 24, 25; W5 23 | Open |
 | 11 | [ ] Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 10; step 9 utilities | Open |
 

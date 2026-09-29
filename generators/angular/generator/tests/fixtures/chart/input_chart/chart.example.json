@@ -10,22 +10,22 @@
       "id": "revenueChart",
       "type": "Chart",
       "attrs": {
-        "[chartType]": "\"bar\"",
-        "[series]": "revenueSeries",
-        "[xAxis]": "\"month\"",
-        "[yAxis]": "\"revenue\"",
-        "[legend]": "true",
-        "[tooltip]": "true",
-        "[loading]": "isLoading",
-        "[error]": "loadError",
-        "[ariaLabel]": "\"Monthly revenue bar chart\""
+        "uses.chartType": "\"bar\"",
+        "uses.series": "revenueSeries",
+        "uses.xAxis": "\"month\"",
+        "uses.yAxis": "\"revenue\"",
+        "uses.legend": true,
+        "uses.tooltip": true,
+        "uses.loading": "isLoading",
+        "uses.error": "loadError",
+        "uses.ariaLabel": "\"Monthly revenue bar chart\""
       },
       "children": [
         {
           "id": "chartEmpty",
           "type": "FeedbackWidgets",
           "attrs": {
-            "[message]": "\"No data to chart.\""
+            "uses.message": "\"No data to chart.\""
           }
         }
       ]

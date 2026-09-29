@@ -7,8 +7,9 @@ document (`id: "root"`, `version`, `type`, `children`) whose node types are exac
 [known object type](../scopes/scope.md#known-object-type) literals from the generated
 catalog. Examples distinguish specialized instances through globally unique
 ids, attributes, and known-type child composition rather than new aliases or
-pseudo-types. They exercise the attributes their scopes describe, using
-Angular-Material-style `[uses]` and `(produces)` / `(behaves)` attribute keys for
+pseudo-types. They exercise the attributes their scopes describe, using the
+[typed attribute keys](../README.md#attributes---attrs-field) `uses.name`,
+`produces.name` and `behaves.name`; their Angular-style expression values are for
 illustration only — the format is framework-independent.
 Vocabulary and aliases used by examples are defined in the
 [spec glossary](../scopes/scope.md#glossary); examples demonstrate usage and should not

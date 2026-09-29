@@ -10,9 +10,9 @@
       "id": "appointmentPicker",
       "type": "DateTimePicker",
       "attrs": {
-        "[start]": "appointmentStart",
-        "[end]": "appointmentEnd",
-        "(dateChange)": "onDateChange($event)"
+        "uses.start": "appointmentStart",
+        "uses.end": "appointmentEnd",
+        "produces.dateChange": "onDateChange($event)"
       }
     },
     {

@@ -10,10 +10,10 @@
       "id": "ordersGrid",
       "type": "DataGrid",
       "attrs": {
-        "[data]": "orders",
-        "[selection]": "\"multiple\"",
-        "[sortable]": "true",
-        "(selectionChange)": "onOrderSelection($event)"
+        "uses.data": "orders",
+        "uses.selection": "\"multiple\"",
+        "uses.sortable": true,
+        "produces.selectionChange": "onOrderSelection($event)"
       }
     },
     {

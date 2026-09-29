@@ -10,8 +10,8 @@
       "id": "workspaceSplitter",
       "type": "Splitters",
       "attrs": {
-        "[orientation]": "\"horizontal\"",
-        "[position]": "320"
+        "uses.orientation": "\"horizontal\"",
+        "uses.position": 320
       }
     },
     {

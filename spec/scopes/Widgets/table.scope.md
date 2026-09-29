@@ -18,9 +18,9 @@ focus and editing belong to Data grid.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `(sort)` — Behaves — orders rows by a chosen column.
-- `(filter)` — Behaves — narrows the visible rows by a predicate.
-- `(paginate)` — Behaves — splits rows into navigable pages.
+- `behaves.sort` — Behaves — orders rows by a chosen column.
+- `behaves.filter` — Behaves — narrows the visible rows by a predicate.
+- `behaves.paginate` — Behaves — splits rows into navigable pages.
 
 ## Child model
 

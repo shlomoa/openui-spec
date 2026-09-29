@@ -6,9 +6,11 @@ import test from "node:test";
 
 import { OpenUiJson, OpenUiJsonError, OpenUiValidationError } from "../src/index";
 
+const SPEC_VERSION = readFileSync(path.resolve(__dirname, "..", "..", "SCHEMA_VERSION"), "utf8").trim();
+
 function documentWith(childType = "Table"): Record<string, any> {
   return {
-    version: "0.6.0",
+    version: SPEC_VERSION,
     id: "root",
     type: "html",
     children: [{ id: "target", type: childType }],

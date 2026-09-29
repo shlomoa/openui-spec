@@ -8,7 +8,8 @@ repos:
       - id: check-added-large-files
       - id: check-json
         # TypeScript tsconfig files are JSONC and may contain comments.
-        exclude: '(^|/)tsconfig(?:\.[^/]+)?\.json$'
+        # Invalid conformance documents may be invalid JSON on purpose.
+        exclude: '(^|/)tsconfig(?:\.[^/]+)?\.json$|^spec/conformance/invalid/[^/]*(?<!\.expected)\.json$'
       - id: check-yaml
       - id: end-of-file-fixer
       - id: mixed-line-ending
@@ -32,6 +33,8 @@ repos:
     hooks:
       - id: prettier
         types_or: [json, markdown]
+        # Invalid conformance documents are test data, read as raw text.
+        exclude: '^spec/conformance/invalid/[^/]*(?<!\.expected)\.json$'
 
   - repo: local
     hooks:
@@ -42,7 +45,7 @@ repos:
         additional_dependencies:
           - jsonschema==4.26.0
           - TatSu==5.24.0
-        files: ^(SCHEMA_VERSION|spec/(EBNF\.txt|openui\.json|openui\.schema\.json|README\.md|scopes/.*|bin/to_json/.*|bin/check_grammar_consistency/.*)|tests/test_grammar_consistency\.py)$
+        files: ^(SCHEMA_VERSION|bin/openui_document\.py|spec/(EBNF\.txt|openui\.json|openui\.schema\.json|README\.md|scopes/.*|bin/to_json/.*|bin/check_grammar_consistency/.*|conformance/.*)|tests/test_grammar_consistency\.py)$
         pass_filenames: false
       - id: openui-spec-lint
         name: OpenUI spec-content lint

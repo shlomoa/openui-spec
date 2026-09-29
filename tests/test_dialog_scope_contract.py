@@ -11,7 +11,7 @@ TEMPLATE_SECTIONS = (
     "## Accessibility",
     "## Validation notes",
 )
-CONTRACT_KEYS = ("[open]", "[modal]", "(close)", "(cancel)")
+CONTRACT_KEYS = ("uses.open", "uses.modal", "produces.close", "produces.cancel")
 
 
 class DialogScopeContractTest(unittest.TestCase):

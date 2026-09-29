@@ -18,7 +18,7 @@ application content.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `[defaultRoute]` — Uses — optional reference to the `id` of a `Route` owned by this routing definition; used when the application does not receive a more specific navigation target.
+- `uses.defaultRoute` — Uses — reference(Route) — optional reference to the `id` of a `Route` owned by this routing definition; used when the application does not receive a more specific navigation target.
 
 ## Child model
 

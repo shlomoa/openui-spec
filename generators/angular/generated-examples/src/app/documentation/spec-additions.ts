@@ -501,7 +501,7 @@ export const SPEC_ADDITIONS: readonly SpecAddition[] = [
     node: {
       id: 'modalInteraction',
       type: 'ModalOverlay',
-      attrs: { '[target]': '"confirmDeleteDialog"' },
+      attrs: { 'uses.target': '"confirmDeleteDialog"' },
     },
   },
   {
@@ -512,7 +512,7 @@ export const SPEC_ADDITIONS: readonly SpecAddition[] = [
     node: {
       id: 'viewportScrolling',
       type: 'ViewportAndFocusControl',
-      attrs: { '[target]': '"messageLog"' },
+      attrs: { 'uses.target': '"messageLog"' },
     },
   },
   {
@@ -523,7 +523,7 @@ export const SPEC_ADDITIONS: readonly SpecAddition[] = [
     node: {
       id: 'scrollLock',
       type: 'ViewportAndFocusControl',
-      attrs: { '[target]': '"messageLog"' },
+      attrs: { 'uses.target': '"messageLog"' },
     },
   },
   {
@@ -531,7 +531,11 @@ export const SPEC_ADDITIONS: readonly SpecAddition[] = [
     term: 'Text completion',
     preview: 'addition-text-completion',
     source: 'spec/examples/Behaviors/input_assistance.example.json',
-    node: { id: 'textCompletion', type: 'InputAssistance', attrs: { '[target]': '"emailField"' } },
+    node: {
+      id: 'textCompletion',
+      type: 'InputAssistance',
+      attrs: { 'uses.target': '"emailField"' },
+    },
   },
   {
     item: 'behaviors',
@@ -541,7 +545,7 @@ export const SPEC_ADDITIONS: readonly SpecAddition[] = [
     node: {
       id: 'constraintValidation',
       type: 'InputAssistance',
-      attrs: { '[target]': '"emailField"' },
+      attrs: { 'uses.target': '"emailField"' },
     },
   },
   {
@@ -552,7 +556,7 @@ export const SPEC_ADDITIONS: readonly SpecAddition[] = [
     node: {
       id: 'focusManagement',
       type: 'ViewportAndFocusControl',
-      attrs: { '[target]': '"messageLog"' },
+      attrs: { 'uses.target': '"messageLog"' },
     },
   },
 ];

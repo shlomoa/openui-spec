@@ -1,0 +1,8 @@
+{
+  "diagnostics": [
+    {
+      "code": "contract/unresolved-reference",
+      "path": "/children/0/attrs/uses.route"
+    }
+  ]
+}

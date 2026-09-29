@@ -10,9 +10,9 @@
       "id": "signatureCapture",
       "type": "DrawingAndCapture",
       "attrs": {
-        "[label]": "\"Signature\"",
-        "[mode]": "\"draw\"",
-        "(capture)": "saveSignature($event)"
+        "uses.label": "\"Signature\"",
+        "uses.mode": "\"draw\"",
+        "produces.capture": "saveSignature($event)"
       }
     }
   ]

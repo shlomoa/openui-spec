@@ -10,24 +10,24 @@
       "id": "salesChart",
       "type": "Chart",
       "attrs": {
-        "[chartType]": "\"bar\"",
-        "[series]": "salesSeries",
-        "[ariaLabel]": "\"Sales by month\""
+        "uses.chartType": "\"bar\"",
+        "uses.series": "salesSeries",
+        "uses.ariaLabel": "\"Sales by month\""
       }
     },
     {
       "id": "salesTable",
       "type": "table",
       "attrs": {
-        "[data]": "sales"
+        "uses.data": "sales"
       },
       "children": [
         {
           "id": "colMonth",
           "type": "Table",
           "attrs": {
-            "[field]": "\"month\"",
-            "[header]": "\"Month\""
+            "uses.field": "\"month\"",
+            "uses.header": "\"Month\""
           }
         }
       ]
@@ -36,22 +36,22 @@
       "id": "ordersGrid",
       "type": "DataGrid",
       "attrs": {
-        "[data]": "orders",
-        "[sortable]": "true"
+        "uses.data": "orders",
+        "uses.sortable": true
       }
     },
     {
       "id": "recentList",
       "type": "List",
       "attrs": {
-        "[items]": "recent"
+        "uses.items": "recent"
       },
       "children": [
         {
           "id": "recentItem",
           "type": "li",
           "attrs": {
-            "[label]": "item.title"
+            "uses.label": "item.title"
           }
         }
       ]
@@ -60,37 +60,37 @@
       "id": "saveFeedback",
       "type": "FeedbackWidgets",
       "attrs": {
-        "[message]": "\"Saved successfully.\""
+        "uses.message": "\"Saved successfully.\""
       }
     },
     {
       "id": "productMedia",
       "type": "MediaWidgets",
       "attrs": {
-        "[src]": "\"/media/product.mp4\"",
-        "[controls]": "true"
+        "uses.src": "\"/media/product.mp4\"",
+        "uses.controls": true
       }
     },
     {
       "id": "sectionNavigation",
       "type": "NavigationWidgets",
       "attrs": {
-        "[ariaLabel]": "\"Sections\""
+        "uses.ariaLabel": "\"Sections\""
       }
     },
     {
       "id": "rowActionsMenu",
       "type": "MenuWidgets",
       "attrs": {
-        "[label]": "\"Row actions\"",
-        "[open]": "isMenuOpen"
+        "uses.label": "\"Row actions\"",
+        "uses.open": "isMenuOpen"
       }
     },
     {
       "id": "rangePicker",
       "type": "DateTimePicker",
       "attrs": {
-        "[rangePicker]": "\"picker\""
+        "uses.rangePicker": "\"picker\""
       },
       "children": [
         {
@@ -115,14 +115,14 @@
       "id": "wizard",
       "type": "Stepper",
       "attrs": {
-        "[linear]": "true"
+        "uses.linear": true
       },
       "children": [
         {
           "id": "stepOne",
           "type": "step",
           "attrs": {
-            "[label]": "\"Step 1\""
+            "uses.label": "\"Step 1\""
           }
         }
       ]
@@ -131,8 +131,8 @@
       "id": "infoDialog",
       "type": "Dialog",
       "attrs": {
-        "[modal]": "true",
-        "[open]": "showInfo"
+        "uses.modal": true,
+        "uses.open": "showInfo"
       },
       "children": [
         {

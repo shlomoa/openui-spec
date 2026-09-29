@@ -14,14 +14,14 @@ Angular Material app that already contains the manifestation described by
 modal. Every `type` is an exact catalog literal; stable ids identify the dialog
 regions and action instances:
 
-| Example node                       | Attributes                                                                                                          | Derived Angular Material manifestation                               |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| `confirmDialog` (`Dialog`)         | `[modal]=true`, `[open]=isOpen`, `[ariaLabel]="Confirm deletion"`, `[restoreFocus]=true`, `(close)=onClose($event)` | `MatDialog.open(...)` with `ariaLabel` + `restoreFocus` config       |
-| `dialogTitle` (`header`)           | `text="Delete item?"`                                                                                               | `<h2 mat-dialog-title>`                                              |
-| `dialogContent` (`section`)        | `text="This action cannot be undone."`                                                                              | `<mat-dialog-content>`                                               |
-| `dialogActions` (`footer`)         | —                                                                                                                   | `<mat-dialog-actions>`                                               |
-| `cancelDialog` (`ActionControls`)  | `text="Cancel"`, `(click)=close('cancel')`                                                                          | `<button mat-button (click)="close('cancel')">`                      |
-| `confirmDelete` (`ActionControls`) | `text="Delete"`, `(click)=close('confirm')`                                                                         | `<button mat-raised-button color="warn" (click)="close('confirm')">` |
+| Example node                       | Attributes                                                                                                                             | Derived Angular Material manifestation                               |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `confirmDialog` (`Dialog`)         | `uses.modal=true`, `uses.open=isOpen`, `uses.ariaLabel="Confirm deletion"`, `uses.restoreFocus=true`, `produces.close=onClose($event)` | `MatDialog.open(...)` with `ariaLabel` + `restoreFocus` config       |
+| `dialogTitle` (`header`)           | `text="Delete item?"`                                                                                                                  | `<h2 mat-dialog-title>`                                              |
+| `dialogContent` (`section`)        | `text="This action cannot be undone."`                                                                                                 | `<mat-dialog-content>`                                               |
+| `dialogActions` (`footer`)         | —                                                                                                                                      | `<mat-dialog-actions>`                                               |
+| `cancelDialog` (`ActionControls`)  | `text="Cancel"`, `produces.click=close('cancel')`                                                                                      | `<button mat-button (click)="close('cancel')">`                      |
+| `confirmDelete` (`ActionControls`) | `text="Delete"`, `produces.click=close('confirm')`                                                                                     | `<button mat-raised-button color="warn" (click)="close('confirm')">` |
 
 `MatDialogTitle`, `MatDialogContent`, `MatDialogActions`, and the generated
 component selector are Angular Material implementation details, not OpenUI
@@ -35,7 +35,7 @@ Required scaffold files derived from the use case:
   actions.
 - An `app-root` host that opens the dialog via `MatDialog`, passing the
   `ariaLabel` and `restoreFocus` options and subscribing to `afterClosed()`
-  (the `(close)` / `onClose($event)` binding).
+  (the `produces.close` / `onClose($event)` binding).
 
 ## 2. Generate the baseline workspace (npm)
 
@@ -82,7 +82,7 @@ cannot be undone.</mat-dialog-content>`, and the Cancel / Delete actions.
 - `src/components/app-confirm-dialog/app-confirm-dialog.component.scss` — minimal
   layout styling for the content and actions.
 - `src/main.ts` — `app-root` injects `MatDialog`, tracks an `isOpen` signal
-  (mirroring `[open]=isOpen`), opens `AppConfirmDialogComponent` with
+  (mirroring `uses.open=isOpen`), opens `AppConfirmDialogComponent` with
   `{ ariaLabel: 'Confirm deletion', restoreFocus: true, disableClose: false }`,
   and wires `afterClosed()` to `onClose()`.
 
