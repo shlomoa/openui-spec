@@ -225,10 +225,10 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W5 UI description language
 
-19. [ ] Decide attribute value typing (string/null only vs. typed values). *Directive (Q6, decided):* introduce typed values in a W5 grammar revision; this task defines which types, and task 23 adds them to the grammar.
-20. [ ] Replace the Angular-flavoured `[x]` / `(x)` key syntax with a framework-neutral one for Uses / Produces / Behaves. *Directive (Q7, decided 2026-09-29):* attribute keys and values change into typed attributes, as planned; this task designs the new key syntax together with the value types of task 19, and task 23 converts the grammar. Until then, keys and values stay strings, and no other task waits on this one.
-21. [ ] Define data-binding references, event payloads and i18n string references. Same-document element references already exist (0.3.0); extend, don't replace.
-22. [ ] Define versioning and compatibility policy (SemVer for the spec; how documents declare the version).
+19. [ ] Decide attribute value typing (string/null only vs. typed values). *Directive (Q6, decided):* introduce typed values in a W5 grammar revision; this task defines which types, and task 23 adds them to the grammar. *In progress — chain 2, branch claude/chain-2-language-utilities.*
+20. [ ] Replace the Angular-flavoured `[x]` / `(x)` key syntax with a framework-neutral one for Uses / Produces / Behaves. *Directive (Q7, decided 2026-09-29):* attribute keys and values change into typed attributes, as planned; this task designs the new key syntax together with the value types of task 19, and task 23 converts the grammar. Until then, keys and values stay strings, and no other task waits on this one. *In progress — chain 2, branch claude/chain-2-language-utilities.*
+21. [ ] Define data-binding references, event payloads and i18n string references. Same-document element references already exist (0.3.0); extend, don't replace. *In progress — chain 2, branch claude/chain-2-language-utilities.*
+22. [ ] Define versioning and compatibility policy (SemVer for the spec; how documents declare the version). *In progress — chain 2, branch claude/chain-2-language-utilities.*
 23. [ ] Update `EBNF.txt` (authoritative) and regenerate the JSON Schema projection; `spec/bin/check_grammar_consistency` already enforces agreement. *Validate:* both accept/reject the same conformance fixtures. *Demo:* live playground page — paste JSON, see validation and rendered tree.
 
 ### W6 Draft first spec
