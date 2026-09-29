@@ -61,6 +61,14 @@ repos:
           - Markdown==3.11
         files: ^(spec/taxonomy/generic-ui-taxonomy\.(md|html)|spec/taxonomy/images/.*\.svg|spec/bin/render_taxonomy_html\.py)$
         pass_filenames: false
+      - id: taxonomy-tree-html
+        name: Taxonomy tree HTML up to date
+        entry: python -m spec.bin.render_taxonomy_tree --check
+        language: python
+        additional_dependencies:
+          - Markdown==3.11
+        files: ^(spec/scopes/taxonomy_mapping\.md|spec/taxonomy/taxonomy-tree\.html|spec/bin/render_taxonomy_tree\.py)$
+        pass_filenames: false
       - id: markdown-internal-links
         name: Markdown internal links
         entry: python -m spec.bin.check_links

@@ -34,6 +34,10 @@ The alias columns give the names that the surveyed sources use for the same entr
 - **Angular Material:** the component families of the
   [Angular Material survey mapping](../survey/angular-material/taxonomy_mapping.md#entries-by-primary-openui-scope).
 
+The [taxonomy tree](../taxonomy/taxonomy-tree.html) is an interactive view of this document,
+generated from it: the sections, subcategories and entries as a collapsible tree, with the
+alias columns as a per-source name overlay.
+
 A framework name spelled like an OpenUI term but meaning something else is not an alias;
 it stays in the glossary note "Same name, different meaning:" of that term.
 
