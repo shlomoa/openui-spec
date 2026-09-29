@@ -14,6 +14,17 @@ A control that guides the user through a multi-step process as an ordered sequen
 of steps, with optional completion gating and branching. A wizard is a stepper
 hosted in a dialog.
 
+## Attributes
+
+Categories are defined in [`../scope.md`](../scope.md):
+
+- `uses.selectedIndex` — Uses — integer — the position of the current step, counted from zero.
+- `uses.linear` — Uses — boolean — whether a step must be completed before the next one opens.
+- `uses.branching` — Uses — boolean — whether a step may choose which step comes next.
+- `uses.orientation` — Uses — enum(horizontal|vertical) — the direction in which the steps are shown.
+- `produces.selectionChange` — Produces — emitted when the current step changes.
+- `produces.complete` — Produces — emitted when the last step is finished.
+
 ## Child model
 
 A stepper owns its ordered steps:

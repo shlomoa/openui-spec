@@ -62,10 +62,8 @@ class TableContractTest(unittest.TestCase):
 
         self.assertEqual(table["type"], table_contract["type"])
         self.assertEqual(set(table["attrs"]), set(table_contract["attrs"]))
-        self.assertEqual(
-            table["children"],
-            [{"id": "ordersTableRow", "type": table_contract["children"][0]["type"]}],
-        )
+        self.assertIn("tr", [child["type"] for child in table_contract["children"]])
+        self.assertEqual(table["children"], [{"id": "ordersTableRow", "type": "tr"}])
 
 
 if __name__ == "__main__":

@@ -14,13 +14,18 @@ including nested menus that present command or choice lists in a menu pattern.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This family inherits concrete
-open state, active item, orientation, trigger, and command attributes from the selected
-menu implementation.
+Categories are defined in [`../scope.md`](../scope.md):
+
+- `uses.label` — Uses — string — the text of a menu button, or the accessible name of the menu.
+- `uses.open` — Uses — boolean — whether the menu is shown.
+- `uses.anchor` — Uses — reference — the element that opens the menu (its [trigger](../scope.md#trigger)).
+- `uses.orientation` — Uses — enum(horizontal|vertical) — the direction of the menu items; a menubar is horizontal.
+- `produces.select` — Produces — emitted when a menu item is chosen.
 
 ## Child model
 
-Menu widgets do not define a fixed child model at this abstraction level.
+- item — menuitem — 0..n — a command or choice in the menu.
+- submenu — MenuWidgets — 0..n — a nested menu.
 
 ## Accessibility
 

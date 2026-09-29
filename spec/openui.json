@@ -1090,7 +1090,19 @@
               "children": [
                 {
                   "id": "chartInstance",
-                  "type": "Chart"
+                  "type": "Chart",
+                  "attrs": {
+                    "uses.kind": "enum(comparison|trend|composition|distribution|relationship|hierarchy|network|flow)",
+                    "uses.series": "list(number)",
+                    "uses.title": "string",
+                    "uses.legend": "boolean"
+                  },
+                  "children": [
+                    {
+                      "id": "chartAnnotation",
+                      "type": "annotation"
+                    }
+                  ]
                 }
               ]
             },
@@ -1114,6 +1126,14 @@
                   },
                   "children": [
                     {
+                      "id": "tableCaption",
+                      "type": "caption"
+                    },
+                    {
+                      "id": "tableHeader",
+                      "type": "thead"
+                    },
+                    {
                       "id": "tableRow",
                       "type": "tr"
                     }
@@ -1133,7 +1153,27 @@
               "children": [
                 {
                   "id": "dataGridInstance",
-                  "type": "DataGrid"
+                  "type": "DataGrid",
+                  "attrs": {
+                    "uses.selection": "enum(none|single|multiple)",
+                    "uses.editable": "boolean",
+                    "uses.resizableColumns": "boolean",
+                    "uses.reorderableColumns": "boolean",
+                    "behaves.sort": null,
+                    "behaves.filter": null,
+                    "behaves.paginate": null,
+                    "produces.selectionChange": null
+                  },
+                  "children": [
+                    {
+                      "id": "dataGridHeader",
+                      "type": "thead"
+                    },
+                    {
+                      "id": "dataGridRow",
+                      "type": "tr"
+                    }
+                  ]
                 }
               ]
             },
@@ -1151,9 +1191,11 @@
                   "id": "listInstance",
                   "type": "ul",
                   "attrs": {
+                    "uses.selection": "enum(none|single|multiple)",
                     "behaves.sort": null,
                     "behaves.filter": null,
-                    "behaves.paginate": null
+                    "behaves.paginate": null,
+                    "produces.selectionChange": null
                   },
                   "children": [
                     {
@@ -1176,7 +1218,14 @@
               "children": [
                 {
                   "id": "feedbackWidgetsInstance",
-                  "type": "FeedbackWidgets"
+                  "type": "FeedbackWidgets",
+                  "attrs": {
+                    "uses.message": "string",
+                    "uses.severity": "enum(none|information|success|warning|error)",
+                    "uses.duration": "integer",
+                    "uses.anchor": "reference",
+                    "produces.close": null
+                  }
                 }
               ]
             },
@@ -1192,7 +1241,17 @@
               "children": [
                 {
                   "id": "mediaWidgetsInstance",
-                  "type": "MediaWidgets"
+                  "type": "MediaWidgets",
+                  "attrs": {
+                    "uses.src": "url",
+                    "uses.controls": "boolean"
+                  },
+                  "children": [
+                    {
+                      "id": "mediaWidgetsCaptions",
+                      "type": "track"
+                    }
+                  ]
                 }
               ]
             },
@@ -1208,7 +1267,16 @@
               "children": [
                 {
                   "id": "navigationWidgetsInstance",
-                  "type": "NavigationWidgets"
+                  "type": "NavigationWidgets",
+                  "attrs": {
+                    "uses.ariaLabel": "string",
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "uses.selected": "string",
+                    "uses.pageSize": "integer",
+                    "uses.total": "integer",
+                    "produces.selectionChange": null,
+                    "produces.pageChange": null
+                  }
                 }
               ]
             },
@@ -1224,7 +1292,24 @@
               "children": [
                 {
                   "id": "menuWidgetsInstance",
-                  "type": "MenuWidgets"
+                  "type": "MenuWidgets",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.open": "boolean",
+                    "uses.anchor": "reference",
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "produces.select": null
+                  },
+                  "children": [
+                    {
+                      "id": "menuWidgetsItem",
+                      "type": "menuitem"
+                    },
+                    {
+                      "id": "menuWidgetsSubmenu",
+                      "type": "MenuWidgets"
+                    }
+                  ]
                 }
               ]
             },
@@ -1242,8 +1327,10 @@
                   "id": "dateTimePickersInstance",
                   "type": "DateTimePicker",
                   "attrs": {
+                    "uses.label": "string",
                     "uses.start": "string",
                     "uses.end": "string",
+                    "uses.disabled": "boolean",
                     "produces.dateChange": null
                   }
                 }
@@ -1262,6 +1349,14 @@
                 {
                   "id": "stepperInstance",
                   "type": "Stepper",
+                  "attrs": {
+                    "uses.selectedIndex": "integer",
+                    "uses.linear": "boolean",
+                    "uses.branching": "boolean",
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "produces.selectionChange": null,
+                    "produces.complete": null
+                  },
                   "children": [
                     {
                       "id": "stepperStep",

@@ -15,13 +15,21 @@ A tree grid is a data grid whose rows can expand and collapse.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This family inherits concrete
-row, column, selection, sorting, filtering, and editing attributes from the selected
-grid implementation.
+Categories are defined in [`../scope.md`](../scope.md):
+
+- `uses.selection` — Uses — enum(none|single|multiple) — the row selection mode.
+- `uses.editable` — Uses — boolean — whether cells can be edited.
+- `uses.resizableColumns` — Uses — boolean — whether the user can resize columns.
+- `uses.reorderableColumns` — Uses — boolean — whether the user can reorder columns.
+- `behaves.sort` — Behaves — orders rows by a chosen column.
+- `behaves.filter` — Behaves — narrows the visible rows by a predicate.
+- `behaves.paginate` — Behaves — splits rows into navigable pages.
+- `produces.selectionChange` — Produces — emitted when the selected rows change.
 
 ## Child model
 
-Data grids do not define a fixed child model at this abstraction level.
+- header — thead — 0..1 — the header rows, with column labels and sort indicators.
+- row — tr — 0..n — a row of cells.
 
 ## Accessibility
 
@@ -32,3 +40,4 @@ and selection or editing state when those capabilities are present.
 
 - Use the Table widget (`table.scope.md`) for standard tabular data; use this widget for
   interactive grid behavior.
+- The header belongs to its grid; it is not a separate widget.
