@@ -102,7 +102,7 @@ Given a reference document:
 ```json
 {
   "id": "root",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "type": "Dialog",
   "attrs": { "title": "Reference", "obsolete": "true" },
   "children": [{ "id": "page", "type": "page", "attrs": { "title": "Old" } }]
@@ -114,7 +114,7 @@ and a new document:
 ```json
 {
   "id": "root",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "type": "Dialog",
   "attrs": { "title": "New", "introduced": "true" },
   "children": [

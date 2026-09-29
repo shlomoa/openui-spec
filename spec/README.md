@@ -342,7 +342,7 @@ rules:
 
 - `"id"` MUST be `"root"`.
 - `"version"` is REQUIRED (top-level only) and MUST equal the current value in
-  the repository-root `SCHEMA_VERSION` file (currently `0.7.0`).
+  the repository-root `SCHEMA_VERSION` file (currently `0.8.0`).
 - `"type"` MUST be `"html"`.
 
 `EBNF.txt` defines the required root fields, literal root id, version syntax,
@@ -487,7 +487,7 @@ The format itself is in [EBNF](./EBNF.txt)
 
 ### Syntax rules
 
-- **Version field (top-level only):** Required semantic version string (e.g., "0.7.0") identifying the spec version
+- **Version field (top-level only):** Required semantic version string (e.g., "0.8.0") identifying the spec version
 - **ID field:** Must be a camelCase alphanumeric string (starts with lowercase letter, can contain uppercase letters and digits)
 - **Type field:** Must satisfy the grammar's HTML/kebab-case/PascalCase syntax and, in a concrete UI document, exactly match a literal `type` in `spec/openui.json`
 - **Attributes field:** Key-value pairs. A key is `uses.<name>`, `produces.<name>`, `behaves.<name>` or a plain `<name>` (camelCase); the prefix identifies the input, output, or behavior category, and all such categories must stay inside the `attrs` object. A value is a string, number, `true`, `false`, `null`, or a list of these.
@@ -607,7 +607,7 @@ the `scopes` tree: a `<object>.example.json` for each leaf scope and a composite
 ```json
 {
   "id": "root",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "type": "Pages",
   "attrs": {
     "size": "1960x1080",
