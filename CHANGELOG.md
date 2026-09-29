@@ -5,6 +5,26 @@ published packages.
 
 ## [0.6.0] - 2026-09-29
 
+### Scope
+
+- `spec/README.md` has a new Scope section. It defines out of scope (not
+  addressed) and deferred (a later edition may address it), and lists what is
+  in scope, out of scope and deferred. Every catalog object is in scope.
+- Generators, browser and framework machinery, platform prompts,
+  implementation techniques, data that is not UI and immersive views are out of
+  scope. Host-shell presence, docking, multiple-document workspaces, the
+  Accessibility and Composition top-level scopes, ruby annotation, duration
+  selection and index navigation are deferred.
+
+### Categorization
+
+- The taxonomy mapping has a new section, Primary categories of the leaf
+  scopes. Each leaf scope with taxonomy entries has one primary section and
+  subcategory, chosen by three stated rules, and lists its secondary roles.
+  favicon.ico, index.html and Native have no taxonomy entry and are not placed.
+- No scope folder or leaf moved: the taxonomy and the scope tree stay linked
+  views, and every scope id, type and path is unchanged.
+
 ### Specification structure
 
 - Generator content moved out of `spec/README.md`. The Incremental generation
