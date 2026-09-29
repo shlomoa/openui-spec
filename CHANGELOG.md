@@ -17,6 +17,9 @@ published packages.
   The Empty page owns no children, as its Purpose states.
 - Undeclared attributes and children beyond a Child model stay allowed: a
   contract is not an allowlist (glossary, Object; spec part 4.6).
+- Spec part 4.8: the npm and PyPI packages take the spec's version; a change
+  to a package alone takes a patch release, `0.x.y` (owner decision,
+  2026-09-29).
 
 ### Worked examples and fixtures
 
