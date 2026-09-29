@@ -273,12 +273,12 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 2 | [x] Move the glossary to its final location | W1 7 | — | Done |
 | 3 | [x] Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, three new Behaviors scopes, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Step 2 | Done |
 | 3 | [x] Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Done |
-| 4 | [ ] Add the missing terms to their scope Purposes; generate the examples for the new additions from the consolidated data; validate; release the next `0.x.0` | W1 9.13, 9.10–9.12, 9.8; W3 14.7, in this order | Step 3 | Open |
-| 4 | [x] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, in this order | Step 3 | Done |
-| 5 | [ ] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 3 | Open |
-| 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | Step 3 | Open |
-| 6 | [ ] Scope statement and in / out classification | W2 10–12 | Step 3 | Open |
-| 7 | [ ] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, 15 | Steps 4, 6 | Open |
+| 4 | [ ] Add the missing terms to their scope Purposes; generate the examples for the new additions from the consolidated data; validate; release the next `0.x.0` | W1 9.13, 9.10–9.12, 9.8, in this order | Step 3 | Open |
+| 4 | [ ] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy; validate all of W3 14 | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, 14.7, in this order | Step 3 | In progress — PR #164; 14.6–14.13 done, 14.7 open |
+| 5 | [ ] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 4 taxonomy row (W3 14.9 decides which names go in the alias columns; 14.13 sets the final entry names) | Open |
+| 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19, 21, 22 and W8 32 fixture structure (independent of each other); then W5 20; then W5 23 | Step 3; W5 20 waits on Q7; W5 23 needs 19–22 | Open |
+| 6 | [ ] Scope statement and in / out classification | W2 10, then 11; W2 12 (lowest priority) | Step 3 | Open |
+| 7 | [ ] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, 15 | Steps 4, 6 (W3 14.12 needs W2 11) | Open |
 | 8 | [ ] Specification outline and normative split | W4 16–18 | Step 7 | Open |
 | 9 | [ ] Draft the spec, enrich leaves from the survey inventories, `1.0.0-rc.1` | W6 24–26 | Steps 5, 8 | Open |
 | 9 | [ ] Conformance suite and Python / TypeScript utilities | W8 32–34 | W5 23 | Open |
