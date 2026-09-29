@@ -17,7 +17,6 @@ ALLOWED_ABSTRACTION_LEVELS = {
     "Grouped leaf",
     "Folder abstraction",
 }
-INTENTIONAL_COMBINED_MAPPINGS = {"table/data grid"}
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 
 
@@ -58,22 +57,39 @@ class TaxonomyMappingTest(unittest.TestCase):
             _taxonomy_headings(DOCS_TAXONOMY.read_text(encoding="utf-8")),
         )
 
-    def test_every_taxonomy_entry_is_mapped(self) -> None:
-        taxonomy_entries = {_normalize_taxonomy_entry(entry) for entry in _taxonomy_entries()}
-        mapping_entries = {_normalize_taxonomy_entry(row["entry"]) for row in self.mapping_rows}
+    def test_mapping_lists_every_taxonomy_entry_in_its_place(self) -> None:
+        """Both documents list the same entries, with exact names, in the same place."""
+        taxonomy = _placed_entries(DOCS_TAXONOMY.read_text(encoding="utf-8"))
+        mapping = _placed_entries(self.mapping_text)
 
-        self.assertEqual(taxonomy_entries - mapping_entries, set())
+        self.assertEqual(sorted(set(taxonomy) - set(mapping)), [], "missing from the mapping")
+        self.assertEqual(sorted(set(mapping) - set(taxonomy)), [], "missing from the taxonomy")
+        self.assertEqual(mapping, taxonomy)
 
-    def test_mapping_does_not_duplicate_taxonomy_entries(self) -> None:
-        seen: set[str] = set()
-        duplicates: set[str] = set()
-        for row in self.mapping_rows:
-            normalized = _normalize_taxonomy_entry(row["entry"])
-            if normalized in seen:
-                duplicates.add(normalized)
-            seen.add(normalized)
+    def test_each_entry_is_listed_once(self) -> None:
+        for path in (DOCS_TAXONOMY, TAXONOMY_MAPPING):
+            with self.subTest(document=path.name):
+                names = [name for _, _, name in _placed_entries(path.read_text(encoding="utf-8"))]
+                duplicates = sorted({name for name in names if names.count(name) > 1})
+                self.assertEqual(duplicates, [])
 
-        self.assertLessEqual(duplicates, INTENTIONAL_COMBINED_MAPPINGS)
+
+def _placed_entries(text: str) -> list[tuple[str, str, str]]:
+    """Return (section, subcategory, entry) for every entry row, in document order."""
+    entries: list[tuple[str, str, str]] = []
+    section = subcategory = ""
+    for line in text.splitlines():
+        if line.startswith("## "):
+            section, subcategory = line[3:].strip(), ""
+        elif line.startswith("### "):
+            subcategory = line[4:].strip()
+        elif line.startswith("#"):
+            continue
+        cells = _table_cells(line)
+        if len(cells) < 2 or cells[0] in {"Name", "Taxonomy entry"} or _is_separator_row(cells):
+            continue
+        entries.append((section, subcategory, cells[0]))
+    return entries
 
 
 def _taxonomy_headings(text: str) -> list[str]:
@@ -89,18 +105,6 @@ def _taxonomy_headings(text: str) -> list[str]:
             headings.extend(heading for heading in pending if heading not in headings)
             pending = []
     return headings
-
-
-def _taxonomy_entries() -> list[str]:
-    entries: list[str] = []
-    for line in DOCS_TAXONOMY.read_text(encoding="utf-8").splitlines():
-        cells = _table_cells(line)
-        if len(cells) < 2 or cells[0] in {"Name", "---"}:
-            continue
-        if _is_separator_row(cells):
-            continue
-        entries.append(cells[0])
-    return entries
 
 
 def _taxonomy_mapping_rows(text: str) -> list[dict[str, str]]:
@@ -129,16 +133,6 @@ def _table_cells(line: str) -> list[str]:
 
 def _is_separator_row(cells: list[str]) -> bool:
     return all(re.fullmatch(r":?-{3,}:?", cell) for cell in cells)
-
-
-def _normalize_taxonomy_entry(value: str) -> str:
-    normalized = value.lower().strip()
-    normalized = re.sub(r"\s*/\s*", "/", normalized)
-    normalized = re.sub(r",\s+and\s+", "/", normalized)
-    normalized = re.sub(r",\s*", "/", normalized)
-    normalized = re.sub(r"\s+and\s+", "/", normalized)
-    normalized = re.sub(r"\s+", " ", normalized)
-    return normalized
 
 
 if __name__ == "__main__":

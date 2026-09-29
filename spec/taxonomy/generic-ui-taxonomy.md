@@ -17,9 +17,9 @@ Where an entry belongs:
   [classification rules](ui-element-taxonomy.md#classification-rules) define.
 - The Holds line of a subcategory is its inclusion rule.
 - Interaction details, such as hover states, touch targets, gestures and input events,
-  are not UI elements; they are entries of [Interaction definitions](#interaction-definitions).
-  Reusable behaviors that act on an element without being visible themselves are entries
-  of [Behaviors](#behaviors).
+  are entries of [Interaction definitions](#interaction-definitions). Reusable behaviors
+  that act on an element without being visible themselves are entries of
+  [Behaviors](#behaviors).
 - An entry's secondary roles go in its taxonomy mapping note, not in a second entry.
 
 “Device-dependent” means that the element inherently requires a particular
@@ -490,8 +490,6 @@ Holds: Movements or contact patterns interpreted as higher-level interactions.
 ### Input events
 
 Holds: Low-level pointer, touch, keyboard, focus and value events.
-
-_The examples are rendered SVG illustrations, not text or Unicode stand-ins. A visible example is intentionally omitted when the interaction definition itself has no visual representation._
 
 | Name                           | Description — how the user interfaces with it                                                                                                                                                                         | Viewable? | Device-dependent? | Example image  |
 | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | -------------- |

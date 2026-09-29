@@ -413,9 +413,11 @@ Examples:
 | Data Grid        | Structured data display       | Editing, selection, navigation     |
 | Form             | Input grouping and submission | Validation, workflow               |
 
-Hover states, touch targets, gestures, mouse events, and keyboard events are **not abstract UI element types**. They belong to a companion taxonomy of **UI interaction definitions**:
+Hover states, touch targets, gestures, mouse events, and keyboard events are **not abstract UI element types**. The generic UI taxonomy places them in its [Interaction definitions](generic-ui-taxonomy.md#interaction-definitions) section, in four subcategories:
 
-1. Interaction states
-2. Interaction target properties
-3. Interaction gestures
-4. Input events and commands
+1. [Interaction states](generic-ui-taxonomy.md#interaction-states)
+2. [Interaction areas and constraints](generic-ui-taxonomy.md#interaction-areas-and-constraints)
+3. [Gestures](generic-ui-taxonomy.md#gestures)
+4. [Input events](generic-ui-taxonomy.md#input-events)
+
+Reusable behaviors that act on an element without being visible themselves are not abstract UI element types either; they are entries of the generic UI taxonomy's [Behaviors](generic-ui-taxonomy.md#behaviors) section.
