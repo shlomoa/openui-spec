@@ -12,21 +12,29 @@ Gemini, Cursor, and similar tools) working in this repository.
   should only contain bootstrap instructions or agent-specific deltas, then reference this file.
 - Do not duplicate common rules across agent files. If a rule applies to more than one agent, update
   this file or the external general-instructions SSOT instead.
+- The custom agents in `.github/agents/` hold role-specific rules only and follow this file.
 
 ## Repository purpose
 
-OpenUI Spec is a technology-independent specification for describing web UI frameworks, plus an
-Angular TypeScript generator that applies the specification to an existing Angular workspace.
+OpenUI Spec is a technology-independent specification for describing web UI frameworks, the Python
+and TypeScript packages that parse, model and validate OpenUI documents, and an Angular TypeScript
+generator that applies the specification to an existing Angular workspace.
 
 ## Key repository sources
 
-- `README.md` - Developer documentation hub and entry point for repository structure,
-  validation, and implementation docs.
-- `docs/REQUIREMENTS.md` - Project requirements and goals.
-- `spec/README.md` - Specification entry point, including how to read the spec and the section index.
-- `spec/scopes/` - Human-authored specification scope sources.
-- `spec/openui.json` - Generated canonical machine-readable specification built from `spec/scopes/`.
-- `generators/angular/generator/` - Angular TypeScript generator implementation.
+- `README.md` - Package overview and documentation links.
+- [`CONTRIBUTING.md`](CONTRIBUTING.md#repository-map) - Repository map, local setup, validation
+  commands and the spec tools.
+- [`RELEASING.md`](RELEASING.md) - Version rules and the release process.
+- `docs/REQUIREMENTS.md` - Solution requirements as the owner perceives them.
+- `spec/README.md` - Specification entry point: the numbered outline (parts 1–6, Annexes A–C),
+  conformance and the BCP 14 keywords, and the document model and language.
+- `spec/scopes/scope.md` - The glossary, the scope tree and the owner of each taxonomy fact.
+- `spec/scopes/` - Human-authored scope contracts; `spec/taxonomy/` - the taxonomy documents.
+- `spec/openui.json` - Generated catalog built from `spec/scopes/`.
+- `spec/conformance/` - The conformance suite every validator passes.
+- `spec/survey/specui_v1_publish_plan.md` - The v1 publish plan, with the owner's directives; the
+  change records in `spec/survey/` (`*.done.md` applied, `*.notdone.md` not applied).
 - `generators/angular/generator/docs/GENERATION.md` - Angular generator architecture,
   implementation details, code-generation flow, and validation strategy.
 - [`tests/TEST_PLAN.md`](tests/TEST_PLAN.md#root-test-suite-plan) - Spec-contract test-suite
@@ -36,6 +44,10 @@ Angular TypeScript generator that applies the specification to an existing Angul
 
 - Treat `spec/` as the specification source of truth. Keep generated artifacts such as
   `spec/openui.json` aligned with the documented generation flow when the spec changes.
+- Every specification change bumps the spec version before merge; follow
+  [`RELEASING.md` § Schema and catalog version changes](RELEASING.md#schema-and-catalog-version-changes).
+- Generate examples and fixtures; never write them by hand
+  ([`CONTRIBUTING.md` § Examples and fixtures](CONTRIBUTING.md#examples-and-fixtures)).
 - Keep common AI-agent guidance in `AGENTS.md`; keep agent-specific files thin and referential.
 - Before broad repository restructuring, provide an explicitly enumerated multi-step implementation
   plan.
@@ -46,8 +58,9 @@ Angular TypeScript generator that applies the specification to an existing Angul
 
 ## Validation
 
-- Documentation-only changes should be checked for formatting and link consistency when practical.
-- Python/spec validation uses the repository-local virtual environment documented in
-  `CONTRIBUTING.md`.
+- Run the commands of
+  [`CONTRIBUTING.md` § Repository validation](CONTRIBUTING.md#repository-validation) that the
+  change affects; documentation-only changes need at least pre-commit, the link check and
+  `mkdocs build --strict`.
 - Generator changes should follow the pipeline and validation strategy in
   `generators/angular/generator/docs/GENERATION.md`.
