@@ -2,7 +2,7 @@
 
 Layout defines mechanism-level arrangement notions used by containers and widgets,
 including containment, flow, alignment, anchoring, sizing, spacing, wrapping,
-responsive reflow, and breakpoints.
+responsive reflow, breakpoints, and layered arrangement.
 
 ## Objects
 

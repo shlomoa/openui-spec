@@ -774,7 +774,7 @@
           "type": "Layout",
           "attrs": {
             "title": "Layout",
-            "purpose": "Layout defines mechanism-level arrangement notions used by containers and widgets, including containment, flow, alignment, anchoring, sizing, spacing, wrapping, responsive reflow, and breakpoints.",
+            "purpose": "Layout defines mechanism-level arrangement notions used by containers and widgets, including containment, flow, alignment, anchoring, sizing, spacing, wrapping, responsive reflow, breakpoints, and layered arrangement.",
             "scopeDocument": "scopes/Layout/scope.md",
             "status": "draft"
           }
@@ -854,7 +854,7 @@
           "type": "Presentation",
           "attrs": {
             "title": "Presentation",
-            "purpose": "Presentation defines visual styling notions used by controls, containers, widgets, pages, and views, including color, typography, shape, border, shadow, opacity, iconography, spacing tokens, visual states, theme, motion, and visibility.",
+            "purpose": "Presentation defines visual styling notions used by controls, containers, widgets, pages, and views, including color, typography, shape, border, shadow, elevation, opacity, iconography, spacing tokens, visual states, theme, motion, visibility, backdrop, blur, color tint and focus outline.",
             "scopeDocument": "scopes/Presentation/scope.md",
             "status": "draft"
           }

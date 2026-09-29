@@ -1,8 +1,9 @@
 # Presentation
 
 Presentation defines visual styling notions used by controls, containers, widgets,
-pages, and views, including color, typography, shape, border, shadow, opacity,
-iconography, spacing tokens, visual states, theme, motion, and visibility.
+pages, and views, including color, typography, shape, border, shadow, elevation, opacity,
+iconography, spacing tokens, visual states, theme, motion, visibility, backdrop, blur,
+color tint and focus outline.
 
 ## Objects
 
