@@ -6,6 +6,38 @@ OpenUI is a technology-independent specification for a Web UI framework. It defi
 
 It serves application developers, designers and UX owners, framework maintainers, and generator/tooling authors, who all consume the same public contract.
 
+## Outline
+
+The specification has six parts and three annexes:
+
+1. **Introduction and scope:** this page's introduction, [Scope](#scope) and
+   [How to read this spec](#how-to-read-this-spec).
+2. **Conformance:** the [conformance suite](conformance/README.md).
+3. **Terminology:** the [glossary](scopes/scope.md#glossary).
+4. **Document model and language:**
+   [Specification artifacts](#specification-artifacts-grammar-vs-catalog) and
+   [Spec format](#spec-format).
+5. **Categories and objects:**
+   1. [Generic UI taxonomy](taxonomy/generic-ui-taxonomy.md)
+   2. [UI element taxonomy](taxonomy/ui-element-taxonomy.md)
+   3. [Taxonomy mapping](scopes/taxonomy_mapping.md)
+   4. Scope tree: the [top-level scopes](scopes/scope.md#top-level-scopes) and the
+      [spec folder structure](#spec-folder-structure)
+   5. Object contracts: the scope files listed in the
+      [spec folder structure](#spec-folder-structure)
+6. **Catalog:** the generated `openui.json`, its
+   [leaf scope source format](#leaf-scope-source-format-scopemd) and the
+   [leaf scope template](scopes/template.scope.md).
+
+- **Annex A, Grammar:** [`EBNF.txt`](EBNF.txt) and its JSON Schema projection
+  [`openui.schema.json`](openui.schema.json).
+- **Annex B, Survey mapping:** the [evidence register](scopes/evidence.md) and the
+  [terminology decisions](scopes/terminology.md).
+- **Annex C, Examples:** the [worked examples](examples/README.md) and the
+  [app.json example](#appjson-examples).
+
+The [packages and tooling](#packages-and-tooling) are not part of the specification.
+
 ## Scope
 
 **Out of scope** means the specification does not address it. **Deferred** means a later

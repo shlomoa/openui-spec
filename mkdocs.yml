@@ -8,15 +8,14 @@ docs_dir: spec
 exclude_docs: |
   survey/**
 nav:
-  - Overview: README.md
-  - Scopes:
-      - Overview: scopes/scope.md
-      - Taxonomy mapping: scopes/taxonomy_mapping.md
-      - Generic UI taxonomy: taxonomy/generic-ui-taxonomy.md
-      - UI element taxonomy: taxonomy/ui-element-taxonomy.md
-      - Terminology: scopes/terminology.md
-      - Evidence: scopes/evidence.md
-      - Template: scopes/template.scope.md
+  - "1 Introduction, 4 Document model and 6 Catalog": README.md
+  - 2 Conformance:
+      - Conformance suite: conformance/README.md
+  - 3 Terminology and 5 Categories and objects:
+      - Scopes and glossary: scopes/scope.md
+      - 5.1 Generic UI taxonomy: taxonomy/generic-ui-taxonomy.md
+      - 5.2 UI element taxonomy: taxonomy/ui-element-taxonomy.md
+      - 5.3 Taxonomy mapping: scopes/taxonomy_mapping.md
       - Application:
           - Overview: scopes/Application/scope.md
           - Routing: scopes/Application/routing.scope.md
@@ -89,8 +88,12 @@ nav:
           - Overview: scopes/Internationalization/scope.md
       - Interaction:
           - Overview: scopes/Interaction/scope.md
+  - 6 Catalog:
+      - Leaf scope template: scopes/template.scope.md
+  - Annex B Survey mapping:
+      - Evidence: scopes/evidence.md
+      - Terminology: scopes/terminology.md
+  - Annex C Examples: examples/README.md
   - Tooling:
       - OpenUI JSON editing: tooling/editing.md
       - OpenUI JSON comparison: tooling/comparison.md
-      - Conformance suite: conformance/README.md
-  - Examples: examples/README.md
