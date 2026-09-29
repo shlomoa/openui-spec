@@ -1,0 +1,10 @@
+{
+  "id": "root",
+  "version": "0.6.0",
+  "type": "html",
+  "children": [
+    {
+      "id": "child"
+    }
+  ]
+}

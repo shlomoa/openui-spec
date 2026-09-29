@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "LinkAndScrollControls",
   "attrs": {
     "title": "\"Link and scroll controls example\""
@@ -10,9 +10,9 @@
       "id": "skipToContent",
       "type": "LinkAndScrollControls",
       "attrs": {
-        "[label]": "\"Skip to content\"",
-        "[target]": "\"#main\"",
-        "(activate)": "scrollToMain()"
+        "uses.label": "\"Skip to content\"",
+        "uses.target": "\"#main\"",
+        "produces.activate": "scrollToMain()"
       }
     }
   ]

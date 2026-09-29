@@ -10,6 +10,8 @@ It serves application developers, designers and UX owners, framework maintainers
 
 - **TypeScript / Node.js**: The [`@shlomoa/openui-spec`](https://www.npmjs.com/package/@shlomoa/openui-spec) package on npm provides the `OpenUiJson` document API, bundled canonical catalog/schema, TypeScript types, and the `ng-openui-spec` CLI. See the [OpenUI JSON editing guide](tooling/editing.md) for full usage.
 - **Python**: The [`openui-spec`](https://pypi.org/project/openui-spec/) package on PyPI provides the `openui_spec` editing CLI and the `compare_openui_spec` comparison CLI. See the [OpenUI JSON comparison guide](tooling/comparison.md) for changelog tooling.
+- **Playground**: the [playground](playground.html) page on the published site validates a pasted document against the JSON Schema and the catalog and renders its element tree.
+- **Conformance suite**: the [conformance suite](conformance/README.md) is a shared set of valid and invalid documents, with the diagnostics every tool must report for them.
 
 ## Glossary
 
@@ -54,7 +56,7 @@ document must have, and nothing about content:
 - a recursive `element`: each node requires `id` + `type`, optionally `attrs` +
   `children`;
 - `id` rules (camelCase `^[a-z][A-Za-z0-9]*$`), kebab-case or PascalCase
-  `type` syntax, `attrs` as a `string | null` map, with
+  `type` syntax, `attrs` as a map from category-prefixed keys to typed values, with
   `additionalProperties: false` everywhere.
 
 It is **generic and content-blind**. It has no idea what `Charts`, `Dashboard`,
@@ -169,7 +171,7 @@ the glossary and the taxonomy mapping, with their evidence.
 |                                                                  | [favicon.ico](scopes/Application/favicon.scope.md)                                 | The application icon asset used for browser and shell identity.                                                                                          |
 |                                                                  | [index.html](scopes/Application/index_html.scope.md)                               | The application host document and static bootstrap metadata.                                                                                             |
 | **[Controls](scopes/Controls/scope.md)**                         |                                                                                    | Reusable interaction and rendering primitives used in applications, pages, views, containers, and widgets.                                               |
-|                                                                  | [Native](scopes/Controls/native.scope.md)                                          | A standard platform input, identified by its `[type]`, used where no more specific control family applies.                                               |
+|                                                                  | [Native](scopes/Controls/native.scope.md)                                          | A standard platform input, identified by its `uses.type`, used where no more specific control family applies.                                            |
 |                                                                  | [Action controls](scopes/Controls/action_controls.scope.md)                        | Controls that trigger commands or state transitions, such as buttons, icon buttons, tool buttons, hamburger buttons, and toggle buttons.                 |
 |                                                                  | [Text inputs](scopes/Controls/text_inputs.scope.md)                                | Single-line, multi-line, password, search, rich text, keyboard shortcut, and metadata-driven entry controls for textual input.                           |
 |                                                                  | [Choice controls](scopes/Controls/choice_controls.scope.md)                        | Checkboxes, radio buttons, switches, dropdowns, list boxes, and combo boxes that let users select one or more values.                                    |
@@ -242,7 +244,7 @@ rules:
 
 - `"id"` MUST be `"root"`.
 - `"version"` is REQUIRED (top-level only) and MUST equal the current value in
-  the repository-root `SCHEMA_VERSION` file (currently `0.5.0`).
+  the repository-root `SCHEMA_VERSION` file (currently `0.6.0`).
 - `"type"` MUST be `"html"`.
 
 `EBNF.txt` defines the required root fields, literal root id, version syntax,
@@ -274,9 +276,9 @@ closest known semantic category, then express instance distinctions through
 ### attributes - "attrs" field
 
 `attrs` contains all non-hierarchical object configuration as key-value pairs.
-An attribute with no value appears as having `null` value. Attribute keys and
-values should align with the selected framework's attribute naming convention or
-with the HTML standard when targeting native HTML.
+An attribute with no value appears as having `null` value. Attribute names
+should align with the selected framework's attribute naming convention or with
+the HTML standard when targeting native HTML.
 
 Each object in the scopes may declare one or more attribute categories:
 
@@ -287,47 +289,93 @@ Each object in the scopes may declare one or more attribute categories:
 - **Behaves:** behavior attributes. These describe actions or side effects, such
   as setting another attribute value, running a callback on a button click, or
   invoking target-framework logic. Behaviors generalize the notion of outputs:
-  they use output-style binding syntax but describe what the object does rather
-  than only what it emits.
+  they describe what the object does rather than only what it emits.
 
 The category is represented by the attribute key syntax, not by adding loose
-properties outside `attrs`.
+properties outside `attrs`. The key prefix names the category:
 
-For a framework-specific target such as Angular Material:
+- `uses.<name>` is a Uses attribute;
+- `produces.<name>` is a Produces attribute;
+- `behaves.<name>` is a Behaves attribute;
+- a plain `<name>` carries no category, for example a native HTML attribute or
+  catalog metadata such as `title`.
 
-- `[var1]` represents an input binding named `var1`.
-- `(var2)` represents an output binding named `var2`.
-- behavior bindings use the same parenthesized form as outputs, because a
-  behavior is handled as output-triggered target logic.
+`<name>` is a camelCase alphanumeric string. A generator maps each category to
+its target framework; for example, an Angular generator emits `[name]` for a
+Uses attribute and `(name)` for a Produces or Behaves attribute.
 
-Attribute values are strings or `null`. String values may be literals, binding
-expressions, JavaScript code snippets, or function calls, depending on the target
-framework. The OpenUI specification treats those values as target-language
-expressions; generators may validate or transform them for a specific framework,
-but the base JSON format does not execute them.
+An attribute value is a JSON string, number, `true`, `false`, `null`, or a list
+of these. A string value is either:
+
+- a **literal**, quoted inside the string: `"\"Details\""` is the text
+  `Details`; or
+- a **binding or target-language expression**, unquoted: `orders`,
+  `!isExpanded` or `onSubmit(form.value)`. The OpenUI specification treats it as
+  a target-language expression; generators may validate or transform it for a
+  specific framework, but the base JSON format does not execute it.
+
+Produces and Behaves values are target-language expressions or `null`.
+
+### Value types
+
+A Uses attribute declares one value type in its scope's Attributes line, and the
+catalog carries it as the attribute's value (see [Field mapping](#field-mapping)):
+
+| Value type        | A literal value is                                                                               |
+| ----------------- | ------------------------------------------------------------------------------------------------ |
+| `string`          | a quoted string, `"\"Orders\""`                                                                  |
+| `boolean`         | `true` or `false`                                                                                |
+| `integer`         | a JSON number without a fraction, `25`                                                           |
+| `number`          | a JSON number, `0.5`                                                                             |
+| `url`             | a quoted URI reference ([RFC 3986](https://www.rfc-editor.org/rfc/rfc3986)), `"\"favicon.ico\""` |
+| `enum(a\|b)`      | one of the listed words, quoted, `"\"rtl\""`                                                     |
+| `reference`       | an [element reference](#element-references), `"\"dashboardRoute\""`                              |
+| `reference(A\|B)` | an element reference to an element whose `type` is `A` or `B`                                    |
+| `list(type)`      | a JSON list whose items are literals of `type`                                                   |
+
+For every type, an unquoted string is a binding or target-language expression,
+and `null` means the attribute is present without a value. A value that does not
+fit its declared type is invalid. A value of an attribute the contract does not
+declare is not type-checked.
+
+The contract of a known type is the Attributes section of the leaf scope whose
+scope type or instance type it is; in the catalog, those are the category-prefixed
+attributes of the instance node. A literal `reference` value must name an element
+of the same document, and, for `reference(A|B)`, an element whose `type` is listed.
 
 ### Element references
 
 An element reference is a Uses-attribute value that identifies another element in
 the same concrete document by its globally unique `id`. Its static form is a
 quoted string literal whose decoded value is that id; for example,
-`"[route]": "\"dashboardRoute\""`. A consumer resolves the reference across the
-whole document, not just among the referring node's siblings.
+`"uses.route": "\"dashboardRoute\""`. A consumer resolves the reference across the
+whole document, not just among the referring node's siblings. A reference
+attribute declares the value type `reference`, or `reference(Type)` to limit the
+types it may name.
 
-`Routing[defaultRoute]` and `NavItem[route]` reference a `Route`;
-`Route[redirectTo]` references a `Route`; and `Route[target]` references the
-page or content element selected by that route. The `[target]` of every
-behavior (`DragAndDrop`, `Resizable`, `Collapsible`, `InputAssistance`,
+`Routing` `uses.defaultRoute`, `NavItem` `uses.route` and `Route`
+`uses.redirectTo` reference a `Route` (`reference(Route)`); `Route` `uses.target`
+references the page or content element selected by that route. The `uses.target`
+of every behavior (`DragAndDrop`, `Resizable`, `Collapsible`, `InputAssistance`,
 `ModalOverlay` and `ViewportAndFocusControl`) references the
 [controlled element](scopes/scope.md#controlled-element) the behavior acts on. The referenced contract defines
-any additional permitted type. The base grammar, catalog validator, and
-`OpenUiJson.validate()` do not currently parse, resolve, or type-check reference
-values; they continue to validate only document shape, globally unique ids, and
-known type literals.
+any additional permitted type. The base grammar and JSON Schema do not resolve or
+type-check reference values; a validator of the scope contracts does, using the
+declared value type.
 
 Framework selectors and generated identifiers remain implementation details;
 their possible appearance as attribute data does not make them valid `type`
 values.
+
+### Versioning
+
+The spec version follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
+(MAJOR.MINOR.PATCH, no pre-release suffix). Every specification change is a new
+version and may break existing documents (the repository's `RELEASING.md`
+requires a version bump for every specification change). A document
+declares the spec version it is written for in its root `version`. A tool accepts
+only the spec version it implements; there is no deprecation period. The package
+versions of the tools are separate contracts.
 
 ### EBNF notation
 
@@ -341,10 +389,10 @@ The format itself is in [EBNF](./EBNF.txt)
 
 ### Syntax rules
 
-- **Version field (top-level only):** Required semantic version string (e.g., "0.5.0") identifying the spec version
+- **Version field (top-level only):** Required semantic version string (e.g., "0.6.0") identifying the spec version
 - **ID field:** Must be a camelCase alphanumeric string (starts with lowercase letter, can contain uppercase letters and digits)
 - **Type field:** Must satisfy the grammar's HTML/kebab-case/PascalCase syntax and, in a concrete UI document, exactly match a literal `type` in `spec/openui.json`
-- **Attributes field:** Key-value pairs where values are strings or null. Attribute key syntax identifies input, output, and behavior categories; all such categories must stay inside the `attrs` object.
+- **Attributes field:** Key-value pairs. A key is `uses.<name>`, `produces.<name>`, `behaves.<name>` or a plain `<name>` (camelCase); the prefix identifies the input, output, or behavior category, and all such categories must stay inside the `attrs` object. A value is a string, number, `true`, `false`, `null`, or a list of these.
 - **Children field:** Array of UI elements forming a hierarchical tree structure
 - **No unknown properties:** Objects contain only the fields defined by the EBNF format.
 
@@ -374,14 +422,17 @@ child (see [`scopes/scope.md`](scopes/scope.md)). Fields come from:
 | scope `attrs.status`        | Identity `status:`                                         |
 | instance `id`               | derived: `<scopeId>Instance`                               |
 | instance `type`             | Identity `type:` (the concrete/virtual primitive)          |
-| instance `attrs` keys       | Attributes — each `key` by category, value `null`          |
+| instance `attrs` keys       | Attributes — each `key`, with its category prefix          |
+| instance `attrs` values     | Attributes — the Uses value type; `null` otherwise         |
 | instance `children`         | Child model — one node (`id`, `type`) per bullet, in order |
 
 Separators are fixed: `·` (middot, U+00B7) between Identity fields, and `—`
 (em dash, U+2014) between Attributes and Child-model fields. The Attributes
-**category** word is authoritative; its key bracket must agree (`[name]` → `Uses`;
-`(name)` → `Produces` or `Behaves`). Value-types, descriptions, and multiplicity
-are recorded in prose only and are not serialized into the grammar.
+**category** word is authoritative; its key prefix must agree (`uses.name` →
+`Uses`; `produces.name` → `Produces`; `behaves.name` → `Behaves`). A Uses
+attribute declares one [value type](#value-types); every `reference(Type)` must
+name a known object type. Descriptions and multiplicity are recorded in prose
+only and are not serialized into the grammar.
 Machine-bearing sections are the **sole enumerators** of ids, keys, types,
 categories, and multiplicity; prose sections may reference those names but must not
 re-list them.
@@ -409,12 +460,18 @@ identity_line       = "-" WS "id:" WS id_value WS "·" WS
 
 attributes_section  = "## Attributes" NL { prose_line }
                       attribute_line { attribute_line | prose_line } ;
-attribute_line      = "-" WS "`" attr_key "`" WS "—" WS
-                            category WS "—" WS description NL ;
-attr_key            = uses_key | output_key ;
-uses_key            = "[" attr_name "]" ;        (* category MUST be "Uses" *)
-output_key          = "(" attr_name ")" ;        (* category MUST be "Produces" | "Behaves" *)
-category            = "Uses" | "Produces" | "Behaves" ;
+attribute_line      = uses_line | output_line ;
+uses_line           = "-" WS "`" "uses." attr_name "`" WS "—" WS
+                            "Uses" WS "—" WS value_type WS "—" WS description NL ;
+output_line         = "-" WS "`" output_prefix attr_name "`" WS "—" WS
+                            output_category WS "—" WS description NL ;
+output_prefix       = "produces." | "behaves." ;  (* MUST match the category *)
+output_category     = "Produces" | "Behaves" ;
+value_type          = scalar_type | "list(" scalar_type ")" ;
+scalar_type         = "string" | "boolean" | "integer" | "number" | "url"
+                    | "enum(" enum_word { "|" enum_word } ")"
+                    | "reference" [ "(" type_name { "|" type_name } ")" ] ;
+enum_word           = lowercase_letter { lowercase_letter | digit | "-" } ;
 
 child_model_section = "## Child model" NL { prose_line }
                       child_line { child_line | prose_line } ;
@@ -432,7 +489,7 @@ child_id            = camel_case ;
 type_value          = type_name ;                (* per the document type grammar *)
 child_type          = type_name ;
 status_value        = "draft" | "review" | "stable" ;
-attr_name           = letter { letter | digit } ;
+attr_name           = camel_case ;
 camel_case          = lowercase_letter { letter | digit } ;
 object_title        = { character } ;
 description         = { character } ;             (* free prose; not interpreted *)
@@ -452,7 +509,7 @@ the `scopes` tree: a `<object>.example.json` for each leaf scope and a composite
 ```json
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "Pages",
   "attrs": {
     "size": "1960x1080",
@@ -463,10 +520,10 @@ the `scopes` tree: a `<object>.example.json` for each leaf scope and a composite
       "id": "dateRangeInput",
       "type": "DateTimePicker",
       "attrs": {
-        "[formGroup]": "\"campaignTwo\"",
-        "[rangePicker]": "\"campaignTwoPicker\"",
-        "[comparisonStart]": "\"campaignOne.value.start\"",
-        "[comparisonEnd]": "\"campaignOne.value.end\""
+        "uses.formGroup": "\"campaignTwo\"",
+        "uses.rangePicker": "\"campaignTwoPicker\"",
+        "uses.comparisonStart": "\"campaignOne.value.start\"",
+        "uses.comparisonEnd": "\"campaignOne.value.end\""
       },
       "children": [
         {

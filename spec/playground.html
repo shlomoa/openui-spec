@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OpenUI Playground</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ajv/8.17.1/ajv2020.bundle.min.js"></script>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --fg: #1b1f24;
+        --muted: #5a6470;
+        --border: #d0d7de;
+        --panel: #f6f8fa;
+        --ok: #1a7f37;
+        --error: #cf222e;
+        --accent: #0a6ed1;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0d1117;
+          --fg: #e6edf3;
+          --muted: #8b949e;
+          --border: #30363d;
+          --panel: #161b22;
+          --ok: #3fb950;
+          --error: #f85149;
+          --accent: #58a6ff;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 16px;
+        background: var(--bg);
+        color: var(--fg);
+        font: 15px/1.5 system-ui, sans-serif;
+      }
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        gap: 16px;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      }
+      @media (max-width: 800px) {
+        main {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+      h1 {
+        max-width: 1200px;
+        margin: 0 auto 8px;
+        font-size: 1.4rem;
+      }
+      p.lead {
+        max-width: 1200px;
+        margin: 0 auto 16px;
+        color: var(--muted);
+      }
+      section {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--panel);
+        padding: 12px;
+        min-width: 0;
+      }
+      h2 {
+        margin: 0 0 8px;
+        font-size: 1rem;
+      }
+      textarea {
+        width: 100%;
+        min-height: 420px;
+        font: 13px/1.4 ui-monospace, monospace;
+        color: var(--fg);
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 8px;
+      }
+      #status.ok {
+        color: var(--ok);
+      }
+      #status.error {
+        color: var(--error);
+      }
+      #diagnostics li {
+        font-family: ui-monospace, monospace;
+        font-size: 13px;
+        overflow-wrap: anywhere;
+      }
+      #tree ul {
+        list-style: none;
+        margin: 0;
+        padding-left: 18px;
+        border-left: 1px dashed var(--border);
+      }
+      #tree > ul {
+        border-left: 0;
+        padding-left: 0;
+      }
+      .node-type {
+        color: var(--accent);
+        font-weight: 600;
+      }
+      .attr {
+        color: var(--muted);
+        font-family: ui-monospace, monospace;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>OpenUI Playground</h1>
+    <p class="lead">
+      Paste an OpenUI document. It is checked against the grammar's JSON Schema projection
+      (<code>openui.schema.json</code>), globally unique ids and the known types of the catalog
+      (<code>openui.json</code>), and its element tree is rendered.
+    </p>
+    <main>
+      <section>
+        <h2>Document</h2>
+        <textarea id="input" spellcheck="false" aria-label="OpenUI document"></textarea>
+      </section>
+      <section>
+        <h2>Validation</h2>
+        <p id="status" role="status">Loading the schema and the catalog…</p>
+        <ul id="diagnostics"></ul>
+        <h2>Element tree</h2>
+        <div id="tree"></div>
+      </section>
+    </main>
+    <script>
+      const SAMPLE = {
+        id: "root",
+        version: "",
+        type: "html",
+        children: [
+          {
+            id: "confirmDialog",
+            type: "Dialog",
+            attrs: {
+              "uses.open": "isConfirmOpen",
+              "uses.modal": true,
+              "produces.close": "onConfirmClose($event)",
+            },
+          },
+        ],
+      };
+      const input = document.getElementById("input");
+      const statusLine = document.getElementById("status");
+      const diagnosticsList = document.getElementById("diagnostics");
+      const tree = document.getElementById("tree");
+      let validateSchema;
+      let knownTypes = new Set();
+
+      function walk(node, path, visit) {
+        visit(node, path);
+        (Array.isArray(node.children) ? node.children : []).forEach((child, index) =>
+          walk(child, `${path}/children/${index}`, visit),
+        );
+      }
+
+      function diagnose(text) {
+        let document;
+        try {
+          document = JSON.parse(text);
+        } catch (error) {
+          return { document: undefined, diagnostics: [`"" — not JSON: ${error.message}`] };
+        }
+        if (!validateSchema(document)) {
+          return {
+            document,
+            diagnostics: validateSchema.errors.map(
+              (error) => `"${error.instancePath}" — ${error.message}`,
+            ),
+          };
+        }
+        const diagnostics = [];
+        const seen = new Set();
+        walk(document, "", (node, path) => {
+          if (seen.has(node.id)) diagnostics.push(`"${path}/id" — duplicate id ${node.id}`);
+          seen.add(node.id);
+          if (!knownTypes.has(node.type))
+            diagnostics.push(`"${path}/type" — unknown type ${node.type}`);
+        });
+        return { document, diagnostics };
+      }
+
+      function renderNode(node) {
+        const item = window.document.createElement("li");
+        const head = window.document.createElement("div");
+        const type = window.document.createElement("span");
+        type.className = "node-type";
+        type.textContent = String(node.type);
+        head.append(type, ` #${node.id}`);
+        item.append(head);
+        Object.entries(node.attrs || {}).forEach(([key, value]) => {
+          const attr = window.document.createElement("div");
+          attr.className = "attr";
+          attr.textContent = `${key} = ${JSON.stringify(value)}`;
+          item.append(attr);
+        });
+        if (Array.isArray(node.children) && node.children.length) {
+          const list = window.document.createElement("ul");
+          node.children.forEach((child) => list.append(renderNode(child)));
+          item.append(list);
+        }
+        return item;
+      }
+
+      function update() {
+        const { document, diagnostics } = diagnose(input.value);
+        diagnosticsList.replaceChildren(
+          ...diagnostics.map((text) => {
+            const item = window.document.createElement("li");
+            item.textContent = text;
+            return item;
+          }),
+        );
+        statusLine.className = diagnostics.length ? "error" : "ok";
+        statusLine.textContent = diagnostics.length
+          ? `${diagnostics.length} problem(s)`
+          : "Valid OpenUI document.";
+        tree.replaceChildren();
+        if (document && typeof document === "object" && !Array.isArray(document)) {
+          const list = window.document.createElement("ul");
+          list.append(renderNode(document));
+          tree.append(list);
+        }
+      }
+
+      Promise.all([
+        fetch("openui.schema.json").then((response) => response.json()),
+        fetch("openui.json").then((response) => response.json()),
+      ])
+        .then(([schema, catalog]) => {
+          const Ajv = window.ajv2020.default || window.ajv2020;
+          validateSchema = new Ajv({ allErrors: true, strict: false }).compile(schema);
+          walk(catalog, "", (node) => knownTypes.add(node.type));
+          SAMPLE.version = catalog.version;
+          input.value = JSON.stringify(SAMPLE, null, 2);
+          input.addEventListener("input", update);
+          update();
+        })
+        .catch((error) => {
+          statusLine.className = "error";
+          statusLine.textContent = `Cannot load the schema or the catalog: ${error.message}`;
+        });
+    </script>
+  </body>
+</html>

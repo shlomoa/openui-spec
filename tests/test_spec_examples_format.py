@@ -103,7 +103,7 @@ class SpecExamplesFormatTest(unittest.TestCase):
                     path=path.relative_to(EXAMPLES_DIR).as_posix(), id=node.get("id")
                 ):
                     attrs = cast(dict[str, object], node.get("attrs", {}))
-                    target = attrs.get("[target]")
+                    target = attrs.get("uses.target")
                     self.assertIsInstance(target, str, "a behavior needs a [target] reference")
                     self.assertIn(cast(str, target).strip('"'), ids - {node.get("id")})
                     self.assertNotIn("children", node, "a behavior does not own children")

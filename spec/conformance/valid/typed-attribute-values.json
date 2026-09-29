@@ -1,0 +1,27 @@
+{
+  "id": "root",
+  "version": "0.6.0",
+  "type": "html",
+  "children": [
+    {
+      "id": "confirmDialog",
+      "type": "Dialog",
+      "attrs": {
+        "uses.open": "isConfirmOpen",
+        "uses.modal": true,
+        "produces.close": "onConfirmClose($event)",
+        "title": "\"Confirm\"",
+        "hidden": null
+      }
+    },
+    {
+      "id": "ordersTable",
+      "type": "Table",
+      "attrs": {
+        "uses.pageSize": 25,
+        "uses.pageSizes": [10, 25, 50],
+        "behaves.sort": "sortOrders($event)"
+      }
+    }
+  ]
+}

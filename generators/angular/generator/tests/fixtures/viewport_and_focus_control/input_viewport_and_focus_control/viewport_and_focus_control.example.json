@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "ViewportAndFocusControl",
   "attrs": {
     "title": "\"Viewport and focus control example\""
@@ -10,14 +10,14 @@
       "id": "messageLog",
       "type": "StructuralContainers",
       "attrs": {
-        "[ariaLabel]": "\"Message log\""
+        "uses.ariaLabel": "\"Message log\""
       }
     },
     {
       "id": "messageLogScrolling",
       "type": "ViewportAndFocusControl",
       "attrs": {
-        "[target]": "\"messageLog\""
+        "uses.target": "\"messageLog\""
       }
     }
   ]

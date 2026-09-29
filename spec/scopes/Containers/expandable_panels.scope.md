@@ -17,8 +17,8 @@ show or hide its content while its summary stays visible.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `(expand)` — Behaves — reveals the panel's content.
-- `(collapse)` — Behaves — hides the panel's content.
+- `behaves.expand` — Behaves — reveals the panel's content.
+- `behaves.collapse` — Behaves — hides the panel's content.
 
 ## Accessibility
 

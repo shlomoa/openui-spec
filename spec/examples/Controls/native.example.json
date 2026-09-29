@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "Native",
   "attrs": {
     "title": "\"Native controls example\""
@@ -10,32 +10,32 @@
       "id": "colorScheme",
       "type": "Native",
       "attrs": {
-        "[supported]": "\"light dark\"",
-        "[default]": "\"light\""
+        "uses.supported": "\"light dark\"",
+        "uses.default": "\"light\""
       }
     },
     {
       "id": "typography",
       "type": "Native",
       "attrs": {
-        "[fontFamily]": "\"system-ui, sans-serif\"",
-        "[fontSize]": "\"16px\""
+        "uses.fontFamily": "\"system-ui, sans-serif\"",
+        "uses.fontSize": "\"16px\""
       }
     },
     {
       "id": "scrollRegion",
       "type": "Native",
       "attrs": {
-        "[overflow]": "\"auto\"",
-        "[scrollBehavior]": "\"smooth\""
+        "uses.overflow": "\"auto\"",
+        "uses.scrollBehavior": "\"smooth\""
       }
     },
     {
       "id": "focusRing",
       "type": "Native",
       "attrs": {
-        "[focusVisible]": "true",
-        "[tabIndex]": "0"
+        "uses.focusVisible": true,
+        "uses.tabIndex": 0
       }
     }
   ]

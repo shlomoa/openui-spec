@@ -1,41 +1,41 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "Application",
   "children": [
     {
       "id": "appRouting",
       "type": "Routing",
       "attrs": {
-        "[defaultRoute]": "\"dashboardRoute\""
+        "uses.defaultRoute": "\"dashboardRoute\""
       },
       "children": [
         {
           "id": "dashboardRoute",
           "type": "Route",
           "attrs": {
-            "[path]": "\"dashboard\"",
-            "[target]": "\"dashboardPage\"",
-            "[title]": "\"Dashboard\"",
-            "[access]": "\"authenticated\""
+            "uses.path": "\"dashboard\"",
+            "uses.target": "\"dashboardPage\"",
+            "uses.title": "\"Dashboard\"",
+            "uses.access": "\"authenticated\""
           }
         },
         {
           "id": "reportRoute",
           "type": "Route",
           "attrs": {
-            "[path]": "\"reports\"",
-            "[target]": "\"reportPage\"",
-            "[title]": "\"Reports\"",
-            "[access]": "\"report-reader\""
+            "uses.path": "\"reports\"",
+            "uses.target": "\"reportPage\"",
+            "uses.title": "\"Reports\"",
+            "uses.access": "\"report-reader\""
           }
         },
         {
           "id": "fallbackRoute",
           "type": "Route",
           "attrs": {
-            "[path]": "\"**\"",
-            "[redirectTo]": "\"dashboardRoute\""
+            "uses.path": "\"**\"",
+            "uses.redirectTo": "\"dashboardRoute\""
           }
         }
       ]

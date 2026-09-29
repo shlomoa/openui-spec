@@ -1,0 +1,8 @@
+{
+  "diagnostics": [
+    {
+      "code": "grammar/invalid-member-type",
+      "path": "/children"
+    }
+  ]
+}

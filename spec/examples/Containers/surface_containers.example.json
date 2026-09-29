@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "SurfaceContainers",
   "attrs": {
     "title": "\"Surface containers example\""
@@ -10,8 +10,8 @@
       "id": "summaryCard",
       "type": "SurfaceContainers",
       "attrs": {
-        "[label]": "\"Summary\"",
-        "[elevation]": "2"
+        "uses.label": "\"Summary\"",
+        "uses.elevation": 2
       }
     }
   ]

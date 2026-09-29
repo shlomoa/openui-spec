@@ -401,7 +401,7 @@ test("builds the data model from the generated OpenUI catalog", async () => {
   const scopeIds = extractOpenUiScopeNodes(fixture).map((scope) => scope.id);
 
   assert.equal(dataModel.name, "OpenUI");
-  assert.equal(dataModel.version, "0.5.0");
+  assert.equal(dataModel.version, "0.6.0");
   assert.deepEqual(
     dataModel.pages.map((page) => page.id),
     scopeIds,
@@ -629,7 +629,7 @@ test("generates scope-specific Angular Material details from the generated OpenU
     assert.match(controlsTemplate, /aria-label="Component metadata contract"/);
     assert.match(
       controlsTemplate,
-      /Native: A standard platform input, identified by its `\[type\]`/,
+      /Native: A standard platform input, identified by its `uses\.type`/,
     );
 
     const actionControlsTemplate = await readFile(
@@ -674,7 +674,7 @@ test("validates catalog root values, attrs, and scoped document uniqueness", asy
   firstScope.attrs = {
     ...firstScope.attrs,
     scopeDocument: "scopes/Controls/scope.md",
-    invalidAttr: 42 as never,
+    invalidAttr: { value: 42 } as never,
   };
 
   assert.throws(
@@ -682,7 +682,7 @@ test("validates catalog root values, attrs, and scoped document uniqueness", asy
     (error: unknown) => {
       assert.match(
         specValidationMessage(error),
-        /Attribute values must be strings or null/,
+        /Attribute values must be strings, numbers, booleans, null, or lists of these/,
       );
       return true;
     },
@@ -725,7 +725,7 @@ test("allows a valid empty root document for incremental deletion", () => {
   assert.doesNotThrow(() =>
     validateOpenUiSpec({
       id: "root",
-      version: "0.5.0",
+      version: "0.6.0",
       type: "html",
       children: [],
     }),

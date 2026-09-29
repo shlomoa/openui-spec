@@ -1,11 +1,11 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "html",
   "attrs": {
-    "[lang]": "\"en\"",
-    "[dir]": "\"ltr\"",
-    "[title]": "\"OpenUI application\""
+    "uses.lang": "\"en\"",
+    "uses.dir": "\"ltr\"",
+    "uses.title": "\"OpenUI application\""
   },
   "children": [
     {

@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "Table",
   "attrs": {
     "title": "\"Table example\""
@@ -10,9 +10,9 @@
       "id": "ordersTable",
       "type": "table",
       "attrs": {
-        "(sort)": "sortOrders($event)",
-        "(filter)": "filterOrders($event)",
-        "(paginate)": "paginateOrders($event)"
+        "behaves.sort": "sortOrders($event)",
+        "behaves.filter": "filterOrders($event)",
+        "behaves.paginate": "paginateOrders($event)"
       },
       "children": [
         {

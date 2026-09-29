@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "StructuralContainers",
   "attrs": {
     "title": "\"Structural containers example\""
@@ -10,8 +10,8 @@
       "id": "mainArticle",
       "type": "StructuralContainers",
       "attrs": {
-        "[role]": "\"article\"",
-        "[label]": "\"Release notes\""
+        "uses.role": "\"article\"",
+        "uses.label": "\"Release notes\""
       }
     }
   ]

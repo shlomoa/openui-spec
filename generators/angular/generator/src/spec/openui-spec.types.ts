@@ -1,4 +1,5 @@
-export type OpenUiAttributeValue = string | null;
+export type OpenUiAttributeScalar = string | number | boolean | null;
+export type OpenUiAttributeValue = OpenUiAttributeScalar | OpenUiAttributeScalar[];
 
 export interface OpenUiElement {
   id: string;

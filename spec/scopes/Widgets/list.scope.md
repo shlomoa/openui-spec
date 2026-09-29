@@ -18,9 +18,9 @@ sorting, filtering and pagination. Existing `ul`/`li` instances stay valid.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `(sort)` — Behaves — orders the items by a chosen key.
-- `(filter)` — Behaves — narrows the visible items by a predicate.
-- `(paginate)` — Behaves — splits the items into navigable pages.
+- `behaves.sort` — Behaves — orders the items by a chosen key.
+- `behaves.filter` — Behaves — narrows the visible items by a predicate.
+- `behaves.paginate` — Behaves — splits the items into navigable pages.
 
 ## Child model
 

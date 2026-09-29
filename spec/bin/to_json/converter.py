@@ -14,9 +14,19 @@ IDENTITY_RE = re.compile(
     r"type:\s+(?P<type>[A-Za-z][A-Za-z0-9-]*)\s+·\s+"
     r"status:\s+(?P<status>draft|review|stable)\s*$"
 )
+TYPE_NAME = r"[A-Za-z][A-Za-z0-9-]*"
+ENUM_WORD = r"[a-z][a-z0-9-]*"
+SCALAR_VALUE_TYPE = (
+    r"(?:string|boolean|integer|number|url"
+    rf"|enum\({ENUM_WORD}(?:\|{ENUM_WORD})*\)"
+    rf"|reference(?:\({TYPE_NAME}(?:\|{TYPE_NAME})*\))?)"
+)
+VALUE_TYPE_RE = re.compile(rf"^(?:{SCALAR_VALUE_TYPE}|list\({SCALAR_VALUE_TYPE}\))$")
+REFERENCE_TYPES_RE = re.compile(rf"reference\((?P<types>{TYPE_NAME}(?:\|{TYPE_NAME})*)\)")
 ATTRIBUTE_RE = re.compile(
-    r"^-\s+`(?P<key>(?:\[[A-Za-z][A-Za-z0-9]*\]|\([A-Za-z][A-Za-z0-9]*\)))`"
-    r"\s+—\s+(?P<category>Uses|Produces|Behaves)\s+—\s+.+$"
+    r"^-\s+`(?P<key>(?P<prefix>uses|produces|behaves)\.[a-z][A-Za-z0-9]*)`"
+    r"\s+—\s+(?P<category>Uses|Produces|Behaves)"
+    r"(?:\s+—\s+(?P<type>\S+))?\s+—\s+.+$"
 )
 CHILD_RE = re.compile(
     r"^-\s+(?P<id>[a-z][A-Za-z0-9]*)\s+—\s+"
@@ -37,7 +47,7 @@ class LeafScope:
     title: str
     purpose: str
     scope_document: str
-    attrs: dict[str, None]
+    attrs: dict[str, str | None]
     children: list[dict[str, str]]
 
     def to_node(self) -> dict[str, Any]:
@@ -103,7 +113,7 @@ def build_openui_document(
         version or (resolved_spec_dir.parent / "SCHEMA_VERSION").read_text(encoding="utf-8").strip()
     )
 
-    return {
+    document = {
         "id": "root",
         "type": "html",
         "version": resolved_version,
@@ -115,6 +125,28 @@ def build_openui_document(
         },
         "children": [build_scope_tree(resolved_spec_dir / "scopes")],
     }
+    _check_reference_types(document)
+    return document
+
+
+def _walk(node: dict[str, Any]) -> list[dict[str, Any]]:
+    nodes = [node]
+    for child in node.get("children", []):
+        nodes.extend(_walk(child))
+    return nodes
+
+
+def _check_reference_types(document: dict[str, Any]) -> None:
+    """Fail when a `reference(Type)` names a type that is not a known object type."""
+    nodes = _walk(document)
+    known_types = {node["type"] for node in nodes}
+    for node in nodes:
+        for key, value_type in (node.get("attrs") or {}).items():
+            if not key.startswith("uses.") or not isinstance(value_type, str):
+                continue
+            unknown = [name for name in reference_types(value_type) if name not in known_types]
+            if unknown:
+                raise ValueError(f"{node['id']}: {key} references unknown types {unknown}")
 
 
 def build_scope_tree(scopes_dir: Path | str) -> dict[str, Any]:
@@ -292,8 +324,9 @@ def _prose(lines: list[str]) -> str:
     return "\n\n".join(paragraphs)
 
 
-def _attributes(lines: list[str], path: Path) -> dict[str, None]:
-    attrs: dict[str, None] = {}
+def _attributes(lines: list[str], path: Path) -> dict[str, str | None]:
+    """Return each attribute key with its declared value type (Uses) or None."""
+    attrs: dict[str, str | None] = {}
     for line in lines:
         match = ATTRIBUTE_RE.fullmatch(line)
         if not match:
@@ -302,12 +335,26 @@ def _attributes(lines: list[str], path: Path) -> dict[str, None]:
             continue
         key = match.group("key")
         category = match.group("category")
-        if key.startswith("[") and category != "Uses":
-            raise ValueError(f"{path}: attribute {key} must use Uses")
-        if key.startswith("(") and category == "Uses":
-            raise ValueError(f"{path}: attribute {key} must use Produces or Behaves")
-        attrs[key] = None
+        value_type = match.group("type")
+        if match.group("prefix") != category.lower():
+            raise ValueError(f"{path}: attribute {key} must use {match.group('prefix').title()}")
+        if key in attrs:
+            raise ValueError(f"{path}: duplicate attribute {key}")
+        if category == "Uses":
+            if value_type is None or not VALUE_TYPE_RE.fullmatch(value_type):
+                raise ValueError(f"{path}: attribute {key} needs a valid value type")
+            attrs[key] = value_type
+        else:
+            if value_type is not None and VALUE_TYPE_RE.fullmatch(value_type):
+                raise ValueError(f"{path}: {category} attribute {key} declares no value type")
+            attrs[key] = None
     return attrs
+
+
+def reference_types(value_type: str) -> list[str]:
+    """Return the element types a `reference(...)` value type names, if any."""
+    match = REFERENCE_TYPES_RE.search(value_type)
+    return match.group("types").split("|") if match else []
 
 
 def _children(lines: list[str], path: Path, scope_id: str) -> list[dict[str, str]]:

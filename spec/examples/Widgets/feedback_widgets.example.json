@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "FeedbackWidgets",
   "attrs": {
     "title": "\"Feedback widgets example\""
@@ -10,8 +10,8 @@
       "id": "saveFeedback",
       "type": "FeedbackWidgets",
       "attrs": {
-        "[message]": "\"Saved successfully.\"",
-        "[severity]": "\"success\""
+        "uses.message": "\"Saved successfully.\"",
+        "uses.severity": "\"success\""
       }
     }
   ]

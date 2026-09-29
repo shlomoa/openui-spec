@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "DisplayPrimitives",
   "attrs": {
     "title": "\"Display primitives example\""
@@ -10,8 +10,8 @@
       "id": "statusLabel",
       "type": "DisplayPrimitives",
       "attrs": {
-        "[text]": "\"Ready\"",
-        "[variant]": "\"caption\""
+        "uses.text": "\"Ready\"",
+        "uses.variant": "\"caption\""
       }
     }
   ]

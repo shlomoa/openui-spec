@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "Layout",
   "attrs": {
     "title": "\"Layout abstraction example\""
@@ -10,8 +10,8 @@
       "id": "responsiveLayout",
       "type": "Layout",
       "attrs": {
-        "[flow]": "\"responsive\"",
-        "[breakpoints]": "\"compact medium expanded\""
+        "uses.flow": "\"responsive\"",
+        "uses.breakpoints": "\"compact medium expanded\""
       }
     }
   ]

@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "NavigationWidgets",
   "attrs": {
     "title": "\"Navigation widgets example\""
@@ -10,8 +10,8 @@
       "id": "sectionNavigation",
       "type": "NavigationWidgets",
       "attrs": {
-        "[ariaLabel]": "\"Sections\"",
-        "[selected]": "\"overview\""
+        "uses.ariaLabel": "\"Sections\"",
+        "uses.selected": "\"overview\""
       }
     }
   ]

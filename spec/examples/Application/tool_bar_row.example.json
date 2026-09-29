@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "ToolBar",
   "children": [
     {
@@ -11,9 +11,9 @@
           "id": "refreshAction",
           "type": "ToolAction",
           "attrs": {
-            "[label]": "\"Refresh\"",
-            "[icon]": "\"refresh\"",
-            "(activate)": "refresh()"
+            "uses.label": "\"Refresh\"",
+            "uses.icon": "\"refresh\"",
+            "produces.activate": "refresh()"
           }
         }
       ]

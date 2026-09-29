@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "Presentation",
   "attrs": {
     "title": "\"Presentation abstraction example\""
@@ -10,9 +10,9 @@
       "id": "visualTheme",
       "type": "Presentation",
       "attrs": {
-        "[colorScheme]": "\"light\"",
-        "[density]": "\"comfortable\"",
-        "[typography]": "\"system\""
+        "uses.colorScheme": "\"light\"",
+        "uses.density": "\"comfortable\"",
+        "uses.typography": "\"system\""
       }
     }
   ]

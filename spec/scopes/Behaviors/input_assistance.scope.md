@@ -16,7 +16,7 @@ reporting the result).
 
 ## Attributes
 
-- `[target]` — Uses — element reference to the input control the behavior assists or checks (the [controlled element](../scope.md#controlled-element)).
+- `uses.target` — Uses — reference — element reference to the input control the behavior assists or checks (the [controlled element](../scope.md#controlled-element)).
 
 ## Accessibility
 
@@ -30,6 +30,6 @@ reporting the result).
 - The behavior acts on its target and does not own it; it declares no Child model.
 - Dismissing a suggestion keeps the typed value; accepting one does not submit or
   navigate.
-- Form-wide validation stays with the `(validate)` action on Form.
+- Form-wide validation stays with the `behaves.validate` action on Form.
 - Other attributes, such as the candidate source or the rules to check, need an
   explicit owner decision before they are added.

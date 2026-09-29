@@ -16,10 +16,10 @@ business data.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `(filter)` — Behaves — narrows the visible data by a predicate.
-- `(sort)` — Behaves — orders the data by a chosen key.
-- `(group)` — Behaves — groups the data by a chosen key.
-- `(paginate)` — Behaves — splits the data into navigable pages.
+- `behaves.filter` — Behaves — narrows the visible data by a predicate.
+- `behaves.sort` — Behaves — orders the data by a chosen key.
+- `behaves.group` — Behaves — groups the data by a chosen key.
+- `behaves.paginate` — Behaves — splits the data into navigable pages.
 
 ## Accessibility
 

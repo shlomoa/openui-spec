@@ -1,0 +1,25 @@
+{
+  "id": "root",
+  "version": "0.6.0",
+  "type": "html",
+  "children": [
+    {
+      "id": "settingsDialog",
+      "type": "Dialog",
+      "attrs": {
+        "uses.open": "isSettingsOpen",
+        "uses.modal": "!isInline",
+        "produces.close": "onClose($event)",
+        "produces.cancel": null
+      }
+    },
+    {
+      "id": "ordersItem",
+      "type": "NavItem",
+      "attrs": {
+        "uses.label": "ordersLabel",
+        "uses.route": "currentRouteId"
+      }
+    }
+  ]
+}

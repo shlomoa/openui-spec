@@ -44,14 +44,14 @@ class ApplicationScopeContractTest(unittest.TestCase):
         instance = self._instance("routing.scope.md")
 
         self.assertEqual(instance["type"], "Routing")
-        self.assertEqual(instance["attrs"], {"[defaultRoute]": None})
+        self.assertEqual(instance["attrs"], {"uses.defaultRoute": "reference(Route)"})
         self.assertEqual(instance["children"], [{"id": "routingRoute", "type": "Route"}])
 
     def test_navigation_contract_exposes_label_items_and_groups(self) -> None:
         instance = self._instance("navigation.scope.md")
 
         self.assertEqual(instance["type"], "Navigation")
-        self.assertEqual(instance["attrs"], {"[ariaLabel]": None})
+        self.assertEqual(instance["attrs"], {"uses.ariaLabel": "string"})
         self.assertEqual(
             instance["children"],
             [
@@ -64,17 +64,17 @@ class ApplicationScopeContractTest(unittest.TestCase):
         expected_contracts = {
             "route.scope.md": (
                 "Route",
-                {"[path]", "[target]", "[title]", "[redirectTo]", "[access]"},
+                {"uses.path", "uses.target", "uses.title", "uses.redirectTo", "uses.access"},
                 [{"id": "routeChildRoute", "type": "Route"}],
             ),
             "nav_item.scope.md": (
                 "NavItem",
-                {"[label]", "[route]", "[icon]", "[disabled]"},
+                {"uses.label", "uses.route", "uses.icon", "uses.disabled"},
                 [],
             ),
             "nav_group.scope.md": (
                 "NavGroup",
-                {"[label]", "[expanded]"},
+                {"uses.label", "uses.expanded"},
                 [
                     {"id": "navGroupNavigationItem", "type": "NavItem"},
                     {"id": "navGroupNavigationGroup", "type": "NavGroup"},
@@ -87,7 +87,7 @@ class ApplicationScopeContractTest(unittest.TestCase):
             ),
             "tool_action.scope.md": (
                 "ToolAction",
-                {"[label]", "[icon]", "[disabled]", "(activate)"},
+                {"uses.label", "uses.icon", "uses.disabled", "produces.activate"},
                 [],
             ),
         }
@@ -103,7 +103,7 @@ class ApplicationScopeContractTest(unittest.TestCase):
         instance = self._instance("tool_bars.scope.md")
 
         self.assertEqual(instance["type"], "ToolBar")
-        self.assertEqual(instance["attrs"], {"[ariaLabel]": None})
+        self.assertEqual(instance["attrs"], {"uses.ariaLabel": "string"})
         self.assertEqual(
             instance["children"],
             [{"id": "toolBarsToolBarRow", "type": "ToolBarRow"}],
@@ -116,11 +116,11 @@ class ApplicationScopeContractTest(unittest.TestCase):
         self.assertEqual(
             instance["attrs"],
             {
-                "[rel]": None,
-                "[href]": None,
-                "[type]": None,
-                "[sizes]": None,
-                "[media]": None,
+                "uses.rel": "string",
+                "uses.href": "url",
+                "uses.type": "string",
+                "uses.sizes": "string",
+                "uses.media": "string",
             },
         )
         self.assertNotIn("children", instance)
@@ -129,7 +129,10 @@ class ApplicationScopeContractTest(unittest.TestCase):
         instance = self._instance("index_html.scope.md")
 
         self.assertEqual(instance["type"], "html")
-        self.assertEqual(instance["attrs"], {"[lang]": None, "[dir]": None, "[title]": None})
+        self.assertEqual(
+            instance["attrs"],
+            {"uses.lang": "string", "uses.dir": "enum(ltr|rtl|auto)", "uses.title": "string"},
+        )
         self.assertEqual(
             instance["children"],
             [
@@ -140,20 +143,20 @@ class ApplicationScopeContractTest(unittest.TestCase):
 
     def test_application_examples_use_contract_attributes(self) -> None:
         routing = self._example_child("routing.example.json", "appRouting")
-        self.assertEqual(routing["attrs"], {"[defaultRoute]": '"dashboardRoute"'})
-        self.assertEqual(routing["children"][0]["attrs"]["[target]"], '"dashboardPage"')
-        self.assertEqual(routing["children"][2]["attrs"]["[redirectTo]"], '"dashboardRoute"')
+        self.assertEqual(routing["attrs"], {"uses.defaultRoute": '"dashboardRoute"'})
+        self.assertEqual(routing["children"][0]["attrs"]["uses.target"], '"dashboardPage"')
+        self.assertEqual(routing["children"][2]["attrs"]["uses.redirectTo"], '"dashboardRoute"')
 
         navigation = self._example_child("navigation.example.json", "primaryNav")
         nav_group = navigation["children"][1]
-        self.assertEqual(nav_group["attrs"], {"[label]": '"Reports"', "[expanded]": "true"})
-        self.assertEqual(nav_group["children"][1]["attrs"]["[disabled]"], "true")
+        self.assertEqual(nav_group["attrs"], {"uses.label": '"Reports"', "uses.expanded": True})
+        self.assertEqual(nav_group["children"][1]["attrs"]["uses.disabled"], True)
 
         toolbar = self._example_child("tool_bars.example.json", "appToolbar")
         self.assertEqual(toolbar["type"], "ToolBar")
-        self.assertEqual(toolbar["attrs"], {"[ariaLabel]": '"Application commands"'})
+        self.assertEqual(toolbar["attrs"], {"uses.ariaLabel": '"Application commands"'})
         self.assertEqual(
-            toolbar["children"][0]["children"][0]["attrs"]["(activate)"], "createNew()"
+            toolbar["children"][0]["children"][0]["attrs"]["produces.activate"], "createNew()"
         )
 
         self.assertEqual(
@@ -162,9 +165,9 @@ class ApplicationScopeContractTest(unittest.TestCase):
                 "id": "appFavicon",
                 "type": "link",
                 "attrs": {
-                    "[rel]": '"icon"',
-                    "[href]": '"/favicon.ico"',
-                    "[type]": '"image/x-icon"',
+                    "uses.rel": '"icon"',
+                    "uses.href": '"/favicon.ico"',
+                    "uses.type": '"image/x-icon"',
                 },
             },
         )
@@ -176,14 +179,16 @@ class ApplicationScopeContractTest(unittest.TestCase):
 
         self.assertEqual(document["type"], "Application")
         children = {child["id"]: child for child in document["children"]}
-        self.assertEqual(children["appHost"]["attrs"]["[title]"], '"Application bootstrap example"')
-        self.assertEqual(children["appRouting"]["attrs"]["[defaultRoute]"], '"homeRoute"')
         self.assertEqual(
-            children["appNavigation"]["children"][0]["attrs"]["[route]"], '"homeRoute"'
+            children["appHost"]["attrs"]["uses.title"], '"Application bootstrap example"'
+        )
+        self.assertEqual(children["appRouting"]["attrs"]["uses.defaultRoute"], '"homeRoute"')
+        self.assertEqual(
+            children["appNavigation"]["children"][0]["attrs"]["uses.route"], '"homeRoute"'
         )
         self.assertEqual(children["appToolbar"]["type"], "ToolBar")
         self.assertEqual(
-            children["appToolbar"]["children"][0]["children"][0]["attrs"]["(activate)"],
+            children["appToolbar"]["children"][0]["children"][0]["attrs"]["produces.activate"],
             "openHelp()",
         )
 

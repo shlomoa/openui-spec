@@ -18,11 +18,11 @@ to another route.
 
 Categories are defined in [`../scope.md`](../scope.md):
 
-- `[path]` — Uses — location pattern matched relative to the parent route.
-- `[target]` — Uses — reference to the page or content element resolved by this route.
-- `[title]` — Uses — title announced for the resolved route content.
-- `[redirectTo]` — Uses — reference to the route selected instead of resolving content.
-- `[access]` — Uses — application access requirement for this route.
+- `uses.path` — Uses — string — location pattern matched relative to the parent route.
+- `uses.target` — Uses — reference — reference to the page or content element resolved by this route.
+- `uses.title` — Uses — string — title announced for the resolved route content.
+- `uses.redirectTo` — Uses — reference(Route) — reference to the route selected instead of resolving content.
+- `uses.access` — Uses — string — application access requirement for this route.
 
 ## Child model
 
@@ -39,7 +39,7 @@ A route may own nested route definitions:
 
 ## Validation notes
 
-- Exactly one of `[target]` and `[redirectTo]` is required.
-- `[target]` references a page or content element; `[redirectTo]` references a
-  `Route`. `[access]` expresses policy without prescribing authentication,
+- Exactly one of `uses.target` and `uses.redirectTo` is required.
+- `uses.target` references a page or content element; `uses.redirectTo` references a
+  `Route`. `uses.access` expresses policy without prescribing authentication,
   authorization, guard, or resolver mechanisms.

@@ -1,43 +1,43 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "Form",
   "attrs": {
     "title": "\"Customer form\"",
-    "[dirty]": "form.dirty",
-    "[loading]": "isSaving",
-    "[error]": "saveError",
-    "(submit)": "onSubmit(form.value)"
+    "uses.dirty": "form.dirty",
+    "uses.loading": "isSaving",
+    "uses.error": "saveError",
+    "behaves.submit": "onSubmit(form.value)"
   },
   "children": [
     {
       "id": "nameField",
       "type": "TextInputs",
       "attrs": {
-        "[label]": "\"Name\"",
-        "[required]": "true",
-        "[maxLength]": "80",
-        "[value]": "form.name",
-        "(valueChange)": "onChange('name', $event)"
+        "uses.label": "\"Name\"",
+        "uses.required": true,
+        "uses.maxLength": 80,
+        "uses.value": "form.name",
+        "produces.valueChange": "onChange('name', $event)"
       }
     },
     {
       "id": "emailField",
       "type": "TextInputs",
       "attrs": {
-        "[label]": "\"Email\"",
-        "[required]": "true",
-        "[pattern]": "\"^.+@.+$\"",
-        "[error]": "\"Enter a valid email\""
+        "uses.label": "\"Email\"",
+        "uses.required": true,
+        "uses.pattern": "\"^.+@.+$\"",
+        "uses.error": "\"Enter a valid email\""
       }
     },
     {
       "id": "submitButton",
       "type": "ActionControls",
       "attrs": {
-        "[disabled]": "form.invalid",
+        "uses.disabled": "form.invalid",
         "text": "\"Save\"",
-        "(click)": "onSubmit(form.value)"
+        "produces.click": "onSubmit(form.value)"
       }
     },
     {
@@ -45,7 +45,7 @@
       "type": "ActionControls",
       "attrs": {
         "text": "\"Cancel\"",
-        "(click)": "onReset()"
+        "produces.click": "onReset()"
       }
     }
   ]

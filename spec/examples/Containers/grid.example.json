@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "Grid",
   "attrs": {
     "title": "\"Grid example\""
@@ -10,35 +10,35 @@
       "id": "contentGrid",
       "type": "Grid",
       "attrs": {
-        "[columns]": "12",
-        "[rowGap]": "\"16px\"",
-        "[columnGap]": "\"16px\"",
-        "[responsive]": "true"
+        "uses.columns": 12,
+        "uses.rowGap": "\"16px\"",
+        "uses.columnGap": "\"16px\"",
+        "uses.responsive": true
       },
       "children": [
         {
           "id": "mainRegion",
           "type": "section",
           "attrs": {
-            "[colSpan]": "8",
-            "[rowSpan]": "2",
-            "[order]": "1"
+            "uses.colSpan": 8,
+            "uses.rowSpan": 2,
+            "uses.order": 1
           }
         },
         {
           "id": "sideRegion",
           "type": "section",
           "attrs": {
-            "[colSpan]": "4",
-            "[order]": "2"
+            "uses.colSpan": 4,
+            "uses.order": 2
           }
         },
         {
           "id": "footerRegion",
           "type": "section",
           "attrs": {
-            "[colSpan]": "12",
-            "[order]": "3"
+            "uses.colSpan": 12,
+            "uses.order": 3
           }
         }
       ]

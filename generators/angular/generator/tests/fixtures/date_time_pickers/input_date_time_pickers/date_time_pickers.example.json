@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "DateTimePickers",
   "attrs": {
     "title": "\"Date/time picker example\""
@@ -10,14 +10,14 @@
       "id": "appointmentPicker",
       "type": "DateTimePicker",
       "attrs": {
-        "[min]": "\"2026-01-01\"",
-        "[max]": "\"2026-12-31\"",
-        "[matDatepickerFilter]": "isBusinessDay",
-        "[displayFormat]": "\"yyyy-MM-dd HH:mm\"",
-        "[parseFormat]": "\"yyyy-MM-dd HH:mm\"",
-        "[required]": "true",
-        "[ariaLabel]": "\"Appointment date and time\"",
-        "(dateChange)": "onDateChange($event)"
+        "uses.min": "\"2026-01-01\"",
+        "uses.max": "\"2026-12-31\"",
+        "uses.matDatepickerFilter": "isBusinessDay",
+        "uses.displayFormat": "\"yyyy-MM-dd HH:mm\"",
+        "uses.parseFormat": "\"yyyy-MM-dd HH:mm\"",
+        "uses.required": true,
+        "uses.ariaLabel": "\"Appointment date and time\"",
+        "produces.dateChange": "onDateChange($event)"
       },
       "children": [
         {

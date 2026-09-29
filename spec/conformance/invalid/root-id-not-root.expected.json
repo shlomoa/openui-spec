@@ -1,0 +1,3 @@
+{
+  "diagnostics": [{ "code": "grammar/invalid-root-id", "path": "/id" }]
+}

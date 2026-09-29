@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "TextInputs",
   "attrs": {
     "title": "\"Text inputs example\""
@@ -10,10 +10,10 @@
       "id": "searchText",
       "type": "TextInputs",
       "attrs": {
-        "[label]": "\"Search\"",
-        "[placeholder]": "\"Type to search\"",
-        "[value]": "query",
-        "(valueChange)": "onQueryChange($event)"
+        "uses.label": "\"Search\"",
+        "uses.placeholder": "\"Type to search\"",
+        "uses.value": "query",
+        "produces.valueChange": "onQueryChange($event)"
       }
     }
   ]

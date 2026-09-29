@@ -1,0 +1,3 @@
+{
+  "diagnostics": [{ "code": "grammar/missing-property", "path": "/version" }]
+}

@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "OverlayContainers",
   "attrs": {
     "title": "\"Overlay containers example\""
@@ -10,8 +10,8 @@
       "id": "helpOverlay",
       "type": "OverlayContainers",
       "attrs": {
-        "[anchor]": "\"helpButton\"",
-        "[open]": "showHelp"
+        "uses.anchor": "\"helpButton\"",
+        "uses.open": "showHelp"
       }
     }
   ]

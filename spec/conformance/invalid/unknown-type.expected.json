@@ -1,0 +1,5 @@
+{
+  "diagnostics": [
+    { "code": "catalog/unknown-type", "path": "/children/0/type" }
+  ]
+}

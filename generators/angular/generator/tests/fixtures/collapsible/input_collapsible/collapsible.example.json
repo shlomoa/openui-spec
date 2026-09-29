@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "Collapsible",
   "attrs": {
     "title": "\"Collapsible example\""
@@ -17,7 +17,7 @@
       "id": "detailsCollapsible",
       "type": "Collapsible",
       "attrs": {
-        "[target]": "\"detailsSection\""
+        "uses.target": "\"detailsSection\""
       }
     }
   ]

@@ -14,7 +14,7 @@ dragging and dropping them.
 
 ## Attributes
 
-- `[target]` — Uses — element reference to the page, view, container or widget whose elements the behavior moves (the [controlled element](../scope.md#controlled-element)).
+- `uses.target` — Uses — reference — element reference to the page, view, container or widget whose elements the behavior moves (the [controlled element](../scope.md#controlled-element)).
 
 ## Accessibility
 

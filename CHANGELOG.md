@@ -3,6 +3,51 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.6.0] - 2026-09-29
+
+### Typed attributes
+
+- Attribute keys carry their category in a framework-neutral form:
+  `uses.name`, `produces.name` and `behaves.name` replace `[name]` and
+  `(name)`. A key without a prefix still carries no category.
+- Attribute values are typed: a string, number, `true`, `false`, `null`, or a
+  list of these. A literal string stays quoted inside the string
+  (`"\"Orders\""`); an unquoted string stays a binding or target-language
+  expression. `null` still means present without a value.
+- Every Uses attribute declares a value type in its scope's Attributes line:
+  `string`, `boolean`, `integer`, `number`, `url`, `enum(a|b)`, `reference`,
+  `reference(Type)` or `list(type)`. The catalog carries the type as the
+  attribute's value.
+- Element references keep their quoted-id form and are now typed, so tools
+  resolve them and check the referenced type.
+- The spec README has a Versioning section: a document declares the spec
+  version it is written for, and a tool accepts only the version it implements.
+- The decisions and their sources are in
+  `spec/survey/language_change.done.md`.
+
+### Conformance suite and utilities
+
+- New shared conformance suite in `spec/conformance/`: valid documents,
+  invalid documents and the diagnostics a tool must report for each, in four
+  stages (grammar, document, catalog, contract).
+- New Python API `bin.openui_document` and TypeScript API in
+  `@shlomoa/openui-spec`: `parse`, `validate`, `validate_text` /
+  `validateText` and `Catalog`, with a typed `Document`, `Element` and
+  `Attribute` model. Both pass the suite with identical diagnostics, and
+  `OpenUiJson.validate()` and both CLIs use them.
+- New tool `python -m spec.bin.migrate` converts 0.5 documents to the typed
+  form. The worked examples and generator fixtures were regenerated with it.
+- New demo page `spec/playground.html`: paste a document, see its diagnostics
+  and element tree.
+
+### Upgrading to 0.6.0
+
+1. Upgrade the Python or npm package to `0.6.0`.
+2. Run `python -m spec.bin.migrate <folder or file>` on your documents, then
+   set their `version` fields to `0.6.0`.
+3. Code that reads `[name]` or `(name)` keys reads `uses.name`,
+   `produces.name` or `behaves.name` instead, and accepts non-string values.
+
 ## [0.5.0] - 2026-09-29
 
 ### Taxonomy documents
@@ -214,3 +259,4 @@ and enforced rather than adding or removing catalog types.
 [0.3.1]: https://github.com/shlomoa/openui-spec/compare/v0.3.0...v0.3.1
 [0.4.0]: https://github.com/shlomoa/openui-spec/compare/v0.3.1...v0.4.0
 [0.5.0]: https://github.com/shlomoa/openui-spec/compare/v0.4.0...v0.5.0
+[0.6.0]: https://github.com/shlomoa/openui-spec/compare/v0.5.0...v0.6.0

@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "InputAssistance",
   "attrs": {
     "title": "\"Input assistance example\""
@@ -10,16 +10,16 @@
       "id": "emailField",
       "type": "TextInputs",
       "attrs": {
-        "[label]": "\"E-mail\"",
-        "[value]": "email",
-        "(valueChange)": "onEmailChange($event)"
+        "uses.label": "\"E-mail\"",
+        "uses.value": "email",
+        "produces.valueChange": "onEmailChange($event)"
       }
     },
     {
       "id": "emailCompletion",
       "type": "InputAssistance",
       "attrs": {
-        "[target]": "\"emailField\""
+        "uses.target": "\"emailField\""
       }
     }
   ]
