@@ -163,21 +163,21 @@ em {
   </style>
 </head>
 <body>
-<h1>Generic UI Taxonomy</h1>
+<h1 id="generic-ui-taxonomy">Generic UI Taxonomy</h1>
 <p>The generic UI taxonomy groups framework-independent UI terms by their primary purpose.
-It is one of the three <a href="../scopes/scope.md#taxonomy-documents">taxonomy documents</a>. It
+It is one of the three <a href="../scopes/scope/#taxonomy-documents">taxonomy documents</a>. It
 owns the sections and their purpose, the subcategories and their inclusion rule (Holds),
 the entries and where each belongs, and how the user meets each entry: its description,
 whether it is viewable or device-dependent, and its image. The
-<a href="ui-element-taxonomy.md">UI element taxonomy</a> owns the classification rules. The
-<a href="../scopes/taxonomy_mapping.md">taxonomy mapping</a> owns the scope object of each entry.
-Term definitions and aliases live in the <a href="../scopes/scope.md#glossary">glossary</a>, and
+<a href="ui-element-taxonomy/">UI element taxonomy</a> owns the classification rules. The
+<a href="../scopes/taxonomy_mapping/">taxonomy mapping</a> owns the scope object of each entry.
+Term definitions and aliases live in the <a href="../scopes/scope/#glossary">glossary</a>, and
 object contracts in the scope files; an entry description may not contradict them.</p>
 <p>Where an entry belongs:</p>
 <ul>
 <li>Each entry belongs to exactly one section and at most one subcategory, chosen by its
   primary purpose in its current context, as the
-  <a href="ui-element-taxonomy.md#classification-rules">classification rules</a> define.</li>
+  <a href="ui-element-taxonomy/#classification-rules">classification rules</a> define.</li>
 <li>The Holds line of a subcategory is its inclusion rule.</li>
 <li>Interaction details, such as hover states, touch targets, gestures and input events,
   are entries of <a href="#interaction-definitions">Interaction definitions</a>. Reusable behaviors
@@ -188,9 +188,9 @@ object contracts in the scope files; an entry description may not contradict the
 <p>“Device-dependent” means that the element inherently requires a particular
 hardware or host-platform capability, not merely that its layout adapts to a
 device.</p>
-<h2>Input elements</h2>
+<h2 id="input-elements">Input elements</h2>
 <p>Collect data from users or allow users to trigger actions and change values.</p>
-<h3>Command activation</h3>
+<h3 id="command-activation">Command activation</h3>
 <p>Holds: Controls whose main purpose is to run a command.</p>
 <table>
 <thead>
@@ -240,7 +240,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Text and shortcut entry</h3>
+<h3 id="text-and-shortcut-entry">Text and shortcut entry</h3>
 <p>Holds: Entry of text or of a recorded key sequence.</p>
 <table>
 <thead>
@@ -297,7 +297,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Value and resource selection</h3>
+<h3 id="value-and-resource-selection">Value and resource selection</h3>
 <p>Holds: Choosing a value, a quantity in a range, or a resource such as a file, font or color.</p>
 <table>
 <thead>
@@ -480,7 +480,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Temporal entry</h3>
+<h3 id="temporal-entry">Temporal entry</h3>
 <p>Holds: Editing or choosing a date or time, with an optional calendar.</p>
 <table>
 <thead>
@@ -530,7 +530,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Drawing and capture</h3>
+<h3 id="drawing-and-capture">Drawing and capture</h3>
 <p>Holds: Input that is not text or a value: drawing, or capturing sound.</p>
 <table>
 <thead>
@@ -566,7 +566,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Manipulation handles</h3>
+<h3 id="manipulation-handles">Manipulation handles</h3>
 <p>Holds: Visible handles the user drags to move or resize an element. The behavior itself is in the Behaviors section.</p>
 <table>
 <thead>
@@ -595,9 +595,9 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h2>Output elements</h2>
+<h2 id="output-elements">Output elements</h2>
 <p>Present information, results, feedback, progress, or system status to users.</p>
-<h3>Document and numeric display</h3>
+<h3 id="document-and-numeric-display">Document and numeric display</h3>
 <p>Holds: Text, labels, images and calculated values shown without their own interaction.</p>
 <table>
 <thead>
@@ -675,7 +675,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Graphics presentation</h3>
+<h3 id="graphics-presentation">Graphics presentation</h3>
 <p>Holds: Shapes, application-drawn imagery and views onto a graphics scene.</p>
 <table>
 <thead>
@@ -711,7 +711,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Collections and data presentation</h3>
+<h3 id="collections-and-data-presentation">Collections and data presentation</h3>
 <p>Holds: Repeated or structured records and their visualizations: lists, tables, grids, trees, schedules, charts and geographic maps.</p>
 <table>
 <thead>
@@ -796,7 +796,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Media playback</h3>
+<h3 id="media-playback">Media playback</h3>
 <p>Holds: Audio, video and camera content.</p>
 <table>
 <thead>
@@ -832,7 +832,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Feedback and assistance</h3>
+<h3 id="feedback-and-assistance">Feedback and assistance</h3>
 <p>Holds: Status, progress, messages and help.</p>
 <table>
 <thead>
@@ -973,9 +973,9 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h2>Navigational elements</h2>
+<h2 id="navigational-elements">Navigational elements</h2>
 <p>Help users move between product areas, views, locations, or sections of content.</p>
-<h3>Command menus</h3>
+<h3 id="command-menus">Command menus</h3>
 <p>Holds: Lists of commands or choices with menu semantics.</p>
 <table>
 <thead>
@@ -1025,7 +1025,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Hierarchy browsing</h3>
+<h3 id="hierarchy-browsing">Hierarchy browsing</h3>
 <p>Holds: Exploring parent and child items in a tree, columns or a path.</p>
 <table>
 <thead>
@@ -1061,7 +1061,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Content selection and position</h3>
+<h3 id="content-selection-and-position">Content selection and position</h3>
 <p>Holds: Choosing which content is shown, or where in it the user is.</p>
 <table>
 <thead>
@@ -1111,7 +1111,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Application navigation</h3>
+<h3 id="application-navigation">Application navigation</h3>
 <p>Holds: Moving between the destinations of an application or to a linked resource.</p>
 <table>
 <thead>
@@ -1182,7 +1182,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Search, filtering and sorting</h3>
+<h3 id="search-filtering-and-sorting">Search, filtering and sorting</h3>
 <p>Holds: Finding, narrowing and ordering content.</p>
 <table>
 <thead>
@@ -1225,9 +1225,9 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h2>Container elements</h2>
+<h2 id="container-elements">Container elements</h2>
 <p>Group, structure, and organize related content or other UI elements.</p>
-<h3>Grouping surfaces</h3>
+<h3 id="grouping-surfaces">Grouping surfaces</h3>
 <p>Holds: Regions that hold related content or controls, including ones the user can expand.</p>
 <table>
 <thead>
@@ -1305,7 +1305,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Workspace surfaces</h3>
+<h3 id="workspace-surfaces">Workspace surfaces</h3>
 <p>Holds: Application work areas: windows, views, pages and the bars and panels that frame them.</p>
 <table>
 <thead>
@@ -1397,7 +1397,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Overlays and sheets</h3>
+<h3 id="overlays-and-sheets">Overlays and sheets</h3>
 <p>Holds: Surfaces layered above the current content or attached to its edge.</p>
 <table>
 <thead>
@@ -1447,7 +1447,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Forms</h3>
+<h3 id="forms">Forms</h3>
 <p>Holds: A form and the fields and field groups it holds.</p>
 <table>
 <thead>
@@ -1483,7 +1483,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Focused tasks and guided sequences</h3>
+<h3 id="focused-tasks-and-guided-sequences">Focused tasks and guided sequences</h3>
 <p>Holds: A decision, a short task or a sequence of steps that takes the user's attention.</p>
 <table>
 <thead>
@@ -1526,7 +1526,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h2>Layout and structural elements</h2>
+<h2 id="layout-and-structural-elements">Layout and structural elements</h2>
 <p>Concrete structural entities that organize, divide, align, or position other UI elements. They may be visible, partly visible, or identifiable only through their effect on the layout.</p>
 <table>
 <thead>
@@ -1625,9 +1625,9 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h2>Layout mechanisms and definitions</h2>
+<h2 id="layout-mechanisms-and-definitions">Layout mechanisms and definitions</h2>
 <p>Framework-independent rules that determine how UI elements and structural objects are positioned, sized, aligned, grouped, and adapted to available space.</p>
-<h3>Layout rules and relationships</h3>
+<h3 id="layout-rules-and-relationships">Layout rules and relationships</h3>
 <p>Holds: Rules and relationships that decide how elements occupy and respond to space.</p>
 <p>The definitions themselves are abstract; their effects are viewable.</p>
 <table>
@@ -1713,9 +1713,9 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h2>Presentation and style definitions</h2>
+<h2 id="presentation-and-style-definitions">Presentation and style definitions</h2>
 <p>Framework-independent rules that determine how UI elements look, sound, and visually change without defining the elements themselves.</p>
-<h3>Visual appearance and presentation rules</h3>
+<h3 id="visual-appearance-and-presentation-rules">Visual appearance and presentation rules</h3>
 <p>Holds: Visual and auditory rules that communicate hierarchy, identity, meaning, state and change.</p>
 <p>Each illustration shows the effect produced by the definition.</p>
 <table>
@@ -1850,9 +1850,9 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h2>Internationalization and localization definitions</h2>
+<h2 id="internationalization-and-localization-definitions">Internationalization and localization definitions</h2>
 <p>Framework-independent rules and resources that adapt an interface to the user’s language, writing system, locale, and cultural conventions. Internationalization makes this adaptation possible; localization supplies and applies the language- and locale-specific result.</p>
-<h3>Language, locale, and writing-system rules</h3>
+<h3 id="language-locale-and-writing-system-rules">Language, locale, and writing-system rules</h3>
 <p>Holds: Rules for language, translation, writing direction, cultural formatting and localized input.</p>
 <p>The illustrations show the visible effect of each definition; the rule itself may be abstract.</p>
 <table>
@@ -1980,7 +1980,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h4>RTL alignment notes</h4>
+<h4 id="rtl-alignment-notes">RTL alignment notes</h4>
 <ul>
 <li>Use logical layout terms and properties—inline-start, inline-end, block-start, and block-end—in direction-adaptive specifications. Reserve left and right for cases that are intentionally physical.</li>
 <li>Derive visual order from the writing mode and semantic reading order; do not reverse source or DOM order merely to obtain an RTL appearance.</li>
@@ -1990,9 +1990,9 @@ device.</p>
 <li>Adapt keyboard navigation, focus traversal, swipe semantics, transitions, and spatial animations to semantic direction instead of assuming that left always means previous and right always means next.</li>
 <li>Localize text before measuring or truncating it. Allow expansion, script-specific line height, font fallback, and wrapping without clipping or overlapping adjacent elements.</li>
 </ul>
-<h2>Interaction definitions</h2>
+<h2 id="interaction-definitions">Interaction definitions</h2>
 <p>Framework-independent definitions for the states, areas, gestures, and events through which users interact with UI elements. These are interaction concepts rather than UI elements.</p>
-<h3>Interaction states</h3>
+<h3 id="interaction-states">Interaction states</h3>
 <p>Holds: Conditions that show an element's availability, focus, activation or selection.</p>
 <table>
 <thead>
@@ -2049,7 +2049,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Interaction areas and constraints</h3>
+<h3 id="interaction-areas-and-constraints">Interaction areas and constraints</h3>
 <p>Holds: Hit regions and the rules for targeting an element reliably.</p>
 <table>
 <thead>
@@ -2092,7 +2092,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Gestures</h3>
+<h3 id="gestures">Gestures</h3>
 <p>Holds: Movements or contact patterns interpreted as higher-level interactions.</p>
 <table>
 <thead>
@@ -2156,7 +2156,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h3>Input events</h3>
+<h3 id="input-events">Input events</h3>
 <p>Holds: Low-level pointer, touch, keyboard, focus and value events.</p>
 <table>
 <thead>
@@ -2276,7 +2276,7 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<h2>Behaviors</h2>
+<h2 id="behaviors">Behaviors</h2>
 <p>Reusable behaviors that act on an existing element without being a visible element themselves.</p>
 <table>
 <thead>
