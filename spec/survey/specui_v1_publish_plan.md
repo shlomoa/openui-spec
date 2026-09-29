@@ -247,7 +247,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W8 Spec utilities
 
-32. [ ] Create a shared conformance suite (`spec/conformance/`: valid + invalid documents with expected diagnostics); create its fixture structure early and finalize the suite after W5 task 23 freezes the grammar and schema.
+32. [ ] Create a shared conformance suite (`spec/conformance/`: valid + invalid documents with expected diagnostics); create its fixture structure early and finalize the suite after W5 task 23 freezes the grammar and schema. *In progress — chain 2, branch claude/chain-2-language-utilities.*
 33. [ ] After W5 task 23 and task 32, Python: parse (EBNF + JSON) → typed object model → validate (grammar, catalog membership, scope contract).
 34. [ ] After W5 task 23 and task 32, TypeScript: same API surface in `@shlomoa/openui-spec`.
 35. [ ] Both packages pass the same suite; publish `1.0.0` to PyPI and npm as part of the M5 release. *Directive (Q3):* publish `0.x.0` versions until downstream validation clears `1.0.0`. *Demo:* the W5 playground uses the TS validator.
