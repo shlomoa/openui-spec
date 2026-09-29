@@ -3,10 +3,11 @@ import unittest
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DOCS_TAXONOMY = REPO_ROOT / "spec" / "generic-ui-taxonomy.md"
+DOCS_TAXONOMY = REPO_ROOT / "spec" / "taxonomy" / "generic-ui-taxonomy.md"
 SPEC_DIR = REPO_ROOT / "spec"
 SCOPES_DIR = SPEC_DIR / "scopes"
 TAXONOMY_MAPPING = SCOPES_DIR / "taxonomy_mapping.md"
+UI_ELEMENT_TAXONOMY = SPEC_DIR / "taxonomy" / "ui-element-taxonomy.md"
 SCOPES_INDEX = SCOPES_DIR / "scope.md"
 SPEC_README = SPEC_DIR / "README.md"
 MKDOCS_CONFIG = REPO_ROOT / "mkdocs.yml"
@@ -17,8 +18,8 @@ ALLOWED_ABSTRACTION_LEVELS = {
     "Grouped leaf",
     "Folder abstraction",
 }
-INTENTIONAL_COMBINED_MAPPINGS = {"table/data grid"}
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+LINK_TEXT_RE = re.compile(r"\[([^\]]+)\]\([^)]+\)")
 
 
 class TaxonomyMappingTest(unittest.TestCase):
@@ -52,34 +53,110 @@ class TaxonomyMappingTest(unittest.TestCase):
                     self.assertFalse(link.startswith("../"), link)
                     self.assertTrue((SCOPES_DIR / link).is_file(), link)
 
-    def test_every_taxonomy_entry_is_mapped(self) -> None:
-        taxonomy_entries = {_normalize_taxonomy_entry(entry) for entry in _taxonomy_entries()}
-        mapping_entries = {_normalize_taxonomy_entry(row["entry"]) for row in self.mapping_rows}
+    def test_mapping_headings_mirror_the_generic_taxonomy(self) -> None:
+        self.assertEqual(
+            _taxonomy_headings(TAXONOMY_MAPPING.read_text(encoding="utf-8")),
+            _taxonomy_headings(DOCS_TAXONOMY.read_text(encoding="utf-8")),
+        )
 
-        self.assertEqual(taxonomy_entries - mapping_entries, set())
+    def test_mapping_lists_every_taxonomy_entry_in_its_place(self) -> None:
+        """Both documents list the same entries, with exact names, in the same place."""
+        taxonomy = _placed_entries(DOCS_TAXONOMY.read_text(encoding="utf-8"))
+        mapping = _placed_entries(self.mapping_text)
 
-    def test_mapping_does_not_duplicate_taxonomy_entries(self) -> None:
-        seen: set[str] = set()
-        duplicates: set[str] = set()
-        for row in self.mapping_rows:
-            normalized = _normalize_taxonomy_entry(row["entry"])
-            if normalized in seen:
-                duplicates.add(normalized)
-            seen.add(normalized)
+        self.assertEqual(sorted(set(taxonomy) - set(mapping)), [], "missing from the mapping")
+        self.assertEqual(sorted(set(mapping) - set(taxonomy)), [], "missing from the taxonomy")
+        self.assertEqual(mapping, taxonomy)
 
-        self.assertLessEqual(duplicates, INTENTIONAL_COMBINED_MAPPINGS)
+    def test_every_taxonomy_entry_has_an_image_or_needs_none(self) -> None:
+        image_re = re.compile(r"!\[[^\]]+\]\((images/[^)]+\.svg)\)")
+        for line in DOCS_TAXONOMY.read_text(encoding="utf-8").splitlines():
+            cells = _table_cells(line)
+            if len(cells) < 2 or cells[0] == "Name" or _is_separator_row(cells):
+                continue
+            with self.subTest(entry=cells[0]):
+                match = image_re.fullmatch(cells[-1])
+                if cells[-1] != "Not applicable":
+                    self.assertIsNotNone(match, cells[-1])
+                    self.assertTrue(
+                        (DOCS_TAXONOMY.parent / match.group(1)).is_file(), match.group(1)
+                    )
+
+    def test_each_entry_has_one_section_and_at_most_one_subcategory(self) -> None:
+        """Each entry is listed once, under a section and at most one subcategory of it."""
+        for path in (DOCS_TAXONOMY, TAXONOMY_MAPPING):
+            text = path.read_text(encoding="utf-8")
+            entries = _placed_entries(text)
+            names = [name for _, _, name in entries]
+            subcategories = [
+                line[4:].strip() for line in text.splitlines() if line.startswith("### ")
+            ]
+            with self.subTest(document=path.name):
+                self.assertGreater(len(entries), 0)
+                duplicates = sorted({name for name in names if names.count(name) > 1})
+                self.assertEqual(duplicates, [], "entries listed more than once")
+                repeated = sorted({name for name in subcategories if subcategories.count(name) > 1})
+                self.assertEqual(repeated, [], "subcategories in more than one section")
+            for section, _, name in entries:
+                with self.subTest(document=path.name, entry=name):
+                    self.assertNotEqual(section, "", "entry outside every section")
+
+    def test_every_openui_term_of_the_ui_element_taxonomy_is_in_the_mapping(self) -> None:
+        mapped = {name for _, _, name in _placed_entries(self.mapping_text)}
+        mapped |= {LINK_TEXT_RE.sub(r"\1", row["spec_object"]) for row in self.mapping_rows}
+        terms = _openui_terms(UI_ELEMENT_TAXONOMY.read_text(encoding="utf-8"))
+
+        self.assertGreater(len(terms), 0)
+        self.assertEqual(sorted(terms - mapped), [])
 
 
-def _taxonomy_entries() -> list[str]:
-    entries: list[str] = []
-    for line in DOCS_TAXONOMY.read_text(encoding="utf-8").splitlines():
+def _openui_terms(text: str) -> set[str]:
+    """Return the terms of the "OpenUI term" column, without "Not added"."""
+    terms: set[str] = set()
+    column = None
+    for line in text.splitlines():
         cells = _table_cells(line)
-        if len(cells) < 2 or cells[0] in {"Name", "---"}:
+        if not cells:
+            column = None
             continue
-        if _is_separator_row(cells):
+        if "OpenUI term" in cells:
+            column = cells.index("OpenUI term")
+        elif column is not None and not _is_separator_row(cells) and cells[column] != "Not added":
+            terms.update(term.strip() for term in cells[column].split(";"))
+    return terms
+
+
+def _placed_entries(text: str) -> list[tuple[str, str, str]]:
+    """Return (section, subcategory, entry) for every entry row, in document order."""
+    entries: list[tuple[str, str, str]] = []
+    section = subcategory = ""
+    for line in text.splitlines():
+        if line.startswith("## "):
+            section, subcategory = line[3:].strip(), ""
+        elif line.startswith("### "):
+            subcategory = line[4:].strip()
+        elif line.startswith("#"):
             continue
-        entries.append(cells[0])
+        cells = _table_cells(line)
+        if len(cells) < 2 or cells[0] in {"Name", "Taxonomy entry"} or _is_separator_row(cells):
+            continue
+        entries.append((section, subcategory, cells[0]))
     return entries
+
+
+def _taxonomy_headings(text: str) -> list[str]:
+    """Return the section (##) and subcategory (###) headings that hold entry tables."""
+    headings: list[str] = []
+    pending: list[str] = []
+    for line in text.splitlines():
+        if line.startswith("## "):
+            pending = [line]
+        elif line.startswith("### "):
+            pending = [heading for heading in pending if heading.startswith("## ")] + [line]
+        elif _table_cells(line) and pending:
+            headings.extend(heading for heading in pending if heading not in headings)
+            pending = []
+    return headings
 
 
 def _taxonomy_mapping_rows(text: str) -> list[dict[str, str]]:
@@ -108,16 +185,6 @@ def _table_cells(line: str) -> list[str]:
 
 def _is_separator_row(cells: list[str]) -> bool:
     return all(re.fullmatch(r":?-{3,}:?", cell) for cell in cells)
-
-
-def _normalize_taxonomy_entry(value: str) -> str:
-    normalized = value.lower().strip()
-    normalized = re.sub(r"\s*/\s*", "/", normalized)
-    normalized = re.sub(r",\s+and\s+", "/", normalized)
-    normalized = re.sub(r",\s*", "/", normalized)
-    normalized = re.sub(r"\s+and\s+", "/", normalized)
-    normalized = re.sub(r"\s+", " ", normalized)
-    return normalized
 
 
 if __name__ == "__main__":

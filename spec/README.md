@@ -150,9 +150,8 @@ Generators use the three artifacts together:
 
 The `scopes` folder is structured hierarchically. Each top-level scope is a folder; each object is either a child scope folder or a snake_case `*.scope.md` leaf file.
 The [taxonomy mapping](scopes/taxonomy_mapping.md) maps the abstract entries in
-the [generic UI taxonomy](generic-ui-taxonomy.md) to the concrete scope object or alias that owns
-each term. The [UI element taxonomy](ui-element-taxonomy.md) is being merged into it and
-retired (plan task W3 14.6).
+the [generic UI taxonomy](taxonomy/generic-ui-taxonomy.md) to the concrete scope object or alias that owns
+each term. The [UI element taxonomy](taxonomy/ui-element-taxonomy.md) is a part of the specification too.
 The [terminology](scopes/terminology.md) records the approved term changes behind
 the glossary and the taxonomy mapping, with their evidence.
 
@@ -243,7 +242,7 @@ rules:
 
 - `"id"` MUST be `"root"`.
 - `"version"` is REQUIRED (top-level only) and MUST equal the current value in
-  the repository-root `SCHEMA_VERSION` file (currently `0.4.0`).
+  the repository-root `SCHEMA_VERSION` file (currently `0.5.0`).
 - `"type"` MUST be `"html"`.
 
 `EBNF.txt` defines the required root fields, literal root id, version syntax,
@@ -342,7 +341,7 @@ The format itself is in [EBNF](./EBNF.txt)
 
 ### Syntax rules
 
-- **Version field (top-level only):** Required semantic version string (e.g., "0.4.0") identifying the spec version
+- **Version field (top-level only):** Required semantic version string (e.g., "0.5.0") identifying the spec version
 - **ID field:** Must be a camelCase alphanumeric string (starts with lowercase letter, can contain uppercase letters and digits)
 - **Type field:** Must satisfy the grammar's HTML/kebab-case/PascalCase syntax and, in a concrete UI document, exactly match a literal `type` in `spec/openui.json`
 - **Attributes field:** Key-value pairs where values are strings or null. Attribute key syntax identifies input, output, and behavior categories; all such categories must stay inside the `attrs` object.
@@ -453,7 +452,7 @@ the `scopes` tree: a `<object>.example.json` for each leaf scope and a composite
 ```json
 {
   "id": "root",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "type": "Pages",
   "attrs": {
     "size": "1960x1080",

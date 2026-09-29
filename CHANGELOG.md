@@ -3,6 +3,49 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.5.0] - 2026-09-29
+
+### Taxonomy documents
+
+- The taxonomy documents stay part of the spec. They moved to a new
+  `spec/taxonomy/` folder: the generic UI taxonomy, its generated HTML, the UI
+  element taxonomy and the `images/` folder.
+- Each taxonomy fact has one owner. The owner table is in
+  `spec/scopes/scope.md#taxonomy-documents`, and each taxonomy document says
+  what it owns. The subcategory Holds rules and the entry-placement rules moved
+  from the taxonomy mapping into the generic UI taxonomy.
+- Removed duplicates and contradictions. Nine entry names now have one
+  spelling in all documents. Mapping notes keep only scope-specific facts. The
+  UI element taxonomy uses the generic taxonomy's names for the interaction
+  groups. The View, Window, Tab, Date picker and Report descriptions now follow
+  the glossary and the scope Purposes.
+- The UI element taxonomy has a new "OpenUI term" column. The 60 approved
+  terms that no abstract type reached now have a home: 40 on existing types and
+  20 in 15 new abstract types.
+- Added images for all 85 generic taxonomy entries that had none.
+
+### Glossary
+
+- The notes under Control, Element and Page are now headed "Same name,
+  different meaning:". Each names the framework, its name, what it is there,
+  then what OpenUI means. The meanings are unchanged.
+
+### Tests
+
+- The taxonomy tests are stricter. They compare the section, subcategory and
+  exact name of every entry in the generic taxonomy and the mapping, in both
+  directions. They check that each entry sits in one section and at most one
+  subcategory, has an image or "Not applicable", and that every OpenUI term of
+  the UI element taxonomy is in the mapping.
+
+### Upgrading to 0.5.0
+
+1. Upgrade the Python or npm package to `0.5.0` and set concrete document
+   `version` fields to `0.5.0`.
+2. Change links to `spec/generic-ui-taxonomy.md`,
+   `spec/generic-ui-taxonomy.html`, `spec/ui-element-taxonomy.md` or
+   `spec/images/` to the same files under `spec/taxonomy/`.
+
 ## [0.4.0] - 2026-09-29
 
 ### New Behaviors
@@ -169,3 +212,5 @@ and enforced rather than adding or removing catalog types.
 [0.2.0]: https://github.com/shlomoa/openui-spec/compare/v0.1.1...v0.2.0
 [0.3.0]: https://github.com/shlomoa/openui-spec/compare/v0.2.0...v0.3.0
 [0.3.1]: https://github.com/shlomoa/openui-spec/compare/v0.3.0...v0.3.1
+[0.4.0]: https://github.com/shlomoa/openui-spec/compare/v0.3.1...v0.4.0
+[0.5.0]: https://github.com/shlomoa/openui-spec/compare/v0.4.0...v0.5.0

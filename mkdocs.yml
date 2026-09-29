@@ -12,8 +12,8 @@ nav:
   - Scopes:
       - Overview: scopes/scope.md
       - Taxonomy mapping: scopes/taxonomy_mapping.md
-      - Generic UI taxonomy: generic-ui-taxonomy.md
-      - UI element taxonomy (retiring): ui-element-taxonomy.md
+      - Generic UI taxonomy: taxonomy/generic-ui-taxonomy.md
+      - UI element taxonomy: taxonomy/ui-element-taxonomy.md
       - Terminology: scopes/terminology.md
       - Evidence: scopes/evidence.md
       - Template: scopes/template.scope.md

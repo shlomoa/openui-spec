@@ -6,12 +6,32 @@ element, control, widget, view, container, behavior, table, grid, and button are
 defined in the [glossary](#glossary). Scope files specialize
 those terms for concrete object contracts rather than redefining them.
 The [taxonomy mapping](taxonomy_mapping.md) maps entries from
-the [generic UI taxonomy](../generic-ui-taxonomy.md) to these scope objects and records whether each
+the [generic UI taxonomy](../taxonomy/generic-ui-taxonomy.md) to these scope objects and records whether each
 entry is an existing object, alias, grouped leaf, or folder-level abstraction.
 The [terminology](terminology.md) records the approved term changes, with their
 evidence and the canonical-term rule. The taxonomy and the scope tree are linked views of one vocabulary. The taxonomy
 groups terms by purpose; the scope tree organizes contracts. A new taxonomy section
 or subcategory does not create a scope folder, type or contract.
+
+## Taxonomy documents
+
+Three documents specify the OpenUI taxonomy. Each fact about it has one owner, and the
+documents link to each other instead of repeating it:
+
+| Document                                                  | Owns                                                                                                                                                                                                                               |
+| --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Generic UI taxonomy](../taxonomy/generic-ui-taxonomy.md) | The sections and their purpose; the subcategories and their inclusion rule (Holds); the entries and where each belongs; how the user meets each entry: its description, whether it is viewable or device-dependent, and its image. |
+| [UI element taxonomy](../taxonomy/ui-element-taxonomy.md) | The abstract element types in 15 categories, with their purpose and typical concrete elements; the OpenUI term each type maps to; the classification rules, with their primary and secondary role examples.                        |
+| [Taxonomy mapping](taxonomy_mapping.md)                   | For each entry: its scope object, its abstraction level and its scope-specific notes. Its section and subcategory headings mirror the generic UI taxonomy, and a test keeps them equal.                                            |
+
+The rest of the spec keeps its own facts:
+
+- The [glossary](#glossary) keeps the term definitions and the generic aliases, which are
+  synonyms such as "hyperlink" or "push button". Framework names, such as `sap.m.Page` or
+  `QDockWidget`, are not glossary aliases; a taxonomy entry's framework names belong on its
+  row in the taxonomy mapping.
+- The scope files keep the object contracts.
+- A taxonomy description may not contradict the glossary or a scope file.
 
 ## Top-level scopes
 
@@ -92,15 +112,15 @@ grammar and field mapping are documented in [`../README.md`](../README.md).
 
 This glossary is the repository source of truth for OpenUI vocabulary. Other
 documents may classify, specialize, or illustrate these terms, but should link
-here instead of redefining them. A term may have several aliases in product,
-framework, accessibility, or platform language; the canonical term below is the
-preferred OpenUI wording.
+here instead of redefining them. A term may have several generic aliases; the
+canonical term below is the preferred OpenUI wording.
 
 ### Glossary usage rules
 
 - Use **Canonical term** names in normative spec prose when possible.
-- Use **Aliases** to recognize equivalent names from frameworks, platforms,
-  design systems, accessibility APIs, and user-facing product language.
+- Use **Aliases** to recognize generic synonyms from design systems and
+  user-facing product language. Framework names belong in the taxonomy mapping, as
+  [Taxonomy documents](#taxonomy-documents) states.
 - When a document needs a narrower meaning, state the specialization and link to
   the canonical term instead of creating a parallel definition.
 - Scope files under [`scopes/`](#scopes) define object contracts. This
@@ -189,8 +209,8 @@ control may be interactive, such as an input or button, or structural/rendering
 oriented, such as native table tags. A control is classified by primitive
 semantics, not by whether it is visually simple.
 
-Framework meanings differ: OpenUI5 `sap.ui.core.Control` is the generic base
-class of every UI class, not a primitive.
+Same name, different meaning: in OpenUI5, `sap.ui.core.Control` is the base
+class of every UI class. In OpenUI, a control is a primitive.
 
 #### Controlled element
 
@@ -220,9 +240,9 @@ for any concrete occurrence in a document. Its `type` is a semantic category
 from the catalog; its `id`, `attrs`, and `children` describe that particular
 instance.
 
-Framework meanings differ: an HTML element is one markup tag, and OpenUI5
-`sap.ui.core.Element` is a base class. An OpenUI element may be implemented by
-many HTML elements.
+Same name, different meaning: in HTML, an element is one markup tag, and in
+OpenUI5, `sap.ui.core.Element` is a base class. In OpenUI, an element is one node
+of the document tree and may be built from many HTML elements.
 
 #### Grammar
 
@@ -311,8 +331,9 @@ containers, widgets, controls, and behaviors, and may participate in routing and
 navigation. A page is broader than a DOM page or framework route component: it is
 the implementation-independent contract for a user-perceived screen or shell.
 
-Framework meanings differ: OpenUI5 `sap.m.Page` is a container with a header, a
-content area and a footer, which can appear inside a page.
+Same name, different meaning: in OpenUI5, `sap.m.Page` is a container with a
+header, a content area and a footer, which can sit inside a page. In OpenUI, a
+page is a top-level navigable surface.
 
 #### Scope
 

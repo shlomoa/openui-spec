@@ -18,16 +18,16 @@ The edition is done when all of these hold:
 8. **Validation** — CI runs format, lint, spec-content lint and conformance tests on Linux and Windows.
 9. **Visibility** — a published web page shows the v1.0 spec: taxonomy browser, per-object pages and live rendered examples.
 
-## Current state (PR #163, 2026-09-29, v0.3.1)
+## Current state (2026-09-29, v0.4.0)
 
-Re-checked on 2026-09-29 on the PR #163 branch, after execution step 3 and milestones M1 and M2. Earlier snapshots: `main` at `1c90f5c` (2026-09-26) and `b97f3f8` (2026-09-23).
+Re-checked on 2026-09-29, after execution step 3 and the `0.4.0` release (milestones M1 and M2). Earlier snapshots: `main` at `1c90f5c` (2026-09-26) and `b97f3f8` (2026-09-23).
 
 | Area | What exists | Gap for v1.0 |
 | --- | --- | --- |
-| Survey | `spec/survey/` with 4 sources: `angular-material/`, `html5/` (WHATWG HTML), `openui5/`, `qt/`. The consolidated change files are applied and named `*.done.md`; content not yet applied is in `*.notdone.md`. `spec/survey/` is excluded from pre-commit, markdownlint and mkdocs | Each `*.notdone.md` item is assigned to a task (W1 9.13; W3 14.6; W6 25) or is out of v1 by Q9 |
+| Survey | `spec/survey/` with 4 sources: `angular-material/`, `html5/` (WHATWG HTML), `openui5/`, `qt/`. The consolidated change files are applied and named `*.done.md`; content not yet applied is in `*.notdone.md`. `spec/survey/` is excluded from pre-commit, markdownlint and mkdocs | Each `*.notdone.md` item is assigned to a task (W1 9.13; W6 25) or is out of v1 by Q9 |
 | Terminology | Glossary in [`spec/scopes/scope.md`](../scopes/scope.md#glossary); the approved decisions in [`terminology.md`](../scopes/terminology.md#summary) are applied and verified (2026-09-29), except A41–A43, which are out of v1 (Q9) | No alias table across the 4 sources (W1 9.9) |
 | Scope | One-line purpose in `spec/README.md` | No explicit in / out list (W2). Decided: host-shell presence, docking and multiple-document workspaces are out of v1 (Q9); the Accessibility and Composition top-level scopes are deferred (Q13). The surveys also defer browser internals, storage and workers |
-| Categorization | 11 top-level scopes. The taxonomy is specified by three spec documents: `spec/generic-ui-taxonomy.md` (with its generated HTML), `spec/ui-element-taxonomy.md` and [`spec/scopes/taxonomy_mapping.md`](../scopes/taxonomy_mapping.md#classification-rules). Nine sections plus Behaviors and 21 subcategories, with classification rules | The three documents repeat and contradict each other in places (W3 14.13); move, refresh and extend the two taxonomy documents (W3 14.6, 14.8–14.11); give each leaf scope one primary category (W3 14.12); rename or move scope folders (W3 15) |
+| Categorization | 11 top-level scopes. The taxonomy is specified by three spec documents, with one owner for each fact ([Taxonomy documents](../scopes/scope.md#taxonomy-documents)): `spec/taxonomy/generic-ui-taxonomy.md` (with its generated HTML and an image for every entry with a visual form), `spec/taxonomy/ui-element-taxonomy.md` (237 abstract types, each with its OpenUI term) and [`spec/scopes/taxonomy_mapping.md`](../scopes/taxonomy_mapping.md#taxonomy-mapping). Nine sections plus Behaviors and 21 subcategories, with classification rules; a test keeps the generic taxonomy and the mapping equal | Give each leaf scope one primary category (W3 14.12); rename or move scope folders (W3 15) |
 | Structure | `spec/README.md` mixes glossary pointer, artifact roles, format, grammar, incremental generation | No normative / informative split; generator content inside the spec (the generator itself stays in this repository, Q8) |
 | Language | `EBNF.txt` declared authoritative; JSON Schema is a projection; `spec/bin/check_grammar_consistency` enforces EBNF ↔ schema ↔ README ↔ catalog in pre-commit. Same-document element references (quoted ids in Uses attrs); behaviors reference their controlled element with `[target]` | Still `string \| null` values and `[x]` / `(x)` keys; no data-binding, event-payload or i18n rules |
 | Catalog | 50 leaf `*.scope.md` files, including the new `Behaviors/input_assistance`, `viewport_and_focus_control` and `modal_overlay`; every leaf has an evidence row; `spec/openui.json` regenerated | Four approved terms missing from their Purposes (W1 9.13); many leaves still have no Attributes or Child model (W6 25); examples not yet generated for the new additions (W1 9.10–9.12) |
@@ -59,20 +59,30 @@ flowchart LR
   W0 --> W3[W3 Categorization]
   W1 --> W2
   W1 --> W3
-  W2 -- "14.12, 15 only" --> W3
-  W3 --> W4[W4 Structure]
+  W3 -- "9.9, 9.10, 9.13" --> W1
+  W2 -- "14.12, 15" --> W3
+  W3 -- "16" --> W4[W4 Structure]
   W1 --> W5[W5 Language]
-  W4 --> W6[W6 Draft spec]
+  W8 -- "32 fixtures, for 23" --> W5
+  W4 -- "24" --> W6[W6 Draft spec]
+  W1 -- "25" --> W6
   W5 --> W6
   W6 --> W7[W7 Docs]
-  W5 --> W8[W8 Utilities]
-  W6 -- "task 35 only" --> W8
-  W8 --> W7
-  W9[W9 Validation] -.-> W6
-  W9 -.-> W8
+  W5 -- "32 finish, 33, 34" --> W8[W8 Utilities]
+  W6 -- "35" --> W8
+  W8 -- "31" --> W7
+  W9[W9 Validation, done]
 ```
 
-W9 starts first and runs alongside everything else; dashed arrows mean it gates W6 and W8 rather than feeding content. A labelled arrow holds only for the named tasks: W3 waits on W2 only for 14.12 and 15, and W8 waits on W6 only for task 35 (the joint release); W8 32–34 need only W5 task 23. W7 waits on W8 because task 31 notifies downstream after W8 task 35.
+W9 is done: it ran first, and its checks now run on every change. An arrow without a label holds for the whole workstream; a labelled arrow holds only for the named tasks of the workstream it points to:
+
+- W1 waits on W3 for 9.9, 9.10 and 9.13, which use the merged taxonomy (W3 14.1–14.5, 14.9, 14.13).
+- W3 waits on W2 only for 14.12 and 15 (14.12 needs W2 11).
+- W4 waits on W3 only for 16; 17 needs 16, and 18 needs nothing.
+- W5 waits on W8 for 23, which is validated against the fixtures of 32; the fixture structure of 32 needs nothing.
+- W6 waits on W4 only for 24, and on W1 for 25 (the alias table, 9.9); 25 and 26 also need W5.
+- W8 waits on W6 only for 35 (the joint release); the finished suite of 32, and 33–34, need W5 23.
+- W7 waits on W8 only for 31, which notifies downstream after W8 task 35.
 
 ## Tasks
 
@@ -150,9 +160,9 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 9.4 [x] New scopes: create `Behaviors/input_assistance.scope.md` and `Behaviors/viewport_and_focus_control.scope.md` from `template.scope.md`, list them in `Behaviors/scope.md`, and add one row each to `spec/scopes/evidence.md`.
    - 9.5 [x] Decide whether Modal overlay, moved to Behaviors by C4, needs its own scope file or is covered by an existing leaf. Decided 2026-09-29: its own scope, `Behaviors/modal_overlay`, with Modal interaction as its alias.
    - 9.6 [x] Scope contracts: apply [`scope_change.md`](scope_change.done.md#summary) in the same pass: the Purpose texts, the behavior target references and the Validation notes rules. Apply [`architecture_change.md`](architecture_change.done.md#summary) with it: the Behaviors folder description, the Boundaries rules of the folder scopes and the tree rules in `spec/scopes/scope.md`.
-   - 9.7 [ ] Bump `SCHEMA_VERSION` and the package versions to the next `0.x.0` (directive Q3), regenerate `spec/openui.json` and the fixtures with the new version, and update `CHANGELOG.md`. `spec/openui.json` and the generator fixtures already follow each scope change, because pre-commit and the tests enforce it. The examples are tasks 9.10–9.12.
+   - 9.7 [x] Bump `SCHEMA_VERSION` and the package versions to the next `0.x.0` (directive Q3), regenerate `spec/openui.json` and the fixtures with the new version, and update `CHANGELOG.md`. `spec/openui.json` and the generator fixtures already follow each scope change, because pre-commit and the tests enforce it. The examples are tasks 9.10–9.12. Released as `0.4.0` (2026-09-29).
    - 9.8 [ ] Validate: pre-commit, unit tests, `mkdocs build --strict` and the npm tests.
-   - 9.9 [ ] Build the alias table (task 8.3) from the survey `taxonomy_mapping.md` files, using the final names: add the HTML / WAI-ARIA, OpenUI5, Qt and Angular Material columns to `spec/scopes/taxonomy_mapping.md` and fill them for every entry ("—" where a source has no name). The names sit on the entry's own row, so they need no term-existence check; extend `tests/test_taxonomy_mapping.py` to check that every row has the four columns. Move framework names out of the glossary Aliases lines into these columns (task 14.9).
+   - 9.9 [ ] Build the alias table (task 8.3) from the survey `taxonomy_mapping.md` files, using the final names: add the HTML / WAI-ARIA, OpenUI5, Qt and Angular Material columns to `spec/scopes/taxonomy_mapping.md` and fill them for every entry ("—" where a source has no name). The names sit on the entry's own row, so they need no term-existence check; extend `tests/test_taxonomy_mapping.py` to check that every row has the four columns. *Directive (2026-09-29):* move only framework-specific names (OpenUI5, Qt, Angular Material) out of the glossary Aliases lines into these columns. HTML, WAI-ARIA and CSS names are standard names, not framework names, and stay as glossary aliases (for example "CSS grid", "ARIA grid", "HTML table" and "`aria-controls` target"). Move the HTML and WAI-ARIA names still in mapping notes (for example HTML `output` and `menuitem`) into the HTML / WAI-ARIA column. A framework name spelled like an OpenUI term but meaning something else is not an alias; it stays in the glossary (task 14.9).
    - 9.10 [ ] Generate the examples for every new addition with the [Spec JSON File Generator](../../.github/agents/spec-json-file-generator.agent.md) agent, using the Add rows of the consolidated files as its input: [`terminology.md`](../scopes/terminology.md#4-add), [`taxonomy_mapping_change.md`](taxonomy_mapping_change.done.md#4-add) and the approved rows of [`ui_element_taxonomy_merge_proposal.md`](ui_element_taxonomy_merge_proposal.done.md#4-add). Each row gives the term, its scope and its level; the evidence it links to gives the attribute values and the child composition. The output: for each Alias and Grouped leaf addition, including the merge additions (Menu item, Date and time field, Captions), a node in its scope's example, with an id derived from the term (for example `highlightedText`) and the scope's catalog type. Glossary-only terms (terminology A1–A5) get no example. The three new Behaviors scopes (`input_assistance`, `viewport_and_focus_control`, `modal_overlay`) already have their leaf examples, their entries in `Behaviors/scope.example.json` and the index rows in `spec/examples/README.md` (tasks 9.4, 9.5).
    - 9.11 [ ] Regenerate the existing examples that the scope changes affect, with the same agent, so that each example meets the new Validation notes ([`scope_change.md`](scope_change.done.md#4-add), A1–A9).
      - 9.11.1 [x] Behavior targets (pulled forward, 2026-09-29): the Collapsible, Resizable and Drag and drop examples and the Behaviors folder example now reference their controlled element with `[target]` and own no children ([`scope_change.md`](scope_change.done.md#2-replace), R1). The attributes their Validation notes do not authorize are removed. `tests/test_spec_examples_format.py` checks that every behavior node in every example has a `[target]` that names another element of the same document, and no children.
@@ -176,28 +186,35 @@ Each task ends with a validation step and a visual demo, per the project rules. 
     - 14.3 [x] Classification rules: write the rules the approved changes already define into `spec/scopes/taxonomy_mapping.md` ([merge proposal section 5](ui_element_taxonomy_merge_proposal.done.md#5-classification-rules)): each subcategory's Holds text from [`category.md`](category.done.md#4-add) as its inclusion rule, one subcategory per entry, and secondary roles in the notes. Done in the same pass as 14.4.
     - 14.4 [x] Apply the category changes: the heading changes, the Behaviors section and the subcategories of [`category.md`](category.done.md#summary) in `spec/scopes/taxonomy_mapping.md` and `spec/generic-ui-taxonomy.md`. Done in the same pass as W1 tasks 9.2 and 9.3.
     - 14.5 [x] Apply the approved merge additions from 14.1 in the same pass.
-    - 14.6 [ ] Record the reversal: remove the "Retirement of the UI element taxonomy" sections from [`category.notdone.md`](category.notdone.md#retirement-of-the-ui-element-taxonomy) and [`ui_element_taxonomy_merge_proposal.notdone.md`](ui_element_taxonomy_merge_proposal.notdone.md#retirement-of-the-ui-element-taxonomy); remove "is being merged into it and retired" from `spec/README.md` and "(retiring)" from the `mkdocs.yml` navigation. *Directive (Q4 sub-question, revised 2026-09-29):* keep `spec/ui-element-taxonomy.md`; its content was merged into the taxonomy (14.1–14.5), and the file stays as a part of the specification.
-    - 14.8 [ ] Move the taxonomy documents to `spec/taxonomy/`: `generic-ui-taxonomy.md`, `generic-ui-taxonomy.html`, `ui-element-taxonomy.md` and `images/`. They are spec documents that specify the taxonomy, not scope registers, so they get their own folder next to `spec/scopes/`. Update every link and path: the spec README and scopes index, the survey records, `mkdocs.yml`, the `render_taxonomy_html` tool and its pre-commit hook, and the tests.
-    - 14.9 [ ] Record which document owns each fact, in the introduction of each taxonomy document and in `spec/scopes/scope.md`, and link the documents to each other:
+    - 14.6 [x] Record the reversal: remove the "Retirement of the UI element taxonomy" sections from [`category.notdone.md`](category.notdone.md#category-change-not-done) and [`ui_element_taxonomy_merge_proposal.notdone.md`](ui_element_taxonomy_merge_proposal.notdone.md#ui-element-taxonomy-merge-not-done); remove "is being merged into it and retired" from `spec/README.md` and "(retiring)" from the `mkdocs.yml` navigation. *Directive (Q4 sub-question, revised 2026-09-29):* keep `spec/ui-element-taxonomy.md`; its content was merged into the taxonomy (14.1–14.5), and the file stays as a part of the specification. Result: both sections removed and the reversal recorded in the two `*.notdone.md` files; the README and the navigation name it a part of the specification.
+    - 14.8 [x] Move the taxonomy documents to `spec/taxonomy/`: `generic-ui-taxonomy.md`, `generic-ui-taxonomy.html`, `ui-element-taxonomy.md` and `images/`. They are spec documents that specify the taxonomy, not scope registers, so they get their own folder next to `spec/scopes/`. Update every link and path: the spec README and scopes index, the survey records, `mkdocs.yml`, the `render_taxonomy_html` tool and its pre-commit hook, and the tests. Result: moved with `git mv`; links and paths updated in the spec README, `spec/scopes/scope.md` (so `spec/openui.json` was regenerated), the taxonomy mapping, the evidence register, CONTRIBUTING, the survey records, `mkdocs.yml`, the tool, its hook and the tests.
+    - 14.9 [x] Record which document owns each fact, in the introduction of each taxonomy document and in `spec/scopes/scope.md`, and link the documents to each other:
       - `spec/taxonomy/generic-ui-taxonomy.md`: the sections and their purpose, the subcategories and their inclusion rule (Holds), the entries and where each belongs, and how the user meets each entry (description, viewable, device-dependent, image);
       - `spec/taxonomy/ui-element-taxonomy.md`: the abstract element types in 15 categories, their purpose and typical concrete elements, the OpenUI term each type maps to (14.10), and the classification rules with their primary and secondary role examples;
       - `spec/scopes/taxonomy_mapping.md`: for each entry, its scope object, abstraction level and scope-specific notes; its section and subcategory headings mirror the generic UI taxonomy, and a test keeps them equal;
-      - the glossary keeps term definitions and generic aliases (synonyms such as "hyperlink" or "push button"); framework names (such as `sap.m.Page` or `QDockWidget`) live only in the alias columns of the taxonomy mapping (task 9.9); glossary-only terms that are not taxonomy entries, such as Owner and Element, get no framework names;
+      - the glossary keeps term definitions and generic aliases: synonyms such as "hyperlink" or "push button", and standard HTML, WAI-ARIA and CSS names such as "CSS grid" or "HTML table";
+      - a framework name that means the same as an OpenUI term (such as `QPushButton` or `QDockWidget`) lives only in the alias columns of the taxonomy mapping (task 9.9); glossary-only terms that are not taxonomy entries, such as Owner and Element, get no framework aliases;
+      - a framework name spelled like an OpenUI term but meaning something else lives in that term's glossary entry, in a note headed "Same name, different meaning:" (decided 2026-09-29), for example OpenUI5 `sap.m.Page`, which is a container, under Page;
       - the scope files keep object contracts; a taxonomy description may not contradict the glossary or a scope file.
-    - 14.10 [ ] Refresh `spec/taxonomy/ui-element-taxonomy.md` and add its new content, keeping its structure (15 categories of abstract types):
+      - Result: the owner table is in [`spec/scopes/scope.md`](../scopes/scope.md#taxonomy-documents), and each taxonomy document's introduction states what it owns and links the others. The Holds lines and the entry-placement rules moved from the taxonomy mapping into the generic UI taxonomy; `tests/test_taxonomy_mapping.py` checks that the mapping headings mirror the generic taxonomy. No framework name sits in a glossary Aliases line to move; the move of framework names into the alias columns stays with task 9.9.
+    - 14.9.1 [x] Rename the glossary notes headed "Framework meanings differ:" (under Control, Element and Page in `spec/scopes/scope.md`) to "Same name, different meaning:", each written as: the framework, its name, what it is there, then what OpenUI means. Done 2026-09-29.
+    - 14.10 [x] Refresh `spec/taxonomy/ui-element-taxonomy.md` and add its new content, keeping its structure (15 categories of abstract types):
       - add an "OpenUI term" column filled from [appendix A of the merge proposal](ui_element_taxonomy_merge_proposal.done.md#appendix-a-where-each-abstract-type-went) (for example Comparison Chart → Chart, Voice Input → not added);
       - replace the retired names it still uses: Hamburger menu / Hamburger Menu (now Hamburger button), Dropdown Menu as the classification example (now Menu button) and the section name "UI interaction definitions" (now Interaction definitions);
       - give a home to the approved terms that no abstract type reaches yet (about 60 of the 169 element and behavior terms, for example Hero banner, Shell bar, Object page, Wizard, Tree grid, Column browser, Keyboard shortcut field, Value help, Input assistance, Modal overlay, Startup screen), as new abstract types or as examples of existing ones, or state why a term is left out;
       - state the approved decisions in the category introductions without removing the types: category 7's visualizations sit with the data they show in Collections and data presentation (merge decision 1); category 14's identity types are compound widgets of existing elements (decision 2); category 15's accessibility types are properties of other elements, not elements (decision 3, Q13);
       - add a test that every term in the "OpenUI term" column exists in `spec/scopes/taxonomy_mapping.md`.
-    - 14.11 [ ] Refresh `spec/taxonomy/generic-ui-taxonomy.md`: align the entry descriptions with the glossary and the scope Purposes: View as the [glossary View](../scopes/scope.md#view) does (it still says "a complete application page or state", which is a Page); Window as the [glossary Window](../scopes/scope.md#window) does (it still says "a top-level application or document area" that the user maximizes, and multiple-document workspaces are out of v1, Q9); Tab, which describes a tab selector while its spec object is the Tabs container; Date picker ("commonly through a calendar", while the Purpose makes the calendar optional); Report ("for reading, printing or export", while the Purpose is filtering, sorting, grouping and paging); draw the images of the 85 entries marked "None yet", in the style of `spec/taxonomy/images/`; regenerate `generic-ui-taxonomy.html`.
-    - 14.13 [ ] Remove the duplicates and contradictions between the taxonomy documents and the rest of the spec, following the owners of 14.9 (found 2026-09-29):
+      - Result: the 222 types keep their 15 categories and gain the "OpenUI term" column from appendix A ("Not added" for the 23 types OpenUI does not add, with a link to the reasons). All 60 unreached terms now have a home: 40 as OpenUI terms of existing types and 20 in 15 new types (for example Shortcut Input, Font Selection, Menu Bar, Window, Page, View, Bar, Value Lookup), so every one of the 169 element and behavior terms is reached. The retired names are replaced (the interaction section name in 14.13), categories 7, 14 and 15 state decisions 1–3 in their introductions, and `tests/test_taxonomy_mapping.py` checks that every OpenUI term is an entry or a spec object of the taxonomy mapping.
+    - 14.11 [x] Refresh `spec/taxonomy/generic-ui-taxonomy.md`: align the entry descriptions with the glossary and the scope Purposes: View as the [glossary View](../scopes/scope.md#view) does (it still says "a complete application page or state", which is a Page); Window as the [glossary Window](../scopes/scope.md#window) does (it still says "a top-level application or document area" that the user maximizes, and multiple-document workspaces are out of v1, Q9); Tab, which describes a tab selector while its spec object is the Tabs container; Date picker ("commonly through a calendar", while the Purpose makes the calendar optional); Report ("for reading, printing or export", while the Purpose is filtering, sorting, grouping and paging); draw the images of the 85 entries marked "None yet", in the style of `spec/taxonomy/images/`; regenerate `generic-ui-taxonomy.html`.
+      - Result: the View, Window, Tab, Date picker and Report descriptions follow the glossary and the scope Purposes; all 85 entries marked "None yet" have an SVG image in `spec/taxonomy/images/`, in the style of the existing ones; the HTML is regenerated, and `tests/test_taxonomy_mapping.py` checks that every entry has an existing image or "Not applicable".
+    - 14.13 [x] Remove the duplicates and contradictions between the taxonomy documents and the rest of the spec, following the owners of 14.9 (found 2026-09-29):
       - duplicated between the generic UI taxonomy and the taxonomy mapping: the entry list and placement (244 entries), the subcategory rules (Holds lines only in the mapping; the generic taxonomy has them for none of the 21 subcategories, and paraphrases the old ones), the section introductions (only in the generic taxonomy) and the classification rules (in the mapping and in the UI element taxonomy); mapping notes that restate the entry description keep only scope-specific information;
       - nine entry names are spelled differently in the two documents (for example "Currency and measurement formatting" and "Currency/measurement formatting"; "Pointer enter / leave" and "Pointer enter/leave"); use one spelling;
       - the UI element taxonomy names the interaction companion groups "Interaction target properties" and "Input events and commands", where the generic taxonomy says "Interaction areas and constraints" and "Input events";
       - `tests/test_taxonomy_mapping.py` checks entries in one direction only, ignores placement, and still allows the retired combined row "table/data grid"; make it check both directions, the exact names and the section and subcategory of each entry.
+      - Result: the subcategory rules and the placement rules are only in the generic UI taxonomy (14.9) and the classification rules only in the UI element taxonomy; the mapping notes keep only scope-specific information ("—" where none is left); the nine entry names use the generic taxonomy's spelling; the UI element taxonomy names the four Interaction definitions subcategories as the generic taxonomy does and links them; `tests/test_taxonomy_mapping.py` compares the (section, subcategory, entry) lists of the two documents exactly, in both directions, and no longer allows "table/data grid".
     - 14.12 [ ] Give each of the 50 leaf scopes one primary section and subcategory in `spec/scopes/taxonomy_mapping.md`, from the taxonomy entries that link to it; other subcategories its entries fall in are secondary roles. Depends on W2 task 11 (only in-scope leaves are mapped).
-    - 14.7 [ ] Validate: pre-commit, link check, `mkdocs build --strict` and unit tests; every taxonomy entry belongs to exactly one section and at most one subcategory.
+    - 14.7 [x] Validate: pre-commit, link check, `mkdocs build --strict` and unit tests; every taxonomy entry belongs to exactly one section and at most one subcategory. Result (2026-09-29): all pass; `tests/test_taxonomy_mapping.py` now checks the section and subcategory rule for every entry of both documents.
 15. [ ] Rename or move scope folders to match. *Validate:* every object has exactly one primary category; catalog regenerates. *Demo:* interactive taxonomy tree with per-framework overlay.
 
 ### W4 Specification structure
@@ -209,7 +226,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 ### W5 UI description language
 
 19. [ ] Decide attribute value typing (string/null only vs. typed values). *Directive (Q6, decided):* introduce typed values in a W5 grammar revision; this task defines which types, and task 23 adds them to the grammar.
-20. [ ] Replace the Angular-flavoured `[x]` / `(x)` key syntax with a framework-neutral one for Uses / Produces / Behaves, or formally adopt it.
+20. [ ] Replace the Angular-flavoured `[x]` / `(x)` key syntax with a framework-neutral one for Uses / Produces / Behaves. *Directive (Q7, decided 2026-09-29):* attribute keys and values change into typed attributes, as planned; this task designs the new key syntax together with the value types of task 19, and task 23 converts the grammar. Until then, keys and values stay strings, and no other task waits on this one.
 21. [ ] Define data-binding references, event payloads and i18n string references. Same-document element references already exist (0.3.0); extend, don't replace.
 22. [ ] Define versioning and compatibility policy (SemVer for the spec; how documents declare the version).
 23. [ ] Update `EBNF.txt` (authoritative) and regenerate the JSON Schema projection; `spec/bin/check_grammar_consistency` already enforces agreement. *Validate:* both accept/reject the same conformance fixtures. *Demo:* live playground page — paste JSON, see validation and rendered tree.
@@ -241,15 +258,15 @@ Five GitHub milestones, each ending with a tagged release and a visible web page
 
 | Milestone | Release | Tasks | Exit criterion | Visual demo |
 | --- | --- | --- | --- | --- |
-| [x] M1 Guard rails | Not tagged; ships in the step 4 release | 1–3 | CI green on Linux and Windows with spec-content lint | Lint report page |
-| [x] M2 Survey consolidated | Not tagged; ships in the step 4 release | 4–6 | All consolidated change files approved | The change files in `spec/survey/` |
+| [x] M1 Guard rails | `0.4.0` | 1–3 | CI green on Linux and Windows with spec-content lint | Lint report page |
+| [x] M2 Survey consolidated | `0.4.0` | 4–6 | All consolidated change files approved | The change files in `spec/survey/` |
 | [ ] M3 Foundations agreed | Next `0.x.0` | 7–18 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
 | [ ] M4 Language frozen | Next `0.x.0` | 19–23, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
 | [ ] M5 v1.0.0 published | `1.0.0` | 24–31, 35 | Packages at 1.0.0 on PyPI + npm; docs live | Published spec site with rendered examples |
 
 *Directive (Q3):* M5's `1.0.0` release waits on downstream validation; until then each milestone ships a `0.x.0` release.
 
-M1 and M2 are complete: their tasks are done and their exit criteria hold. They were not tagged; their content ships in the next `0.x.0` release (execution step 4). Milestones carry no fixed version number: each release takes the next free `0.x.0` (directive Q3), and only M5 has a fixed number, `1.0.0`. M4 can start as soon as the terminology is applied (W1 9.1–9.6, execution step 3, done); it does not need the taxonomy or the rest of task 9.
+M1 and M2 are complete: their tasks are done and their exit criteria hold. They were released as `0.4.0` (tag `v0.4.0`, 2026-09-29), together with the step 3 changes. Milestones carry no fixed version number: each release takes the next free `0.x.0` (directive Q3), and only M5 has a fixed number, `1.0.0`. M4 can start as soon as the terminology is applied (W1 9.1–9.6, execution step 3, done); it does not need the taxonomy or the rest of task 9.
 
 ## Execution order
 
@@ -266,28 +283,31 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 2 | [x] Move the glossary to its final location | W1 7 | — | Done |
 | 3 | [x] Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, three new Behaviors scopes, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Step 2 | Done |
 | 3 | [x] Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Done |
-| 4 | [ ] Add the missing terms to their scope Purposes; regenerate and version; generate the examples for the new additions from the consolidated data; validate; release `0.x.0` | W1 9.13, 9.7, 9.10–9.12, 9.8; W3 14.7, in this order | Step 3 | Open |
-| 4 | [ ] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, in this order | Step 3 | Open |
-| 5 | [ ] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 3 | Open |
-| 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | Step 3 | Open |
-| 6 | [ ] Scope statement and in / out classification | W2 10–12 | Step 3 | Open |
-| 7 | [ ] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, 15 | Steps 4, 6 | Open |
-| 8 | [ ] Specification outline and normative split | W4 16–18 | Step 7 | Open |
-| 9 | [ ] Draft the spec, enrich leaves from the survey inventories, `1.0.0-rc.1` | W6 24–26 | Steps 5, 8 | Open |
-| 9 | [ ] Conformance suite and Python / TypeScript utilities | W8 32–34 | W5 23 | Open |
-| 10 | [ ] Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 9 | Open |
+| 4 | [ ] Add the missing terms to their scope Purposes; generate the examples for the new additions from the consolidated data; validate; release the next `0.x.0` | W1 9.13, 9.10–9.12, 9.8, in this order | Step 3 | Open |
+| 4 | [x] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy; validate all of W3 14 | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, 14.7, in this order | Step 3 | Done — PR #164 |
+| 4 | [ ] Move incremental-generation and generator content out of `spec/README.md` | W4 18 | — | Open |
+| 5 | [ ] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 4 taxonomy row (W3 14.9 decides which names go in the alias columns; 14.13 sets the final entry names) | Open |
+| 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19 and 20 (together), 21, 22 and W8 32 fixture structure (independent of each other); then W5 23 | Step 3; W5 23 needs 19–22 and the fixture structure of W8 32 | Open |
+| 6 | [ ] Scope statement and in / out classification | W2 10, then 11; W2 12 (lowest priority) | Step 3 | Open |
+| 6 | [ ] Enrich each leaf scope from the survey inventories and the alias table | W6 25 | W1 9.9 (step 5); W5 19–23 (step 5) | Open |
+| 7 | [ ] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, then 15 | Step 4 taxonomy row; W2 11 (step 6) | Open |
+| 8 | [ ] Specification outline and normative split | W4 16, then 17 | Step 7 | Open |
+| 9 | [ ] Draft the spec per the outline | W6 24 | Step 8; step 5 language row (W5 19–23) | Open |
+| 9 | [ ] Conformance suite and Python / TypeScript utilities | W8 32 (finish the suite), 33, 34 | W5 23 | Open |
+| 10 | [ ] Regenerate, migrate all examples and fixtures, `1.0.0-rc.1` | W6 26 | W6 24, 25; W5 23 | Open |
+| 11 | [ ] Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 10; step 9 utilities | Open |
 
-*Directive (Q3):* the `1.0.0-rc.1` of step 9 and the `1.0.0` of step 10 wait on downstream validation; until then each release is `0.x.0` / `0.x.y`.
+Rows marked In progress are taken by a sub-agent; other agents take other rows.
+
+*Directive (Q3):* the `1.0.0-rc.1` of step 10 and the `1.0.0` of step 11 wait on downstream validation; until then each release is `0.x.0` / `0.x.y`.
 
 Priority: step 3 is the first specification change and unblocks the language work (step 5), so the decisions and proposals feeding it (steps 1–2) come first. The categorization of scope folders (step 7) waits on the scope statement, as the workstream graph requires.
 
 ## Open questions
 
-Only the questions still open are listed. Answered questions became directives where they apply; decisions already applied are recorded as completed tasks (W0 6.1, W1 8.5 and 9.1, W3 13); decisions not yet applied are directives on the tasks they affect (Q3, the Q4 sub-question, Q6, Q8 on W4 task 18, Q9 and Q13 on W2 task 10). A question blocks only the workstream task that depends on its decision; unrelated work may proceed.
+Only the questions still open are listed. Answered questions became directives where they apply; decisions already applied are recorded as completed tasks (W0 6.1, W1 8.5 and 9.1, W3 13); decisions not yet applied are directives on the tasks they affect (Q3, the Q4 sub-question, Q6, Q7 on W5 task 20, Q8 on W4 task 18, Q9 and Q13 on W2 task 10). A question blocks only the workstream task that depends on its decision; unrelated work may proceed.
 
-| # | Question | Status | Evidence / options |
-| --- | --- | --- | --- |
-| Q7 | Attribute keys: keep `[x]` / `(x)`, or neutral keys (`uses.x`, `produces.x`, `behaves.x`)? | Deferred — blocks W5 task 20 | Still Angular syntax in `spec/README.md` and the leaf template |
+None.
 
 ## Sources
 
