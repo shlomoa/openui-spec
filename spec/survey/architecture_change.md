@@ -3,7 +3,7 @@
 This proposal turns the architecture findings of the four UI surveys into concrete changes
 to the structure of the scope tree under [`spec/scopes/`](../scopes/scope.md#top-level-scopes):
 its top-level scopes, its folders and the rules that govern them. It uses the approved
-[terminology](terminology.md#summary), [categories](category.md#summary),
+[terminology](../scopes/terminology.md#summary), [categories](category.md#summary),
 [taxonomy mapping change](taxonomy_mapping_change.md#summary),
 [scope change](scope_change.md#summary) and [structure change](structure_change.md#add).
 Each recommendation is one of four actions on a specific part of the tree.
@@ -25,7 +25,7 @@ Each recommendation is one of four actions on a specific part of the tree.
 - **Status:** approved (2026-09-27), not yet applied: C1 and A1–A6. It is applied with
   terminology step
   9 in the [v1 publish plan](specui_v1_publish_plan.md#w1-terminology).
-- **Naming rule used:** the approved [canonical-term rule](terminology.md#appendix-a-canonical-term-rule).
+- **Naming rule used:** the approved [canonical-term rule](../scopes/terminology.md#appendix-a-canonical-term-rule).
 - **Already decided:** the new scopes and the taxonomy groupings are settled elsewhere and
   listed once in [section 0](#0-already-decided).
 
@@ -45,11 +45,11 @@ All four surveys keep the eleven top-level scopes and propose no new root. See
 
 | Survey proposal                                                                      | Decided in                                                                                                                                                                                                                            |
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| New leaves under existing roots (Angular Material, Qt, HTML)                         | Two new Behaviors scopes in the [structure change](structure_change.md#add); every other proposed leaf became a term of an existing scope ([terminology: Terms that need a new scope](terminology.md#49-terms-that-need-a-new-scope)) |
+| New leaves under existing roots (Angular Material, Qt, HTML)                         | Two new Behaviors scopes in the [structure change](structure_change.md#add); every other proposed leaf became a term of an existing scope ([terminology: Terms that need a new scope](../scopes/terminology.md#49-terms-that-need-a-new-scope)) |
 | Qt taxonomy extension and its Reusable behaviors browsing group                      | The Behaviors section and 21 subcategories in [category](category.md#4-add)                                                                                                                                                           |
 | Survey categories kept as research groupings, not roots (Angular Material, Qt, HTML) | [Category: Kept](category.md#kept)                                                                                                                                                                                                    |
 | HTML "enrich in place first"                                                         | The approved changes to existing scopes in [scope change](scope_change.md#1-change)                                                                                                                                                   |
-| OpenUI5 clusters placed inside existing roots                                        | Approved terms in [terminology](terminology.md#42-input-elements)                                                                                                                                                                     |
+| OpenUI5 clusters placed inside existing roots                                        | Approved terms in [terminology](../scopes/terminology.md#42-input-elements)                                                                                                                                                                     |
 
 ## 1. Change
 
@@ -90,7 +90,7 @@ Rules added to the Boundaries section of the named `scope.md`.
 ### Not added
 
 - **Accessibility and Composition top-level folders** (HTML P6, P7): not added in the
-  approved [terminology](terminology.md#not-added). Whether they belong in the project stays
+  approved [terminology](../scopes/terminology.md#not-added). Whether they belong in the project stays
   with plan question Q13.
 - **A Host integration branch under Application** (Qt): host-shell presence stays with plan
   question Q9. Until then, system-tray presence must not be mapped to favicon.

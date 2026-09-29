@@ -23,7 +23,7 @@ consolidated file has since settled an item, the outcome is linked.
 `QSystemTrayIcon` is the survey's only entry with the merge disposition Deferred
 ([taxonomy mapping](taxonomy_mapping.md#applicationscopemd)). Notification delivery and
 native floating windows are deferred with it. Consolidated outcome: Notification-area
-presence is not added ([terminology: Not added](../terminology.md#not-added)) and there is no
+presence is not added ([terminology: Not added](../../scopes/terminology.md#not-added)) and there is no
 Host integration branch ([architecture change: Not added](../architecture_change.md#not-added));
 host integration stays with plan question Q9.
 
@@ -31,19 +31,19 @@ host integration stays with plan question Q9.
 
 Classes: `QMdiArea`, `QMdiSubWindow`, `QDockWidget`. Consolidated outcome: Dockable panel
 (A42) and Multiple-document workspace (A43) are approved terms of Surface containers
-([terminology: Container elements](../terminology.md#45-container-elements)). Whether they
+([terminology: Container elements](../../scopes/terminology.md#45-container-elements)). Whether they
 are optional runtime capabilities waits on Q9 ([scope change: Not added](../scope_change.md#not-added)).
 
 ## Q3 The six proposed leaves
 
 | Leaf                   | Consolidated outcome                                                                                                                                      |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| P01 Page stack         | Alias of Tabs ([terminology A51](../terminology.md#46-layout-and-structural-elements))                                                                    |
-| P02 Scroll container   | Alias of Structural containers ([terminology A52](../terminology.md#46-layout-and-structural-elements))                                                   |
-| P03 Text completion    | Term of the new Input assistance scope ([terminology A59, A71](../terminology.md#47-behaviors); [structure change](../structure_change.md#add))           |
-| P04 Graphics viewport  | Alias of Media widgets ([terminology A28](../terminology.md#43-output-elements))                                                                          |
-| P05 Modal interaction  | Alias of Modal overlay, moved to Behaviors ([terminology A56, C4](../terminology.md#47-behaviors))                                                        |
-| P06 Viewport scrolling | Term of the new Viewport and focus control scope ([terminology A57, A72](../terminology.md#47-behaviors); [structure change](../structure_change.md#add)) |
+| P01 Page stack         | Alias of Tabs ([terminology A51](../../scopes/terminology.md#46-layout-and-structural-elements))                                                                    |
+| P02 Scroll container   | Alias of Structural containers ([terminology A52](../../scopes/terminology.md#46-layout-and-structural-elements))                                                   |
+| P03 Text completion    | Term of the new Input assistance scope ([terminology A59, A71](../../scopes/terminology.md#47-behaviors); [structure change](../structure_change.md#add))           |
+| P04 Graphics viewport  | Alias of Media widgets ([terminology A28](../../scopes/terminology.md#43-output-elements))                                                                          |
+| P05 Modal interaction  | Alias of Modal overlay, moved to Behaviors ([terminology A56, C4](../../scopes/terminology.md#47-behaviors))                                                        |
+| P06 Viewport scrolling | Term of the new Viewport and focus control scope ([terminology A57, A72](../../scopes/terminology.md#47-behaviors); [structure change](../structure_change.md#add)) |
 
 Evidence approval, generator support and accessibility conformance of the two new scopes
 are part of applying them (plan W1 step 9.4).
@@ -71,8 +71,8 @@ defines Stack as "a structure that arranges child elements sequentially along a
 horizontal, vertical, or depth axis", while the canonical taxonomy mapping calls it a
 "Linear arrangement container". Consolidated outcome: Stack is kept as a linear
 arrangement, and depth-layered stacking is the new term Layered arrangement
-([terminology: Kept](../terminology.md#kept-with-a-sharper-definition), A55). The generic taxonomy sentence drops "or depth" when the terminology is applied (plan W1
-step 9.3), as recorded in the Stack row of [terminology: Kept](../terminology.md#kept-with-a-sharper-definition).
+([terminology: Kept](../../scopes/terminology.md#kept-with-a-sharper-definition), A55). The generic taxonomy sentence drops "or depth" when the terminology is applied (plan W1
+step 9.3), as recorded in the Stack row of [terminology: Kept](../../scopes/terminology.md#kept-with-a-sharper-definition).
 
 ## Q7 Adapter capability handling
 
@@ -86,11 +86,11 @@ generator and adapter concern (plan W8), not specification vocabulary.
 | Id  | Decision                                                          | Consolidated outcome                                                                                                                |
 | --- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | D01 | Behavior targets are id references, not owned children            | Settled: [scope change R1](../scope_change.md#2-replace); the encoding is W5 task 21                                                |
-| D02 | Modal restriction and modal focus in one leaf                     | Settled: Modal overlay behavior ([terminology C4, A56](../terminology.md#1-change))                                                 |
+| D02 | Modal restriction and modal focus in one leaf                     | Settled: Modal overlay behavior ([terminology C4, A56](../../scopes/terminology.md#1-change))                                                 |
 | D03 | Scroll position as a normalized fraction per axis                 | Open: needs typed values (plan Q6, W5)                                                                                              |
 | D04 | Reuse existing behavior leaves, add only P05 and P06              | Superseded: the two new scopes are Input assistance and Viewport and focus control ([structure change](../structure_change.md#add)) |
 | D05 | Text completion references an input; ordered string candidates    | Settled as a term (A59); the value shape waits on W5                                                                                |
 | D06 | Graphics viewport borrows scene data by resource reference        | Open: needs a resource-reference value kind (W5)                                                                                    |
-| D07 | Triggers are vocabulary mapped to outcomes                        | Settled: glossary term Trigger ([terminology A4](../terminology.md#41-glossary-terms))                                              |
+| D07 | Triggers are vocabulary mapped to outcomes                        | Settled: glossary term Trigger ([terminology A4](../../scopes/terminology.md#41-glossary-terms))                                              |
 | D08 | Live preview is application-supplied; cancellation reports intent | Open: event semantics (W5 task 21); see [scope change A7](../scope_change.md#4-add)                                                 |
 | D09 | One controlling policy per target and capability                  | Open: a validation rule for W6 task 25                                                                                              |

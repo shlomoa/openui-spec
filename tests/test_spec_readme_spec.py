@@ -79,6 +79,7 @@ EXPECTED_SPEC_MARKDOWN = [
     "scopes/scope.md",
     "scopes/taxonomy_mapping.md",
     "scopes/template.scope.md",
+    "scopes/terminology.md",
     "tooling/comparison.md",
     "tooling/editing.md",
 ]

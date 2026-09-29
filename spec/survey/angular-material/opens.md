@@ -26,17 +26,17 @@ consolidated file has since settled an item, the outcome is linked.
 | D04 | Cleanup when a host disappears; fallback when a restore target is gone              | AM-P03, AM-P05         | Open: same as D03                                                                                                                         |
 | D05 | Behavior targets as children versus the rule that children own UI                   | AM-E10                 | Settled: [scope change R1](../scope_change.md#2-replace)                                                                                  |
 | D06 | Form field ownership; Token collection value, mode and events                       | AM-P01, AM-P02         | Terms settled (Form field A44, Token collection A20); machine fields wait on W5 ([scope change: Not added](../scope_change.md#not-added)) |
-| D07 | Reconcile Qt Scroll container and Text completion                                   | AM-P04, AM-E01         | Settled: [terminology A52, A59](../terminology.md#47-behaviors); evidence for virtualization and autosizing is still open                 |
+| D07 | Reconcile Qt Scroll container and Text completion                                   | AM-P04, AM-E01         | Settled: [terminology A52, A59](../../scopes/terminology.md#47-behaviors); evidence for virtualization and autosizing is still open                 |
 
 ## A2 Proposal acceptance
 
 | Proposal                  | Consolidated outcome                                                                          |
 | ------------------------- | --------------------------------------------------------------------------------------------- |
-| AM-P01 Form field         | Form field, alias of Form ([terminology A44](../terminology.md#45-container-elements))        |
-| AM-P02 Token collection   | Token collection, alias of List ([terminology A20](../terminology.md#42-input-elements))      |
-| AM-P03 Modal interaction  | Alias of Modal overlay in Behaviors ([terminology A56](../terminology.md#47-behaviors))       |
-| AM-P04 Scrollable         | Alias of Viewport scrolling ([terminology A57](../terminology.md#47-behaviors))               |
-| AM-P05 Scroll lock        | Scroll lock in Viewport and focus control ([terminology A58](../terminology.md#47-behaviors)) |
+| AM-P01 Form field         | Form field, alias of Form ([terminology A44](../../scopes/terminology.md#45-container-elements))        |
+| AM-P02 Token collection   | Token collection, alias of List ([terminology A20](../../scopes/terminology.md#42-input-elements))      |
+| AM-P03 Modal interaction  | Alias of Modal overlay in Behaviors ([terminology A56](../../scopes/terminology.md#47-behaviors))       |
+| AM-P04 Scrollable         | Alias of Viewport scrolling ([terminology A57](../../scopes/terminology.md#47-behaviors))               |
+| AM-P05 Scroll lock        | Scroll lock in Viewport and focus control ([terminology A58](../../scopes/terminology.md#47-behaviors)) |
 | AM-E01 Choice controls    | [Scope change](../scope_change.md#1-change) C2 and A3                                         |
 | AM-E02 Range control      | Scope change C3 and A2                                                                        |
 | AM-E03 Date/time pickers  | Scope change C9 and A8                                                                        |
@@ -55,7 +55,7 @@ consolidated file has since settled an item, the outcome is linked.
 
 Qt (modal, scrolling, completion, temporal, range, progress): see
 [Qt Q4](../qt/opens.md#q4-overlap-with-angular-material). OpenUI5 Cards: covered by the
-existing Card alias ([terminology: Not added](../terminology.md#not-added)); card composition
+existing Card alias ([terminology: Not added](../../scopes/terminology.md#not-added)); card composition
 is in [scope change C18](../scope_change.md#1-change).
 
 ## A4 Upstream theming exports

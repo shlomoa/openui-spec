@@ -12,6 +12,7 @@ nav:
   - Scopes:
       - Overview: scopes/scope.md
       - Taxonomy mapping: scopes/taxonomy_mapping.md
+      - Terminology: scopes/terminology.md
       - Evidence: scopes/evidence.md
       - Template: scopes/template.scope.md
       - Application:

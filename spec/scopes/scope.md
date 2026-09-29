@@ -8,7 +8,8 @@ those terms for concrete object contracts rather than redefining them.
 The [taxonomy mapping](taxonomy_mapping.md) maps entries from
 `docs/generic-ui-taxonomy.md` to these scope objects and records whether each
 entry is an existing object, alias, grouped leaf, or folder-level abstraction.
-The taxonomy and the scope tree are linked views of one vocabulary. The taxonomy
+The [terminology](terminology.md) records the approved term changes, with their
+evidence and the canonical-term rule. The taxonomy and the scope tree are linked views of one vocabulary. The taxonomy
 groups terms by purpose; the scope tree organizes contracts. A new taxonomy section
 or subcategory does not create a scope folder, type or contract.
 

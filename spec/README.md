@@ -152,6 +152,8 @@ The `scopes` folder is structured hierarchically. Each top-level scope is a fold
 The [taxonomy mapping](scopes/taxonomy_mapping.md) maps the abstract entries in
 `docs/generic-ui-taxonomy.md` to the concrete scope object or alias that owns
 each term.
+The [terminology](scopes/terminology.md) records the approved term changes behind
+the glossary and the taxonomy mapping, with their evidence.
 
 | Scope                                                            | Object                                                                             | Description                                                                                           |
 | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |

@@ -72,7 +72,7 @@ section. Some are examples or repeated occurrences. The full list is in
 ## H5 Accessibility and Composition folders
 
 The survey's proposals P6 and P7 would add two top-level scopes. Consolidated outcome: not
-added ([terminology: Not added](../terminology.md#not-added),
+added ([terminology: Not added](../../scopes/terminology.md#not-added),
 [architecture change: Not added](../architecture_change.md#not-added)); whether they belong in
 the project stays with plan question Q13.
 
@@ -92,7 +92,7 @@ is not added ([scope change: Not added](../scope_change.md#not-added)).
 The survey needs sources beyond HTML for accessibility patterns, gestures, layout and
 composite widgets before a merge. The consolidated files use WAI-ARIA 1.2 and the Qt,
 Angular Material and OpenUI5 surveys for these; see the Source URL columns of
-[terminology](../terminology.md#summary) and [category](../category.md#summary).
+[terminology](../../scopes/terminology.md#summary) and [category](../category.md#summary).
 
 ## H9 Element coverage
 
@@ -141,8 +141,8 @@ and the 21 input states.
 | `dialog`                                                                                                                                                                                                              | Dialog                                                                                                                               |
 | `canvas`                                                                                                                                                                                                              | Canvas (Drawing and capture controls)                                                                                                |
 | `template`, `slot`                                                                                                                                                                                                    | Composition; waits on plan question Q13                                                                                              |
-| `ruby`, `rt`, `rp`                                                                                                                                                                                                    | Not added at this stage ([terminology: Not added](../terminology.md#not-added))                                                      |
-| `mark`                                                                                                                                                                                                                | Highlighted text (Display primitives), [terminology A73](../terminology.md#43-output-elements)                                       |
+| `ruby`, `rt`, `rp`                                                                                                                                                                                                    | Not added at this stage ([terminology: Not added](../../scopes/terminology.md#not-added))                                                      |
+| `mark`                                                                                                                                                                                                                | Highlighted text (Display primitives), [terminology A73](../../scopes/terminology.md#43-output-elements)                                       |
 
 Finding: with Highlighted text (terminology A73) added for `mark`, the approved vocabulary
 covers every HTML UI element; ruby annotations are left out at this stage.
