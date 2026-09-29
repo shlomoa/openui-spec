@@ -492,7 +492,8 @@
                     "uses.expanded": "boolean",
                     "behaves.expand": null,
                     "behaves.collapse": null,
-                    "produces.expandedChange": null
+                    "produces.expandedChange": null,
+                    "uses.multi": "boolean"
                   },
                   "children": [
                     {

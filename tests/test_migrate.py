@@ -111,34 +111,39 @@ class MigrateTest(unittest.TestCase):
         self.assertEqual(chart["attrs"], {"uses.kind": '"comparison"', "title": "t"})
         self.assertEqual(grid["attrs"], {"behaves.sort": None})
 
-    def test_undeclared_category_keys_are_removed(self) -> None:
-        [chart] = self._fit({"id": "sales", "type": "Chart", "attrs": {"uses.xAxis": '"month"'}})[
-            "children"
-        ]
-        self.assertEqual(chart, {"id": "sales", "type": "Chart"})
+    def test_undeclared_keys_and_extra_children_are_kept(self) -> None:
+        chart = {
+            "id": "sales",
+            "type": "Chart",
+            "attrs": {"uses.xAxis": '"month"'},
+            "children": [{"id": "salesEmpty", "type": "FeedbackWidgets"}],
+        }
+        [fitted] = self._fit(chart)["children"]
+        self.assertEqual(fitted, chart)
 
-    def test_children_follow_the_child_model(self) -> None:
-        document = self._fit(
+    def test_missing_required_children_are_added(self) -> None:
+        [panel] = self._fit(
             {
                 "id": "filters",
                 "type": "ExpandablePanels",
                 "children": [
                     {"id": "filtersContent", "type": "section"},
                     {"id": "inner", "type": "ExpandablePanels"},
-                    {"id": "home", "type": "EmptyPage"},
                 ],
-            },
-            {"id": "homeRoute", "type": "Route", "attrs": {"uses.target": '"home"'}},
-        )
-        [panel, _, moved] = document["children"]
+            }
+        )["children"]
         self.assertEqual(
             panel["children"],
             [
                 {"id": "filtersSummary", "type": "summary"},
                 {"id": "filtersContent", "type": "section"},
+                {
+                    "id": "inner",
+                    "type": "ExpandablePanels",
+                    "children": [{"id": "innerSummary", "type": "summary"}],
+                },
             ],
         )
-        self.assertEqual(moved, {"id": "home", "type": "EmptyPage"})
 
     def test_contract_fitting_is_idempotent(self) -> None:
         text = json.dumps(

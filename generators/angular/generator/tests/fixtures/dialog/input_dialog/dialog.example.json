@@ -12,6 +12,8 @@
       "attrs": {
         "uses.modal": true,
         "uses.open": "isOpen",
+        "uses.ariaLabel": "\"Confirm deletion\"",
+        "uses.restoreFocus": true,
         "produces.close": "onClose($event)",
         "produces.cancel": "onCancel($event)"
       },

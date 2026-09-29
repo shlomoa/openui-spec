@@ -85,6 +85,10 @@
                 "uses.icon": "\"help\"",
                 "produces.activate": "openHelp()"
               }
+            },
+            {
+              "id": "homePage",
+              "type": "EmptyPage"
             }
           ]
         }
@@ -93,10 +97,6 @@
     {
       "id": "shellBar",
       "type": "Application"
-    },
-    {
-      "id": "homePage",
-      "type": "EmptyPage"
     }
   ]
 }

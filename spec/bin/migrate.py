@@ -13,20 +13,18 @@ Keys (0.5 to 0.6), for every document:
   `string`, `url`, `enum(...)`, `reference` or `list(...)`.
 
 Contracts (0.10 to 0.11), for every worked example (`*.example.json`) the grammar
-accepts, so that each element follows its type's contract:
+accepts:
 
 - a key in `RENAMES` becomes the declared key that means the same, with its value
   mapped; a Produces or Behaves value that is not an expression becomes `null`;
-- every other category-prefixed key the type does not declare is removed; a plain
-  key carries no category, is not part of a contract (spec parts 4.5 and 4.6) and
-  is kept;
-- below the root, a child the leaf's Child model does not allow, or one beyond its
-  multiplicity, is removed with its subtree, or moved to the root when an element
-  reference names it; a missing required child is added as an empty element with
-  the id `<parentId><ChildId>`.
+- below the root, each child that a leaf's Child model requires (multiplicity `1` or
+  `1..n`) and that is missing is added as an empty element with the id
+  `<parentId><ChildId>`.
 
-The root of an example is the example's scope node, so its own children are not
-fitted to a Child model. Running the tool twice changes nothing.
+Nothing is removed: a contract does not restrict an element to its declared
+attributes or to the children of its Child model (spec part 4.6; glossary, Object).
+The root of an example is the example's scope node, so no child is added to it.
+Running the tool twice changes nothing.
 
 Usage: ``python -m spec.bin.migrate [--check] PATH...`` (a folder is searched for
 JSON documents whose root id is ``root``).
@@ -40,7 +38,7 @@ import json
 import re
 import sys
 from collections import Counter
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -144,110 +142,71 @@ def migrate_element(element: dict[str, Any], catalog: Catalog) -> None:
 
 
 def fit_document(document: dict[str, Any], contracts: Contracts) -> list[str]:
-    """Fit every element of *document* to its type's contract in place; list each change."""
-    fit = _Fit(contracts, set(_ids(document)))
+    """Rename keys and add missing required children in place; list each change."""
+    changes: list[str] = []
     for element, path in _walk(document, ""):
-        fit.attrs(element, path)
-    fit.referenced = {
-        literal
-        for element, _ in _walk(document, "")
-        for literal in _references(element, contracts.catalog)
-    }
-    fit.children(document, "", document)
-    return fit.changes
+        _rename_attrs(element, path, contracts, changes)
+    changes.extend(_add_required_children(document, contracts))
+    return changes
 
 
-def contract_problems(document: dict[str, Any], contracts: Contracts) -> list[str]:
-    """Return what `fit_document` would change: an undeclared attribute or a wrong child."""
-    return fit_document(copy.deepcopy(document), contracts)
+def missing_required_children(document: dict[str, Any], contracts: Contracts) -> list[str]:
+    """Return each required child (Child model minimum) that *document* lacks."""
+    return _add_required_children(copy.deepcopy(document), contracts)
 
 
-@dataclass
-class _Fit:
-    contracts: Contracts
-    ids: set[str]
-    referenced: set[str] = field(default_factory=set)
-    changes: list[str] = field(default_factory=list)
+def _rename_attrs(
+    element: dict[str, Any], path: str, contracts: Contracts, changes: list[str]
+) -> None:
+    renames = RENAMES.get(contracts.leaf_of.get(element["type"], ""), {})
+    attrs = element.get("attrs")
+    if not attrs or not renames.keys() & attrs.keys():
+        return
+    fitted: dict[str, Any] = {}
+    for key, value in attrs.items():
+        if key not in renames:
+            fitted.setdefault(key, value)
+            continue
+        new_key, values = renames[key]
+        new_value = values.get(value, value) if isinstance(value, (str, bool)) else value
+        if not new_key.startswith("uses.") and not _is_expression(new_value):
+            new_value = None
+        changes.append(f"{_where(element, path)}: {key} -> {new_key}")
+        fitted.setdefault(new_key, new_value)
+    element["attrs"] = fitted
 
-    def attrs(self, element: dict[str, Any], path: str) -> None:
-        if "attrs" not in element:
-            return
-        declared = self.contracts.catalog.contracts.get(element["type"], {})
-        renames = RENAMES.get(self.contracts.leaf_of.get(element["type"], ""), {})
-        fitted: dict[str, Any] = {}
-        for key, value in element["attrs"].items():
-            category, _, name = key.rpartition(".")
-            declaration = declared.get(name)
-            if declaration is not None and declaration.category == (category or None):
-                fitted.setdefault(key, value)
-                continue
-            new_key, values = renames.get(key, (None, {}))
-            if new_key is None and not category:
-                fitted.setdefault(key, value)
-                continue
-            if new_key is None:
-                self.changes.append(f"{_where(element, path)}: removes {key}")
-                continue
-            new_value = values.get(value, value) if isinstance(value, (str, bool)) else value
-            if not new_key.startswith("uses.") and not _is_expression(new_value):
-                new_value = None
-            self.changes.append(f"{_where(element, path)}: {key} -> {new_key}")
-            fitted.setdefault(new_key, new_value)
-        if fitted:
-            element["attrs"] = fitted
-        else:
-            del element["attrs"]
 
-    def children(self, element: dict[str, Any], path: str, root: dict[str, Any]) -> None:
-        scope_type = self.contracts.leaf_of.get(element["type"])
-        if element is not root and scope_type is not None:
-            self._fit_children(element, path, root, self.contracts.child_models[scope_type])
-        for index, child in enumerate(element.get("children", [])):
-            self.children(child, f"{path}/children/{index}", root)
-
-    def _fit_children(
-        self,
-        element: dict[str, Any],
-        path: str,
-        root: dict[str, Any],
-        model: list[tuple[str, str, str]],
-    ) -> None:
-        where = _where(element, path)
+def _add_required_children(document: dict[str, Any], contracts: Contracts) -> list[str]:
+    """Below the root, add each missing required child as an empty element."""
+    ids = set(_ids(document))
+    changes: list[str] = []
+    for element, path in _walk(document, ""):
+        scope_type = contracts.leaf_of.get(element["type"])
+        if element is document or scope_type is None:
+            continue
+        model = contracts.child_models[scope_type]
         order = {child_type: index for index, (_, child_type, _) in enumerate(model)}
-        limits: dict[str, tuple[int, int]] = {}
-        for _, child_type, multiplicity in model:
-            low, high = limits.get(child_type, (0, 0))
-            add_low, add_high = MULTIPLICITY[multiplicity]
-            limits[child_type] = (low + add_low, min(high + add_high, sys.maxsize))
-        kept: list[dict[str, Any]] = []
-        counts: Counter[str] = Counter()
-        for child in element.get("children", []):
-            if counts[child["type"]] < limits.get(child["type"], (0, 0))[1]:
-                counts[child["type"]] += 1
-                kept.append(child)
-            elif child["id"] in self.referenced:
-                root.setdefault("children", []).append(child)
-                self.changes.append(f"{where}: moves referenced child {child['id']} to the root")
-            else:
-                self.changes.append(f"{where}: removes child {child['id']} ({child['type']})")
+        counts = Counter(child["type"] for child in element.get("children", []))
         for child_id, child_type, multiplicity in model:
-            if counts[child_type] >= limits[child_type][0] or MULTIPLICITY[multiplicity][0] == 0:
+            if MULTIPLICITY[multiplicity][0] == 0 or counts[child_type] > 0:
                 continue
             new_id = f"{element['id']}{child_id[:1].upper()}{child_id[1:]}"
-            if new_id in self.ids:
-                raise ValueError(f"{where}: cannot add required child {new_id}: the id is taken")
-            self.ids.add(new_id)
+            if new_id in ids:
+                raise ValueError(f"{_where(element, path)}: cannot add {new_id}: the id is taken")
+            ids.add(new_id)
             counts[child_type] += 1
+            children = element.setdefault("children", [])
             position = next(
-                (i for i, c in enumerate(kept) if order[c["type"]] > order[child_type]),
-                len(kept),
+                (
+                    index
+                    for index, child in enumerate(children)
+                    if order.get(child["type"], len(order)) > order[child_type]
+                ),
+                len(children),
             )
-            kept.insert(position, {"id": new_id, "type": child_type})
-            self.changes.append(f"{where}: adds required child {new_id} ({child_type})")
-        if kept:
-            element["children"] = kept
-        else:
-            element.pop("children", None)
+            children.insert(position, {"id": new_id, "type": child_type})
+            changes.append(f"{_where(element, path)}: adds required child {new_id} ({child_type})")
+    return changes
 
 
 def _walk(element: dict[str, Any], path: str) -> list[tuple[dict[str, Any], str]]:
@@ -259,23 +218,6 @@ def _walk(element: dict[str, Any], path: str) -> list[tuple[dict[str, Any], str]
             for pair in _walk(child, f"{path}/children/{index}")
         ),
     ]
-
-
-def _references(element: dict[str, Any], catalog: Catalog) -> list[str]:
-    """Return the ids that the literal element references of *element* name."""
-    declared = catalog.contracts.get(element["type"], {})
-    literals = []
-    for key, value in (element.get("attrs") or {}).items():
-        category, _, name = key.rpartition(".")
-        declaration = declared.get(name)
-        if category != "uses" or declaration is None or declaration.category != "uses":
-            continue
-        if "reference" not in (declaration.value_type or ""):
-            continue
-        for item in value if isinstance(value, list) else [value]:
-            if isinstance(item, str) and len(item) > 1 and item[0] == item[-1] == '"':
-                literals.append(json.loads(item))
-    return literals
 
 
 def _where(element: dict[str, Any], path: str) -> str:

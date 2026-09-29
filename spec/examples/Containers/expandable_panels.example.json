@@ -9,10 +9,58 @@
     {
       "id": "settingsAccordion",
       "type": "ExpandablePanels",
+      "attrs": {
+        "uses.multi": false
+      },
       "children": [
         {
           "id": "settingsAccordionSummary",
           "type": "summary"
+        },
+        {
+          "id": "generalPanel",
+          "type": "ExpandablePanels",
+          "attrs": {
+            "uses.heading": "\"General\"",
+            "uses.expanded": true,
+            "uses.defaultExpanded": true,
+            "produces.expandedChange": "onToggle('general', $event)"
+          },
+          "children": [
+            {
+              "id": "generalPanelSummary",
+              "type": "summary"
+            },
+            {
+              "id": "generalContent",
+              "type": "section",
+              "attrs": {
+                "text": "\"General settings\""
+              }
+            }
+          ]
+        },
+        {
+          "id": "advancedPanel",
+          "type": "ExpandablePanels",
+          "attrs": {
+            "uses.heading": "\"Advanced\"",
+            "uses.expanded": false,
+            "uses.ariaControls": "\"advancedContent\""
+          },
+          "children": [
+            {
+              "id": "advancedPanelSummary",
+              "type": "summary"
+            },
+            {
+              "id": "advancedContent",
+              "type": "section",
+              "attrs": {
+                "text": "\"Advanced settings\""
+              }
+            }
+          ]
         }
       ]
     },

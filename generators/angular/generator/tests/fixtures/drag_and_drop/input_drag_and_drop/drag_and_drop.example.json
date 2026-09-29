@@ -8,7 +8,32 @@
   "children": [
     {
       "id": "taskBoard",
-      "type": "StructuralContainers"
+      "type": "StructuralContainers",
+      "children": [
+        {
+          "id": "todoColumn",
+          "type": "StructuralContainers",
+          "attrs": {
+            "uses.ariaLabel": "\"To do\""
+          },
+          "children": [
+            {
+              "id": "taskCard",
+              "type": "SurfaceContainers",
+              "attrs": {
+                "uses.title": "\"Write the spec\""
+              }
+            }
+          ]
+        },
+        {
+          "id": "doneColumn",
+          "type": "StructuralContainers",
+          "attrs": {
+            "uses.ariaLabel": "\"Done\""
+          }
+        }
+      ]
     },
     {
       "id": "taskBoardDragAndDrop",

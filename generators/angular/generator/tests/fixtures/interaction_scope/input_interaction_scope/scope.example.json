@@ -8,7 +8,12 @@
   "children": [
     {
       "id": "dragInteraction",
-      "type": "Interaction"
+      "type": "Interaction",
+      "attrs": {
+        "uses.state": "\"dragging\"",
+        "uses.gesture": "\"drag\"",
+        "produces.complete": "onDragComplete($event)"
+      }
     }
   ]
 }

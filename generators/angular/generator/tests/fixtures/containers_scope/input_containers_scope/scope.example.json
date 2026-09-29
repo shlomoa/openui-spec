@@ -10,12 +10,16 @@
       "id": "layoutGrid",
       "type": "Grid",
       "attrs": {
-        "uses.columns": 12
+        "uses.columns": 12,
+        "uses.responsive": true
       },
       "children": [
         {
           "id": "mainItem",
           "type": "section",
+          "attrs": {
+            "uses.colSpan": 8
+          },
           "children": [
             {
               "id": "detailTabs",
@@ -26,7 +30,10 @@
               "children": [
                 {
                   "id": "overviewTab",
-                  "type": "tab"
+                  "type": "tab",
+                  "attrs": {
+                    "uses.label": "\"Overview\""
+                  }
                 }
               ]
             }
@@ -35,11 +42,15 @@
         {
           "id": "sideItem",
           "type": "section",
+          "attrs": {
+            "uses.colSpan": 4
+          },
           "children": [
             {
               "id": "filtersPanel",
               "type": "ExpandablePanels",
               "attrs": {
+                "uses.heading": "\"Filters\"",
                 "uses.expanded": true
               },
               "children": [
@@ -57,7 +68,8 @@
       "id": "summaryCard",
       "type": "SurfaceContainers",
       "attrs": {
-        "uses.title": "\"Summary\""
+        "uses.title": "\"Summary\"",
+        "uses.elevation": 2
       }
     },
     {
@@ -85,13 +97,17 @@
     },
     {
       "id": "mainArticle",
-      "type": "StructuralContainers"
+      "type": "StructuralContainers",
+      "attrs": {
+        "uses.role": "\"article\""
+      }
     },
     {
       "id": "workspaceSplitter",
       "type": "Splitters",
       "attrs": {
-        "uses.orientation": "\"horizontal\""
+        "uses.orientation": "\"horizontal\"",
+        "uses.position": 320
       },
       "children": [
         {

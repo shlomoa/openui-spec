@@ -10,15 +10,37 @@
       "id": "taskList",
       "type": "List",
       "attrs": {
+        "uses.items": "tasks",
         "behaves.sort": null,
         "behaves.filter": "searchTerm",
         "uses.selection": "\"single\"",
+        "uses.loading": "isLoading",
+        "uses.error": "loadError",
         "produces.selectionChange": "onSelect($event)"
       },
       "children": [
         {
           "id": "taskItem",
-          "type": "li"
+          "type": "li",
+          "attrs": {
+            "uses.label": "item.title",
+            "uses.description": "item.due"
+          }
+        },
+        {
+          "id": "listMore",
+          "type": "ActionControls",
+          "attrs": {
+            "uses.hasMore": "hasMore",
+            "produces.activate": "onLoadMore()"
+          }
+        },
+        {
+          "id": "listEmpty",
+          "type": "FeedbackWidgets",
+          "attrs": {
+            "uses.message": "\"No tasks.\""
+          }
         }
       ]
     },

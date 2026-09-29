@@ -141,7 +141,13 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     ),
     "Containers/expandable_panels.scope.md": (
         "details",
-        ("behaves.collapse", "behaves.expand", "produces.expandedChange", "uses.expanded"),
+        (
+            "behaves.collapse",
+            "behaves.expand",
+            "produces.expandedChange",
+            "uses.expanded",
+            "uses.multi",
+        ),
         (("expandablePanelsSummary", "summary"), ("expandablePanelsContent", "section")),
     ),
     "Containers/grid.scope.md": (

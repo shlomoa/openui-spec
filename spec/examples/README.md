@@ -11,11 +11,13 @@ pseudo-types. They exercise the attributes their scopes describe, using the
 [typed attribute keys](../README.md#45-attributes-and-their-categories) `uses.name`,
 `produces.name` and `behaves.name`; their Angular-style expression values are for
 illustration only — the format is framework-independent.
-Every category-prefixed attribute an example uses is declared by its type's
-contract, with a value of the declared type. Below the root, which stands for the
-scope, the children of a leaf type are the ones its Child model allows, within
-their multiplicity. `tests/test_example_contracts.py` checks both, and
-`python -m spec.bin.migrate` fits an example to the contracts.
+A declared attribute has a value of its declared type, and a literal element
+reference names an element of the declared type. Below the root, which stands for
+the scope, every element has the children its leaf's Child model requires. An
+example may use attributes and children that a contract does not list, as the
+[glossary](../scopes/scope.md#object) allows. `tests/test_example_contracts.py`
+checks these rules, and `python -m spec.bin.migrate` renames the attributes that a
+contract declares under another name and adds missing required children.
 Vocabulary and aliases used by examples are defined in the
 [spec glossary](../scopes/scope.md#glossary); examples demonstrate usage and should not
 redefine shared terms.

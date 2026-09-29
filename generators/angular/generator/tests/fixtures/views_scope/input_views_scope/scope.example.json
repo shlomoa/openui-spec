@@ -10,16 +10,48 @@
       "id": "customerReport",
       "type": "Report",
       "attrs": {
-        "title": "\"Customers\""
-      }
+        "title": "\"Customers\"",
+        "uses.readOnly": true
+      },
+      "children": [
+        {
+          "id": "customerTable",
+          "type": "table",
+          "attrs": {
+            "uses.data": "customers"
+          },
+          "children": [
+            {
+              "id": "colName",
+              "type": "Table",
+              "attrs": {
+                "uses.field": "\"name\"",
+                "uses.header": "\"Name\"",
+                "uses.sortable": true
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "customerForm",
       "type": "Form",
       "attrs": {
         "title": "\"Edit customer\"",
+        "uses.dirty": "form.dirty",
         "behaves.submit": "onSubmit(form.value)"
-      }
+      },
+      "children": [
+        {
+          "id": "nameField",
+          "type": "TextInputs",
+          "attrs": {
+            "uses.label": "\"Name\"",
+            "uses.required": true
+          }
+        }
+      ]
     }
   ]
 }

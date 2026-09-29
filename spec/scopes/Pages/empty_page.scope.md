@@ -21,6 +21,5 @@ A page with no content and no routing or navigation.
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
-- The empty page owns no child entries. Placeholder content, empty-state widgets,
-  routing, and navigation require an explicit owner decision before they are
-  added as contract entries.
+- The empty page owns no child entries: as its Purpose states, it has no
+  content, routing or navigation.

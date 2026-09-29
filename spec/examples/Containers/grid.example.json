@@ -12,20 +12,34 @@
       "attrs": {
         "uses.columns": 12,
         "uses.rowGap": "\"16px\"",
-        "uses.columnGap": "\"16px\""
+        "uses.columnGap": "\"16px\"",
+        "uses.responsive": true
       },
       "children": [
         {
           "id": "mainRegion",
-          "type": "section"
+          "type": "section",
+          "attrs": {
+            "uses.colSpan": 8,
+            "uses.rowSpan": 2,
+            "uses.order": 1
+          }
         },
         {
           "id": "sideRegion",
-          "type": "section"
+          "type": "section",
+          "attrs": {
+            "uses.colSpan": 4,
+            "uses.order": 2
+          }
         },
         {
           "id": "footerRegion",
-          "type": "section"
+          "type": "section",
+          "attrs": {
+            "uses.colSpan": 12,
+            "uses.order": 3
+          }
         }
       ]
     }

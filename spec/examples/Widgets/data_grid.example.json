@@ -10,6 +10,7 @@
       "id": "ordersGrid",
       "type": "DataGrid",
       "attrs": {
+        "uses.data": "orders",
         "uses.selection": "\"multiple\"",
         "behaves.sort": null,
         "produces.selectionChange": "onOrderSelection($event)"

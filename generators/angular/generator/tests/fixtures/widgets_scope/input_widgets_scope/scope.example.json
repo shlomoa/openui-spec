@@ -17,22 +17,42 @@
     },
     {
       "id": "salesTable",
-      "type": "table"
+      "type": "table",
+      "attrs": {
+        "uses.data": "sales"
+      },
+      "children": [
+        {
+          "id": "colMonth",
+          "type": "Table",
+          "attrs": {
+            "uses.field": "\"month\"",
+            "uses.header": "\"Month\""
+          }
+        }
+      ]
     },
     {
       "id": "ordersGrid",
       "type": "DataGrid",
       "attrs": {
+        "uses.data": "orders",
         "behaves.sort": null
       }
     },
     {
       "id": "recentList",
       "type": "List",
+      "attrs": {
+        "uses.items": "recent"
+      },
       "children": [
         {
           "id": "recentItem",
-          "type": "li"
+          "type": "li",
+          "attrs": {
+            "uses.label": "item.title"
+          }
         }
       ]
     },
@@ -68,7 +88,28 @@
     },
     {
       "id": "rangePicker",
-      "type": "DateTimePicker"
+      "type": "DateTimePicker",
+      "attrs": {
+        "uses.rangePicker": "\"picker\""
+      },
+      "children": [
+        {
+          "id": "rangeStart",
+          "type": "input",
+          "attrs": {
+            "matStartDate": null,
+            "placeholder": "\"Start\""
+          }
+        },
+        {
+          "id": "rangeEnd",
+          "type": "input",
+          "attrs": {
+            "matEndDate": null,
+            "placeholder": "\"End\""
+          }
+        }
+      ]
     },
     {
       "id": "wizard",
@@ -79,7 +120,10 @@
       "children": [
         {
           "id": "stepOne",
-          "type": "step"
+          "type": "step",
+          "attrs": {
+            "uses.label": "\"Step 1\""
+          }
         }
       ]
     },

@@ -10,7 +10,8 @@
       "id": "summaryCard",
       "type": "SurfaceContainers",
       "attrs": {
-        "uses.title": "\"Summary\""
+        "uses.title": "\"Summary\"",
+        "uses.elevation": 2
       }
     },
     {

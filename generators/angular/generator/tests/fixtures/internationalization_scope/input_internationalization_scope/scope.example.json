@@ -8,7 +8,12 @@
   "children": [
     {
       "id": "localeRules",
-      "type": "Internationalization"
+      "type": "Internationalization",
+      "attrs": {
+        "uses.locale": "\"en-US\"",
+        "uses.direction": "\"ltr\"",
+        "uses.dateFormat": "\"mediumDate\""
+      }
     }
   ]
 }

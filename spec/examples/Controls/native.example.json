@@ -8,19 +8,35 @@
   "children": [
     {
       "id": "colorScheme",
-      "type": "Native"
+      "type": "Native",
+      "attrs": {
+        "uses.supported": "\"light dark\"",
+        "uses.default": "\"light\""
+      }
     },
     {
       "id": "typography",
-      "type": "Native"
+      "type": "Native",
+      "attrs": {
+        "uses.fontFamily": "\"system-ui, sans-serif\"",
+        "uses.fontSize": "\"16px\""
+      }
     },
     {
       "id": "scrollRegion",
-      "type": "Native"
+      "type": "Native",
+      "attrs": {
+        "uses.overflow": "\"auto\"",
+        "uses.scrollBehavior": "\"smooth\""
+      }
     },
     {
       "id": "focusRing",
-      "type": "Native"
+      "type": "Native",
+      "attrs": {
+        "uses.focusVisible": true,
+        "uses.tabIndex": 0
+      }
     }
   ]
 }

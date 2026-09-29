@@ -8,7 +8,12 @@
   "children": [
     {
       "id": "visualTheme",
-      "type": "Presentation"
+      "type": "Presentation",
+      "attrs": {
+        "uses.colorScheme": "\"light\"",
+        "uses.density": "\"comfortable\"",
+        "uses.typography": "\"system\""
+      }
     }
   ]
 }

@@ -4,6 +4,9 @@
   "type": "Form",
   "attrs": {
     "title": "\"Customer form\"",
+    "uses.dirty": "form.dirty",
+    "uses.loading": "isSaving",
+    "uses.error": "saveError",
     "behaves.submit": "onSubmit(form.value)"
   },
   "children": [
@@ -23,7 +26,9 @@
       "type": "TextInputs",
       "attrs": {
         "uses.label": "\"Email\"",
-        "uses.required": true
+        "uses.required": true,
+        "uses.pattern": "\"^.+@.+$\"",
+        "uses.error": "\"Enter a valid email\""
       }
     },
     {

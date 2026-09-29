@@ -5,14 +5,21 @@ published packages.
 
 ## [0.11.0] - 2026-09-29
 
+### Scope contracts
+
+- Expandable panels: in an accordion, at most one panel MUST be expanded at a
+  time; expanding one panel collapses the others. The new `uses.multi`
+  (boolean) says whether more than one panel may be expanded; in an accordion it
+  is `false`.
+- Dashboard, Empty page and Report no longer say that their content needs an
+  owner decision. A dashboard's cards, metrics, charts and actions and a
+  report's tables, grids and charts are existing objects composed as children.
+  The Empty page owns no children, as its Purpose states.
+- Undeclared attributes and children beyond a Child model stay allowed: a
+  contract is not an allowlist (glossary, Object; spec part 4.6).
+
 ### Worked examples and fixtures
 
-- Every worked example, and every generator input fixture copied from one,
-  follows the leaf contracts. Every category-prefixed attribute is declared by
-  its element's type, with a value of the declared type. Below the root, the
-  children of a leaf type are the ones its Child model allows, within their
-  multiplicity. Plain keys carry no category and are not part of a contract, so
-  they stay.
 - Attributes that a contract declares under another name are renamed:
   - Action controls: `text` and `produces.click` (and `produces.loadMore`)
     become `uses.label` and `produces.activate`.
@@ -28,25 +35,18 @@ published packages.
     `produces.selectionChange` and `produces.complete`.
   - Structural containers: `uses.label` becomes `uses.ariaLabel`; Surface
     containers: `uses.label` becomes `uses.title`.
-- Attributes that no contract declares are removed, for example the axes,
-  tooltip and loading state of Chart, the data of Data grid and Table, the
-  column spans of Grid items, the labels and order of `tab` and `step`
-  elements, and every attribute of the Layout, Presentation,
-  Internationalization and Interaction examples.
-- Children that a Child model does not allow are removed, for example the
-  empty-state message of Chart and List, the accordion panels inside an
-  Expandable panel, the columns of a Report and the inputs of the Date range
-  picker. The `homePage` of the Application example, which a route names, moves
-  to the root. Required children that were missing are added: the `summary` of
-  Expandable panels, the pane `section` of Splitters and the content `section`
-  of a Dialog.
+- Required children that were missing are added: the `summary` of Expandable
+  panels, the pane `section` of Splitters and the content `section` of a
+  Dialog.
+- No attribute or child is removed.
 
 ### Tools
 
-- `python -m spec.bin.migrate` also fits worked examples (`*.example.json`) to
-  the leaf contracts. `tests/test_example_contracts.py` fails when an example
-  uses an undeclared attribute, a value of the wrong type or a child the Child
-  model does not allow.
+- `python -m spec.bin.migrate` also renames these attributes and adds missing
+  required children in worked examples (`*.example.json`).
+  `tests/test_example_contracts.py` checks every example and input fixture: a
+  declared attribute has its declared type, element references resolve to the
+  declared type, and required children are present.
 - The Angular generator reads the label and result of a dialog action from
   `uses.label` and `produces.activate`.
 
@@ -54,9 +54,9 @@ published packages.
 
 1. Upgrade the Python or npm package to `0.11.0` and set concrete document
    `version` fields to `0.11.0`.
-2. Rename the attributes listed above in your documents. For a worked example
-   (`*.example.json`), `python -m spec.bin.migrate <file or folder>` does it and
-   also removes the undeclared attributes and fits the children.
+2. Rename the attributes listed above in your documents and add missing
+   required children. For a worked example (`*.example.json`),
+   `python -m spec.bin.migrate <file or folder>` does both.
 3. For the Angular generator, give each dialog action `uses.label` and
    `produces.activate` instead of `text` and `produces.click`.
 

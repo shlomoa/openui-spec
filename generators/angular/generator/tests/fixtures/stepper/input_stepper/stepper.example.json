@@ -18,15 +18,38 @@
       "children": [
         {
           "id": "cartStep",
-          "type": "step"
+          "type": "step",
+          "attrs": {
+            "uses.label": "\"Cart\"",
+            "uses.order": 1,
+            "uses.completed": true
+          }
         },
         {
           "id": "shippingStep",
-          "type": "step"
+          "type": "step",
+          "attrs": {
+            "uses.label": "\"Shipping\"",
+            "uses.order": 2,
+            "uses.invalid": "shippingForm.invalid"
+          }
         },
         {
           "id": "paymentStep",
-          "type": "step"
+          "type": "step",
+          "attrs": {
+            "uses.label": "\"Payment\"",
+            "uses.order": 3
+          }
+        },
+        {
+          "id": "stepperSubmit",
+          "type": "ActionControls",
+          "attrs": {
+            "uses.label": "\"Place order\"",
+            "uses.disabled": "!allStepsValid",
+            "produces.activate": "submit()"
+          }
         }
       ]
     },
