@@ -68,9 +68,9 @@ flowchart LR
   W1 -- "25" --> W6
   W5 --> W6
   W6 --> W7[W7 Docs]
-  W5 --> W8[W8 Utilities]
+  W5 -- "32 finish, 33, 34" --> W8[W8 Utilities]
   W6 -- "35" --> W8
-  W8 --> W7
+  W8 -- "31" --> W7
   W9[W9 Validation, done]
 ```
 
@@ -82,7 +82,7 @@ W9 is done: it ran first, and its checks now run on every change. An arrow witho
 - W5 waits on W8 for 23, which is validated against the fixtures of 32; the fixture structure of 32 needs nothing.
 - W6 waits on W4 only for 24, and on W1 for 25 (the alias table, 9.9); 25 and 26 also need W5.
 - W8 waits on W6 only for 35 (the joint release); the finished suite of 32, and 33–34, need W5 23.
-- W7 waits on W8 because task 31 notifies downstream after W8 task 35.
+- W7 waits on W8 only for 31, which notifies downstream after W8 task 35.
 
 ## Tasks
 
@@ -287,12 +287,12 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 4 | [x] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy; validate all of W3 14 | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, 14.7, in this order | Step 3 | Done — PR #164 |
 | 4 | [ ] Move incremental-generation and generator content out of `spec/README.md` | W4 18 | — | Open |
 | 5 | [ ] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 4 taxonomy row (W3 14.9 decides which names go in the alias columns; 14.13 sets the final entry names) | Open |
-| 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19 and 20 (together), 21, 22 and W8 32 fixture structure (independent of each other); then W5 23 | Step 3; W5 23 needs 19–22 | Open |
+| 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19 and 20 (together), 21, 22 and W8 32 fixture structure (independent of each other); then W5 23 | Step 3; W5 23 needs 19–22 and the fixture structure of W8 32 | Open |
 | 6 | [ ] Scope statement and in / out classification | W2 10, then 11; W2 12 (lowest priority) | Step 3 | Open |
 | 6 | [ ] Enrich each leaf scope from the survey inventories and the alias table | W6 25 | W1 9.9 (step 5); W5 19–23 (step 5) | Open |
 | 7 | [ ] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, then 15 | Step 4 taxonomy row; W2 11 (step 6) | Open |
 | 8 | [ ] Specification outline and normative split | W4 16, then 17 | Step 7 | Open |
-| 9 | [ ] Draft the spec per the outline | W6 24 | Step 8 | Open |
+| 9 | [ ] Draft the spec per the outline | W6 24 | Step 8; step 5 language row (W5 19–23) | Open |
 | 9 | [ ] Conformance suite and Python / TypeScript utilities | W8 32 (finish the suite), 33, 34 | W5 23 | Open |
 | 10 | [ ] Regenerate, migrate all examples and fixtures, `1.0.0-rc.1` | W6 26 | W6 24, 25; W5 23 | Open |
 | 11 | [ ] Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 10; step 9 utilities | Open |
