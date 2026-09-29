@@ -100,16 +100,44 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     ),
     "Containers/expandable_panels.scope.md": (
         "details",
-        ("behaves.collapse", "behaves.expand"),
+        ("behaves.collapse", "behaves.expand", "produces.expandedChange", "uses.expanded"),
+        (("expandablePanelsSummary", "summary"), ("expandablePanelsContent", "section")),
+    ),
+    "Containers/grid.scope.md": (
+        "Grid",
+        ("uses.columnGap", "uses.columns", "uses.rowGap"),
+        (("gridItem", "section"),),
+    ),
+    "Containers/overlay_containers.scope.md": (
+        "OverlayContainers",
+        ("produces.close", "uses.anchor", "uses.open", "uses.placement"),
         (),
     ),
-    "Containers/grid.scope.md": ("Grid", (), (("gridItem", "section"),)),
-    "Containers/overlay_containers.scope.md": ("OverlayContainers", (), ()),
-    "Containers/sheet_containers.scope.md": ("SheetContainers", (), ()),
-    "Containers/splitters.scope.md": ("Splitters", (), ()),
-    "Containers/structural_containers.scope.md": ("StructuralContainers", (), ()),
-    "Containers/surface_containers.scope.md": ("SurfaceContainers", (), ()),
-    "Containers/tabs.scope.md": ("Tabs", (), (("tabsTab", "tab"),)),
+    "Containers/sheet_containers.scope.md": (
+        "SheetContainers",
+        ("produces.close", "uses.open", "uses.position"),
+        (),
+    ),
+    "Containers/splitters.scope.md": (
+        "Splitters",
+        ("produces.resize", "uses.orientation"),
+        (("splittersPane", "section"), ("splittersHandle", "separator")),
+    ),
+    "Containers/structural_containers.scope.md": (
+        "StructuralContainers",
+        ("uses.ariaLabel", "uses.orientation"),
+        (),
+    ),
+    "Containers/surface_containers.scope.md": (
+        "SurfaceContainers",
+        ("uses.checkable", "uses.checked", "uses.title"),
+        (("surfaceContainersContent", "section"), ("surfaceContainersActions", "footer")),
+    ),
+    "Containers/tabs.scope.md": (
+        "Tabs",
+        ("produces.selectedTabChange", "uses.orientation", "uses.selectedIndex"),
+        (("tabsTab", "tab"),),
+    ),
     "Controls/action_controls.scope.md": (
         "ActionControls",
         (

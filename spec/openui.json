@@ -438,6 +438,11 @@
                 {
                   "id": "gridInstance",
                   "type": "Grid",
+                  "attrs": {
+                    "uses.columns": "integer",
+                    "uses.rowGap": "string",
+                    "uses.columnGap": "string"
+                  },
                   "children": [
                     {
                       "id": "gridItem",
@@ -461,9 +466,21 @@
                   "id": "expandablePanelsInstance",
                   "type": "details",
                   "attrs": {
+                    "uses.expanded": "boolean",
                     "behaves.expand": null,
-                    "behaves.collapse": null
-                  }
+                    "behaves.collapse": null,
+                    "produces.expandedChange": null
+                  },
+                  "children": [
+                    {
+                      "id": "expandablePanelsSummary",
+                      "type": "summary"
+                    },
+                    {
+                      "id": "expandablePanelsContent",
+                      "type": "section"
+                    }
+                  ]
                 }
               ]
             },
@@ -480,6 +497,11 @@
                 {
                   "id": "tabsInstance",
                   "type": "Tabs",
+                  "attrs": {
+                    "uses.selectedIndex": "integer",
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "produces.selectedTabChange": null
+                  },
                   "children": [
                     {
                       "id": "tabsTab",
@@ -501,7 +523,22 @@
               "children": [
                 {
                   "id": "surfaceContainersInstance",
-                  "type": "SurfaceContainers"
+                  "type": "SurfaceContainers",
+                  "attrs": {
+                    "uses.title": "string",
+                    "uses.checkable": "boolean",
+                    "uses.checked": "boolean"
+                  },
+                  "children": [
+                    {
+                      "id": "surfaceContainersContent",
+                      "type": "section"
+                    },
+                    {
+                      "id": "surfaceContainersActions",
+                      "type": "footer"
+                    }
+                  ]
                 }
               ]
             },
@@ -517,7 +554,12 @@
               "children": [
                 {
                   "id": "sheetContainersInstance",
-                  "type": "SheetContainers"
+                  "type": "SheetContainers",
+                  "attrs": {
+                    "uses.open": "boolean",
+                    "uses.position": "enum(start|end|top|bottom)",
+                    "produces.close": null
+                  }
                 }
               ]
             },
@@ -533,7 +575,13 @@
               "children": [
                 {
                   "id": "overlayContainersInstance",
-                  "type": "OverlayContainers"
+                  "type": "OverlayContainers",
+                  "attrs": {
+                    "uses.open": "boolean",
+                    "uses.anchor": "reference",
+                    "uses.placement": "enum(top|bottom|start|end|auto)",
+                    "produces.close": null
+                  }
                 }
               ]
             },
@@ -549,7 +597,11 @@
               "children": [
                 {
                   "id": "structuralContainersInstance",
-                  "type": "StructuralContainers"
+                  "type": "StructuralContainers",
+                  "attrs": {
+                    "uses.ariaLabel": "string",
+                    "uses.orientation": "enum(horizontal|vertical)"
+                  }
                 }
               ]
             },
@@ -565,7 +617,21 @@
               "children": [
                 {
                   "id": "splittersInstance",
-                  "type": "Splitters"
+                  "type": "Splitters",
+                  "attrs": {
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "produces.resize": null
+                  },
+                  "children": [
+                    {
+                      "id": "splittersPane",
+                      "type": "section"
+                    },
+                    {
+                      "id": "splittersHandle",
+                      "type": "separator"
+                    }
+                  ]
                 }
               ]
             }

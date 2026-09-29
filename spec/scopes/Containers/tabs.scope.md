@@ -14,6 +14,14 @@ A tabbed container that switches between views or content regions, including a
 page stack that shows one region without a visible tab strip. A tab strip may
 reference content it does not own.
 
+## Attributes
+
+Categories are defined in [`../scope.md`](../scope.md):
+
+- `uses.selectedIndex` — Uses — integer — the position of the selected tab, counted from zero.
+- `uses.orientation` — Uses — enum(horizontal|vertical) — the direction of the tab strip.
+- `produces.selectedTabChange` — Produces — emitted when another tab is selected.
+
 ## Child model
 
 A tabs container owns its ordered tabs:
@@ -30,5 +38,5 @@ A tabs container owns its ordered tabs:
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
-- Tabs are ordered; selected and disabled state require an explicit owner decision
-  before they are added as attributes.
+- Tabs are ordered. The label and disabled state of one tab belong to that tab, not
+  to the tabs contract.

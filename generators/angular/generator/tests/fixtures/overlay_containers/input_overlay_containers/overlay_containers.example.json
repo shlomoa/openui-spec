@@ -13,6 +13,13 @@
         "uses.anchor": "\"helpButton\"",
         "uses.open": "showHelp"
       }
+    },
+    {
+      "id": "helpButton",
+      "type": "ActionControls",
+      "attrs": {
+        "uses.label": "\"Help\""
+      }
     }
   ]
 }

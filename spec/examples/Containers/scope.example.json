@@ -83,6 +83,13 @@
       }
     },
     {
+      "id": "helpButton",
+      "type": "ActionControls",
+      "attrs": {
+        "uses.label": "\"Help\""
+      }
+    },
+    {
       "id": "mainArticle",
       "type": "StructuralContainers",
       "attrs": {
