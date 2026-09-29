@@ -11,32 +11,57 @@
       "type": "SurfaceContainers",
       "attrs": {
         "[title]": "\"Workspace\""
-      },
-      "children": [
-        {
-          "id": "panelCollapsible",
-          "type": "Collapsible",
-          "attrs": {
-            "[expanded]": "true"
-          }
-        },
-        {
-          "id": "panelResizable",
-          "type": "Resizable",
-          "attrs": {
-            "[handles]": "\"right\"",
-            "[minSize]": "\"240x160\""
-          }
-        },
-        {
-          "id": "panelDnd",
-          "type": "DragAndDrop",
-          "attrs": {
-            "[itemType]": "\"panel\"",
-            "[ariaLabel]": "\"Move panel\""
-          }
-        }
-      ]
+      }
+    },
+    {
+      "id": "panelCollapsible",
+      "type": "Collapsible",
+      "attrs": {
+        "[target]": "\"workspacePanel\""
+      }
+    },
+    {
+      "id": "panelResizable",
+      "type": "Resizable",
+      "attrs": {
+        "[target]": "\"workspacePanel\""
+      }
+    },
+    {
+      "id": "panelDnd",
+      "type": "DragAndDrop",
+      "attrs": {
+        "[target]": "\"workspacePanel\""
+      }
+    },
+    {
+      "id": "searchQuery",
+      "type": "TextInputs",
+      "attrs": {
+        "[label]": "\"Search\"",
+        "[value]": "query"
+      }
+    },
+    {
+      "id": "searchCompletion",
+      "type": "InputAssistance",
+      "attrs": {
+        "[target]": "\"searchQuery\""
+      }
+    },
+    {
+      "id": "workspaceFocus",
+      "type": "ViewportAndFocusControl",
+      "attrs": {
+        "[target]": "\"workspacePanel\""
+      }
+    },
+    {
+      "id": "workspaceModality",
+      "type": "ModalOverlay",
+      "attrs": {
+        "[target]": "\"workspacePanel\""
+      }
     }
   ]
 }

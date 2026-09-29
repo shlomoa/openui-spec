@@ -1,7 +1,7 @@
 """Lint OpenUI specification content (scope prose and registers).
 
-Each rule checks one spec-content invariant and reports findings. Rules that
-depend on unfinished work are registered but disabled until that work lands.
+Each rule checks one spec-content invariant and reports findings. A rule may be
+registered with no check (disabled) while the work it depends on is unfinished.
 
 Usage: ``python -m spec.bin.lint_spec [--spec-dir DIR] [--html REPORT.html]``
 """
@@ -20,6 +20,12 @@ from pathlib import Path
 DEFAULT_SPEC_DIR = Path(__file__).resolve().parents[1]
 TEMPLATE_NAME = "template.scope.md"
 EVIDENCE_ROW_RE = re.compile(r"^\|\s*`(?P<leaf>scopes/[^`]+\.scope\.md)`\s*\|")
+GLOSSARY_DOC = "scopes/scope.md"
+GLOSSARY_HEADING = "## Glossary"
+ALIASES_PREFIX = "**Aliases:**"
+OPTIONAL_SECTION_MARK = "Omit the whole section"
+# Archived source evidence: surveys quote framework vocabulary and are not spec prose.
+GLOSSARY_EXCLUDED_DIRS = ("survey",)
 
 
 @dataclass(frozen=True)
@@ -82,14 +88,137 @@ def check_evidence_rows(spec_dir: Path) -> list[Finding]:
     return findings
 
 
-PENDING_W1 = "Disabled until W1 task 7 moves the glossary into spec/scopes/scope.md."
+def markdown_lines(path: Path) -> list[str]:
+    """Return the lines of a Markdown file with fenced code blocks blanked out."""
+    lines = []
+    in_fence = False
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.lstrip().startswith(("```", "~~~")):
+            in_fence = not in_fence
+            lines.append("")
+        else:
+            lines.append("" if in_fence else line)
+    return lines
+
+
+def h2_sections(lines: list[str]) -> list[str]:
+    """Return the ``## `` headings of a Markdown document, in order."""
+    return [line.rstrip() for line in lines if line.startswith("## ")]
+
+
+def template_sections(spec_dir: Path) -> tuple[list[str], set[str]]:
+    """Return the template's ``## `` sections and the ones it allows a leaf to omit."""
+    bodies: dict[str, list[str]] = {}
+    for line in markdown_lines(spec_dir / "scopes" / TEMPLATE_NAME):
+        if line.startswith("## "):
+            bodies[line.rstrip()] = []
+        elif bodies:
+            bodies[next(reversed(bodies))].append(line.strip())
+    optional = {
+        section for section, body in bodies.items() if OPTIONAL_SECTION_MARK in " ".join(body)
+    }
+    return list(bodies), optional
+
+
+def check_template_sections(spec_dir: Path) -> list[Finding]:
+    """Every leaf scope has the template's sections, in order; only optional ones may be omitted."""
+    rule = "template-sections"
+    template = f"scopes/{TEMPLATE_NAME}"
+    if not (spec_dir / template).is_file():
+        return [Finding(rule, template, "leaf scope template is missing")]
+
+    expected, optional = template_sections(spec_dir)
+    findings = []
+    for leaf in leaf_scopes(spec_dir):
+        actual = h2_sections(markdown_lines(spec_dir / leaf))
+        counts = Counter(actual)
+        findings += [
+            Finding(rule, leaf, f"unexpected section '{section}' (not in {template})")
+            for section in dict.fromkeys(actual)
+            if section not in expected
+        ]
+        findings += [
+            Finding(rule, leaf, f"section '{section}' appears {count} times")
+            for section, count in counts.items()
+            if count > 1 and section in expected
+        ]
+        findings += [
+            Finding(rule, leaf, f"missing required section '{section}'")
+            for section in expected
+            if section not in counts and section not in optional
+        ]
+        known = [section for section in dict.fromkeys(actual) if section in expected]
+        if known != [section for section in expected if section in counts]:
+            order = ", ".join(section[3:] for section in expected)
+            findings.append(Finding(rule, leaf, f"sections are out of order; expected {order}"))
+    return findings
+
+
+def glossary_definitions(lines: list[str]) -> list[tuple[int, str]]:
+    """Return ``(line index, term)`` for each heading whose body opens with an Aliases line."""
+    definitions = []
+    for index, line in enumerate(lines):
+        if not line.startswith("#"):
+            continue
+        body = next((text for text in lines[index + 1 :] if text.strip()), "")
+        if body.startswith(ALIASES_PREFIX):
+            definitions.append((index, line.lstrip("#").strip()))
+    return definitions
+
+
+def glossary_range(lines: list[str]) -> range:
+    """Return the line indexes of the Glossary section (empty when there is none)."""
+    start = next((i for i, line in enumerate(lines) if line.rstrip() == GLOSSARY_HEADING), None)
+    if start is None:
+        return range(0)
+    end = next((i for i in range(start + 1, len(lines)) if lines[i].startswith("## ")), len(lines))
+    return range(start, end)
+
+
+def check_glossary_single_definition(spec_dir: Path) -> list[Finding]:
+    """Glossary terms are defined once, and only in the glossary."""
+    rule = "glossary-single-definition"
+    glossary_path = spec_dir / GLOSSARY_DOC
+    if not glossary_path.is_file():
+        return [Finding(rule, GLOSSARY_DOC, "glossary document is missing")]
+
+    glossary_lines = markdown_lines(glossary_path)
+    section = glossary_range(glossary_lines)
+    terms = [term for index, term in glossary_definitions(glossary_lines) if index in section]
+    if not terms:
+        return [Finding(rule, GLOSSARY_DOC, f"no '{GLOSSARY_HEADING}' section with terms")]
+
+    counts = Counter(term.casefold() for term in terms)
+    first: dict[str, str] = {}
+    for term in terms:
+        first.setdefault(term.casefold(), term)
+    findings = [
+        Finding(rule, GLOSSARY_DOC, f"glossary term '{term}' is defined {counts[key]} times")
+        for key, term in first.items()
+        if counts[key] > 1
+    ]
+    for path in sorted(spec_dir.rglob("*.md")):
+        relative = path.relative_to(spec_dir)
+        if relative.parts[0] in GLOSSARY_EXCLUDED_DIRS:
+            continue
+        is_glossary_doc = relative.as_posix() == GLOSSARY_DOC
+        findings += [
+            Finding(
+                rule,
+                relative.as_posix(),
+                f"redefines glossary term '{term}'; link to {GLOSSARY_DOC}#glossary instead",
+            )
+            for index, term in glossary_definitions(markdown_lines(path))
+            if term.casefold() in counts and not (is_glossary_doc and index in section)
+        ]
+    return findings
+
 
 RULES: tuple[Rule, ...] = (
     Rule(
         "template-sections",
-        "Every leaf *.scope.md matches the template.scope.md sections.",
-        None,
-        PENDING_W1,
+        "Every leaf *.scope.md has the template.scope.md sections, in order.",
+        check_template_sections,
     ),
     Rule(
         "evidence-row",
@@ -99,8 +228,7 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "glossary-single-definition",
         "Glossary terms are defined once; other documents link instead of redefining.",
-        None,
-        PENDING_W1,
+        check_glossary_single_definition,
     ),
 )
 

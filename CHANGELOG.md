@@ -25,8 +25,10 @@ published packages.
   now holds only the tooling guides.
 - Added the `spec/bin/lint_spec.py` spec-content linter, run by pre-commit. It
   checks that every leaf scope has exactly one `evidence.md` row and can write an
-  HTML report with `--html`. Template-section and glossary rules are registered
-  but disabled until the glossary moves into `spec/scopes/scope.md`.
+  HTML report with `--html`. It also checks that every leaf scope has the
+  `template.scope.md` sections in order (`template-sections`), and that glossary
+  terms are defined once, only in `spec/scopes/scope.md#glossary`
+  (`glossary-single-definition`).
 - Added the `spec/bin/check_links.py` Markdown internal link checker, run by
   pre-commit, and fixed the broken internal links it found.
 - The `openui-grammar-consistency` pre-commit hook now also runs when only scope

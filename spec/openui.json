@@ -14,7 +14,7 @@
       "type": "Scopes",
       "attrs": {
         "title": "Scopes",
-        "purpose": "The `scopes` folder is the hierarchical source for OpenUI scope objects. Each top-level folder is a scope, and each child object is either another scope folder or a snake_case `*.scope.md` leaf file. Shared vocabulary, aliases, and canonical meanings for terms such as object, element, control, widget, view, container, behavior, table, grid, and button are defined in the [glossary](#glossary). Scope files specialize those terms for concrete object contracts rather than redefining them. The [taxonomy mapping](taxonomy_mapping.md) maps entries from `docs/generic-ui-taxonomy.md` to these scope objects and records whether each entry is an existing object, alias, grouped leaf, or folder-level abstraction.",
+        "purpose": "The `scopes` folder is the hierarchical source for OpenUI scope objects. Each top-level folder is a scope, and each child object is either another scope folder or a snake_case `*.scope.md` leaf file. Shared vocabulary, aliases, and canonical meanings for terms such as object, element, control, widget, view, container, behavior, table, grid, and button are defined in the [glossary](#glossary). Scope files specialize those terms for concrete object contracts rather than redefining them. The [taxonomy mapping](taxonomy_mapping.md) maps entries from the [generic UI taxonomy](../generic-ui-taxonomy.md) to these scope objects and records whether each entry is an existing object, alias, grouped leaf, or folder-level abstraction. The [terminology](terminology.md) records the approved term changes, with their evidence and the canonical-term rule. The taxonomy and the scope tree are linked views of one vocabulary. The taxonomy groups terms by purpose; the scope tree organizes contracts. A new taxonomy section or subcategory does not create a scope folder, type or contract.",
         "scopeDocument": "scopes/scope.md",
         "status": "draft"
       },
@@ -294,7 +294,7 @@
           "type": "Behaviors",
           "attrs": {
             "title": "Behaviors",
-            "purpose": "Behaviors define reusable interaction capabilities that can be applied to pages, views, containers, and widgets.",
+            "purpose": "Behaviors define reusable interaction capabilities that can be applied to any element, which a behavior references as its controlled element and does not own.",
             "scopeDocument": "scopes/Behaviors/scope.md",
             "status": "draft"
           },
@@ -312,24 +312,9 @@
                 {
                   "id": "dragAndDropInstance",
                   "type": "DragAndDrop",
-                  "children": [
-                    {
-                      "id": "dragAndDropTargetPage",
-                      "type": "page"
-                    },
-                    {
-                      "id": "dragAndDropTargetView",
-                      "type": "view"
-                    },
-                    {
-                      "id": "dragAndDropTargetContainer",
-                      "type": "container"
-                    },
-                    {
-                      "id": "dragAndDropTargetWidget",
-                      "type": "widget"
-                    }
-                  ]
+                  "attrs": {
+                    "[target]": null
+                  }
                 }
               ]
             },
@@ -346,16 +331,9 @@
                 {
                   "id": "resizableInstance",
                   "type": "Resizable",
-                  "children": [
-                    {
-                      "id": "resizableTargetPage",
-                      "type": "page"
-                    },
-                    {
-                      "id": "resizableTargetView",
-                      "type": "view"
-                    }
-                  ]
+                  "attrs": {
+                    "[target]": null
+                  }
                 }
               ]
             },
@@ -372,16 +350,66 @@
                 {
                   "id": "collapsibleInstance",
                   "type": "Collapsible",
-                  "children": [
-                    {
-                      "id": "collapsibleTargetPage",
-                      "type": "page"
-                    },
-                    {
-                      "id": "collapsibleTargetView",
-                      "type": "view"
-                    }
-                  ]
+                  "attrs": {
+                    "[target]": null
+                  }
+                }
+              ]
+            },
+            {
+              "id": "inputAssistance",
+              "type": "InputAssistance",
+              "attrs": {
+                "title": "Input assistance",
+                "purpose": "Reusable behaviors that help or check what the user enters, and can attach to any input control: text completion (offering and accepting suggestions while the user types) and constraint validation (checking a value against declared rules and reporting the result).",
+                "scopeDocument": "scopes/Behaviors/input_assistance.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "inputAssistanceInstance",
+                  "type": "InputAssistance",
+                  "attrs": {
+                    "[target]": null
+                  }
+                }
+              ]
+            },
+            {
+              "id": "modalOverlay",
+              "type": "ModalOverlay",
+              "attrs": {
+                "title": "Modal overlay",
+                "purpose": "A behavior that makes a referenced surface modal: while it is active, interaction outside that surface is blocked until its task is completed or dismissed, and focus stays inside the surface. Modal interaction is another name for it. The dimming layer behind the surface is appearance (Backdrop, in Presentation), and background scroll locking is Viewport and focus control.",
+                "scopeDocument": "scopes/Behaviors/modal_overlay.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "modalOverlayInstance",
+                  "type": "ModalOverlay",
+                  "attrs": {
+                    "[target]": null
+                  }
+                }
+              ]
+            },
+            {
+              "id": "viewportAndFocusControl",
+              "type": "ViewportAndFocusControl",
+              "attrs": {
+                "title": "Viewport and focus control",
+                "purpose": "Reusable behaviors a control applies to something outside itself: viewport scrolling (moving the visible part of a viewport, with optional momentum and a reveal action that brings an element into view without moving focus), scroll lock (stopping the page background from scrolling while a feature asks for it, then restoring the position) and focus management (moving focus to a chosen element and restoring it afterwards).",
+                "scopeDocument": "scopes/Behaviors/viewport_and_focus_control.scope.md",
+                "status": "draft"
+              },
+              "children": [
+                {
+                  "id": "viewportAndFocusControlInstance",
+                  "type": "ViewportAndFocusControl",
+                  "attrs": {
+                    "[target]": null
+                  }
                 }
               ]
             }
@@ -424,7 +452,7 @@
               "type": "ExpandablePanels",
               "attrs": {
                 "title": "Expandable panels",
-                "purpose": "A container that expands or collapses to show or hide its content.",
+                "purpose": "A container, such as an accordion or a disclosure, that expands or collapses to show or hide its content while its summary stays visible.",
                 "scopeDocument": "scopes/Containers/expandable_panels.scope.md",
                 "status": "draft"
               },
@@ -444,7 +472,7 @@
               "type": "Tabs",
               "attrs": {
                 "title": "Tabs",
-                "purpose": "A tabbed container that switches between views or content regions.",
+                "purpose": "A tabbed container that switches between views or content regions, including a page stack that shows one region without a visible tab strip. A tab strip may reference content it does not own.",
                 "scopeDocument": "scopes/Containers/tabs.scope.md",
                 "status": "draft"
               },
@@ -466,7 +494,7 @@
               "type": "SurfaceContainers",
               "attrs": {
                 "title": "Surface containers",
-                "purpose": "Surface containers cover windows, screens, views, panels, cards, and toolbar surfaces when they are modeled as visual regions that hold related content or controls.",
+                "purpose": "Surface containers cover windows, panels, cards, tiles, labelled groups, checkable groups, hero banners and toolbar surfaces when they are modeled as visual regions that hold related content or controls.",
                 "scopeDocument": "scopes/Containers/surface_containers.scope.md",
                 "status": "draft"
               },
@@ -482,7 +510,7 @@
               "type": "SheetContainers",
               "attrs": {
                 "title": "Sheet containers",
-                "purpose": "Sheet containers cover sidebars, sheets, side sheets, and bottom sheets that reveal supplemental content from an edge or layered surface.",
+                "purpose": "Sheet containers cover sidebars, sheets, side sheets, and bottom sheets that reveal supplemental content from an edge or layered surface. Edge placement, navigation content and modality are independent.",
                 "scopeDocument": "scopes/Containers/sheet_containers.scope.md",
                 "status": "draft"
               },
@@ -498,7 +526,7 @@
               "type": "OverlayContainers",
               "attrs": {
                 "title": "Overlay containers",
-                "purpose": "Overlay containers cover popovers and modal overlays that layer content above the current surface without necessarily becoming a full dialog widget.",
+                "purpose": "Overlay containers cover popovers that layer content above the current surface without necessarily becoming a full dialog widget. Modality comes from the Modal overlay behavior, scroll locking from Viewport and focus control, and the backdrop from Presentation.",
                 "scopeDocument": "scopes/Containers/overlay_containers.scope.md",
                 "status": "draft"
               },
@@ -514,7 +542,7 @@
               "type": "StructuralContainers",
               "attrs": {
                 "title": "Structural containers",
-                "purpose": "Structural containers cover panes, rails, stacks, scaffolds, and regions that organize page or view content without prescribing a concrete layout engine.",
+                "purpose": "Structural containers cover panes, rails, stacks, scaffolds, regions, bars and scroll containers that organize page or view content without prescribing a concrete layout engine.",
                 "scopeDocument": "scopes/Containers/structural_containers.scope.md",
                 "status": "draft"
               },
@@ -530,7 +558,7 @@
               "type": "Splitters",
               "attrs": {
                 "title": "Splitters",
-                "purpose": "Splitters cover movable dividers between panes or regions that let users adjust the relative size of adjacent containers.",
+                "purpose": "Splitters cover movable dividers, with their splitter handles, between panes or regions that let users adjust the relative size of adjacent containers.",
                 "scopeDocument": "scopes/Containers/splitters.scope.md",
                 "status": "draft"
               },
@@ -558,7 +586,7 @@
               "type": "Native",
               "attrs": {
                 "title": "Native",
-                "purpose": "A standard browser, framework, or runtime presentation and input capability that supports the user interface without requiring a custom OpenUI control definition.",
+                "purpose": "A standard platform input, identified by its `[type]`, used where no more specific control family applies.",
                 "scopeDocument": "scopes/Controls/native.scope.md",
                 "status": "draft"
               },
@@ -580,7 +608,7 @@
               "type": "ActionControls",
               "attrs": {
                 "title": "Action controls",
-                "purpose": "Action controls cover controls that trigger commands or state transitions, including button and icon button aliases when they are not modeled as a more specific widget.",
+                "purpose": "Action controls cover controls that trigger commands or state transitions, including buttons, icon buttons, tool buttons, hamburger buttons and toggle buttons when they are not modeled as a more specific widget.",
                 "scopeDocument": "scopes/Controls/action_controls.scope.md",
                 "status": "draft"
               },
@@ -596,7 +624,7 @@
               "type": "TextInputs",
               "attrs": {
                 "title": "Text inputs",
-                "purpose": "Text inputs cover single-line, multi-line, password, and search entry controls that accept textual user input.",
+                "purpose": "Text inputs cover single-line, multi-line, password, search, rich text, keyboard shortcut and metadata-driven entry controls that accept textual user input.",
                 "scopeDocument": "scopes/Controls/text_inputs.scope.md",
                 "status": "draft"
               },
@@ -612,7 +640,7 @@
               "type": "ChoiceControls",
               "attrs": {
                 "title": "Choice controls",
-                "purpose": "Choice controls cover checkboxes, radio buttons, switches, toggles, dropdowns, list boxes, and combo boxes that let users select one or more values.",
+                "purpose": "Choice controls cover checkboxes, radio buttons, switches, dropdowns, list boxes and combo boxes, including suggestion-backed, multi-select and font-family variants, that let users select one or more values.",
                 "scopeDocument": "scopes/Controls/choice_controls.scope.md",
                 "status": "draft"
               },
@@ -628,7 +656,7 @@
               "type": "PickerControl",
               "attrs": {
                 "title": "Picker control",
-                "purpose": "A picker control covers specialized selection affordances such as wheel picker, color picker, and file picker. Date and time picker aliases map to the existing Date/Time pickers widget when calendar semantics are required.",
+                "purpose": "A picker control covers specialized selection affordances such as wheel pickers, color pickers, file pickers, folder pickers and font pickers. Date and time entry maps to the Date/Time pickers widget.",
                 "scopeDocument": "scopes/Controls/picker_control.scope.md",
                 "status": "draft"
               },
@@ -644,7 +672,7 @@
               "type": "RangeControl",
               "attrs": {
                 "title": "Range control",
-                "purpose": "A range control covers sliders, spin boxes, stepper inputs, and rating controls that select or present a value within a bounded or discrete range.",
+                "purpose": "A range control covers sliders, range sliders, rotary value controls, spin boxes, step inputs and rating controls that select or present a value within a bounded or discrete range.",
                 "scopeDocument": "scopes/Controls/range_control.scope.md",
                 "status": "draft"
               },
@@ -660,7 +688,7 @@
               "type": "DrawingAndCapture",
               "attrs": {
                 "title": "Drawing and capture controls",
-                "purpose": "Drawing and capture controls cover canvas or drawing areas, microphone input, and biometric prompts that collect non-text user input.",
+                "purpose": "Drawing and capture controls cover canvases or drawing areas and microphone input that collect non-text user input.",
                 "scopeDocument": "scopes/Controls/drawing_and_capture.scope.md",
                 "status": "draft"
               },
@@ -676,7 +704,7 @@
               "type": "DisplayPrimitives",
               "attrs": {
                 "title": "Display primitives",
-                "purpose": "Display primitives cover labels, text, images, icons, avatars, and separators or dividers that render content without owning a complex interaction model.",
+                "purpose": "Display primitives cover labels, text, images, icons, avatars, separators or dividers, calculated output, highlighted text and geometric shapes that render content without owning a complex interaction model.",
                 "scopeDocument": "scopes/Controls/display_primitives.scope.md",
                 "status": "draft"
               },
@@ -692,7 +720,7 @@
               "type": "StatusIndicator",
               "attrs": {
                 "title": "Status indicator",
-                "purpose": "A status indicator covers status bars, tags, badges, progress bars, loaders, and spinners that communicate state without requiring user activation.",
+                "purpose": "A status indicator covers status bars, tags, badges, meters, progress bars, loaders and spinners that communicate state without requiring user activation.",
                 "scopeDocument": "scopes/Controls/status_indicator.scope.md",
                 "status": "draft"
               },
@@ -746,7 +774,7 @@
           "type": "Layout",
           "attrs": {
             "title": "Layout",
-            "purpose": "Layout defines mechanism-level arrangement notions used by containers and widgets, including containment, flow, alignment, anchoring, sizing, spacing, wrapping, responsive reflow, and breakpoints.",
+            "purpose": "Layout defines mechanism-level arrangement notions used by containers and widgets, including containment, flow, alignment, anchoring, sizing, spacing, wrapping, responsive reflow, breakpoints, and layered arrangement.",
             "scopeDocument": "scopes/Layout/scope.md",
             "status": "draft"
           }
@@ -826,7 +854,7 @@
           "type": "Presentation",
           "attrs": {
             "title": "Presentation",
-            "purpose": "Presentation defines visual styling notions used by controls, containers, widgets, pages, and views, including color, typography, shape, border, shadow, opacity, iconography, spacing tokens, visual states, theme, motion, and visibility.",
+            "purpose": "Presentation defines visual styling notions used by controls, containers, widgets, pages, and views, including color, typography, shape, border, shadow, elevation, opacity, iconography, spacing tokens, visual states, theme, motion, visibility, backdrop, blur, color tint and focus outline.",
             "scopeDocument": "scopes/Presentation/scope.md",
             "status": "draft"
           }
@@ -868,7 +896,7 @@
               "type": "Form",
               "attrs": {
                 "title": "Form",
-                "purpose": "A read-write data view that lets the user enter and edit business data with validation, submission, and dirty-state tracking.",
+                "purpose": "A read-write data view, made of form fields and form groups, that lets the user enter and edit business data with validation, submission and dirty-state tracking.",
                 "scopeDocument": "scopes/Views/form.scope.md",
                 "status": "draft"
               },
@@ -917,7 +945,7 @@
               "type": "Table",
               "attrs": {
                 "title": "Table",
-                "purpose": "A tabular presentation of data with column definitions, row models, and optional sorting, filtering, and pagination.",
+                "purpose": "A tabular presentation of data with columns, rows, cells, a caption and header associations, and optional sorting, filtering and pagination. Interactive cell focus and editing belong to Data grid.",
                 "scopeDocument": "scopes/Widgets/table.scope.md",
                 "status": "draft"
               },
@@ -960,7 +988,7 @@
               "type": "List",
               "attrs": {
                 "title": "List",
-                "purpose": "An ordered or unordered collection of items with optional sorting, filtering, and pagination, following the HTML `ul`/`li` model.",
+                "purpose": "An ordered, unordered or description list of items, including icon collections, token collections and editable chip collections, with optional selection, links, sorting, filtering and pagination. Existing `ul`/`li` instances stay valid.",
                 "scopeDocument": "scopes/Widgets/list.scope.md",
                 "status": "draft"
               },
@@ -987,7 +1015,7 @@
               "type": "FeedbackWidgets",
               "attrs": {
                 "title": "Feedback widgets",
-                "purpose": "Feedback widgets cover tooltips, alerts, toasts, snackbars, notifications, and narration or audio-description surfaces that communicate contextual or transient information.",
+                "purpose": "Feedback widgets cover tooltips, contextual help, alerts, toasts, snackbars, notifications, startup screens, illustrated messages and narration or audio-description surfaces that communicate contextual or transient information.",
                 "scopeDocument": "scopes/Widgets/feedback_widgets.scope.md",
                 "status": "draft"
               },
@@ -1003,7 +1031,7 @@
               "type": "MediaWidgets",
               "attrs": {
                 "title": "Media widgets",
-                "purpose": "Media widgets cover media players, camera previews, and map surfaces that present rich visual, audio, video, or spatial content with widget-level behavior.",
+                "purpose": "Media widgets cover media players, camera previews, geographic maps, custom graphics surfaces and graphics viewports that present rich visual, audio, video, or spatial content with widget-level behavior.",
                 "scopeDocument": "scopes/Widgets/media_widgets.scope.md",
                 "status": "draft"
               },
@@ -1019,7 +1047,7 @@
               "type": "NavigationWidgets",
               "attrs": {
                 "title": "Navigation widgets",
-                "purpose": "Navigation widgets cover navigation bars, drawers, rails, hamburger menus, breadcrumbs, tree views, pagination controls, and carousels when they are modeled as reusable widgets.",
+                "purpose": "Navigation widgets cover navigation drawers, navigation rails, breadcrumbs, tree views, column browsers, pagination controls and carousels when they are modeled as reusable widgets. A tree or pager does not require route navigation.",
                 "scopeDocument": "scopes/Widgets/navigation_widgets.scope.md",
                 "status": "draft"
               },
@@ -1035,7 +1063,7 @@
               "type": "MenuWidgets",
               "attrs": {
                 "title": "Menu widgets",
-                "purpose": "Menu widgets cover menus, dropdown menus, and context menus that present command or choice lists in a menu pattern.",
+                "purpose": "Menu widgets cover menus, menu buttons, menubars and context menus, including nested menus that present command or choice lists in a menu pattern.",
                 "scopeDocument": "scopes/Widgets/menu_widgets.scope.md",
                 "status": "draft"
               },
@@ -1051,7 +1079,7 @@
               "type": "DateTimePickers",
               "attrs": {
                 "title": "Date/Time pickers",
-                "purpose": "A calendar-based control for selecting a date, a time, or a date range from the user.",
+                "purpose": "A control for entering or selecting a date, a time or both, as one value or a range. A calendar is optional.",
                 "scopeDocument": "scopes/Widgets/date_time_pickers.scope.md",
                 "status": "draft"
               },
@@ -1072,7 +1100,7 @@
               "type": "Stepper",
               "attrs": {
                 "title": "Stepper",
-                "purpose": "A control that guides the user through a multi-step process as an ordered sequence of steps.",
+                "purpose": "A control that guides the user through a multi-step process as an ordered sequence of steps, with optional completion gating and branching. A wizard is a stepper hosted in a dialog.",
                 "scopeDocument": "scopes/Widgets/stepper.scope.md",
                 "status": "draft"
               },
@@ -1094,7 +1122,7 @@
               "type": "Dialog",
               "attrs": {
                 "title": "Dialog",
-                "purpose": "A modal or non-modal interaction surface that overlays the page with a title, content, and actions.",
+                "purpose": "A modal or non-modal interaction surface that overlays the page with a title, content and actions. Message, prompt, picker and progress dialogs are compositions of these regions. Modal focus and dismissal follow the Modal overlay behavior.",
                 "scopeDocument": "scopes/Widgets/dialog.scope.md",
                 "status": "draft"
               },

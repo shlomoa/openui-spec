@@ -3,7 +3,7 @@
 An **abstract UI element type** describes an element by its purpose and behavior, independent of framework, platform, visual style, or implementation technology.
 
 Canonical OpenUI vocabulary, aliases, and detailed term definitions live in
-[`spec/scopes/scope.md` § Glossary](../spec/scopes/scope.md#glossary). This taxonomy groups
+[`spec/scopes/scope.md` § Glossary](scopes/scope.md#glossary). This taxonomy groups
 and compares terms by primary purpose; it should link to the glossary rather
 than introduce conflicting definitions.
 

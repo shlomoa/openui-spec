@@ -10,7 +10,9 @@ technology-independently.
 
 ## Purpose
 
-A tabbed container that switches between views or content regions.
+A tabbed container that switches between views or content regions, including a
+page stack that shows one region without a visible tab strip. A tab strip may
+reference content it does not own.
 
 ## Child model
 

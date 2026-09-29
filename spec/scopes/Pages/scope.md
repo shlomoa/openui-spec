@@ -4,10 +4,10 @@ Pages are predefined page-level specification scopes.
 
 ## Objects
 
-- [Dashboard](dashboard.scope.md): A predefined page layout for overview metrics
-  and summary content.
-- [Shell page](shell_page.scope.md): A page with no content with routing and
-  navigation.
+- [Dashboard](dashboard.scope.md): A predefined page layout that presents
+  overview metrics and summary content for quick scanning.
+- [Shell page](shell_page.scope.md): A page shell with no business-object
+  content that presents application routing and navigation.
 - [Empty page](empty_page.scope.md): A page with no content and no routing or
   navigation.
 

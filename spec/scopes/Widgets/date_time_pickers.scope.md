@@ -11,8 +11,8 @@ technology-independently.
 
 ## Purpose
 
-A calendar-based control for selecting a date, a time, or a date range from the
-user.
+A control for entering or selecting a date, a time or both, as one value or a
+range. A calendar is optional.
 
 ## Attributes
 
@@ -36,3 +36,4 @@ Categories are defined in [`../scope.md`](../scope.md). The Angular Material
   `openui.schema.json`.
 - Attribute keys are recorded technology-independently; the Angular Material
   binding is a reference pattern only and is not part of the contract.
+- Locale, value format and time zone must be decided before single-value binding attributes are added.

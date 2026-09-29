@@ -9,8 +9,8 @@ and feedback aliases from the generic UI taxonomy.
 
 ## Purpose
 
-A status indicator covers status bars, tags, badges, progress bars, loaders, and
-spinners that communicate state without requiring user activation.
+A status indicator covers status bars, tags, badges, meters, progress bars,
+loaders and spinners that communicate state without requiring user activation.
 
 ## Attributes
 
@@ -30,3 +30,4 @@ meaningful text alternatives for non-text visual feedback.
 
 - Use this object for passive status feedback; use feedback widgets for transient
   messages such as alerts, toasts, or notifications.
+- Progress is determinate or indeterminate (progress mode). A meter shows a measured value, not task progress; a badge or tag shows status attached to another element.

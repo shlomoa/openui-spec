@@ -1,0 +1,26 @@
+{
+  "id": "root",
+  "version": "0.3.1",
+  "type": "InputAssistance",
+  "attrs": {
+    "title": "\"Input assistance example\""
+  },
+  "children": [
+    {
+      "id": "emailField",
+      "type": "TextInputs",
+      "attrs": {
+        "[label]": "\"E-mail\"",
+        "[value]": "email",
+        "(valueChange)": "onEmailChange($event)"
+      }
+    },
+    {
+      "id": "emailCompletion",
+      "type": "InputAssistance",
+      "attrs": {
+        "[target]": "\"emailField\""
+      }
+    }
+  ]
+}

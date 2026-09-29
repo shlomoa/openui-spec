@@ -14,6 +14,7 @@ TOP_LEVEL_SCOPE_LINK_PATTERN = re.compile(r"^- \[([^\]]+)\]\(([^)]+/scope\.md)\)
 EXPECTED_SPEC_MARKDOWN = [
     "README.md",
     "examples/README.md",
+    "generic-ui-taxonomy.md",
     "scopes/Application/favicon.scope.md",
     "scopes/Application/index_html.scope.md",
     "scopes/Application/nav_group.scope.md",
@@ -27,8 +28,11 @@ EXPECTED_SPEC_MARKDOWN = [
     "scopes/Application/tool_bars.scope.md",
     "scopes/Behaviors/collapsible.scope.md",
     "scopes/Behaviors/drag_and_drop.scope.md",
+    "scopes/Behaviors/input_assistance.scope.md",
+    "scopes/Behaviors/modal_overlay.scope.md",
     "scopes/Behaviors/resizable.scope.md",
     "scopes/Behaviors/scope.md",
+    "scopes/Behaviors/viewport_and_focus_control.scope.md",
     "scopes/Containers/expandable_panels.scope.md",
     "scopes/Containers/grid.scope.md",
     "scopes/Containers/overlay_containers.scope.md",
@@ -76,8 +80,10 @@ EXPECTED_SPEC_MARKDOWN = [
     "scopes/scope.md",
     "scopes/taxonomy_mapping.md",
     "scopes/template.scope.md",
+    "scopes/terminology.md",
     "tooling/comparison.md",
     "tooling/editing.md",
+    "ui-element-taxonomy.md",
 ]
 
 

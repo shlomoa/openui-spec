@@ -16,4 +16,7 @@ The Internationalization scope describes technology-independent localization con
 it does not require a translation file format, message extraction tool, ICU runtime,
 font stack, or locale-data provider.
 
+Locale-sensitive parsing and display of dates, times and numbers belong here. The
+services that implement them and the stored value representation do not.
+
 Internationalization objects follow the shared [scope folder and attribute category rules](../scope.md).

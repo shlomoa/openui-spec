@@ -9,9 +9,9 @@ and message aliases from the generic UI taxonomy.
 
 ## Purpose
 
-Feedback widgets cover tooltips, alerts, toasts, snackbars, notifications, and
-narration or audio-description surfaces that communicate contextual or transient
-information.
+Feedback widgets cover tooltips, contextual help, alerts, toasts, snackbars,
+notifications, startup screens, illustrated messages and narration or
+audio-description surfaces that communicate contextual or transient information.
 
 ## Attributes
 
@@ -32,3 +32,4 @@ urgency and modality of the message.
 
 - Use status indicators for passive state display; use this family for message
   surfaces that appear, announce, or dismiss.
+- Contextual help is requested and can be interactive; a tooltip is passive.

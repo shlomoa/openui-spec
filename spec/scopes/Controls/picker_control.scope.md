@@ -9,9 +9,9 @@ control aliases from the generic UI taxonomy.
 
 ## Purpose
 
-A picker control covers specialized selection affordances such as wheel picker, color
-picker, and file picker. Date and time picker aliases map to the existing
-Date/Time pickers widget when calendar semantics are required.
+A picker control covers specialized selection affordances such as wheel pickers,
+color pickers, file pickers, folder pickers and font pickers. Date and time entry
+maps to the Date/Time pickers widget.
 
 ## Attributes
 
@@ -29,5 +29,6 @@ accessible label for the control and any opened picker surface.
 
 ## Validation notes
 
-- Use the existing Date/Time pickers widget for calendar-based date or time
-  selection contracts.
+- Use the existing Date/Time pickers widget for date or time entry contracts,
+  with or without a calendar.
+- Choosing a file, folder or font does not grant access to it. A picker may be hosted in a dialog.

@@ -9,8 +9,9 @@ spatial widget aliases from the generic UI taxonomy.
 
 ## Purpose
 
-Media widgets cover media players, camera previews, and map surfaces that present
-rich visual, audio, video, or spatial content with widget-level behavior.
+Media widgets cover media players, camera previews, geographic maps, custom
+graphics surfaces and graphics viewports that present rich visual, audio, video,
+or spatial content with widget-level behavior.
 
 ## Attributes
 
@@ -25,9 +26,9 @@ Media widgets do not define a fixed child model at this abstraction level.
 ## Accessibility
 
 Media widgets provide captions, transcripts, alternatives, labels, and keyboard access
-for playback, preview, map, or spatial controls as appropriate.
+for playback, preview, geographic map, or spatial controls as appropriate.
 
 ## Validation notes
 
 - Use drawing and capture controls for input capture; use this family for playback,
-  preview, and map presentation.
+  preview, and geographic map presentation.

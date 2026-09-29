@@ -8,42 +8,39 @@
   "children": [
     {
       "id": "taskBoard",
-      "type": "container",
-      "attrs": {
-        "[acceptedTypes]": "\"task\"",
-        "(drop)": "onDrop($event)",
-        "(dragOver)": "onDragOver($event)"
-      },
+      "type": "StructuralContainers",
       "children": [
         {
           "id": "todoColumn",
-          "type": "container",
+          "type": "StructuralContainers",
           "attrs": {
-            "[label]": "\"To do\"",
-            "[connectedTo]": "\"doneColumn\""
+            "[label]": "\"To do\""
           },
           "children": [
             {
               "id": "taskCard",
-              "type": "DragAndDrop",
+              "type": "SurfaceContainers",
               "attrs": {
-                "[itemType]": "\"task\"",
-                "[disabled]": "false",
-                "[ariaLabel]": "\"Drag task to reorder\"",
-                "(dragStart)": "onDragStart($event)",
-                "(dragCancel)": "onDragCancel($event)"
+                "[title]": "\"Write the spec\""
               }
             }
           ]
         },
         {
           "id": "doneColumn",
-          "type": "container",
+          "type": "StructuralContainers",
           "attrs": {
             "[label]": "\"Done\""
           }
         }
       ]
+    },
+    {
+      "id": "taskBoardDragAndDrop",
+      "type": "DragAndDrop",
+      "attrs": {
+        "[target]": "\"taskBoard\""
+      }
     }
   ]
 }

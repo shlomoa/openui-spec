@@ -9,8 +9,10 @@ aliases from the generic UI taxonomy.
 
 ## Purpose
 
-Overlay containers cover popovers and modal overlays that layer content above the
-current surface without necessarily becoming a full dialog widget.
+Overlay containers cover popovers that layer content above the current surface
+without necessarily becoming a full dialog widget. Modality comes from the Modal
+overlay behavior, scroll locking from Viewport and focus control, and the
+backdrop from Presentation.
 
 ## Attributes
 

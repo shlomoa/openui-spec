@@ -9,9 +9,9 @@ widget aliases from the generic UI taxonomy.
 
 ## Purpose
 
-Navigation widgets cover navigation bars, drawers, rails, hamburger menus,
-breadcrumbs, tree views, pagination controls, and carousels when they are modeled as
-reusable widgets.
+Navigation widgets cover navigation drawers, navigation rails, breadcrumbs, tree
+views, column browsers, pagination controls and carousels when they are modeled as
+reusable widgets. A tree or pager does not require route navigation.
 
 ## Attributes
 

@@ -9,8 +9,8 @@ aliases from the generic UI taxonomy.
 
 ## Purpose
 
-Menu widgets cover menus, dropdown menus, and context menus that present command or
-choice lists in a menu pattern.
+Menu widgets cover menus, menu buttons, menubars and context menus, including
+nested menus that present command or choice lists in a menu pattern.
 
 ## Attributes
 

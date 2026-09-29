@@ -86,6 +86,28 @@ class SpecExamplesFormatTest(unittest.TestCase):
                     f"expected one of {sorted(expected_types)} in {sorted(example_types)}",
                 )
 
+    def test_behavior_nodes_reference_their_controlled_element(self) -> None:
+        behavior_types = {
+            cast(str, parse_leaf_scope(path, scopes_dir=SCOPES_DIR)["type"])
+            for path in (SCOPES_DIR / "Behaviors").glob("*.scope.md")
+        }
+        self.assertGreater(len(behavior_types), 0)
+
+        for path in sorted(EXAMPLES_DIR.rglob("*.example.json")):
+            document = json.loads(path.read_text(encoding="utf-8"))
+            ids = _document_ids(document)
+            for node in _descendants(document):
+                if node.get("type") not in behavior_types:
+                    continue
+                with self.subTest(
+                    path=path.relative_to(EXAMPLES_DIR).as_posix(), id=node.get("id")
+                ):
+                    attrs = cast(dict[str, object], node.get("attrs", {}))
+                    target = attrs.get("[target]")
+                    self.assertIsInstance(target, str, "a behavior needs a [target] reference")
+                    self.assertIn(cast(str, target).strip('"'), ids - {node.get("id")})
+                    self.assertNotIn("children", node, "a behavior does not own children")
+
 
 def _leaf_scope_paths() -> set[str]:
     return {
@@ -115,6 +137,20 @@ def _document_types(node: object) -> set[str]:
         for child in cast(list[object], children):
             types.update(_document_types(child))
     return types
+
+
+def _descendants(node: dict[str, object]) -> list[dict[str, object]]:
+    found: list[dict[str, object]] = []
+    for child in cast(list[object], node.get("children", [])):
+        if isinstance(child, dict):
+            child_node = cast(dict[str, object], child)
+            found.append(child_node)
+            found.extend(_descendants(child_node))
+    return found
+
+
+def _document_ids(document: dict[str, object]) -> set[str]:
+    return {cast(str, node["id"]) for node in _descendants(document) if "id" in node}
 
 
 if __name__ == "__main__":

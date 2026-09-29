@@ -29,8 +29,8 @@ Proposed paths are not existing files.
 | P3  | `Containers/form_group.scope.md`             | A named group of form controls with group-level state        | Must not duplicate the Form view or imply every container is form-associated. |
 | P4  | `Behaviors/constraint_validation.scope.md`   | Reusable constraint checking and reporting                   | Form view keeps business submission and dirty state.                          |
 | P5  | `Behaviors/focus_management.scope.md`        | Reusable focus movement and restoration policy               | Needs explicit owner/target reference rules.                                  |
-| P6  | `Accessibility/scope.md`                     | Shared accessibility notions (new top-level folder)          | Conditional on a scope decision (plan Q13).                                   |
-| P7  | `Composition/scope.md`                       | Reusable content and insertion points (new top-level folder) | Conditional; only if content projection is a requirement (plan Q13).          |
+| P6  | `Accessibility/scope.md`                     | Shared accessibility notions (new top-level folder)          | Deferred (plan Q13).                                                          |
+| P7  | `Composition/scope.md`                       | Reusable content and insertion points (new top-level folder) | Deferred (plan Q13).                                                          |
 | P8  | `Controls/tabular_content.scope.md`          | Row, cell, caption and header primitives                     | Only if owned children in Table prove insufficient.                           |
 
 Embedded browsing, microdata, capture and authentication, platform messaging, storage,

@@ -9,8 +9,8 @@ aliases from the generic UI taxonomy.
 
 ## Purpose
 
-Splitters cover movable dividers between panes or regions that let users adjust the
-relative size of adjacent containers.
+Splitters cover movable dividers, with their splitter handles, between panes or
+regions that let users adjust the relative size of adjacent containers.
 
 ## Attributes
 

@@ -113,7 +113,7 @@ The drafts propose a reference-based target model for new behaviors without owne
 
 ## Candidate canonical mapping additions
 
-The [complete crosswalk](TAXONOMY_MAPPING.md) preserves existing mappings. On acceptance, add the object entries below and the behavior entries in the behavior extension section to `docs/generic-ui-taxonomy.md` and the canonical mapping together. Existing aliases need only notes or additional narrower terms, not duplicate leaves. Existing glossary definitions remain authoritative; add a concise definition only for an accepted new term.
+The [complete crosswalk](TAXONOMY_MAPPING.md) preserves existing mappings. On acceptance, add the object entries below and the behavior entries in the behavior extension section to `spec/generic-ui-taxonomy.md` and the canonical mapping together. Existing aliases need only notes or additional narrower terms, not duplicate leaves. Existing glossary definitions remain authoritative; add a concise definition only for an accepted new term.
 
 | Taxonomy entry | Spec object after acceptance | Abstraction level | Notes |
 | --- | --- | --- | --- |

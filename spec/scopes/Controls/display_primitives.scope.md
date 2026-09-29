@@ -9,8 +9,9 @@ non-composite rendering aliases from the generic UI taxonomy.
 
 ## Purpose
 
-Display primitives cover labels, text, images, icons, avatars, and separators or
-dividers that render content without owning a complex interaction model.
+Display primitives cover labels, text, images, icons, avatars, separators or
+dividers, calculated output, highlighted text and geometric shapes that render
+content without owning a complex interaction model.
 
 ## Attributes
 
@@ -31,3 +32,4 @@ semantics according to the selected primitive and its role in the UI.
 
 - Use this family for render-only primitives; use widgets when the rendered object
   owns composite behavior.
+- A geometric shape is concrete geometry. It is not the Shape presentation definition.

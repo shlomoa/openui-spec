@@ -1,12 +1,15 @@
 # Behaviors
 
-Behaviors define reusable interaction capabilities that can be applied to pages, views, containers, and widgets.
+Behaviors define reusable interaction capabilities that can be applied to any element, which a behavior references as its controlled element and does not own.
 
 ## Objects
 
-- [Drag and drop](drag_and_drop.scope.md): A behavior that allows users to drag and drop elements within a page or view.
-- [Resizable](resizable.scope.md): A behavior that allows users to resize elements within a page or view.
-- [Collapsible](collapsible.scope.md): A behavior that allows users to collapse and expand elements within a page or view.
+- [Drag and drop](drag_and_drop.scope.md): Moves elements within a page, view, container, or widget by dragging and dropping them.
+- [Resizable](resizable.scope.md): Lets the user change the size of an element within a page or view.
+- [Collapsible](collapsible.scope.md): Lets the user collapse and expand elements within a page or view.
+- [Input assistance](input_assistance.scope.md): Helps or checks what the user enters in any input control: text completion and constraint validation.
+- [Modal overlay](modal_overlay.scope.md): Makes a referenced surface modal, blocking interaction outside it until its task is completed or dismissed.
+- [Viewport and focus control](viewport_and_focus_control.scope.md): Behaviors a control applies to something outside itself: viewport scrolling, scroll lock, and focus management.
 
 ## Boundaries
 

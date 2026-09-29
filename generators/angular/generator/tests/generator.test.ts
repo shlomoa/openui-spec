@@ -9,7 +9,10 @@ import { run } from "../src/main";
 import { createCatalogIndex } from "../src/spec/catalog-index";
 import { extractOpenUiScopeNodes } from "../src/spec/openui-sections";
 import type { OpenUiElement } from "../src/spec/openui-spec.types";
-import { validateOpenUiCatalog, validateOpenUiSpec } from "../src/spec/validate-spec";
+import {
+  validateOpenUiCatalog,
+  validateOpenUiSpec,
+} from "../src/spec/validate-spec";
 import { SpecValidationError } from "../src/spec/diagnostics";
 import { cleanupTestOutput } from "./test-output";
 
@@ -19,7 +22,12 @@ const ANGULAR_GENERATOR_ROOT =
     : path.resolve(__dirname, "..");
 const REPOSITORY_ROOT = path.resolve(ANGULAR_GENERATOR_ROOT, "..", "..", "..");
 const CATALOG_FIXTURE = path.join(REPOSITORY_ROOT, "spec", "openui.json");
-const MINIMAL_CATALOG_FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "minimal-openui.json");
+const MINIMAL_CATALOG_FIXTURE = path.join(
+  ANGULAR_GENERATOR_ROOT,
+  "tests",
+  "fixtures",
+  "minimal-openui.json",
+);
 const LATEST_SPEC_EXAMPLES_FIXTURE = path.join(
   ANGULAR_GENERATOR_ROOT,
   "tests",
@@ -38,22 +46,50 @@ const REPRESENTATIVE_CONCRETE_FIXTURES = [
   {
     name: "chart",
     route: "chart",
-    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "chart", "input_chart", "chart.example.json"),
+    fixture: path.join(
+      ANGULAR_GENERATOR_ROOT,
+      "tests",
+      "fixtures",
+      "chart",
+      "input_chart",
+      "chart.example.json",
+    ),
   },
   {
     name: "list",
     route: "list",
-    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "list", "input_list", "list.example.json"),
+    fixture: path.join(
+      ANGULAR_GENERATOR_ROOT,
+      "tests",
+      "fixtures",
+      "list",
+      "input_list",
+      "list.example.json",
+    ),
   },
   {
     name: "table",
     route: "table",
-    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "table", "input_table", "table.example.json"),
+    fixture: path.join(
+      ANGULAR_GENERATOR_ROOT,
+      "tests",
+      "fixtures",
+      "table",
+      "input_table",
+      "table.example.json",
+    ),
   },
   {
     name: "stepper",
     route: "stepper",
-    fixture: path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "stepper", "input_stepper", "stepper.example.json"),
+    fixture: path.join(
+      ANGULAR_GENERATOR_ROOT,
+      "tests",
+      "fixtures",
+      "stepper",
+      "input_stepper",
+      "stepper.example.json",
+    ),
   },
   {
     name: "date/time pickers",
@@ -69,7 +105,10 @@ const REPRESENTATIVE_CONCRETE_FIXTURES = [
   },
 ] as const;
 const TEST_OUTPUT_ROOT = path.join(REPOSITORY_ROOT, "tmp");
-const TEST_OUTPUT_PREFIX = path.join(TEST_OUTPUT_ROOT, "openui-angular-generator-");
+const TEST_OUTPUT_PREFIX = path.join(
+  TEST_OUTPUT_ROOT,
+  "openui-angular-generator-",
+);
 
 type LatestSpecExampleCase = {
   name: string;
@@ -90,13 +129,23 @@ async function createTestOutputDirectory(): Promise<string> {
 function pageById(pages: DataModelPage[], id: string): DataModelPage {
   const page = pages.find((candidate) => candidate.id === id);
   if (!page) {
-    throw new assert.AssertionError({ message: `Expected page '${id}' to exist.` });
+    throw new assert.AssertionError({
+      message: `Expected page '${id}' to exist.`,
+    });
   }
   return page;
 }
 
-function assertPageFeatures(pages: DataModelPage[], id: string, features: DataModelPage["features"]): void {
-  assert.deepEqual(pageById(pages, id).features, features, `Expected '${id}' to map to ${features.join(", ")}.`);
+function assertPageFeatures(
+  pages: DataModelPage[],
+  id: string,
+  features: DataModelPage["features"],
+): void {
+  assert.deepEqual(
+    pageById(pages, id).features,
+    features,
+    `Expected '${id}' to map to ${features.join(", ")}.`,
+  );
 }
 
 function firstChild(node: OpenUiElement, message: string): OpenUiElement {
@@ -107,14 +156,19 @@ function firstChild(node: OpenUiElement, message: string): OpenUiElement {
   return child;
 }
 
-function assertNoScopeDocumentAttrs(node: OpenUiElement, nodePath = "root"): void {
+function assertNoScopeDocumentAttrs(
+  node: OpenUiElement,
+  nodePath = "root",
+): void {
   assert.equal(
     node.attrs?.scopeDocument,
     undefined,
     `${nodePath} must not carry attrs.scopeDocument in concrete input fixtures.`,
   );
 
-  (node.children ?? []).forEach((child, index) => assertNoScopeDocumentAttrs(child, `${nodePath}.children[${index}]`));
+  (node.children ?? []).forEach((child, index) =>
+    assertNoScopeDocumentAttrs(child, `${nodePath}.children[${index}]`),
+  );
 }
 
 function specValidationMessage(error: unknown): string {
@@ -134,15 +188,21 @@ test("treats the dialog fixture as concrete input without catalog traceability a
 
 test("validates the dialog fixture as concrete input against the OpenUI catalog", async () => {
   const fixture = JSON.parse(await readFile(DIALOG_FIXTURE, "utf8"));
-  const catalog = createCatalogIndex(JSON.parse(await readFile(CATALOG_FIXTURE, "utf8")));
+  const catalog = createCatalogIndex(
+    JSON.parse(await readFile(CATALOG_FIXTURE, "utf8")),
+  );
 
   assert.doesNotThrow(() => validateOpenUiSpec(fixture, { catalog }));
-  await assert.doesNotReject(() => run(["validate", "--input", DIALOG_FIXTURE]));
+  await assert.doesNotReject(() =>
+    run(["validate", "--input", DIALOG_FIXTURE]),
+  );
 });
 
 test("rejects unknown non-native concrete input types during catalog validation", async () => {
   const fixture = JSON.parse(await readFile(DIALOG_FIXTURE, "utf8"));
-  const catalog = createCatalogIndex(JSON.parse(await readFile(CATALOG_FIXTURE, "utf8")));
+  const catalog = createCatalogIndex(
+    JSON.parse(await readFile(CATALOG_FIXTURE, "utf8")),
+  );
   fixture.children[0].type = "MissingWidget";
 
   assert.throws(
@@ -173,13 +233,20 @@ test("builds a concrete dialog data model from the dialog fixture", async () => 
   assert.deepEqual(dialogPage.features, ["component"]);
 
   const dialogComponent = dataModel.dialogComponents?.[0];
-  assert.ok(dialogComponent, "Expected concrete dialog data model to include a dialog component.");
+  assert.ok(
+    dialogComponent,
+    "Expected concrete dialog data model to include a dialog component.",
+  );
   assert.equal(dialogComponent.selector, "app-confirm-dialog");
   assert.equal(dialogComponent.className, "AppConfirmDialogComponent");
   assert.equal(dialogComponent.title, "Delete item?");
   assert.equal(dialogComponent.content, "This action cannot be undone.");
   assert.deepEqual(
-    dialogComponent.actions.map((action) => [action.text, action.result, action.emphasis]),
+    dialogComponent.actions.map((action) => [
+      action.text,
+      action.result,
+      action.emphasis,
+    ]),
     [
       ["Cancel", "cancel", "default"],
       ["Delete", "confirm", "warn"],
@@ -193,7 +260,10 @@ test("generates Angular Material dialog output from the concrete dialog fixture"
     await run(["generate", "--input", DIALOG_FIXTURE, "--out", outDir]);
 
     const component = await readFile(
-      path.join(outDir, "src/components/app-confirm-dialog/app-confirm-dialog.component.ts"),
+      path.join(
+        outDir,
+        "src/components/app-confirm-dialog/app-confirm-dialog.component.ts",
+      ),
       "utf8",
     );
     assert.match(component, /MatDialogTitle/);
@@ -203,13 +273,22 @@ test("generates Angular Material dialog output from the concrete dialog fixture"
     assert.match(component, /MatDialogRef<AppConfirmDialogComponent>/);
 
     const template = await readFile(
-      path.join(outDir, "src/components/app-confirm-dialog/app-confirm-dialog.component.html"),
+      path.join(
+        outDir,
+        "src/components/app-confirm-dialog/app-confirm-dialog.component.html",
+      ),
       "utf8",
     );
     assert.match(template, /<h2 mat-dialog-title>Delete item\?<\/h2>/);
     assert.match(template, /This action cannot be undone\./);
-    assert.match(template, /<button mat-button \(click\)="close\('cancel'\)">Cancel<\/button>/);
-    assert.match(template, /<button mat-raised-button color="warn" \(click\)="close\('confirm'\)">Delete<\/button>/);
+    assert.match(
+      template,
+      /<button mat-button \(click\)="close\('cancel'\)">Cancel<\/button>/,
+    );
+    assert.match(
+      template,
+      /<button mat-raised-button color="warn" \(click\)="close\('confirm'\)">Delete<\/button>/,
+    );
   } finally {
     await cleanupTestOutput(outDir);
   }
@@ -218,7 +297,9 @@ test("generates Angular Material dialog output from the concrete dialog fixture"
 for (const fixtureCase of REPRESENTATIVE_CONCRETE_FIXTURES) {
   test(`validates and generates the concrete ${fixtureCase.name} fixture`, async () => {
     const fixture = JSON.parse(await readFile(fixtureCase.fixture, "utf8"));
-    const catalog = createCatalogIndex(JSON.parse(await readFile(CATALOG_FIXTURE, "utf8")));
+    const catalog = createCatalogIndex(
+      JSON.parse(await readFile(CATALOG_FIXTURE, "utf8")),
+    );
     assertNoScopeDocumentAttrs(fixture);
     assert.doesNotThrow(() => validateOpenUiSpec(fixture, { catalog }));
 
@@ -227,10 +308,23 @@ for (const fixtureCase of REPRESENTATIVE_CONCRETE_FIXTURES) {
       await run(["generate", "--input", fixtureCase.fixture, "--out", outDir]);
 
       await assert.doesNotReject(
-        readFile(path.join(outDir, "src", "app", "pages", fixtureCase.route, `${fixtureCase.route}.page.ts`), "utf8"),
+        readFile(
+          path.join(
+            outDir,
+            "src",
+            "app",
+            "pages",
+            fixtureCase.route,
+            `${fixtureCase.route}.page.ts`,
+          ),
+          "utf8",
+        ),
         `${fixtureCase.name} should generate a concrete routed page.`,
       );
-      const routes = await readFile(path.join(outDir, "src/app/app.routes.ts"), "utf8");
+      const routes = await readFile(
+        path.join(outDir, "src/app/app.routes.ts"),
+        "utf8",
+      );
       assert.match(routes, new RegExp(`path: '${fixtureCase.route}'`));
     } finally {
       await cleanupTestOutput(outDir);
@@ -239,13 +333,23 @@ for (const fixtureCase of REPRESENTATIVE_CONCRETE_FIXTURES) {
 }
 
 test("validates and generates latest spec example cases from the fixture manifest", async () => {
-  const manifest = JSON.parse(await readFile(LATEST_SPEC_EXAMPLES_FIXTURE, "utf8")) as LatestSpecExampleManifest;
-  const catalog = createCatalogIndex(JSON.parse(await readFile(CATALOG_FIXTURE, "utf8")));
+  const manifest = JSON.parse(
+    await readFile(LATEST_SPEC_EXAMPLES_FIXTURE, "utf8"),
+  ) as LatestSpecExampleManifest;
+  const catalog = createCatalogIndex(
+    JSON.parse(await readFile(CATALOG_FIXTURE, "utf8")),
+  );
 
-  assert.ok(manifest.cases.length > 0, "Expected latest spec example fixture manifest to contain cases.");
+  assert.ok(
+    manifest.cases.length > 0,
+    "Expected latest spec example fixture manifest to contain cases.",
+  );
 
   for (const fixtureCase of manifest.cases) {
-    const sourceExamplePath = path.join(REPOSITORY_ROOT, fixtureCase.sourceExample);
+    const sourceExamplePath = path.join(
+      REPOSITORY_ROOT,
+      fixtureCase.sourceExample,
+    );
     const fixturePath = path.join(REPOSITORY_ROOT, fixtureCase.fixture);
     const fixture = JSON.parse(await readFile(fixturePath, "utf8"));
     const sourceExample = JSON.parse(await readFile(sourceExamplePath, "utf8"));
@@ -266,10 +370,23 @@ test("validates and generates latest spec example cases from the fixture manifes
       await run(["generate", "--input", fixturePath, "--out", outDir]);
 
       await assert.doesNotReject(
-        readFile(path.join(outDir, "src", "app", "pages", fixtureCase.route, `${fixtureCase.route}.page.ts`), "utf8"),
+        readFile(
+          path.join(
+            outDir,
+            "src",
+            "app",
+            "pages",
+            fixtureCase.route,
+            `${fixtureCase.route}.page.ts`,
+          ),
+          "utf8",
+        ),
         `${fixtureCase.name} should generate a routed page from ${fixtureCase.fixture}.`,
       );
-      const routes = await readFile(path.join(outDir, "src/app/app.routes.ts"), "utf8");
+      const routes = await readFile(
+        path.join(outDir, "src/app/app.routes.ts"),
+        "utf8",
+      );
       assert.match(routes, new RegExp(`path: '${fixtureCase.route}'`));
     } finally {
       await cleanupTestOutput(outDir);
@@ -285,33 +402,68 @@ test("builds the data model from the generated OpenUI catalog", async () => {
 
   assert.equal(dataModel.name, "OpenUI");
   assert.equal(dataModel.version, "0.3.1");
-  assert.deepEqual(dataModel.pages.map((page) => page.id), scopeIds);
+  assert.deepEqual(
+    dataModel.pages.map((page) => page.id),
+    scopeIds,
+  );
 
   const application = pageById(dataModel.pages, "application");
   assert.equal(application.route, "application");
   assert.equal(application.title, "Application");
   assert.equal(application.sourceDocument, "scopes/Application/scope.md");
   assert.deepEqual(application.features, ["application-structure"]);
-  assert.match(application.requirements[0], /Routing: Routing defines how an application resolves navigation intents/);
+  assert.match(
+    application.requirements[0],
+    /Routing: Routing defines how an application resolves navigation intents/,
+  );
 
   assert.equal(pageById(dataModel.pages, "dragAndDrop").route, "drag-and-drop");
   assertPageFeatures(dataModel.pages, "scopes", ["ui-concept"]);
-  assertPageFeatures(dataModel.pages, "favicon", ["application-structure", "theme"]);
+  assertPageFeatures(dataModel.pages, "favicon", [
+    "application-structure",
+    "theme",
+  ]);
   assertPageFeatures(dataModel.pages, "indexHtml", ["application-structure"]);
-  assertPageFeatures(dataModel.pages, "actionControls", ["component", "interaction"]);
-  assertPageFeatures(dataModel.pages, "textInputs", ["component", "form", "state-model"]);
+  assertPageFeatures(dataModel.pages, "actionControls", [
+    "component",
+    "interaction",
+  ]);
+  assertPageFeatures(dataModel.pages, "textInputs", [
+    "component",
+    "form",
+    "state-model",
+  ]);
   assertPageFeatures(dataModel.pages, "table", ["component", "data-binding"]);
-  assertPageFeatures(dataModel.pages, "overlayContainers", ["layout", "feedback"]);
+  assertPageFeatures(dataModel.pages, "overlayContainers", [
+    "layout",
+    "feedback",
+  ]);
   assertPageFeatures(dataModel.pages, "splitters", ["layout", "interaction"]);
   assertPageFeatures(dataModel.pages, "interaction", ["interaction"]);
-  assertPageFeatures(dataModel.pages, "internationalization", ["internationalization"]);
+  assertPageFeatures(dataModel.pages, "internationalization", [
+    "internationalization",
+  ]);
   assertPageFeatures(dataModel.pages, "layout", ["layout"]);
   assertPageFeatures(dataModel.pages, "presentation", ["theme"]);
-  assertPageFeatures(dataModel.pages, "dataGrid", ["component", "data-binding", "interaction"]);
-  assertPageFeatures(dataModel.pages, "feedbackWidgets", ["component", "feedback"]);
-  assertPageFeatures(dataModel.pages, "menuWidgets", ["component", "navigation", "interaction"]);
+  assertPageFeatures(dataModel.pages, "dataGrid", [
+    "component",
+    "data-binding",
+    "interaction",
+  ]);
+  assertPageFeatures(dataModel.pages, "feedbackWidgets", [
+    "component",
+    "feedback",
+  ]);
+  assertPageFeatures(dataModel.pages, "menuWidgets", [
+    "component",
+    "navigation",
+    "interaction",
+  ]);
 
-  assert.equal(pageById(dataModel.pages, "dialog").sourceDocument, "scopes/Widgets/dialog.scope.md");
+  assert.equal(
+    pageById(dataModel.pages, "dialog").sourceDocument,
+    "scopes/Widgets/dialog.scope.md",
+  );
 });
 
 test("generates an Angular Material standalone app from the generated OpenUI catalog", async () => {
@@ -319,7 +471,9 @@ test("generates an Angular Material standalone app from the generated OpenUI cat
   try {
     await run(["generate", "--input", CATALOG_FIXTURE, "--out", outDir]);
 
-    const packageJson = JSON.parse(await readFile(path.join(outDir, "package.json"), "utf8")) as {
+    const packageJson = JSON.parse(
+      await readFile(path.join(outDir, "package.json"), "utf8"),
+    ) as {
       dependencies: Record<string, string>;
       devDependencies: Record<string, string>;
       overrides?: Record<string, string>;
@@ -327,13 +481,22 @@ test("generates an Angular Material standalone app from the generated OpenUI cat
     assert.equal(packageJson.dependencies["@angular/material"], "^22.0.2");
     assert.equal(packageJson.dependencies["@angular/core"], "^22.0.0");
     assert.equal(packageJson.devDependencies["@angular/build"], "^22.0.3");
-    assert.equal(packageJson.devDependencies["@angular/compiler-cli"], "^22.0.0");
+    assert.equal(
+      packageJson.devDependencies["@angular/compiler-cli"],
+      "^22.0.0",
+    );
     assert.equal(packageJson.overrides, undefined);
 
-    const indexHtml = await readFile(path.join(outDir, "src/index.html"), "utf8");
+    const indexHtml = await readFile(
+      path.join(outDir, "src/index.html"),
+      "utf8",
+    );
     assert.match(indexHtml, /<openui-root><\/openui-root>/);
 
-    const routes = await readFile(path.join(outDir, "src/app/app.routes.ts"), "utf8");
+    const routes = await readFile(
+      path.join(outDir, "src/app/app.routes.ts"),
+      "utf8",
+    );
     assert.match(routes, /path: 'application'/);
     assert.match(routes, /path: 'routing'/);
     assert.match(routes, /path: 'navigation'/);
@@ -347,10 +510,16 @@ test("generates an Angular Material standalone app from the generated OpenUI cat
     assert.match(routes, /path: 'date-time-pickers'/);
     assert.match(routes, /path: '', pathMatch: 'full', redirectTo: 'scopes'/);
 
-    const appComponent = await readFile(path.join(outDir, "src/app/app.component.ts"), "utf8");
+    const appComponent = await readFile(
+      path.join(outDir, "src/app/app.component.ts"),
+      "utf8",
+    );
     assert.match(appComponent, /APPLICATION_STRUCTURE/);
     assert.match(appComponent, /MatSidenavModule/);
-    assert.match(appComponent, /Root component: {{ applicationStructure\.rootComponent }}/);
+    assert.match(
+      appComponent,
+      /Root component: {{ applicationStructure\.rootComponent }}/,
+    );
     assert.match(appComponent, /routerLink="\/form"/);
 
     const applicationStructureModel = await readFile(
@@ -364,7 +533,10 @@ test("generates an Angular Material standalone app from the generated OpenUI cat
     assert.match(applicationStructureModel, /ApplicationPage/);
     assert.match(applicationStructureModel, /ShellPagePage/);
 
-    const i18nService = await readFile(path.join(outDir, "src/app/openui-i18n.service.ts"), "utf8");
+    const i18nService = await readFile(
+      path.join(outDir, "src/app/openui-i18n.service.ts"),
+      "utf8",
+    );
     assert.match(i18nService, /activeLocale: "he-IL"/);
     assert.match(i18nService, /defaultLocale: "en"/);
     assert.match(i18nService, /"order.submit": "Submit order"/);
@@ -382,9 +554,18 @@ test("generates scope-specific Angular Material details from the generated OpenU
       path.join(outDir, "src/app/pages/application/application.page.html"),
       "utf8",
     );
-    assert.match(applicationTemplate, /aria-label="Application structure materialization"/);
-    assert.match(applicationTemplate, /Routing: Routing defines how an application resolves navigation intents/);
-    assert.match(applicationTemplate, /mat-sidenav-container owns mat-sidenav navigation/);
+    assert.match(
+      applicationTemplate,
+      /aria-label="Application structure materialization"/,
+    );
+    assert.match(
+      applicationTemplate,
+      /Routing: Routing defines how an application resolves navigation intents/,
+    );
+    assert.match(
+      applicationTemplate,
+      /mat-sidenav-container owns mat-sidenav navigation/,
+    );
 
     const dragAndDropPage = await readFile(
       path.join(outDir, "src/app/pages/drag-and-drop/drag-and-drop.page.ts"),
@@ -399,42 +580,87 @@ test("generates scope-specific Angular Material details from the generated OpenU
       path.join(outDir, "src/app/pages/drag-and-drop/drag-and-drop.page.html"),
       "utf8",
     );
-    assert.match(dragAndDropTemplate, /aria-label="Interaction model materialization"/);
-    assert.match(dragAndDropTemplate, /aria-label="Layout system materialization"/);
+    assert.match(
+      dragAndDropTemplate,
+      /aria-label="Interaction model materialization"/,
+    );
+    assert.match(
+      dragAndDropTemplate,
+      /aria-label="Layout system materialization"/,
+    );
     assert.match(dragAndDropTemplate, /data-openui-event="press"/);
-    assert.match(dragAndDropTemplate, /data-openui-region="columns" data-openui-aggregation="columns" cdkDropList/);
+    assert.match(
+      dragAndDropTemplate,
+      /data-openui-region="columns" data-openui-aggregation="columns" cdkDropList/,
+    );
 
-    const formPage = await readFile(path.join(outDir, "src/app/pages/form/form.page.ts"), "utf8");
+    const formPage = await readFile(
+      path.join(outDir, "src/app/pages/form/form.page.ts"),
+      "utf8",
+    );
     assert.match(formPage, /ReactiveFormsModule/);
     assert.match(formPage, /MatFormFieldModule/);
     assert.match(formPage, /dataBindingContracts/);
 
-    const formTemplate = await readFile(path.join(outDir, "src/app/pages/form/form.page.html"), "utf8");
+    const formTemplate = await readFile(
+      path.join(outDir, "src/app/pages/form/form.page.html"),
+      "utf8",
+    );
     assert.match(formTemplate, /<mat-form-field appearance="outline">/);
-    assert.match(formTemplate, /aria-label="Data binding model materialization"/);
+    assert.match(
+      formTemplate,
+      /aria-label="Data binding model materialization"/,
+    );
     assert.match(formTemplate, /read-write data view/);
     assert.match(formTemplate, /dirty-state tracking/);
 
-    const dialogPage = await readFile(path.join(outDir, "src/app/pages/dialog/dialog.page.ts"), "utf8");
+    const dialogPage = await readFile(
+      path.join(outDir, "src/app/pages/dialog/dialog.page.ts"),
+      "utf8",
+    );
     assert.match(dialogPage, /MatChipsModule/);
     assert.match(dialogPage, /MatSnackBarModule/);
     assert.match(dialogPage, /showFeedback\(\)/);
 
-    const controlsTemplate = await readFile(path.join(outDir, "src/app/pages/controls/controls.page.html"), "utf8");
-    assert.match(controlsTemplate, /aria-label="Component metadata contract"/);
-    assert.match(controlsTemplate, /Native: A standard browser, framework, or runtime presentation/);
-
-    const actionControlsTemplate = await readFile(
-      path.join(outDir, "src/app/pages/action-controls/action-controls.page.html"),
+    const controlsTemplate = await readFile(
+      path.join(outDir, "src/app/pages/controls/controls.page.html"),
       "utf8",
     );
-    assert.match(actionControlsTemplate, /aria-label="Component metadata contract"/);
-    assert.match(actionControlsTemplate, /aria-label="Interaction model materialization"/);
+    assert.match(controlsTemplate, /aria-label="Component metadata contract"/);
+    assert.match(
+      controlsTemplate,
+      /Native: A standard platform input, identified by its `\[type\]`/,
+    );
 
-    const dataGridTemplate = await readFile(path.join(outDir, "src/app/pages/data-grid/data-grid.page.html"), "utf8");
+    const actionControlsTemplate = await readFile(
+      path.join(
+        outDir,
+        "src/app/pages/action-controls/action-controls.page.html",
+      ),
+      "utf8",
+    );
+    assert.match(
+      actionControlsTemplate,
+      /aria-label="Component metadata contract"/,
+    );
+    assert.match(
+      actionControlsTemplate,
+      /aria-label="Interaction model materialization"/,
+    );
+
+    const dataGridTemplate = await readFile(
+      path.join(outDir, "src/app/pages/data-grid/data-grid.page.html"),
+      "utf8",
+    );
     assert.match(dataGridTemplate, /aria-label="Component metadata contract"/);
-    assert.match(dataGridTemplate, /aria-label="Data binding model materialization"/);
-    assert.match(dataGridTemplate, /aria-label="Interaction model materialization"/);
+    assert.match(
+      dataGridTemplate,
+      /aria-label="Data binding model materialization"/,
+    );
+    assert.match(
+      dataGridTemplate,
+      /aria-label="Interaction model materialization"/,
+    );
   } finally {
     await cleanupTestOutput(outDir);
   }
@@ -454,14 +680,22 @@ test("validates catalog root values, attrs, and scoped document uniqueness", asy
   assert.throws(
     () => validateOpenUiCatalog(fixture),
     (error: unknown) => {
-      assert.match(specValidationMessage(error), /Attribute values must be strings or null/);
+      assert.match(
+        specValidationMessage(error),
+        /Attribute values must be strings or null/,
+      );
       return true;
     },
   );
 
-  const duplicateFixture = JSON.parse(await readFile(MINIMAL_CATALOG_FIXTURE, "utf8"));
+  const duplicateFixture = JSON.parse(
+    await readFile(MINIMAL_CATALOG_FIXTURE, "utf8"),
+  );
   const duplicateScopes = (duplicateFixture.children as OpenUiElement[])[0];
-  const duplicateFirstScope = firstChild(duplicateScopes, "Expected at least one scoped child.");
+  const duplicateFirstScope = firstChild(
+    duplicateScopes,
+    "Expected at least one scoped child.",
+  );
 
   duplicateFirstScope.attrs = {
     ...duplicateFirstScope.attrs,
@@ -471,7 +705,10 @@ test("validates catalog root values, attrs, and scoped document uniqueness", asy
   assert.throws(
     () => validateOpenUiCatalog(duplicateFixture),
     (error: unknown) => {
-      assert.match(specValidationMessage(error), /Duplicate scope document 'scopes\/Controls\/scope\.md'/);
+      assert.match(
+        specValidationMessage(error),
+        /Duplicate scope document 'scopes\/Controls\/scope\.md'/,
+      );
       return true;
     },
   );

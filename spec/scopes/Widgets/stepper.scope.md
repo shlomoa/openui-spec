@@ -11,7 +11,8 @@ only as a reference pattern, recorded technology-independently.
 ## Purpose
 
 A control that guides the user through a multi-step process as an ordered sequence
-of steps.
+of steps, with optional completion gating and branching. A wizard is a stepper
+hosted in a dialog.
 
 ## Child model
 
