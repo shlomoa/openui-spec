@@ -82,12 +82,24 @@ class TaxonomyMappingTest(unittest.TestCase):
                         (DOCS_TAXONOMY.parent / match.group(1)).is_file(), match.group(1)
                     )
 
-    def test_each_entry_is_listed_once(self) -> None:
+    def test_each_entry_has_one_section_and_at_most_one_subcategory(self) -> None:
+        """Each entry is listed once, under a section and at most one subcategory of it."""
         for path in (DOCS_TAXONOMY, TAXONOMY_MAPPING):
+            text = path.read_text(encoding="utf-8")
+            entries = _placed_entries(text)
+            names = [name for _, _, name in entries]
+            subcategories = [
+                line[4:].strip() for line in text.splitlines() if line.startswith("### ")
+            ]
             with self.subTest(document=path.name):
-                names = [name for _, _, name in _placed_entries(path.read_text(encoding="utf-8"))]
+                self.assertGreater(len(entries), 0)
                 duplicates = sorted({name for name in names if names.count(name) > 1})
-                self.assertEqual(duplicates, [])
+                self.assertEqual(duplicates, [], "entries listed more than once")
+                repeated = sorted({name for name in subcategories if subcategories.count(name) > 1})
+                self.assertEqual(repeated, [], "subcategories in more than one section")
+            for section, _, name in entries:
+                with self.subTest(document=path.name, entry=name):
+                    self.assertNotEqual(section, "", "entry outside every section")
 
     def test_every_openui_term_of_the_ui_element_taxonomy_is_in_the_mapping(self) -> None:
         mapped = {name for _, _, name in _placed_entries(self.mapping_text)}
