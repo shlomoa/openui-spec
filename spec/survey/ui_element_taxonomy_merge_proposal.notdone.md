@@ -1,15 +1,8 @@
 # UI element taxonomy merge: not done
 
 Content of [`ui_element_taxonomy_merge_proposal.done.md`](ui_element_taxonomy_merge_proposal.done.md#summary) that is not applied yet.
-
-## Retirement of the UI element taxonomy
-
-> This proposal merges the UI element taxonomy into the canonical OpenUI taxonomy, so that
-> the file can then be retired, as the project owner decided (plan question Q4).
->
-> … the appendix records where every abstract type went when the file is retired (task 14.6).
-
-The merge is applied (W3 14.1–14.5); retiring [`spec/ui-element-taxonomy.md`](../ui-element-taxonomy.md#1-input-and-editing-elements) is plan task W3 14.6.
+The retirement of the UI element taxonomy was reversed on 2026-09-29: it stays a part of the
+specification (plan task W3 14.6).
 
 ## Chart contract
 
