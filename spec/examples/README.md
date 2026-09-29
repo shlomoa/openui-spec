@@ -8,7 +8,7 @@ document (`id: "root"`, `version`, `type`, `children`) whose node types are exac
 catalog. Examples distinguish specialized instances through globally unique
 ids, attributes, and known-type child composition rather than new aliases or
 pseudo-types. They exercise the attributes their scopes describe, using the
-[typed attribute keys](../README.md#attributes---attrs-field) `uses.name`,
+[typed attribute keys](../README.md#45-attributes-and-their-categories) `uses.name`,
 `produces.name` and `behaves.name`; their Angular-style expression values are for
 illustration only — the format is framework-independent.
 Vocabulary and aliases used by examples are defined in the

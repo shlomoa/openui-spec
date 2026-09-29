@@ -1,6 +1,6 @@
 {
   "type": "html",
   "children": [{ "type": "Chart", "id": "salesChart" }],
-  "version": "0.8.0",
+  "version": "0.9.0",
   "id": "root"
 }

@@ -18,22 +18,22 @@ The edition is done when all of these hold:
 8. **Validation** — CI runs format, lint, spec-content lint and conformance tests on Linux and Windows.
 9. **Visibility** — a published web page shows the v1.0 spec: taxonomy browser, per-object pages and live rendered examples.
 
-## Current state (2026-09-29, v0.4.0)
+## Current state (2026-09-29, v0.8.0)
 
-Re-checked on 2026-09-29, after execution step 3 and the `0.4.0` release (milestones M1 and M2). Earlier snapshots: `main` at `1c90f5c` (2026-09-26) and `b97f3f8` (2026-09-23).
+Re-checked on 2026-09-29 on `main` after PR #170 (`0.8.0`): workstreams W0–W5 and W9 are done, and so are W8 tasks 32–34. Earlier snapshots: `0.4.0` (2026-09-29), `main` at `1c90f5c` (2026-09-26) and `b97f3f8` (2026-09-23).
 
 | Area | What exists | Gap for v1.0 |
 | --- | --- | --- |
-| Survey | `spec/survey/` with 4 sources: `angular-material/`, `html5/` (WHATWG HTML), `openui5/`, `qt/`. The consolidated change files are applied and named `*.done.md`; content not yet applied is in `*.notdone.md`. `spec/survey/` is excluded from pre-commit, markdownlint and mkdocs | Each `*.notdone.md` item is assigned to a task (W1 9.13; W6 25) or is out of v1 by Q9 |
-| Terminology | Glossary in [`spec/scopes/scope.md`](../scopes/scope.md#glossary); the approved decisions in [`terminology.md`](../scopes/terminology.md#summary) are applied and verified (2026-09-29), except A41–A43, which are out of v1 (Q9) | None: the alias table is four columns of the taxonomy mapping (W1 9.9) |
-| Scope | One-line purpose in `spec/README.md` | No explicit in / out list (W2). Decided: host-shell presence, docking and multiple-document workspaces are out of v1 (Q9); the Accessibility and Composition top-level scopes are deferred (Q13). The surveys also defer browser internals, storage and workers |
-| Categorization | 11 top-level scopes. The taxonomy is specified by three spec documents, with one owner for each fact ([Taxonomy documents](../scopes/scope.md#taxonomy-documents)): `spec/taxonomy/generic-ui-taxonomy.md` (with its generated HTML and an image for every entry with a visual form), `spec/taxonomy/ui-element-taxonomy.md` (237 abstract types, each with its OpenUI term) and [`spec/scopes/taxonomy_mapping.md`](../scopes/taxonomy_mapping.md#taxonomy-mapping). Nine sections plus Behaviors and 21 subcategories, with classification rules; a test keeps the generic taxonomy and the mapping equal | Give each leaf scope one primary category (W3 14.12); rename or move scope folders (W3 15) |
-| Structure | `spec/README.md` mixes glossary pointer, artifact roles, format, grammar, incremental generation | No normative / informative split; generator content inside the spec (the generator itself stays in this repository, Q8) |
-| Language | `EBNF.txt` declared authoritative; JSON Schema is a projection; `spec/bin/check_grammar_consistency` enforces EBNF ↔ schema ↔ README ↔ catalog in pre-commit. Same-document element references (quoted ids in Uses attrs); behaviors reference their controlled element with `[target]` | Still `string \| null` values and `[x]` / `(x)` keys; no data-binding, event-payload or i18n rules |
-| Catalog | 50 leaf `*.scope.md` files, including the new `Behaviors/input_assistance`, `viewport_and_focus_control` and `modal_overlay`; every leaf has an evidence row; `spec/openui.json` regenerated | Many leaves still have no Attributes or Child model (W6 25); examples not yet generated for the new additions (W1 9.10–9.12) |
-| Utilities | Python: `openui_spec`, `compare_openui_spec`, TatSu parser, and the `spec/bin` tools `to_json`, `check_grammar_consistency`, `lint_spec`, `check_links`, `render_taxonomy_html`. TS: `OpenUiJson`, `ng-openui-spec` CLI (ajv) | No shared conformance suite; no object model beyond the JSON tree |
-| Validation | pre-commit (prettier, markdownlint, ruff, yamllint, check-json, grammar / catalog consistency, spec-content lint with all three rules, internal link check, taxonomy HTML check); unittest; npm tests; CI on Ubuntu + Windows | No conformance tests (W8) |
-| Visibility | `generated-examples` Angular app with screenshots; Read the Docs via mkdocs | No single published page for the spec itself |
+| Survey | `spec/survey/` with 4 sources: `angular-material/`, `html5/` (WHATWG HTML), `openui5/`, `qt/`. The applied change files are named `*.done.md`; what is not applied yet is in `*.notdone.md`. `spec/survey/` is excluded from pre-commit, markdownlint and mkdocs | The `*.notdone.md` items go to W6 25 or are out of v1 (Q9) |
+| Terminology | Glossary in [`spec/scopes/scope.md`](../scopes/scope.md#glossary), with "Same name, different meaning" notes; the approved [`terminology.md`](../scopes/terminology.md#summary) is applied; the alias table is four columns of the taxonomy mapping (HTML / WAI-ARIA, OpenUI5, Qt, Angular Material) | None |
+| Scope | The `## Scope` section of `spec/README.md` (in scope, out of scope, deferred) and the classification in [`scope_statement.md`](scope_statement.md#scope-statement) | None |
+| Categorization | One taxonomy in three spec documents with one owner for each fact; one primary category for each placed leaf scope; the interactive taxonomy tree (`spec/taxonomy/taxonomy-tree.html`) with a per-framework overlay | None |
+| Structure | A numbered outline (six parts, three annexes), the Conformance part with BCP 14 keywords and the normative / informative marking; `spec/README.md` is written to it (W6 24, `0.9.0`) | None |
+| Language | Typed attributes: `uses.x` / `produces.x` / `behaves.x` keys and typed values, in `EBNF.txt`, the JSON Schema and the catalog ([`language_change.done.md`](language_change.done.md)); `spec/bin/migrate.py`; the playground page | None for v1 (internationalization postponed) |
+| Catalog | 50 leaf scopes, each with an evidence row, a worked example and generator fixtures; 17 leaves have no Child model and 8 no Attributes section | Enrich the leaves (W6 25) |
+| Utilities | Python `bin/openui_document.py` and TypeScript `src/document.ts` parse, model and validate with identical results on the conformance suite (`spec/conformance/`) | Publish `1.0.0` (W8 35) |
+| Validation | pre-commit, the spec-content lint, the link check, the taxonomy page checks, unit tests, npm tests and the `generated-examples` app checks; CI on Ubuntu, macOS and Windows | None |
+| Visibility | `generated-examples` app with screenshots, the taxonomy pages and the playground; Read the Docs via mkdocs | The published spec site with a rendered example per object (W6 27, W7 30) |
 
 ## Workstreams
 
@@ -43,10 +43,10 @@ Ten workstreams in three layers: consolidate the foundations (W1–W5), write th
 | --- | --- | --- | --- |
 | W0 | [x] Survey consolidation | What do HTML, openui5, Qt and Angular Material call and group each UI artifact, and which proposed scopes are accepted? | Approved change files in `spec/survey/` (terminology, category, taxonomy mapping, scope, architecture, structure, schema) |
 | W1 | [x] Terminology | Which word does OpenUI use, and what does it mean? | Glossary v1 + cross-framework alias table |
-| W2 | [ ] Scope | What is the spec, what is in, what is out? | Normative scope statement (in / out / deferred) |
-| W3 | [ ] UI categorization | What is the single most natural way to group UI artifacts? | One taxonomy in three spec documents (generic UI taxonomy, UI element taxonomy, taxonomy mapping), one owner for each fact |
-| W4 | [ ] Specification structure | How is the spec document organized? | Numbered outline with normative/informative parts; file layout |
-| W5 | [ ] UI description language | How does an author describe a UI? | Grammar v1.0 (EBNF + JSON Schema), binding/event/i18n rules, versioning policy |
+| W2 | [x] Scope | What is the spec, what is in, what is out? | Normative scope statement (in / out / deferred) |
+| W3 | [x] UI categorization | What is the single most natural way to group UI artifacts? | One taxonomy in three spec documents (generic UI taxonomy, UI element taxonomy, taxonomy mapping), one owner for each fact |
+| W4 | [x] Specification structure | How is the spec document organized? | Numbered outline with normative/informative parts; file layout |
+| W5 | [x] UI description language | How does an author describe a UI? | Grammar v1.0 (EBNF + JSON Schema), binding/event/i18n rules, versioning policy |
 | W6 | [ ] Draft first spec | — | v1.0.0-rc.1 spec text + regenerated catalog (*directive, Q3:* released as `0.x.0` until downstream validation) |
 | W7 | [ ] Documentation | — | Updated README, REQUIREMENTS, CONTRIBUTING, AGENTS/CLAUDE, CHANGELOG, Read the Docs site |
 | W8 | [ ] Spec utilities | Can tools parse, model and validate v1.0? | Python + TS parse/model/validate APIs passing one conformance suite |
@@ -171,7 +171,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W2 Scope
 
-10. [x] Write the normative scope section: purpose, audience, in scope, out of scope, deferred to later editions. *Directive (Q9, decided 2026-09-29):* host-shell presence (such as a notification-area icon), docking and multiple-document workspaces are out of v1 and deferred to a later edition; Main window, Dockable panel and Multiple-document workspace (terminology A41–A43) stay out of the taxonomy and the glossary. *Directive (Q13, decided 2026-09-29):* the Accessibility and Composition top-level scopes (HTML P6, P7) are deferred: accessibility is a property of every element, not an element, and content projection is not a requirement. Result: the [Scope section](../README.md#scope) of `spec/README.md` states what is in scope, out of scope and deferred, with the two definitions; [`scope_statement.md`](scope_statement.md#decisions) gives the source of each item and the owner decisions of 2026-09-29.
+10. [x] Write the normative scope section: purpose, audience, in scope, out of scope, deferred to later editions. *Directive (Q9, decided 2026-09-29):* host-shell presence (such as a notification-area icon), docking and multiple-document workspaces are out of v1 and deferred to a later edition; Main window, Dockable panel and Multiple-document workspace (terminology A41–A43) stay out of the taxonomy and the glossary. *Directive (Q13, decided 2026-09-29):* the Accessibility and Composition top-level scopes (HTML P6, P7) are deferred: accessibility is a property of every element, not an element, and content projection is not a requirement. Result: the [Scope section](../README.md#12-scope) of `spec/README.md` states what is in scope, out of scope and deferred, with the two definitions; [`scope_statement.md`](scope_statement.md#decisions) gives the source of each item and the owner decisions of 2026-09-29.
 11. [x] Classify every catalog object and every survey concept as in / out / deferred. *Validate:* no catalog object is out of scope. *Demo:* scope map page. Result: the [classification](scope_statement.md#classification) lists all 61 catalog objects as In (the scope map) and classifies the terminology rows, the 222 abstract types, the scope-extension proposals and the survey inventories; `tests/test_scope_statement.py` checks that every scope document is listed once, as In.
 12. [x] *Lowest priority:* `docs/REQUIREMENTS.md` does not affect the spec. Split `docs/REQUIREMENTS.md` so spec requirements and generator requirements are separate. *Directive:* `docs/REQUIREMENTS.md` lists the requirements for the solution as the user and owner perceive them, not requirements for the spec; spec content (artifact roles, vocabulary, catalog rules) belongs in `spec/` and is only linked from it. Result: section 1 of [`docs/REQUIREMENTS.md`](../../docs/REQUIREMENTS.md#1-specification) now states only what the solution needs from the spec and links the scope, the artifact roles, the glossary with the known object type contract, and the object contracts; the rules it repeated from the spec are removed. Section 2 keeps the generator requirements and section 3 the generated examples, each separate.
 
@@ -220,7 +220,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 ### W4 Specification structure
 
 16. [x] Define the v1.0 outline; the three taxonomy documents are part of it (section 5). For example: 1 Introduction & scope · 2 Conformance · 3 Terminology · 4 Document model & language · 5 Categories & objects · 6 Catalog · Annex A Grammar · Annex B Survey mapping · Annex C Examples. Result: the [outline](outline.done.md#1-outline) places every spec document in six parts and three annexes, with the source of each point; `spec/README.md` has the numbered [Outline](../README.md#outline) and the `mkdocs.yml` navigation follows it. No file moved (W6 24 does the rewrite).
-17. [x] Define RFC 2119 keyword use (MUST/SHOULD/MAY) and mark normative vs. informative sections. Result: [`spec/README.md` § Conformance](../README.md#conformance) defines the keywords by BCP 14 (RFC 2119, RFC 8174: only in capitals, only in normative parts) and marks each part of the outline normative or informative; Annex B, Annex C (examples) and the tooling are informative. `tests/test_conformance_keywords.py` checks that informative documents and README sections use no keyword.
+17. [x] Define RFC 2119 keyword use (MUST/SHOULD/MAY) and mark normative vs. informative sections. Result: [`spec/README.md` § Conformance](../README.md#2-conformance) defines the keywords by BCP 14 (RFC 2119, RFC 8174: only in capitals, only in normative parts) and marks each part of the outline normative or informative; Annex B, Annex C (examples) and the tooling are informative. `tests/test_conformance_keywords.py` checks that informative documents and README sections use no keyword.
 18. [x] Move incremental-generation and generator content out of `spec/README.md` into the generator docs. *Directive (Q8, decided 2026-09-29):* the Angular generator stays in openui-spec for v1.0, in `generators/angular/`, as [`docs/REQUIREMENTS.md`](../../docs/REQUIREMENTS.md#2-angular-typescript-generator) states. Result: the Incremental generation section (scenarios and algorithm) and the list of how generators use the three artifacts moved from `spec/README.md` to [`GENERATION.md`](../../generators/angular/generator/docs/GENERATION.md#incremental-generation); every link and code comment now points there.
 
 ### W5 UI description language
@@ -233,10 +233,11 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W6 Draft first spec
 
-24. [ ] Rewrite the spec per W4 outline, using W1–W5 outputs.
+24. [x] Rewrite the spec per W4 outline, using W1–W5 outputs. Result: `spec/README.md` follows the numbered parts 1–6 and Annexes A–C of the [outline](outline.done.md#1-outline) (no file split, as its file layout states), part 2 names the conformance targets, each rule is written once (duplicates removed from `spec/scopes/scope.md`), the stale Angular wording and example are gone, and normative requirements use BCP 14 capitals; released as `0.9.0` ([PR #172](https://github.com/shlomoa/openui-spec/pull/172)).
 25. [ ] Enrich each leaf scope (Attributes, Child model) from the survey inventories and the alias table (W1 task 9.9); add evidence rows. Include the contract items the change files deferred to this task: the chart kind, legend and annotation of Chart, the message severity of Feedback widgets and repeat-while-pressed of Action controls ([`ui_element_taxonomy_merge_proposal.notdone.md`](ui_element_taxonomy_merge_proposal.notdone.md#chart-contract)); the attribute names of the new capabilities ([`scope_change.notdone.md`](scope_change.notdone.md#deferred)); and the Qt "Enhance" rows ([`taxonomy_mapping_change.notdone.md`](taxonomy_mapping_change.notdone.md#deferred)).
 26. [ ] Regenerate `openui.json`, bump to `1.0.0-rc.1`, migrate all examples and fixtures. *Directive (Q3):* bump to the next `0.x.0` instead; `1.0.0-rc.1` waits on downstream validation.
-27. [ ] Review period, then coordinate the M5 `1.0.0` release with W8 task 35. *Directive (Q3):* `1.0.0` waits on downstream validation; until then each release is `0.x.0` / `0.x.y`. *Validate:* full CI + conformance suite. *Demo:* published spec site with a rendered example per object (reuse `generated-examples`).
+    - 26.1 [ ] Downstream validation (added 2026-09-29): hand the `0.x.0` release of task 26 to angular-django2 (#98/#103 TS parser) and django-angular3, have them build on it, and record their results and any spec issues they find in the plan. This is the downstream validation directive Q3 waits on; tasks 27, 29 and 35 start after it. *Validate:* each downstream project reports its result, and each spec issue it finds is fixed or recorded as a task.
+27. [ ] After task 26.1, review period, then coordinate the M5 `1.0.0` release with W8 task 35. *Directive (Q3):* `1.0.0` waits on downstream validation; until then each release is `0.x.0` / `0.x.y`. *Validate:* full CI + conformance suite. *Demo:* published spec site with a rendered example per object (reuse `generated-examples`).
 
 ### W7 Documentation
 
@@ -262,13 +263,13 @@ Five GitHub milestones, each ending with a tagged release and a visible web page
 | --- | --- | --- | --- | --- |
 | [x] M1 Guard rails | `0.4.0` | 1–3 | CI green on Linux and Windows with spec-content lint | Lint report page |
 | [x] M2 Survey consolidated | `0.4.0` | 4–6 | All consolidated change files approved | The change files in `spec/survey/` |
-| [ ] M3 Foundations agreed | Next `0.x.0` | 7–18 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
-| [ ] M4 Language frozen | Next `0.x.0` | 19–23, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
+| [x] M3 Foundations agreed | `0.5.0`–`0.8.0` | 7–18 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
+| [x] M4 Language frozen | `0.6.0` | 19–23, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
 | [ ] M5 v1.0.0 published | `1.0.0` | 24–31, 35 | Packages at 1.0.0 on PyPI + npm; docs live | Published spec site with rendered examples |
 
 *Directive (Q3):* M5's `1.0.0` release waits on downstream validation; until then each milestone ships a `0.x.0` release.
 
-M1 and M2 are complete: their tasks are done and their exit criteria hold. They were released as `0.4.0` (tag `v0.4.0`, 2026-09-29), together with the step 3 changes. Milestones carry no fixed version number: each release takes the next free `0.x.0` (directive Q3), and only M5 has a fixed number, `1.0.0`. M4 can start as soon as the terminology is applied (W1 9.1–9.6, execution step 3, done); it does not need the taxonomy or the rest of task 9.
+M1 and M2 are complete: they were released as `0.4.0` (tag `v0.4.0`, 2026-09-29), together with the step 3 changes. M4 is complete: the typed grammar, the conformance suite and the Python and TypeScript validators were released as `0.6.0` (PR #169). M3 is complete: its tasks were released across `0.5.0` (PR #164), `0.7.0` (PR #168) and `0.8.0` (PR #170). The releases `0.5.0` and `0.6.0` have no git tag; `v0.4.0` and `v0.7.0` do. Milestones carry no fixed version number: each release takes the next free `0.x.0` (directive Q3), and only M5 has a fixed number, `1.0.0`.
 
 ## Execution order
 
@@ -294,14 +295,15 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 6 | [ ] Enrich each leaf scope from the survey inventories and the alias table | W6 25 | W1 9.9 (step 5); W5 19–23 (step 5) | Open |
 | 7 | [x] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, then 15 | Step 4 taxonomy row; W2 11 (step 6) | Done |
 | 8 | [x] Specification outline and normative split | W4 16, then 17 | Step 7 | Done |
-| 9 | [ ] Draft the spec per the outline | W6 24 | Step 8; step 5 language row (W5 19–23) | Open |
+| 9 | [x] Draft the spec per the outline | W6 24 | Step 8; step 5 language row (W5 19–23) | Done — PR #172 (`0.9.0`) |
 | 9 | [x] Conformance suite and Python / TypeScript utilities | W8 32 (finish the suite), 33, 34 | W5 23 | Done — PR #169 (`0.6.0`) |
 | 10 | [ ] Regenerate, migrate all examples and fixtures, `1.0.0-rc.1` | W6 26 | W6 24, 25; W5 23 | Open |
-| 11 | [ ] Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 10; step 9 utilities | Open |
+| 11 | [ ] Downstream validation of the step 10 release | W6 26.1 | Step 10 | Open |
+| 12 | [ ] Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 11; step 9 utilities | Open |
 
 Rows marked In progress are taken by a sub-agent; other agents take other rows.
 
-*Directive (Q3):* the `1.0.0-rc.1` of step 10 and the `1.0.0` of step 11 wait on downstream validation; until then each release is `0.x.0` / `0.x.y`.
+*Directive (Q3):* the `1.0.0-rc.1` of step 10 and the `1.0.0` of step 12 wait on downstream validation (step 11, task 26.1); until then each release is `0.x.0` / `0.x.y`.
 
 Priority: step 3 is the first specification change and unblocks the language work (step 5), so the decisions and proposals feeding it (steps 1–2) come first. The categorization of scope folders (step 7) waits on the scope statement, as the workstream graph requires.
 

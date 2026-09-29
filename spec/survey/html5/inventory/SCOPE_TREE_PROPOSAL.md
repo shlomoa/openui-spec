@@ -83,7 +83,7 @@ The evidence register's current family entries often authorize purpose and alias
 5. **M5 — Regenerate and inspect the catalog.** Use the existing `spec/to_json` converter; do not hand-edit `spec/openui.json`. Review the exact added/removed ids and literal types, child ownership, duplicate identities, string-or-null attributes, and changes to `scopeDocument` paths. Treat new folder types as catalog changes too.
 6. **M6 — Validate and document migration.** Run the applicable converter/spec contract tests, known-type checks, link/Markdown checks, and repository documentation checks from the local environment. Update affected fixtures/generator mappings only where the accepted change requires them. Publish the old/new identity map for any breaking change.
 
-Detailed execution should follow the repository's [contribution validation workflow](../../../../CONTRIBUTING.md) and [converter source contract](../../../README.md#leaf-scope-source-format-scopemd). This request produces the reviewable mapping and proposal; it does not perform M1–M6 or mark the full survey's steps 4–7 complete.
+Detailed execution should follow the repository's [contribution validation workflow](../../../../CONTRIBUTING.md) and [converter source contract](../../../README.md#62-leaf-scope-source-format). This request produces the reviewable mapping and proposal; it does not perform M1–M6 or mark the full survey's steps 4–7 complete.
 
 ## Acceptance criteria for the eventual merge
 

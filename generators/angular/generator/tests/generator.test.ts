@@ -180,7 +180,7 @@ test("treats the dialog fixture as concrete input without catalog traceability a
   const fixture = JSON.parse(await readFile(DIALOG_FIXTURE, "utf8"));
 
   // Artifact roles are defined by spec/README.md, section
-  // "Specification artifacts: grammar vs. catalog": concrete input nodes do not
+  // Spec part "4.1 Specification artifacts": concrete input nodes do not
   // carry generated catalog traceability such as attrs.scopeDocument.
   assert.equal(fixture.type, "Dialog");
   assertNoScopeDocumentAttrs(fixture);
@@ -401,7 +401,7 @@ test("builds the data model from the generated OpenUI catalog", async () => {
   const scopeIds = extractOpenUiScopeNodes(fixture).map((scope) => scope.id);
 
   assert.equal(dataModel.name, "OpenUI");
-  assert.equal(dataModel.version, "0.8.0");
+  assert.equal(dataModel.version, "0.9.0");
   assert.deepEqual(
     dataModel.pages.map((page) => page.id),
     scopeIds,
@@ -725,7 +725,7 @@ test("allows a valid empty root document for incremental deletion", () => {
   assert.doesNotThrow(() =>
     validateOpenUiSpec({
       id: "root",
-      version: "0.8.0",
+      version: "0.9.0",
       type: "html",
       children: [],
     }),

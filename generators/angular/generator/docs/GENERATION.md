@@ -6,7 +6,7 @@ boundaries, Angular validation strategy, and generator test conventions.
 
 The roles of `input.json`, `spec/openui.schema.json`, and `spec/openui.json`
 are defined only in
-[`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
+[`spec/README.md` § 4.1 Specification artifacts](../../../../spec/README.md#41-specification-artifacts).
 This document explains how the Angular generator consumes those artifacts; it
 must not redefine their contract.
 
@@ -109,7 +109,7 @@ Transitional input definitions and adapters are not allowed.
 
 The roles of `input.json`, `spec/openui.schema.json`, and `spec/openui.json` are
 defined once in
-[`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
+[`spec/README.md` § 4.1 Specification artifacts](../../../../spec/README.md#41-specification-artifacts).
 The Angular generator consumes those artifacts according to the input, context,
 and output contract in [REQUIREMENTS.md](../../../../docs/REQUIREMENTS.md) §2;
 this document does not redefine either contract.
@@ -154,7 +154,7 @@ through validation, extraction, and data-model construction.
 
 Do not duplicate the OpenUI artifact role definitions here. Use the canonical
 definition in
-[`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
+[`spec/README.md` § 4.1 Specification artifacts](../../../../spec/README.md#41-specification-artifacts).
 
 The generator uses the three artifacts together:
 
@@ -370,6 +370,14 @@ pages, but they currently carry no extra `DataModelFeature` until
 
 Future work should extend the native OpenUI extraction and data-model mapping
 directly; do not add adapter or compatibility shapes.
+
+### Attribute categories in Angular
+
+The spec leaves the mapping of the
+[attribute categories](../../../../spec/README.md#45-attributes-and-their-categories) to
+each generator. In Angular template syntax, a Uses attribute (`uses.name`) corresponds to a
+property binding `[name]`, and a Produces or Behaves attribute (`produces.name`,
+`behaves.name`) to an event binding `(name)`.
 
 ## Generated output shape
 
@@ -642,7 +650,7 @@ fixture. Those tests protect the current catalog-driven page-generation slice;
 they do not define the full generator input contract.
 
 The generator input contract is the concrete `input.json` role defined in
-[`spec/README.md` § Specification artifacts: grammar vs. catalog](../../../../spec/README.md#specification-artifacts-grammar-vs-catalog).
+[`spec/README.md` § 4.1 Specification artifacts](../../../../spec/README.md#41-specification-artifacts).
 Concrete input fixtures must validate against the grammar and catalog without
 requiring catalog traceability fields such as `attrs.scopeDocument` on app nodes.
 

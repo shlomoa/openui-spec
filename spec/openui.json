@@ -1,7 +1,7 @@
 {
   "id": "root",
   "type": "html",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "attrs": {
     "name": "OpenUI",
     "description": "Technology-independent Web UI framework specification",
@@ -14,7 +14,7 @@
       "type": "Scopes",
       "attrs": {
         "title": "Scopes",
-        "purpose": "The `scopes` folder is the hierarchical source for OpenUI scope objects. Each top-level folder is a scope, and each child object is either another scope folder or a snake_case `*.scope.md` leaf file. Shared vocabulary, aliases, and canonical meanings for terms such as object, element, control, widget, view, container, behavior, table, grid, and button are defined in the [glossary](#glossary). Scope files specialize those terms for concrete object contracts rather than redefining them. The [taxonomy mapping](taxonomy_mapping.md) maps entries from the [generic UI taxonomy](../taxonomy/generic-ui-taxonomy.md) to these scope objects and records whether each entry is an existing object, alias, grouped leaf, or folder-level abstraction. The [terminology](terminology.md) records the approved term changes, with their evidence and the canonical-term rule. The taxonomy and the scope tree are linked views of one vocabulary. The taxonomy groups terms by purpose; the scope tree organizes contracts. A new taxonomy section or subcategory does not create a scope folder, type or contract.",
+        "purpose": "The `scopes` folder is the hierarchical source for OpenUI scope objects. Each top-level folder is a scope, and each child object is either another scope folder or a snake_case `*.scope.md` leaf file. Scope files specialize the glossary terms for concrete object contracts rather than redefining them. The taxonomy and the scope tree are linked views of one vocabulary: the taxonomy groups terms by purpose, and the scope tree organizes contracts. A new taxonomy section or subcategory does not create a scope folder, type or contract. The [taxonomy mapping](taxonomy_mapping.md) links each taxonomy entry to its scope object.\n\nThis page holds two parts of the [specification](../README.md#outline): the scope tree and its folder rules (part 5.4) and the [glossary](#glossary) (part 3, Terminology).",
         "scopeDocument": "scopes/scope.md",
         "status": "draft"
       },

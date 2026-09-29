@@ -72,7 +72,7 @@ ng-openui-spec validate --input document.json
 
 ### Documentation
 
-- [Specification overview and artifact model](https://openui-spec.readthedocs.io/en/latest/#specification-artifacts-grammar-vs-catalog)
+- [Specification overview and artifact model](https://openui-spec.readthedocs.io/en/latest/#41-specification-artifacts)
 - [OpenUI JSON editing API and CLI reference](https://openui-spec.readthedocs.io/en/latest/tooling/editing/)
 - [OpenUI JSON comparison guide](https://openui-spec.readthedocs.io/en/latest/tooling/comparison/)
 - [OpenUI document examples](https://openui-spec.readthedocs.io/en/latest/examples/)
