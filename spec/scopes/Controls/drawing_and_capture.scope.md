@@ -25,7 +25,7 @@ level.
 ## Accessibility
 
 Drawing and capture controls provide accessible instructions, alternatives, and
-status feedback for permissions, recording, drawing, or biometric verification.
+status feedback for permissions, recording, or drawing.
 
 ## Validation notes
 

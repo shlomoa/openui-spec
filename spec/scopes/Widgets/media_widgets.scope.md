@@ -26,9 +26,9 @@ Media widgets do not define a fixed child model at this abstraction level.
 ## Accessibility
 
 Media widgets provide captions, transcripts, alternatives, labels, and keyboard access
-for playback, preview, map, or spatial controls as appropriate.
+for playback, preview, geographic map, or spatial controls as appropriate.
 
 ## Validation notes
 
 - Use drawing and capture controls for input capture; use this family for playback,
-  preview, and map presentation.
+  preview, and geographic map presentation.

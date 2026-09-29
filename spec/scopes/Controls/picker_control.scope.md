@@ -29,6 +29,6 @@ accessible label for the control and any opened picker surface.
 
 ## Validation notes
 
-- Use the existing Date/Time pickers widget for calendar-based date or time
-  selection contracts.
+- Use the existing Date/Time pickers widget for date or time entry contracts,
+  with or without a calendar.
 - Choosing a file, folder or font does not grant access to it. A picker may be hosted in a dialog.

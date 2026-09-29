@@ -16,7 +16,7 @@ or subcategory does not create a scope folder, type or contract.
 ## Top-level scopes
 
 - [Application](Application/scope.md): application-level bootstrap artifacts and implementation-independent concepts such as routing, navigation, tool bars, `favicon.ico`, and `index.html`.
-- [Controls](Controls/scope.md): browser, framework, or runtime-provided native controls and presentation capabilities.
+- [Controls](Controls/scope.md): reusable interaction and rendering primitives used in applications, pages, views, containers, and widgets.
 - [Behaviors](Behaviors/scope.md): reusable behaviors that can be applied to any element, which the behavior references and does not own.
 - [Pages](Pages/scope.md): predefined page-level layouts and page shells.
 - [Views](Views/scope.md): user-facing views of business objects and workflows.
@@ -380,7 +380,8 @@ the action must not be invoked.
 Button variants refine the same base concept. An icon button is a button whose
 visible label is primarily an icon. A toggle button represents a persistent
 pressed/unpressed state and should expose that state without changing the
-meaning of its label. A menu button opens a menu of choices. A submit button
+meaning of its label. A menu button opens a menu of commands; it is mapped to
+[Menu widgets](Widgets/menu_widgets.scope.md). A submit button
 commits form data. A destructive button performs a risky action and often needs
 confirmation or careful emphasis. A floating action button is a prominent
 contextual action surfaced as a design-system variant, not a separate semantic

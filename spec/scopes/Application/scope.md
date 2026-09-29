@@ -9,18 +9,22 @@ shape.
 
 ## Objects
 
-- [Routing](routing.scope.md): Application-level route definitions and route
-  resolution behavior.
-- [Route](route.scope.md): A location pattern resolving to content or a redirect.
-- [Navigation](navigation.scope.md): User-facing navigation structures that
-  expose routes, pages, and views.
-- [Navigation item](nav_item.scope.md): A labelled route destination.
-- [Navigation group](nav_group.scope.md): A labelled hierarchical grouping of
-  navigation entries.
-- [Tool bars](tool_bars.scope.md): Application-level command surfaces and
-  action placement.
-- [Tool bar row](tool_bar_row.scope.md): An ordered collection of toolbar actions.
-- [Tool action](tool_action.scope.md): A labelled command available from a toolbar.
+- [Routing](routing.scope.md): How an application resolves navigation intents or
+  locations to application content.
+- [Route](route.scope.md): A location pattern mapped to application content or
+  redirected to another route.
+- [Navigation](navigation.scope.md): User-facing structures for moving between
+  application routes, pages, views, and major work areas.
+- [Navigation item](nav_item.scope.md): One labelled application route presented
+  as a user-selectable destination.
+- [Navigation group](nav_group.scope.md): A labelled group that organizes
+  related navigation destinations.
+- [Tool bars](tool_bars.scope.md): Application-level command surfaces for
+  frequently used actions.
+- [Tool bar row](tool_bar_row.scope.md): An ordered row of command actions
+  within a tool bar.
+- [Tool action](tool_action.scope.md): A labelled application command exposed
+  from a tool bar.
 - [favicon.ico](favicon.scope.md): The application icon asset used for browser
   and shell identity.
 - [index.html](index_html.scope.md): The application host document and static
