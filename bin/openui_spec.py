@@ -10,6 +10,11 @@ from typing import Any
 
 from jsonschema import Draft202012Validator
 
+if __package__:
+    from .openui_document import Catalog, validate_value
+else:
+    from openui_document import Catalog, validate_value
+
 JsonObject = dict[str, Any]
 AttributeScalar = str | int | float | bool | None
 AttributeValue = AttributeScalar | list[AttributeScalar]
@@ -66,36 +71,18 @@ class OpenUiJson:
         output_path.write_text(json.dumps(self.document, indent=2) + "\n", encoding="utf-8")
 
     def validate(self) -> None:
-        """Validate the document against the OpenUI schema and catalog."""
+        """Validate the document with every stage of `bin.openui_document`.
+
+        The stages are the grammar, the document rules (unique ids and the spec
+        version), catalog membership and the declared attribute value types.
+        """
         if self.document is None:
             raise OpenUiValidationError("the root object has been removed")
 
-        schema = self._load_json(self.schema_path, "schema")
-        catalog = self._load_json(self.catalog_path, "catalog")
-        try:
-            Draft202012Validator.check_schema(schema)
-        except Exception as error:
-            raise OpenUiValidationError(f"invalid OpenUI schema: {error}") from error
-
-        validator = Draft202012Validator(schema)
-        errors = sorted(
-            validator.iter_errors(self.document), key=lambda error: list(error.absolute_path)
-        )
-        if errors:
-            messages = [
-                f"{self._json_path(error.absolute_path)}: {error.message}" for error in errors
-            ]
-            raise OpenUiValidationError("\n".join(messages))
-
-        known_types = self._catalog_types(catalog)
-        seen_ids: set[str] = set()
-        for node in self._walk(self.document):
-            object_id = node["id"]
-            if object_id in seen_ids:
-                raise OpenUiValidationError(f"duplicate object id: {object_id}")
-            seen_ids.add(object_id)
-            if node["type"] not in known_types:
-                raise OpenUiValidationError(f"unknown OpenUI object type: {node['type']}")
+        catalog = Catalog.from_value(self._load_json(self.catalog_path, "catalog"))
+        diagnostics = validate_value(self.document, catalog)
+        if diagnostics:
+            raise OpenUiValidationError("\n".join(str(diagnostic) for diagnostic in diagnostics))
 
     def add(self, parent_id: str, child: Mapping[str, Any]) -> None:
         """Validate and append *child* to the children of *parent_id*."""

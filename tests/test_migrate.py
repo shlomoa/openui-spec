@@ -7,7 +7,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from spec.bin.migrate import CATALOG_PATH, catalog_contracts, main, migrate_text
+from bin.openui_document import Catalog
+from spec.bin.migrate import main, migrate_text
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MIGRATED_FOLDERS = (
@@ -19,11 +20,11 @@ MIGRATED_FOLDERS = (
 class MigrateTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.contracts = catalog_contracts(json.loads(CATALOG_PATH.read_text(encoding="utf-8")))
+        cls.catalog = Catalog.load()
 
     def _migrate(self, element: dict[str, object]) -> dict[str, object]:
         document = {"id": "root", "version": "0.5.0", "type": "html", "children": [element]}
-        return json.loads(migrate_text(json.dumps(document), self.contracts))["children"][0]
+        return json.loads(migrate_text(json.dumps(document), self.catalog))["children"][0]
 
     def test_keys_take_their_category_prefix(self) -> None:
         migrated = self._migrate(
@@ -77,8 +78,8 @@ class MigrateTest(unittest.TestCase):
         document = json.dumps(
             {"id": "root", "version": "0.5.0", "type": "html", "attrs": {"[open]": "true"}}
         )
-        once = migrate_text(document, self.contracts)
-        self.assertEqual(migrate_text(once, self.contracts), once)
+        once = migrate_text(document, self.catalog)
+        self.assertEqual(migrate_text(once, self.catalog), once)
 
     def test_check_mode_reports_and_keeps_old_documents(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

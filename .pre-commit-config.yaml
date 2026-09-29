@@ -45,7 +45,7 @@ repos:
         additional_dependencies:
           - jsonschema==4.26.0
           - TatSu==5.24.0
-        files: ^(SCHEMA_VERSION|spec/(EBNF\.txt|openui\.json|openui\.schema\.json|README\.md|scopes/.*|bin/to_json/.*|bin/check_grammar_consistency/.*|conformance/.*)|tests/test_grammar_consistency\.py)$
+        files: ^(SCHEMA_VERSION|bin/openui_document\.py|spec/(EBNF\.txt|openui\.json|openui\.schema\.json|README\.md|scopes/.*|bin/to_json/.*|bin/check_grammar_consistency/.*|conformance/.*)|tests/test_grammar_consistency\.py)$
         pass_filenames: false
       - id: openui-spec-lint
         name: OpenUI spec-content lint

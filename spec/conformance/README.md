@@ -84,6 +84,8 @@ contract diagnostic.
   EBNF and the JSON Schema. Both must accept every valid document and every
   invalid document whose diagnostics are not `grammar/`, and both must reject
   every document with a `grammar/` diagnostic.
+- `tests/test_openui_document.py` runs the Python pipeline, `bin.openui_document`,
+  on every case and requires exactly the expected diagnostics.
 - `tests/test_conformance_suite.py` checks the layout: every file is in its
   place, every invalid document has its expected diagnostics, every
   expected-diagnostics file validates against the schema, every code has an

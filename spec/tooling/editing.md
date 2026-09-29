@@ -90,20 +90,50 @@ ng-openui-spec remove --input document.json --id newTable
 
 ## What it validates
 
-Every command validates the resulting document against two sources of truth:
+Every command validates the resulting document in the four stages of the
+[conformance suite](../conformance/README.md#stages):
 
-- **Shape** — the document is checked against
-  [`spec/openui.schema.json`](https://github.com/shlomoa/openui-spec/blob/main/spec/openui.schema.json),
-  which defines the required structure of any OpenUI document.
-- **Object types** — each object's `type` must exactly equal a literal `type`
+- **Grammar** — the document format of [`EBNF.txt`](../EBNF.txt) and its projection
+  [`spec/openui.schema.json`](https://github.com/shlomoa/openui-spec/blob/main/spec/openui.schema.json).
+- **Document** — every object `id` is unique, and the root `version` is the spec
+  version the tool implements.
+- **Catalog** — each object's `type` must exactly equal a literal `type`
   present in the canonical
   [`spec/openui.json`](https://github.com/shlomoa/openui-spec/blob/main/spec/openui.json)
   catalog. Unknown types, aliases, selectors, and implementation identifiers are
   rejected. The normative definition and instance-flexibility rules live in the
   [`Known object type`](../scopes/scope.md#known-object-type) glossary entry.
+- **Contract** — every attribute an object's type declares fits its
+  [value type](../README.md#value-types), and every literal element reference
+  names an element of an allowed type.
 
-The tool also rejects duplicate object `id` values, so every object in the
-document remains uniquely addressable.
+Each problem is a diagnostic: a stage-prefixed code (such as
+`catalog/unknown-type`), a JSON Pointer to the place and a message.
+
+## Parse, model and validate API
+
+The Python package exposes this API, and it passes the
+[conformance suite](../conformance/README.md#conformance-suite):
+
+| Python (`bin.openui_document`) | What it does                                                                              |
+| ------------------------------ | ----------------------------------------------------------------------------------------- |
+| `parse(text)`                  | Parses the text into a `Document`, or raises `OpenUiParseError` with grammar diagnostics. |
+| `validate(document, catalog)`  | Runs the document, catalog and contract stages; returns diagnostics.                      |
+| `validate_text(text, catalog)` | Runs every stage on text; a grammar diagnostic stops it.                                  |
+| `Catalog.load(path)`           | Loads a catalog; the default is the bundled `spec/openui.json`.                           |
+
+A `Document` has a `version` and a `root` `Element`. An `Element` has an `id`, a
+`type`, a JSON Pointer `path`, its `attributes` and its `children`. An `Attribute`
+has its `key`, `category` (`uses`, `produces`, `behaves` or none), `name`, raw
+`value` and `path`, and tells whether the value is an expression or a literal.
+
+```python
+from bin.openui_document import parse, validate
+
+document = parse(open("input.json", encoding="utf-8").read())
+for diagnostic in validate(document):
+    print(diagnostic.code, diagnostic.path, diagnostic.message)
+```
 
 ## Usage
 

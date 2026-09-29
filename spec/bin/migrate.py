@@ -24,39 +24,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-CATALOG_PATH = REPO_ROOT / "spec" / "openui.json"
+from bin.openui_document import Catalog
+
 OLD_KEY = re.compile(r"^(?P<open>[\[(])(?P<name>[a-z][A-Za-z0-9]*)(?P<close>[\])])$")
 NUMBER = re.compile(r"^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?$")
 LITERAL_TYPES = {"boolean", "integer", "number"}
-
-# type literal -> attribute name -> (category prefix, declared value type or None)
-Contracts = dict[str, dict[str, tuple[str, str | None]]]
-
-
-def catalog_contracts(catalog: dict[str, Any]) -> Contracts:
-    """Return the declared attributes of every known type in the catalog.
-
-    A leaf's attributes sit on its instance node; they also apply to the leaf's
-    scope type, which names the same object.
-    """
-    contracts: Contracts = {}
-
-    def visit(node: dict[str, Any], parent: dict[str, Any] | None) -> None:
-        declared = {
-            key.split(".", 1)[1]: (key.split(".", 1)[0], value)
-            for key, value in (node.get("attrs") or {}).items()
-            if "." in key
-        }
-        if declared:
-            contracts.setdefault(node["type"], {}).update(declared)
-            if parent is not None and node["id"] == f"{parent['id']}Instance":
-                contracts.setdefault(parent["type"], {}).update(declared)
-        for child in node.get("children", []):
-            visit(child, node)
-
-    visit(catalog, None)
-    return contracts
 
 
 def _convert_value(value: Any, value_type: str | None) -> Any:
@@ -71,11 +43,11 @@ def _convert_value(value: Any, value_type: str | None) -> Any:
     return value
 
 
-def migrate_element(element: dict[str, Any], contracts: Contracts) -> None:
+def migrate_element(element: dict[str, Any], catalog: Catalog) -> None:
     """Migrate the attribute keys and values of *element* and its children in place."""
     attrs = element.get("attrs")
     if isinstance(attrs, dict):
-        declared = contracts.get(element.get("type", ""), {})
+        declared = catalog.contracts.get(element.get("type", ""), {})
         migrated: dict[str, Any] = {}
         for key, value in attrs.items():
             match = OLD_KEY.fullmatch(key)
@@ -83,23 +55,23 @@ def migrate_element(element: dict[str, Any], contracts: Contracts) -> None:
                 migrated[key] = value
                 continue
             name = match.group("name")
-            category, value_type = declared.get(name, (None, None))
+            declaration = declared.get(name)
+            category = declaration.category if declaration else None
             if match.group("open") == "[":
-                migrated[f"uses.{name}"] = _convert_value(
-                    value, value_type if category == "uses" else None
-                )
+                value_type = declaration.value_type if category == "uses" else None
+                migrated[f"uses.{name}"] = _convert_value(value, value_type)
             else:
                 prefix = "behaves" if category == "behaves" else "produces"
                 migrated[f"{prefix}.{name}"] = value
         element["attrs"] = migrated
     for child in element.get("children", []):
-        migrate_element(child, contracts)
+        migrate_element(child, catalog)
 
 
-def migrate_text(text: str, contracts: Contracts) -> str:
+def migrate_text(text: str, catalog: Catalog) -> str:
     """Return the migrated JSON text of one document."""
     document = json.loads(text)
-    migrate_element(document, contracts)
+    migrate_element(document, catalog)
     return json.dumps(document, ensure_ascii=False, indent=2) + "\n"
 
 
@@ -131,12 +103,12 @@ def main(argv: list[str] | None = None) -> int:
         "--check", action="store_true", help="report files that need migration; change nothing"
     )
     args = parser.parse_args(argv)
-    contracts = catalog_contracts(json.loads(CATALOG_PATH.read_text(encoding="utf-8")))
+    catalog = Catalog.load()
 
     pending = []
     for path in _documents(args.files):
         text = path.read_text(encoding="utf-8")
-        migrated = migrate_text(text, contracts)
+        migrated = migrate_text(text, catalog)
         if json.loads(migrated) == json.loads(text):
             continue
         pending.append(path)
