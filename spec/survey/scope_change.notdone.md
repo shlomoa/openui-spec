@@ -2,11 +2,6 @@
 
 Content of [`scope_change.done.md`](scope_change.done.md#summary) that is not applied yet.
 
-## Deferred
-
-- **Attribute names and other machine keys** for the new capabilities: they wait on the
-  language decisions (W5 tasks 19–23) and are added in W6 task 25.
-
 ## Out of v1
 
 Not applied, by plan question Q9 (decided 2026-09-29: out of v1):
