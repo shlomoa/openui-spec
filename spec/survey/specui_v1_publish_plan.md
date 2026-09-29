@@ -41,16 +41,16 @@ Ten workstreams in three layers: consolidate the foundations (W1–W5), write th
 
 | # | Workstream | Question it answers | Main deliverable |
 | --- | --- | --- | --- |
-| W0 | Survey consolidation | What do HTML, openui5, Qt and Angular Material call and group each UI artifact, and which proposed scopes are accepted? | Approved change files in `spec/survey/` (terminology, category, taxonomy mapping, scope, architecture, structure, schema) |
-| W1 | Terminology | Which word does OpenUI use, and what does it mean? | Glossary v1 + cross-framework alias table |
-| W2 | Scope | What is the spec, what is in, what is out? | Normative scope statement (in / out / deferred) |
-| W3 | UI categorization | What is the single most natural way to group UI artifacts? | One taxonomy; the other two re-expressed as informative views |
-| W4 | Specification structure | How is the spec document organized? | Numbered outline with normative/informative parts; file layout |
-| W5 | UI description language | How does an author describe a UI? | Grammar v1.0 (EBNF + JSON Schema), binding/event/i18n rules, versioning policy |
-| W6 | Draft first spec | — | v1.0.0-rc.1 spec text + regenerated catalog (*directive, Q3:* released as `0.x.0` until downstream validation) |
-| W7 | Documentation | — | Updated README, REQUIREMENTS, CONTRIBUTING, AGENTS/CLAUDE, CHANGELOG, Read the Docs site |
-| W8 | Spec utilities | Can tools parse, model and validate v1.0? | Python + TS parse/model/validate APIs passing one conformance suite |
-| W9 | Validation | Is every change checked the same way everywhere? | Format + lint + spec-content lint + tests in CI on Linux and Windows |
+| W0 | [ ] Survey consolidation | What do HTML, openui5, Qt and Angular Material call and group each UI artifact, and which proposed scopes are accepted? | Approved change files in `spec/survey/` (terminology, category, taxonomy mapping, scope, architecture, structure, schema) |
+| W1 | [ ] Terminology | Which word does OpenUI use, and what does it mean? | Glossary v1 + cross-framework alias table |
+| W2 | [ ] Scope | What is the spec, what is in, what is out? | Normative scope statement (in / out / deferred) |
+| W3 | [ ] UI categorization | What is the single most natural way to group UI artifacts? | One taxonomy; the other two re-expressed as informative views |
+| W4 | [ ] Specification structure | How is the spec document organized? | Numbered outline with normative/informative parts; file layout |
+| W5 | [ ] UI description language | How does an author describe a UI? | Grammar v1.0 (EBNF + JSON Schema), binding/event/i18n rules, versioning policy |
+| W6 | [ ] Draft first spec | — | v1.0.0-rc.1 spec text + regenerated catalog (*directive, Q3:* released as `0.x.0` until downstream validation) |
+| W7 | [ ] Documentation | — | Updated README, REQUIREMENTS, CONTRIBUTING, AGENTS/CLAUDE, CHANGELOG, Read the Docs site |
+| W8 | [ ] Spec utilities | Can tools parse, model and validate v1.0? | Python + TS parse/model/validate APIs passing one conformance suite |
+| W9 | [ ] Validation | Is every change checked the same way everywhere? | Format + lint + spec-content lint + tests in CI on Linux and Windows |
 
 ```mermaid
 flowchart LR
@@ -227,11 +227,11 @@ Five GitHub milestones, each ending with a tagged release and a visible web page
 
 | Milestone | Release | Tasks | Exit criterion | Visual demo |
 | --- | --- | --- | --- | --- |
-| M1 Guard rails | `0.4.0` | 1–3 | CI green on Linux and Windows with spec-content lint | Lint report page |
-| M2 Survey consolidated | `0.5.0` | 4–6 | All consolidated change files approved | The change files in `spec/survey/` |
-| M3 Foundations agreed | `0.6.0` | 7–19 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
-| M4 Language frozen | `0.7.0` | 20–24, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
-| M5 v1.0.0 published | `1.0.0` | 25–31, 35 | Packages at 1.0.0 on PyPI + npm; docs live | Published spec site with rendered examples |
+| [ ] M1 Guard rails | `0.4.0` | 1–3 | CI green on Linux and Windows with spec-content lint | Lint report page |
+| [ ] M2 Survey consolidated | `0.5.0` | 4–6 | All consolidated change files approved | The change files in `spec/survey/` |
+| [ ] M3 Foundations agreed | `0.6.0` | 7–19 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
+| [ ] M4 Language frozen | `0.7.0` | 20–24, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
+| [ ] M5 v1.0.0 published | `1.0.0` | 25–31, 35 | Packages at 1.0.0 on PyPI + npm; docs live | Published spec site with rendered examples |
 
 *Directive (Q3):* M5's `1.0.0` release waits on downstream validation; until then each milestone ships a `0.x.0` release.
 
@@ -243,25 +243,25 @@ The execution stack, top first. A step starts when the steps it depends on are d
 
 | # | Step | Plan tasks | Depends on | Status |
 | --- | --- | --- | --- | --- |
-| 1 | Guard rails: tooling folder, spec-content lint framework, link checker | W9 1, 2.2, 2.4, 2.5, 3.1 | — | Done |
-| 1 | Remove stale file references from `AGENTS.md` | W9 3.2 | — | Done |
-| 1 | Category decisions in [`category.md`](category.done.md#summary) | W3 13 | — | Done |
-| 1 | Matrix decision (not built) | W0 5 | — | Done |
-| 1 | Scope reconciliation | W0 6 | — | Done |
-| 2 | UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Done |
-| 2 | Move the glossary to its final location | W1 7 | — | Done |
-| 3 | Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, three new Behaviors scopes, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Step 2 | Done |
-| 4 | Add the missing terms to their scope Purposes; regenerate and version; generate the examples for the new additions from the consolidated data; validate; release `0.x.0` | W1 9.13, 9.7, 9.10–9.12, 9.8; W3 14.7, in this order | Step 3 | Open |
-| 4 | Keep and align the taxonomy documents: record the reversal, move them to `spec/taxonomy/`, state their roles, refresh and extend the UI element taxonomy, refresh the generic taxonomy | W3 14.6, 14.8–14.11 | Step 3 | Open |
-| 4 | Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Done |
-| 5 | Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 3 | Open |
-| 5 | Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | W1 9 | Open |
-| 6 | Scope statement and in / out classification; answers Q9 and Q13 | W2 10–12 | W1 9, W0 6 | Open |
-| 7 | Map leaf scopes to the categories; rename or move scope folders | W3 14.12, 15 | Steps 4, 6 | Open |
-| 8 | Specification outline and normative split | W4 16–18 | Step 7 | Open |
-| 9 | Draft the spec, enrich leaves from the survey inventories, `1.0.0-rc.1` | W6 24–26 | Steps 5, 8 | Open |
-| 9 | Conformance suite and Python / TypeScript utilities | W8 32–34 | W5 23 | Open |
-| 10 | Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 9 | Open |
+| 1 | [ ] Guard rails: tooling folder, spec-content lint framework, link checker | W9 1, 2.2, 2.4, 2.5, 3.1 | — | Done |
+| 1 | [ ] Remove stale file references from `AGENTS.md` | W9 3.2 | — | Done |
+| 1 | [ ] Category decisions in [`category.md`](category.done.md#summary) | W3 13 | — | Done |
+| 1 | [ ] Matrix decision (not built) | W0 5 | — | Done |
+| 1 | [ ] Scope reconciliation | W0 6 | — | Done |
+| 2 | [ ] UI element taxonomy merge proposal and its approval | W3 14.1, 14.2 | Step 1 category decisions (target subcategories) | Done |
+| 2 | [ ] Move the glossary to its final location | W1 7 | — | Done |
+| 3 | [ ] Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, three new Behaviors scopes, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Step 2 | Done |
+| 4 | [ ] Add the missing terms to their scope Purposes; regenerate and version; generate the examples for the new additions from the consolidated data; validate; release `0.x.0` | W1 9.13, 9.7, 9.10–9.12, 9.8; W3 14.7, in this order | Step 3 | Open |
+| 4 | [ ] Keep and align the taxonomy documents: record the reversal, move them to `spec/taxonomy/`, state their roles, refresh and extend the UI element taxonomy, refresh the generic taxonomy | W3 14.6, 14.8–14.11 | Step 3 | Open |
+| 4 | [ ] Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Done |
+| 5 | [ ] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 3 | Open |
+| 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | W1 9 | Open |
+| 6 | [ ] Scope statement and in / out classification; answers Q9 and Q13 | W2 10–12 | W1 9, W0 6 | Open |
+| 7 | [ ] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, 15 | Steps 4, 6 | Open |
+| 8 | [ ] Specification outline and normative split | W4 16–18 | Step 7 | Open |
+| 9 | [ ] Draft the spec, enrich leaves from the survey inventories, `1.0.0-rc.1` | W6 24–26 | Steps 5, 8 | Open |
+| 9 | [ ] Conformance suite and Python / TypeScript utilities | W8 32–34 | W5 23 | Open |
+| 10 | [ ] Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 9 | Open |
 
 *Directive (Q3):* the `1.0.0-rc.1` of step 9 and the `1.0.0` of step 10 wait on downstream validation; until then each release is `0.x.0` / `0.x.y`.
 
