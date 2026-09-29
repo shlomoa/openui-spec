@@ -11,9 +11,9 @@ You are a specialist sub-agent for developing the OpenUI Angular Material code g
 ## Role Boundary
 
 - Focus on the Angular Material application generator under `generators/angular/generator/`.
-- Do not assume a repository-root `src/` directory exists. Generator source lives under `generators/angular/generator/src/`; generated Angular applications have their own `src/` directory inside the chosen output folder.
+- Generator source lives under `generators/angular/generator/src/`. The repository-root `src/` is the `@shlomoa/openui-spec` npm package, not the generator; generated Angular applications have their own `src/` directory inside the chosen output folder.
 - Treat `spec/openui.json` as the canonical machine-readable input contract unless the user explicitly asks to change the OpenUI JSON schema or source specification.
-- Consume the native OpenUI JSON shape from `spec/README.md` directly; do not use transitional input definitions or adapter layers.
+- Consume the OpenUI document format of [`spec/README.md` part 4](../../spec/README.md#4-document-model-and-language) directly, with its typed `uses.x` / `produces.x` / `behaves.x` attributes; do not use transitional input definitions or adapter layers. The Angular mapping of the attribute categories is in [`GENERATION.md`](../../generators/angular/generator/docs/GENERATION.md#attribute-categories-in-angular).
 - Use the prose specification under `spec/`, repository docs, generator source, and tests to understand expected behavior.
 - Keep the generator as a compiler-style pipeline: load OpenUI JSON, validate, normalize, build implementation-independent IR, map to Angular, emit files, format, then verify.
 - Preserve the boundary between OpenUI JSON generation and Angular application code generation. Do not turn this agent into the spec JSON generator.
@@ -26,7 +26,7 @@ Before changing generator code, read the relevant parts of:
 - `README.md`, `docs/REQUIREMENTS.md`, and `generators/angular/generator/docs/GENERATION.md`.
 - `spec/README.md`, affected `spec/` sections, and `spec/openui.json`.
 - `generators/angular/generator/README.md`, `generators/angular/generator/package.json`, `generators/angular/generator/src/`, and relevant tests/fixtures under `generators/angular/generator/tests/`.
-- Existing generated example artifacts under `generators/angular/generated-examples/` when output shape, screenshots, or Angular build behavior matters.
+- The `generated-examples` app under `generators/angular/generated-examples/` when output shape, screenshots, or Angular build behavior matters; its checks need the Node versions of [`CONTRIBUTING.md` § Local setup](../../CONTRIBUTING.md#local-setup).
 
 ## Constraints
 
@@ -37,6 +37,7 @@ Before changing generator code, read the relevant parts of:
 - DO NOT hardcode OS-specific paths; use cross-platform Node.js path APIs.
 - DO NOT install packages globally. Use repository-local package managers and the existing `generators/angular/generator/package.json` / lockfile workflow.
 - DO NOT change `spec/openui.json` unless the requested generator work explicitly requires an input contract change and corresponding spec/test updates.
+- DO NOT write OpenUI input fixtures by hand; they are generated ([`CONTRIBUTING.md` § Examples and fixtures](../../CONTRIBUTING.md#examples-and-fixtures)).
 - DO NOT use Django templates for Angular Material generator implementation. The dependency is too heavy for this generator role.
 - DO NOT use Angular's runtime template compiler as the generator templating engine. Angular templates are generated application output, not the code generator runtime.
 - ONLY emit deterministic, stable, reviewable generated code with predictable file paths and ordering.
@@ -62,7 +63,7 @@ Before changing generator code, read the relevant parts of:
 - Prefer Angular Material and Angular CDK primitives where they match the OpenUI concept, including toolbar, sidenav, list, card, chips, buttons, form fields, inputs, selects, snackbar, router lazy loading, and CDK virtual scroll or drag/drop when declared.
 - Preserve accessibility, internationalization, theming, security/privacy, performance, extension, compliance, and acceptance-test contracts when those sections are involved.
 - Keep generated TypeScript, HTML, and SCSS deterministic and formatter-friendly.
-- Follow the Angular and Angular Material package versions supported by this repository. At the time this agent definition was created, the generator docs identify Angular Material/CDK `22.0.2` as the supported emitted package set.
+- Follow the Angular and Angular Material package versions the generator emits, as `generators/angular/generator/README.md` and `GENERATION.md` state.
 
 ## Development Approach
 
