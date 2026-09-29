@@ -28,7 +28,7 @@ Re-checked on 2026-09-29 on `main` after PR #170 (`0.8.0`): workstreams W0–W5 
 | Terminology | Glossary in [`spec/scopes/scope.md`](../scopes/scope.md#glossary), with "Same name, different meaning" notes; the approved [`terminology.md`](../scopes/terminology.md#summary) is applied; the alias table is four columns of the taxonomy mapping (HTML / WAI-ARIA, OpenUI5, Qt, Angular Material) | None |
 | Scope | The `## Scope` section of `spec/README.md` (in scope, out of scope, deferred) and the classification in [`scope_statement.md`](scope_statement.md#scope-statement) | None |
 | Categorization | One taxonomy in three spec documents with one owner for each fact; one primary category for each placed leaf scope; the interactive taxonomy tree (`spec/taxonomy/taxonomy-tree.html`) with a per-framework overlay | None |
-| Structure | A numbered outline (six parts, three annexes), the Conformance section with BCP 14 keywords and the normative / informative marking, in `spec/README.md` and [`outline.done.md`](outline.done.md) | The spec text is not rewritten per the outline yet (W6 24) |
+| Structure | A numbered outline (six parts, three annexes), the Conformance part with BCP 14 keywords and the normative / informative marking; `spec/README.md` is written to it (W6 24, `0.9.0`) | None |
 | Language | Typed attributes: `uses.x` / `produces.x` / `behaves.x` keys and typed values, in `EBNF.txt`, the JSON Schema and the catalog ([`language_change.done.md`](language_change.done.md)); `spec/bin/migrate.py`; the playground page | None for v1 (internationalization postponed) |
 | Catalog | 50 leaf scopes, each with an evidence row, a worked example and generator fixtures; 17 leaves have no Child model and 8 no Attributes section | Enrich the leaves (W6 25) |
 | Utilities | Python `bin/openui_document.py` and TypeScript `src/document.ts` parse, model and validate with identical results on the conformance suite (`spec/conformance/`) | Publish `1.0.0` (W8 35) |
@@ -233,7 +233,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 ### W6 Draft first spec
 
-24. [ ] Rewrite the spec per W4 outline, using W1–W5 outputs. *In progress — chain A, branch claude/w6-24-spec-draft.*
+24. [x] Rewrite the spec per W4 outline, using W1–W5 outputs. Result: `spec/README.md` follows the numbered parts 1–6 and Annexes A–C of the [outline](outline.done.md#1-outline) (no file split, as its file layout states), part 2 names the conformance targets, each rule is written once (duplicates removed from `spec/scopes/scope.md`), the stale Angular wording and example are gone, and normative requirements use BCP 14 capitals; released as `0.9.0` ([PR #172](https://github.com/shlomoa/openui-spec/pull/172)).
 25. [ ] Enrich each leaf scope (Attributes, Child model) from the survey inventories and the alias table (W1 task 9.9); add evidence rows. Include the contract items the change files deferred to this task: the chart kind, legend and annotation of Chart, the message severity of Feedback widgets and repeat-while-pressed of Action controls ([`ui_element_taxonomy_merge_proposal.notdone.md`](ui_element_taxonomy_merge_proposal.notdone.md#chart-contract)); the attribute names of the new capabilities ([`scope_change.notdone.md`](scope_change.notdone.md#deferred)); and the Qt "Enhance" rows ([`taxonomy_mapping_change.notdone.md`](taxonomy_mapping_change.notdone.md#deferred)).
 26. [ ] Regenerate `openui.json`, bump to `1.0.0-rc.1`, migrate all examples and fixtures. *Directive (Q3):* bump to the next `0.x.0` instead; `1.0.0-rc.1` waits on downstream validation.
     - 26.1 [ ] Downstream validation (added 2026-09-29): hand the `0.x.0` release of task 26 to angular-django2 (#98/#103 TS parser) and django-angular3, have them build on it, and record their results and any spec issues they find in the plan. This is the downstream validation directive Q3 waits on; tasks 27, 29 and 35 start after it. *Validate:* each downstream project reports its result, and each spec issue it finds is fixed or recorded as a task.
@@ -295,7 +295,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 6 | [ ] Enrich each leaf scope from the survey inventories and the alias table | W6 25 | W1 9.9 (step 5); W5 19–23 (step 5) | Open |
 | 7 | [x] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, then 15 | Step 4 taxonomy row; W2 11 (step 6) | Done |
 | 8 | [x] Specification outline and normative split | W4 16, then 17 | Step 7 | Done |
-| 9 | [ ] Draft the spec per the outline | W6 24 | Step 8; step 5 language row (W5 19–23) | In progress — chain A |
+| 9 | [x] Draft the spec per the outline | W6 24 | Step 8; step 5 language row (W5 19–23) | Done — PR #172 (`0.9.0`) |
 | 9 | [x] Conformance suite and Python / TypeScript utilities | W8 32 (finish the suite), 33, 34 | W5 23 | Done — PR #169 (`0.6.0`) |
 | 10 | [ ] Regenerate, migrate all examples and fixtures, `1.0.0-rc.1` | W6 26 | W6 24, 25; W5 23 | Open |
 | 11 | [ ] Downstream validation of the step 10 release | W6 26.1 | Step 10 | Open |
