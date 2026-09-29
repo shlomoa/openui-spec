@@ -83,6 +83,27 @@ describe('Component documentation routing', () => {
     expect(root.querySelectorAll('.board-preview mat-card').length).toBe(3);
   });
 
+  it('renders the spec example nodes of approved terms on the Examples tab', async () => {
+    const harness = await RouterTestingHarness.create('/components/behaviors/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+
+    expect(root.querySelector('h1')?.textContent).toContain('Behaviors');
+    expect(root.querySelectorAll('.spec-addition-preview').length).toBe(6);
+    expect(root.textContent).toContain('Text completion');
+    expect(root.textContent).toContain('type: InputAssistance');
+    expect(root.textContent).toContain('id: modalInteraction');
+    expect(root.textContent).toContain('[target]: "confirmDeleteDialog"');
+    expect(root.textContent).toContain('spec/examples/Behaviors/modal_overlay.example.json');
+  });
+
+  it('renders spec example children in the node preview', async () => {
+    const harness = await RouterTestingHarness.create('/components/feedback/examples');
+    const root = harness.routeNativeElement as HTMLElement;
+
+    expect(root.textContent).toContain('Progress dialog');
+    expect(root.textContent).toContain('progressDialogContent: section');
+  });
+
   it('renders styling guidance on the Styling tab', async () => {
     const harness = await RouterTestingHarness.create('/components/form/styling');
     const root = harness.routeNativeElement as HTMLElement;

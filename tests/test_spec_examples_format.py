@@ -126,6 +126,30 @@ class SpecExamplesFormatTest(unittest.TestCase):
                 document = json.loads(example_path.read_text(encoding="utf-8"))
                 self.assertIn(_term_id(term), _document_ids(document))
 
+    def test_generated_examples_app_shows_every_addition_node(self) -> None:
+        """The app's addition data mirrors the nodes of the spec examples (plan W1 9.12)."""
+        app_data = GENERATED_EXAMPLES_ADDITIONS.read_text(encoding="utf-8")
+        scope_of = _mapping_scopes()
+        checked = 0
+        for term in _addition_terms():
+            scope_path = scope_of.get(term)
+            if scope_path is None:
+                continue
+            source = "spec/examples/" + scope_path.replace(".scope.md", ".example.json").replace(
+                "scope.md", "scope.example.json"
+            )
+            document = json.loads((REPO_ROOT / source).read_text(encoding="utf-8"))
+            node = next(n for n in _descendants(document) if n["id"] == _term_id(term))
+            with self.subTest(term=term):
+                pattern = (
+                    rf"term: '{re.escape(term)}',\s+preview: '[a-z0-9-]+',\s+"
+                    rf"source: '{re.escape(source)}',\s+node: \{{\s*"
+                    rf"id: '{node['id']}',\s+type: '{node['type']}'"
+                )
+                self.assertRegex(app_data, pattern)
+                checked += 1
+        self.assertEqual(app_data.count("    term: '"), checked)
+
 
 ADDITION_SOURCES = (
     SCOPES_DIR / "terminology.md",
@@ -133,6 +157,16 @@ ADDITION_SOURCES = (
     SPEC_DIR / "survey" / "ui_element_taxonomy_merge_proposal.done.md",
 )
 EXAMPLE_LEVELS = ("Alias", "Grouped leaf")
+GENERATED_EXAMPLES_ADDITIONS = (
+    REPO_ROOT
+    / "generators"
+    / "angular"
+    / "generated-examples"
+    / "src"
+    / "app"
+    / "documentation"
+    / "spec-additions.ts"
+)
 MARKDOWN_LINK_RE = re.compile(r"\[([^\]]*)\]\(([^)]*)\)")
 
 

@@ -28,6 +28,12 @@ scope, mirroring [`spec/scopes/`](../../../spec/scopes). Those documents are the
 source of truth for what this app documents; the app manifests them, it does not
 regenerate them.
 
+`src/app/documentation/spec-additions.ts` holds the nodes the spec examples show
+for the approved terms, as written in their `spec/examples` documents. Each node
+is one example of the component it belongs to, rendered as a Material card. The
+root test `tests/test_spec_examples_format.py` checks that the file matches the
+spec examples.
+
 ## Incremental generation
 
 The Angular generator supports incremental operation as defined in
@@ -66,12 +72,14 @@ documentation data model and the component-viewer routing/tabs:
   example, API content is derived from a spec document and styling is present,
   and specific specification sections (UI concept model, application structure,
   layout system, state model, acceptance criteria) are documented with generated
-  examples.
+  examples, and every spec example node of an approved term is an example of its
+  component.
 - `components/component-viewer/component-viewer.spec.ts` — the `/components`
   landing lists components; a component renders API, Examples, and Styling tabs;
   the API tab is sourced from the spec by default; and the per-concept Examples
   previews (structure, layout, binding, interaction, accessibility, performance,
-  compliance, internationalization, reference, extension) render correctly.
+  compliance, internationalization, reference, extension) and the spec example
+  node previews render correctly.
 
 These app-specific checks are documented here as their SSOT. For the Angular
 generator architecture and generator package validation strategy, see
