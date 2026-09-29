@@ -66,16 +66,18 @@ packages, every release is a `0.x.0` or `0.x.y` version, and there is no release
 candidate (directive Q3 of the
 [v1 publish plan](spec/survey/specui_v1_publish_plan.md#goal-and-definition-of-done)):
 
-| Change                                                 | Version                          |
-| ------------------------------------------------------ | -------------------------------- |
-| Any specification change                               | the next free minor, `0.x.0`     |
-| A package change that changes no specification content | the next patch, `0.x.y`          |
-| `1.0.0-rc.1` and `1.0.0`                               | only after downstream validation |
+The npm and PyPI packages take the spec's version (owner decision, 2026-09-29):
+
+| Change                                                 | Version                                                 |
+| ------------------------------------------------------ | ------------------------------------------------------- |
+| Any specification change                               | the next free minor, `0.x.0`, for the spec and packages |
+| A package change that changes no specification content | the next patch, `0.x.y`, for the packages only          |
+| `1.0.0-rc.1` and `1.0.0`                               | only after downstream validation                        |
 
 "Next free" is counted against `main` at merge time. If `main` releases the version
 your branch took, merge `main` into the branch and take the next one.
 
-Set the same version in `[project].version` of [`pyproject.toml`](pyproject.toml),
+Set the package version in `[project].version` of [`pyproject.toml`](pyproject.toml),
 in `version` of [`package.json`](package.json) and of
 `generators/angular/generator/package.json`, and in their lockfiles. Add the release
 entry, with its compare link, to [`CHANGELOG.md`](CHANGELOG.md). The publication
@@ -83,13 +85,12 @@ workflows do not publish the Angular generator as a separate package.
 
 ### Schema and catalog version changes
 
-The package version and the OpenUI schema/catalog version are separate
-contracts. **Every spec change forces a version bump.** A change to the
+**Every spec change forces a version bump.** A change to the
 specification prose under `spec/scopes/`, the grammar, the schema, or the catalog
 contracts cannot be merged under an unchanged version:
 
 - **Mandatory version bump**: Update [`SCHEMA_VERSION`](SCHEMA_VERSION) to the
-  version of stage 2. The packages take the same version.
+  version of stage 2, the same as the packages.
 - **Catalog alignment**: Regenerate [`spec/openui.json`](spec/openui.json) with
   `python -m spec.bin.to_json --spec-dir spec --output spec/openui.json`, so that its
   root `version` matches `SCHEMA_VERSION`.
