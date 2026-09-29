@@ -1,17 +1,16 @@
 # Scopes
 
-The `scopes` folder is the hierarchical source for OpenUI scope objects. Each top-level folder is a scope, and each child object is either another scope folder or a snake_case `*.scope.md` leaf file.
-Shared vocabulary, aliases, and canonical meanings for terms such as object,
-element, control, widget, view, container, behavior, table, grid, and button are
-defined in the [glossary](#glossary). Scope files specialize
-those terms for concrete object contracts rather than redefining them.
-The [taxonomy mapping](taxonomy_mapping.md) maps entries from
-the [generic UI taxonomy](../taxonomy/generic-ui-taxonomy.md) to these scope objects and records whether each
-entry is an existing object, alias, grouped leaf, or folder-level abstraction.
-The [terminology](terminology.md) records the approved term changes, with their
-evidence and the canonical-term rule. The taxonomy and the scope tree are linked views of one vocabulary. The taxonomy
-groups terms by purpose; the scope tree organizes contracts. A new taxonomy section
-or subcategory does not create a scope folder, type or contract.
+The `scopes` folder is the hierarchical source for OpenUI scope objects. Each top-level
+folder is a scope, and each child object is either another scope folder or a snake_case
+`*.scope.md` leaf file. Scope files specialize the glossary terms for concrete object
+contracts rather than redefining them. The taxonomy and the scope tree are linked views of
+one vocabulary: the taxonomy groups terms by purpose, and the scope tree organizes
+contracts. A new taxonomy section or subcategory does not create a scope folder, type or
+contract. The [taxonomy mapping](taxonomy_mapping.md) links each taxonomy entry to its
+scope object.
+
+This page holds two parts of the [specification](../README.md#outline): the scope tree
+and its folder rules (part 5.4) and the [glossary](#glossary) (part 3, Terminology).
 
 ## Taxonomy documents
 
@@ -31,7 +30,7 @@ The rest of the spec keeps its own facts:
   `QDockWidget`, are not glossary aliases; a taxonomy entry's framework names belong on its
   row in the taxonomy mapping.
 - The scope files keep the object contracts.
-- A taxonomy description may not contradict the glossary or a scope file.
+- A taxonomy description MUST NOT contradict the glossary or a scope file.
 
 ## Top-level scopes
 
@@ -60,58 +59,23 @@ A leaf object with no child objects is represented as:
 
 Top-level scope folder names use Pascal Case. Leaf filenames use snake_case.
 
-A broad grouped leaf may become a family folder with its own child contracts only with
+A broad grouped leaf MAY become a family folder with its own child contracts only with
 an explicit map from old to new paths, ids and types. A folder and a leaf with the same
-name must not produce the same id.
+name MUST NOT produce the same id.
 
-## Object serialization rules
+## Object contracts and the catalog
 
-Scope objects follow the JSON shape defined in `../README.md`:
-
-- `id` is a camelCase alphanumeric identifier.
-- `type` satisfies the grammar's kebab-case or PascalCase syntax. Each literal
-  emitted from the scope sources becomes part of the catalog's exact
-  [known-type set](#known-object-type).
-- `attrs` contains all non-hierarchical configuration.
-- `children` contains nested UI elements.
-- No loose object properties are allowed outside `attrs` except the structural fields defined by the spec.
-
-### Scope node and instance representation (generated `spec/openui.json`)
-
-`spec/openui.json` is generated from the prose scopes; it is not hand-authored. A leaf's contract is authored in its `*.scope.md` Attributes and Child model sections. When generated, each scope node is metadata-only (its `attrs` carry `title`, `purpose`, `scopeDocument`, and `status`) and the scope's object contract is represented by a single child instance node:
-
-- `id` is `<scopeId>Instance` (camelCase).
-- `type` is the exact semantic-category literal the scope materializes (for
-  example `dialog`, `input`, `table`, or a PascalCase category). The generated
-  literal is a known catalog type; framework selectors and aliases are not
-  substituted for it.
-- `attrs` carry the contract attributes by category — Uses `uses.name`, Produces `produces.name`, Behaves `behaves.name` — using the Attribute categories below. A Uses attribute's value is its declared [value type](../README.md#value-types); a Produces or Behaves attribute's value is `null`.
-- `children` carry the instance's typed child model.
-- The instance node has no `scopeDocument`; scope-document traceability stays on the scope node.
-
-## Attribute categories
-
-Scope object attributes are represented through `attrs` key syntax; the key prefix names the category:
-
-- **Uses** (`uses.name`): input attributes. These provide data, configuration, state, or references consumed by the object. A Uses attribute declares its [value type](../README.md#value-types).
-- **Produces** (`produces.name`): output attributes. These expose events, emitted values, notifications, or callbacks produced by the object.
-- **Behaves** (`behaves.name`): behavior attributes. These describe actions or side effects, such as setting another attribute value, running a callback, or invoking target-framework logic.
-
-A generator maps each category to its target framework; for example, an Angular generator emits `[name]` for a Uses attribute and `(name)` for a Produces or Behaves attribute. The base OpenUI scope model does not execute attribute values.
-
-## Leaf scope template
-
-Every leaf `*.scope.md` (a scope with no child objects) uses the single shared
-[`template.scope.md`](template.scope.md), which is the source of truth for leaf
-structure: leaf files fill its sections and do not redefine them. The template's
-three machine-bearing sections (Identity, Attributes, Child model) parse
-deterministically into a scope node plus its `<scopeId>Instance`; the section
-grammar and field mapping are documented in [`../README.md`](../README.md).
+Each scope file is the contract of one object. The document format its objects use is
+[part 4](../README.md#4-document-model-and-language) of the specification. Every leaf
+`*.scope.md` (a scope with no child objects) fills the sections of the single shared
+[`template.scope.md`](template.scope.md) and does not redefine them. The catalog,
+`spec/openui.json`, is generated from the scope files as
+[part 6](../README.md#6-catalog) states.
 
 ## Glossary
 
 This glossary is the repository source of truth for OpenUI vocabulary. Other
-documents may classify, specialize, or illustrate these terms, but should link
+documents MAY classify, specialize, or illustrate these terms, but SHOULD link
 here instead of redefining them. A term may have several generic aliases; the
 canonical term below is the preferred OpenUI wording.
 
@@ -277,7 +241,8 @@ generated framework selectors and class names are implementation details.
 Known type membership does not impose per-type attribute or child restrictions.
 Any number of elements may use the same known type while differing in globally
 unique `id`, typed `attrs`, and compositions of known-type `children`,
-subject only to the common OpenUI grammar. Specialized or complex UI is modeled
+subject to the common OpenUI grammar and the declared
+[value types](../README.md#46-value-types) of their attributes. Specialized or complex UI is modeled
 by selecting the closest known semantic categories and preserving distinctions
 through instance ids, attributes, and composition rather than inventing types.
 
@@ -392,16 +357,16 @@ command, switch device, or assistive technology command.
 
 A button is different from a link: a link navigates to a resource or location,
 while a button performs an operation in the current context. A button may look
-like a link, and a link may look like a button, but the semantic role should
-match the function. A button must expose an accessible name that describes the
+like a link, and a link may look like a button, but the semantic role SHOULD
+match the function. A button MUST expose an accessible name that describes the
 operation; icon-only buttons therefore need text, an accessibility label, or an
 equivalent name source. Keyboard users expect buttons to activate with Enter and
-Space. If the action is unavailable, the disabled state must be communicated and
-the action must not be invoked.
+Space. If the action is unavailable, the disabled state MUST be communicated and
+the action MUST NOT be invoked.
 
 Button variants refine the same base concept. An icon button is a button whose
 visible label is primarily an icon. A toggle button represents a persistent
-pressed/unpressed state and should expose that state without changing the
+pressed/unpressed state and SHOULD expose that state without changing the
 meaning of its label. A menu button opens a menu of commands; it is mapped to
 [Menu widgets](Widgets/menu_widgets.scope.md). A submit button
 commits form data. A destructive button performs a risky action and often needs
@@ -443,7 +408,7 @@ Grid is an overloaded term. In layout terminology, a grid is a structural
 arrangement of rows and columns used to align and size child content. In ARIA
 terminology, a grid is an interactive composite widget that provides directional
 keyboard navigation among cells and may represent either tabular data or a
-layout grouping of widgets. OpenUI documents must qualify the intended meaning
+layout grouping of widgets. OpenUI documents MUST qualify the intended meaning
 when the distinction matters: layout grid for arrangement, data grid for
 interactive tabular data, and table for static tabular data.
 
@@ -453,7 +418,7 @@ interactive tabular data, and table for static tabular data.
 
 A link is an interactive reference that navigates to another resource,
 location, route, document fragment, or application state. Its expected operation
-is navigation rather than command execution. Links should identify their target
+is navigation rather than command execution. Links SHOULD identify their target
 or purpose, support keyboard activation, and use native link semantics when the
 target platform provides them.
 
@@ -468,7 +433,7 @@ and data cells, not merely visual alignment. Accessible tables require structura
 markup or equivalent semantics that identify header cells and data cells and
 programmatically associate them. Captions, header scope, row and column groups,
 and explicit header references help users and assistive technologies understand
-the table's purpose and cell relationships. Tables must not be used as a generic
+the table's purpose and cell relationships. Tables MUST NOT be used as a generic
 layout mechanism; use layout containers for visual arrangement without tabular
 data semantics.
 

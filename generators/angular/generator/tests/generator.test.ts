@@ -180,7 +180,7 @@ test("treats the dialog fixture as concrete input without catalog traceability a
   const fixture = JSON.parse(await readFile(DIALOG_FIXTURE, "utf8"));
 
   // Artifact roles are defined by spec/README.md, section
-  // "Specification artifacts: grammar vs. catalog": concrete input nodes do not
+  // Spec part "4.1 Specification artifacts": concrete input nodes do not
   // carry generated catalog traceability such as attrs.scopeDocument.
   assert.equal(fixture.type, "Dialog");
   assertNoScopeDocumentAttrs(fixture);
