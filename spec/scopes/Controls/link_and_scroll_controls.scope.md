@@ -14,12 +14,15 @@ primitive controls rather than application navigation structures or composite wi
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This family inherits concrete
-target, current position, and range attributes from the selected platform control.
+Categories are defined in [`../scope.md`](../scope.md):
 
-## Child model
-
-Link and scroll controls do not define a fixed child model at this abstraction level.
+- `uses.label` — Uses — string — the link text and accessible name.
+- `uses.href` — Uses — url — the destination of a link.
+- `uses.value` — Uses — number — the current position of a scrollbar.
+- `uses.min` — Uses — number — the lowest scrollbar position.
+- `uses.max` — Uses — number — the highest scrollbar position.
+- `uses.orientation` — Uses — enum(horizontal|vertical) — the direction of a scrollbar.
+- `produces.activate` — Produces — emitted when a link is followed.
 
 ## Accessibility
 

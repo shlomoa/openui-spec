@@ -9,11 +9,10 @@ SCOPES_DIR = REPO_ROOT / "spec" / "scopes"
 
 ContractShape = tuple[str, tuple[str, ...], tuple[tuple[str, str], ...]]
 
+# Attributes and Child model may be omitted when the sources support none (template).
 REQUIRED_TEMPLATE_SECTIONS = (
     "## Identity",
     "## Purpose",
-    "## Attributes",
-    "## Child model",
 )
 
 NEW_GROUPED_LEAF_SCOPES = {
@@ -49,11 +48,6 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
         ("uses.dir", "uses.lang", "uses.title"),
         (("indexHtmlDocumentHead", "head"), ("indexHtmlDocumentBody", "body")),
     ),
-    "Application/navigation.scope.md": (
-        "Navigation",
-        ("uses.ariaLabel",),
-        (("navigationItem", "NavItem"), ("navigationGroup", "NavGroup")),
-    ),
     "Application/nav_group.scope.md": (
         "NavGroup",
         ("uses.expanded", "uses.label"),
@@ -63,6 +57,11 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
         "NavItem",
         ("uses.disabled", "uses.icon", "uses.label", "uses.route"),
         (),
+    ),
+    "Application/navigation.scope.md": (
+        "Navigation",
+        ("uses.ariaLabel",),
+        (("navigationItem", "NavItem"), ("navigationGroup", "NavGroup")),
     ),
     "Application/route.scope.md": (
         "Route",
@@ -90,15 +89,15 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
         (("toolBarsToolBarRow", "ToolBarRow"),),
     ),
     "Behaviors/collapsible.scope.md": ("Collapsible", ("uses.target",), ()),
+    "Behaviors/drag_and_drop.scope.md": ("DragAndDrop", ("uses.target",), ()),
     "Behaviors/input_assistance.scope.md": ("InputAssistance", ("uses.target",), ()),
     "Behaviors/modal_overlay.scope.md": ("ModalOverlay", ("uses.target",), ()),
+    "Behaviors/resizable.scope.md": ("Resizable", ("uses.target",), ()),
     "Behaviors/viewport_and_focus_control.scope.md": (
         "ViewportAndFocusControl",
         ("uses.target",),
         (),
     ),
-    "Behaviors/drag_and_drop.scope.md": ("DragAndDrop", ("uses.target",), ()),
-    "Behaviors/resizable.scope.md": ("Resizable", ("uses.target",), ()),
     "Containers/expandable_panels.scope.md": (
         "details",
         ("behaves.collapse", "behaves.expand"),
@@ -111,20 +110,111 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     "Containers/structural_containers.scope.md": ("StructuralContainers", (), ()),
     "Containers/surface_containers.scope.md": ("SurfaceContainers", (), ()),
     "Containers/tabs.scope.md": ("Tabs", (), (("tabsTab", "tab"),)),
-    "Controls/action_controls.scope.md": ("ActionControls", (), ()),
-    "Controls/choice_controls.scope.md": ("ChoiceControls", (), ()),
-    "Controls/display_primitives.scope.md": ("DisplayPrimitives", (), ()),
-    "Controls/drawing_and_capture.scope.md": ("DrawingAndCapture", (), ()),
-    "Controls/link_and_scroll_controls.scope.md": ("LinkAndScrollControls", (), ()),
+    "Controls/action_controls.scope.md": (
+        "ActionControls",
+        (
+            "produces.activate",
+            "uses.autoRepeat",
+            "uses.disabled",
+            "uses.icon",
+            "uses.label",
+            "uses.pressed",
+        ),
+        (),
+    ),
+    "Controls/choice_controls.scope.md": (
+        "ChoiceControls",
+        (
+            "produces.selectionChange",
+            "uses.checked",
+            "uses.disabled",
+            "uses.indeterminate",
+            "uses.label",
+            "uses.required",
+            "uses.selection",
+            "uses.value",
+        ),
+        (("choiceControlsOption", "option"),),
+    ),
+    "Controls/display_primitives.scope.md": (
+        "DisplayPrimitives",
+        ("uses.alt", "uses.decorative", "uses.for", "uses.orientation", "uses.src", "uses.text"),
+        (),
+    ),
+    "Controls/drawing_and_capture.scope.md": (
+        "DrawingAndCapture",
+        ("uses.height", "uses.label", "uses.width"),
+        (),
+    ),
+    "Controls/link_and_scroll_controls.scope.md": (
+        "LinkAndScrollControls",
+        (
+            "produces.activate",
+            "uses.href",
+            "uses.label",
+            "uses.max",
+            "uses.min",
+            "uses.orientation",
+            "uses.value",
+        ),
+        (),
+    ),
     "Controls/native.scope.md": (
         "input",
         ("uses.disabled", "uses.placeholder", "uses.type", "uses.value"),
         (),
     ),
-    "Controls/picker_control.scope.md": ("PickerControl", (), ()),
-    "Controls/range_control.scope.md": ("RangeControl", (), ()),
-    "Controls/status_indicator.scope.md": ("StatusIndicator", (), ()),
-    "Controls/text_inputs.scope.md": ("TextInputs", (), ()),
+    "Controls/picker_control.scope.md": (
+        "PickerControl",
+        (
+            "produces.valueChange",
+            "uses.accept",
+            "uses.disabled",
+            "uses.kind",
+            "uses.label",
+            "uses.multiple",
+            "uses.value",
+        ),
+        (),
+    ),
+    "Controls/range_control.scope.md": (
+        "RangeControl",
+        (
+            "produces.valueChange",
+            "uses.disabled",
+            "uses.end",
+            "uses.label",
+            "uses.max",
+            "uses.min",
+            "uses.orientation",
+            "uses.start",
+            "uses.step",
+            "uses.value",
+            "uses.wrapping",
+        ),
+        (),
+    ),
+    "Controls/status_indicator.scope.md": (
+        "StatusIndicator",
+        ("uses.label", "uses.max", "uses.min", "uses.mode", "uses.severity", "uses.value"),
+        (),
+    ),
+    "Controls/text_inputs.scope.md": (
+        "TextInputs",
+        (
+            "produces.valueChange",
+            "uses.disabled",
+            "uses.label",
+            "uses.maxLength",
+            "uses.multiline",
+            "uses.placeholder",
+            "uses.readOnly",
+            "uses.required",
+            "uses.type",
+            "uses.value",
+        ),
+        (),
+    ),
     "Pages/dashboard.scope.md": ("DashboardPage", (), ()),
     "Pages/empty_page.scope.md": ("EmptyPage", (), ()),
     "Pages/shell_page.scope.md": (
@@ -152,11 +242,7 @@ EXPECTED_ENRICHED_CONTRACTS: dict[str, ContractShape] = {
     "Widgets/dialog.scope.md": (
         "dialog",
         ("produces.cancel", "produces.close", "uses.modal", "uses.open"),
-        (
-            ("dialogTitle", "header"),
-            ("dialogContent", "section"),
-            ("dialogActions", "footer"),
-        ),
+        (("dialogTitle", "header"), ("dialogContent", "section"), ("dialogActions", "footer")),
     ),
     "Widgets/feedback_widgets.scope.md": ("FeedbackWidgets", (), ()),
     "Widgets/list.scope.md": (

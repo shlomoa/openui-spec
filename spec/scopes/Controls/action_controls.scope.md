@@ -16,12 +16,14 @@ are not modeled as a more specific widget.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This family does not add a
-fixed attribute contract beyond the concrete control chosen by an implementation.
+Categories are defined in [`../scope.md`](../scope.md):
 
-## Child model
-
-Action controls do not define a fixed child model at this abstraction level.
+- `uses.label` — Uses — string — visible text and accessible name of the command.
+- `uses.icon` — Uses — string — optional technology-independent icon token.
+- `uses.disabled` — Uses — boolean — whether the control is unavailable.
+- `uses.pressed` — Uses — boolean — the pressed state of a toggle button.
+- `uses.autoRepeat` — Uses — boolean — whether activation repeats while the control is held down.
+- `produces.activate` — Produces — emitted when the control is activated, and again at each repeat while it is held down.
 
 ## Accessibility
 
@@ -32,3 +34,7 @@ keyboard/pointer activation equivalent to the selected concrete platform control
 
 - Use this family when the taxonomy term is a command surface rather than a
   navigation link, menu item, or composite widget.
+- Repeat while pressed is off unless `uses.autoRepeat` is true, and is not used for a
+  destructive command. Releasing the control, disabling it or losing the pointer stops
+  the repetition.
+- A control without `uses.pressed` is a command button, not a toggle button.

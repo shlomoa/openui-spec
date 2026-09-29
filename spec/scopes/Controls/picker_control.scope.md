@@ -15,12 +15,15 @@ maps to the Date/Time pickers widget.
 
 ## Attributes
 
-Categories are defined in [`../scope.md`](../scope.md). This object inherits concrete
-value, range, and source attributes from the selected picker implementation.
+Categories are defined in [`../scope.md`](../scope.md):
 
-## Child model
-
-A picker control does not define a fixed child model at this abstraction level.
+- `uses.label` — Uses — string — accessible name of the picker.
+- `uses.kind` — Uses — enum(wheel|color|file|folder|font) — what the picker chooses.
+- `uses.value` — Uses — string — the chosen value, color, file, folder or font.
+- `uses.accept` — Uses — string — the file types a file picker offers, as media types or file extensions.
+- `uses.multiple` — Uses — boolean — whether a file picker accepts more than one file.
+- `uses.disabled` — Uses — boolean — whether the picker is unavailable.
+- `produces.valueChange` — Produces — emitted when the chosen value changes.
 
 ## Accessibility
 

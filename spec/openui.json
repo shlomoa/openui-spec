@@ -615,7 +615,15 @@
               "children": [
                 {
                   "id": "actionControlsInstance",
-                  "type": "ActionControls"
+                  "type": "ActionControls",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.icon": "string",
+                    "uses.disabled": "boolean",
+                    "uses.pressed": "boolean",
+                    "uses.autoRepeat": "boolean",
+                    "produces.activate": null
+                  }
                 }
               ]
             },
@@ -631,7 +639,19 @@
               "children": [
                 {
                   "id": "textInputsInstance",
-                  "type": "TextInputs"
+                  "type": "TextInputs",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.value": "string",
+                    "uses.placeholder": "string",
+                    "uses.type": "enum(text|password|search|email|tel|url)",
+                    "uses.multiline": "boolean",
+                    "uses.maxLength": "integer",
+                    "uses.readOnly": "boolean",
+                    "uses.required": "boolean",
+                    "uses.disabled": "boolean",
+                    "produces.valueChange": null
+                  }
                 }
               ]
             },
@@ -647,7 +667,23 @@
               "children": [
                 {
                   "id": "choiceControlsInstance",
-                  "type": "ChoiceControls"
+                  "type": "ChoiceControls",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.value": "string",
+                    "uses.checked": "boolean",
+                    "uses.indeterminate": "boolean",
+                    "uses.selection": "enum(single|multiple)",
+                    "uses.required": "boolean",
+                    "uses.disabled": "boolean",
+                    "produces.selectionChange": null
+                  },
+                  "children": [
+                    {
+                      "id": "choiceControlsOption",
+                      "type": "option"
+                    }
+                  ]
                 }
               ]
             },
@@ -663,7 +699,16 @@
               "children": [
                 {
                   "id": "pickerControlInstance",
-                  "type": "PickerControl"
+                  "type": "PickerControl",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.kind": "enum(wheel|color|file|folder|font)",
+                    "uses.value": "string",
+                    "uses.accept": "string",
+                    "uses.multiple": "boolean",
+                    "uses.disabled": "boolean",
+                    "produces.valueChange": null
+                  }
                 }
               ]
             },
@@ -679,7 +724,20 @@
               "children": [
                 {
                   "id": "rangeControlInstance",
-                  "type": "RangeControl"
+                  "type": "RangeControl",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.value": "number",
+                    "uses.min": "number",
+                    "uses.max": "number",
+                    "uses.step": "number",
+                    "uses.start": "number",
+                    "uses.end": "number",
+                    "uses.wrapping": "boolean",
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "uses.disabled": "boolean",
+                    "produces.valueChange": null
+                  }
                 }
               ]
             },
@@ -695,7 +753,12 @@
               "children": [
                 {
                   "id": "drawingAndCaptureInstance",
-                  "type": "DrawingAndCapture"
+                  "type": "DrawingAndCapture",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.width": "integer",
+                    "uses.height": "integer"
+                  }
                 }
               ]
             },
@@ -711,7 +774,15 @@
               "children": [
                 {
                   "id": "displayPrimitivesInstance",
-                  "type": "DisplayPrimitives"
+                  "type": "DisplayPrimitives",
+                  "attrs": {
+                    "uses.text": "string",
+                    "uses.src": "url",
+                    "uses.alt": "string",
+                    "uses.decorative": "boolean",
+                    "uses.for": "reference",
+                    "uses.orientation": "enum(horizontal|vertical)"
+                  }
                 }
               ]
             },
@@ -727,7 +798,15 @@
               "children": [
                 {
                   "id": "statusIndicatorInstance",
-                  "type": "StatusIndicator"
+                  "type": "StatusIndicator",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.value": "number",
+                    "uses.min": "number",
+                    "uses.max": "number",
+                    "uses.mode": "enum(determinate|indeterminate)",
+                    "uses.severity": "enum(none|information|success|warning|error)"
+                  }
                 }
               ]
             },
@@ -743,7 +822,16 @@
               "children": [
                 {
                   "id": "linkAndScrollControlsInstance",
-                  "type": "LinkAndScrollControls"
+                  "type": "LinkAndScrollControls",
+                  "attrs": {
+                    "uses.label": "string",
+                    "uses.href": "url",
+                    "uses.value": "number",
+                    "uses.min": "number",
+                    "uses.max": "number",
+                    "uses.orientation": "enum(horizontal|vertical)",
+                    "produces.activate": null
+                  }
                 }
               ]
             }
