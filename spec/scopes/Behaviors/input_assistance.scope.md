@@ -1,7 +1,7 @@
 # Input assistance
 
 This leaf follows the [leaf scope template](../template.scope.md). It was created by
-the approved [structure change](../../survey/structure_change.md#add) and groups the
+the approved structure change as a new [Behaviors object](scope.md#objects) and groups the
 behaviors that help or check what the user enters.
 
 ## Identity
