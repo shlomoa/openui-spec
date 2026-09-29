@@ -30,7 +30,15 @@ published packages.
 ### Example tests
 
 - A new test checks that every Alias and Grouped leaf addition is shown in its
-  scope's example.
+  scope's example, and that the `generated-examples` app shows each such node
+  as written.
+
+### Generated examples app
+
+- The app shows each new example node on the Examples tab of its component,
+  as a Material card with the node's JSON as its source. New Controls,
+  Widgets, Containers and Behaviors components hold the nodes that no existing
+  component covers. New screenshots are `example-11-*-examples.png`.
 
 ### Upgrading to 0.6.0
 
