@@ -14,7 +14,21 @@
       }
     },
     {
-      "id": "messageLogScrolling",
+      "id": "viewportScrolling",
+      "type": "ViewportAndFocusControl",
+      "attrs": {
+        "[target]": "\"messageLog\""
+      }
+    },
+    {
+      "id": "scrollLock",
+      "type": "ViewportAndFocusControl",
+      "attrs": {
+        "[target]": "\"messageLog\""
+      }
+    },
+    {
+      "id": "focusManagement",
       "type": "ViewportAndFocusControl",
       "attrs": {
         "[target]": "\"messageLog\""

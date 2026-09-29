@@ -13,6 +13,10 @@
         "[ariaLabel]": "\"Sections\"",
         "[selected]": "\"overview\""
       }
+    },
+    {
+      "id": "columnBrowser",
+      "type": "NavigationWidgets"
     }
   ]
 }

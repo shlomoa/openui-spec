@@ -55,6 +55,22 @@
           ]
         }
       ]
+    },
+    {
+      "id": "progressDialog",
+      "type": "Dialog",
+      "children": [
+        {
+          "id": "progressDialogContent",
+          "type": "section",
+          "children": [
+            {
+              "id": "progressDialogIndicator",
+              "type": "StatusIndicator"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

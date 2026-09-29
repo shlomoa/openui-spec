@@ -16,7 +16,14 @@
       }
     },
     {
-      "id": "emailCompletion",
+      "id": "textCompletion",
+      "type": "InputAssistance",
+      "attrs": {
+        "[target]": "\"emailField\""
+      }
+    },
+    {
+      "id": "constraintValidation",
       "type": "InputAssistance",
       "attrs": {
         "[target]": "\"emailField\""

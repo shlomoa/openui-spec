@@ -13,6 +13,10 @@
         "[orientation]": "\"horizontal\"",
         "[position]": "320"
       }
+    },
+    {
+      "id": "splitterHandle",
+      "type": "Splitters"
     }
   ]
 }

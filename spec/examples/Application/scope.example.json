@@ -93,6 +93,10 @@
           ]
         }
       ]
+    },
+    {
+      "id": "shellBar",
+      "type": "Application"
     }
   ]
 }

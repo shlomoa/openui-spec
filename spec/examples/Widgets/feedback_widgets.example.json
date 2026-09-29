@@ -13,6 +13,18 @@
         "[message]": "\"Saved successfully.\"",
         "[severity]": "\"success\""
       }
+    },
+    {
+      "id": "contextualHelp",
+      "type": "FeedbackWidgets"
+    },
+    {
+      "id": "startupScreen",
+      "type": "FeedbackWidgets"
+    },
+    {
+      "id": "illustratedMessage",
+      "type": "FeedbackWidgets"
     }
   ]
 }

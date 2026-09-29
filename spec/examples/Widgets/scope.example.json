@@ -143,6 +143,26 @@
           }
         }
       ]
+    },
+    {
+      "id": "fileUpload",
+      "type": "Widgets"
+    },
+    {
+      "id": "filterBar",
+      "type": "Widgets"
+    },
+    {
+      "id": "valueHelp",
+      "type": "Widgets"
+    },
+    {
+      "id": "personalizationPanel",
+      "type": "Widgets"
+    },
+    {
+      "id": "planningCalendar",
+      "type": "Widgets"
     }
   ]
 }

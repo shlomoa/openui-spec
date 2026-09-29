@@ -13,6 +13,18 @@
         "[text]": "\"Ready\"",
         "[variant]": "\"caption\""
       }
+    },
+    {
+      "id": "calculatedOutput",
+      "type": "DisplayPrimitives"
+    },
+    {
+      "id": "geometricShape",
+      "type": "DisplayPrimitives"
+    },
+    {
+      "id": "highlightedText",
+      "type": "DisplayPrimitives"
     }
   ]
 }

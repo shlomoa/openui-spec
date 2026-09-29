@@ -16,6 +16,14 @@
         "[value]": "volume",
         "(valueChange)": "setVolume($event)"
       }
+    },
+    {
+      "id": "rangeSlider",
+      "type": "RangeControl"
+    },
+    {
+      "id": "rotaryValueControl",
+      "type": "RangeControl"
     }
   ]
 }

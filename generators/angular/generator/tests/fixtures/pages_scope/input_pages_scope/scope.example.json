@@ -24,6 +24,10 @@
     {
       "id": "notFound",
       "type": "EmptyPage"
+    },
+    {
+      "id": "objectPage",
+      "type": "Pages"
     }
   ]
 }

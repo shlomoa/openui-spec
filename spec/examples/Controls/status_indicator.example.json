@@ -13,6 +13,14 @@
         "[state]": "\"loading\"",
         "[label]": "\"Syncing\""
       }
+    },
+    {
+      "id": "meter",
+      "type": "StatusIndicator"
+    },
+    {
+      "id": "progressMode",
+      "type": "StatusIndicator"
     }
   ]
 }

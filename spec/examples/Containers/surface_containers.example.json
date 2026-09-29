@@ -13,6 +13,22 @@
         "[label]": "\"Summary\"",
         "[elevation]": "2"
       }
+    },
+    {
+      "id": "tile",
+      "type": "SurfaceContainers"
+    },
+    {
+      "id": "labelledGroup",
+      "type": "SurfaceContainers"
+    },
+    {
+      "id": "checkableGroup",
+      "type": "SurfaceContainers"
+    },
+    {
+      "id": "heroBanner",
+      "type": "SurfaceContainers"
     }
   ]
 }

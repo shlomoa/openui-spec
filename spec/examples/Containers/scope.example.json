@@ -96,6 +96,10 @@
         "[orientation]": "\"horizontal\"",
         "[position]": "320"
       }
+    },
+    {
+      "id": "flexibleColumnLayout",
+      "type": "Containers"
     }
   ]
 }

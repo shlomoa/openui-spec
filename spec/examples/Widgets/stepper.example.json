@@ -52,6 +52,16 @@
           }
         }
       ]
+    },
+    {
+      "id": "wizard",
+      "type": "Stepper",
+      "children": [
+        {
+          "id": "wizardStep",
+          "type": "step"
+        }
+      ]
     }
   ]
 }

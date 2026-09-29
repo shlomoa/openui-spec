@@ -32,7 +32,7 @@
       ]
     },
     {
-      "id": "confirmDeleteModality",
+      "id": "modalInteraction",
       "type": "ModalOverlay",
       "attrs": {
         "[target]": "\"confirmDeleteDialog\""

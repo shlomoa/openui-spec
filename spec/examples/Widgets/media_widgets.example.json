@@ -14,6 +14,18 @@
         "[caption]": "\"Product walkthrough\"",
         "[controls]": "true"
       }
+    },
+    {
+      "id": "customGraphicsSurface",
+      "type": "MediaWidgets"
+    },
+    {
+      "id": "graphicsViewport",
+      "type": "MediaWidgets"
+    },
+    {
+      "id": "captions",
+      "type": "MediaWidgets"
     }
   ]
 }

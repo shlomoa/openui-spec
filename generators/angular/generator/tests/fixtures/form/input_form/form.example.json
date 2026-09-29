@@ -47,6 +47,14 @@
         "text": "\"Cancel\"",
         "(click)": "onReset()"
       }
+    },
+    {
+      "id": "formField",
+      "type": "Form"
+    },
+    {
+      "id": "formGroup",
+      "type": "Form"
     }
   ]
 }

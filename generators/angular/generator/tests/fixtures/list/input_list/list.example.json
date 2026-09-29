@@ -43,6 +43,26 @@
           }
         }
       ]
+    },
+    {
+      "id": "tree",
+      "type": "List"
+    },
+    {
+      "id": "tokenCollection",
+      "type": "List"
+    },
+    {
+      "id": "editableChipCollection",
+      "type": "List"
+    },
+    {
+      "id": "descriptionList",
+      "type": "List"
+    },
+    {
+      "id": "iconCollection",
+      "type": "List"
     }
   ]
 }

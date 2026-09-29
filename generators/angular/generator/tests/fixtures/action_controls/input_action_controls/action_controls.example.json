@@ -14,6 +14,10 @@
         "[disabled]": "isSaving",
         "(activate)": "save()"
       }
+    },
+    {
+      "id": "toolButton",
+      "type": "ActionControls"
     }
   ]
 }
