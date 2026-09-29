@@ -18,11 +18,11 @@ or subcategory does not create a scope folder, type or contract.
 Three documents specify the OpenUI taxonomy. Each fact about it has one owner, and the
 documents link to each other instead of repeating it:
 
-| Document                                                  | Owns                                                                                                                                                                                                                               |
-| --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Generic UI taxonomy](../taxonomy/generic-ui-taxonomy.md) | The sections and their purpose; the subcategories and their inclusion rule (Holds); the entries and where each belongs; how the user meets each entry: its description, whether it is viewable or device-dependent, and its image. |
-| [UI element taxonomy](../taxonomy/ui-element-taxonomy.md) | The abstract element types in 15 categories, with their purpose and typical concrete elements; the OpenUI term each type maps to; the classification rules, with their primary and secondary role examples.                        |
-| [Taxonomy mapping](taxonomy_mapping.md)                   | For each entry: its scope object, its abstraction level and its scope-specific notes. Its section and subcategory headings mirror the generic UI taxonomy, and a test keeps them equal.                                            |
+| Document                                                  | Owns                                                                                                                                                                                                                                              |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Generic UI taxonomy](../taxonomy/generic-ui-taxonomy.md) | The sections and their purpose; the subcategories and their inclusion rule (Holds); the entries and where each belongs; how the user meets each entry: its description, whether it is viewable or device-dependent, and its image.                |
+| [UI element taxonomy](../taxonomy/ui-element-taxonomy.md) | The abstract element types in 15 categories, with their purpose and typical concrete elements; the OpenUI term each type maps to; the classification rules, with their primary and secondary role examples.                                       |
+| [Taxonomy mapping](taxonomy_mapping.md)                   | For each entry: its scope object, its abstraction level and its scope-specific notes. For each leaf scope: its primary section and subcategory. Its section and subcategory headings mirror the generic UI taxonomy, and a test keeps them equal. |
 
 The rest of the spec keeps its own facts:
 
