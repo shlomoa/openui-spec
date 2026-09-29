@@ -1,8 +1,11 @@
 """Render ``spec/taxonomy/generic-ui-taxonomy.md`` as a self-contained HTML page.
 
 The HTML page is a convenience view of the Markdown source: the same content, with
-every ``images/*.svg`` illustration embedded so the page opens on its own. The page
-keeps its own ``<head>`` (title and styles); only the ``<body>`` is regenerated.
+every ``images/*.svg`` illustration embedded so the page opens on its own. The page is
+published on the Read the Docs site, so each link to another Markdown page points to
+that page's URL on the site (``x.md#a`` becomes ``x/#a``), and each heading has an id
+for ``#anchor`` links. The page keeps its own
+``<head>`` (title and styles); only the ``<body>`` is regenerated.
 
 Usage: ``python -m spec.bin.render_taxonomy_html [--check]``. With ``--check`` the
 page is not written; the command fails when it is out of date with the Markdown.
@@ -23,6 +26,9 @@ SOURCE = REPO_ROOT / "spec" / "taxonomy" / "generic-ui-taxonomy.md"
 TARGET = REPO_ROOT / "spec" / "taxonomy" / "generic-ui-taxonomy.html"
 IMG_RE = re.compile(r'<img alt="(?P<alt>[^"]*)" src="(?P<src>images/[^"]+\.svg)"\s*/?>')
 TITLE_RE = re.compile(r"<title>.*?</title>", re.S)
+MD_LINK_RE = re.compile(
+    r'href="(?P<path>(?![A-Za-z][A-Za-z0-9+.-]*:)[^"#]+)\.md(?P<anchor>#[^"]*)?"'
+)
 
 
 def _inline_image(match: re.Match[str], base: Path) -> str:
@@ -34,8 +40,9 @@ def _inline_image(match: re.Match[str], base: Path) -> str:
 def render(source: Path = SOURCE, target: Path = TARGET) -> str:
     """Return the HTML page for ``source``, reusing the ``<head>`` of ``target``."""
     text = source.read_text(encoding="utf-8")
-    body = markdown.markdown(text, extensions=["tables"], output_format="html")
+    body = markdown.markdown(text, extensions=["tables", "toc"], output_format="html")
     body = IMG_RE.sub(lambda m: _inline_image(m, source.parent), body)
+    body = MD_LINK_RE.sub(lambda m: f'href="{m["path"]}/{m["anchor"] or ""}"', body)
     head = target.read_text(encoding="utf-8").split("<body>", 1)[0]
     title = re.search(r"^# (.+)$", text, re.M)
     if title:
