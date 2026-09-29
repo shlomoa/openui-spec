@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "DataGrid",
   "attrs": {
     "title": "\"Data grid example\""
@@ -15,6 +15,10 @@
         "uses.sortable": true,
         "produces.selectionChange": "onOrderSelection($event)"
       }
+    },
+    {
+      "id": "treeGrid",
+      "type": "DataGrid"
     }
   ]
 }

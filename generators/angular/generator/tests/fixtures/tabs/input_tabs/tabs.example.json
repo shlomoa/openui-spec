@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "Tabs",
   "attrs": {
     "title": "\"Tabs example\""
@@ -57,6 +57,16 @@
             "uses.disabled": true,
             "uses.order": 3
           }
+        }
+      ]
+    },
+    {
+      "id": "pageStack",
+      "type": "Tabs",
+      "children": [
+        {
+          "id": "pageStackPage",
+          "type": "tab"
         }
       ]
     }

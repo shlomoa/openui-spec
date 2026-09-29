@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "DisplayPrimitives",
   "attrs": {
     "title": "\"Display primitives example\""
@@ -13,6 +13,18 @@
         "uses.text": "\"Ready\"",
         "uses.variant": "\"caption\""
       }
+    },
+    {
+      "id": "calculatedOutput",
+      "type": "DisplayPrimitives"
+    },
+    {
+      "id": "geometricShape",
+      "type": "DisplayPrimitives"
+    },
+    {
+      "id": "highlightedText",
+      "type": "DisplayPrimitives"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "Stepper",
   "attrs": {
     "title": "\"Stepper example\""
@@ -50,6 +50,16 @@
             "uses.disabled": "!allStepsValid",
             "produces.click": "submit()"
           }
+        }
+      ]
+    },
+    {
+      "id": "wizard",
+      "type": "Stepper",
+      "children": [
+        {
+          "id": "wizardStep",
+          "type": "step"
         }
       ]
     }

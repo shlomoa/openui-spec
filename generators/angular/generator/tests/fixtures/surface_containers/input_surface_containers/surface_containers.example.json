@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "SurfaceContainers",
   "attrs": {
     "title": "\"Surface containers example\""
@@ -13,6 +13,22 @@
         "uses.label": "\"Summary\"",
         "uses.elevation": 2
       }
+    },
+    {
+      "id": "tile",
+      "type": "SurfaceContainers"
+    },
+    {
+      "id": "labelledGroup",
+      "type": "SurfaceContainers"
+    },
+    {
+      "id": "checkableGroup",
+      "type": "SurfaceContainers"
+    },
+    {
+      "id": "heroBanner",
+      "type": "SurfaceContainers"
     }
   ]
 }

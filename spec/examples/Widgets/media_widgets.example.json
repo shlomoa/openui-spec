@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "MediaWidgets",
   "attrs": {
     "title": "\"Media widgets example\""
@@ -14,6 +14,18 @@
         "uses.caption": "\"Product walkthrough\"",
         "uses.controls": true
       }
+    },
+    {
+      "id": "customGraphicsSurface",
+      "type": "MediaWidgets"
+    },
+    {
+      "id": "graphicsViewport",
+      "type": "MediaWidgets"
+    },
+    {
+      "id": "captions",
+      "type": "MediaWidgets"
     }
   ]
 }

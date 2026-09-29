@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "ChoiceControls",
   "attrs": {
     "title": "\"Choice controls example\""
@@ -14,6 +14,26 @@
         "uses.value": "shippingSpeed",
         "produces.selectionChange": "onShippingSpeedChange($event)"
       }
+    },
+    {
+      "id": "suggestionBackedComboBox",
+      "type": "ChoiceControls"
+    },
+    {
+      "id": "selectionMode",
+      "type": "ChoiceControls"
+    },
+    {
+      "id": "multiSelectComboBox",
+      "type": "ChoiceControls"
+    },
+    {
+      "id": "fontFamilySelector",
+      "type": "ChoiceControls"
+    },
+    {
+      "id": "exclusiveSelectionCoordination",
+      "type": "ChoiceControls"
     }
   ]
 }

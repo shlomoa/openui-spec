@@ -1098,5 +1098,29 @@
         </p>
       </div>
     }
+    @default {
+      @if (addition; as addition) {
+        <mat-card class="spec-addition-preview" [attr.aria-label]="addition.term + ' node'">
+          <mat-card-title>{{ addition.term }}</mat-card-title>
+          <mat-card-subtitle>{{ addition.source }}</mat-card-subtitle>
+          <mat-card-content>
+            <mat-chip-set [attr.aria-label]="addition.term + ' node type and id'">
+              <mat-chip highlighted>type: {{ addition.node.type }}</mat-chip>
+              <mat-chip>id: {{ addition.node.id }}</mat-chip>
+              @for (attr of attrs(addition); track attr) {
+                <mat-chip>{{ attr }}</mat-chip>
+              }
+            </mat-chip-set>
+            @if (addition.node.children?.length) {
+              <mat-list [attr.aria-label]="addition.term + ' children'">
+                @for (child of addition.node.children; track child.id) {
+                  <mat-list-item>{{ child.id }}: {{ child.type }}</mat-list-item>
+                }
+              </mat-list>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+    }
   }
 </div>

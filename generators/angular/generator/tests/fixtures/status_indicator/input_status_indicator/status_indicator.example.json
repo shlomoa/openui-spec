@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "StatusIndicator",
   "attrs": {
     "title": "\"Status indicator example\""
@@ -13,6 +13,14 @@
         "uses.state": "\"loading\"",
         "uses.label": "\"Syncing\""
       }
+    },
+    {
+      "id": "meter",
+      "type": "StatusIndicator"
+    },
+    {
+      "id": "progressMode",
+      "type": "StatusIndicator"
     }
   ]
 }

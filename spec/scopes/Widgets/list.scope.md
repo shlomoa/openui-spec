@@ -10,9 +10,9 @@ recorded technology-independently.
 
 ## Purpose
 
-An ordered, unordered or description list of items, including icon collections,
-token collections and editable chip collections, with optional selection, links,
-sorting, filtering and pagination. Existing `ul`/`li` instances stay valid.
+An ordered, unordered or description list of items, including trees, icon
+collections, token collections and editable chip collections, with optional
+selection, links, sorting, filtering and pagination. Existing `ul`/`li` instances stay valid.
 
 ## Attributes
 

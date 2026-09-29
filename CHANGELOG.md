@@ -3,6 +3,59 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.7.0] - 2026-09-29
+
+### Scope Purposes
+
+- The Purposes now name four approved terms: Menu item (Menu widgets),
+  Captions (Media widgets), Tree (List) and Tree grid (Data grid).
+
+### Alias table
+
+- The taxonomy mapping has four new columns: HTML / WAI-ARIA, OpenUI5, Qt and
+  Angular Material. They give the names each source uses for every entry, or
+  "—" where a source has none. The HTML and WAI-ARIA names that sat in the
+  mapping notes moved into them.
+- Every OpenUI5 class of the survey is matched to one taxonomy entry, or listed
+  as fitting none with the reason.
+
+### Examples
+
+- Every Alias and Grouped leaf addition of the terminology, the taxonomy
+  mapping change and the UI element taxonomy merge has a node in its scope's
+  example. The node id comes from the term (for example `highlightedText`),
+  and its type is the scope's catalog type. The nodes carry no new attributes:
+  attribute names for the new capabilities wait on a later release.
+- In the Input assistance, Viewport and focus control and Modal overlay
+  examples, the nodes `emailCompletion`, `messageLogScrolling` and
+  `confirmDeleteModality` are renamed `textCompletion`, `viewportScrolling`
+  and `modalInteraction`.
+- The Date/time pickers example binds a range with `uses.start`, `uses.end`
+  and `produces.dateChange`. It no longer uses single-value binding,
+  value-format or Angular-only attributes, as its Validation notes require.
+- The Dialog example handles a cancellation request with `produces.cancel`,
+  apart from `produces.close`.
+
+### Example tests
+
+- A new test checks that every Alias and Grouped leaf addition is shown in its
+  scope's example, and that the `generated-examples` app shows each such node
+  as written.
+- The taxonomy mapping test checks that every row has the four alias columns.
+
+### Generated examples app
+
+- The app shows each new example node on the Examples tab of its component,
+  as a Material card with the node's JSON as its source. New Controls,
+  Widgets, Containers and Behaviors components hold the nodes that no existing
+  component covers. New screenshots are `example-11-*-examples.png`.
+
+### Upgrading to 0.7.0
+
+1. Upgrade the Python or npm package to `0.7.0` and set concrete document
+   `version` fields to `0.7.0`.
+2. If you reference the renamed example node ids, use the new ids.
+
 ## [0.6.0] - 2026-09-29
 
 ### Typed attributes
@@ -260,3 +313,4 @@ and enforced rather than adding or removing catalog types.
 [0.4.0]: https://github.com/shlomoa/openui-spec/compare/v0.3.1...v0.4.0
 [0.5.0]: https://github.com/shlomoa/openui-spec/compare/v0.4.0...v0.5.0
 [0.6.0]: https://github.com/shlomoa/openui-spec/compare/v0.5.0...v0.6.0
+[0.7.0]: https://github.com/shlomoa/openui-spec/compare/v0.6.0...v0.7.0

@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "Form",
   "attrs": {
     "title": "\"Customer form\"",
@@ -47,6 +47,14 @@
         "text": "\"Cancel\"",
         "produces.click": "onReset()"
       }
+    },
+    {
+      "id": "formField",
+      "type": "Form"
+    },
+    {
+      "id": "formGroup",
+      "type": "Form"
     }
   ]
 }

@@ -1,4 +1,5 @@
 import { DocumentationItems } from './documentation-items';
+import { SPEC_ADDITIONS } from './spec-additions';
 
 describe('DocumentationItems', () => {
   const docs = new DocumentationItems();
@@ -25,7 +26,7 @@ describe('DocumentationItems', () => {
 
   it('derives API content from a spec document and provides styling', () => {
     for (const component of docs.getAllComponents()) {
-      expect(component.api.specPath).toMatch(/^spec\/\d{2}-.*\.md$/);
+      expect(component.api.specPath).toMatch(/^spec\/(\d{2}-.*|scopes\/.+)\.md$/);
       expect(component.api.points.length).toBeGreaterThan(0);
       expect(component.styling.notes.length).toBeGreaterThan(0);
       expect(component.styling.code.length).toBeGreaterThan(0);
@@ -43,6 +44,7 @@ describe('DocumentationItems', () => {
       'application-structure-tree',
       'shell-side',
       'shell-toolbar',
+      'addition-shell-bar',
     ]);
   });
 
@@ -80,6 +82,7 @@ describe('DocumentationItems', () => {
       'page-responsive',
       'page-density',
       'page-dnd',
+      'addition-object-page',
     ]);
 
     const densityExample = component?.examples.find((example) => example.id === 'page-density');
@@ -123,6 +126,27 @@ describe('DocumentationItems', () => {
     expect(derivedExample?.code).toContain('computed<ValueState>');
     expect(derivedExample?.code).toContain("? 'Error' : this.valueState()");
     expect(derivedExample?.code).not.toContain('_lastMeasuredWidth');
+  });
+
+  it('shows every spec example node of an approved term on its component', () => {
+    expect(SPEC_ADDITIONS.length).toBe(63);
+    for (const addition of SPEC_ADDITIONS) {
+      const example = docs
+        .getComponentById(addition.item)
+        ?.examples.find((candidate) => candidate.preview === addition.preview);
+      expect(example?.title).toBe(addition.term);
+      expect(example?.code).toContain(`// ${addition.source}`);
+      expect(example?.code).toContain(`"id": "${addition.node.id}"`);
+      expect(example?.code).toContain(`"type": "${addition.node.type}"`);
+    }
+  });
+
+  it('documents the Controls, Widgets, Containers and Behaviors scopes', () => {
+    for (const id of ['controls', 'widgets', 'containers', 'behaviors']) {
+      const component = docs.getComponentById(id);
+      expect(component?.api.specPath).toMatch(/^spec\/scopes\/\w+\/scope\.md$/);
+      expect(component?.examples.every((example) => example.id.startsWith('addition-'))).toBe(true);
+    }
   });
 
   it('returns undefined for an unknown component id', () => {

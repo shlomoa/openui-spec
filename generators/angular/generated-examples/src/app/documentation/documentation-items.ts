@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SPEC_ADDITIONS, SpecAdditionPreview } from './spec-additions';
 
 /**
  * Preview discriminator used by the examples tab to render a live Angular
@@ -67,7 +68,8 @@ export type ExamplePreview =
   | 'acceptance-evidence'
   | 'security-encoding'
   | 'security-masking'
-  | 'security-confirmation';
+  | 'security-confirmation'
+  | SpecAdditionPreview;
 
 /** A single runnable example shown on a component's "Examples" tab. */
 export interface DocExample {
@@ -113,6 +115,20 @@ export interface DocCategory {
   readonly name: string;
   readonly summary: string;
   readonly items: readonly DocComponent[];
+}
+
+/**
+ * The examples of one component for the nodes the spec examples show for the
+ * approved terms. The code is the node as written in its `spec/examples` document.
+ */
+function additionExamples(item: string): DocExample[] {
+  return SPEC_ADDITIONS.filter((addition) => addition.item === item).map((addition) => ({
+    id: addition.preview,
+    title: addition.term,
+    description: `The ${addition.term} node of ${addition.source}: a ${addition.node.type} node with the id ${addition.node.id}.`,
+    preview: addition.preview,
+    code: `// ${addition.source}\n${JSON.stringify(addition.node, null, 2)}`,
+  }));
 }
 
 const CATEGORIES: readonly DocCategory[] = [
@@ -371,6 +387,7 @@ export class AppComponent {}`,
 })
 export class AppComponent {}`,
           },
+          ...additionExamples('shell'),
         ],
         styling: {
           notes: [
@@ -554,6 +571,7 @@ export class BoardPage {
   readonly columns = ['Backlog', 'In progress', 'Done'];
 }`,
           },
+          ...additionExamples('page'),
         ],
         styling: {
           notes: [
@@ -570,6 +588,41 @@ export class BoardPage {
   .page-grid {
     grid-template-columns: 1fr;
   }
+}`,
+        },
+      },
+      {
+        id: 'containers',
+        name: 'Containers',
+        summary:
+          'Surface, structural, splitter and expandable containers for the approved terms of the Containers scope.',
+        api: {
+          specSection: 'Containers',
+          specPath: 'spec/scopes/Containers/scope.md',
+          purpose:
+            'Containers define layout structures that arrange child content in a specific layout or presentation pattern.',
+          derivedFrom: [
+            'spec/examples/Containers/surface_containers.example.json',
+            'spec/examples/Containers/structural_containers.example.json',
+            'spec/examples/Containers/splitters.example.json',
+            'spec/examples/Containers/expandable_panels.example.json',
+            'spec/examples/Containers/scope.example.json',
+          ],
+          points: [
+            'Each example is one node that a spec example shows for an approved term.',
+            'The node id comes from the term and the node type is the catalog type of its scope.',
+            'The nodes carry no new attributes: attribute names for the new capabilities come in a later release.',
+          ],
+          jsonMapping: 'the Containers scope in /spec/openui.json',
+        },
+        examples: additionExamples('containers'),
+        styling: {
+          notes: [
+            'Each node renders as a Material card that names its term, type and id, and lists its children.',
+          ],
+          code: `.spec-addition-preview {
+  display: grid;
+  gap: 0.5rem;
 }`,
         },
       },
@@ -638,6 +691,7 @@ export class OrdersTable {
   </td>
 </ng-container>`,
           },
+          ...additionExamples('table'),
         ],
         styling: {
           notes: [
@@ -796,6 +850,7 @@ export class OrderValidationComponent {
   }
 }`,
           },
+          ...additionExamples('form'),
         ],
         styling: {
           notes: [
@@ -977,6 +1032,75 @@ mat-list[aria-label='Bound orders'] mat-list-item {
 }`,
         },
       },
+      {
+        id: 'controls',
+        name: 'Controls',
+        summary:
+          'Text inputs, choice, range, picker and display controls for the approved terms of the Controls scope.',
+        api: {
+          specSection: 'Controls',
+          specPath: 'spec/scopes/Controls/scope.md',
+          purpose:
+            'Controls define reusable interaction and rendering primitives that can appear in applications, pages, views, containers, and widgets.',
+          derivedFrom: [
+            'spec/examples/Controls/text_inputs.example.json',
+            'spec/examples/Controls/choice_controls.example.json',
+            'spec/examples/Controls/range_control.example.json',
+            'spec/examples/Controls/picker_control.example.json',
+            'spec/examples/Controls/display_primitives.example.json',
+          ],
+          points: [
+            'Each example is one node that a spec example shows for an approved term.',
+            'The node id comes from the term and the node type is the catalog type of its scope.',
+            'The nodes carry no new attributes: attribute names for the new capabilities come in a later release.',
+          ],
+          jsonMapping: 'the Controls scope in /spec/openui.json',
+        },
+        examples: additionExamples('controls'),
+        styling: {
+          notes: [
+            'Each node renders as a Material card that names its term, type and id, and lists its children.',
+          ],
+          code: `.spec-addition-preview {
+  display: grid;
+  gap: 0.5rem;
+}`,
+        },
+      },
+      {
+        id: 'widgets',
+        name: 'Widgets',
+        summary:
+          'List, date and time, media and grouped widgets for the approved terms of the Widgets scope.',
+        api: {
+          specSection: 'Widgets',
+          specPath: 'spec/scopes/Widgets/scope.md',
+          purpose:
+            'Widgets define reusable components that can be used in multiple pages or views.',
+          derivedFrom: [
+            'spec/examples/Widgets/list.example.json',
+            'spec/examples/Widgets/date_time_pickers.example.json',
+            'spec/examples/Widgets/media_widgets.example.json',
+            'spec/examples/Widgets/scope.example.json',
+          ],
+          points: [
+            'Each example is one node that a spec example shows for an approved term.',
+            'The node id comes from the term and the node type is the catalog type of its scope.',
+            'The nodes carry no new attributes: attribute names for the new capabilities come in a later release.',
+          ],
+          jsonMapping: 'the Widgets scope in /spec/openui.json',
+        },
+        examples: additionExamples('widgets'),
+        styling: {
+          notes: [
+            'Each node renders as a Material card that names its term, type and id, and lists its children.',
+          ],
+          code: `.spec-addition-preview {
+  display: grid;
+  gap: 0.5rem;
+}`,
+        },
+      },
     ],
   },
   {
@@ -1061,6 +1185,7 @@ export class SaveActionComponent {
   }
 }`,
           },
+          ...additionExamples('action'),
         ],
         styling: {
           notes: [
@@ -1069,6 +1194,40 @@ export class SaveActionComponent {
           ],
           code: `button[mat-raised-button] {
   min-width: 8rem;
+}`,
+        },
+      },
+      {
+        id: 'behaviors',
+        name: 'Behaviors',
+        summary:
+          'Input assistance, viewport and focus control and modal overlay behaviors for the approved terms of the Behaviors scope.',
+        api: {
+          specSection: 'Behaviors',
+          specPath: 'spec/scopes/Behaviors/scope.md',
+          purpose:
+            'Behaviors define reusable interaction capabilities that can be applied to any element, which a behavior references as its controlled element and does not own.',
+          derivedFrom: [
+            'spec/examples/Behaviors/input_assistance.example.json',
+            'spec/examples/Behaviors/viewport_and_focus_control.example.json',
+            'spec/examples/Behaviors/modal_overlay.example.json',
+          ],
+          points: [
+            'Each example is one node that a spec example shows for an approved term.',
+            'The node id comes from the term and the node type is the catalog type of its scope.',
+            'The nodes carry no new attributes: attribute names for the new capabilities come in a later release.',
+            'A behavior node names its controlled element with uses.target and owns no children.',
+          ],
+          jsonMapping: 'the Behaviors scope in /spec/openui.json',
+        },
+        examples: additionExamples('behaviors'),
+        styling: {
+          notes: [
+            'Each node renders as a Material card that names its term, type and id, and lists its children.',
+          ],
+          code: `.spec-addition-preview {
+  display: grid;
+  gap: 0.5rem;
 }`,
         },
       },
@@ -1448,6 +1607,7 @@ export class ConfirmDialogComponent {
   { path: 'orders/:orderId', component: OrderPage },
 ];`,
           },
+          ...additionExamples('navigation-container'),
         ],
         styling: {
           notes: [
@@ -1563,6 +1723,7 @@ export class OrdersEmptyComponent {
   }
 }`,
           },
+          ...additionExamples('feedback'),
         ],
         styling: {
           notes: [

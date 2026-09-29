@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "TextInputs",
   "attrs": {
     "title": "\"Text inputs example\""
@@ -15,6 +15,18 @@
         "uses.value": "query",
         "produces.valueChange": "onQueryChange($event)"
       }
+    },
+    {
+      "id": "richTextEditor",
+      "type": "TextInputs"
+    },
+    {
+      "id": "keyboardShortcutField",
+      "type": "TextInputs"
+    },
+    {
+      "id": "metadataDrivenField",
+      "type": "TextInputs"
     }
   ]
 }
