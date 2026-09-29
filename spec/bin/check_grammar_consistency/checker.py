@@ -32,41 +32,32 @@ REQUIRED_README_STATEMENTS = (
     "Global ID uniqueness is enforced by OpenUI tooling, not by the EBNF or JSON Schema.",
 )
 
-VALID_DOCUMENT = """{
-  "type": "html",
-  "children": [{"type": "Button", "id": "child"}],
-  "version": "0.3.1",
-  "id": "root"
-}"""
+CONFORMANCE_DIR = SPEC_DIR / "conformance"
+GRAMMAR_CODE_PREFIX = "grammar/"
 
-CONSISTENCY_CASES = {
-    "valid unordered document": (VALID_DOCUMENT, True),
-    "root id is not root": (
-        '{"version": "0.3.1", "id": "notRoot", "type": "html"}',
-        False,
-    ),
-    "missing root version": ('{"id": "root", "type": "html"}', False),
-    "invalid version": ('{"id": "root", "version": "0.3", "type": "html"}', False),
-    "invalid child id": (
-        '{"id": "root", "version": "0.3.1", "type": "html", '
-        '"children": [{"id": "Child", "type": "Button"}]}',
-        False,
-    ),
-    "invalid type": ('{"id": "root", "version": "0.3.1", "type": "bad--type"}', False),
-    "unknown property": (
-        '{"id": "root", "version": "0.3.1", "type": "html", "unknown": true}',
-        False,
-    ),
-    "invalid attribute value": (
-        '{"id": "root", "version": "0.3.1", "type": "html", "attrs": {"count": 1}}',
-        False,
-    ),
-    "trailing comma": ('{"id": "root", "version": "0.3.1", "type": "html",}', False),
-    "duplicate member": (
-        '{"id": "root", "version": "0.3.1", "type": "html", "type": "body"}',
-        False,
-    ),
-}
+
+def grammar_cases() -> dict[str, tuple[str, bool]]:
+    """Return each conformance case as (document text, whether the grammar accepts it).
+
+    The grammar accepts every valid document and every invalid document whose
+    expected diagnostics are all outside the grammar stage.
+    """
+    cases: dict[str, tuple[str, bool]] = {}
+    for path in sorted((CONFORMANCE_DIR / "valid").glob("*.json")):
+        cases[f"valid/{path.name}"] = (path.read_text(encoding="utf-8"), True)
+    for path in sorted((CONFORMANCE_DIR / "invalid").glob("*.json")):
+        if path.name.endswith(".expected.json"):
+            continue
+        expected_path = path.with_name(f"{path.stem}.expected.json")
+        expected = json.loads(expected_path.read_text(encoding="utf-8"))
+        grammar_rejects = any(
+            diagnostic["code"].startswith(GRAMMAR_CODE_PREFIX)
+            for diagnostic in expected["diagnostics"]
+        )
+        cases[f"invalid/{path.name}"] = (path.read_text(encoding="utf-8"), not grammar_rejects)
+    if not cases:
+        raise AssertionError(f"no conformance cases found in {CONFORMANCE_DIR}")
+    return cases
 
 
 def _load_json_without_duplicate_members(text: str) -> Any:
@@ -150,7 +141,7 @@ def check() -> None:
     schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     validator = Draft202012Validator(schema)
 
-    for name, (text, expected) in CONSISTENCY_CASES.items():
+    for name, (text, expected) in grammar_cases().items():
         ebnf_result = ebnf_accepts(text, grammar)
         schema_result = schema_accepts(text, validator)
         if ebnf_result != expected or schema_result != expected or ebnf_result != schema_result:

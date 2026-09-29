@@ -10,6 +10,7 @@ It serves application developers, designers and UX owners, framework maintainers
 
 - **TypeScript / Node.js**: The [`@shlomoa/openui-spec`](https://www.npmjs.com/package/@shlomoa/openui-spec) package on npm provides the `OpenUiJson` document API, bundled canonical catalog/schema, TypeScript types, and the `ng-openui-spec` CLI. See the [OpenUI JSON editing guide](tooling/editing.md) for full usage.
 - **Python**: The [`openui-spec`](https://pypi.org/project/openui-spec/) package on PyPI provides the `openui_spec` editing CLI and the `compare_openui_spec` comparison CLI. See the [OpenUI JSON comparison guide](tooling/comparison.md) for changelog tooling.
+- **Conformance suite**: the [conformance suite](conformance/README.md) is a shared set of valid and invalid documents, with the diagnostics every tool must report for them.
 
 ## Glossary
 

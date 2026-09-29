@@ -1,0 +1,3 @@
+{
+  "diagnostics": [{ "code": "grammar/duplicate-member", "path": "/type" }]
+}

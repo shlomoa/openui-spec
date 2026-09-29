@@ -1,0 +1,9 @@
+{
+  "id": "root",
+  "version": "0.5.0",
+  "type": "html",
+  "children": [
+    { "id": "salesChart", "type": "Chart" },
+    { "id": "salesChart", "type": "Chart" }
+  ]
+}

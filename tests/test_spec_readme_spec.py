@@ -13,6 +13,7 @@ NAV_ENTRY_PATTERN = re.compile(r"^\s*-\s+.*?:\s+(.+\.md)$")
 TOP_LEVEL_SCOPE_LINK_PATTERN = re.compile(r"^- \[([^\]]+)\]\(([^)]+/scope\.md)\):", re.MULTILINE)
 EXPECTED_SPEC_MARKDOWN = [
     "README.md",
+    "conformance/README.md",
     "examples/README.md",
     "scopes/Application/favicon.scope.md",
     "scopes/Application/index_html.scope.md",

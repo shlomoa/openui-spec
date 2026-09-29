@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/shlomoa/openui-spec/main/spec/conformance/diagnostics.schema.json",
+  "title": "OpenUI conformance expected diagnostics",
+  "description": "The diagnostics a tool must report for one invalid conformance document. See spec/conformance/README.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["diagnostics"],
+  "properties": {
+    "diagnostics": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/diagnostic" }
+    }
+  },
+  "$defs": {
+    "diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "path"],
+      "properties": {
+        "code": { "$ref": "#/$defs/code" },
+        "path": {
+          "description": "JSON Pointer (RFC 6901) to the place of the fault.",
+          "type": "string",
+          "pattern": "^(?:/(?:[^~/]|~[01])*)*$"
+        }
+      }
+    },
+    "code": {
+      "oneOf": [
+        {
+          "const": "grammar/json-syntax",
+          "description": "The document is not JSON, for example it has a trailing comma."
+        },
+        {
+          "const": "grammar/duplicate-member",
+          "description": "An object has the same member twice."
+        },
+        {
+          "const": "grammar/unknown-property",
+          "description": "An object has a member the grammar does not define."
+        },
+        {
+          "const": "grammar/missing-property",
+          "description": "An object lacks a required member."
+        },
+        {
+          "const": "grammar/invalid-member-type",
+          "description": "A member has the wrong JSON type, for example children that is not an array."
+        },
+        {
+          "const": "grammar/invalid-root-id",
+          "description": "The root id is not \"root\"."
+        },
+        {
+          "const": "grammar/invalid-id",
+          "description": "An element id is not a camelCase alphanumeric string."
+        },
+        {
+          "const": "grammar/invalid-type",
+          "description": "A type is not an HTML tag, kebab-case or PascalCase name."
+        },
+        {
+          "const": "grammar/invalid-version",
+          "description": "The root version is not a MAJOR.MINOR.PATCH string."
+        },
+        {
+          "const": "grammar/invalid-attribute-value",
+          "description": "An attribute value is not allowed by the grammar."
+        },
+        {
+          "const": "document/duplicate-id",
+          "description": "An id is used by more than one element of the document; the path points to each use after the first, in document order."
+        },
+        {
+          "const": "catalog/unknown-type",
+          "description": "A type is not a known object type of the catalog, spec/openui.json."
+        }
+      ]
+    }
+  }
+}

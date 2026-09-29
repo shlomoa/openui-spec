@@ -92,4 +92,5 @@ nav:
   - Tooling:
       - OpenUI JSON editing: tooling/editing.md
       - OpenUI JSON comparison: tooling/comparison.md
+      - Conformance suite: conformance/README.md
   - Examples: examples/README.md
