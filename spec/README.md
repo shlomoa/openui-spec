@@ -6,6 +6,49 @@ OpenUI is a technology-independent specification for a Web UI framework. It defi
 
 It serves application developers, designers and UX owners, framework maintainers, and generator/tooling authors, who all consume the same public contract.
 
+## Scope
+
+**Out of scope** means the specification does not address it. **Deferred** means a later
+edition may address it.
+
+### In scope
+
+- **Terminology:** the [glossary](scopes/scope.md#glossary), with one definition for each term.
+- **Catalog:** the eleven [top-level scopes](scopes/scope.md#top-level-scopes) and their leaf
+  scopes, each with its contract. Every catalog object is in scope.
+- **Categorization:** the three [taxonomy documents](scopes/scope.md#taxonomy-documents).
+- **Language:** the document format ([`EBNF.txt`](EBNF.txt) and its JSON Schema projection),
+  including element, data-binding and event references.
+- **Survey traceability:** the [evidence register](scopes/evidence.md), which links each
+  leaf scope to the surveyed sources.
+- **Utilities:** the Python and TypeScript [packages](#packages-and-tooling) that parse and
+  validate OpenUI documents.
+- **Compositions:** a UI pattern built from existing objects is in scope as a composition of
+  them, for example a transfer list (two list boxes and buttons), a preview (an Image, a
+  Media player or a Dialog), a walkthrough (Popovers) or a query builder (Value help).
+
+### Out of scope
+
+- **Generators:** they consume the specification and are not part of it.
+- **Browser and framework machinery:** HTML parsing, scheduling, storage, workers and
+  communication; framework infrastructure and tooling classes.
+- **Platform prompts:** prompts the browser or the operating system shows, such as a
+  biometric or permission prompt, and speech entry.
+- **Implementation techniques:** rendering content outside its place in the tree (a portal)
+  and rendering only the visible part of a collection (virtualization).
+- **Data that is not UI:** document metadata and resource declarations beyond
+  `index.html` and `favicon.ico`, and stored application data such as a saved query.
+- **Immersive views:** panoramic, AR and VR views.
+
+### Deferred
+
+- **Host-shell presence, docking and multiple-document workspaces:** for example a
+  notification-area icon, a main window, a dockable panel or a multiple-document workspace.
+- **Accessibility and Composition top-level scopes.** Accessibility stays in scope as a
+  property of every element: each leaf contract has an Accessibility section.
+- **Ruby annotation.**
+- **Duration selection** and **index navigation** (an A to Z rail).
+
 ## Packages and Tooling
 
 - **TypeScript / Node.js**: The [`@shlomoa/openui-spec`](https://www.npmjs.com/package/@shlomoa/openui-spec) package on npm provides the `OpenUiJson` document API, bundled canonical catalog/schema, TypeScript types, and the `ng-openui-spec` CLI. See the [OpenUI JSON editing guide](tooling/editing.md) for full usage.
