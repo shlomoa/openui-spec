@@ -267,7 +267,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 3 | [x] Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, three new Behaviors scopes, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Step 2 | Done |
 | 3 | [x] Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Done |
 | 4 | [ ] Add the missing terms to their scope Purposes; regenerate and version; generate the examples for the new additions from the consolidated data; validate; release `0.x.0` | W1 9.13, 9.7, 9.10–9.12, 9.8; W3 14.7, in this order | Step 3 | Open |
-| 4 | [ ] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, in this order | Step 3 | Open |
+| 4 | [ ] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, in this order | Step 3 | In progress — branch claude/w3-taxonomy-documents |
 | 5 | [ ] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 3 | Open |
 | 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | Step 3 | Open |
 | 6 | [ ] Scope statement and in / out classification | W2 10–12 | Step 3 | Open |
@@ -276,6 +276,8 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 9 | [ ] Draft the spec, enrich leaves from the survey inventories, `1.0.0-rc.1` | W6 24–26 | Steps 5, 8 | Open |
 | 9 | [ ] Conformance suite and Python / TypeScript utilities | W8 32–34 | W5 23 | Open |
 | 10 | [ ] Review and release `1.0.0`; packages; documentation; notify downstream | W6 27; W8 35; W7 28–31 | Step 9 | Open |
+
+Rows marked In progress are taken by a sub-agent; other agents take other rows.
 
 *Directive (Q3):* the `1.0.0-rc.1` of step 9 and the `1.0.0` of step 10 wait on downstream validation; until then each release is `0.x.0` / `0.x.y`.
 
