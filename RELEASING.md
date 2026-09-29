@@ -9,9 +9,8 @@ maintained in [`CHANGELOG.md`](CHANGELOG.md) and reused for the GitHub release.
 
 ## Assumptions
 
-- You have Python 3.12 or later, Git, Node.js 22, and npm installed.
-- You have write access to `shlomoa/openui-spec` on GitHub.
-- Your local `main` is up to date with `origin/main`.
+- You have the tools of [CONTRIBUTING § Local setup](CONTRIBUTING.md#local-setup),
+  Git, and write access to `shlomoa/openui-spec` on GitHub.
 - PyPI Trusted Publishing is configured for this repository's
   [`.github/workflows/publish-pypi.yml`](.github/workflows/publish-pypi.yml)
   workflow and its `pypi` GitHub environment. The workflow uses OIDC; do not add
@@ -24,28 +23,30 @@ maintained in [`CHANGELOG.md`](CHANGELOG.md) and reused for the GitHub release.
 
 ## Prerequisites
 
-Create a repository-local Python environment and install the validation and
-build tools.
+Set up the repository-local virtual environment as
+[CONTRIBUTING § Local setup](CONTRIBUTING.md#local-setup) describes, then add the
+build tool:
 
 Windows (PowerShell):
 
 ```powershell
-py -m venv .venv
-.\.venv\Scripts\python -m pip install pre-commit==4.6.0 -r requirements-test.txt -r requirements-docs.txt build
+.\.venv\Scripts\python -m pip install build
 ```
 
 Linux or macOS (Bash):
 
 ```bash
-python3 -m venv .venv
-./.venv/bin/python -m pip install pre-commit==4.6.0 -r requirements-test.txt -r requirements-docs.txt build
+./.venv/bin/python -m pip install build
 ```
 
 ---
 
-## 1. Verify the release commit
+## 1. Prepare the release on the pull request branch
 
-Start from a clean, current `main` branch:
+The version bump is part of the change, not a later step. A change that needs a
+release carries its version bump, its regenerated artifacts and its
+[`CHANGELOG.md`](CHANGELOG.md) entry on its own branch, before it is merged. Start
+the branch from a current `main`:
 
 ```bash
 git checkout main
@@ -53,125 +54,83 @@ git pull --ff-only origin main
 git status --short
 ```
 
-The final command must produce no output. If it reports changes, commit or
-stash them before proceeding.
+The last command must produce no output.
 
 ---
 
 ## 2. Select and set the package version
 
-Choose a [PEP 440](https://peps.python.org/pep-0440/)-compliant version. Use
-Semantic Versioning-compatible final releases where applicable.
+The spec version follows [Semantic Versioning](spec/README.md#48-versioning), with no
+pre-release suffix. Until the specification is validated in downstream tools and
+packages, every release is a `0.x.0` or `0.x.y` version, and there is no release
+candidate (directive Q3 of the
+[v1 publish plan](spec/survey/specui_v1_publish_plan.md#goal-and-definition-of-done)):
 
-| Release type      | Example    |
-| ----------------- | ---------- |
-| Alpha pre-release | `0.2.0a1`  |
-| Beta pre-release  | `0.2.0b1`  |
-| Release candidate | `0.2.0rc1` |
-| Final release     | `0.2.0`    |
-| Patch release     | `0.2.1`    |
+| Change                                                 | Version                          |
+| ------------------------------------------------------ | -------------------------------- |
+| Any specification change                               | the next free minor, `0.x.0`     |
+| A package change that changes no specification content | the next patch, `0.x.y`          |
+| `1.0.0-rc.1` and `1.0.0`                               | only after downstream validation |
 
-Update `[project].version` in [`pyproject.toml`](pyproject.toml) and
-`version` in [`package.json`](package.json), ensuring both published packages
-remain aligned. Align the Angular generator package metadata when it is part of
-the release, update the corresponding lockfiles, and complete the release entry
-in [`CHANGELOG.md`](CHANGELOG.md). The current publication workflows do not
-publish the Angular generator as a separate package. Then commit those files
-with the other intended release changes:
+"Next free" is counted against `main` at merge time. If `main` releases the version
+your branch took, merge `main` into the branch and take the next one.
 
-```bash
-git add CHANGELOG.md pyproject.toml package.json package-lock.json
-git add generators/angular/generator/package.json generators/angular/generator/package-lock.json
-git commit -m "chore: release X.Y.Z"
-```
+Set the same version in `[project].version` of [`pyproject.toml`](pyproject.toml),
+in `version` of [`package.json`](package.json) and of
+`generators/angular/generator/package.json`, and in their lockfiles. Add the release
+entry, with its compare link, to [`CHANGELOG.md`](CHANGELOG.md). The publication
+workflows do not publish the Angular generator as a separate package.
 
 ### Schema and catalog version changes
 
 The package version and the OpenUI schema/catalog version are separate
-contracts. **Every spec change forces a version bump.** Any change to the
-specification prose under `spec/scopes/`, the schema, or the catalog contracts
-cannot be released or merged under an unchanged version:
+contracts. **Every spec change forces a version bump.** A change to the
+specification prose under `spec/scopes/`, the grammar, the schema, or the catalog
+contracts cannot be merged under an unchanged version:
 
-- **Mandatory version bump**: Update [`SCHEMA_VERSION`](SCHEMA_VERSION) whenever
-  the specification changes.
-- **Catalog alignment**: Update the root `version` of
-  [`spec/openui.json`](spec/openui.json) (or regenerate it with
-  `python -m spec.bin.to_json --spec-dir spec --output .\spec\openui.json`), ensuring
-  it matches `SCHEMA_VERSION`.
-- **Examples and fixtures**: Update all affected examples under `spec/examples/`
-  and generator fixtures under `generators/angular/generator/tests/fixtures/` to
-  the bumped version.
-- **Package release**: Any release that includes specification changes must
-  also bump the package version in [`pyproject.toml`](pyproject.toml) and
-  [`package.json`](package.json) appropriately.
+- **Mandatory version bump**: Update [`SCHEMA_VERSION`](SCHEMA_VERSION) to the
+  version of stage 2. The packages take the same version.
+- **Catalog alignment**: Regenerate [`spec/openui.json`](spec/openui.json) with
+  `python -m spec.bin.to_json --spec-dir spec --output spec/openui.json`, so that its
+  root `version` matches `SCHEMA_VERSION`.
+- **Documents**: Set the new `version` in every worked example under
+  `spec/examples/`, every conformance document under `spec/conformance/`, every
+  generator fixture under `generators/angular/generator/tests/fixtures/` and every
+  test document. Their content is generated, not edited by hand
+  ([CONTRIBUTING § Examples and fixtures](CONTRIBUTING.md#examples-and-fixtures)).
 
-The repository contract tests validate the catalog's version against
-`SCHEMA_VERSION` and ensure all spec examples and fixtures remain aligned.
+The repository tests check the catalog's version against `SCHEMA_VERSION` and
+that every example, conformance document and fixture declares it.
 
 ---
 
 ## 3. Run complete release validation
 
-Run every command below from the repository root. These checks mirror the
-repository's build workflow across Python, documentation, the OpenUI JSON npm
-package, the Angular generator, and the generated Angular example application.
+Run every command of
+[CONTRIBUTING § Repository validation](CONTRIBUTING.md#repository-validation) on
+the branch. They mirror the build workflow.
 
-Windows (PowerShell):
-
-```powershell
-.\.venv\Scripts\pre-commit run --all-files
-git diff --check
-.\.venv\Scripts\python -m unittest discover -s tests -p 'test_*.py'
-.\.venv\Scripts\python -m unittest discover -s spec\tests -p 'test_*.py'
-.\.venv\Scripts\python -m mkdocs build --strict
-npm ci
-npm test
-Push-Location generators\angular\generator
-npm ci
-npm run build
-npm test
-Pop-Location
-Push-Location generators\angular\generated-examples
-npm ci
-npm run format:check
-npm run lint
-npm test
-npm run build
-Pop-Location
-```
-
-Linux or macOS (Bash):
-
-```bash
-./.venv/bin/pre-commit run --all-files
-git diff --check
-./.venv/bin/python -m unittest discover -s tests -p 'test_*.py'
-./.venv/bin/python -m unittest discover -s spec/tests -p 'test_*.py'
-./.venv/bin/python -m mkdocs build --strict
-npm ci
-npm test
-(
-  cd generators/angular/generator
-  npm ci
-  npm run build
-  npm test
-)
-(
-  cd generators/angular/generated-examples
-  npm ci
-  npm run format:check
-  npm run lint
-  npm test
-  npm run build
-)
-```
-
-Do not tag a release until every command succeeds. Commit any validation fixes,
-then repeat this stage.
+Do not merge until every command succeeds and the CI checks of the pull request
+pass. Commit any validation fixes, then repeat this stage.
 
 ---
 
-## 4. Build and inspect the distribution
+## 4. Merge
+
+Merge the pull request into `main`. Then run the remaining stages from a clean,
+current `main`:
+
+```bash
+git checkout main
+git pull --ff-only origin main
+git status --short
+```
+
+The last command must produce no output.
+
+---
+
+## 5. Build and inspect the distribution
 
 Build the release artifacts locally with the repository-local virtual
 environment:
@@ -201,14 +160,13 @@ Actions; local artifacts are for verification and must not be committed.
 
 ---
 
-## 5. Tag and push the release
+## 6. Tag the release
 
-Create an annotated tag using the `vX.Y.Z` convention, then push the release
-commit and tag:
+Create an annotated tag on the merged release commit of `main`, using the `vX.Y.Z`
+convention, and push the tag:
 
 ```bash
 git tag -a vX.Y.Z -m "Release vX.Y.Z"
-git push origin main
 git push origin vX.Y.Z
 ```
 
@@ -217,7 +175,7 @@ GitHub release.
 
 ---
 
-## 6. Create the GitHub release
+## 7. Create the GitHub release
 
 1. Go to <https://github.com/shlomoa/openui-spec/releases/new>.
 2. Select the `vX.Y.Z` tag.
@@ -266,9 +224,6 @@ moving branch revision.
   ```bash
   npx @shlomoa/openui-spec --help
   ```
-
-- If a new package development version is required on `main`, open a follow-up
-  change that updates `pyproject.toml` and `package.json` to the next planned pre-release version.
 
 ---
 
