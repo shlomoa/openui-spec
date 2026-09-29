@@ -144,7 +144,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    Apply the approved terminology. These are specification changes, so they follow [`RELEASING.md`](../../RELEASING.md#schema-and-catalog-version-changes). Do task 7 first, so the glossary changes land in their final location.
    - 9.1 [x] Glossary: add A1–A5 (Owner, Controlled element, Controlling element, Trigger, Window); apply C6 (move "component" and "UI component" from the Widget aliases to the Object aliases) and D2 (remove "widget instance" from the Element aliases); add the conflicting-meaning notes for Page, Control, Element and Grid ([appendix A](../scopes/terminology.md#appendix-a-canonical-term-rule)). Owner, Controlled element and Controlling element replace the proposed Standalone entry, which is not added.
    - 9.2 [x] Taxonomy mapping: apply C1–C6, R1–R11 and D1 in `spec/scopes/taxonomy_mapping.md`, and add A6–A76 with their scope and abstraction level. Apply [`taxonomy_mapping_change.md`](taxonomy_mapping_change.md#summary) in the same pass.
-   - 9.3 [x] Generic taxonomy: make the same renames and additions in `docs/generic-ui-taxonomy.md`, which the taxonomy mapping is based on.
+   - 9.3 [x] Generic taxonomy: make the same renames and additions in `docs/generic-ui-taxonomy.md`, which the taxonomy mapping is based on. Its HTML rendering, `docs/generic-ui-taxonomy.html`, is generated from it for ease of use (`python -m spec.bin.render_taxonomy_html`; a pre-commit check keeps it up to date).
    - 9.4 [x] New scopes: create `Behaviors/input_assistance.scope.md` and `Behaviors/viewport_and_focus_control.scope.md` from `template.scope.md`, list them in `Behaviors/scope.md`, and add one row each to `spec/scopes/evidence.md`.
    - 9.5 [x] Decide whether Modal overlay, moved to Behaviors by C4, needs its own scope file or is covered by an existing leaf. Decided 2026-09-29: its own scope, `Behaviors/modal_overlay`, with Modal interaction as its alias.
    - 9.6 [x] Scope contracts: apply [`scope_change.md`](scope_change.md#summary) in the same pass: the Purpose texts, the behavior target references and the Validation notes rules. Apply [`architecture_change.md`](architecture_change.md#summary) with it: the Behaviors folder description, the Boundaries rules of the folder scopes and the tree rules in `spec/scopes/scope.md`.
@@ -163,7 +163,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 
 10. [ ] Write the normative scope section: purpose, audience, in scope, out of scope, deferred to later editions.
 11. [ ] Classify every catalog object and every survey concept as in / out / deferred. *Validate:* no catalog object is out of scope. *Demo:* scope map page.
-12. [ ] Split `docs/REQUIREMENTS.md` so spec requirements and generator requirements are separate.
+12. [ ] Split `docs/REQUIREMENTS.md` so spec requirements and generator requirements are separate. *Directive:* `docs/REQUIREMENTS.md` lists the requirements for the solution as the user and owner perceive them, not requirements for the spec; spec content (artifact roles, vocabulary, catalog rules) belongs in `spec/` and is only linked from it.
 
 ### W3 UI categorization
 

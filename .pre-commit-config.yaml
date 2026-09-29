@@ -50,6 +50,14 @@ repos:
         language: python
         files: ^spec/(scopes/|bin/lint_spec\.py$|(?!survey/).*\.md$)
         pass_filenames: false
+      - id: generic-taxonomy-html
+        name: Generic UI taxonomy HTML up to date
+        entry: python -m spec.bin.render_taxonomy_html --check
+        language: python
+        additional_dependencies:
+          - Markdown==3.11
+        files: ^(docs/generic-ui-taxonomy\.(md|html)|docs/images/.*\.svg|spec/bin/render_taxonomy_html\.py)$
+        pass_filenames: false
       - id: markdown-internal-links
         name: Markdown internal links
         entry: python -m spec.bin.check_links
