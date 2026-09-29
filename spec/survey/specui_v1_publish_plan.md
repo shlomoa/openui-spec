@@ -18,9 +18,9 @@ The edition is done when all of these hold:
 8. **Validation** — CI runs format, lint, spec-content lint and conformance tests on Linux and Windows.
 9. **Visibility** — a published web page shows the v1.0 spec: taxonomy browser, per-object pages and live rendered examples.
 
-## Current state (PR #163, 2026-09-29, v0.3.1)
+## Current state (2026-09-29, v0.4.0)
 
-Re-checked on 2026-09-29 on the PR #163 branch, after execution step 3 and milestones M1 and M2. Earlier snapshots: `main` at `1c90f5c` (2026-09-26) and `b97f3f8` (2026-09-23).
+Re-checked on 2026-09-29, after execution step 3 and the `0.4.0` release (milestones M1 and M2). Earlier snapshots: `main` at `1c90f5c` (2026-09-26) and `b97f3f8` (2026-09-23).
 
 | Area | What exists | Gap for v1.0 |
 | --- | --- | --- |
@@ -150,7 +150,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
    - 9.4 [x] New scopes: create `Behaviors/input_assistance.scope.md` and `Behaviors/viewport_and_focus_control.scope.md` from `template.scope.md`, list them in `Behaviors/scope.md`, and add one row each to `spec/scopes/evidence.md`.
    - 9.5 [x] Decide whether Modal overlay, moved to Behaviors by C4, needs its own scope file or is covered by an existing leaf. Decided 2026-09-29: its own scope, `Behaviors/modal_overlay`, with Modal interaction as its alias.
    - 9.6 [x] Scope contracts: apply [`scope_change.md`](scope_change.done.md#summary) in the same pass: the Purpose texts, the behavior target references and the Validation notes rules. Apply [`architecture_change.md`](architecture_change.done.md#summary) with it: the Behaviors folder description, the Boundaries rules of the folder scopes and the tree rules in `spec/scopes/scope.md`.
-   - 9.7 [ ] Bump `SCHEMA_VERSION` and the package versions to the next `0.x.0` (directive Q3), regenerate `spec/openui.json` and the fixtures with the new version, and update `CHANGELOG.md`. `spec/openui.json` and the generator fixtures already follow each scope change, because pre-commit and the tests enforce it. The examples are tasks 9.10–9.12.
+   - 9.7 [x] Bump `SCHEMA_VERSION` and the package versions to the next `0.x.0` (directive Q3), regenerate `spec/openui.json` and the fixtures with the new version, and update `CHANGELOG.md`. `spec/openui.json` and the generator fixtures already follow each scope change, because pre-commit and the tests enforce it. The examples are tasks 9.10–9.12. Released as `0.4.0` (2026-09-29).
    - 9.8 [ ] Validate: pre-commit, unit tests, `mkdocs build --strict` and the npm tests.
    - 9.9 [ ] Build the alias table (task 8.3) from the survey `taxonomy_mapping.md` files, using the final names: add the HTML / WAI-ARIA, OpenUI5, Qt and Angular Material columns to `spec/scopes/taxonomy_mapping.md` and fill them for every entry ("—" where a source has no name). The names sit on the entry's own row, so they need no term-existence check; extend `tests/test_taxonomy_mapping.py` to check that every row has the four columns. Move framework names out of the glossary Aliases lines into these columns (task 14.9).
    - 9.10 [ ] Generate the examples for every new addition with the [Spec JSON File Generator](../../.github/agents/spec-json-file-generator.agent.md) agent, using the Add rows of the consolidated files as its input: [`terminology.md`](../scopes/terminology.md#4-add), [`taxonomy_mapping_change.md`](taxonomy_mapping_change.done.md#4-add) and the approved rows of [`ui_element_taxonomy_merge_proposal.md`](ui_element_taxonomy_merge_proposal.done.md#4-add). Each row gives the term, its scope and its level; the evidence it links to gives the attribute values and the child composition. The output: for each Alias and Grouped leaf addition, including the merge additions (Menu item, Date and time field, Captions), a node in its scope's example, with an id derived from the term (for example `highlightedText`) and the scope's catalog type. Glossary-only terms (terminology A1–A5) get no example. The three new Behaviors scopes (`input_assistance`, `viewport_and_focus_control`, `modal_overlay`) already have their leaf examples, their entries in `Behaviors/scope.example.json` and the index rows in `spec/examples/README.md` (tasks 9.4, 9.5).
@@ -245,15 +245,15 @@ Five GitHub milestones, each ending with a tagged release and a visible web page
 
 | Milestone | Release | Tasks | Exit criterion | Visual demo |
 | --- | --- | --- | --- | --- |
-| [x] M1 Guard rails | Not tagged; ships in the step 4 release | 1–3 | CI green on Linux and Windows with spec-content lint | Lint report page |
-| [x] M2 Survey consolidated | Not tagged; ships in the step 4 release | 4–6 | All consolidated change files approved | The change files in `spec/survey/` |
+| [x] M1 Guard rails | `0.4.0` | 1–3 | CI green on Linux and Windows with spec-content lint | Lint report page |
+| [x] M2 Survey consolidated | `0.4.0` | 4–6 | All consolidated change files approved | The change files in `spec/survey/` |
 | [ ] M3 Foundations agreed | Next `0.x.0` | 7–18 | Glossary, scope, taxonomy and outline approved | Glossary + taxonomy tree pages |
 | [ ] M4 Language frozen | Next `0.x.0` | 19–23, 32–34 | Grammar 1.0 + conformance suite merged | Validation playground |
 | [ ] M5 v1.0.0 published | `1.0.0` | 24–31, 35 | Packages at 1.0.0 on PyPI + npm; docs live | Published spec site with rendered examples |
 
 *Directive (Q3):* M5's `1.0.0` release waits on downstream validation; until then each milestone ships a `0.x.0` release.
 
-M1 and M2 are complete: their tasks are done and their exit criteria hold. They were not tagged; their content ships in the next `0.x.0` release (execution step 4). Milestones carry no fixed version number: each release takes the next free `0.x.0` (directive Q3), and only M5 has a fixed number, `1.0.0`. M4 can start as soon as the terminology is applied (W1 9.1–9.6, execution step 3, done); it does not need the taxonomy or the rest of task 9.
+M1 and M2 are complete: their tasks are done and their exit criteria hold. They were released as `0.4.0` (tag `v0.4.0`, 2026-09-29), together with the step 3 changes. Milestones carry no fixed version number: each release takes the next free `0.x.0` (directive Q3), and only M5 has a fixed number, `1.0.0`. M4 can start as soon as the terminology is applied (W1 9.1–9.6, execution step 3, done); it does not need the taxonomy or the rest of task 9.
 
 ## Execution order
 
@@ -270,7 +270,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 2 | [x] Move the glossary to its final location | W1 7 | — | Done |
 | 3 | [x] Apply terminology, categories and merge in one pass: glossary, taxonomy mapping, generic taxonomy, classification rules, three new Behaviors scopes, scope contracts | W1 9.1–9.6; W3 14.3–14.5 | Step 2 | Done |
 | 3 | [x] Implement and enable the scope-template and glossary lint rules | W9 2.1, 2.3 | W1 7 | Done |
-| 4 | [ ] Add the missing terms to their scope Purposes; regenerate and version; generate the examples for the new additions from the consolidated data; validate; release `0.x.0` | W1 9.13, 9.7, 9.10–9.12, 9.8; W3 14.7, in this order | Step 3 | Open |
+| 4 | [ ] Add the missing terms to their scope Purposes; generate the examples for the new additions from the consolidated data; validate; release the next `0.x.0` | W1 9.13, 9.10–9.12, 9.8; W3 14.7, in this order | Step 3 | Open |
 | 4 | [x] Keep the taxonomy documents as parts of the spec and align them: record the reversal, move them to `spec/taxonomy/`, record one owner for each fact, remove the duplicates and contradictions, refresh and extend the UI element taxonomy, refresh the generic taxonomy | W3 14.6, 14.8, 14.9, 14.13, 14.10, 14.11, in this order | Step 3 | Done |
 | 5 | [ ] Alias table from the survey mappings, with the final names | W1 9.9 (8.3) | Step 3 | Open |
 | 5 | [ ] Language decisions and grammar (M4 may start here) | W5 19–23; W8 32 fixture structure | Step 3 | Open |
