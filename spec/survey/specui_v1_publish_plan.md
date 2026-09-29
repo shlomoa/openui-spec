@@ -220,7 +220,7 @@ Each task ends with a validation step and a visual demo, per the project rules. 
 ### W4 Specification structure
 
 16. [x] Define the v1.0 outline; the three taxonomy documents are part of it (section 5). For example: 1 Introduction & scope · 2 Conformance · 3 Terminology · 4 Document model & language · 5 Categories & objects · 6 Catalog · Annex A Grammar · Annex B Survey mapping · Annex C Examples. Result: the [outline](outline.done.md#1-outline) places every spec document in six parts and three annexes, with the source of each point; `spec/README.md` has the numbered [Outline](../README.md#outline) and the `mkdocs.yml` navigation follows it. No file moved (W6 24 does the rewrite).
-17. [ ] Define RFC 2119 keyword use (MUST/SHOULD/MAY) and mark normative vs. informative sections. *In progress — chain 3, branch claude/chain-3-scope-structure.*
+17. [x] Define RFC 2119 keyword use (MUST/SHOULD/MAY) and mark normative vs. informative sections. Result: [`spec/README.md` § Conformance](../README.md#conformance) defines the keywords by BCP 14 (RFC 2119, RFC 8174: only in capitals, only in normative parts) and marks each part of the outline normative or informative; Annex B, Annex C (examples) and the tooling are informative. `tests/test_conformance_keywords.py` checks that informative documents and README sections use no keyword.
 18. [x] Move incremental-generation and generator content out of `spec/README.md` into the generator docs. *Directive (Q8, decided 2026-09-29):* the Angular generator stays in openui-spec for v1.0, in `generators/angular/`, as [`docs/REQUIREMENTS.md`](../../docs/REQUIREMENTS.md#2-angular-typescript-generator) states. Result: the Incremental generation section (scenarios and algorithm) and the list of how generators use the three artifacts moved from `spec/README.md` to [`GENERATION.md`](../../generators/angular/generator/docs/GENERATION.md#incremental-generation); every link and code comment now points there.
 
 ### W5 UI description language
@@ -293,7 +293,7 @@ The execution stack, top first. A step starts when the steps it depends on are d
 | 6 | [x] Scope statement and in / out classification | W2 10, then 11; W2 12 (lowest priority) | Step 3 | Done |
 | 6 | [ ] Enrich each leaf scope from the survey inventories and the alias table | W6 25 | W1 9.9 (step 5); W5 19–23 (step 5) | Open |
 | 7 | [x] Map leaf scopes to the categories; rename or move scope folders | W3 14.12, then 15 | Step 4 taxonomy row; W2 11 (step 6) | Done |
-| 8 | [ ] Specification outline and normative split | W4 16, then 17 | Step 7 | Open |
+| 8 | [x] Specification outline and normative split | W4 16, then 17 | Step 7 | Done |
 | 9 | [ ] Draft the spec per the outline | W6 24 | Step 8; step 5 language row (W5 19–23) | Open |
 | 9 | [x] Conformance suite and Python / TypeScript utilities | W8 32 (finish the suite), 33, 34 | W5 23 | Done — PR #169 (`0.6.0`) |
 | 10 | [ ] Regenerate, migrate all examples and fixtures, `1.0.0-rc.1` | W6 26 | W6 24, 25; W5 23 | Open |

@@ -12,7 +12,8 @@ The specification has six parts and three annexes:
 
 1. **Introduction and scope:** this page's introduction, [Scope](#scope) and
    [How to read this spec](#how-to-read-this-spec).
-2. **Conformance:** the [conformance suite](conformance/README.md).
+2. **Conformance:** the [requirement keywords and the normative and informative parts](#conformance),
+   and the [conformance suite](conformance/README.md).
 3. **Terminology:** the [glossary](scopes/scope.md#glossary).
 4. **Document model and language:**
    [Specification artifacts](#specification-artifacts-grammar-vs-catalog) and
@@ -80,6 +81,37 @@ edition may address it.
   property of every element: each leaf contract has an Accessibility section.
 - **Ruby annotation.**
 - **Duration selection** and **index navigation** (an A to Z rail).
+
+## Conformance
+
+### Requirement keywords
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+"SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
+specification are to be interpreted as described in BCP 14
+([RFC 2119](https://www.rfc-editor.org/rfc/rfc2119),
+[RFC 8174](https://www.rfc-editor.org/rfc/rfc8174)) when, and only when, they appear
+in all capitals, as shown here.
+
+- The keywords appear only in normative parts.
+- The same words in lower case carry no requirement.
+- Notes and examples inside a normative part are informative.
+
+### Normative and informative parts
+
+| Part                          | Where                                                                                                                                              | Status      |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| 1 Introduction and scope      | This page's introduction, [Outline](#outline), [How to read this spec](#how-to-read-this-spec)                                                     | Informative |
+| 1 Introduction and scope      | [Scope](#scope)                                                                                                                                    | Normative   |
+| 2 Conformance                 | This section; the [conformance suite](conformance/README.md)                                                                                       | Normative   |
+| 3 Terminology                 | The [glossary](scopes/scope.md#glossary)                                                                                                           | Normative   |
+| 4 Document model and language | [Specification artifacts](#specification-artifacts-grammar-vs-catalog), [Spec format](#spec-format)                                                | Normative   |
+| 5 Categories and objects      | The three taxonomy documents, the scope tree and the scope files (the [Outline](#outline) lists them)                                              | Normative   |
+| 6 Catalog                     | [Leaf scope source format](#leaf-scope-source-format-scopemd), the [leaf scope template](scopes/template.scope.md) and the generated `openui.json` | Normative   |
+| Annex A Grammar               | [`EBNF.txt`](EBNF.txt), which is authoritative, and its JSON Schema projection                                                                     | Normative   |
+| Annex B Survey mapping        | The [evidence register](scopes/evidence.md) and the [terminology decisions](scopes/terminology.md)                                                 | Informative |
+| Annex C Examples              | The [worked examples](examples/README.md) and [app.json examples](#appjson-examples)                                                               | Informative |
+| Not a part                    | [Packages and tooling](#packages-and-tooling)                                                                                                      | Informative |
 
 ## Packages and Tooling
 
