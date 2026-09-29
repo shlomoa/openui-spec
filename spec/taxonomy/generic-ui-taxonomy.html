@@ -164,17 +164,34 @@ em {
 </head>
 <body>
 <h1>Generic UI Taxonomy</h1>
-<p>Framework-independent UI taxonomy. Each entry is classified by its primary
-purpose. The canonical vocabulary, aliases, and detailed term definitions live in
-<a href="../scopes/scope.md#glossary"><code>spec/scopes/scope.md</code> § Glossary</a>; this document
-classifies and illustrates those terms rather than redefining them. The
-spec-object coverage map is maintained in <code>spec/scopes/taxonomy_mapping.md</code>.
-“Device-dependent” means that the element inherently requires a particular
+<p>The generic UI taxonomy groups framework-independent UI terms by their primary purpose.
+It is one of the three <a href="../scopes/scope.md#taxonomy-documents">taxonomy documents</a>. It
+owns the sections and their purpose, the subcategories and their inclusion rule (Holds),
+the entries and where each belongs, and how the user meets each entry: its description,
+whether it is viewable or device-dependent, and its image. The
+<a href="ui-element-taxonomy.md">UI element taxonomy</a> owns the classification rules. The
+<a href="../scopes/taxonomy_mapping.md">taxonomy mapping</a> owns the scope object of each entry.
+Term definitions and aliases live in the <a href="../scopes/scope.md#glossary">glossary</a>, and
+object contracts in the scope files; an entry description may not contradict them.</p>
+<p>Where an entry belongs:</p>
+<ul>
+<li>Each entry belongs to exactly one section and at most one subcategory, chosen by its
+  primary purpose in its current context, as the
+  <a href="ui-element-taxonomy.md#classification-rules">classification rules</a> define.</li>
+<li>The Holds line of a subcategory is its inclusion rule.</li>
+<li>Interaction details, such as hover states, touch targets, gestures and input events,
+  are not UI elements; they are entries of <a href="#interaction-definitions">Interaction definitions</a>.
+  Reusable behaviors that act on an element without being visible themselves are entries
+  of <a href="#behaviors">Behaviors</a>.</li>
+<li>An entry's secondary roles go in its taxonomy mapping note, not in a second entry.</li>
+</ul>
+<p>“Device-dependent” means that the element inherently requires a particular
 hardware or host-platform capability, not merely that its layout adapts to a
 device.</p>
 <h2>Input elements</h2>
 <p>Collect data from users or allow users to trigger actions and change values.</p>
 <h3>Command activation</h3>
+<p>Holds: Controls whose main purpose is to run a command.</p>
 <table>
 <thead>
 <tr>
@@ -224,6 +241,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Text and shortcut entry</h3>
+<p>Holds: Entry of text or of a recorded key sequence.</p>
 <table>
 <thead>
 <tr>
@@ -280,6 +298,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Value and resource selection</h3>
+<p>Holds: Choosing a value, a quantity in a range, or a resource such as a file, font or color.</p>
 <table>
 <thead>
 <tr>
@@ -462,6 +481,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Temporal entry</h3>
+<p>Holds: Editing or choosing a date or time, with an optional calendar.</p>
 <table>
 <thead>
 <tr>
@@ -511,6 +531,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Drawing and capture</h3>
+<p>Holds: Input that is not text or a value: drawing, or capturing sound.</p>
 <table>
 <thead>
 <tr>
@@ -546,6 +567,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Manipulation handles</h3>
+<p>Holds: Visible handles the user drags to move or resize an element. The behavior itself is in the Behaviors section.</p>
 <table>
 <thead>
 <tr>
@@ -576,6 +598,7 @@ device.</p>
 <h2>Output elements</h2>
 <p>Present information, results, feedback, progress, or system status to users.</p>
 <h3>Document and numeric display</h3>
+<p>Holds: Text, labels, images and calculated values shown without their own interaction.</p>
 <table>
 <thead>
 <tr>
@@ -653,6 +676,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Graphics presentation</h3>
+<p>Holds: Shapes, application-drawn imagery and views onto a graphics scene.</p>
 <table>
 <thead>
 <tr>
@@ -688,6 +712,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Collections and data presentation</h3>
+<p>Holds: Repeated or structured records and their visualizations: lists, tables, grids, trees, schedules, charts and geographic maps.</p>
 <table>
 <thead>
 <tr>
@@ -772,6 +797,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Media playback</h3>
+<p>Holds: Audio, video and camera content.</p>
 <table>
 <thead>
 <tr>
@@ -807,6 +833,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Feedback and assistance</h3>
+<p>Holds: Status, progress, messages and help.</p>
 <table>
 <thead>
 <tr>
@@ -949,6 +976,7 @@ device.</p>
 <h2>Navigational elements</h2>
 <p>Help users move between product areas, views, locations, or sections of content.</p>
 <h3>Command menus</h3>
+<p>Holds: Lists of commands or choices with menu semantics.</p>
 <table>
 <thead>
 <tr>
@@ -998,6 +1026,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Hierarchy browsing</h3>
+<p>Holds: Exploring parent and child items in a tree, columns or a path.</p>
 <table>
 <thead>
 <tr>
@@ -1033,6 +1062,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Content selection and position</h3>
+<p>Holds: Choosing which content is shown, or where in it the user is.</p>
 <table>
 <thead>
 <tr>
@@ -1082,6 +1112,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Application navigation</h3>
+<p>Holds: Moving between the destinations of an application or to a linked resource.</p>
 <table>
 <thead>
 <tr>
@@ -1152,6 +1183,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Search, filtering and sorting</h3>
+<p>Holds: Finding, narrowing and ordering content.</p>
 <table>
 <thead>
 <tr>
@@ -1196,6 +1228,7 @@ device.</p>
 <h2>Container elements</h2>
 <p>Group, structure, and organize related content or other UI elements.</p>
 <h3>Grouping surfaces</h3>
+<p>Holds: Regions that hold related content or controls, including ones the user can expand.</p>
 <table>
 <thead>
 <tr>
@@ -1273,6 +1306,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Workspace surfaces</h3>
+<p>Holds: Application work areas: windows, views, pages and the bars and panels that frame them.</p>
 <table>
 <thead>
 <tr>
@@ -1364,6 +1398,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Overlays and sheets</h3>
+<p>Holds: Surfaces layered above the current content or attached to its edge.</p>
 <table>
 <thead>
 <tr>
@@ -1413,6 +1448,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Forms</h3>
+<p>Holds: A form and the fields and field groups it holds.</p>
 <table>
 <thead>
 <tr>
@@ -1448,6 +1484,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Focused tasks and guided sequences</h3>
+<p>Holds: A decision, a short task or a sequence of steps that takes the user's attention.</p>
 <table>
 <thead>
 <tr>
@@ -1591,7 +1628,8 @@ device.</p>
 <h2>Layout mechanisms and definitions</h2>
 <p>Framework-independent rules that determine how UI elements and structural objects are positioned, sized, aligned, grouped, and adapted to available space.</p>
 <h3>Layout rules and relationships</h3>
-<p>Rules and relationships that determine how structural objects and UI elements occupy and respond to space. The definitions themselves are abstract; their effects are viewable.</p>
+<p>Holds: Rules and relationships that decide how elements occupy and respond to space.</p>
+<p>The definitions themselves are abstract; their effects are viewable.</p>
 <table>
 <thead>
 <tr>
@@ -1678,7 +1716,8 @@ device.</p>
 <h2>Presentation and style definitions</h2>
 <p>Framework-independent rules that determine how UI elements look, sound, and visually change without defining the elements themselves.</p>
 <h3>Visual appearance and presentation rules</h3>
-<p>Visual and auditory systems applied consistently to communicate hierarchy, identity, meaning, state, and change. Each illustration shows the effect produced by the definition.</p>
+<p>Holds: Visual and auditory rules that communicate hierarchy, identity, meaning, state and change.</p>
+<p>Each illustration shows the effect produced by the definition.</p>
 <table>
 <thead>
 <tr>
@@ -1814,7 +1853,8 @@ device.</p>
 <h2>Internationalization and localization definitions</h2>
 <p>Framework-independent rules and resources that adapt an interface to the user’s language, writing system, locale, and cultural conventions. Internationalization makes this adaptation possible; localization supplies and applies the language- and locale-specific result.</p>
 <h3>Language, locale, and writing-system rules</h3>
-<p>Definitions governing language coverage, translation, writing direction, bidirectional content, culturally appropriate formatting, and localized input. The illustrations show the visible effect of each definition; the rule itself may be abstract.</p>
+<p>Holds: Rules for language, translation, writing direction, cultural formatting and localized input.</p>
+<p>The illustrations show the visible effect of each definition; the rule itself may be abstract.</p>
 <table>
 <thead>
 <tr>
@@ -1953,7 +1993,7 @@ device.</p>
 <h2>Interaction definitions</h2>
 <p>Framework-independent definitions for the states, areas, gestures, and events through which users interact with UI elements. These are interaction concepts rather than UI elements.</p>
 <h3>Interaction states</h3>
-<p>Visual or behavioral conditions that communicate an element’s current availability, focus, activation, or selection.</p>
+<p>Holds: Conditions that show an element's availability, focus, activation or selection.</p>
 <table>
 <thead>
 <tr>
@@ -2010,7 +2050,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Interaction areas and constraints</h3>
-<p>Hit regions and usability rules that determine where and how reliably an interactive element can be targeted.</p>
+<p>Holds: Hit regions and the rules for targeting an element reliably.</p>
 <table>
 <thead>
 <tr>
@@ -2053,7 +2093,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Gestures</h3>
-<p>Meaningful movements or contact patterns performed by users and interpreted as higher-level interactions.</p>
+<p>Holds: Movements or contact patterns interpreted as higher-level interactions.</p>
 <table>
 <thead>
 <tr>
@@ -2117,7 +2157,7 @@ device.</p>
 </tbody>
 </table>
 <h3>Input events</h3>
-<p>Lower-level occurrences generated by pointer, touch, keyboard, focus, or value changes and used to implement interactions.</p>
+<p>Holds: Low-level pointer, touch, keyboard, focus and value events.</p>
 <p><em>The examples are rendered SVG illustrations, not text or Unicode stand-ins. A visible example is intentionally omitted when the interaction definition itself has no visual representation.</em></p>
 <table>
 <thead>

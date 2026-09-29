@@ -13,6 +13,26 @@ evidence and the canonical-term rule. The taxonomy and the scope tree are linked
 groups terms by purpose; the scope tree organizes contracts. A new taxonomy section
 or subcategory does not create a scope folder, type or contract.
 
+## Taxonomy documents
+
+Three documents specify the OpenUI taxonomy. Each fact about it has one owner, and the
+documents link to each other instead of repeating it:
+
+| Document                                                  | Owns                                                                                                                                                                                                                               |
+| --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Generic UI taxonomy](../taxonomy/generic-ui-taxonomy.md) | The sections and their purpose; the subcategories and their inclusion rule (Holds); the entries and where each belongs; how the user meets each entry: its description, whether it is viewable or device-dependent, and its image. |
+| [UI element taxonomy](../taxonomy/ui-element-taxonomy.md) | The abstract element types in 15 categories, with their purpose and typical concrete elements; the OpenUI term each type maps to; the classification rules, with their primary and secondary role examples.                        |
+| [Taxonomy mapping](taxonomy_mapping.md)                   | For each entry: its scope object, its abstraction level and its scope-specific notes. Its section and subcategory headings mirror the generic UI taxonomy, and a test keeps them equal.                                            |
+
+The rest of the spec keeps its own facts:
+
+- The [glossary](#glossary) keeps the term definitions and the generic aliases, which are
+  synonyms such as "hyperlink" or "push button". Framework names, such as `sap.m.Page` or
+  `QDockWidget`, are not glossary aliases; a taxonomy entry's framework names belong on its
+  row in the taxonomy mapping.
+- The scope files keep the object contracts.
+- A taxonomy description may not contradict the glossary or a scope file.
+
 ## Top-level scopes
 
 - [Application](Application/scope.md): application-level bootstrap artifacts and implementation-independent concepts such as routing, navigation, tool bars, `favicon.ico`, and `index.html`.
@@ -92,15 +112,15 @@ grammar and field mapping are documented in [`../README.md`](../README.md).
 
 This glossary is the repository source of truth for OpenUI vocabulary. Other
 documents may classify, specialize, or illustrate these terms, but should link
-here instead of redefining them. A term may have several aliases in product,
-framework, accessibility, or platform language; the canonical term below is the
-preferred OpenUI wording.
+here instead of redefining them. A term may have several generic aliases; the
+canonical term below is the preferred OpenUI wording.
 
 ### Glossary usage rules
 
 - Use **Canonical term** names in normative spec prose when possible.
-- Use **Aliases** to recognize equivalent names from frameworks, platforms,
-  design systems, accessibility APIs, and user-facing product language.
+- Use **Aliases** to recognize generic synonyms from design systems and
+  user-facing product language. Framework names belong in the taxonomy mapping, as
+  [Taxonomy documents](#taxonomy-documents) states.
 - When a document needs a narrower meaning, state the specialization and link to
   the canonical term instead of creating a parallel definition.
 - Scope files under [`scopes/`](#scopes) define object contracts. This

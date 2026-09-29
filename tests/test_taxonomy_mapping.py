@@ -52,6 +52,12 @@ class TaxonomyMappingTest(unittest.TestCase):
                     self.assertFalse(link.startswith("../"), link)
                     self.assertTrue((SCOPES_DIR / link).is_file(), link)
 
+    def test_mapping_headings_mirror_the_generic_taxonomy(self) -> None:
+        self.assertEqual(
+            _taxonomy_headings(TAXONOMY_MAPPING.read_text(encoding="utf-8")),
+            _taxonomy_headings(DOCS_TAXONOMY.read_text(encoding="utf-8")),
+        )
+
     def test_every_taxonomy_entry_is_mapped(self) -> None:
         taxonomy_entries = {_normalize_taxonomy_entry(entry) for entry in _taxonomy_entries()}
         mapping_entries = {_normalize_taxonomy_entry(row["entry"]) for row in self.mapping_rows}
@@ -68,6 +74,21 @@ class TaxonomyMappingTest(unittest.TestCase):
             seen.add(normalized)
 
         self.assertLessEqual(duplicates, INTENTIONAL_COMBINED_MAPPINGS)
+
+
+def _taxonomy_headings(text: str) -> list[str]:
+    """Return the section (##) and subcategory (###) headings that hold entry tables."""
+    headings: list[str] = []
+    pending: list[str] = []
+    for line in text.splitlines():
+        if line.startswith("## "):
+            pending = [line]
+        elif line.startswith("### "):
+            pending = [heading for heading in pending if heading.startswith("## ")] + [line]
+        elif _table_cells(line) and pending:
+            headings.extend(heading for heading in pending if heading not in headings)
+            pending = []
+    return headings
 
 
 def _taxonomy_entries() -> list[str]:

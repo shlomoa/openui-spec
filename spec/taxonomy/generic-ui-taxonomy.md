@@ -1,10 +1,27 @@
 # Generic UI Taxonomy
 
-Framework-independent UI taxonomy. Each entry is classified by its primary
-purpose. The canonical vocabulary, aliases, and detailed term definitions live in
-[`spec/scopes/scope.md` § Glossary](../scopes/scope.md#glossary); this document
-classifies and illustrates those terms rather than redefining them. The
-spec-object coverage map is maintained in `spec/scopes/taxonomy_mapping.md`.
+The generic UI taxonomy groups framework-independent UI terms by their primary purpose.
+It is one of the three [taxonomy documents](../scopes/scope.md#taxonomy-documents). It
+owns the sections and their purpose, the subcategories and their inclusion rule (Holds),
+the entries and where each belongs, and how the user meets each entry: its description,
+whether it is viewable or device-dependent, and its image. The
+[UI element taxonomy](ui-element-taxonomy.md) owns the classification rules. The
+[taxonomy mapping](../scopes/taxonomy_mapping.md) owns the scope object of each entry.
+Term definitions and aliases live in the [glossary](../scopes/scope.md#glossary), and
+object contracts in the scope files; an entry description may not contradict them.
+
+Where an entry belongs:
+
+- Each entry belongs to exactly one section and at most one subcategory, chosen by its
+  primary purpose in its current context, as the
+  [classification rules](ui-element-taxonomy.md#classification-rules) define.
+- The Holds line of a subcategory is its inclusion rule.
+- Interaction details, such as hover states, touch targets, gestures and input events,
+  are not UI elements; they are entries of [Interaction definitions](#interaction-definitions).
+  Reusable behaviors that act on an element without being visible themselves are entries
+  of [Behaviors](#behaviors).
+- An entry's secondary roles go in its taxonomy mapping note, not in a second entry.
+
 “Device-dependent” means that the element inherently requires a particular
 hardware or host-platform capability, not merely that its layout adapts to a
 device.
@@ -14,6 +31,8 @@ device.
 Collect data from users or allow users to trigger actions and change values.
 
 ### Command activation
+
+Holds: Controls whose main purpose is to run a command.
 
 | Name             | Description — how the user interfaces with it                                                                            | Viewable? | Device-dependent? | Example image                                          |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------ | :-------: | :---------------: | ------------------------------------------------------ |
@@ -25,6 +44,8 @@ Collect data from users or allow users to trigger actions and change values.
 
 ### Text and shortcut entry
 
+Holds: Entry of text or of a recorded key sequence.
+
 | Name                    | Description — how the user interfaces with it                                                                           | Viewable? | Device-dependent? | Example image                                        |
 | ----------------------- | ----------------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | ---------------------------------------------------- |
 | Text field              | Accepts a single line of typed, pasted, dictated, or programmatically entered text.                                     |    Yes    |        No         | ![Text field example](images/text-field.svg)         |
@@ -35,6 +56,8 @@ Collect data from users or allow users to trigger actions and change values.
 | Metadata-driven field   | Shows a value and picks its editor, such as a text, number or date input, from the data type and metadata of the value. |    Yes    |        No         | None yet                                             |
 
 ### Value and resource selection
+
+Holds: Choosing a value, a quantity in a range, or a resource such as a file, font or color.
 
 | Name                        | Description — how the user interfaces with it                                                                                              | Viewable? | Device-dependent? | Example image                                            |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | :-------: | :---------------: | -------------------------------------------------------- |
@@ -65,6 +88,8 @@ Collect data from users or allow users to trigger actions and change values.
 
 ### Temporal entry
 
+Holds: Editing or choosing a date or time, with an optional calendar.
+
 | Name                | Description — how the user interfaces with it                                   | Viewable? | Device-dependent? | Example image                                  |
 | ------------------- | ------------------------------------------------------------------------------- | :-------: | :---------------: | ---------------------------------------------- |
 | Date picker         | Accepts or selects a date, commonly through a calendar presentation.            |    Yes    |        No         | ![Date picker example](images/date-picker.svg) |
@@ -75,6 +100,8 @@ Collect data from users or allow users to trigger actions and change values.
 
 ### Drawing and capture
 
+Holds: Input that is not text or a value: drawing, or capturing sound.
+
 | Name             | Description — how the user interfaces with it                                                              | Viewable? | Device-dependent? | Example image                                            |
 | ---------------- | ---------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | -------------------------------------------------------- |
 | Canvas           | A drawing surface that the application paints on and the user may draw on with a pointer, touch or stylus. |    Yes    |        No         | ![Canvas example](images/canvas-drawing-area.svg)        |
@@ -82,6 +109,8 @@ Collect data from users or allow users to trigger actions and change values.
 | Microphone input | Captures audio after the user starts recording and grants permission.                                      | Sometimes |        Yes        | ![Microphone input example](images/microphone-input.svg) |
 
 ### Manipulation handles
+
+Holds: Visible handles the user drags to move or resize an element. The behavior itself is in the Behaviors section.
 
 | Name          | Description — how the user interfaces with it              | Viewable? | Device-dependent? | Example image                                      |
 | ------------- | ---------------------------------------------------------- | :-------: | :---------------: | -------------------------------------------------- |
@@ -93,6 +122,8 @@ Collect data from users or allow users to trigger actions and change values.
 Present information, results, feedback, progress, or system status to users.
 
 ### Document and numeric display
+
+Holds: Text, labels, images and calculated values shown without their own interaction.
 
 | Name              | Description — how the user interfaces with it                                                                                               | Viewable? | Device-dependent? | Example image                                      |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | -------------------------------------------------- |
@@ -108,6 +139,8 @@ Present information, results, feedback, progress, or system status to users.
 
 ### Graphics presentation
 
+Holds: Shapes, application-drawn imagery and views onto a graphics scene.
+
 | Name                    | Description — how the user interfaces with it                                           | Viewable? | Device-dependent? | Example image |
 | ----------------------- | --------------------------------------------------------------------------------------- | :-------: | :---------------: | ------------- |
 | Geometric shape         | Draws a geometric shape such as an ellipse, rectangle, line, polygon or path.           |    Yes    |        No         | None yet      |
@@ -115,6 +148,8 @@ Present information, results, feedback, progress, or system status to users.
 | Graphics viewport       | Shows a scene of graphic items. The user pans, zooms and selects items or regions.      |    Yes    |        No         | None yet      |
 
 ### Collections and data presentation
+
+Holds: Repeated or structured records and their visualizations: lists, tables, grids, trees, schedules, charts and geographic maps.
 
 | Name              | Description — how the user interfaces with it                                                                                           | Viewable? | Device-dependent? | Example image                                    |
 | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | ------------------------------------------------ |
@@ -131,6 +166,8 @@ Present information, results, feedback, progress, or system status to users.
 
 ### Media playback
 
+Holds: Audio, video and camera content.
+
 | Name           | Description — how the user interfaces with it                                               | Viewable? | Device-dependent? | Example image                                        |
 | -------------- | ------------------------------------------------------------------------------------------- | :-------: | :---------------: | ---------------------------------------------------- |
 | Media player   | Presents audio or video with playback, seeking, volume, caption, and fullscreen operations. |    Yes    |        No         | ![Media player example](images/media-player.svg)     |
@@ -138,6 +175,8 @@ Present information, results, feedback, progress, or system status to users.
 | Captions       | Shows the speech and important sounds of audio or video as synchronized text.               |    Yes    |        No         | None yet                                             |
 
 ### Feedback and assistance
+
+Holds: Status, progress, messages and help.
 
 | Name                | Description — how the user interfaces with it                                                                                                                                                  | Viewable? | Device-dependent? | Example image                                                        |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | -------------------------------------------------------------------- |
@@ -166,6 +205,8 @@ Help users move between product areas, views, locations, or sections of content.
 
 ### Command menus
 
+Holds: Lists of commands or choices with menu semantics.
+
 | Name         | Description — how the user interfaces with it                                                       | Viewable? | Device-dependent? | Example image                                    |
 | ------------ | --------------------------------------------------------------------------------------------------- | :-------: | :---------------: | ------------------------------------------------ |
 | Menu         | Presents commands or destinations. The user opens it and selects an item.                           |    Yes    |        No         | ![Menu example](images/menu.svg)                 |
@@ -176,6 +217,8 @@ Help users move between product areas, views, locations, or sections of content.
 
 ### Hierarchy browsing
 
+Holds: Exploring parent and child items in a tree, columns or a path.
+
 | Name           | Description — how the user interfaces with it                                                              | Viewable? | Device-dependent? | Example image                                |
 | -------------- | ---------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | -------------------------------------------- |
 | Tree view      | Presents hierarchical data. The user expands, collapses, and selects nodes.                                |    Yes    |        No         | ![Tree view example](images/tree-view.svg)   |
@@ -183,6 +226,8 @@ Help users move between product areas, views, locations, or sections of content.
 | Column browser | Shows a hierarchy as side-by-side columns. Selecting an item in one column shows its children in the next. |    Yes    |        No         | None yet                                     |
 
 ### Content selection and position
+
+Holds: Choosing which content is shown, or where in it the user is.
 
 | Name               | Description — how the user interfaces with it                                                      | Viewable? | Device-dependent? | Example image                                                |
 | ------------------ | -------------------------------------------------------------------------------------------------- | :-------: | :---------------: | ------------------------------------------------------------ |
@@ -193,6 +238,8 @@ Help users move between product areas, views, locations, or sections of content.
 | Carousel           | Shows one or several items in a constrained viewport. The user moves or swipes between items.      |    Yes    |        No         | ![Carousel example](images/carousel.svg)                     |
 
 ### Application navigation
+
+Holds: Moving between the destinations of an application or to a linked resource.
 
 | Name              | Description — how the user interfaces with it                                                                                                                     | Viewable? | Device-dependent? | Example image                                              |
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | ---------------------------------------------------------- |
@@ -207,6 +254,8 @@ Help users move between product areas, views, locations, or sections of content.
 
 ### Search, filtering and sorting
 
+Holds: Finding, narrowing and ordering content.
+
 | Name                  | Description — how the user interfaces with it                                                                    | Viewable? | Device-dependent? | Example image                                    |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | ------------------------------------------------ |
 | Search field          | Accepts a query and may display suggestions or filters.                                                          |    Yes    |        No         | ![Search field example](images/search-field.svg) |
@@ -219,6 +268,8 @@ Help users move between product areas, views, locations, or sections of content.
 Group, structure, and organize related content or other UI elements.
 
 ### Grouping surfaces
+
+Holds: Regions that hold related content or controls, including ones the user can expand.
 
 | Name            | Description — how the user interfaces with it                                                                                                                                        | Viewable? | Device-dependent? | Example image                              |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-------: | :---------------: | ------------------------------------------ |
@@ -233,6 +284,8 @@ Group, structure, and organize related content or other UI elements.
 | Hero banner     | A full-width banner at the top of a page that greets the user and gives quick access to key information or actions. The banner itself is not interactive; controls placed in it are. |    Yes    |        No         | None yet                                   |
 
 ### Workspace surfaces
+
+Holds: Application work areas: windows, views, pages and the bars and panels that frame them.
 
 | Name         | Description — how the user interfaces with it                                                               | Viewable? | Device-dependent? | Example image                           |
 | ------------ | ----------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | --------------------------------------- |
@@ -250,6 +303,8 @@ Group, structure, and organize related content or other UI elements.
 
 ### Overlays and sheets
 
+Holds: Surfaces layered above the current content or attached to its edge.
+
 | Name         | Description — how the user interfaces with it                                                                                                                                                                                                        | Viewable? | Device-dependent? | Example image                                    |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | ------------------------------------------------ |
 | Popover      | Shows contextual, potentially interactive content anchored to another object.                                                                                                                                                                        |    Yes    |        No         | ![Popover example](images/popover.svg)           |
@@ -260,6 +315,8 @@ Group, structure, and organize related content or other UI elements.
 
 ### Forms
 
+Holds: A form and the fields and field groups it holds.
+
 | Name       | Description — how the user interfaces with it                                               | Viewable? | Device-dependent? | Example image                    |
 | ---------- | ------------------------------------------------------------------------------------------- | :-------: | :---------------: | -------------------------------- |
 | Form       | Groups related fields and actions for entering, reviewing, validating, and submitting data. |    Yes    |        No         | ![Form example](images/form.svg) |
@@ -267,6 +324,8 @@ Group, structure, and organize related content or other UI elements.
 | Form group | A titled group of related form fields.                                                      |    Yes    |        No         | None yet                         |
 
 ### Focused tasks and guided sequences
+
+Holds: A decision, a short task or a sequence of steps that takes the user's attention.
 
 | Name             | Description — how the user interfaces with it                                                            | Viewable? | Device-dependent? | Example image                        |
 | ---------------- | -------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | ------------------------------------ |
@@ -300,7 +359,9 @@ Framework-independent rules that determine how UI elements and structural object
 
 ### Layout rules and relationships
 
-Rules and relationships that determine how structural objects and UI elements occupy and respond to space. The definitions themselves are abstract; their effects are viewable.
+Holds: Rules and relationships that decide how elements occupy and respond to space.
+
+The definitions themselves are abstract; their effects are viewable.
 
 | Name                | Description — how the user experiences its effect                                                                                                                                                                       | Viewable? | Device-dependent? | Example image                                             |
 | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | --------------------------------------------------------- |
@@ -321,7 +382,9 @@ Framework-independent rules that determine how UI elements look, sound, and visu
 
 ### Visual appearance and presentation rules
 
-Visual and auditory systems applied consistently to communicate hierarchy, identity, meaning, state, and change. Each illustration shows the effect produced by the definition.
+Holds: Visual and auditory rules that communicate hierarchy, identity, meaning, state and change.
+
+Each illustration shows the effect produced by the definition.
 
 | Name           | Description — how the user experiences its effect                                                                                                                                                                                                                    | Viewable? | Device-dependent? | Example image                                            |
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | -------------------------------------------------------- |
@@ -349,7 +412,9 @@ Framework-independent rules and resources that adapt an interface to the user’
 
 ### Language, locale, and writing-system rules
 
-Definitions governing language coverage, translation, writing direction, bidirectional content, culturally appropriate formatting, and localized input. The illustrations show the visible effect of each definition; the rule itself may be abstract.
+Holds: Rules for language, translation, writing direction, cultural formatting and localized input.
+
+The illustrations show the visible effect of each definition; the rule itself may be abstract.
 
 | Name                                     | Description — how the user experiences its effect                                                                                                                                                                                                                  | Viewable? | Device-dependent? | Example image                                                                       |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-------: | :---------------: | ----------------------------------------------------------------------------------- |
@@ -386,7 +451,7 @@ Framework-independent definitions for the states, areas, gestures, and events th
 
 ### Interaction states
 
-Visual or behavioral conditions that communicate an element’s current availability, focus, activation, or selection.
+Holds: Conditions that show an element's availability, focus, activation or selection.
 
 | Name           | Description — how the user interfaces with it                                                                  | Viewable? | Device-dependent? | Example image                                             |
 | -------------- | -------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | --------------------------------------------------------- |
@@ -399,7 +464,7 @@ Visual or behavioral conditions that communicate an element’s current availabi
 
 ### Interaction areas and constraints
 
-Hit regions and usability rules that determine where and how reliably an interactive element can be targeted.
+Holds: Hit regions and the rules for targeting an element reliably.
 
 | Name                | Description — how the user interfaces with it                                                                                    | Viewable? | Device-dependent? | Example image                                            |
 | ------------------- | -------------------------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | -------------------------------------------------------- |
@@ -410,7 +475,7 @@ Hit regions and usability rules that determine where and how reliably an interac
 
 ### Gestures
 
-Meaningful movements or contact patterns performed by users and interpreted as higher-level interactions.
+Holds: Movements or contact patterns interpreted as higher-level interactions.
 
 | Name            | Description — how the user interfaces with it                                                                                                                                                                                 | Viewable? | Device-dependent? | Example image  |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------: | :---------------: | -------------- |
@@ -424,7 +489,7 @@ Meaningful movements or contact patterns performed by users and interpreted as h
 
 ### Input events
 
-Lower-level occurrences generated by pointer, touch, keyboard, focus, or value changes and used to implement interactions.
+Holds: Low-level pointer, touch, keyboard, focus and value events.
 
 _The examples are rendered SVG illustrations, not text or Unicode stand-ins. A visible example is intentionally omitted when the interaction definition itself has no visual representation._
 

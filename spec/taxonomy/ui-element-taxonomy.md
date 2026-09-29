@@ -2,10 +2,15 @@
 
 An **abstract UI element type** describes an element by its purpose and behavior, independent of framework, platform, visual style, or implementation technology.
 
-Canonical OpenUI vocabulary, aliases, and detailed term definitions live in
-[`spec/scopes/scope.md` § Glossary](../scopes/scope.md#glossary). This taxonomy groups
-and compares terms by primary purpose; it should link to the glossary rather
-than introduce conflicting definitions.
+This document is one of the three [taxonomy documents](../scopes/scope.md#taxonomy-documents).
+It owns the abstract element types in 15 categories, with their purpose and typical
+concrete elements, the OpenUI term each type maps to, and the
+[classification rules](#classification-rules) with their primary and secondary role
+examples. The [generic UI taxonomy](generic-ui-taxonomy.md) owns the sections,
+subcategories and entries that the OpenUI terms belong to, and the
+[taxonomy mapping](../scopes/taxonomy_mapping.md) owns their scope objects. Term
+definitions and aliases live in the [glossary](../scopes/scope.md#glossary), and object
+contracts in the scope files; a type description may not contradict them.
 
 There is no universally standardized “complete” taxonomy. The following model aims to cover the element types used across web, desktop, mobile, touch, TV, embedded, voice-assisted, and mixed-interface applications.
 

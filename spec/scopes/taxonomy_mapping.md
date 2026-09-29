@@ -1,30 +1,22 @@
 # Taxonomy mapping
 
-This document maps the abstract vocabulary in `spec/taxonomy/generic-ui-taxonomy.md` to the
-canonical scope objects under `spec/scopes/`. It keeps taxonomy aliases explicit while
-leaving detailed definitions in the [glossary](scope.md#glossary) and concrete
-contracts in each linked scope file.
+This document maps each entry of the [generic UI taxonomy](../taxonomy/generic-ui-taxonomy.md)
+to its canonical scope object under `spec/scopes/`. It is one of the three
+[taxonomy documents](scope.md#taxonomy-documents). For each entry it owns the scope
+object, the abstraction level and the scope-specific notes. Its section and subcategory
+headings and its entries mirror the generic UI taxonomy, which owns the sections, the
+subcategories with their inclusion rules (Holds) and the placement of each entry; a test
+keeps the two equal. The [UI element taxonomy](../taxonomy/ui-element-taxonomy.md) owns
+the classification rules. Term definitions live in the [glossary](scope.md#glossary), and
+object contracts in each linked scope file.
 
 The abstraction levels used in the tables below are defined in the
-[glossary](scope.md#abstraction-levels).
-
-## Classification rules
-
-- Each taxonomy entry belongs to exactly one section and at most one subcategory, chosen by
-  its primary purpose in its current context. The Holds line of each subcategory is its
-  inclusion rule.
-- An element may also have secondary roles. They go in the entry's note, not in a second
-  row: each row names one spec object.
-- Interaction details, such as hover states, touch targets, gestures and input events, are
-  not UI elements; they are entries of [Interaction definitions](#interaction-definitions).
-  Reusable behaviors that act on an element without being visible themselves are entries of
-  [Behaviors](#behaviors).
+[glossary](scope.md#abstraction-levels). Each row names one spec object; an entry's
+secondary roles go in its note.
 
 ## Input elements
 
 ### Command activation
-
-Holds: Controls whose main purpose is to run a command.
 
 | Taxonomy entry   | Spec object                                          | Abstraction level | Notes                                                       |
 | ---------------- | ---------------------------------------------------- | ----------------- | ----------------------------------------------------------- |
@@ -36,8 +28,6 @@ Holds: Controls whose main purpose is to run a command.
 
 ### Text and shortcut entry
 
-Holds: Entry of text or of a recorded key sequence.
-
 | Taxonomy entry          | Spec object                                  | Abstraction level | Notes                                             |
 | ----------------------- | -------------------------------------------- | ----------------- | ------------------------------------------------- |
 | Text field              | [Text inputs](Controls/text_inputs.scope.md) | Grouped leaf      | Single-line text-entry variant.                   |
@@ -48,8 +38,6 @@ Holds: Entry of text or of a recorded key sequence.
 | Metadata-driven field   | [Text inputs](Controls/text_inputs.scope.md) | Alias             | Field whose editor follows the value's data type. |
 
 ### Value and resource selection
-
-Holds: Choosing a value, a quantity in a range, or a resource such as a file, font or color.
 
 | Taxonomy entry              | Spec object                                          | Abstraction level | Notes                                                   |
 | --------------------------- | ---------------------------------------------------- | ----------------- | ------------------------------------------------------- |
@@ -80,8 +68,6 @@ Holds: Choosing a value, a quantity in a range, or a resource such as a file, fo
 
 ### Temporal entry
 
-Holds: Editing or choosing a date or time, with an optional calendar.
-
 | Taxonomy entry      | Spec object                                             | Abstraction level | Notes                                       |
 | ------------------- | ------------------------------------------------------- | ----------------- | ------------------------------------------- |
 | Date picker         | [Date/Time pickers](Widgets/date_time_pickers.scope.md) | Existing object   | Calendar-oriented picker widget.            |
@@ -92,8 +78,6 @@ Holds: Editing or choosing a date or time, with an optional calendar.
 
 ### Drawing and capture
 
-Holds: Input that is not text or a value: drawing, or capturing sound.
-
 | Taxonomy entry   | Spec object                                                           | Abstraction level | Notes                                         |
 | ---------------- | --------------------------------------------------------------------- | ----------------- | --------------------------------------------- |
 | Canvas           | [Drawing and capture controls](Controls/drawing_and_capture.scope.md) | Alias             | Surface the application and the user draw on. |
@@ -101,8 +85,6 @@ Holds: Input that is not text or a value: drawing, or capturing sound.
 | Microphone input | [Drawing and capture controls](Controls/drawing_and_capture.scope.md) | Alias             | Audio-capture input.                          |
 
 ### Manipulation handles
-
-Holds: Visible handles the user drags to move or resize an element. The behavior itself is in the Behaviors section.
 
 | Taxonomy entry | Spec object                                       | Abstraction level | Notes                                                   |
 | -------------- | ------------------------------------------------- | ----------------- | ------------------------------------------------------- |
@@ -112,8 +94,6 @@ Holds: Visible handles the user drags to move or resize an element. The behavior
 ## Output elements
 
 ### Document and numeric display
-
-Holds: Text, labels, images and calculated values shown without their own interaction.
 
 | Taxonomy entry    | Spec object                                                | Abstraction level | Notes                                                 |
 | ----------------- | ---------------------------------------------------------- | ----------------- | ----------------------------------------------------- |
@@ -129,8 +109,6 @@ Holds: Text, labels, images and calculated values shown without their own intera
 
 ### Graphics presentation
 
-Holds: Shapes, application-drawn imagery and views onto a graphics scene.
-
 | Taxonomy entry          | Spec object                                                | Abstraction level | Notes                                                            |
 | ----------------------- | ---------------------------------------------------------- | ----------------- | ---------------------------------------------------------------- |
 | Geometric shape         | [Display primitives](Controls/display_primitives.scope.md) | Alias             | Ellipse, rectangle, line, polygon or path.                       |
@@ -138,8 +116,6 @@ Holds: Shapes, application-drawn imagery and views onto a graphics scene.
 | Graphics viewport       | [Media widgets](Widgets/media_widgets.scope.md)            | Alias             | View onto a graphics scene, with pan, zoom and region selection. |
 
 ### Collections and data presentation
-
-Holds: Repeated or structured records and their visualizations: lists, tables, grids, trees, schedules, charts and geographic maps.
 
 | Taxonomy entry    | Spec object                                     | Abstraction level | Notes                                                  |
 | ----------------- | ----------------------------------------------- | ----------------- | ------------------------------------------------------ |
@@ -156,8 +132,6 @@ Holds: Repeated or structured records and their visualizations: lists, tables, g
 
 ### Media playback
 
-Holds: Audio, video and camera content.
-
 | Taxonomy entry | Spec object                                     | Abstraction level | Notes                                                              |
 | -------------- | ----------------------------------------------- | ----------------- | ------------------------------------------------------------------ |
 | Media player   | [Media widgets](Widgets/media_widgets.scope.md) | Grouped leaf      | Playback widget.                                                   |
@@ -165,8 +139,6 @@ Holds: Audio, video and camera content.
 | Captions       | [Media widgets](Widgets/media_widgets.scope.md) | Alias             | Synchronized text for audio or video (HTML track kind `captions`). |
 
 ### Feedback and assistance
-
-Holds: Status, progress, messages and help.
 
 | Taxonomy entry      | Spec object                                            | Abstraction level | Notes                                                              |
 | ------------------- | ------------------------------------------------------ | ----------------- | ------------------------------------------------------------------ |
@@ -193,8 +165,6 @@ Holds: Status, progress, messages and help.
 
 ### Command menus
 
-Holds: Lists of commands or choices with menu semantics.
-
 | Taxonomy entry | Spec object                                   | Abstraction level | Notes                                                                                                          |
 | -------------- | --------------------------------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------- |
 | Menu           | [Menu widgets](Widgets/menu_widgets.scope.md) | Grouped leaf      | Command or choice menu. Not the HTML `menu` element, which is a plain list of commands without popup behavior. |
@@ -205,8 +175,6 @@ Holds: Lists of commands or choices with menu semantics.
 
 ### Hierarchy browsing
 
-Holds: Exploring parent and child items in a tree, columns or a path.
-
 | Taxonomy entry | Spec object                                               | Abstraction level | Notes                                        |
 | -------------- | --------------------------------------------------------- | ----------------- | -------------------------------------------- |
 | Tree view      | [Navigation widgets](Widgets/navigation_widgets.scope.md) | Alias             | Hierarchical navigation or selection widget. |
@@ -214,8 +182,6 @@ Holds: Exploring parent and child items in a tree, columns or a path.
 | Column browser | [Navigation widgets](Widgets/navigation_widgets.scope.md) | Alias             | Hierarchy shown as columns.                  |
 
 ### Content selection and position
-
-Holds: Choosing which content is shown, or where in it the user is.
 
 | Taxonomy entry     | Spec object                                                            | Abstraction level | Notes                                  |
 | ------------------ | ---------------------------------------------------------------------- | ----------------- | -------------------------------------- |
@@ -226,8 +192,6 @@ Holds: Choosing which content is shown, or where in it the user is.
 | Carousel           | [Navigation widgets](Widgets/navigation_widgets.scope.md)              | Alias             | Sequential slide/navigation widget.    |
 
 ### Application navigation
-
-Holds: Moving between the destinations of an application or to a linked resource.
 
 | Taxonomy entry    | Spec object                                                            | Abstraction level | Notes                                      |
 | ----------------- | ---------------------------------------------------------------------- | ----------------- | ------------------------------------------ |
@@ -242,8 +206,6 @@ Holds: Moving between the destinations of an application or to a linked resource
 
 ### Search, filtering and sorting
 
-Holds: Finding, narrowing and ordering content.
-
 | Taxonomy entry        | Spec object                                  | Abstraction level | Notes                                                           |
 | --------------------- | -------------------------------------------- | ----------------- | --------------------------------------------------------------- |
 | Search field          | [Text inputs](Controls/text_inputs.scope.md) | Alias             | Text-entry control specialized for search.                      |
@@ -254,8 +216,6 @@ Holds: Finding, narrowing and ordering content.
 ## Container elements
 
 ### Grouping surfaces
-
-Holds: Regions that hold related content or controls, including ones the user can expand.
 
 | Taxonomy entry  | Spec object                                                  | Abstraction level | Notes                                                    |
 | --------------- | ------------------------------------------------------------ | ----------------- | -------------------------------------------------------- |
@@ -270,8 +230,6 @@ Holds: Regions that hold related content or controls, including ones the user ca
 | Hero banner     | [Surface containers](Containers/surface_containers.scope.md) | Alias             | Full-width greeting banner at the top of a page.         |
 
 ### Workspace surfaces
-
-Holds: Application work areas: windows, views, pages and the bars and panels that frame them.
 
 | Taxonomy entry | Spec object                                                  | Abstraction level | Notes                                                                                                         |
 | -------------- | ------------------------------------------------------------ | ----------------- | ------------------------------------------------------------------------------------------------------------- |
@@ -289,8 +247,6 @@ Holds: Application work areas: windows, views, pages and the bars and panels tha
 
 ### Overlays and sheets
 
-Holds: Surfaces layered above the current content or attached to its edge.
-
 | Taxonomy entry | Spec object                                                  | Abstraction level | Notes                               |
 | -------------- | ------------------------------------------------------------ | ----------------- | ----------------------------------- |
 | Popover        | [Overlay containers](Containers/overlay_containers.scope.md) | Grouped leaf      | Anchored overlay surface.           |
@@ -301,8 +257,6 @@ Holds: Surfaces layered above the current content or attached to its edge.
 
 ### Forms
 
-Holds: A form and the fields and field groups it holds.
-
 | Taxonomy entry | Spec object                 | Abstraction level | Notes                                           |
 | -------------- | --------------------------- | ----------------- | ----------------------------------------------- |
 | Form           | [Form](Views/form.scope.md) | Existing object   | Read-write data view.                           |
@@ -310,8 +264,6 @@ Holds: A form and the fields and field groups it holds.
 | Form group     | [Form](Views/form.scope.md) | Alias             | Titled group of form fields.                    |
 
 ### Focused tasks and guided sequences
-
-Holds: A decision, a short task or a sequence of steps that takes the user's attention.
 
 | Taxonomy entry   | Spec object                         | Abstraction level | Notes                                            |
 | ---------------- | ----------------------------------- | ----------------- | ------------------------------------------------ |
@@ -341,8 +293,6 @@ Holds: A decision, a short task or a sequence of steps that takes the user's att
 
 ### Layout rules and relationships
 
-Holds: Rules and relationships that decide how elements occupy and respond to space.
-
 | Taxonomy entry      | Spec object               | Abstraction level  | Notes                                          |
 | ------------------- | ------------------------- | ------------------ | ---------------------------------------------- |
 | Containment         | [Layout](Layout/scope.md) | Folder abstraction | Mechanism-level layout vocabulary.             |
@@ -359,8 +309,6 @@ Holds: Rules and relationships that decide how elements occupy and respond to sp
 ## Presentation and style definitions
 
 ### Visual appearance and presentation rules
-
-Holds: Visual and auditory rules that communicate hierarchy, identity, meaning, state and change.
 
 | Taxonomy entry | Spec object                           | Abstraction level  | Notes                                                                    |
 | -------------- | ------------------------------------- | ------------------ | ------------------------------------------------------------------------ |
@@ -386,8 +334,6 @@ Holds: Visual and auditory rules that communicate hierarchy, identity, meaning, 
 
 ### Language, locale, and writing-system rules
 
-Holds: Rules for language, translation, writing direction, cultural formatting and localized input.
-
 | Taxonomy entry                          | Spec object                                           | Abstraction level  | Notes                                         |
 | --------------------------------------- | ----------------------------------------------------- | ------------------ | --------------------------------------------- |
 | Language support                        | [Internationalization](Internationalization/scope.md) | Folder abstraction | Locale and language vocabulary.               |
@@ -411,8 +357,6 @@ Holds: Rules for language, translation, writing direction, cultural formatting a
 
 ### Interaction states
 
-Holds: Conditions that show an element's availability, focus, activation or selection.
-
 | Taxonomy entry | Spec object                         | Abstraction level  | Notes                         |
 | -------------- | ----------------------------------- | ------------------ | ----------------------------- |
 | Hover state    | [Interaction](Interaction/scope.md) | Folder abstraction | Interaction state vocabulary. |
@@ -424,8 +368,6 @@ Holds: Conditions that show an element's availability, focus, activation or sele
 
 ### Interaction areas and constraints
 
-Holds: Hit regions and the rules for targeting an element reliably.
-
 | Taxonomy entry      | Spec object                         | Abstraction level  | Notes                   |
 | ------------------- | ----------------------------------- | ------------------ | ----------------------- |
 | Touch target        | [Interaction](Interaction/scope.md) | Folder abstraction | Target-size vocabulary. |
@@ -434,8 +376,6 @@ Holds: Hit regions and the rules for targeting an element reliably.
 | Target spacing      | [Interaction](Interaction/scope.md) | Folder abstraction | Target-size vocabulary. |
 
 ### Gestures
-
-Holds: Movements or contact patterns interpreted as higher-level interactions.
 
 | Taxonomy entry  | Spec object                         | Abstraction level  | Notes                                                   |
 | --------------- | ----------------------------------- | ------------------ | ------------------------------------------------------- |
@@ -448,8 +388,6 @@ Holds: Movements or contact patterns interpreted as higher-level interactions.
 | Pull to refresh | [Interaction](Interaction/scope.md) | Folder abstraction | Gesture vocabulary; the refresh request is its outcome. |
 
 ### Input events
-
-Holds: Low-level pointer, touch, keyboard, focus and value events.
 
 | Taxonomy entry               | Spec object                         | Abstraction level  | Notes                                |
 | ---------------------------- | ----------------------------------- | ------------------ | ------------------------------------ |
@@ -470,8 +408,6 @@ Holds: Low-level pointer, touch, keyboard, focus and value events.
 | Change event                 | [Interaction](Interaction/scope.md) | Folder abstraction | Change event vocabulary.             |
 
 ## Behaviors
-
-Holds: Reusable behaviors that act on an existing element without being a visible element themselves.
 
 | Taxonomy entry                   | Spec object                                                                 | Abstraction level | Notes                                                                        |
 | -------------------------------- | --------------------------------------------------------------------------- | ----------------- | ---------------------------------------------------------------------------- |
