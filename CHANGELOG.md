@@ -3,6 +3,47 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.9.0] - 2026-09-29
+
+### Leaf scope contracts
+
+- 33 leaf scopes gained typed Attributes or a Child model, taken from the four
+  survey inventories (HTML, Angular Material, OpenUI5, Qt) and the alias table.
+  For example: label, value, bounds and selection mode of the Controls
+  families; open state, anchor and placement of overlays; the selected tab;
+  row selection and column resizing of Data grid; the options of Choice
+  controls, the panes and handles of Splitters and the caption and header rows
+  of Table.
+- Chart has a kind (comparison, trend, composition, distribution,
+  relationship, hierarchy, network or flow), a data series, a title, a legend
+  and annotations. Feedback widgets and Status indicator have a severity
+  (none, information, success, warning or error). Action controls have a
+  pressed state and repeat while pressed (`uses.autoRepeat`).
+- The Behaviors scopes have attribute names beyond `uses.target`, such as the
+  trigger and expanded state of Collapsible, the drop effect of Drag and drop,
+  the suggestions and pattern of Input assistance, the initial focus and
+  dismissal of Modal overlay and the scroll and focus actions of Viewport and
+  focus control.
+- Leaves with no supported attributes or children leave the section out, as
+  the leaf template allows.
+
+### Evidence
+
+- Every evidence row cites the survey rows that justify its leaf.
+
+### Worked examples
+
+- The Overlay containers example and the Containers example contain the
+  `helpButton` that their `uses.anchor` reference names.
+
+### Upgrading to 0.9.0
+
+1. Upgrade the Python or npm package to `0.9.0` and set concrete document
+   `version` fields to `0.9.0`.
+2. Check the values of the newly declared attributes: a literal value must fit
+   its declared type, and a literal element reference must name an element of
+   the same document.
+
 ## [0.8.0] - 2026-09-29
 
 ### Scope
@@ -368,3 +409,4 @@ and enforced rather than adding or removing catalog types.
 [0.6.0]: https://github.com/shlomoa/openui-spec/compare/v0.5.0...v0.6.0
 [0.7.0]: https://github.com/shlomoa/openui-spec/compare/v0.6.0...v0.7.0
 [0.8.0]: https://github.com/shlomoa/openui-spec/compare/v0.7.0...v0.8.0
+[0.9.0]: https://github.com/shlomoa/openui-spec/compare/v0.8.0...v0.9.0
