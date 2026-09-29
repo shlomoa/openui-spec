@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "Report",
   "attrs": {
     "title": "\"Sales report\"",
@@ -22,7 +22,7 @@
       "type": "table",
       "attrs": {
         "uses.data": "rows",
-        "uses.sort": "\"revenue desc\"",
+        "behaves.sort": null,
         "uses.groupBy": "\"region\""
       },
       "children": [

@@ -3,6 +3,66 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.11.0] - 2026-09-29
+
+### Scope contracts
+
+- Expandable panels: in an accordion, at most one panel MUST be expanded at a
+  time; expanding one panel collapses the others. The new `uses.multi`
+  (boolean) says whether more than one panel may be expanded; in an accordion it
+  is `false`.
+- Dashboard, Empty page and Report no longer say that their content needs an
+  owner decision. A dashboard's cards, metrics, charts and actions and a
+  report's tables, grids and charts are existing objects composed as children.
+  The Empty page owns no children, as its Purpose states.
+- Undeclared attributes and children beyond a Child model stay allowed: a
+  contract is not an allowlist (glossary, Object; spec part 4.6).
+- Spec part 4.8: the npm and PyPI packages take the spec's version; a change
+  to a package alone takes a patch release, `0.x.y` (owner decision,
+  2026-09-29).
+
+### Worked examples and fixtures
+
+- Attributes that a contract declares under another name are renamed:
+  - Action controls: `text` and `produces.click` (and `produces.loadMore`)
+    become `uses.label` and `produces.activate`.
+  - Chart: `uses.chartType` becomes `uses.kind` (`bar` is `comparison`) and
+    `uses.ariaLabel` becomes `uses.title`.
+  - Data grid: `uses.sortable` becomes `behaves.sort`.
+  - Link and scroll controls: `uses.target` becomes `uses.href`.
+  - List: `uses.filter` and `uses.sort` become `behaves.filter` and
+    `behaves.sort`; Table: `uses.sort` becomes `behaves.sort`.
+  - Status indicator: `uses.state` `loading` becomes `uses.mode`
+    `indeterminate`.
+  - Stepper: `produces.stepChange` and `produces.completed` become
+    `produces.selectionChange` and `produces.complete`.
+  - Structural containers: `uses.label` becomes `uses.ariaLabel`; Surface
+    containers: `uses.label` becomes `uses.title`.
+- Required children that were missing are added: the `summary` of Expandable
+  panels, the pane `section` of Splitters and the content `section` of a
+  Dialog.
+- No attribute or child is removed.
+
+### Tools
+
+- `python -m spec.bin.migrate` also renames these attributes and adds missing
+  required children in worked examples (`*.example.json`).
+  `tests/test_example_contracts.py` checks every example and input fixture: a
+  declared attribute has its declared type, element references resolve to the
+  declared type, and required children are present.
+- The Angular generator reads the label and result of a dialog action from
+  `uses.label` and `produces.activate`.
+
+### Upgrading to 0.11.0
+
+1. Upgrade the Python or npm package to `0.11.0` and set concrete document
+   `version` fields to `0.11.0`.
+2. Rename the attributes listed above in your documents and add missing
+   required children. For a worked example (`*.example.json`),
+   `python -m spec.bin.migrate <file or folder>` does both.
+3. For the Angular generator, give each dialog action `uses.label` and
+   `produces.activate` instead of `text` and `produces.click`.
+
 ## [0.10.0] - 2026-09-29
 
 ### Leaf scope contracts
@@ -446,3 +506,4 @@ and enforced rather than adding or removing catalog types.
 [0.8.0]: https://github.com/shlomoa/openui-spec/compare/v0.7.0...v0.8.0
 [0.9.0]: https://github.com/shlomoa/openui-spec/compare/v0.8.0...v0.9.0
 [0.10.0]: https://github.com/shlomoa/openui-spec/compare/v0.9.0...v0.10.0
+[0.11.0]: https://github.com/shlomoa/openui-spec/compare/v0.10.0...v0.11.0

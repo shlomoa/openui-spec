@@ -456,7 +456,11 @@ export const SPEC_ADDITIONS: readonly SpecAddition[] = [
     term: 'Disclosure',
     preview: 'addition-disclosure',
     source: 'spec/examples/Containers/expandable_panels.example.json',
-    node: { id: 'disclosure', type: 'ExpandablePanels' },
+    node: {
+      id: 'disclosure',
+      type: 'ExpandablePanels',
+      children: [{ id: 'disclosureSummary', type: 'summary' }],
+    },
   },
   {
     item: 'containers',
@@ -477,7 +481,11 @@ export const SPEC_ADDITIONS: readonly SpecAddition[] = [
     term: 'Splitter handle',
     preview: 'addition-splitter-handle',
     source: 'spec/examples/Containers/splitters.example.json',
-    node: { id: 'splitterHandle', type: 'Splitters' },
+    node: {
+      id: 'splitterHandle',
+      type: 'Splitters',
+      children: [{ id: 'splitterHandlePane', type: 'section' }],
+    },
   },
   {
     item: 'containers',

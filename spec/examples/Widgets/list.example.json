@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "List",
   "attrs": {
     "title": "\"List example\""
@@ -11,8 +11,8 @@
       "type": "List",
       "attrs": {
         "uses.items": "tasks",
-        "uses.sort": "\"dueDate asc\"",
-        "uses.filter": "searchTerm",
+        "behaves.sort": null,
+        "behaves.filter": "searchTerm",
         "uses.selection": "\"single\"",
         "uses.loading": "isLoading",
         "uses.error": "loadError",
@@ -32,7 +32,7 @@
           "type": "ActionControls",
           "attrs": {
             "uses.hasMore": "hasMore",
-            "produces.loadMore": "onLoadMore()"
+            "produces.activate": "onLoadMore()"
           }
         },
         {

@@ -1,7 +1,7 @@
 {
   "id": "root",
   "type": "html",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "attrs": {
     "name": "OpenUI",
     "description": "Technology-independent Web UI framework specification",
@@ -492,7 +492,8 @@
                     "uses.expanded": "boolean",
                     "behaves.expand": null,
                     "behaves.collapse": null,
-                    "produces.expandedChange": null
+                    "produces.expandedChange": null,
+                    "uses.multi": "boolean"
                   },
                   "children": [
                     {

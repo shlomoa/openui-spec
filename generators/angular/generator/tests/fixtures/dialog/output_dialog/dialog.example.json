@@ -39,16 +39,16 @@
               "id": "cancelDialog",
               "type": "ActionControls",
               "attrs": {
-                "text": "\"Cancel\"",
-                "produces.click": "close('cancel')"
+                "uses.label": "\"Cancel\"",
+                "produces.activate": "close('cancel')"
               }
             },
             {
               "id": "confirmDelete",
               "type": "ActionControls",
               "attrs": {
-                "text": "\"Delete\"",
-                "produces.click": "close('confirm')"
+                "uses.label": "\"Delete\"",
+                "produces.activate": "close('confirm')"
               }
             }
           ]

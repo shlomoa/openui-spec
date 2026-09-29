@@ -26,6 +26,6 @@ quick scanning.
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
-- Only the Purpose is authorized by current evidence; dashboard attributes,
-  layout regions, cards, metrics, and actions require an explicit owner decision
-  before they are added as contract entries.
+- A dashboard's cards, metrics, charts and actions are existing objects composed
+  as its children; the [page](../scope.md#page) may contain them, and its contract
+  does not restrict them ([object](../scope.md#object)).

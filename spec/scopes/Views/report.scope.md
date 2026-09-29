@@ -31,5 +31,5 @@ Categories are defined in [`../scope.md`](../scope.md):
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
-- The view is read-only; presentation primitives (table, grid, chart) require an
-  explicit owner decision before they are added as a child model.
+- The view is read-only. Its tables, grids and charts are existing objects composed
+  as its children; its contract does not restrict them ([object](../scope.md#object)).

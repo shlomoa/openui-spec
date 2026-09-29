@@ -21,6 +21,7 @@ Categories are defined in [`../scope.md`](../scope.md):
 - `behaves.expand` — Behaves — reveals the panel's content.
 - `behaves.collapse` — Behaves — hides the panel's content.
 - `produces.expandedChange` — Produces — emitted when the panel expands or collapses.
+- `uses.multi` — Uses — boolean — whether more than one panel may be expanded; in an accordion it is `false`.
 
 ## Child model
 
@@ -37,5 +38,6 @@ Categories are defined in [`../scope.md`](../scope.md):
 
 - `id` is a camelCase identifier and `type` is a valid type per
   `openui.schema.json`.
-- The summary comes first. Whether one panel of an accordion closes when another
-  opens needs an explicit owner decision before it gets an attribute.
+- The summary comes first.
+- In an accordion, at most one panel MUST be expanded at a time: expanding one
+  panel collapses the others.

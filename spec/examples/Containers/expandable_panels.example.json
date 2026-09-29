@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "ExpandablePanels",
   "attrs": {
     "title": "\"Expandable panels example\""
@@ -14,6 +14,10 @@
       },
       "children": [
         {
+          "id": "settingsAccordionSummary",
+          "type": "summary"
+        },
+        {
           "id": "generalPanel",
           "type": "ExpandablePanels",
           "attrs": {
@@ -23,6 +27,10 @@
             "produces.expandedChange": "onToggle('general', $event)"
           },
           "children": [
+            {
+              "id": "generalPanelSummary",
+              "type": "summary"
+            },
             {
               "id": "generalContent",
               "type": "section",
@@ -42,6 +50,10 @@
           },
           "children": [
             {
+              "id": "advancedPanelSummary",
+              "type": "summary"
+            },
+            {
               "id": "advancedContent",
               "type": "section",
               "attrs": {
@@ -54,7 +66,13 @@
     },
     {
       "id": "disclosure",
-      "type": "ExpandablePanels"
+      "type": "ExpandablePanels",
+      "children": [
+        {
+          "id": "disclosureSummary",
+          "type": "summary"
+        }
+      ]
     }
   ]
 }

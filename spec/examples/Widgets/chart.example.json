@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "Chart",
   "attrs": {
     "title": "\"Chart example\""
@@ -10,7 +10,7 @@
       "id": "revenueChart",
       "type": "Chart",
       "attrs": {
-        "uses.chartType": "\"bar\"",
+        "uses.kind": "\"comparison\"",
         "uses.series": "revenueSeries",
         "uses.xAxis": "\"month\"",
         "uses.yAxis": "\"revenue\"",
@@ -18,7 +18,7 @@
         "uses.tooltip": true,
         "uses.loading": "isLoading",
         "uses.error": "loadError",
-        "uses.ariaLabel": "\"Monthly revenue bar chart\""
+        "uses.title": "\"Monthly revenue bar chart\""
       },
       "children": [
         {

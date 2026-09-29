@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "Controls",
   "attrs": {
     "title": "\"Controls example\""
@@ -83,14 +83,14 @@
       "id": "syncStatus",
       "type": "StatusIndicator",
       "attrs": {
-        "uses.state": "\"loading\""
+        "uses.mode": "\"indeterminate\""
       }
     },
     {
       "id": "skipToContent",
       "type": "LinkAndScrollControls",
       "attrs": {
-        "uses.target": "\"#main\""
+        "uses.href": "\"#main\""
       }
     },
     {

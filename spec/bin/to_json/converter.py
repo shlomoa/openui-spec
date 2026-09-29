@@ -100,6 +100,21 @@ def parse_leaf_scope(path: Path | str, *, scopes_dir: Path | str | None = None) 
     return leaf.to_node()
 
 
+def parse_child_model(path: Path | str) -> list[tuple[str, str, str]]:
+    """Return the Child model of a leaf as (child id, child type, multiplicity) triples.
+
+    The catalog does not serialize multiplicity (part 6.3), so a validator reads it here.
+    """
+    source_path = Path(path)
+    lines = _sections(source_path.read_text(encoding="utf-8")).get("Child model", [])
+    _children(lines, source_path, "")  # rejects malformed lines
+    return [
+        (match.group("id"), match.group("type"), match.group("multiplicity"))
+        for match in map(CHILD_RE.fullmatch, lines)
+        if match
+    ]
+
+
 def build_openui_document(
     *,
     spec_dir: Path | str | None = None,

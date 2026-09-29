@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "Splitters",
   "attrs": {
     "title": "\"Splitters example\""
@@ -12,11 +12,23 @@
       "attrs": {
         "uses.orientation": "\"horizontal\"",
         "uses.position": 320
-      }
+      },
+      "children": [
+        {
+          "id": "workspaceSplitterPane",
+          "type": "section"
+        }
+      ]
     },
     {
       "id": "splitterHandle",
-      "type": "Splitters"
+      "type": "Splitters",
+      "children": [
+        {
+          "id": "splitterHandlePane",
+          "type": "section"
+        }
+      ]
     }
   ]
 }

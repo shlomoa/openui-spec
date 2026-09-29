@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "DragAndDrop",
   "attrs": {
     "title": "\"Drag and drop example\""
@@ -14,7 +14,7 @@
           "id": "todoColumn",
           "type": "StructuralContainers",
           "attrs": {
-            "uses.label": "\"To do\""
+            "uses.ariaLabel": "\"To do\""
           },
           "children": [
             {
@@ -30,7 +30,7 @@
           "id": "doneColumn",
           "type": "StructuralContainers",
           "attrs": {
-            "uses.label": "\"Done\""
+            "uses.ariaLabel": "\"Done\""
           }
         }
       ]

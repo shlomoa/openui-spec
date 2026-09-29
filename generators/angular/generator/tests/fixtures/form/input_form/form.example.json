@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "Form",
   "attrs": {
     "title": "\"Customer form\"",
@@ -36,16 +36,16 @@
       "type": "ActionControls",
       "attrs": {
         "uses.disabled": "form.invalid",
-        "text": "\"Save\"",
-        "produces.click": "onSubmit(form.value)"
+        "uses.label": "\"Save\"",
+        "produces.activate": "onSubmit(form.value)"
       }
     },
     {
       "id": "cancelButton",
       "type": "ActionControls",
       "attrs": {
-        "text": "\"Cancel\"",
-        "produces.click": "onReset()"
+        "uses.label": "\"Cancel\"",
+        "produces.activate": "onReset()"
       }
     },
     {

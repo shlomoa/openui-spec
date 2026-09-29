@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "Stepper",
   "attrs": {
     "title": "\"Stepper example\""
@@ -12,8 +12,8 @@
       "attrs": {
         "uses.linear": true,
         "uses.selectedIndex": 0,
-        "produces.stepChange": "onStepChange($event)",
-        "produces.completed": "onComplete()"
+        "produces.selectionChange": "onStepChange($event)",
+        "produces.complete": "onComplete()"
       },
       "children": [
         {
@@ -46,9 +46,9 @@
           "id": "stepperSubmit",
           "type": "ActionControls",
           "attrs": {
-            "text": "\"Place order\"",
+            "uses.label": "\"Place order\"",
             "uses.disabled": "!allStepsValid",
-            "produces.click": "submit()"
+            "produces.activate": "submit()"
           }
         }
       ]

@@ -319,7 +319,10 @@ The spec version follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 (MAJOR.MINOR.PATCH, no pre-release suffix). Every specification change is a new version
 and may break existing documents. A document declares the spec version it is written for
 in its root `version`. A tool MUST accept only the spec version it implements; there is no
-deprecation period. The package versions of the tools are separate contracts.
+deprecation period. The npm and PyPI packages take the spec's version; a change to a
+package alone takes a patch release, `0.x.y`
+([RELEASING](https://github.com/shlomoa/openui-spec/blob/main/RELEASING.md#2-select-and-set-the-package-version)
+gives the procedure).
 
 ## 5. Categories and objects
 

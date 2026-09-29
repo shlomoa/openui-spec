@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 
 from bin.openui_document import Catalog
-from spec.bin.migrate import main, migrate_text
+from spec.bin.migrate import Contracts, fit_document, main, migrate_text
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MIGRATED_FOLDERS = (
@@ -21,6 +21,7 @@ class MigrateTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.catalog = Catalog.load()
+        cls.contracts = Contracts.load(cls.catalog)
 
     def _migrate(self, element: dict[str, object]) -> dict[str, object]:
         document = {"id": "root", "version": "0.5.0", "type": "html", "children": [element]}
@@ -90,6 +91,66 @@ class MigrateTest(unittest.TestCase):
             self.assertEqual(path.read_text(encoding="utf-8"), text)
             self.assertEqual(main([directory]), 0)
             self.assertEqual(json.loads(path.read_text(encoding="utf-8"))["attrs"], {"uses.a": 1})
+
+    def _fit(self, *children: dict[str, object]) -> dict[str, object]:
+        document = {
+            "id": "root",
+            "version": self.catalog.version,
+            "type": "Widgets",
+            "children": children,
+        }
+        document = json.loads(json.dumps(document))
+        fit_document(document, self.contracts)
+        return document
+
+    def test_renamed_keys_take_the_declared_key_and_value(self) -> None:
+        [chart, grid] = self._fit(
+            {"id": "sales", "type": "Chart", "attrs": {"uses.chartType": '"bar"', "title": "t"}},
+            {"id": "orders", "type": "DataGrid", "attrs": {"uses.sortable": True}},
+        )["children"]
+        self.assertEqual(chart["attrs"], {"uses.kind": '"comparison"', "title": "t"})
+        self.assertEqual(grid["attrs"], {"behaves.sort": None})
+
+    def test_undeclared_keys_and_extra_children_are_kept(self) -> None:
+        chart = {
+            "id": "sales",
+            "type": "Chart",
+            "attrs": {"uses.xAxis": '"month"'},
+            "children": [{"id": "salesEmpty", "type": "FeedbackWidgets"}],
+        }
+        [fitted] = self._fit(chart)["children"]
+        self.assertEqual(fitted, chart)
+
+    def test_missing_required_children_are_added(self) -> None:
+        [panel] = self._fit(
+            {
+                "id": "filters",
+                "type": "ExpandablePanels",
+                "children": [
+                    {"id": "filtersContent", "type": "section"},
+                    {"id": "inner", "type": "ExpandablePanels"},
+                ],
+            }
+        )["children"]
+        self.assertEqual(
+            panel["children"],
+            [
+                {"id": "filtersSummary", "type": "summary"},
+                {"id": "filtersContent", "type": "section"},
+                {
+                    "id": "inner",
+                    "type": "ExpandablePanels",
+                    "children": [{"id": "innerSummary", "type": "summary"}],
+                },
+            ],
+        )
+
+    def test_contract_fitting_is_idempotent(self) -> None:
+        text = json.dumps(
+            self._fit({"id": "sales", "type": "Chart", "children": [{"id": "x", "type": "li"}]})
+        )
+        once = migrate_text(text, self.catalog, self.contracts)
+        self.assertEqual(migrate_text(once, self.catalog, self.contracts), once)
 
     def test_examples_and_generator_fixtures_are_migrated(self) -> None:
         self.assertEqual(main(["--check", *map(str, MIGRATED_FOLDERS)]), 0)
