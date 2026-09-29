@@ -197,7 +197,7 @@ def check_glossary_single_definition(spec_dir: Path) -> list[Finding]:
         for key, term in first.items()
         if counts[key] > 1
     ]
-    for path in sorted(spec_dir.rglob("*.md")):
+    for path in sorted(spec_dir.rglob("*.md"), key=lambda p: p.relative_to(spec_dir).as_posix()):
         relative = path.relative_to(spec_dir)
         if relative.parts[0] in GLOSSARY_EXCLUDED_DIRS:
             continue

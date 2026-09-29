@@ -518,7 +518,7 @@ test("validation failure is atomic — invalid root leaves existing workspace un
       await applicationOnlyInput(["routing", "navigation"]),
     );
     const invalidInput = await writeJsonFile(path.join(tempRoot, "inputs", "no-root.json"), {
-      version: "0.3.1",
+      version: "0.4.0",
       id: "notRoot",
       type: "html",
       children: [],
