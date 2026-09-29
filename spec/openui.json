@@ -972,7 +972,7 @@
               "type": "DataGrid",
               "attrs": {
                 "title": "Data grid",
-                "purpose": "A data grid is an interactive tabular-data widget that may support cell focus, selection, editing, sorting, filtering, pagination, or keyboard grid navigation.",
+                "purpose": "A data grid is an interactive tabular-data widget that may support cell focus, selection, editing, sorting, filtering, pagination, or keyboard grid navigation. A tree grid is a data grid whose rows can expand and collapse.",
                 "scopeDocument": "scopes/Widgets/data_grid.scope.md",
                 "status": "draft"
               },
@@ -988,7 +988,7 @@
               "type": "List",
               "attrs": {
                 "title": "List",
-                "purpose": "An ordered, unordered or description list of items, including icon collections, token collections and editable chip collections, with optional selection, links, sorting, filtering and pagination. Existing `ul`/`li` instances stay valid.",
+                "purpose": "An ordered, unordered or description list of items, including trees, icon collections, token collections and editable chip collections, with optional selection, links, sorting, filtering and pagination. Existing `ul`/`li` instances stay valid.",
                 "scopeDocument": "scopes/Widgets/list.scope.md",
                 "status": "draft"
               },
@@ -1031,7 +1031,7 @@
               "type": "MediaWidgets",
               "attrs": {
                 "title": "Media widgets",
-                "purpose": "Media widgets cover media players, camera previews, geographic maps, custom graphics surfaces and graphics viewports that present rich visual, audio, video, or spatial content with widget-level behavior.",
+                "purpose": "Media widgets cover media players, captions, camera previews, geographic maps, custom graphics surfaces and graphics viewports that present rich visual, audio, video, or spatial content with widget-level behavior.",
                 "scopeDocument": "scopes/Widgets/media_widgets.scope.md",
                 "status": "draft"
               },
@@ -1063,7 +1063,7 @@
               "type": "MenuWidgets",
               "attrs": {
                 "title": "Menu widgets",
-                "purpose": "Menu widgets cover menus, menu buttons, menubars and context menus, including nested menus that present command or choice lists in a menu pattern.",
+                "purpose": "Menu widgets cover menus, menu items, menu buttons, menubars and context menus, including nested menus that present command or choice lists in a menu pattern.",
                 "scopeDocument": "scopes/Widgets/menu_widgets.scope.md",
                 "status": "draft"
               },
