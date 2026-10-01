@@ -1,0 +1,14 @@
+{
+  "id": "root",
+  "version": "0.12.0",
+  "type": "html",
+  "children": [
+    {
+      "id": "saveForm",
+      "type": "Form",
+      "attrs": {
+        "behaves.submit": "\"Save\""
+      }
+    }
+  ]
+}

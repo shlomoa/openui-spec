@@ -138,6 +138,38 @@ test("a list reference keeps its own diagnostic once", () => {
   assert.deepEqual(diagnostics.map((item) => item.code), ["contract/unresolved-reference"]);
 });
 
+function behaves(elementType: string, key: string, value: unknown): string {
+  return JSON.stringify({
+    id: "root",
+    version: defaultCatalog().version,
+    type: "html",
+    children: [{ id: "target", type: elementType, attrs: { [key]: value } }],
+  });
+}
+
+const PRODUCES_AND_BEHAVES: [string, string][] = [
+  ["Form", "behaves.submit"],
+  ["Dialog", "produces.close"],
+];
+
+test("a quoted literal is rejected for a produces or behaves attribute", () => {
+  for (const [elementType, key] of PRODUCES_AND_BEHAVES) {
+    const diagnostics = validateText(behaves(elementType, key, '"Save"'));
+    assert.equal(diagnostics.length, 1, key);
+    assert.equal(diagnostics[0].code, "contract/wrong-value-type");
+    assert.equal(diagnostics[0].path, `/children/0/attrs/${key}`);
+    assert.match(diagnostics[0].message, /must be an expression or null/);
+  }
+});
+
+test("an expression or null is accepted for a produces or behaves attribute", () => {
+  for (const [elementType, key] of PRODUCES_AND_BEHAVES) {
+    for (const value of ["save($event)", null]) {
+      assert.deepEqual(validateText(behaves(elementType, key, value)), [], `${key} ${value}`);
+    }
+  }
+});
+
 test("a value type splits into base and argument", () => {
   assert.deepEqual(valueTypeParts("string"), ["string", undefined]);
   assert.deepEqual(valueTypeParts("list(number)"), ["list", "number"]);
