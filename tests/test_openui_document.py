@@ -136,12 +136,6 @@ class ModelTest(unittest.TestCase):
         [diagnostic] = validate_value(document)
         self.assertEqual(diagnostic.code, "contract/unresolved-reference")
 
-    def test_a_catalog_rejects_a_declared_type_that_is_not_a_value_type(self) -> None:
-        catalog = json.loads((REPO_ROOT / "spec" / "openui.json").read_text(encoding="utf-8"))
-        catalog["attrs"] = {"uses.count": "foo(bar)"}
-        with self.assertRaisesRegex(ValueError, "not a value type"):
-            Catalog.from_value(catalog)
-
     def test_a_value_type_splits_into_base_and_argument(self) -> None:
         self.assertEqual(value_type_parts("string"), ("string", None))
         self.assertEqual(value_type_parts("list(number)"), ("list", "number"))

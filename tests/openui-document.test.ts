@@ -138,12 +138,6 @@ test("a list reference keeps its own diagnostic once", () => {
   assert.deepEqual(diagnostics.map((item) => item.code), ["contract/unresolved-reference"]);
 });
 
-test("a catalog rejects a declared type that is not a value type", () => {
-  const catalog = JSON.parse(readFileSync(path.join(REPO_ROOT, "spec", "openui.json"), "utf8"));
-  catalog.attrs = { "uses.count": "foo(bar)" };
-  assert.throws(() => Catalog.fromValue(catalog), /not a value type/);
-});
-
 test("a value type splits into base and argument", () => {
   assert.deepEqual(valueTypeParts("string"), ["string", undefined]);
   assert.deepEqual(valueTypeParts("list(number)"), ["list", "number"]);

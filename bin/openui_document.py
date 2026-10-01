@@ -20,7 +20,6 @@ Public API (the TypeScript package mirrors it): ``parse``, ``validate``,
 from __future__ import annotations
 
 import json
-import re
 from collections.abc import Iterator
 from dataclasses import dataclass, field
 from functools import cache
@@ -143,10 +142,6 @@ class Catalog:
             for key, value in (node.get("attrs") or {}).items():
                 category, name = _attribute_parts(key)
                 if category:
-                    if isinstance(value, str) and not value_type_pattern().fullmatch(value):
-                        raise ValueError(
-                            f"{node['id']}: {key} declares {value!r}, which is not a value type"
-                        )
                     declared[name] = Declaration(category, value)
             if declared:
                 contracts.setdefault(node["type"], {}).update(declared)
@@ -168,12 +163,6 @@ def value_type_parts(value_type: str) -> tuple[str, str | None]:
     """Split a declared value type into base and argument: `list(number)` is `list`, `number`."""
     base, separator, rest = value_type.partition("(")
     return (base, rest.removesuffix(")")) if separator else (base, None)
-
-
-@cache
-def value_type_pattern() -> re.Pattern[str]:
-    """The pattern of a declared value type: `$defs/valueType` of the bundled schema."""
-    return re.compile(default_schema()["$defs"]["valueType"]["pattern"])
 
 
 @cache

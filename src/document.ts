@@ -138,9 +138,6 @@ export class Catalog {
       for (const [key, value] of Object.entries(node.attrs ?? {})) {
         const [category, name] = attributeParts(key);
         if (category !== null) {
-          if (typeof value === "string" && !declaredValueTypePattern().test(value)) {
-            throw new Error(`${node.id}: ${key} declares ${JSON.stringify(value)}, which is not a value type`);
-          }
           declared.set(name, { category, valueType: typeof value === "string" ? value : null });
         }
       }
@@ -168,14 +165,6 @@ export class Catalog {
 export function valueTypeParts(valueType: string): [string, string | undefined] {
   const open = valueType.indexOf("(");
   return open === -1 ? [valueType, undefined] : [valueType.slice(0, open), valueType.slice(open + 1, -1)];
-}
-
-let valueTypePattern: RegExp | undefined;
-
-/** The pattern of a declared value type: `$defs/valueType` of the bundled schema. */
-function declaredValueTypePattern(): RegExp {
-  valueTypePattern ??= new RegExp(defaultSchema().$defs.valueType.pattern);
-  return valueTypePattern;
 }
 
 let bundledCatalog: Catalog | undefined;

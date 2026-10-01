@@ -277,9 +277,8 @@ Produces and Behaves values MUST be target-language expressions or `null`.
 
 A Uses attribute declares one value type in its scope's Attributes line, and the catalog
 carries it as the attribute's string value (see [6.3](#63-field-mapping)). The syntax of a
-value type is the `value_type` production of [`EBNF.txt`](EBNF.txt), and the `valueType`
-definition of [`openui.schema.json`](openui.schema.json) accepts the same text
-([Annex A](#annex-a-grammar)). An attribute value is a string, `null` or a list of these
+value type is the `value_type` production of the [section grammar](#64-section-grammar). An
+attribute value is a string, `null` or a list of these
 ([4.5](#45-attributes-and-their-categories)), so every value of a typed attribute is a string:
 
 | Value type        | A value is written as                                                                            |
@@ -461,33 +460,43 @@ section             = attributes_section | child_model_section | prose_section ;
 title_heading       = "#" WS object_title NL ;
 
 identity_section    = "## Identity" NL { prose_line } identity_line ;
-identity_line       = "-" WS "id:" WS camel_case WS "·" WS
-                            "type:" WS type_name WS "·" WS
+identity_line       = "-" WS "id:" WS id_value WS "·" WS
+                            "type:" WS type_value WS "·" WS
                             "status:" WS status_value NL ;
 
 attributes_section  = "## Attributes" NL { prose_line }
                       attribute_line { attribute_line | prose_line } ;
 attribute_line      = uses_line | output_line ;
-uses_line           = "-" WS "`" "uses." camel_case "`" WS "—" WS
+uses_line           = "-" WS "`" "uses." attr_name "`" WS "—" WS
                             "Uses" WS "—" WS value_type WS "—" WS description NL ;
-output_line         = "-" WS "`" output_prefix camel_case "`" WS "—" WS
+output_line         = "-" WS "`" output_prefix attr_name "`" WS "—" WS
                             output_category WS "—" WS description NL ;
 output_prefix       = "produces." | "behaves." ;  (* MUST match the category *)
 output_category     = "Produces" | "Behaves" ;
+value_type          = scalar_type | "list(" scalar_type ")" ;
+scalar_type         = "string" | "boolean" | "integer" | "number" | "url"
+                    | "enum(" enum_word { "|" enum_word } ")"
+                    | "reference" [ "(" type_name { "|" type_name } ")" ] ;
+enum_word           = lowercase_letter { lowercase_letter | digit | "-" } ;
 
 child_model_section = "## Child model" NL { prose_line }
                       child_line { child_line | prose_line } ;
-child_line          = "-" WS camel_case WS "—" WS
-                            type_name WS "—" WS
+child_line          = "-" WS child_id WS "—" WS
+                            child_type WS "—" WS
                             multiplicity WS "—" WS description NL ;
 multiplicity        = "1" | "0..1" | "0..n" | "1..n" ;
 
 prose_section       = heading NL { prose_line } ;
 heading             = "##" WS { character } ;
 
-(* lexical — camel_case, type_name and value_type are the productions of the same
-   name in EBNF.txt (Annex A), written without the JSON quotes *)
+(* lexical — id/type/attr rules reuse the document grammar of Annex A *)
+id_value            = camel_case ;
+child_id            = camel_case ;
+type_value          = type_name ;                (* per the document type grammar *)
+child_type          = type_name ;
 status_value        = "draft" | "review" | "stable" ;
+attr_name           = camel_case ;
+camel_case          = lowercase_letter { letter | digit } ;
 object_title        = { character } ;
 description         = { character } ;             (* free prose; not interpreted *)
 prose_line          = ? any line that is not an identity / attribute / child line ? ;
@@ -497,11 +506,10 @@ NL                  = ? line break ? ;
 
 ## Annex A. Grammar
 
-[`EBNF.txt`](EBNF.txt) is the authoritative grammar of the OpenUI document format and of the
-value types a scope declares. [`openui.schema.json`](openui.schema.json) is its JSON Schema
-(draft 2020-12) projection and MUST accept and reject the same documents and the same
-value types; `spec/bin/check_grammar_consistency` checks this on the conformance suite and
-on every value type of the catalog. The schema's `$id`,
+[`EBNF.txt`](EBNF.txt) is the authoritative grammar of the OpenUI document format.
+[`openui.schema.json`](openui.schema.json) is its JSON Schema (draft 2020-12) projection and
+MUST accept and reject the same documents; `spec/bin/check_grammar_consistency` checks this
+on the conformance suite. The schema's `$id`,
 <https://raw.githubusercontent.com/shlomoa/openui-spec/main/spec/openui.schema.json>, is its
 stable reference, for example as a `$schema` value.
 
