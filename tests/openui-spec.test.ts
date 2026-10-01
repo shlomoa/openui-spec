@@ -66,6 +66,18 @@ test("rejects syntax-valid types absent from the catalog", () => {
   }
 });
 
+test("validates full documents against the configured schema", () => {
+  const schema = JSON.parse(
+    readFileSync(path.resolve(__dirname, "..", "..", "spec", "openui.schema.json"), "utf8"),
+  ) as Record<string, any>;
+  schema.$defs.typeName.pattern = "^html$";
+
+  assert.throws(
+    () => new OpenUiJson(documentWith(), { schema }).validate(),
+    /grammar\/invalid-type/,
+  );
+});
+
 test("accepts flexible instances of the same known type", () => {
   const document = new OpenUiJson({
     ...documentWith(),

@@ -3,6 +3,15 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.11.1] - 2026-10-01
+
+### Schema-backed validation
+
+- The Python and TypeScript OpenUI JSON packages now validate the grammar with
+  the bundled `openui.schema.json`. JSON decoding continues to report malformed
+  JSON and duplicate members; all other grammar diagnostics are mapped from
+  schema results.
+
 ## [0.11.0] - 2026-09-29
 
 ### Scope contracts
@@ -507,3 +516,4 @@ and enforced rather than adding or removing catalog types.
 [0.9.0]: https://github.com/shlomoa/openui-spec/compare/v0.8.0...v0.9.0
 [0.10.0]: https://github.com/shlomoa/openui-spec/compare/v0.9.0...v0.10.0
 [0.11.0]: https://github.com/shlomoa/openui-spec/compare/v0.10.0...v0.11.0
+[0.11.1]: https://github.com/shlomoa/openui-spec/compare/v0.11.0...v0.11.1

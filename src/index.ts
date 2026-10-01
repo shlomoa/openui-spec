@@ -118,7 +118,8 @@ export class OpenUiJson {
     }
 
     const catalog = Catalog.fromValue(this.loadJson(this.options.catalog, this.options.catalogPath, "catalog"));
-    const diagnostics = validateValue(this.document, catalog);
+    const schema = this.loadJson(this.options.schema, this.options.schemaPath, "schema");
+    const diagnostics = validateValue(this.document, catalog, schema);
     if (diagnostics.length > 0) {
       throw new OpenUiValidationError(diagnostics.map(String).join("\n"));
     }
@@ -193,15 +194,6 @@ export class OpenUiJson {
     const node = this.find(objectId);
     if (node === undefined) {
       throw new OpenUiJsonError(`object not found: ${objectId}`);
-    }
-    if (
-      !Object.entries(attributes).every(
-        ([key, value]) => typeof key === "string" && isAttributeValue(value),
-      )
-    ) {
-      throw new OpenUiJsonError(
-        "attribute changes must map strings to strings, numbers, booleans, null, or lists of these",
-      );
     }
     const updated = structuredClone(node);
     if (!Object.hasOwn(updated, "attrs")) {
@@ -308,11 +300,6 @@ function isJsonObject(value: unknown): value is JsonObject {
 
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
-}
-
-function isAttributeValue(value: unknown): boolean {
-  const items = Array.isArray(value) ? value : [value];
-  return items.every((item) => item === null || ["string", "number", "boolean"].includes(typeof item));
 }
 
 function formatValidationErrors(errors: ErrorObject[] | null | undefined): string {
