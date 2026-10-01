@@ -16,7 +16,7 @@ else:
     from openui_document import Catalog, validate_value
 
 JsonObject = dict[str, Any]
-AttributeScalar = str | int | float | bool | None
+AttributeScalar = str | None
 AttributeValue = AttributeScalar | list[AttributeScalar]
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCHEMA_PATH = REPOSITORY_ROOT / "spec" / "openui.schema.json"

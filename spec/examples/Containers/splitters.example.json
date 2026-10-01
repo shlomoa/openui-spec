@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "type": "Splitters",
   "attrs": {
     "title": "\"Splitters example\""
@@ -11,7 +11,7 @@
       "type": "Splitters",
       "attrs": {
         "uses.orientation": "\"horizontal\"",
-        "uses.position": 320
+        "uses.position": "320"
       },
       "children": [
         {

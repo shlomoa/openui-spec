@@ -63,7 +63,7 @@ test("parse builds the typed tree", () => {
         {
           id: "confirmDialog",
           type: "Dialog",
-          attrs: { "uses.open": "isOpen", "uses.modal": true, title: '"Confirm"' },
+          attrs: { "uses.open": "isOpen", "uses.modal": "true", title: '"Confirm"' },
         },
       ],
     }),
@@ -76,7 +76,8 @@ test("parse builds the typed tree", () => {
   assert.equal(dialog.path, "/children/0");
   const open = dialog.attribute("uses.open");
   assert.deepEqual([open?.category, open?.name, open?.isExpression], ["uses", "open", true]);
-  assert.equal(dialog.attribute("uses.modal")?.literal, true);
+  const modal = dialog.attribute("uses.modal");
+  assert.deepEqual([modal?.literal, modal?.isExpression], [null, true]);
   const title = dialog.attribute("title");
   assert.deepEqual([title?.category, title?.literal, title?.isExpression], [null, "Confirm", false]);
   assert.equal(dialog.attribute("missing"), undefined);

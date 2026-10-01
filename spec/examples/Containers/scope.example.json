@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "type": "Containers",
   "attrs": {
     "title": "\"Containers example\""
@@ -10,22 +10,22 @@
       "id": "layoutGrid",
       "type": "Grid",
       "attrs": {
-        "uses.columns": 12,
-        "uses.responsive": true
+        "uses.columns": "12",
+        "uses.responsive": "true"
       },
       "children": [
         {
           "id": "mainItem",
           "type": "section",
           "attrs": {
-            "uses.colSpan": 8
+            "uses.colSpan": "8"
           },
           "children": [
             {
               "id": "detailTabs",
               "type": "Tabs",
               "attrs": {
-                "uses.selectedIndex": 0
+                "uses.selectedIndex": "0"
               },
               "children": [
                 {
@@ -43,7 +43,7 @@
           "id": "sideItem",
           "type": "section",
           "attrs": {
-            "uses.colSpan": 4
+            "uses.colSpan": "4"
           },
           "children": [
             {
@@ -51,7 +51,7 @@
               "type": "ExpandablePanels",
               "attrs": {
                 "uses.heading": "\"Filters\"",
-                "uses.expanded": true
+                "uses.expanded": "true"
               },
               "children": [
                 {
@@ -69,7 +69,7 @@
       "type": "SurfaceContainers",
       "attrs": {
         "uses.title": "\"Summary\"",
-        "uses.elevation": 2
+        "uses.elevation": "2"
       }
     },
     {
@@ -107,7 +107,7 @@
       "type": "Splitters",
       "attrs": {
         "uses.orientation": "\"horizontal\"",
-        "uses.position": 320
+        "uses.position": "320"
       },
       "children": [
         {

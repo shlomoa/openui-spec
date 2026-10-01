@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "type": "Tabs",
   "attrs": {
     "title": "\"Tabs example\""
@@ -10,8 +10,8 @@
       "id": "detailTabs",
       "type": "Tabs",
       "attrs": {
-        "uses.selectedIndex": 0,
-        "uses.keyboardNavigation": true,
+        "uses.selectedIndex": "0",
+        "uses.keyboardNavigation": "true",
         "produces.selectedTabChange": "onTabChange($event)"
       },
       "children": [
@@ -20,7 +20,7 @@
           "type": "tab",
           "attrs": {
             "uses.label": "\"Overview\"",
-            "uses.order": 1
+            "uses.order": "1"
           },
           "children": [
             {
@@ -37,7 +37,7 @@
           "type": "tab",
           "attrs": {
             "uses.label": "\"History\"",
-            "uses.order": 2
+            "uses.order": "2"
           },
           "children": [
             {
@@ -54,8 +54,8 @@
           "type": "tab",
           "attrs": {
             "uses.label": "\"Audit\"",
-            "uses.disabled": true,
-            "uses.order": 3
+            "uses.disabled": "true",
+            "uses.order": "3"
           }
         }
       ]

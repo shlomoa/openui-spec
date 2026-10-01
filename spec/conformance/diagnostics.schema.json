@@ -71,7 +71,7 @@
         },
         {
           "const": "grammar/invalid-attribute-value",
-          "description": "An attribute value is not a string, number, true, false, null or a list of those."
+          "description": "An attribute value is not a string, null or a list of those."
         },
         {
           "const": "document/duplicate-id",

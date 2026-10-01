@@ -1,7 +1,7 @@
 {
   "diagnostics": [
     {
-      "code": "contract/wrong-value-type",
+      "code": "grammar/invalid-attribute-value",
       "path": "/children/0/attrs/produces.close"
     }
   ]

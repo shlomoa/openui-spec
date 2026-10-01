@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "type": "Application",
   "children": [
     {
@@ -19,7 +19,7 @@
         "uses.label": "\"Dashboard\"",
         "uses.route": "\"dashboardRoute\"",
         "uses.icon": "\"dashboard\"",
-        "uses.disabled": false
+        "uses.disabled": "false"
       }
     },
     {

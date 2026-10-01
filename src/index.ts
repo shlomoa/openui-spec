@@ -22,7 +22,7 @@ export {
 
 export type JsonObject = Record<string, any>;
 
-export type OpenUiAttributeScalar = string | number | boolean | null;
+export type OpenUiAttributeScalar = string | null;
 export type OpenUiAttributeValue = OpenUiAttributeScalar | OpenUiAttributeScalar[];
 
 export interface OpenUiDocument {

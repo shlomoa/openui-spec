@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "type": "Stepper",
   "attrs": {
     "title": "\"Stepper example\""
@@ -10,8 +10,8 @@
       "id": "checkoutStepper",
       "type": "Stepper",
       "attrs": {
-        "uses.linear": true,
-        "uses.selectedIndex": 0,
+        "uses.linear": "true",
+        "uses.selectedIndex": "0",
         "produces.selectionChange": "onStepChange($event)",
         "produces.complete": "onComplete()"
       },
@@ -21,8 +21,8 @@
           "type": "step",
           "attrs": {
             "uses.label": "\"Cart\"",
-            "uses.order": 1,
-            "uses.completed": true
+            "uses.order": "1",
+            "uses.completed": "true"
           }
         },
         {
@@ -30,7 +30,7 @@
           "type": "step",
           "attrs": {
             "uses.label": "\"Shipping\"",
-            "uses.order": 2,
+            "uses.order": "2",
             "uses.invalid": "shippingForm.invalid"
           }
         },
@@ -39,7 +39,7 @@
           "type": "step",
           "attrs": {
             "uses.label": "\"Payment\"",
-            "uses.order": 3
+            "uses.order": "3"
           }
         },
         {

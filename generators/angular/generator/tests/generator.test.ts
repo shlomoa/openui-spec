@@ -401,7 +401,7 @@ test("builds the data model from the generated OpenUI catalog", async () => {
   const scopeIds = extractOpenUiScopeNodes(fixture).map((scope) => scope.id);
 
   assert.equal(dataModel.name, "OpenUI");
-  assert.equal(dataModel.version, "0.11.0");
+  assert.equal(dataModel.version, "0.12.0");
   assert.deepEqual(
     dataModel.pages.map((page) => page.id),
     scopeIds,
@@ -682,7 +682,7 @@ test("validates catalog root values, attrs, and scoped document uniqueness", asy
     (error: unknown) => {
       assert.match(
         specValidationMessage(error),
-        /Attribute values must be strings, numbers, booleans, null, or lists of these/,
+        /Attribute values must be strings, null, or lists of these/,
       );
       return true;
     },
@@ -725,7 +725,7 @@ test("allows a valid empty root document for incremental deletion", () => {
   assert.doesNotThrow(() =>
     validateOpenUiSpec({
       id: "root",
-      version: "0.11.0",
+      version: "0.12.0",
       type: "html",
       children: [],
     }),
