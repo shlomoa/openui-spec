@@ -33,6 +33,15 @@ published packages.
 - The converter takes the id, type-name and attribute-key tokens of a scope line from
   `openui.schema.json` instead of its own patterns, so a scope cannot declare a type no
   document can use (`Foo-Bar-baz`). The generated catalog is unchanged.
+- The converter derives the line shapes and the value types of a leaf scope from the `ebnf`
+  block of the part 6.4 section grammar, which is now their single definition, through a
+  small EBNF-to-regex translator (`spec/bin/to_json/ebnf_regex.py`) that fails on notation
+  it does not understand. The generated catalog is unchanged. Where the old hand-written
+  patterns and part 6.4 differed in an edge case, 6.4 rules: an identity line takes no
+  trailing white space, a separator is a space or a tab, and a description can be empty.
+  The block now defines the character classes it uses (`lowercase_letter`, `uppercase_letter`,
+  `letter`, `digit`, `character`), and part 6.4 states that the converter also rejects a
+  bullet that matches no line and a Produces or Behaves line that declares a value type.
 - The contract stage reports one diagnostic per list attribute: the declared list type
   for a wrong value (`uses.series must be list(number)`), or the item's own reference
   diagnostic. The conformance suite compares diagnostics as a list, so a diagnostic

@@ -409,6 +409,11 @@ one instance node (see [6.3](#63-field-mapping)). Every node carries the `attrs.
 path of its scope file, except an instance node, which gets its traceability from its
 scope node.
 
+The converter does not restate the line shapes and the value types of a leaf scope: it
+derives its patterns from the `ebnf` block of [6.4](#64-section-grammar), which is their
+single definition, and takes the id, type-name and attribute-name tokens from
+`openui.schema.json`.
+
 ### 6.2 Leaf scope source format
 
 Every leaf `*.scope.md` follows the shared [leaf template](scopes/template.scope.md). Three
@@ -444,6 +449,11 @@ one [value type](#46-value-types), and every `reference(Type)` MUST name a known
 type. Descriptions and multiplicity are recorded in prose only and are not serialized.
 
 ### 6.4 Section grammar
+
+The converter translates this block into the patterns it matches the Identity, Attributes
+and Child model lines with ([6.1](#61-generation)); notation or a production it does not
+understand fails the build. It also rejects a bullet in those sections that matches no line,
+and a Produces or Behaves line whose description starts with a value-type field.
 
 ```ebnf
 (* OpenUI leaf scope (*.scope.md) — machine-bearing section grammar.
@@ -499,6 +509,15 @@ child_type          = type_name ;
 status_value        = "draft" | "review" | "stable" ;
 attr_name           = camel_case ;
 camel_case          = lowercase_letter { letter | digit } ;
+letter              = lowercase_letter | uppercase_letter ;
+lowercase_letter    = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l"
+                    | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x"
+                    | "y" | "z" ;
+uppercase_letter    = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L"
+                    | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X"
+                    | "Y" | "Z" ;
+digit               = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+character           = ? any character except a line break ? ;
 object_title        = { character } ;
 description         = { character } ;             (* free prose; not interpreted *)
 prose_line          = ? any line that is not an identity / attribute / child line ? ;
