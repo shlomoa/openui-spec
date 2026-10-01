@@ -55,10 +55,11 @@ def grammar_cases() -> dict[str, tuple[str, bool]]:
 
 
 def ebnf_accepts(text: str, grammar: str) -> bool:
-    """Return whether text satisfies the EBNF syntax and its cardinality constraints.
+    """Return whether text satisfies EBNF syntax and its schema-projected constraints.
 
-    TatSu parses the EBNF productions; the grammar stage of `bin.openui_document`
-    checks the cardinality and pattern rules the EBNF states in its comments.
+    TatSu parses the EBNF productions; `grammar_diagnostics` validates the
+    decoded value against the JSON Schema that projects its cardinality and
+    pattern rules.
     """
     try:
         parse(grammar, text, parseinfo=True)

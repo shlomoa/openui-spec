@@ -101,6 +101,10 @@ same diagnostics, and both pass the [conformance suite](spec/conformance/README.
 - TypeScript: `src/document.ts`, exported from `@shlomoa/openui-spec` (`parse`,
   `validate`, `validateText` and the same classes).
 
+Both grammar stages validate decoded document values against
+`spec/openui.schema.json`. JSON decoding remains responsible for syntax and
+duplicate-member diagnostics.
+
 The repository root is the `@shlomoa/openui-spec` npm package. Its build uses the
 canonical files under `spec/` directly and must be run from the repository root
 (`npm ci`, `npm test`).

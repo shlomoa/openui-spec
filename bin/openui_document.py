@@ -3,8 +3,8 @@
 The pipeline has four stages, in the order the conformance suite defines
 (`spec/conformance/README.md`):
 
-1. grammar: the document format of `spec/EBNF.txt` (parsed with TatSu) and its
-   JSON Schema projection;
+1. grammar: `spec/openui.schema.json`, the JSON Schema projection of the
+   document format in `spec/EBNF.txt`;
 2. document: globally unique ids and the spec version;
 3. catalog: every type is a known object type of `spec/openui.json`;
 4. contract: every declared attribute fits its declared value type, and every
@@ -27,22 +27,14 @@ from functools import cache
 from pathlib import Path
 from typing import Any
 
+from jsonschema import Draft202012Validator
+
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 SPEC_DIR = REPOSITORY_ROOT / "spec"
-EBNF_PATH = SPEC_DIR / "EBNF.txt"
 CATALOG_PATH = SPEC_DIR / "openui.json"
+SCHEMA_PATH = SPEC_DIR / "openui.schema.json"
 
-ID_PATTERN = re.compile(r"^[a-z][A-Za-z0-9]*$")
-TYPE_PATTERN = re.compile(
-    r"^(?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?)$"
-)
-VERSION_PATTERN = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+$")
-ATTR_KEY_PATTERN = re.compile(
-    r"^(?:(?P<category>uses|produces|behaves)\.)?(?P<name>[a-z][A-Za-z0-9]*)$"
-)
 VALUE_TYPE_PATTERN = re.compile(r"^(?P<base>[a-z]+)(?:\((?P<argument>.*)\))?$")
-ROOT_MEMBERS = ("id", "version", "type", "attrs", "children")
-ELEMENT_MEMBERS = ("id", "type", "attrs", "children")
 
 
 @dataclass(frozen=True)
@@ -151,9 +143,9 @@ class Catalog:
             known_types.add(node["type"])
             declared = {}
             for key, value in (node.get("attrs") or {}).items():
-                match = ATTR_KEY_PATTERN.fullmatch(key)
-                if match and match.group("category"):
-                    declared[match.group("name")] = Declaration(match.group("category"), value)
+                category, name = _attribute_parts(key)
+                if category:
+                    declared[name] = Declaration(category, value)
             if declared:
                 contracts.setdefault(node["type"], {}).update(declared)
                 if parent is not None and node["id"] == f"{parent['id']}Instance":
@@ -181,8 +173,6 @@ def parse(text: str) -> Document:
     value, diagnostics = decode(text)
     if not diagnostics:
         diagnostics = grammar_diagnostics(value)
-    if not diagnostics and not _ebnf_accepts(text):
-        diagnostics = [Diagnostic("grammar/json-syntax", "", "the EBNF grammar rejects the text")]
     if diagnostics:
         raise OpenUiParseError(diagnostics)
     return from_value(value)
@@ -246,17 +236,37 @@ def validate_text(text: str, catalog: Catalog | None = None) -> list[Diagnostic]
     return validate(document, catalog)
 
 
-def validate_value(value: Any, catalog: Catalog | None = None) -> list[Diagnostic]:
+def validate_value(
+    value: Any,
+    catalog: Catalog | None = None,
+    schema: dict[str, Any] | None = None,
+) -> list[Diagnostic]:
     """Run every stage on an already decoded JSON value (duplicate members are not visible)."""
-    diagnostics = grammar_diagnostics(value)
+    diagnostics = grammar_diagnostics(value, schema)
     return diagnostics or validate(from_value(value), catalog)
 
 
-def grammar_diagnostics(value: Any) -> list[Diagnostic]:
-    """Return the grammar diagnostics of a decoded JSON value."""
-    diagnostics: list[Diagnostic] = []
-    _check_element(value, "", True, diagnostics)
-    return diagnostics
+@cache
+def default_schema() -> dict[str, Any]:
+    """Load the bundled JSON Schema that owns the document format."""
+    return json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+
+
+@cache
+def _default_schema_validator() -> Draft202012Validator:
+    return Draft202012Validator(default_schema())
+
+
+def grammar_diagnostics(
+    value: Any, schema: dict[str, Any] | None = None
+) -> list[Diagnostic]:
+    """Return schema-derived grammar diagnostics for a decoded JSON value."""
+    validator = _default_schema_validator() if schema is None else Draft202012Validator(schema)
+    return [
+        diagnostic
+        for error in validator.iter_errors(value)
+        for diagnostic in _schema_diagnostics(error)
+    ]
 
 
 # --- grammar stage -------------------------------------------------------------------------
@@ -307,100 +317,53 @@ def _duplicate_paths(value: Any, path: str) -> Iterator[str]:
             yield from _duplicate_paths(item, f"{path}/{index}")
 
 
-def _check_element(value: Any, path: str, is_root: bool, out: list[Diagnostic]) -> None:
-    if not isinstance(value, dict):
-        out.append(Diagnostic("grammar/invalid-member-type", path, "an element must be an object"))
-        return
-    members = ROOT_MEMBERS if is_root else ELEMENT_MEMBERS
-    for key in value:
-        if key not in members:
-            out.append(
-                Diagnostic(
-                    "grammar/unknown-property", f"{path}/{_escape(key)}", f"unknown member {key}"
-                )
+def _schema_diagnostics(error: Any) -> list[Diagnostic]:
+    """Translate one JSON Schema error into the conformance diagnostic vocabulary."""
+    path = _json_pointer(error.absolute_path)
+    if error.validator == "additionalProperties":
+        properties = error.schema.get("properties", {})
+        return [
+            Diagnostic(
+                "grammar/unknown-property",
+                f"{path}/{_escape(key)}",
+                f"unknown member {key}",
             )
-    required = ("id", "version", "type") if is_root else ("id", "type")
-    for key in required:
-        if key not in value:
-            out.append(
-                Diagnostic(
-                    "grammar/missing-property", f"{path}/{key}", f"missing required property {key}"
-                )
+            for key in sorted(set(error.instance) - set(properties))
+        ]
+    if error.validator == "required":
+        return [
+            Diagnostic(
+                "grammar/missing-property",
+                f"{path}/{_escape(key)}",
+                f"missing required property {key}",
             )
-    if "id" in value:
-        _check_id(value["id"], f"{path}/id", is_root, out)
-    if "type" in value:
-        _check_pattern(value["type"], f"{path}/type", TYPE_PATTERN, "grammar/invalid-type", out)
-    if is_root and "version" in value:
-        _check_pattern(
-            value["version"], "/version", VERSION_PATTERN, "grammar/invalid-version", out
-        )
-    if "attrs" in value:
-        _check_attrs(value["attrs"], f"{path}/attrs", out)
-    if "children" in value:
-        children = value["children"]
-        if not isinstance(children, list):
-            out.append(
+            for key in error.validator_value
+            if key not in error.instance
+        ]
+    if error.validator == "type":
+        return [Diagnostic("grammar/invalid-member-type", path, error.message)]
+    if error.validator == "const":
+        return [Diagnostic("grammar/invalid-root-id", path, error.message)]
+    if error.validator == "pattern":
+        if list(error.absolute_schema_path)[-2:] == ["propertyNames", "pattern"]:
+            key = error.instance
+            return [
                 Diagnostic(
-                    "grammar/invalid-member-type", f"{path}/children", "children must be a list"
+                    "grammar/invalid-key",
+                    f"{path}/{_escape(key)}",
+                    f"invalid attribute key {key}",
                 )
-            )
-        else:
-            for index, child in enumerate(children):
-                _check_element(child, f"{path}/children/{index}", False, out)
-
-
-def _check_id(value: Any, path: str, is_root: bool, out: list[Diagnostic]) -> None:
-    if is_root:
-        if value != "root":
-            out.append(Diagnostic("grammar/invalid-root-id", path, 'the root id must be "root"'))
-        return
-    _check_pattern(value, path, ID_PATTERN, "grammar/invalid-id", out)
-
-
-def _check_pattern(
-    value: Any, path: str, pattern: re.Pattern[str], code: str, out: list[Diagnostic]
-) -> None:
-    if not isinstance(value, str):
-        out.append(Diagnostic("grammar/invalid-member-type", path, "the value must be a string"))
-    elif not pattern.fullmatch(value):
-        out.append(Diagnostic(code, path, f"{value!r} does not match {pattern.pattern}"))
-
-
-def _check_attrs(value: Any, path: str, out: list[Diagnostic]) -> None:
-    if not isinstance(value, dict):
-        out.append(Diagnostic("grammar/invalid-member-type", path, "attrs must be an object"))
-        return
-    for key, item in value.items():
-        item_path = f"{path}/{_escape(key)}"
-        if not ATTR_KEY_PATTERN.fullmatch(key):
-            out.append(Diagnostic("grammar/invalid-key", item_path, f"invalid attribute key {key}"))
-        items = item if isinstance(item, list) else [item]
-        if not all(_is_scalar(entry) for entry in items):
-            out.append(
-                Diagnostic(
-                    "grammar/invalid-attribute-value",
-                    item_path,
-                    "a value must be a string, number, boolean, null, or a list of these",
-                )
-            )
-
-
-@cache
-def _compiled_grammar() -> Any:
-    import tatsu
-
-    return tatsu.compile(EBNF_PATH.read_text(encoding="utf-8"))
-
-
-def _ebnf_accepts(text: str) -> bool:
-    from tatsu.exceptions import FailedParse
-
-    try:
-        _compiled_grammar().parse(text)
-    except FailedParse:
-        return False
-    return True
+            ]
+        name = list(error.absolute_path)[-1]
+        code = {
+            "id": "grammar/invalid-id",
+            "type": "grammar/invalid-type",
+            "version": "grammar/invalid-version",
+        }[name]
+        return [Diagnostic(code, path, error.message)]
+    if error.validator == "anyOf":
+        return [Diagnostic("grammar/invalid-attribute-value", path, error.message)]
+    return []
 
 
 # --- model -----------------------------------------------------------------------------------
@@ -409,13 +372,12 @@ def _ebnf_accepts(text: str) -> bool:
 def _element(value: dict[str, Any], path: str) -> Element:
     attributes = []
     for key, item in (value.get("attrs") or {}).items():
-        match = ATTR_KEY_PATTERN.fullmatch(key)
-        assert match is not None  # the grammar stage guarantees it
+        category, name = _attribute_parts(key)
         attributes.append(
             Attribute(
                 key,
-                match.group("category"),
-                match.group("name"),
+                category,
+                name,
                 item,
                 f"{path}/attrs/{_escape(key)}",
             )
@@ -527,9 +489,15 @@ def _decode_literal(value: str) -> str | None:
     return decoded if isinstance(decoded, str) else None
 
 
-def _is_scalar(value: Any) -> bool:
-    return value is None or isinstance(value, (str, bool, int, float))
+def _attribute_parts(key: str) -> tuple[str | None, str]:
+    """Return an attribute's category and name after schema validation."""
+    category, separator, name = key.partition(".")
+    return (category, name) if separator and category in {"uses", "produces", "behaves"} else (None, key)
 
 
 def _escape(key: str) -> str:
     return key.replace("~", "~0").replace("/", "~1")
+
+
+def _json_pointer(path: Iterator[Any]) -> str:
+    return "".join(f"/{_escape(str(value))}" for value in path)

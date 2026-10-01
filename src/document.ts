@@ -5,7 +5,8 @@
  * stages, the same diagnostic codes and paths, and the same results on the shared
  * conformance suite (`spec/conformance/`).
  *
- * 1. grammar: the document format of `spec/EBNF.txt` and its JSON Schema projection;
+ * 1. grammar: `spec/openui.schema.json`, the JSON Schema projection of the document
+ *    format in `spec/EBNF.txt`;
  * 2. document: globally unique ids and the spec version;
  * 3. catalog: every type is a known object type of `spec/openui.json`;
  * 4. contract: every declared attribute fits its declared value type, and every
@@ -15,17 +16,16 @@
  */
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import Ajv2020 from "ajv/dist/2020";
+import type { ErrorObject, ValidateFunction } from "ajv";
 
-const ID_PATTERN = /^[a-z][A-Za-z0-9]*$/;
-const TYPE_PATTERN = /^(?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?)$/;
-const VERSION_PATTERN = /^[0-9]+\.[0-9]+\.[0-9]+$/;
-const ATTR_KEY_PATTERN = /^(?:(uses|produces|behaves)\.)?([a-z][A-Za-z0-9]*)$/;
 const VALUE_TYPE_PATTERN = /^([a-z]+)(?:\((.*)\))?$/;
-const ROOT_MEMBERS = ["id", "version", "type", "attrs", "children"];
-const ELEMENT_MEMBERS = ["id", "type", "attrs", "children"];
 
 /** The bundled catalog of the spec version this package implements. */
 export const DEFAULT_CATALOG_PATH = path.resolve(__dirname, "..", "..", "spec", "openui.json");
+export const DEFAULT_SCHEMA_PATH = path.resolve(__dirname, "..", "..", "spec", "openui.schema.json");
+
+type JsonObject = Record<string, any>;
 
 /** One broken rule: a stage-prefixed code, a JSON Pointer and a free-text message. */
 export class Diagnostic {
@@ -137,9 +137,9 @@ export class Catalog {
       knownTypes.add(node.type);
       const declared = new Map<string, Declaration>();
       for (const [key, value] of Object.entries(node.attrs ?? {})) {
-        const match = ATTR_KEY_PATTERN.exec(key);
-        if (match?.[1]) {
-          declared.set(match[2], { category: match[1], valueType: typeof value === "string" ? value : null });
+        const [category, name] = attributeParts(key);
+        if (category !== null) {
+          declared.set(name, { category, valueType: typeof value === "string" ? value : null });
         }
       }
       if (declared.size > 0) {
@@ -238,16 +238,19 @@ export function validateText(text: string, catalog: Catalog = defaultCatalog()):
 }
 
 /** Runs every stage on an already decoded JSON value (duplicate members are not visible). */
-export function validateValue(value: unknown, catalog: Catalog = defaultCatalog()): Diagnostic[] {
-  const diagnostics = grammarDiagnostics(value);
+export function validateValue(
+  value: unknown,
+  catalog: Catalog = defaultCatalog(),
+  schema: JsonObject = defaultSchema(),
+): Diagnostic[] {
+  const diagnostics = grammarDiagnostics(value, schema);
   return diagnostics.length > 0 ? diagnostics : validate(fromValue(value as Record<string, any>), catalog);
 }
 
-/** Returns the grammar diagnostics of a decoded JSON value. */
-export function grammarDiagnostics(value: unknown): Diagnostic[] {
-  const diagnostics: Diagnostic[] = [];
-  checkElement(value, "", true, diagnostics);
-  return diagnostics;
+/** Returns schema-derived grammar diagnostics for a decoded JSON value. */
+export function grammarDiagnostics(value: unknown, schema: JsonObject = defaultSchema()): Diagnostic[] {
+  const validator = schema === defaultSchema() ? defaultSchemaValidator() : createSchemaValidator(schema);
+  return schemaDiagnostics(value, validator);
 }
 
 /** Decodes JSON `text`; reports invalid JSON and duplicate object members. */
@@ -268,6 +271,75 @@ export function decode(text: string): { value: unknown; diagnostics: Diagnostic[
 }
 
 // --- grammar stage ------------------------------------------------------------------------
+
+let bundledSchema: JsonObject | undefined;
+let bundledSchemaValidator: ValidateFunction | undefined;
+
+function defaultSchema(): JsonObject {
+  bundledSchema ??= JSON.parse(readFileSync(DEFAULT_SCHEMA_PATH, "utf8")) as JsonObject;
+  return bundledSchema;
+}
+
+function defaultSchemaValidator(): ValidateFunction {
+  bundledSchemaValidator ??= createSchemaValidator(defaultSchema());
+  return bundledSchemaValidator;
+}
+
+function createSchemaValidator(schema: JsonObject): ValidateFunction {
+  return new Ajv2020({ allErrors: true, strict: false }).compile(schema);
+}
+
+function schemaDiagnostics(value: unknown, validator: ValidateFunction): Diagnostic[] {
+  if (validator(value)) {
+    return [];
+  }
+  const errors = validator.errors ?? [];
+  const anyOfPaths = new Set(errors.filter((error) => error.keyword === "anyOf").map((error) => error.instancePath));
+  return errors.flatMap((error) =>
+    error.keyword !== "anyOf" && [...anyOfPaths].some((path) => error.instancePath === path || error.instancePath.startsWith(`${path}/`))
+      ? []
+      : schemaErrorDiagnostics(error),
+  );
+}
+
+function schemaErrorDiagnostics(error: ErrorObject): Diagnostic[] {
+  const path = error.instancePath;
+  if (error.schemaPath.includes("/anyOf/") || error.keyword === "propertyNames") {
+    return [];
+  }
+  if (error.keyword === "additionalProperties") {
+    const key = (error.params as { additionalProperty: string }).additionalProperty;
+    return [new Diagnostic("grammar/unknown-property", `${path}/${escapePointer(key)}`, `unknown member ${key}`)];
+  }
+  if (error.keyword === "required") {
+    const key = (error.params as { missingProperty: string }).missingProperty;
+    return [new Diagnostic("grammar/missing-property", `${path}/${escapePointer(key)}`, `missing required property ${key}`)];
+  }
+  if (error.keyword === "type") {
+    return [new Diagnostic("grammar/invalid-member-type", path, error.message ?? "invalid JSON type")];
+  }
+  if (error.keyword === "const") {
+    return [new Diagnostic("grammar/invalid-root-id", path, error.message ?? "invalid root id")];
+  }
+  if (error.keyword === "pattern") {
+    const key = (error as ErrorObject & { propertyName?: string }).propertyName;
+    if (key !== undefined) {
+      return [new Diagnostic("grammar/invalid-key", `${path}/${escapePointer(key)}`, `invalid attribute key ${key}`)];
+    }
+    const member = path.split("/").at(-1);
+    const code =
+      member === "id"
+        ? "grammar/invalid-id"
+        : member === "type"
+          ? "grammar/invalid-type"
+          : "grammar/invalid-version";
+    return [new Diagnostic(code, path, error.message ?? "invalid value")];
+  }
+  if (error.keyword === "anyOf") {
+    return [new Diagnostic("grammar/invalid-attribute-value", path, error.message ?? "invalid attribute value")];
+  }
+  return [];
+}
 
 /** Scans valid JSON text and returns the JSON Pointer of every repeated object member. */
 function duplicatePaths(text: string): string[] {
@@ -317,86 +389,12 @@ function duplicatePaths(text: string): string[] {
   return found;
 }
 
-function checkElement(value: unknown, at: string, isRoot: boolean, out: Diagnostic[]): void {
-  if (!isObject(value)) {
-    out.push(new Diagnostic("grammar/invalid-member-type", at, "an element must be an object"));
-    return;
-  }
-  const members = isRoot ? ROOT_MEMBERS : ELEMENT_MEMBERS;
-  for (const key of Object.keys(value)) {
-    if (!members.includes(key)) {
-      out.push(new Diagnostic("grammar/unknown-property", `${at}/${escapePointer(key)}`, `unknown member ${key}`));
-    }
-  }
-  for (const key of isRoot ? ["id", "version", "type"] : ["id", "type"]) {
-    if (!(key in value)) {
-      out.push(new Diagnostic("grammar/missing-property", `${at}/${key}`, `missing required property ${key}`));
-    }
-  }
-  if ("id" in value) {
-    if (isRoot) {
-      if (value.id !== "root") {
-        out.push(new Diagnostic("grammar/invalid-root-id", `${at}/id`, 'the root id must be "root"'));
-      }
-    } else {
-      checkPattern(value.id, `${at}/id`, ID_PATTERN, "grammar/invalid-id", out);
-    }
-  }
-  if ("type" in value) {
-    checkPattern(value.type, `${at}/type`, TYPE_PATTERN, "grammar/invalid-type", out);
-  }
-  if (isRoot && "version" in value) {
-    checkPattern(value.version, "/version", VERSION_PATTERN, "grammar/invalid-version", out);
-  }
-  if ("attrs" in value) {
-    checkAttrs(value.attrs, `${at}/attrs`, out);
-  }
-  if ("children" in value) {
-    if (!Array.isArray(value.children)) {
-      out.push(new Diagnostic("grammar/invalid-member-type", `${at}/children`, "children must be a list"));
-    } else {
-      value.children.forEach((child, index) => checkElement(child, `${at}/children/${index}`, false, out));
-    }
-  }
-}
-
-function checkPattern(value: unknown, at: string, pattern: RegExp, code: string, out: Diagnostic[]): void {
-  if (typeof value !== "string") {
-    out.push(new Diagnostic("grammar/invalid-member-type", at, "the value must be a string"));
-  } else if (!pattern.test(value)) {
-    out.push(new Diagnostic(code, at, `${JSON.stringify(value)} does not match ${pattern.source}`));
-  }
-}
-
-function checkAttrs(value: unknown, at: string, out: Diagnostic[]): void {
-  if (!isObject(value)) {
-    out.push(new Diagnostic("grammar/invalid-member-type", at, "attrs must be an object"));
-    return;
-  }
-  for (const [key, item] of Object.entries(value)) {
-    const itemPath = `${at}/${escapePointer(key)}`;
-    if (!ATTR_KEY_PATTERN.test(key)) {
-      out.push(new Diagnostic("grammar/invalid-key", itemPath, `invalid attribute key ${key}`));
-    }
-    const items = Array.isArray(item) ? item : [item];
-    if (!items.every(isScalar)) {
-      out.push(
-        new Diagnostic(
-          "grammar/invalid-attribute-value",
-          itemPath,
-          "a value must be a string, number, boolean, null, or a list of these",
-        ),
-      );
-    }
-  }
-}
-
 // --- model ---------------------------------------------------------------------------------
 
 function buildElement(value: Record<string, any>, at: string): Element {
   const attributes = Object.entries(value.attrs ?? {}).map(([key, item]) => {
-    const match = ATTR_KEY_PATTERN.exec(key) as RegExpExecArray; // the grammar stage guarantees it
-    return new Attribute(key, match[1] ?? null, match[2], item, `${at}/attrs/${escapePointer(key)}`);
+    const [category, name] = attributeParts(key);
+    return new Attribute(key, category, name, item, `${at}/attrs/${escapePointer(key)}`);
   });
   const children = ((value.children ?? []) as Record<string, any>[]).map((child, index) =>
     buildElement(child, `${at}/children/${index}`),
@@ -504,12 +502,9 @@ function decodeLiteral(value: string): string | undefined {
   }
 }
 
-function isScalar(value: unknown): boolean {
-  return value === null || ["string", "number", "boolean"].includes(typeof value);
-}
-
-function isObject(value: unknown): value is Record<string, any> {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
+function attributeParts(key: string): [string | null, string] {
+  const [category, ...name] = key.split(".");
+  return ["uses", "produces", "behaves"].includes(category) ? [category, name.join(".")] : [null, key];
 }
 
 function escapePointer(key: string): string {

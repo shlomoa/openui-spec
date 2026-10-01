@@ -73,14 +73,19 @@ class OpenUiJson:
     def validate(self) -> None:
         """Validate the document with every stage of `bin.openui_document`.
 
-        The stages are the grammar, the document rules (unique ids and the spec
-        version), catalog membership and the declared attribute value types.
+        The grammar stage uses `openui.schema.json`; the later stages check the
+        document rules (unique ids and the spec version), catalog membership and
+        declared attribute value types.
         """
         if self.document is None:
             raise OpenUiValidationError("the root object has been removed")
 
         catalog = Catalog.from_value(self._load_json(self.catalog_path, "catalog"))
-        diagnostics = validate_value(self.document, catalog)
+        diagnostics = validate_value(
+            self.document,
+            catalog,
+            self._load_json(self.schema_path, "schema"),
+        )
         if diagnostics:
             raise OpenUiValidationError("\n".join(str(diagnostic) for diagnostic in diagnostics))
 
@@ -143,13 +148,6 @@ class OpenUiJson:
         node = self._find(object_id)
         if node is None:
             raise OpenUiJsonError(f"object not found: {object_id}")
-        if not all(
-            isinstance(key, str) and _is_attribute_value(value) for key, value in attributes.items()
-        ):
-            raise OpenUiJsonError(
-                "attribute changes must map strings to strings, numbers, booleans, null, "
-                "or lists of these"
-            )
         updated = copy.deepcopy(node)
         updated.setdefault("attrs", {}).update(attributes)
         self._validate_node(updated, is_root=node is self.document)
@@ -224,9 +222,3 @@ class OpenUiJson:
     def _json_path(path: Iterator[Any]) -> str:
         values = list(path)
         return "$" if not values else "$." + ".".join(str(value) for value in values)
-
-
-def _is_attribute_value(value: Any) -> bool:
-    """Return whether *value* is a typed attribute value: a scalar or a list of scalars."""
-    items = value if isinstance(value, list) else [value]
-    return all(item is None or isinstance(item, (str, int, float, bool)) for item in items)

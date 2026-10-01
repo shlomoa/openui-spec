@@ -202,6 +202,11 @@ grammar. Global ID uniqueness is enforced by OpenUI tooling, not by the EBNF or 
 The [conformance suite](conformance/README.md#stages) names the stage that owns each rule:
 grammar, document, catalog and contract.
 
+The packages run the grammar stage against `openui.schema.json`, rather than restating the
+document format in program code. Their JSON decoders additionally report malformed JSON and
+duplicate object members before schema validation, because a JSON Schema receives an already
+decoded value and cannot observe duplicate members.
+
 ### 4.2 Document structure
 
 A document is one JSON object, the root element. Every element has these fields:
@@ -497,6 +502,10 @@ MUST accept and reject the same documents; `spec/bin/check_grammar_consistency` 
 on the conformance suite. The schema's `$id`,
 <https://raw.githubusercontent.com/shlomoa/openui-spec/main/spec/openui.schema.json>, is its
 stable reference, for example as a `$schema` value.
+
+The packages validate decoded document values against `openui.schema.json`. Their only grammar
+checks before it are JSON decoding and duplicate-member detection; the conformance suite
+defines how decoder and JSON Schema results map to grammar diagnostics.
 
 EBNF blocks use `(* ... *)` for comments; comment text explains and is not part of the
 grammar. Quoted punctuation terminals are literal: for example, `"-"` is a hyphen where a

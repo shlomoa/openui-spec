@@ -35,7 +35,9 @@ npm install @shlomoa/openui-spec
   is required.
 - **Strict document validation** — validates the grammar, unique ids, the spec
   version, exact known-type membership in the catalog and the declared attribute
-  value types ([what it validates](#what-it-validates)).
+  value types ([what it validates](#what-it-validates)). The grammar stage uses
+  the bundled JSON Schema after JSON decoding, which also detects syntax errors
+  and duplicate object members.
 - **Safe programmatic mutations** — provides strongly-typed methods to add, remove,
   modify attributes, and replace objects in OpenUI documents.
 - **Command-line interface** — installs the `ng-openui-spec` binary for

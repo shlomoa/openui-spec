@@ -17,7 +17,9 @@ Contributor and developer entry points for this repository:
 ## OpenUI JSON packages
 
 Both implementations bundle `spec/openui.schema.json` and `spec/openui.json`, and
-parse, model and validate documents with the same API and the same diagnostics.
+parse, model and validate documents with the same API and the same diagnostics. Their
+grammar stage validates decoded values against the bundled JSON Schema; JSON decoding
+supplies the syntax and duplicate-member diagnostics the schema cannot observe.
 Validation runs the four stages of the
 [conformance suite](https://openui-spec.readthedocs.io/en/latest/conformance/#stages):
 grammar, document (globally unique ids and the spec version), catalog (every `type` is a
