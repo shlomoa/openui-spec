@@ -172,6 +172,11 @@ class EbnfCapturesTest(unittest.TestCase):
         with self.assertRaisesRegex(EbnfError, "no lead"):
             Ebnf('v = "a" | t t ; t = "T" ;').branch_with_tail("v", "t")
 
+    def test_reachable_follows_references_and_stops_at_tokens(self) -> None:
+        grammar = Ebnf('a = b [ c ] ; b = d | "x" ; c = "c" ; d = e ; z = "z" ;', tokens={"d": "d"})
+        self.assertEqual(grammar.reachable("a"), {"a", "b", "c", "d"})
+        self.assertEqual(Ebnf("a = missing ;").reachable("a"), {"a", "missing"})
+
     def test_terminal_text_reads_a_terminal_of_a_sequence(self) -> None:
         self.assertEqual(self.GRAMMAR.terminal_text("line", 0), "-")
         with self.assertRaisesRegex(EbnfError, "not a terminal"):

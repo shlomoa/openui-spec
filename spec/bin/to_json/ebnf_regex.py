@@ -225,6 +225,18 @@ def _mentions(node: Node, name: str) -> bool:
     return False
 
 
+def _references(node: Node) -> list[str]:
+    if isinstance(node, Ref):
+        return [node.name]
+    if isinstance(node, Seq):
+        return [name for item in node.items for name in _references(item)]
+    if isinstance(node, Alt):
+        return [name for option in node.options for name in _references(option)]
+    if isinstance(node, (Opt, Rep)):
+        return _references(node.body)
+    return []
+
+
 class Ebnf:
     """The productions of one grammar, and the regular expression each one stands for.
 
@@ -260,7 +272,7 @@ class Ebnf:
         a symbol for another pattern. ``before`` and ``after`` keep the items of a production
         that is one sequence before, or after, the item that is the nonterminal given.
         """
-        rule = self._rule(name)
+        rule = Ref(name) if name in self.tokens else self._rule(name)
         if before is not None or after is not None:
             rule = self._slice(name, rule, before, after)
         emitter = _Emitter(self, dict(groups or {}), dict(replace or {}))
@@ -303,6 +315,19 @@ class Ebnf:
         lead = emitter.emit(branch.items[0], (name,))
         tail = emitter.emit(Seq(branch.items[1:]), (name,))
         return f"(?P<lead>{lead})(?P<tail>{tail})"
+
+    def reachable(self, *names: str) -> set[str]:
+        """Return ``names`` and every nonterminal their productions refer to, defined or not."""
+        found: set[str] = set()
+        pending = list(names)
+        while pending:
+            name = pending.pop()
+            if name in found:
+                continue
+            found.add(name)
+            if name in self.rules and name not in self.tokens:
+                pending.extend(_references(self.rules[name]))
+        return found
 
     def terminal_text(self, name: str, index: int) -> str:
         """Return the text of terminal number ``index`` among the items of sequence ``name``."""

@@ -11,6 +11,8 @@ from typing import Any
 
 from bin.openui_document import default_schema
 
+from .section_grammar import README_PATH, USES_CATEGORY, SectionGrammar
+
 
 def _token(pattern: str) -> str:
     """Return a schema pattern without its anchors, ready to embed in another pattern."""
@@ -23,31 +25,15 @@ _DEFS = default_schema()["$defs"]
 ID = _token(_DEFS["element"]["properties"]["id"]["pattern"])
 TYPE_NAME = _token(_DEFS["typeName"]["pattern"])
 ATTRIBUTE_KEY_RE = re.compile(_DEFS["attrs"]["propertyNames"]["pattern"])
+# Part 6.4 defines type_name and camel_case (an id and an attribute name) by these patterns.
+LEXICAL = {"type_name": TYPE_NAME, "camel_case": ID}
 
-IDENTITY_RE = re.compile(
-    rf"^-\s+id:\s+(?P<id>{ID})\s+·\s+"
-    rf"type:\s+(?P<type>{TYPE_NAME})\s+·\s+"
-    r"status:\s+(?P<status>draft|review|stable)\s*$"
-)
-# The declared value types belong to the scope format; README.md 6.4 defines them.
-ENUM_WORD = r"[a-z][a-z0-9-]*"
-SCALAR_VALUE_TYPE = (
-    r"(?:string|boolean|integer|number|url"
-    rf"|enum\({ENUM_WORD}(?:\|{ENUM_WORD})*\)"
-    rf"|reference(?:\({TYPE_NAME}(?:\|{TYPE_NAME})*\))?)"
-)
-VALUE_TYPE_RE = re.compile(rf"^(?:{SCALAR_VALUE_TYPE}|list\({SCALAR_VALUE_TYPE}\))$")
-REFERENCE_TYPES_RE = re.compile(rf"reference\((?P<types>{TYPE_NAME}(?:\|{TYPE_NAME})*)\)")
-ATTRIBUTE_RE = re.compile(
-    r"^-\s+`(?P<key>[^`\s]+)`"
-    r"\s+—\s+(?P<category>Uses|Produces|Behaves)"
-    r"(?:\s+—\s+(?P<type>\S+))?\s+—\s+.+$"
-)
-CHILD_RE = re.compile(
-    rf"^-\s+(?P<id>{ID})\s+—\s+"
-    rf"(?P<type>{TYPE_NAME})\s+—\s+"
-    r"(?P<multiplicity>1|0\.\.1|0\.\.n|1\.\.n)\s+—\s+.+$"
-)
+# The line shapes and the value types are not written here: README part 6.4 defines them, and
+# the converter derives its patterns from the `ebnf` block of that part.
+GRAMMAR = SectionGrammar.from_readme(README_PATH, lexical=LEXICAL)
+IDENTITY_RE = GRAMMAR.identity_re
+CHILD_RE = GRAMMAR.child_re
+VALUE_TYPE_RE = GRAMMAR.value_type_re
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 OBJECT_LINK_RE = re.compile(r"^-\s+\[[^\]]+\]\((?P<link>[^)]+)\):.*$")
 
@@ -92,13 +78,22 @@ class LeafScope:
         return instance
 
 
-def parse_leaf_scope(path: Path | str, *, scopes_dir: Path | str | None = None) -> dict[str, Any]:
-    """Parse a leaf `*.scope.md` file into its generated scope node."""
+def parse_leaf_scope(
+    path: Path | str,
+    *,
+    scopes_dir: Path | str | None = None,
+    grammar: SectionGrammar = GRAMMAR,
+) -> dict[str, Any]:
+    """Parse a leaf `*.scope.md` file into its generated scope node.
+
+    The machine-bearing sections are read with `grammar`, by default the section grammar of
+    README part 6.4.
+    """
     source_path = Path(path)
     text = source_path.read_text(encoding="utf-8")
     sections = _sections(text)
     title = _title(text, source_path)
-    identity = _identity(sections, source_path)
+    identity = _identity(sections, source_path, grammar)
     scope_document = _scope_document(source_path, scopes_dir)
     purpose = _prose(sections.get("Purpose", [])) or _leading_prose(text)
 
@@ -109,23 +104,27 @@ def parse_leaf_scope(path: Path | str, *, scopes_dir: Path | str | None = None) 
         title=title,
         purpose=purpose,
         scope_document=scope_document,
-        attrs=_attributes(sections.get("Attributes", []), source_path),
-        children=_children(sections.get("Child model", []), source_path, identity["id"]),
+        attrs=_attributes(sections.get(grammar.attributes_section, []), source_path, grammar),
+        children=_children(
+            sections.get(grammar.child_model_section, []), source_path, identity["id"], grammar
+        ),
     )
     return leaf.to_node()
 
 
-def parse_child_model(path: Path | str) -> list[tuple[str, str, str]]:
+def parse_child_model(
+    path: Path | str, *, grammar: SectionGrammar = GRAMMAR
+) -> list[tuple[str, str, str]]:
     """Return the Child model of a leaf as (child id, child type, multiplicity) triples.
 
     The catalog does not serialize multiplicity (part 6.3), so a validator reads it here.
     """
     source_path = Path(path)
-    lines = _sections(source_path.read_text(encoding="utf-8")).get("Child model", [])
-    _children(lines, source_path, "")  # rejects malformed lines
+    lines = _sections(source_path.read_text(encoding="utf-8")).get(grammar.child_model_section, [])
+    _children(lines, source_path, "", grammar)  # rejects malformed lines
     return [
         (match.group("id"), match.group("type"), match.group("multiplicity"))
-        for match in map(CHILD_RE.fullmatch, lines)
+        for match in map(grammar.child_re.fullmatch, lines)
         if match
     ]
 
@@ -134,6 +133,7 @@ def build_openui_document(
     *,
     spec_dir: Path | str | None = None,
     version: str | None = None,
+    grammar: SectionGrammar = GRAMMAR,
 ) -> dict[str, Any]:
     """Build the full OpenUI JSON document from the prose scope tree."""
     resolved_spec_dir = (
@@ -153,9 +153,9 @@ def build_openui_document(
             "scopeDocument": "README.md",
             "status": "draft",
         },
-        "children": [build_scope_tree(resolved_spec_dir / "scopes")],
+        "children": [build_scope_tree(resolved_spec_dir / "scopes", grammar=grammar)],
     }
-    _check_reference_types(document)
+    _check_reference_types(document, grammar)
     return document
 
 
@@ -166,7 +166,7 @@ def _walk(node: dict[str, Any]) -> list[dict[str, Any]]:
     return nodes
 
 
-def _check_reference_types(document: dict[str, Any]) -> None:
+def _check_reference_types(document: dict[str, Any], grammar: SectionGrammar) -> None:
     """Fail when a `reference(Type)` names a type that is not a known object type."""
     nodes = _walk(document)
     known_types = {node["type"] for node in nodes}
@@ -174,17 +174,21 @@ def _check_reference_types(document: dict[str, Any]) -> None:
         for key, value_type in (node.get("attrs") or {}).items():
             if not key.startswith("uses.") or not isinstance(value_type, str):
                 continue
-            unknown = [name for name in reference_types(value_type) if name not in known_types]
+            unknown = [
+                name for name in reference_types(value_type, grammar) if name not in known_types
+            ]
             if unknown:
                 raise ValueError(f"{node['id']}: {key} references unknown types {unknown}")
 
 
-def build_scope_tree(scopes_dir: Path | str) -> dict[str, Any]:
+def build_scope_tree(
+    scopes_dir: Path | str, *, grammar: SectionGrammar = GRAMMAR
+) -> dict[str, Any]:
     """Build the generated JSON node for `spec/scopes` or any scope directory."""
     root = Path(scopes_dir).resolve()
     if not root.is_dir():
         raise ValueError(f"{root}: scope directory does not exist")
-    return _build_scope_directory(root, root)
+    return _build_scope_directory(root, root, grammar)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -240,7 +244,7 @@ def _sections(text: str) -> dict[str, list[str]]:
     return sections
 
 
-def _build_scope_directory(path: Path, scopes_dir: Path) -> dict[str, Any]:
+def _build_scope_directory(path: Path, scopes_dir: Path, grammar: SectionGrammar) -> dict[str, Any]:
     scope_file = path / "scope.md"
     if not scope_file.is_file():
         raise ValueError(f"{path}: missing scope.md")
@@ -248,7 +252,8 @@ def _build_scope_directory(path: Path, scopes_dir: Path) -> dict[str, Any]:
     text = scope_file.read_text(encoding="utf-8")
     title = _title(text, scope_file)
     children = [
-        _build_child(child_path, scopes_dir) for child_path in _ordered_children(path, text)
+        _build_child(child_path, scopes_dir, grammar)
+        for child_path in _ordered_children(path, text)
     ]
     child_ids = {child["id"] for child in children}
     node_id = _scope_directory_id(path, scopes_dir, title, child_ids)
@@ -267,10 +272,10 @@ def _build_scope_directory(path: Path, scopes_dir: Path) -> dict[str, Any]:
     return node
 
 
-def _build_child(path: Path, scopes_dir: Path) -> dict[str, Any]:
+def _build_child(path: Path, scopes_dir: Path, grammar: SectionGrammar) -> dict[str, Any]:
     if path.is_dir():
-        return _build_scope_directory(path, scopes_dir)
-    return parse_leaf_scope(path, scopes_dir=scopes_dir)
+        return _build_scope_directory(path, scopes_dir, grammar)
+    return parse_leaf_scope(path, scopes_dir=scopes_dir, grammar=grammar)
 
 
 def _ordered_children(path: Path, text: str) -> list[Path]:
@@ -322,13 +327,15 @@ def _leading_prose(text: str) -> str:
     return _prose(lines)
 
 
-def _identity(sections: dict[str, list[str]], path: Path) -> dict[str, str]:
-    if "Identity" not in sections:
+def _identity(
+    sections: dict[str, list[str]], path: Path, grammar: SectionGrammar
+) -> dict[str, str]:
+    if grammar.identity_section not in sections:
         leaf_id = _leaf_id_from_path(path)
         return {"id": leaf_id, "type": _pascal_case(leaf_id), "status": "draft"}
 
-    for line in sections.get("Identity", []):
-        match = IDENTITY_RE.fullmatch(line)
+    for line in sections[grammar.identity_section]:
+        match = grammar.identity_re.fullmatch(line)
         if match:
             return match.groupdict()
         if line.strip().startswith("-"):
@@ -354,44 +361,70 @@ def _prose(lines: list[str]) -> str:
     return "\n\n".join(paragraphs)
 
 
-def _attributes(lines: list[str], path: Path) -> dict[str, str | None]:
+def _attributes(lines: list[str], path: Path, grammar: SectionGrammar) -> dict[str, str | None]:
     """Return each attribute key with its declared value type (Uses) or None."""
     attrs: dict[str, str | None] = {}
     for line in lines:
-        match = ATTRIBUTE_RE.fullmatch(line)
-        key = match.group("key") if match else ""
-        prefix, separator, _ = key.partition(".")
-        if not match or not separator or not ATTRIBUTE_KEY_RE.fullmatch(key):
-            if line.strip().startswith("-"):
-                raise ValueError(f"{path}: malformed Attributes line: {line}")
+        attribute = _attribute_line(line, path, grammar)
+        if attribute is None:
             continue
-        category = match.group("category")
-        value_type = match.group("type")
-        if prefix != category.lower():
-            raise ValueError(f"{path}: attribute {key} must use {prefix.title()}")
+        key, value_type = attribute
         if key in attrs:
             raise ValueError(f"{path}: duplicate attribute {key}")
-        if category == "Uses":
-            if value_type is None or not VALUE_TYPE_RE.fullmatch(value_type):
-                raise ValueError(f"{path}: attribute {key} needs a valid value type")
-            attrs[key] = value_type
-        else:
-            if value_type is not None and VALUE_TYPE_RE.fullmatch(value_type):
-                raise ValueError(f"{path}: {category} attribute {key} declares no value type")
-            attrs[key] = None
+        attrs[key] = value_type
     return attrs
 
 
-def reference_types(value_type: str) -> list[str]:
+def _attribute_line(
+    line: str, path: Path, grammar: SectionGrammar
+) -> tuple[str, str | None] | None:
+    """Return the key and the declared value type of an attribute line; None for prose.
+
+    The line is a Uses line or an output line of part 6.4. A bullet that is neither is
+    malformed, and the error says which rule it breaks when the head of the line shows it.
+    """
+    uses = grammar.uses_re.fullmatch(line)
+    output = None if uses else grammar.output_re.fullmatch(line)
+    if uses or output:
+        match = uses or output
+        key = match.group("prefix") + match.group("name")
+        _check_key(key, match.group("category"), line, path)
+        if output and grammar.declared_type_re.fullmatch(output.group("description")):
+            raise ValueError(
+                f"{path}: {output.group('category')} attribute {key} declares no value type"
+            )
+        return key, uses.group("type") if uses else None
+    if not line.strip().startswith("-"):
+        return None
+    head = grammar.attribute_head_re.match(line)
+    if head:
+        key = head.group("prefix") + head.group("name")
+        _check_key(key, head.group("category"), line, path)
+        if head.group("category") == USES_CATEGORY:
+            raise ValueError(f"{path}: attribute {key} needs a valid value type")
+    raise ValueError(f"{path}: malformed Attributes line: {line}")
+
+
+def _check_key(key: str, category: str, line: str, path: Path) -> None:
+    """Check the key against the schema and its prefix against the category (part 6.4)."""
+    if not ATTRIBUTE_KEY_RE.fullmatch(key):
+        raise ValueError(f"{path}: malformed Attributes line: {line}")
+    prefix = key.partition(".")[0]
+    if prefix != category.lower():
+        raise ValueError(f"{path}: attribute {key} must use {prefix.title()}")
+
+
+def reference_types(value_type: str, grammar: SectionGrammar = GRAMMAR) -> list[str]:
     """Return the element types a `reference(...)` value type names, if any."""
-    match = REFERENCE_TYPES_RE.search(value_type)
-    return match.group("types").split("|") if match else []
+    return grammar.reference_types(value_type)
 
 
-def _children(lines: list[str], path: Path, scope_id: str) -> list[dict[str, str]]:
+def _children(
+    lines: list[str], path: Path, scope_id: str, grammar: SectionGrammar
+) -> list[dict[str, str]]:
     children: list[dict[str, str]] = []
     for line in lines:
-        match = CHILD_RE.fullmatch(line)
+        match = grammar.child_re.fullmatch(line)
         if not match:
             if line.strip().startswith("-"):
                 raise ValueError(f"{path}: malformed Child model line: {line}")

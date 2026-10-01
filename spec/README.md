@@ -409,6 +409,11 @@ one instance node (see [6.3](#63-field-mapping)). Every node carries the `attrs.
 path of its scope file, except an instance node, which gets its traceability from its
 scope node.
 
+The converter does not restate the line shapes and the value types of a leaf scope: it
+derives its patterns from the `ebnf` block of [6.4](#64-section-grammar), which is their
+single definition, and takes the id, type-name and attribute-name tokens from
+`openui.schema.json`.
+
 ### 6.2 Leaf scope source format
 
 Every leaf `*.scope.md` follows the shared [leaf template](scopes/template.scope.md). Three
@@ -444,6 +449,12 @@ one [value type](#46-value-types), and every `reference(Type)` MUST name a known
 type. Descriptions and multiplicity are recorded in prose only and are not serialized.
 
 ### 6.4 Section grammar
+
+The converter translates this block into the patterns it matches the Identity, Attributes
+and Child model lines with ([6.1](#61-generation)); notation or a production it does not
+understand fails the build. The block leaves `lowercase_letter`, `letter`, `digit` and
+`character` undefined: the converter reads them as the ASCII classes `a`–`z`, `A`–`Z`,
+`0`–`9` and any character but a line break.
 
 ```ebnf
 (* OpenUI leaf scope (*.scope.md) — machine-bearing section grammar.

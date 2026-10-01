@@ -91,14 +91,19 @@ The repository also has a Python scope catalog converter in `spec/bin/to_json/`:
 spec/bin/to_json/
 ├─ __init__.py
 ├─ __main__.py
-└─ converter.py
+├─ converter.py
+├─ ebnf_regex.py
+└─ section_grammar.py
 ```
 
 The converter parses `spec/scopes/**/*.scope.md` and parent `scope.md` files into
 the native OpenUI `id` / `type` / `attrs` / `children` tree. Leaf scope nodes are
 metadata-only and contain one generated `<scopeId>Instance` child that carries
 the object contract attributes and child model. Child-model ids are scoped by the
-owning leaf when needed, so generated ids remain globally unique.
+owning leaf when needed, so generated ids remain globally unique. The line shapes and
+value types of a leaf scope are not written in `converter.py`: `section_grammar.py` reads
+the `ebnf` block of [spec part 6.4](../../../../spec/README.md#64-section-grammar) and
+`ebnf_regex.py` translates it into the patterns the converter matches lines with.
 
 Code-generation work should extend this pipeline directly from the native OpenUI
 `id` / `type` / `attrs` / `children` document model into the existing data
