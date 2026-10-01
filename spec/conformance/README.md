@@ -66,8 +66,9 @@ Each diagnostic has two members:
   the whole document, `""`.
 
 A tool passes a case when it reports exactly the expected diagnostics: the same
-set of `code` and `path` pairs, in any order. Messages are free text and are
-not compared.
+`code` and `path` pairs, each reported once, in any order. A diagnostic that a tool
+reports twice, or one the case does not list, fails the case. Messages are free text
+and are not compared.
 
 ### Grammar diagnostic provenance
 

@@ -276,23 +276,29 @@ Produces and Behaves values MUST be target-language expressions or `null`.
 ### 4.6 Value types
 
 A Uses attribute declares one value type in its scope's Attributes line, and the catalog
-carries it as the attribute's value (see [6.3](#63-field-mapping)):
+carries it as the attribute's string value (see [6.3](#63-field-mapping)). The syntax of a
+value type is the `value_type` production of the [section grammar](#64-section-grammar). An
+attribute value is a string, `null` or a list of these
+([4.5](#45-attributes-and-their-categories)), so every value of a typed attribute is a string:
 
-| Value type        | A literal value is                                                                               |
+| Value type        | A value is written as                                                                            |
 | ----------------- | ------------------------------------------------------------------------------------------------ |
 | `string`          | a quoted string, `"\"Orders\""`                                                                  |
-| `boolean`         | `true` or `false`                                                                                |
-| `integer`         | a JSON number without a fraction, `25`                                                           |
-| `number`          | a JSON number, `0.5`                                                                             |
+| `boolean`         | the unquoted string `true` or `false`, `"true"`                                                  |
+| `integer`         | an unquoted string of digits, `"25"`                                                             |
+| `number`          | an unquoted decimal string, `"0.5"`                                                              |
 | `url`             | a quoted URI reference ([RFC 3986](https://www.rfc-editor.org/rfc/rfc3986)), `"\"favicon.ico\""` |
 | `enum(a\|b)`      | one of the listed words, quoted, `"\"rtl\""`                                                     |
 | `reference`       | an [element reference](#47-element-references), `"\"dashboardRoute\""`                           |
 | `reference(A\|B)` | an element reference to an element whose `type` is `A` or `B`                                    |
-| `list(type)`      | a JSON list whose items are literals of `type`                                                   |
+| `list(type)`      | a JSON list of strings and `null` whose items are values of `type`                               |
 
-For every type, an unquoted string is a binding or target-language expression, and `null`
-means the attribute is present without a value. A value that does not fit its declared
-type is invalid. A value of an attribute the contract does not declare is not type-checked.
+An unquoted string is a binding or target-language expression, so a `boolean`, `integer` or
+`number` value is an expression: the contract stage does not check it, and a conversion may
+annotate it (`"(int)x"`, [4.5](#45-attributes-and-their-categories)). A quoted literal is
+text, so it does not fit `boolean`, `integer` or `number`. `null` means the attribute is
+present without a value, for every type. A value that does not fit its declared type is
+invalid. A value of an attribute the contract does not declare is not type-checked.
 
 The contract of a known type is the Attributes section of the leaf scope whose scope type
 or instance type it is; in the catalog, those are the category-prefixed attributes of the

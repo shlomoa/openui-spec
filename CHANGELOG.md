@@ -22,6 +22,19 @@ published packages.
   number in a list, a Boolean in a list and a list with a `null` item.
 - The generator's own document check accepts the same values.
 
+### Value types and list diagnostics
+
+- Spec part 4.6 says how a typed value is written: `boolean`, `integer` and `number`
+  values are unquoted strings (`"true"`, `"25"`, `"0.5"`), so they are expressions; a
+  quoted literal does not fit these types. The syntax of a declared value type stays the
+  `value_type` production of the part 6.4 section grammar.
+- The Python and TypeScript validators no longer carry their own value-type pattern: they
+  split a declared type structurally (`list(number)` is `list` and `number`).
+- The contract stage reports one diagnostic per list attribute: the declared list type
+  for a wrong value (`uses.series must be list(number)`), or the item's own reference
+  diagnostic. The conformance suite compares diagnostics as a list, so a diagnostic
+  reported twice fails a case; it gains `list-items-wrong-type`.
+
 ## [0.11.1] - 2026-10-01
 
 ### Schema-backed validation

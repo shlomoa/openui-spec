@@ -19,7 +19,6 @@ import path from "node:path";
 import Ajv2020 from "ajv/dist/2020";
 import type { ErrorObject, ValidateFunction } from "ajv";
 
-const VALUE_TYPE_PATTERN = /^([a-z]+)(?:\((.*)\))?$/;
 
 /** The bundled catalog of the spec version this package implements. */
 export const DEFAULT_CATALOG_PATH = path.resolve(__dirname, "..", "..", "spec", "openui.json");
@@ -160,6 +159,12 @@ export class Catalog {
   static load(filePath: string = DEFAULT_CATALOG_PATH): Catalog {
     return Catalog.fromValue(JSON.parse(readFileSync(filePath, "utf8")));
   }
+}
+
+/** Splits a declared value type into its base and argument: `list(number)` is `list` and `number`. */
+export function valueTypeParts(valueType: string): [string, string | undefined] {
+  const open = valueType.indexOf("(");
+  return open === -1 ? [valueType, undefined] : [valueType.slice(0, open), valueType.slice(open + 1, -1)];
 }
 
 let bundledCatalog: Catalog | undefined;
@@ -414,9 +419,7 @@ function contractDiagnostics(attribute: Attribute, declaration: Declaration, byI
 }
 
 function fits(attribute: Attribute, value: unknown, valueType: string, byId: Map<string, Element>): Diagnostic[] {
-  const match = VALUE_TYPE_PATTERN.exec(valueType);
-  const base = match ? match[1] : valueType;
-  const argument = match?.[2];
+  const [base, argument] = valueTypeParts(valueType);
   if (value === null) {
     return [];
   }
@@ -427,7 +430,15 @@ function fits(attribute: Attribute, value: unknown, valueType: string, byId: Map
     if (!Array.isArray(value)) {
       return [wrongType(attribute, valueType)];
     }
-    return value.flatMap((item) => fits(attribute, item, argument ?? "", byId));
+    for (const item of value) {
+      const problems = fits(attribute, item, argument ?? "", byId);
+      if (problems.length > 0) {
+        // One diagnostic per attribute: the declared list type for a wrong value,
+        // the first item's own diagnostic for a reference.
+        return [problems[0].code === "contract/wrong-value-type" ? wrongType(attribute, valueType) : problems[0]];
+      }
+    }
+    return [];
   }
   if (typeof value === "string") {
     const literal = decodeLiteral(value);

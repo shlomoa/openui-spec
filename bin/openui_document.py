@@ -20,7 +20,6 @@ Public API (the TypeScript package mirrors it): ``parse``, ``validate``,
 from __future__ import annotations
 
 import json
-import re
 from collections.abc import Iterator
 from dataclasses import dataclass, field
 from functools import cache
@@ -33,8 +32,6 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 SPEC_DIR = REPOSITORY_ROOT / "spec"
 CATALOG_PATH = SPEC_DIR / "openui.json"
 SCHEMA_PATH = SPEC_DIR / "openui.schema.json"
-
-VALUE_TYPE_PATTERN = re.compile(r"^(?P<base>[a-z]+)(?:\((?P<argument>.*)\))?$")
 
 
 @dataclass(frozen=True)
@@ -160,6 +157,12 @@ class Catalog:
     def load(cls, path: str | Path = CATALOG_PATH) -> Catalog:
         """Load a catalog from *path* (default: the bundled `spec/openui.json`)."""
         return cls.from_value(json.loads(Path(path).read_text(encoding="utf-8")))
+
+
+def value_type_parts(value_type: str) -> tuple[str, str | None]:
+    """Split a declared value type into base and argument: `list(number)` is `list`, `number`."""
+    base, separator, rest = value_type.partition("(")
+    return (base, rest.removesuffix(")")) if separator else (base, None)
 
 
 @cache
@@ -403,8 +406,7 @@ def _contract_diagnostics(
 def _fits(
     attribute: Attribute, value: Any, value_type: str, by_id: dict[str, Element]
 ) -> list[Diagnostic]:
-    match = VALUE_TYPE_PATTERN.fullmatch(value_type)
-    base, argument = (match.group("base"), match.group("argument")) if match else (value_type, None)
+    base, argument = value_type_parts(value_type)
     if value is None:
         return []
     if base == "list":
@@ -412,11 +414,16 @@ def _fits(
             return []
         if not isinstance(value, list):
             return [_wrong_type(attribute, value_type)]
-        return [
-            diagnostic
-            for item in value
-            for diagnostic in _fits(attribute, item, argument or "", by_id)
-        ]
+        for item in value:
+            problems = _fits(attribute, item, argument or "", by_id)
+            if problems:
+                # One diagnostic per attribute: the declared list type for a wrong value,
+                # the first item's own diagnostic for a reference.
+                first = problems[0]
+                if first.code == "contract/wrong-value-type":
+                    return [_wrong_type(attribute, value_type)]
+                return [first]
+        return []
     if isinstance(value, str):
         literal = _decode_literal(value)
         if literal is None:
