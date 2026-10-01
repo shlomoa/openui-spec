@@ -489,7 +489,9 @@ multiplicity        = "1" | "0..1" | "0..n" | "1..n" ;
 prose_section       = heading NL { prose_line } ;
 heading             = "##" WS { character } ;
 
-(* lexical — id/type/attr rules reuse the document grammar of Annex A *)
+(* lexical — a scope line writes the id, type and attribute-name tokens of a document:
+   type_name is the pattern of `$defs/typeName` in openui.schema.json, and camel_case is
+   the pattern of an element id (`$defs/element`) and of an attribute name (`$defs/attrs`) *)
 id_value            = camel_case ;
 child_id            = camel_case ;
 type_value          = type_name ;                (* per the document type grammar *)
