@@ -1,0 +1,51 @@
+# .github/ISSUE_TEMPLATE/bug_report.yml
+name: Bug report
+description: Report a bug
+title: ""
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Thanks for reporting this bug. Please fill out the details below."
+
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: One-sentence summary
+      placeholder: "What broke?"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - High
+        - Medium
+        - Low
+      default: 1
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      placeholder: |
+        1. Go to...
+        2. Click...
+        3. See error...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: affected
+    attributes:
+      label: Affected area
+      options:
+        - Web
+        - API
+        - Mobile
+        - Docs
+      validations:
+        required: true
