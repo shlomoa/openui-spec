@@ -3,6 +3,25 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.12.0] - 2026-10-01
+
+### Attribute value grammar
+
+- An attribute value is a string, `null`, or a list of strings and `null`
+  (`EBNF.txt`, `openui.schema.json`, spec part 4.5). A JSON number or Boolean is
+  no longer a value, alone or in a list; the grammar stage reports
+  `grammar/invalid-attribute-value`. A typed value is written as a string, for
+  example `"true"` or `"25"`, as in HTML, where an attribute value is a quoted
+  string or absent.
+- The contract stage no longer checks a JSON number or Boolean against
+  `boolean`, `integer` and `number`, and the packages' attribute value types
+  narrow to `string | null`.
+- `spec.bin.migrate` converts a JSON Boolean or number, alone or in a list, to
+  the string of its JSON text. The worked examples, the conformance cases and the
+  generator fixtures are migrated, and the suite gains cases for a Boolean, a
+  number in a list, a Boolean in a list and a list with a `null` item.
+- The generator's own document check accepts the same values.
+
 ## [0.11.1] - 2026-10-01
 
 ### Schema-backed validation
@@ -517,3 +536,4 @@ and enforced rather than adding or removing catalog types.
 [0.10.0]: https://github.com/shlomoa/openui-spec/compare/v0.9.0...v0.10.0
 [0.11.0]: https://github.com/shlomoa/openui-spec/compare/v0.10.0...v0.11.0
 [0.11.1]: https://github.com/shlomoa/openui-spec/compare/v0.11.0...v0.11.1
+[0.12.0]: https://github.com/shlomoa/openui-spec/compare/v0.11.1...v0.12.0

@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "type": "ToolAction",
   "children": [
     {
@@ -9,7 +9,7 @@
       "attrs": {
         "uses.label": "\"Refresh\"",
         "uses.icon": "\"refresh\"",
-        "uses.disabled": false,
+        "uses.disabled": "false",
         "produces.activate": "refresh()"
       }
     }

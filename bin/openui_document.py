@@ -432,13 +432,6 @@ def _fits(
         if base == "reference":
             return _reference(attribute, literal, argument, by_id)
         return [_wrong_type(attribute, value_type)]
-    if base == "boolean":
-        return [] if isinstance(value, bool) else [_wrong_type(attribute, value_type)]
-    is_number = isinstance(value, (int, float)) and not isinstance(value, bool)
-    if base == "number" and is_number:
-        return []
-    if base == "integer" and is_number and float(value).is_integer():
-        return []
     return [_wrong_type(attribute, value_type)]
 
 

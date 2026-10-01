@@ -10,10 +10,10 @@
       "id": "confirmDialog",
       "type": "Dialog",
       "attrs": {
-        "uses.modal": true,
+        "uses.modal": "true",
         "uses.open": "isOpen",
         "uses.ariaLabel": "\"Confirm deletion\"",
-        "uses.restoreFocus": true,
+        "uses.restoreFocus": "true",
         "produces.close": "onClose($event)"
       },
       "children": [

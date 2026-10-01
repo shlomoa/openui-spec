@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "type": "Application",
   "children": [
     {
@@ -17,7 +17,7 @@
       "type": "NavGroup",
       "attrs": {
         "uses.label": "\"Reports\"",
-        "uses.expanded": true
+        "uses.expanded": "true"
       },
       "children": [
         {
@@ -33,7 +33,7 @@
           "type": "NavGroup",
           "attrs": {
             "uses.label": "\"Archived\"",
-            "uses.expanded": false
+            "uses.expanded": "false"
           }
         }
       ]

@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "type": "Application",
   "attrs": {
     "size": "\"1960x1080\""
@@ -92,7 +92,7 @@
       "type": "Report",
       "attrs": {
         "title": "\"Orders\"",
-        "uses.readOnly": true
+        "uses.readOnly": "true"
       },
       "children": [
         {
@@ -108,7 +108,7 @@
               "attrs": {
                 "uses.field": "\"id\"",
                 "uses.header": "\"Order\"",
-                "uses.sortable": true
+                "uses.sortable": "true"
               }
             }
           ]

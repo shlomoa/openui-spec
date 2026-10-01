@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "type": "MediaWidgets",
   "attrs": {
     "title": "\"Media widgets example\""
@@ -12,7 +12,7 @@
       "attrs": {
         "uses.src": "\"/media/product.mp4\"",
         "uses.caption": "\"Product walkthrough\"",
-        "uses.controls": true
+        "uses.controls": "true"
       }
     },
     {

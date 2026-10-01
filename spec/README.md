@@ -259,8 +259,12 @@ inside `attrs`, never as a separate field. A generator maps each category to its
 framework; the specification does not fix that mapping (the Angular generator's mapping is
 in its [generation guide](https://github.com/shlomoa/openui-spec/blob/main/generators/angular/generator/docs/GENERATION.md#attribute-categories-in-angular)).
 
-An attribute value is a JSON string, number, `true`, `false`, `null`, or a list of these.
-A string value is either:
+An attribute value is a JSON string, `null`, or a list of these, as in HTML, where an
+attribute value is a quoted string or absent. A JSON number or Boolean is not a value.
+`null` means the attribute is present without a value, and `"null"` is the string `null`.
+A typed value is written as a string, for example `"true"` or `"25"`, and a type may be
+annotated inside the string with a conversion in the target language, for example
+`"(int)x"`; the specification defines no conversion syntax. A string value is either:
 
 - a **literal**, quoted inside the string: `"\"Details\""` is the text `Details`; or
 - a **binding or target-language expression**, unquoted: `orders`, `!isExpanded` or

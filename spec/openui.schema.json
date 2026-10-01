@@ -41,7 +41,7 @@
       ]
     },
     "scalarValue": {
-      "type": ["string", "number", "boolean", "null"]
+      "type": ["string", "null"]
     },
     "children": {
       "type": "array",

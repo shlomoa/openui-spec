@@ -445,15 +445,6 @@ function fits(attribute: Attribute, value: unknown, valueType: string, byId: Map
     }
     return [wrongType(attribute, valueType)];
   }
-  if (base === "boolean") {
-    return typeof value === "boolean" ? [] : [wrongType(attribute, valueType)];
-  }
-  if (base === "number" && typeof value === "number") {
-    return [];
-  }
-  if (base === "integer" && typeof value === "number" && Number.isInteger(value)) {
-    return [];
-  }
   return [wrongType(attribute, valueType)];
 }
 

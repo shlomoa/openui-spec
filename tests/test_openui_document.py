@@ -59,7 +59,7 @@ class ModelTest(unittest.TestCase):
                             "type": "Dialog",
                             "attrs": {
                                 "uses.open": "isOpen",
-                                "uses.modal": True,
+                                "uses.modal": "true",
                                 "title": '"Confirm"',
                             },
                         }
@@ -73,7 +73,8 @@ class ModelTest(unittest.TestCase):
         open_attribute = dialog.attribute("uses.open")
         self.assertEqual((open_attribute.category, open_attribute.name), ("uses", "open"))
         self.assertTrue(open_attribute.is_expression)
-        self.assertEqual(dialog.attribute("uses.modal").literal, True)
+        modal = dialog.attribute("uses.modal")
+        self.assertEqual((modal.literal, modal.is_expression), (None, True))
         title = dialog.attribute("title")
         self.assertEqual(
             (title.category, title.literal, title.is_expression), (None, "Confirm", False)

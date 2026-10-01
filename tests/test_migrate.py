@@ -1,4 +1,4 @@
-"""The spec.bin.migrate tool converts 0.5 attribute keys and values mechanically."""
+"""The spec.bin.migrate tool converts attribute keys and values mechanically."""
 
 from __future__ import annotations
 
@@ -44,7 +44,7 @@ class MigrateTest(unittest.TestCase):
         migrated = self._migrate({"id": "orders", "type": "Table", "attrs": {"(sort)": "s()"}})
         self.assertEqual(migrated["attrs"], {"behaves.sort": "s()"})
 
-    def test_literal_values_follow_the_declared_type(self) -> None:
+    def test_old_string_values_stay_strings(self) -> None:
         migrated = self._migrate(
             {
                 "id": "nameInput",
@@ -52,7 +52,6 @@ class MigrateTest(unittest.TestCase):
                 "attrs": {
                     "[disabled]": "true",
                     "[value]": "42",
-                    "[maxLength]": "80",
                     "[step]": "0.5",
                     "[placeholder]": '"Name"',
                     "[readOnly]": "isLocked",
@@ -64,10 +63,9 @@ class MigrateTest(unittest.TestCase):
         self.assertEqual(
             migrated["attrs"],
             {
-                "uses.disabled": True,
+                "uses.disabled": "true",
                 "uses.value": "42",
-                "uses.maxLength": 80,
-                "uses.step": 0.5,
+                "uses.step": "0.5",
                 "uses.placeholder": '"Name"',
                 "uses.readOnly": "isLocked",
                 "title": "true",
@@ -75,9 +73,43 @@ class MigrateTest(unittest.TestCase):
             },
         )
 
+    def test_json_booleans_and_numbers_become_strings(self) -> None:
+        migrated = self._migrate(
+            {
+                "id": "nameInput",
+                "type": "input",
+                "attrs": {
+                    "uses.disabled": True,
+                    "uses.readOnly": False,
+                    "uses.maxLength": 80,
+                    "uses.step": 0.5,
+                    "uses.sizes": [10, 25, None, "50"],
+                    "uses.label": '"Name"',
+                    "hidden": None,
+                },
+            }
+        )
+        self.assertEqual(
+            migrated["attrs"],
+            {
+                "uses.disabled": "true",
+                "uses.readOnly": "false",
+                "uses.maxLength": "80",
+                "uses.step": "0.5",
+                "uses.sizes": ["10", "25", None, "50"],
+                "uses.label": '"Name"',
+                "hidden": None,
+            },
+        )
+
     def test_migration_is_idempotent(self) -> None:
         document = json.dumps(
-            {"id": "root", "version": "0.5.0", "type": "html", "attrs": {"[open]": "true"}}
+            {
+                "id": "root",
+                "version": "0.5.0",
+                "type": "html",
+                "attrs": {"[open]": "true", "uses.size": 25, "uses.modal": True},
+            }
         )
         once = migrate_text(document, self.catalog)
         self.assertEqual(migrate_text(once, self.catalog), once)
@@ -90,7 +122,7 @@ class MigrateTest(unittest.TestCase):
             self.assertEqual(main(["--check", str(path)]), 1)
             self.assertEqual(path.read_text(encoding="utf-8"), text)
             self.assertEqual(main([directory]), 0)
-            self.assertEqual(json.loads(path.read_text(encoding="utf-8"))["attrs"], {"uses.a": 1})
+            self.assertEqual(json.loads(path.read_text(encoding="utf-8"))["attrs"], {"uses.a": "1"})
 
     def _fit(self, *children: dict[str, object]) -> dict[str, object]:
         document = {
@@ -106,7 +138,7 @@ class MigrateTest(unittest.TestCase):
     def test_renamed_keys_take_the_declared_key_and_value(self) -> None:
         [chart, grid] = self._fit(
             {"id": "sales", "type": "Chart", "attrs": {"uses.chartType": '"bar"', "title": "t"}},
-            {"id": "orders", "type": "DataGrid", "attrs": {"uses.sortable": True}},
+            {"id": "orders", "type": "DataGrid", "attrs": {"uses.sortable": '"yes"'}},
         )["children"]
         self.assertEqual(chart["attrs"], {"uses.kind": '"comparison"', "title": "t"})
         self.assertEqual(grid["attrs"], {"behaves.sort": None})

@@ -1,0 +1,8 @@
+{
+  "diagnostics": [
+    {
+      "code": "grammar/invalid-attribute-value",
+      "path": "/children/0/attrs/uses.pageSizes"
+    }
+  ]
+}

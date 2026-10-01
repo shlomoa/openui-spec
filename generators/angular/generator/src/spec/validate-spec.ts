@@ -116,7 +116,7 @@ function validateElement(
         if (!items.every(isAttributeScalar)) {
           diagnostics.push({
             path: `${path}.attrs.${key}`,
-            message: "Attribute values must be strings, numbers, booleans, null, or lists of these.",
+            message: "Attribute values must be strings, null, or lists of these.",
           });
         }
       }
@@ -207,7 +207,7 @@ function isValidType(type: string): boolean {
 }
 
 function isAttributeScalar(value: unknown): boolean {
-  return value === null || ["string", "number", "boolean"].includes(typeof value);
+  return value === null || typeof value === "string";
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

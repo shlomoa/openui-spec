@@ -1,16 +1,17 @@
 """Migrate OpenUI documents to the typed attributes and to the leaf contracts.
 
 The conversion is mechanical and uses only the catalog (`spec/openui.json`) and the
-leaf scopes (`spec/scopes/`). It has two steps.
+leaf scopes (`spec/scopes/`). It has three steps.
 
 Keys (0.5 to 0.6), for every document:
 
 - `[name]` becomes `uses.name`;
 - `(name)` becomes `behaves.name` when the element's type declares `name` as a
-  Behaves attribute, and `produces.name` otherwise;
-- a Uses value `"true"` or `"false"` becomes a JSON boolean, and an unquoted
-  number becomes a JSON number, unless the type declares the attribute as
-  `string`, `url`, `enum(...)`, `reference` or `list(...)`.
+  Behaves attribute, and `produces.name` otherwise.
+
+Values (0.11 to 0.12), for every document: an attribute value is a string, `null`
+or a list of these, so a JSON boolean or number, alone or in a list, becomes the
+string of its JSON text (`true` becomes `"true"`, `25` becomes `"25"`).
 
 Contracts (0.10 to 0.11), for every worked example (`*.example.json`) the grammar
 accepts:
@@ -47,8 +48,6 @@ from bin.openui_document import SPEC_DIR, Catalog, grammar_diagnostics
 from spec.bin.to_json.converter import parse_child_model, parse_leaf_scope
 
 OLD_KEY = re.compile(r"^(?P<open>[\[(])(?P<name>[a-z][A-Za-z0-9]*)(?P<close>[\])])$")
-NUMBER = re.compile(r"^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?$")
-LITERAL_TYPES = {"boolean", "integer", "number"}
 MULTIPLICITY = {"1": (1, 1), "0..1": (0, 1), "0..n": (0, sys.maxsize), "1..n": (1, sys.maxsize)}
 
 # 0.10 to 0.11: example keys that a leaf contract declares under another name, per
@@ -104,15 +103,12 @@ class Contracts:
         return cls(catalog, leaf_of, child_models)
 
 
-def _convert_value(value: Any, value_type: str | None) -> Any:
-    if not isinstance(value, str):
-        return value
-    if value_type is not None and value_type not in LITERAL_TYPES:
-        return value
-    if value in {"true", "false"}:
-        return value == "true"
-    if NUMBER.fullmatch(value):
-        return float(value) if "." in value else int(value)
+def _stringify(value: Any) -> Any:
+    """Return *value* with each JSON boolean or number, alone or in a list, as a string."""
+    if isinstance(value, list):
+        return [_stringify(item) for item in value]
+    if isinstance(value, (bool, int, float)):
+        return json.dumps(value)
     return value
 
 
@@ -131,12 +127,11 @@ def migrate_element(element: dict[str, Any], catalog: Catalog) -> None:
             declaration = declared.get(name)
             category = declaration.category if declaration else None
             if match.group("open") == "[":
-                value_type = declaration.value_type if category == "uses" else None
-                migrated[f"uses.{name}"] = _convert_value(value, value_type)
+                migrated[f"uses.{name}"] = value
             else:
                 prefix = "behaves" if category == "behaves" else "produces"
                 migrated[f"{prefix}.{name}"] = value
-        element["attrs"] = migrated
+        element["attrs"] = {key: _stringify(value) for key, value in migrated.items()}
     for child in element.get("children", []):
         migrate_element(child, catalog)
 
