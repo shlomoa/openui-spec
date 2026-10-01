@@ -9,12 +9,27 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from bin.openui_document import default_schema
+
+
+def _token(pattern: str) -> str:
+    """Return a schema pattern without its anchors, ready to embed in another pattern."""
+    return f"(?:{pattern.removeprefix('^').removesuffix('$')})"
+
+
+# The id, type-name and attribute-key tokens of a scope line are the ones of a document:
+# the patterns of `openui.schema.json`, so a scope cannot declare what no document can use.
+_DEFS = default_schema()["$defs"]
+ID = _token(_DEFS["element"]["properties"]["id"]["pattern"])
+TYPE_NAME = _token(_DEFS["typeName"]["pattern"])
+ATTRIBUTE_KEY_RE = re.compile(_DEFS["attrs"]["propertyNames"]["pattern"])
+
 IDENTITY_RE = re.compile(
-    r"^-\s+id:\s+(?P<id>[a-z][A-Za-z0-9]*)\s+·\s+"
-    r"type:\s+(?P<type>[A-Za-z][A-Za-z0-9-]*)\s+·\s+"
+    rf"^-\s+id:\s+(?P<id>{ID})\s+·\s+"
+    rf"type:\s+(?P<type>{TYPE_NAME})\s+·\s+"
     r"status:\s+(?P<status>draft|review|stable)\s*$"
 )
-TYPE_NAME = r"[A-Za-z][A-Za-z0-9-]*"
+# The declared value types belong to the scope format; README.md 6.4 defines them.
 ENUM_WORD = r"[a-z][a-z0-9-]*"
 SCALAR_VALUE_TYPE = (
     r"(?:string|boolean|integer|number|url"
@@ -24,13 +39,13 @@ SCALAR_VALUE_TYPE = (
 VALUE_TYPE_RE = re.compile(rf"^(?:{SCALAR_VALUE_TYPE}|list\({SCALAR_VALUE_TYPE}\))$")
 REFERENCE_TYPES_RE = re.compile(rf"reference\((?P<types>{TYPE_NAME}(?:\|{TYPE_NAME})*)\)")
 ATTRIBUTE_RE = re.compile(
-    r"^-\s+`(?P<key>(?P<prefix>uses|produces|behaves)\.[a-z][A-Za-z0-9]*)`"
+    r"^-\s+`(?P<key>[^`\s]+)`"
     r"\s+—\s+(?P<category>Uses|Produces|Behaves)"
     r"(?:\s+—\s+(?P<type>\S+))?\s+—\s+.+$"
 )
 CHILD_RE = re.compile(
-    r"^-\s+(?P<id>[a-z][A-Za-z0-9]*)\s+—\s+"
-    r"(?P<type>[A-Za-z][A-Za-z0-9-]*)\s+—\s+"
+    rf"^-\s+(?P<id>{ID})\s+—\s+"
+    rf"(?P<type>{TYPE_NAME})\s+—\s+"
     r"(?P<multiplicity>1|0\.\.1|0\.\.n|1\.\.n)\s+—\s+.+$"
 )
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
@@ -344,15 +359,16 @@ def _attributes(lines: list[str], path: Path) -> dict[str, str | None]:
     attrs: dict[str, str | None] = {}
     for line in lines:
         match = ATTRIBUTE_RE.fullmatch(line)
-        if not match:
+        key = match.group("key") if match else ""
+        prefix, separator, _ = key.partition(".")
+        if not match or not separator or not ATTRIBUTE_KEY_RE.fullmatch(key):
             if line.strip().startswith("-"):
                 raise ValueError(f"{path}: malformed Attributes line: {line}")
             continue
-        key = match.group("key")
         category = match.group("category")
         value_type = match.group("type")
-        if match.group("prefix") != category.lower():
-            raise ValueError(f"{path}: attribute {key} must use {match.group('prefix').title()}")
+        if prefix != category.lower():
+            raise ValueError(f"{path}: attribute {key} must use {prefix.title()}")
         if key in attrs:
             raise ValueError(f"{path}: duplicate attribute {key}")
         if category == "Uses":
