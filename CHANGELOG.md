@@ -22,6 +22,22 @@ published packages.
   number in a list, a Boolean in a list and a list with a `null` item.
 - The generator's own document check accepts the same values.
 
+### Value types and list diagnostics
+
+- The syntax of a declared value type is one definition: the `value_type` production of
+  `EBNF.txt`, projected as `$defs/valueType` in `openui.schema.json`. The converter and
+  both validators take the pattern from the schema instead of restating it; the catalog
+  loaders reject a declared type that is not a value type. `spec/README.md` 6.4 no longer
+  repeats the productions: it points to `EBNF.txt`. `check_grammar_consistency` checks that
+  the EBNF rule and the schema pattern agree on every value type of the catalog.
+- Spec part 4.6 says how a typed value is written: `boolean`, `integer` and `number`
+  values are unquoted strings (`"true"`, `"25"`, `"0.5"`), so they are expressions; a
+  quoted literal does not fit these types.
+- The contract stage reports one diagnostic per list attribute: the declared list type
+  for a wrong value (`uses.series must be list(number)`), or the item's own reference
+  diagnostic. The conformance suite compares diagnostics as a list, so a diagnostic
+  reported twice fails a case; it gains `list-items-wrong-type`.
+
 ## [0.11.1] - 2026-10-01
 
 ### Schema-backed validation
