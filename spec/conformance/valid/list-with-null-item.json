@@ -7,10 +7,7 @@
       "id": "ordersTable",
       "type": "Table",
       "attrs": {
-        "uses.pageSizes": [
-          "10",
-          null
-        ]
+        "uses.pageSizes": ["10", null]
       }
     }
   ]
