@@ -44,7 +44,7 @@
               "attrs": {
                 "uses.label": "\"Delete\"",
                 "uses.icon": "\"delete\"",
-                "uses.disabled": true,
+                "uses.disabled": "true",
                 "produces.activate": "deleteSelected()"
               }
             }

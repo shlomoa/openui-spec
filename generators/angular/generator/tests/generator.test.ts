@@ -682,7 +682,7 @@ test("validates catalog root values, attrs, and scoped document uniqueness", asy
     (error: unknown) => {
       assert.match(
         specValidationMessage(error),
-        /Attribute values must be strings, numbers, booleans, null, or lists of these/,
+        /Attribute values must be strings, null, or lists of these/,
       );
       return true;
     },

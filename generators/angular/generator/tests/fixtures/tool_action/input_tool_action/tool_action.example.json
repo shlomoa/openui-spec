@@ -9,7 +9,7 @@
       "attrs": {
         "uses.label": "\"Refresh\"",
         "uses.icon": "\"refresh\"",
-        "uses.disabled": false,
+        "uses.disabled": "false",
         "produces.activate": "refresh()"
       }
     }

@@ -19,7 +19,7 @@
         "uses.label": "\"Dashboard\"",
         "uses.route": "\"dashboardRoute\"",
         "uses.icon": "\"dashboard\"",
-        "uses.disabled": false
+        "uses.disabled": "false"
       }
     },
     {

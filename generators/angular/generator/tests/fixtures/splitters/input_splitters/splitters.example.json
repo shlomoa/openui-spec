@@ -11,7 +11,7 @@
       "type": "Splitters",
       "attrs": {
         "uses.orientation": "\"horizontal\"",
-        "uses.position": 320
+        "uses.position": "320"
       },
       "children": [
         {

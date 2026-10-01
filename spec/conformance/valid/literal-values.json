@@ -25,8 +25,8 @@
       "id": "deleteDialog",
       "type": "dialog",
       "attrs": {
-        "uses.open": false,
-        "uses.modal": true
+        "uses.open": "false",
+        "uses.modal": "true"
       }
     }
   ]

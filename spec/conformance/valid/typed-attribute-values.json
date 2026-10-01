@@ -8,7 +8,7 @@
       "type": "Dialog",
       "attrs": {
         "uses.open": "isConfirmOpen",
-        "uses.modal": true,
+        "uses.modal": "true",
         "produces.close": "onConfirmClose($event)",
         "title": "\"Confirm\"",
         "hidden": null
@@ -18,8 +18,8 @@
       "id": "ordersTable",
       "type": "Table",
       "attrs": {
-        "uses.pageSize": 25,
-        "uses.pageSizes": [10, 25, 50],
+        "uses.pageSize": "25",
+        "uses.pageSizes": ["10", "25", "50"],
         "behaves.sort": "sortOrders($event)"
       }
     }

@@ -149,8 +149,8 @@ class ApplicationScopeContractTest(unittest.TestCase):
 
         navigation = self._example_child("navigation.example.json", "primaryNav")
         nav_group = navigation["children"][1]
-        self.assertEqual(nav_group["attrs"], {"uses.label": '"Reports"', "uses.expanded": True})
-        self.assertEqual(nav_group["children"][1]["attrs"]["uses.disabled"], True)
+        self.assertEqual(nav_group["attrs"], {"uses.label": '"Reports"', "uses.expanded": "true"})
+        self.assertEqual(nav_group["children"][1]["attrs"]["uses.disabled"], "true")
 
         toolbar = self._example_child("tool_bars.example.json", "appToolbar")
         self.assertEqual(toolbar["type"], "ToolBar")

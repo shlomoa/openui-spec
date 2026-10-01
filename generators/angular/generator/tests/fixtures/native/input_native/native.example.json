@@ -34,8 +34,8 @@
       "id": "focusRing",
       "type": "Native",
       "attrs": {
-        "uses.focusVisible": true,
-        "uses.tabIndex": 0
+        "uses.focusVisible": "true",
+        "uses.tabIndex": "0"
       }
     }
   ]

@@ -14,8 +14,8 @@
         "uses.series": "revenueSeries",
         "uses.xAxis": "\"month\"",
         "uses.yAxis": "\"revenue\"",
-        "uses.legend": true,
-        "uses.tooltip": true,
+        "uses.legend": "true",
+        "uses.tooltip": "true",
         "uses.loading": "isLoading",
         "uses.error": "loadError",
         "uses.title": "\"Monthly revenue bar chart\""

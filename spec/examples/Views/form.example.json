@@ -15,8 +15,8 @@
       "type": "TextInputs",
       "attrs": {
         "uses.label": "\"Name\"",
-        "uses.required": true,
-        "uses.maxLength": 80,
+        "uses.required": "true",
+        "uses.maxLength": "80",
         "uses.value": "form.name",
         "produces.valueChange": "onChange('name', $event)"
       }
@@ -26,7 +26,7 @@
       "type": "TextInputs",
       "attrs": {
         "uses.label": "\"Email\"",
-        "uses.required": true,
+        "uses.required": "true",
         "uses.pattern": "\"^.+@.+$\"",
         "uses.error": "\"Enter a valid email\""
       }

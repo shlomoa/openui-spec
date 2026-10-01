@@ -11,7 +11,7 @@
       "type": "Dialog",
       "attrs": {
         "uses.open": "isConfirmOpen",
-        "uses.modal": true,
+        "uses.modal": "true",
         "produces.close": "onConfirmClose($event)"
       },
       "children": [

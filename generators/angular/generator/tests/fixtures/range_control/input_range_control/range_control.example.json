@@ -11,8 +11,8 @@
       "type": "RangeControl",
       "attrs": {
         "uses.label": "\"Volume\"",
-        "uses.min": 0,
-        "uses.max": 100,
+        "uses.min": "0",
+        "uses.max": "100",
         "uses.value": "volume",
         "produces.valueChange": "setVolume($event)"
       }

@@ -4,7 +4,7 @@
   "type": "Report",
   "attrs": {
     "title": "\"Sales report\"",
-    "uses.readOnly": true,
+    "uses.readOnly": "true",
     "uses.loading": "isLoading",
     "uses.error": "loadError"
   },
@@ -32,7 +32,7 @@
           "attrs": {
             "uses.field": "\"region\"",
             "uses.header": "\"Region\"",
-            "uses.sortable": true
+            "uses.sortable": "true"
           }
         },
         {
@@ -41,7 +41,7 @@
           "attrs": {
             "uses.field": "\"revenue\"",
             "uses.header": "\"Revenue\"",
-            "uses.sortable": true
+            "uses.sortable": "true"
           }
         }
       ]
@@ -50,7 +50,7 @@
       "id": "reportPaging",
       "type": "NavigationWidgets",
       "attrs": {
-        "uses.pageSize": 25,
+        "uses.pageSize": "25",
         "uses.total": "rowCount",
         "produces.pageChange": "onPage($event)"
       }

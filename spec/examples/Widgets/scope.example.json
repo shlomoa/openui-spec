@@ -68,7 +68,7 @@
       "type": "MediaWidgets",
       "attrs": {
         "uses.src": "\"/media/product.mp4\"",
-        "uses.controls": true
+        "uses.controls": "true"
       }
     },
     {
@@ -115,7 +115,7 @@
       "id": "wizard",
       "type": "Stepper",
       "attrs": {
-        "uses.linear": true
+        "uses.linear": "true"
       },
       "children": [
         {
@@ -131,7 +131,7 @@
       "id": "infoDialog",
       "type": "Dialog",
       "attrs": {
-        "uses.modal": true,
+        "uses.modal": "true",
         "uses.open": "showInfo"
       },
       "children": [

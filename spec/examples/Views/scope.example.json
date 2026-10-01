@@ -11,7 +11,7 @@
       "type": "Report",
       "attrs": {
         "title": "\"Customers\"",
-        "uses.readOnly": true
+        "uses.readOnly": "true"
       },
       "children": [
         {
@@ -27,7 +27,7 @@
               "attrs": {
                 "uses.field": "\"name\"",
                 "uses.header": "\"Name\"",
-                "uses.sortable": true
+                "uses.sortable": "true"
               }
             }
           ]
@@ -48,7 +48,7 @@
           "type": "TextInputs",
           "attrs": {
             "uses.label": "\"Name\"",
-            "uses.required": true
+            "uses.required": "true"
           }
         }
       ]

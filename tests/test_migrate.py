@@ -138,7 +138,7 @@ class MigrateTest(unittest.TestCase):
     def test_renamed_keys_take_the_declared_key_and_value(self) -> None:
         [chart, grid] = self._fit(
             {"id": "sales", "type": "Chart", "attrs": {"uses.chartType": '"bar"', "title": "t"}},
-            {"id": "orders", "type": "DataGrid", "attrs": {"uses.sortable": "\"yes\""}},
+            {"id": "orders", "type": "DataGrid", "attrs": {"uses.sortable": '"yes"'}},
         )["children"]
         self.assertEqual(chart["attrs"], {"uses.kind": '"comparison"', "title": "t"})
         self.assertEqual(grid["attrs"], {"behaves.sort": None})
