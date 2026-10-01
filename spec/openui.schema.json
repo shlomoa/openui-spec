@@ -43,6 +43,11 @@
     "scalarValue": {
       "type": ["string", "null"]
     },
+    "valueType": {
+      "type": "string",
+      "description": "The text of a declared value type: the value_type production of EBNF.txt, without the JSON quotes.",
+      "pattern": "^(?:(?:string|boolean|integer|number|url|enum\\([a-z][a-z0-9-]*(?:\\|[a-z][a-z0-9-]*)*\\)|reference(?:\\((?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?)(?:\\|(?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?))*\\))?)|list\\((?:string|boolean|integer|number|url|enum\\([a-z][a-z0-9-]*(?:\\|[a-z][a-z0-9-]*)*\\)|reference(?:\\((?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?)(?:\\|(?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?))*\\))?)\\))$"
+    },
     "children": {
       "type": "array",
       "items": {

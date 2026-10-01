@@ -9,20 +9,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from bin.openui_document import value_type_parts, value_type_pattern
+
 IDENTITY_RE = re.compile(
     r"^-\s+id:\s+(?P<id>[a-z][A-Za-z0-9]*)\s+·\s+"
     r"type:\s+(?P<type>[A-Za-z][A-Za-z0-9-]*)\s+·\s+"
     r"status:\s+(?P<status>draft|review|stable)\s*$"
 )
-TYPE_NAME = r"[A-Za-z][A-Za-z0-9-]*"
-ENUM_WORD = r"[a-z][a-z0-9-]*"
-SCALAR_VALUE_TYPE = (
-    r"(?:string|boolean|integer|number|url"
-    rf"|enum\({ENUM_WORD}(?:\|{ENUM_WORD})*\)"
-    rf"|reference(?:\({TYPE_NAME}(?:\|{TYPE_NAME})*\))?)"
-)
-VALUE_TYPE_RE = re.compile(rf"^(?:{SCALAR_VALUE_TYPE}|list\({SCALAR_VALUE_TYPE}\))$")
-REFERENCE_TYPES_RE = re.compile(rf"reference\((?P<types>{TYPE_NAME}(?:\|{TYPE_NAME})*)\)")
+VALUE_TYPE_RE = value_type_pattern()
 ATTRIBUTE_RE = re.compile(
     r"^-\s+`(?P<key>(?P<prefix>uses|produces|behaves)\.[a-z][A-Za-z0-9]*)`"
     r"\s+—\s+(?P<category>Uses|Produces|Behaves)"
@@ -368,8 +362,10 @@ def _attributes(lines: list[str], path: Path) -> dict[str, str | None]:
 
 def reference_types(value_type: str) -> list[str]:
     """Return the element types a `reference(...)` value type names, if any."""
-    match = REFERENCE_TYPES_RE.search(value_type)
-    return match.group("types").split("|") if match else []
+    base, argument = value_type_parts(value_type)
+    if base == "list" and argument:
+        return reference_types(argument)
+    return argument.split("|") if base == "reference" and argument else []
 
 
 def _children(lines: list[str], path: Path, scope_id: str) -> list[dict[str, str]]:

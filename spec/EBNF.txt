@@ -46,3 +46,14 @@ ui_element_list = ui_element { "," ui_element } ;
 
 string = /"(?:[^"\\]|\\["\\\/bfnrt]|\\u[0-9a-fA-F]{4})*"/ ;
 null = "null" ;
+
+(* Declared value types. A scope declares the value type of a Uses
+   attribute in its Attributes line, and the catalog carries it as the
+   attribute's string value; value_type is the text of that string,
+   without the JSON quotes. It is string, boolean, integer, number, url,
+   enum(word|word|...), reference, reference(Type|Type|...), or a list
+   of one of these written list(...) with a type other than list. A word
+   is lowercase letters, digits and hyphens. A Type is a type_name, which
+   is the type_value pattern without the JSON quotes. *)
+type_name = /(?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?)/ ;
+value_type = /(?:(?:string|boolean|integer|number|url|enum\([a-z][a-z0-9-]*(?:\|[a-z][a-z0-9-]*)*\)|reference(?:\((?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?)(?:\|(?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?))*\))?)|list\((?:string|boolean|integer|number|url|enum\([a-z][a-z0-9-]*(?:\|[a-z][a-z0-9-]*)*\)|reference(?:\((?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?)(?:\|(?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?))*\))?)\))/ ;
