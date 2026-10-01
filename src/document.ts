@@ -411,7 +411,9 @@ function buildElement(value: Record<string, any>, at: string): Element {
 
 function contractDiagnostics(attribute: Attribute, declaration: Declaration, byId: Map<string, Element>): Diagnostic[] {
   if (declaration.valueType === null) {
-    return attribute.value === null || typeof attribute.value === "string"
+    // Produces and Behaves values are target-language expressions or null (spec part 4.5).
+    const value = attribute.value;
+    return value === null || (typeof value === "string" && decodeLiteral(value) === undefined)
       ? []
       : [wrongType(attribute, "an expression or null")];
   }

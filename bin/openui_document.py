@@ -397,7 +397,9 @@ def _contract_diagnostics(
     attribute: Attribute, declaration: Declaration, by_id: dict[str, Element]
 ) -> list[Diagnostic]:
     if declaration.value_type is None:
-        if attribute.value is None or isinstance(attribute.value, str):
+        # Produces and Behaves values are target-language expressions or null (spec part 4.5).
+        value = attribute.value
+        if value is None or (isinstance(value, str) and _decode_literal(value) is None):
             return []
         return [_wrong_type(attribute, "an expression or null")]
     return _fits(attribute, attribute.value, declaration.value_type, by_id)
