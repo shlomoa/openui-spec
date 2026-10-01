@@ -503,8 +503,9 @@ function decodeLiteral(value: string): string | undefined {
 }
 
 function attributeParts(key: string): [string | null, string] {
+  // The schema guarantees the key form, so a dot separates the category from the name.
   const [category, ...name] = key.split(".");
-  return ["uses", "produces", "behaves"].includes(category) ? [category, name.join(".")] : [null, key];
+  return name.length > 0 ? [category, name.join(".")] : [null, key];
 }
 
 function escapePointer(key: string): string {

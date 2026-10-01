@@ -488,13 +488,9 @@ def _decode_literal(value: str) -> str | None:
 
 
 def _attribute_parts(key: str) -> tuple[str | None, str]:
-    """Return an attribute's category and name after schema validation."""
+    """Return an attribute's category and name; the schema guarantees the key form."""
     category, separator, name = key.partition(".")
-    return (
-        (category, name)
-        if separator and category in {"uses", "produces", "behaves"}
-        else (None, key)
-    )
+    return (category, name) if separator else (None, key)
 
 
 def _escape(key: str) -> str:
