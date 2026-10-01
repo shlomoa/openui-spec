@@ -31,20 +31,18 @@ type_value = /"(?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-
 (* Attributes: key-value pairs. The key prefix names the attribute
    category: "uses." (input), "produces." (output) or "behaves."
    (behavior). A key without a prefix carries no category. The name is
-   camelCase alphanumeric. A value is a string, a number, true, false,
-   null, or a list of those. A string quoted inside the string is a
-   literal; an unquoted string is a binding or target-language
-   expression. null means the attribute is present without a value. *)
+   camelCase alphanumeric. A value is a string, null, or a list of
+   those. A string quoted inside the string is a literal; an unquoted
+   string is a binding or target-language expression. null means the
+   attribute is present without a value. *)
 attribute_list = attribute_pair { "," attribute_pair } ;
 attribute_pair = attr_key ":" attr_value ;
 attr_key = /"(?:(?:uses|produces|behaves)\.)?[a-z][A-Za-z0-9]*"/ ;
 attr_value = scalar_value | list_value ;
 list_value = "[" [ scalar_value { "," scalar_value } ] "]" ;
-scalar_value = string | number | boolean | null ;
+scalar_value = string | null ;
 
 ui_element_list = ui_element { "," ui_element } ;
 
 string = /"(?:[^"\\]|\\["\\\/bfnrt]|\\u[0-9a-fA-F]{4})*"/ ;
-number = /-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?/ ;
-boolean = "true" | "false" ;
 null = "null" ;
