@@ -136,6 +136,28 @@ class ModelTest(unittest.TestCase):
         [diagnostic] = validate_value(document)
         self.assertEqual(diagnostic.code, "contract/unresolved-reference")
 
+    def _behaves(self, element_type: str, key: str, value: object) -> dict[str, object]:
+        return {
+            "id": "root",
+            "version": default_catalog().version,
+            "type": "html",
+            "children": [{"id": "target", "type": element_type, "attrs": {key: value}}],
+        }
+
+    def test_a_quoted_literal_is_rejected_for_a_produces_or_behaves_attribute(self) -> None:
+        for element_type, key in (("Form", "behaves.submit"), ("Dialog", "produces.close")):
+            with self.subTest(key=key):
+                [diagnostic] = validate_value(self._behaves(element_type, key, '"Save"'))
+                self.assertEqual(diagnostic.code, "contract/wrong-value-type")
+                self.assertEqual(diagnostic.path, f"/children/0/attrs/{key}")
+                self.assertIn("must be an expression or null", diagnostic.message)
+
+    def test_an_expression_or_null_is_accepted_for_a_produces_or_behaves_attribute(self) -> None:
+        for element_type, key in (("Form", "behaves.submit"), ("Dialog", "produces.close")):
+            for value in ("save($event)", None):
+                with self.subTest(key=key, value=value):
+                    self.assertEqual(validate_value(self._behaves(element_type, key, value)), [])
+
     def test_a_value_type_splits_into_base_and_argument(self) -> None:
         self.assertEqual(value_type_parts("string"), ("string", None))
         self.assertEqual(value_type_parts("list(number)"), ("list", "number"))

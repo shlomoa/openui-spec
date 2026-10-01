@@ -37,6 +37,10 @@ published packages.
   for a wrong value (`uses.series must be list(number)`), or the item's own reference
   diagnostic. The conformance suite compares diagnostics as a list, so a diagnostic
   reported twice fails a case; it gains `list-items-wrong-type`.
+- The contract stage reports a quoted literal on a Produces or Behaves attribute as
+  `contract/wrong-value-type`, as spec part 4.5 requires (a Produces or Behaves value is a
+  target-language expression or `null`). Both validators accepted it before; the suite gains
+  `quoted-literal-for-behaves`.
 
 ## [0.11.1] - 2026-10-01
 
