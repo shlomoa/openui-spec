@@ -30,6 +30,9 @@ published packages.
   `value_type` production of the part 6.4 section grammar.
 - The Python and TypeScript validators no longer carry their own value-type pattern: they
   split a declared type structurally (`list(number)` is `list` and `number`).
+- The converter takes the id, type-name and attribute-key tokens of a scope line from
+  `openui.schema.json` instead of its own patterns, so a scope cannot declare a type no
+  document can use (`Foo-Bar-baz`). The generated catalog is unchanged.
 - The contract stage reports one diagnostic per list attribute: the declared list type
   for a wrong value (`uses.series must be list(number)`), or the item's own reference
   diagnostic. The conformance suite compares diagnostics as a list, so a diagnostic

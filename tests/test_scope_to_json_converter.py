@@ -1,9 +1,15 @@
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
 
 from spec.bin.to_json.converter import (
+    ATTRIBUTE_KEY_RE,
+    ID,
+    IDENTITY_RE,
+    TYPE_NAME,
+    VALUE_TYPE_RE,
     build_openui_document,
     build_scope_tree,
     main,
@@ -15,6 +21,95 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SPEC_DIR = REPO_ROOT / "spec"
 SCOPES_DIR = SPEC_DIR / "scopes"
 DIALOG_SCOPE = SCOPES_DIR / "Widgets" / "dialog.scope.md"
+
+
+def _schema_defs() -> dict:
+    return json.loads((SPEC_DIR / "openui.schema.json").read_text(encoding="utf-8"))["$defs"]
+
+
+class ScopeLineTokensTest(unittest.TestCase):
+    """A scope line writes the id, type and attribute-key tokens of a document."""
+
+    def test_types_are_the_documents_types(self) -> None:
+        document = re.compile(_schema_defs()["typeName"]["pattern"])
+        for text in (
+            "Dialog",
+            "html",
+            "ToolBar",
+            "nav-item",
+            "Foo-bar",
+            "Foo-Bar-baz",
+            "A-B-C",
+            "a-B",
+            "Foo-",
+            "9x",
+            "",
+        ):
+            with self.subTest(type=text):
+                self.assertEqual(
+                    bool(re.fullmatch(TYPE_NAME, text)), bool(document.fullmatch(text))
+                )
+
+    def test_ids_are_the_documents_ids(self) -> None:
+        document = re.compile(_schema_defs()["element"]["properties"]["id"]["pattern"])
+        for text in ("dialog", "toolBar", "x1", "Dialog", "1x", "a-b", ""):
+            with self.subTest(id=text):
+                self.assertEqual(bool(re.fullmatch(ID, text)), bool(document.fullmatch(text)))
+
+    def test_attribute_keys_are_the_documents_keys(self) -> None:
+        document = re.compile(_schema_defs()["attrs"]["propertyNames"]["pattern"])
+        for text in (
+            "uses.label",
+            "produces.activate",
+            "behaves.sort",
+            "label",
+            "uses.Label",
+            "x.label",
+            "uses.",
+        ):
+            with self.subTest(key=text):
+                self.assertEqual(
+                    bool(ATTRIBUTE_KEY_RE.fullmatch(text)), bool(document.fullmatch(text))
+                )
+
+    def test_an_identity_line_rejects_a_type_no_document_can_use(self) -> None:
+        line = "- id: dialog · type: {} · status: draft"
+        self.assertTrue(IDENTITY_RE.fullmatch(line.format("Dialog")))
+        self.assertFalse(IDENTITY_RE.fullmatch(line.format("Foo-Bar-baz")))
+
+    def test_value_types_the_scope_format_accepts(self) -> None:
+        for text in (
+            "string",
+            "boolean",
+            "integer",
+            "number",
+            "url",
+            "enum(a|b-c)",
+            "reference",
+            "reference(Route)",
+            "reference(Route|NavItem)",
+            "list(string)",
+            "list(enum(a|b))",
+            "list(reference(Route))",
+        ):
+            with self.subTest(accepted=text):
+                self.assertTrue(VALUE_TYPE_RE.fullmatch(text))
+        for text in (
+            "",
+            "String",
+            "list",
+            "list()",
+            "list(list(string))",
+            "enum",
+            "enum()",
+            "enum(A)",
+            "reference()",
+            "reference(Foo-Bar-baz)",
+            "foo(bar)",
+            "bar",
+        ):
+            with self.subTest(rejected=text):
+                self.assertFalse(VALUE_TYPE_RE.fullmatch(text))
 
 
 class ScopeToJsonConverterTest(unittest.TestCase):
