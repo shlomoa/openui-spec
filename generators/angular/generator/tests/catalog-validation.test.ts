@@ -59,11 +59,11 @@ test("keeps version grammar separate from catalog compatibility", () => {
   assert.doesNotThrow(() => validateOpenUiSpec(standaloneDocument));
   assert.throws(
     () => validateOpenUiSpec(standaloneDocument, { catalog: CATALOG }),
-    /root\.version: Root version '9\.8\.7' does not match catalog version '0\.3\.0'\./,
+    /\/version: document\/unsupported-version: Root version '9\.8\.7' does not match catalog version '0\.3\.0'\./,
   );
   assert.throws(
     () => validateOpenUiSpec({ ...standaloneDocument, version: "9.8" }),
-    /root\.version: Root version must use "major\.minor\.patch" format\./,
+    /\/version: grammar\/invalid-version: /,
   );
 });
 
@@ -74,7 +74,7 @@ test("requires exact catalog membership at the document root", () => {
   assert.doesNotThrow(() => validateOpenUiSpec(document));
   assert.throws(
     () => validateOpenUiSpec(document, { catalog }),
-    /root\.type: Unknown OpenUI object type 'WidgetExample'\./,
+    /\/type: catalog\/unknown-type: Unknown OpenUI object type 'WidgetExample'\./,
   );
 });
 

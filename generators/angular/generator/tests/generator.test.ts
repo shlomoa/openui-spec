@@ -210,7 +210,7 @@ test("rejects unknown non-native concrete input types during catalog validation"
     (error: unknown) => {
       assert.match(
         specValidationMessage(error),
-        /root\.children\[0\]\.type: Unknown OpenUI object type 'MissingWidget'\./,
+        /\/children\/0\/type: catalog\/unknown-type: Unknown OpenUI object type 'MissingWidget'\./,
       );
       return true;
     },

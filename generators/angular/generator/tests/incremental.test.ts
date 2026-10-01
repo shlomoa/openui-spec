@@ -540,7 +540,7 @@ test("validation failure is atomic — invalid root leaves existing workspace un
 
     await assert.rejects(
       generate(invalidInput, outDir),
-      /root\.id: Root id must be exactly "root"\./,
+      /\/id: grammar\/invalid-root-id: /,
     );
 
     for (const relativePath of initialEmittedPaths) {
