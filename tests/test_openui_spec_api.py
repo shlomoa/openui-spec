@@ -53,7 +53,9 @@ class OpenUiJsonTest(unittest.TestCase):
     def test_validate_uses_the_configured_schema(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             schema_path = Path(temporary_directory) / "schema.json"
-            schema = json.loads((REPO_ROOT / "spec" / "openui.schema.json").read_text(encoding="utf-8"))
+            schema = json.loads(
+                (REPO_ROOT / "spec" / "openui.schema.json").read_text(encoding="utf-8")
+            )
             schema["$defs"]["typeName"]["pattern"] = "^html$"
             schema_path.write_text(json.dumps(schema), encoding="utf-8")
 

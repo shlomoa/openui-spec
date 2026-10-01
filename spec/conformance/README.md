@@ -76,16 +76,16 @@ fails and reports `grammar/duplicate-member` while retaining object member pairs
 It then validates the decoded value against [`openui.schema.json`](../openui.schema.json).
 The remaining grammar codes map directly from JSON Schema keywords:
 
-| JSON Schema keyword | Diagnostic code |
-| ------------------- | --------------- |
-| `additionalProperties` | `grammar/unknown-property` |
-| `required` | `grammar/missing-property` |
-| `type` | `grammar/invalid-member-type` |
-| root `const` | `grammar/invalid-root-id` |
-| element `id` `pattern` | `grammar/invalid-id` |
+| JSON Schema keyword            | Diagnostic code                                   |
+| ------------------------------ | ------------------------------------------------- |
+| `additionalProperties`         | `grammar/unknown-property`                        |
+| `required`                     | `grammar/missing-property`                        |
+| `type`                         | `grammar/invalid-member-type`                     |
+| root `const`                   | `grammar/invalid-root-id`                         |
+| element `id` `pattern`         | `grammar/invalid-id`                              |
 | `type` and `version` `pattern` | `grammar/invalid-type`, `grammar/invalid-version` |
-| `propertyNames` `pattern` | `grammar/invalid-key` |
-| attribute `anyOf` | `grammar/invalid-attribute-value` |
+| `propertyNames` `pattern`      | `grammar/invalid-key`                             |
+| attribute `anyOf`              | `grammar/invalid-attribute-value`                 |
 
 This adapter preserves the diagnostic codes already defined by the suite; a
 future code change requires changing both the relevant expected diagnostic and

@@ -5,7 +5,7 @@ published packages.
 
 ## [0.11.1] - 2026-10-01
 
-### Tools
+### Schema-backed validation
 
 - The Python and TypeScript OpenUI JSON packages now validate the grammar with
   the bundled `openui.schema.json`. JSON decoding continues to report malformed
