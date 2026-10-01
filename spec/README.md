@@ -452,9 +452,8 @@ type. Descriptions and multiplicity are recorded in prose only and are not seria
 
 The converter translates this block into the patterns it matches the Identity, Attributes
 and Child model lines with ([6.1](#61-generation)); notation or a production it does not
-understand fails the build. The block leaves `lowercase_letter`, `letter`, `digit` and
-`character` undefined: the converter reads them as the ASCII classes `a`–`z`, `A`–`Z`,
-`0`–`9` and any character but a line break.
+understand fails the build. It also rejects a bullet in those sections that matches no line,
+and a Produces or Behaves line whose description starts with a value-type field.
 
 ```ebnf
 (* OpenUI leaf scope (*.scope.md) — machine-bearing section grammar.
@@ -510,6 +509,15 @@ child_type          = type_name ;
 status_value        = "draft" | "review" | "stable" ;
 attr_name           = camel_case ;
 camel_case          = lowercase_letter { letter | digit } ;
+letter              = lowercase_letter | uppercase_letter ;
+lowercase_letter    = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l"
+                    | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x"
+                    | "y" | "z" ;
+uppercase_letter    = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L"
+                    | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X"
+                    | "Y" | "Z" ;
+digit               = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+character           = ? any character except a line break ? ;
 object_title        = { character } ;
 description         = { character } ;             (* free prose; not interpreted *)
 prose_line          = ? any line that is not an identity / attribute / child line ? ;

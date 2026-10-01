@@ -9,7 +9,6 @@ from spec.bin.to_json import converter
 from spec.bin.to_json.converter import GRAMMAR, LEXICAL, build_scope_tree, parse_leaf_scope
 from spec.bin.to_json.ebnf_regex import Ebnf, EbnfError
 from spec.bin.to_json.section_grammar import (
-    BASIC_CLASSES,
     README_PATH,
     SPECIALS,
     SectionGrammar,
@@ -30,8 +29,10 @@ TYPE_NAMES = ("Dialog", "html", "ToolBar", "nav-item", "Foo-bar")
 PRODUCTIONS: dict[str, tuple[tuple[str, ...], tuple[str, ...]]] = {
     "WS": ((" ", "\t", "  \t "), ("", " ", "\x0b", "\n", "x")),
     "NL": (("",), ("\n", " ")),
-    "lowercase_letter": (("a", "z"), ("A", "1", "-", "ab", "")),
-    "digit": (("0", "9"), ("a", "-", "10", "")),
+    "lowercase_letter": (("a", "m", "z"), ("A", "1", "-", "é", "ab", "")),
+    "uppercase_letter": (("A", "M", "Z"), ("a", "1", "-", "É", "AB", "")),
+    "letter": (("a", "z", "A", "Z"), ("1", "-", "é", "ab", "")),
+    "digit": (("0", "5", "9"), ("a", "-", "٣", "10", "")),
     "character": (("a", "—", " "), ("\n", "\r", "ab")),
     "camel_case": (("dialog", "toolBar", "x1"), ("Dialog", "1x", "a-b", "")),
     "id_value": (("dialog", "toolBar"), ("Dialog", "a-b", "")),
@@ -200,8 +201,13 @@ class DerivedProductionsTest(unittest.TestCase):
     """Every production the converter reads accepts and rejects what part 6.4 states."""
 
     def test_the_cases_cover_every_production_the_converter_reads(self) -> None:
-        read = GRAMMAR.ebnf.reachable(*ROOTS)
-        self.assertEqual(read, set(PRODUCTIONS), "add a case for each production read")
+        # `camel_case` is the schema's token in the converter, but the block defines it too, so
+        # its classes are read from the block as well
+        own = Ebnf(BLOCK, tokens={"type_name": LEXICAL["type_name"]}, specials=SPECIALS)
+        self.assertEqual(
+            own.reachable(*ROOTS), set(PRODUCTIONS), "add a case for each production read"
+        )
+        self.assertLessEqual(GRAMMAR.ebnf.reachable(*ROOTS), set(PRODUCTIONS))
 
     def test_each_production_accepts_and_rejects_its_cases(self) -> None:
         for name, (accepted, rejected) in PRODUCTIONS.items():
@@ -256,7 +262,7 @@ class DerivedProductionsTest(unittest.TestCase):
 
     def test_the_block_defines_camel_case_as_the_schema_does(self) -> None:
         """The block's own definition agrees with the schema token that replaces it."""
-        own = Ebnf(BLOCK, tokens=BASIC_CLASSES, specials=SPECIALS).compile("camel_case")
+        own = Ebnf(BLOCK, specials=SPECIALS).compile("camel_case")
         schema = re.compile(LEXICAL["camel_case"])
         for text in ("dialog", "toolBar", "x1", "a", "Dialog", "1x", "a-b", "a_b", "", "aÉ"):
             self.assertEqual(bool(own.fullmatch(text)), bool(schema.fullmatch(text)), text)
@@ -372,6 +378,24 @@ class DerivationFollowsTheBlockTest(unittest.TestCase):
         self.assertTrue(GRAMMAR.value_type_re.fullmatch("enum(a-b)"))
         self.assertFalse(edited.value_type_re.fullmatch("enum(a-b)"))
         self.assertTrue(edited.value_type_re.fullmatch("enum(ab)"))
+
+    def test_a_changed_character_class_follows_the_block(self) -> None:
+        no_zero = _edited('"0" | "1" | "2"', '"1" | "2"')
+        self.assertTrue(GRAMMAR.value_type_re.fullmatch("enum(a0)"))
+        self.assertFalse(no_zero.value_type_re.fullmatch("enum(a0)"))
+        self.assertTrue(no_zero.value_type_re.fullmatch("enum(a1)"))
+        no_z = _edited('| "y" | "z" ;\nuppercase_letter', '| "y" ;\nuppercase_letter')
+        self.assertTrue(GRAMMAR.value_type_re.fullmatch("enum(z)"))
+        self.assertFalse(no_z.value_type_re.fullmatch("enum(z)"))
+        self.assertTrue(no_z.value_type_re.fullmatch("enum(y)"))
+        text = _scope_text(attributes="- `uses.v` — Uses — enum(a0|z) — x.\n")
+        self.assertTrue(_accepted(text, GRAMMAR))
+        self.assertFalse(_accepted(text, no_zero))
+        self.assertFalse(_accepted(text, no_z))
+
+    def test_a_changed_character_special_is_an_error(self) -> None:
+        with self.assertRaisesRegex(EbnfError, "has no pattern"):
+            _edited("? any character except a line break ?", "? any printable character ?")
 
     def test_a_changed_output_prefix_and_category_follow_the_block(self) -> None:
         edited = _edited(

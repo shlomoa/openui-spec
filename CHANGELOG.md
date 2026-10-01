@@ -39,6 +39,9 @@ published packages.
   it does not understand. The generated catalog is unchanged. Where the old hand-written
   patterns and part 6.4 differed in an edge case, 6.4 rules: an identity line takes no
   trailing white space, a separator is a space or a tab, and a description can be empty.
+  The block now defines the character classes it uses (`lowercase_letter`, `uppercase_letter`,
+  `letter`, `digit`, `character`), and part 6.4 states that the converter also rejects a
+  bullet that matches no line and a Produces or Behaves line that declares a value type.
 - The contract stage reports one diagnostic per list attribute: the declared list type
   for a wrong value (`uses.series must be list(number)`), or the item's own reference
   diagnostic. The conformance suite compares diagnostics as a list, so a diagnostic

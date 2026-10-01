@@ -5,11 +5,10 @@ Attributes and Child model) and of the value types. ``SectionGrammar`` translate
 with ``ebnf_regex`` and exposes the patterns the converter matches lines with. The converter
 names the productions it reads; every literal and every line shape comes from the block.
 
-Two kinds of symbol are not defined by the block, and are supplied to ``SectionGrammar``:
-
-- the lexical productions that part 6.4 defines by reference to ``openui.schema.json``
-  (``type_name`` and ``camel_case``) come from the schema, as the ``lexical`` argument;
-- the character classes the block uses but leaves implicit (``BASIC_CLASSES``).
+The lexical productions that part 6.4 defines by reference to ``openui.schema.json``
+(``type_name`` and ``camel_case``) come from the schema, as the ``lexical`` argument. Everything
+else, the character classes included, is defined by the block; its two ``? ... ?`` specials
+(``SPECIALS``) are the only prose the translator is given a pattern for.
 """
 
 from __future__ import annotations
@@ -20,16 +19,9 @@ from pathlib import Path
 
 from .ebnf_regex import Ebnf, EbnfError
 
-# Part 6.4 uses these four classes without defining them; they are ASCII, as in the schema.
-BASIC_CLASSES = {
-    "lowercase_letter": "[a-z]",
-    "letter": "[A-Za-z]",
-    "digit": "[0-9]",
-    "character": "[^\r\n]",
-}
-# `NL` is a line break. The converter matches one line at a time, so a line ends where the
-# line break would be.
-SPECIALS = {"line break": ""}
+# The two prose specials of the block. `NL` is a line break: the converter matches one line at a
+# time, so a line ends where the line break would be. `character` is any other character.
+SPECIALS = {"line break": "", "any character except a line break": "[^\r\n]"}
 
 # A Uses line writes its key prefix and category as terminals, so they are named by their text.
 USES_PREFIX = "uses."
@@ -72,7 +64,7 @@ class SectionGrammar:
 
     def __init__(self, block: str, *, lexical: Mapping[str, str]) -> None:
         self.block = block
-        self.ebnf = Ebnf(block, tokens={**BASIC_CLASSES, **lexical}, specials=SPECIALS)
+        self.ebnf = Ebnf(block, tokens=lexical, specials=SPECIALS)
         ebnf = self.ebnf
         self.type_name = lexical["type_name"]
 
