@@ -170,14 +170,47 @@ scope-tree shape. Fixtures that stand in for `input.json` must be valid concrete
 app documents and must not need catalog traceability fields such as
 `attrs.scopeDocument` on app nodes.
 
-The native parser should read and validate the OpenUI document shape for every
-input document:
+### Input check
 
-- document `version`, `id`, `type`, `attrs`, and `children`,
-- element id/type rules,
-- `attrs` keys and values (category-prefixed keys; typed values),
-- parent/child relationships, and
-- validation constraints documented in the spec.
+`validateOpenUiGeneratorInput` (`spec/validate-spec.ts`) is the check that
+`generate` and `validate` run on every `input.json` before any model is built.
+It runs in stages and stops at the first stage that reports a diagnostic:
+
+1. **Grammar.** `spec/document-schema.ts` validates the decoded document against
+   `spec/openui.schema.json`, the JSON Schema projection of `spec/EBNF.txt`, with
+   Ajv. The generator source carries no member list, pattern or value rule of the
+   document grammar: a change of the schema reaches the generator without a change
+   of its code. The schema is found by walking up from the generator's own module
+   to `spec/openui.schema.json`, as `spec/catalog-index.ts` finds `spec/openui.json`;
+   the generator runs inside this repository and is not published as a separate
+   package. The `ajv` dependency has the version of the `@shlomoa/openui-spec`
+   package, which runs the same schema.
+2. **Document.** Element ids are globally unique (`document/duplicate-id`).
+3. **Catalog.** The root `version` is the catalog's (`document/unsupported-version`)
+   and every `type` is a known object type of `spec/openui.json`
+   (`catalog/unknown-type`).
+
+A document that carries `attrs.scopeDocument` scope nodes (the catalog shape) also
+gets the scope coverage checks of `validateOpenUiCatalog`. The generator does not
+run the contract stage (declared value types and element references) of the
+packages.
+
+A failure is a `SpecValidationError` whose diagnostics have the `code` and the
+JSON Pointer `path` of the diagnostics of the packages (`src/document.ts`,
+`bin/openui_document.py`) and of the
+[conformance suite](../../../../spec/conformance/README.md#expected-diagnostics).
+The grammar codes map from schema keywords as the conformance
+[grammar diagnostic provenance](../../../../spec/conformance/README.md#grammar-diagnostic-provenance)
+table says; messages are free text and differ from the packages'. The scope coverage
+diagnostics exist only in the generator, so they carry no `code` and a `scope[i]`
+path.
+
+Differences from the packages' grammar stage:
+
+- The input check receives the document `loadOpenUiDocument` decoded with
+  `JSON.parse`. Text that is not JSON (`grammar/json-syntax`) fails in the loader.
+  A repeated object member (`grammar/duplicate-member`) is invisible in a decoded
+  value, and the loader does not detect it: the generator reads the last member.
 
 Catalog-specific validation should verify catalog data derived from prose:
 
@@ -211,6 +244,7 @@ generators/angular/
 │  │  ├─ spec/
 │  │  │  ├─ catalog-index.ts
 │  │  │  ├─ diagnostics.ts
+│  │  │  ├─ document-schema.ts
 │  │  │  ├─ load-spec.ts
 │  │  │  ├─ openui-spec.types.ts
 │  │  │  ├─ openui-sections.ts
@@ -243,6 +277,7 @@ generators/angular/
 │  │  │  └─ minimal-openui.json
 │  │  ├─ catalog-validation.test.ts
 │  │  ├─ classifier.test.ts
+│  │  ├─ conformance.test.ts
 │  │  ├─ generator.test.ts
 │  │  ├─ incremental.test.ts
 │  │  ├─ logger.test.ts
@@ -257,39 +292,41 @@ specification layer.
 
 ## Module responsibilities
 
-| Module                              | Current responsibility                                                                                                                                                                                      |
-| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `main.ts`                           | Parses `generate` and `validate` commands, loads and validates native OpenUI JSON, emits the project, and reconciles it incrementally into the workspace.                                                   |
-| `spec/load-spec.ts`                 | Reads JSON and parses it into the native OpenUI document type.                                                                                                                                              |
-| `spec/openui-spec.types.ts`         | Defines the native OpenUI `id` / `type` / `attrs` / `children` input contract.                                                                                                                              |
-| `spec/catalog-index.ts`             | Indexes only literal `type` values from the generated catalog for exact concrete-input membership checks.                                                                                                   |
-| `spec/openui-sections.ts`           | Provides catalog helpers for scoped OpenUI nodes that carry `attrs.scopeDocument` traceability in the generated catalog tree.                                                                               |
-| `spec/validate-spec.ts`             | Fails early for malformed OpenUI node data and compliance-rule synchronization gaps.                                                                                                                        |
-| `spec/diagnostics.ts`               | Defines validation diagnostic and error reporting types.                                                                                                                                                    |
-| `data-model/normalize-spec.ts`      | Converts native scope IDs into routes, summaries, and feature flags.                                                                                                                                        |
-| `data-model/build-data-model.ts`    | Builds the implementation-independent `DataModelApplication` from catalog scope trees or concrete app documents; concrete dialog regions use stable ids with known semantic types.                          |
-| `data-model/data-model.ts`          | Defines implementation-independent application, page, feature, theme-token, and dialog-component model types.                                                                                               |
-| `generation/angular-model.ts`       | Defines Angular-specific project, page, application-structure, internationalization, and extension model types.                                                                                             |
-| `generation/map-to-angular.ts`      | Maps `DataModelApplication` pages and features into an `AngularProjectModel`.                                                                                                                               |
-| `generation/emit-*.ts`              | Emits Angular project files, routes, global theme styles, optional project-level support files, and standalone page component triplets.                                                                     |
-| `generation/angular-paths.ts`       | Centralizes the generated page directory, file, and import-path naming conventions used by the emitters.                                                                                                    |
-| `generation/import-collector.ts`    | Accumulates and de-duplicates Angular import symbols per module, emitting sorted `import` statements.                                                                                                       |
-| `generation/typescript-literals.ts` | Renders data values as TypeScript object, indented, and string-array literals for embedding in emitted source.                                                                                              |
-| `generation/emit-utils.ts`          | Shared HTML and TypeScript string-escaping helpers for the emitters.                                                                                                                                        |
-| `writers/file-writer.ts`            | Defines the `GeneratedFile` record shape shared by the emitters and the incremental apply layer.                                                                                                            |
-| `generation/classifier.ts`          | Indexes generated component, page, and known application-level manifestations and classifies a workspace folder/file back to the input node or application artifact that owns it.                           |
-| `generation/workspace-index.ts`     | Reads an existing workspace into a path→content index, ignoring `node_modules`/`dist`/`.git`/`.angular`; a missing directory is an empty workspace.                                                         |
-| `generation/reconcile.ts`           | Classifies emitted files against the existing workspace and plans per-file Add / Match / Modify / Delete actions for the incremental generate flow.                                                         |
-| `generation/apply.ts`               | Applies a reconciliation plan: writes Add/Modify files, removes Delete files, and leaves Match files untouched.                                                                                             |
-| `generation/generate.ts`            | Orchestrates the incremental pipeline: emit, index the workspace, reconcile, and apply, degrading to generation from scratch for an empty workspace.                                                        |
-| `logging/`                          | Provides structured logger helpers and CLI logging behavior.                                                                                                                                                |
-| `tests/classifier.test.ts`          | Verifies the incremental classifier maps generated component fixtures, full-output routed page files, and application-level project files to the expected ownership classification.                         |
-| `tests/reconcile.test.ts`           | Verifies the reconciler's Add / Match / Modify / Delete decisions against the incremental fixtures, including parent re-wiring and from-scratch.                                                            |
-| `tests/incremental.test.ts`         | Verifies end-to-end incremental flow: from-scratch Add, no-op Match, Add/Delete/Modify changes, validation atomicity, ignored workspace dirs, full-output planning, and out-of-tree write/delete rejection. |
-| `tests/generator.test.ts`           | Verifies CLI generation, Angular Material dependencies, routes, feature-specific page output, and compliance validation diagnostics.                                                                        |
-| `tests/logger.test.ts`              | Verifies logger formatting and log-level behavior.                                                                                                                                                          |
-| `tests/main-logging.test.ts`        | Verifies CLI logging output and verbosity behavior.                                                                                                                                                         |
-| `tests/catalog-validation.test.ts`  | Verifies exact literal catalog membership, rejection of aliases/selectors/pseudo-types, root coverage, and flexible known-type instances.                                                                   |
+| Module                              | Current responsibility                                                                                                                                                                                                                                                                          |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `main.ts`                           | Parses `generate` and `validate` commands, loads and validates native OpenUI JSON, emits the project, and reconciles it incrementally into the workspace.                                                                                                                                       |
+| `spec/load-spec.ts`                 | Reads JSON and parses it into the native OpenUI document type.                                                                                                                                                                                                                                  |
+| `spec/openui-spec.types.ts`         | Defines the native OpenUI `id` / `type` / `attrs` / `children` input contract.                                                                                                                                                                                                                  |
+| `spec/catalog-index.ts`             | Indexes only literal `type` values from the generated catalog for exact concrete-input membership checks.                                                                                                                                                                                       |
+| `spec/openui-sections.ts`           | Provides catalog helpers for scoped OpenUI nodes that carry `attrs.scopeDocument` traceability in the generated catalog tree.                                                                                                                                                                   |
+| `spec/validate-spec.ts`             | The input check: runs the grammar, document and catalog stages (see [Input check](#input-check)) and fails early with `SpecValidationError`, and the catalog-mode scope coverage checks.                                                                                                        |
+| `spec/document-schema.ts`           | Validates a decoded document against `spec/openui.schema.json` and maps schema errors to grammar diagnostics; holds no grammar rule of its own.                                                                                                                                                 |
+| `spec/diagnostics.ts`               | Defines the validation diagnostic (`code`, JSON Pointer `path`, `message`) and error types.                                                                                                                                                                                                     |
+| `data-model/normalize-spec.ts`      | Converts native scope IDs into routes, summaries, and feature flags.                                                                                                                                                                                                                            |
+| `data-model/build-data-model.ts`    | Builds the implementation-independent `DataModelApplication` from catalog scope trees or concrete app documents; concrete dialog regions use stable ids with known semantic types.                                                                                                              |
+| `data-model/data-model.ts`          | Defines implementation-independent application, page, feature, theme-token, and dialog-component model types.                                                                                                                                                                                   |
+| `generation/angular-model.ts`       | Defines Angular-specific project, page, application-structure, internationalization, and extension model types.                                                                                                                                                                                 |
+| `generation/map-to-angular.ts`      | Maps `DataModelApplication` pages and features into an `AngularProjectModel`.                                                                                                                                                                                                                   |
+| `generation/emit-*.ts`              | Emits Angular project files, routes, global theme styles, optional project-level support files, and standalone page component triplets.                                                                                                                                                         |
+| `generation/angular-paths.ts`       | Centralizes the generated page directory, file, and import-path naming conventions used by the emitters.                                                                                                                                                                                        |
+| `generation/import-collector.ts`    | Accumulates and de-duplicates Angular import symbols per module, emitting sorted `import` statements.                                                                                                                                                                                           |
+| `generation/typescript-literals.ts` | Renders data values as TypeScript object, indented, and string-array literals for embedding in emitted source.                                                                                                                                                                                  |
+| `generation/emit-utils.ts`          | Shared HTML and TypeScript string-escaping helpers for the emitters.                                                                                                                                                                                                                            |
+| `writers/file-writer.ts`            | Defines the `GeneratedFile` record shape shared by the emitters and the incremental apply layer.                                                                                                                                                                                                |
+| `generation/classifier.ts`          | Indexes generated component, page, and known application-level manifestations and classifies a workspace folder/file back to the input node or application artifact that owns it.                                                                                                               |
+| `generation/workspace-index.ts`     | Reads an existing workspace into a path→content index, ignoring `node_modules`/`dist`/`.git`/`.angular`; a missing directory is an empty workspace.                                                                                                                                             |
+| `generation/reconcile.ts`           | Classifies emitted files against the existing workspace and plans per-file Add / Match / Modify / Delete actions for the incremental generate flow.                                                                                                                                             |
+| `generation/apply.ts`               | Applies a reconciliation plan: writes Add/Modify files, removes Delete files, and leaves Match files untouched.                                                                                                                                                                                 |
+| `generation/generate.ts`            | Orchestrates the incremental pipeline: emit, index the workspace, reconcile, and apply, degrading to generation from scratch for an empty workspace.                                                                                                                                            |
+| `logging/`                          | Provides structured logger helpers and CLI logging behavior.                                                                                                                                                                                                                                    |
+| `tests/classifier.test.ts`          | Verifies the incremental classifier maps generated component fixtures, full-output routed page files, and application-level project files to the expected ownership classification.                                                                                                             |
+| `tests/reconcile.test.ts`           | Verifies the reconciler's Add / Match / Modify / Delete decisions against the incremental fixtures, including parent re-wiring and from-scratch.                                                                                                                                                |
+| `tests/incremental.test.ts`         | Verifies end-to-end incremental flow: from-scratch Add, no-op Match, Add/Delete/Modify changes, validation atomicity, ignored workspace dirs, full-output planning, and out-of-tree write/delete rejection.                                                                                     |
+| `tests/conformance.test.ts`         | Verifies that the input check accepts every valid conformance document and rejects, with the expected `code` and `path`, every invalid one that the grammar stage rejects, except the repeated-member case (see [Input check](#input-check)), and the document and catalog cases it implements. |
+| `tests/generator.test.ts`           | Verifies CLI generation, Angular Material dependencies, routes, feature-specific page output, and compliance validation diagnostics.                                                                                                                                                            |
+| `tests/logger.test.ts`              | Verifies logger formatting and log-level behavior.                                                                                                                                                                                                                                              |
+| `tests/main-logging.test.ts`        | Verifies CLI logging output and verbosity behavior.                                                                                                                                                                                                                                             |
+| `tests/catalog-validation.test.ts`  | Verifies exact literal catalog membership, rejection of aliases/selectors/pseudo-types, root coverage, and flexible known-type instances.                                                                                                                                                       |
 
 ## Core design rule
 
@@ -664,7 +701,7 @@ Current catalog/scope-tree regression coverage:
 | builds the data model from catalog scope-tree OpenUI nodes                    | `buildDataModel` produces the expected `DataModelApplication` name, version, and ordered pages for catalog regression coverage.                                      |
 | generates an Angular Material standalone app from catalog scope-tree OpenUI   | The `generate` CLI emits the expected Angular project skeleton and Angular Material dependencies for catalog regression coverage.                                    |
 | generates scope-specific Angular Material details from the catalog tree       | Feature-specific page output (structure, layout, i18n, extension, etc.) is emitted per catalog scope.                                                                |
-| validates canonical root values, attrs, and scoped document uniqueness        | `validateOpenUiSpec` raises `SpecValidationError` for malformed root values and duplicate scopes.                                                                    |
+| validates canonical root values, attrs, and scoped document uniqueness        | `validateOpenUiSpec` raises `SpecValidationError` for malformed root values and duplicate scopes; the document rules come from `spec/openui.schema.json`.            |
 | full-pipeline incremental acceptance scenarios                                | `generate` covers from-scratch Add, no-op Match, incremental Add/Delete/Modify, validation atomicity, ignored workspace directories, and direct comparator planning. |
 
 Required concrete `input.json` acceptance coverage:

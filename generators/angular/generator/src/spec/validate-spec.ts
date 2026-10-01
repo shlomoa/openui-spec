@@ -2,23 +2,19 @@ import { createCatalogIndex, OpenUiCatalogIndex } from "./catalog-index";
 import { extractOpenUiScopeNodes } from "./openui-sections";
 import type { OpenUiDocument, OpenUiElement } from "./openui-spec.types";
 import { type Diagnostic, SpecValidationError } from "./diagnostics";
+import { grammarDiagnostics } from "./document-schema";
 
 export interface ValidateOpenUiSpecOptions {
   catalog?: OpenUiCatalogIndex | OpenUiDocument;
   mode?: "input" | "catalog";
 }
 
-const ROOT_KEYS = new Set(["version", "id", "type", "attrs", "children"]);
-const ELEMENT_KEYS = new Set(["id", "type", "attrs", "children"]);
-const ID_PATTERN = /^[a-z][A-Za-z0-9]*$/;
-const VERSION_PATTERN = /^[0-9]+\.[0-9]+\.[0-9]+$/;
-const KEBAB_TYPE_PATTERN = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
-const PASCAL_TYPE_PATTERN = /^[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?$/;
-const ATTR_KEY_PATTERN = /^(?:(?:uses|produces|behaves)\.)?[a-z][A-Za-z0-9]*$/;
-
 export function validateOpenUiSpec(document: OpenUiDocument, options: ValidateOpenUiSpecOptions = {}): void {
-  const diagnostics: Diagnostic[] = [];
-  validateElement(document, "root", true, new Set<string>(), diagnostics);
+  // The grammar stage stops the later stages: they need a well-formed document.
+  const diagnostics = grammarDiagnostics(document);
+  if (diagnostics.length === 0) {
+    validateUniqueIds(document, "", new Set<string>(), diagnostics);
+  }
 
   if (diagnostics.length === 0 && options.mode === "catalog") {
     validateScopeCoverage(document, diagnostics);
@@ -54,84 +50,15 @@ export function validateOpenUiGeneratorInput(
   validateOpenUiSpec(document, { catalog });
 }
 
-function validateElement(
-  value: unknown,
-  path: string,
-  isRoot: boolean,
-  seenIds: Set<string>,
-  diagnostics: Diagnostic[],
-): void {
-  if (!isRecord(value)) {
-    diagnostics.push({ path, message: "Expected an OpenUI element object." });
-    return;
+function validateUniqueIds(node: OpenUiElement, pointer: string, seenIds: Set<string>, diagnostics: Diagnostic[]): void {
+  if (seenIds.has(node.id)) {
+    diagnostics.push({ code: "document/duplicate-id", path: `${pointer}/id`, message: `Duplicate element id '${node.id}'.` });
   }
+  seenIds.add(node.id);
 
-  const allowedKeys = isRoot ? ROOT_KEYS : ELEMENT_KEYS;
-  for (const key of Object.keys(value)) {
-    if (!allowedKeys.has(key)) {
-      diagnostics.push({
-        path: `${path}.${key}`,
-        message: "Loose properties are not allowed; put non-structural data under attrs.",
-      });
-    }
-  }
-
-  if (isRoot && (typeof value.version !== "string" || !VERSION_PATTERN.test(value.version))) {
-    diagnostics.push({ path: `${path}.version`, message: 'Root version must use "major.minor.patch" format.' });
-  }
-  if (isRoot && value.id !== "root") {
-    diagnostics.push({ path: `${path}.id`, message: 'Root id must be exactly "root".' });
-  }
-
-  if (typeof value.id !== "string") {
-    diagnostics.push({ path: `${path}.id`, message: "Element id is required." });
-  } else {
-    if (!ID_PATTERN.test(value.id)) {
-      diagnostics.push({ path: `${path}.id`, message: `Element id '${value.id}' must be camelCase alphanumeric.` });
-    }
-    if (seenIds.has(value.id)) {
-      diagnostics.push({ path: `${path}.id`, message: `Duplicate element id '${value.id}'.` });
-    }
-    seenIds.add(value.id);
-  }
-
-  if (typeof value.type !== "string") {
-    diagnostics.push({ path: `${path}.type`, message: "Element type is required." });
-  } else if (!isValidType(value.type)) {
-    diagnostics.push({ path: `${path}.type`, message: `Element type '${value.type}' is not a valid OpenUI type.` });
-  }
-
-  if (value.attrs !== undefined) {
-    if (!isRecord(value.attrs)) {
-      diagnostics.push({ path: `${path}.attrs`, message: "attrs must be an object." });
-    } else {
-      for (const [key, attrValue] of Object.entries(value.attrs)) {
-        if (!ATTR_KEY_PATTERN.test(key)) {
-          diagnostics.push({
-            path: `${path}.attrs.${key}`,
-            message: "Attribute keys must be uses.<name>, produces.<name>, behaves.<name> or a camelCase <name>.",
-          });
-        }
-        const items = Array.isArray(attrValue) ? attrValue : [attrValue];
-        if (!items.every(isAttributeScalar)) {
-          diagnostics.push({
-            path: `${path}.attrs.${key}`,
-            message: "Attribute values must be strings, null, or lists of these.",
-          });
-        }
-      }
-    }
-  }
-
-  if (value.children !== undefined) {
-    if (!Array.isArray(value.children)) {
-      diagnostics.push({ path: `${path}.children`, message: "children must be an array." });
-      return;
-    }
-    value.children.forEach((child, index) =>
-      validateElement(child, `${path}.children[${index}]`, false, seenIds, diagnostics),
-    );
-  }
+  (node.children ?? []).forEach((child, index) =>
+    validateUniqueIds(child, `${pointer}/children/${index}`, seenIds, diagnostics),
+  );
 }
 
 function validateScopeCoverage(document: OpenUiDocument, diagnostics: Diagnostic[]): void {
@@ -167,7 +94,7 @@ function validateCatalogReferences(
   catalog: OpenUiCatalogIndex,
   diagnostics: Diagnostic[],
 ): void {
-  validateCatalogReference(node, "root", catalog, diagnostics);
+  validateCatalogReference(node, "", catalog, diagnostics);
 }
 
 function validateCatalogVersion(
@@ -177,7 +104,8 @@ function validateCatalogVersion(
 ): void {
   if (document.version !== catalog.version) {
     diagnostics.push({
-      path: "root.version",
+      code: "document/unsupported-version",
+      path: "/version",
       message: `Root version '${document.version}' does not match catalog version '${catalog.version}'.`,
     });
   }
@@ -190,26 +118,14 @@ function validateCatalogReference(
   diagnostics: Diagnostic[],
 ): void {
   if (!catalog.hasType(node.type)) {
-    diagnostics.push({ path: `${path}.type`, message: `Unknown OpenUI object type '${node.type}'.` });
+    diagnostics.push({ code: "catalog/unknown-type", path: `${path}/type`, message: `Unknown OpenUI object type '${node.type}'.` });
   }
 
   (node.children ?? []).forEach((child, index) =>
-    validateCatalogReference(child, `${path}.children[${index}]`, catalog, diagnostics),
+    validateCatalogReference(child, `${path}/children/${index}`, catalog, diagnostics),
   );
 }
 
 function toCatalogIndex(catalog: OpenUiCatalogIndex | OpenUiDocument): OpenUiCatalogIndex {
   return catalog instanceof OpenUiCatalogIndex ? catalog : createCatalogIndex(catalog);
-}
-
-function isValidType(type: string): boolean {
-  return KEBAB_TYPE_PATTERN.test(type) || PASCAL_TYPE_PATTERN.test(type);
-}
-
-function isAttributeScalar(value: unknown): boolean {
-  return value === null || typeof value === "string";
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
 }

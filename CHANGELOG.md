@@ -38,6 +38,18 @@ published packages.
   diagnostic. The conformance suite compares diagnostics as a list, so a diagnostic
   reported twice fails a case; it gains `list-items-wrong-type`.
 
+### Generator input check
+
+- The Angular generator's input check no longer carries its own copy of the document
+  grammar (the member lists, the id, version, type-name and attribute-key patterns and
+  the attribute value check). It validates the document against `spec/openui.schema.json`
+  with Ajv, so a schema change reaches the generator without a code change, and its
+  diagnostics have the `code` and JSON Pointer `path` of the packages' diagnostics.
+  Generation of valid documents is unchanged. The generator tests run the conformance
+  cases the grammar stage rejects; a repeated object member
+  (`grammar/duplicate-member`) is not detected, as the generator reads a decoded
+  document (see `generators/angular/generator/docs/GENERATION.md`).
+
 ## [0.11.1] - 2026-10-01
 
 ### Schema-backed validation
