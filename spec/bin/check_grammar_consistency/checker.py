@@ -29,6 +29,42 @@ REQUIRED_README_STATEMENTS = (
 CONFORMANCE_DIR = SPEC_DIR / "conformance"
 GRAMMAR_CODE_PREFIX = "grammar/"
 
+# Declared value types the grammar and the schema must treat the same way, besides every
+# type the catalog declares. Samples carry no whitespace: TatSu skips it between tokens.
+VALUE_TYPES_ACCEPTED = (
+    "string",
+    "boolean",
+    "integer",
+    "number",
+    "url",
+    "enum(a|b-c)",
+    "reference",
+    "reference(Route)",
+    "reference(Route|NavItem)",
+    "reference(html)",
+    "list(string)",
+    "list(enum(a|b))",
+    "list(reference(Route))",
+)
+VALUE_TYPES_REJECTED = (
+    "",
+    "String",
+    "list",
+    "list()",
+    "list(list(string))",
+    "enum",
+    "enum()",
+    "enum(A)",
+    "enum(a|)",
+    "reference()",
+    "reference(Route|)",
+    "reference(1x)",
+    "foo(bar)",
+    "bar",
+    "string)",
+    "(string)",
+)
+
 
 def grammar_cases() -> dict[str, tuple[str, bool]]:
     """Return each conformance case as (document text, whether the grammar accepts it).
@@ -69,6 +105,38 @@ def ebnf_accepts(text: str, grammar: str) -> bool:
     return not diagnostics and not grammar_diagnostics(value)
 
 
+def value_type_ebnf_accepts(text: str, grammar: str) -> bool:
+    """Return whether the whole of text is a `value_type` of the EBNF."""
+    try:
+        parse(f"{grammar}\nvalue_type_text = value_type $ ;\n", text, start="value_type_text")
+    except FailedParse:
+        return False
+    return True
+
+
+def value_type_schema_accepts(text: str, schema: dict) -> bool:
+    """Return whether text satisfies `$defs/valueType` of the schema."""
+    validator = Draft202012Validator({"$ref": "#/$defs/valueType", "$defs": schema["$defs"]})
+    return not any(validator.iter_errors(text))
+
+
+def declared_value_types(catalog: dict) -> list[str]:
+    """Return every value type a Uses attribute of the catalog declares."""
+    found: list[str] = []
+
+    def visit(node: dict) -> None:
+        found.extend(
+            value
+            for key, value in (node.get("attrs") or {}).items()
+            if key.startswith("uses.") and isinstance(value, str)
+        )
+        for child in node.get("children", []):
+            visit(child)
+
+    visit(catalog)
+    return sorted(set(found))
+
+
 def schema_accepts(text: str, validator: Draft202012Validator) -> bool:
     """Return whether text is JSON without duplicate members and satisfies the schema."""
     value, diagnostics = decode(text)
@@ -103,6 +171,19 @@ def check() -> None:
         raise AssertionError("spec/openui.json does not satisfy spec/openui.schema.json")
 
     catalog = json.loads(catalog_text)
+    value_type_cases = {
+        **{text: True for text in (*VALUE_TYPES_ACCEPTED, *declared_value_types(catalog))},
+        **{text: False for text in VALUE_TYPES_REJECTED},
+    }
+    for text, expected in value_type_cases.items():
+        ebnf_result = value_type_ebnf_accepts(text, grammar)
+        schema_result = value_type_schema_accepts(text, schema)
+        if ebnf_result != expected or schema_result != expected:
+            raise AssertionError(
+                f"value type {text!r}: expected {expected}, EBNF={ebnf_result}, "
+                f"schema={schema_result}"
+            )
+
     generated_catalog = build_openui_document(spec_dir=SPEC_DIR)
     if catalog != generated_catalog:
         raise AssertionError(

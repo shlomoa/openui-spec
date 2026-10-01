@@ -18,6 +18,7 @@ export {
   parse,
   validate,
   validateText,
+  valueTypeParts,
 } from "./document";
 
 export type JsonObject = Record<string, any>;

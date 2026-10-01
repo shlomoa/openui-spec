@@ -11,6 +11,7 @@ import {
   parse,
   validate,
   validateText,
+  valueTypeParts,
 } from "../src/index";
 
 const REPO_ROOT = path.resolve(__dirname, "..", "..");
@@ -107,4 +108,45 @@ test("the catalog and every worked example validate", () => {
 test("a custom catalog sets the supported version", () => {
   const catalog = Catalog.fromValue({ id: "root", version: "9.9.9", type: "html" });
   assert.deepEqual(validate(parse('{"id": "root", "version": "9.9.9", "type": "html"}'), catalog), []);
+});
+
+function chart(series: unknown): Record<string, unknown> {
+  return {
+    id: "root",
+    version: defaultCatalog().version,
+    type: "html",
+    children: [{ id: "sales", type: "Chart", attrs: { "uses.series": series } }],
+  };
+}
+
+test("a list attribute reports one diagnostic naming the declared type", () => {
+  for (const series of [['"1"', '"2"'], ['"1"', null, '"3"']]) {
+    const diagnostics = validateText(JSON.stringify(chart(series)));
+    assert.equal(diagnostics.length, 1);
+    assert.equal(diagnostics[0].code, "contract/wrong-value-type");
+    assert.equal(diagnostics[0].path, "/children/0/attrs/uses.series");
+    assert.match(diagnostics[0].message, /must be list\(number\)/);
+  }
+});
+
+test("a list reference keeps its own diagnostic once", () => {
+  const document = chart(null);
+  document.children = [
+    { id: "inputs", type: "InputAssistance", attrs: { "uses.target": '"missing"', "uses.suggestions": ["a", "b"] } },
+  ];
+  const diagnostics = validateText(JSON.stringify(document));
+  assert.deepEqual(diagnostics.map((item) => item.code), ["contract/unresolved-reference"]);
+});
+
+test("a catalog rejects a declared type that is not a value type", () => {
+  const catalog = JSON.parse(readFileSync(path.join(REPO_ROOT, "spec", "openui.json"), "utf8"));
+  catalog.attrs = { "uses.count": "foo(bar)" };
+  assert.throws(() => Catalog.fromValue(catalog), /not a value type/);
+});
+
+test("a value type splits into base and argument", () => {
+  assert.deepEqual(valueTypeParts("string"), ["string", undefined]);
+  assert.deepEqual(valueTypeParts("list(number)"), ["list", "number"]);
+  assert.deepEqual(valueTypeParts("reference(A|B)"), ["reference", "A|B"]);
+  assert.deepEqual(valueTypeParts("list(enum(a|b))"), ["list", "enum(a|b)"]);
 });

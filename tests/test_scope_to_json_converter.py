@@ -4,10 +4,12 @@ import unittest
 from pathlib import Path
 
 from spec.bin.to_json.converter import (
+    VALUE_TYPE_RE,
     build_openui_document,
     build_scope_tree,
     main,
     parse_leaf_scope,
+    reference_types,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -17,6 +19,16 @@ DIALOG_SCOPE = SCOPES_DIR / "Widgets" / "dialog.scope.md"
 
 
 class ScopeToJsonConverterTest(unittest.TestCase):
+    def test_value_type_pattern_is_the_schemas(self) -> None:
+        schema = json.loads((SPEC_DIR / "openui.schema.json").read_text(encoding="utf-8"))
+        self.assertEqual(VALUE_TYPE_RE.pattern, schema["$defs"]["valueType"]["pattern"])
+
+    def test_reference_types_name_the_elements_a_value_type_references(self) -> None:
+        self.assertEqual(reference_types("reference"), [])
+        self.assertEqual(reference_types("reference(A|B)"), ["A", "B"])
+        self.assertEqual(reference_types("list(reference(Route))"), ["Route"])
+        self.assertEqual(reference_types("list(string)"), [])
+
     def test_parse_leaf_scope_emits_scope_node_and_instance_contract(self) -> None:
         node = parse_leaf_scope(DIALOG_SCOPE, scopes_dir=SCOPES_DIR)
 

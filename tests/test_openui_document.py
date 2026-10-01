@@ -14,6 +14,7 @@ from bin.openui_document import (
     validate,
     validate_text,
     validate_value,
+    value_type_parts,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -22,8 +23,8 @@ EXAMPLES_DIR = REPO_ROOT / "spec" / "examples"
 EXPECTED_SUFFIX = ".expected.json"
 
 
-def _pairs(diagnostics: list) -> set[tuple[str, str]]:
-    return {(diagnostic.code, diagnostic.path) for diagnostic in diagnostics}
+def _pairs(diagnostics: list) -> list[tuple[str, str]]:
+    return sorted((diagnostic.code, diagnostic.path) for diagnostic in diagnostics)
 
 
 class ConformanceSuiteTest(unittest.TestCase):
@@ -41,7 +42,7 @@ class ConformanceSuiteTest(unittest.TestCase):
             with self.subTest(case=path.name):
                 self.assertEqual(
                     _pairs(validate_text(path.read_text(encoding="utf-8"))),
-                    {(item["code"], item["path"]) for item in expected},
+                    sorted((item["code"], item["path"]) for item in expected),
                 )
 
 
@@ -85,7 +86,7 @@ class ModelTest(unittest.TestCase):
         with self.assertRaises(OpenUiParseError) as raised:
             parse('{"id": "root", "type": "html"}')
         self.assertEqual(
-            _pairs(raised.exception.diagnostics), {("grammar/missing-property", "/version")}
+            _pairs(raised.exception.diagnostics), [("grammar/missing-property", "/version")]
         )
 
     def test_catalog_contracts_cover_scope_and_instance_types(self) -> None:
@@ -107,11 +108,51 @@ class ModelTest(unittest.TestCase):
         document = parse('{"id": "root", "version": "9.9.9", "type": "html"}')
         self.assertEqual(validate(document, catalog), [])
 
+    def _chart(self, series: object) -> dict[str, object]:
+        return {
+            "id": "root",
+            "version": default_catalog().version,
+            "type": "html",
+            "children": [{"id": "sales", "type": "Chart", "attrs": {"uses.series": series}}],
+        }
+
+    def test_a_list_attribute_reports_one_diagnostic_naming_the_declared_type(self) -> None:
+        for series in (['"1"', '"2"'], ['"1"', None, '"3"']):
+            with self.subTest(series=series):
+                [diagnostic] = validate_value(self._chart(series))
+                self.assertEqual(diagnostic.code, "contract/wrong-value-type")
+                self.assertEqual(diagnostic.path, "/children/0/attrs/uses.series")
+                self.assertIn("must be list(number)", diagnostic.message)
+
+    def test_a_list_reference_keeps_its_own_diagnostic_once(self) -> None:
+        document = self._chart(None)
+        document["children"] = [
+            {
+                "id": "inputs",
+                "type": "InputAssistance",
+                "attrs": {"uses.target": '"missing"', "uses.suggestions": ["a", "b"]},
+            }
+        ]
+        [diagnostic] = validate_value(document)
+        self.assertEqual(diagnostic.code, "contract/unresolved-reference")
+
+    def test_a_catalog_rejects_a_declared_type_that_is_not_a_value_type(self) -> None:
+        catalog = json.loads((REPO_ROOT / "spec" / "openui.json").read_text(encoding="utf-8"))
+        catalog["attrs"] = {"uses.count": "foo(bar)"}
+        with self.assertRaisesRegex(ValueError, "not a value type"):
+            Catalog.from_value(catalog)
+
+    def test_a_value_type_splits_into_base_and_argument(self) -> None:
+        self.assertEqual(value_type_parts("string"), ("string", None))
+        self.assertEqual(value_type_parts("list(number)"), ("list", "number"))
+        self.assertEqual(value_type_parts("reference(A|B)"), ("reference", "A|B"))
+        self.assertEqual(value_type_parts("list(enum(a|b))"), ("list", "enum(a|b)"))
+
     def test_validate_value_runs_every_stage(self) -> None:
         diagnostics = validate_value({"id": "root", "version": "0.0.0", "type": "Nope"})
         self.assertEqual(
             _pairs(diagnostics),
-            {("document/unsupported-version", "/version"), ("catalog/unknown-type", "/type")},
+            [("catalog/unknown-type", "/type"), ("document/unsupported-version", "/version")],
         )
 
 
