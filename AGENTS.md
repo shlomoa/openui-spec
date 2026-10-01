@@ -42,6 +42,8 @@ generator that applies the specification to an existing Angular workspace.
 
 ## Repository-specific rules
 
+- Use the terms of [`spec/README.md` § 4.1](spec/README.md#41-specification-artifacts) and the
+  [glossary](spec/scopes/scope.md#glossary). Do not define new terms; ask the owner when none fits.
 - Treat `spec/` as the specification source of truth. Keep generated artifacts such as
   `spec/openui.json` aligned with the documented generation flow when the spec changes.
 - Every specification change bumps the spec version before merge; follow
