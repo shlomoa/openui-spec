@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdir, mkdtemp, readFile, stat, writeFile } from "node:fs/promises";
+import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { test } from "node:test";
 
@@ -11,20 +11,17 @@ import { isEmptyWorkspace, readWorkspaceIndex } from "../src/generation/workspac
 import { loadOpenUiDocument } from "../src/spec/load-spec";
 import type { OpenUiDocument, OpenUiElement } from "../src/spec/openui-spec.types";
 import { emitAngularFilesFromInput } from "./emit-angular-files";
-import { cleanupTestOutput } from "./test-output";
+import { cleanupTestOutput, createTestOutputDirectory as createOutputDirectory } from "./test-output";
 
 const ANGULAR_GENERATOR_ROOT =
   path.basename(path.dirname(__dirname)) === "dist"
     ? path.resolve(__dirname, "..", "..")
     : path.resolve(__dirname, "..");
-const REPOSITORY_ROOT = path.resolve(ANGULAR_GENERATOR_ROOT, "..", "..", "..");
 const FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "minimal-openui.json");
-const TEST_OUTPUT_ROOT = path.join(REPOSITORY_ROOT, "tmp");
-const TEST_OUTPUT_PREFIX = path.join(TEST_OUTPUT_ROOT, "openui-incremental-");
+const TEST_OUTPUT_PREFIX = "openui-incremental-";
 
 async function createTestOutputDirectory(): Promise<string> {
-  await mkdir(TEST_OUTPUT_ROOT, { recursive: true });
-  return mkdtemp(TEST_OUTPUT_PREFIX);
+  return createOutputDirectory(TEST_OUTPUT_PREFIX);
 }
 
 async function writeJsonFile(filePath: string, value: unknown): Promise<string> {

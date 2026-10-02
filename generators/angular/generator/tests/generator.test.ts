@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdir, mkdtemp, readFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { test } from "node:test";
 
@@ -14,7 +14,7 @@ import {
   validateOpenUiSpec,
 } from "../src/spec/validate-spec";
 import { SpecValidationError } from "../src/spec/diagnostics";
-import { cleanupTestOutput } from "./test-output";
+import { cleanupTestOutput, createTestOutputDirectory as createOutputDirectory } from "./test-output";
 
 const ANGULAR_GENERATOR_ROOT =
   path.basename(path.dirname(__dirname)) === "dist"
@@ -104,11 +104,7 @@ const REPRESENTATIVE_CONCRETE_FIXTURES = [
     ),
   },
 ] as const;
-const TEST_OUTPUT_ROOT = path.join(REPOSITORY_ROOT, "tmp");
-const TEST_OUTPUT_PREFIX = path.join(
-  TEST_OUTPUT_ROOT,
-  "openui-angular-generator-",
-);
+const TEST_OUTPUT_PREFIX = "openui-angular-generator-";
 
 type LatestSpecExampleCase = {
   name: string;
@@ -122,8 +118,7 @@ type LatestSpecExampleManifest = {
 };
 
 async function createTestOutputDirectory(): Promise<string> {
-  await mkdir(TEST_OUTPUT_ROOT, { recursive: true });
-  return mkdtemp(TEST_OUTPUT_PREFIX);
+  return createOutputDirectory(TEST_OUTPUT_PREFIX);
 }
 
 function pageById(pages: DataModelPage[], id: string): DataModelPage {
