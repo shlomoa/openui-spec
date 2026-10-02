@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdir, mkdtemp, readFile, stat, writeFile } from "node:fs/promises";
+import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { test } from "node:test";
 
@@ -11,20 +11,17 @@ import { isEmptyWorkspace, readWorkspaceIndex } from "../src/generation/workspac
 import { loadOpenUiDocument } from "../src/spec/load-spec";
 import type { OpenUiDocument, OpenUiElement } from "../src/spec/openui-spec.types";
 import { emitAngularFilesFromInput } from "./emit-angular-files";
-import { cleanupTestOutput } from "./test-output";
+import { cleanupTestOutput, createTestOutputDirectory as createOutputDirectory } from "./test-output";
 
 const ANGULAR_GENERATOR_ROOT =
   path.basename(path.dirname(__dirname)) === "dist"
     ? path.resolve(__dirname, "..", "..")
     : path.resolve(__dirname, "..");
-const REPOSITORY_ROOT = path.resolve(ANGULAR_GENERATOR_ROOT, "..", "..", "..");
 const FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "minimal-openui.json");
-const TEST_OUTPUT_ROOT = path.join(REPOSITORY_ROOT, "tmp");
-const TEST_OUTPUT_PREFIX = path.join(TEST_OUTPUT_ROOT, "openui-incremental-");
+const TEST_OUTPUT_PREFIX = "openui-incremental-";
 
-async function createTestOutputDirectory(): Promise<string> {
-  await mkdir(TEST_OUTPUT_ROOT, { recursive: true });
-  return mkdtemp(TEST_OUTPUT_PREFIX);
+async function createTestOutputDirectory(options: { withCatalog?: boolean } = {}): Promise<string> {
+  return createOutputDirectory(TEST_OUTPUT_PREFIX, options);
 }
 
 async function writeJsonFile(filePath: string, value: unknown): Promise<string> {
@@ -176,7 +173,7 @@ test("no-op match — re-running on an up-to-date workspace matches every emitte
 });
 
 test("incremental add — adds a new child and rewires generated parent files", async () => {
-  const tempRoot = await createTestOutputDirectory();
+  const tempRoot = await createTestOutputDirectory({ withCatalog: true });
   try {
     const outDir = path.join(tempRoot, "workspace");
     const initialInput = await writeJsonFile(
@@ -243,7 +240,7 @@ test("incremental add — adds a new child and rewires generated parent files", 
 });
 
 test("incremental delete — removes a child and rewires generated parent files", async () => {
-  const tempRoot = await createTestOutputDirectory();
+  const tempRoot = await createTestOutputDirectory({ withCatalog: true });
   try {
     const outDir = path.join(tempRoot, "workspace");
     const initialInput = await writeJsonFile(
@@ -308,7 +305,7 @@ test("incremental delete — removes a child and rewires generated parent files"
 });
 
 test("incremental delete — empty JSON removes every previously generated child page", async () => {
-  const tempRoot = await createTestOutputDirectory();
+  const tempRoot = await createTestOutputDirectory({ withCatalog: true });
   try {
     const outDir = path.join(tempRoot, "workspace");
     const initialInput = await writeJsonFile(
@@ -362,7 +359,7 @@ test("incremental delete — empty JSON removes every previously generated child
 });
 
 test("simple modification — renaming a child deletes the old route, adds the new route, and rewires parents", async () => {
-  const tempRoot = await createTestOutputDirectory();
+  const tempRoot = await createTestOutputDirectory({ withCatalog: true });
   try {
     const outDir = path.join(tempRoot, "workspace");
     const initialSpec = await applicationOnlyInput(["routing", "navigation"]);
@@ -446,7 +443,7 @@ test("simple modification — renaming a child deletes the old route, adds the n
 });
 
 test("complex modification — changing a child attribute rewrites only affected generated content", async () => {
-  const tempRoot = await createTestOutputDirectory();
+  const tempRoot = await createTestOutputDirectory({ withCatalog: true });
   try {
     const outDir = path.join(tempRoot, "workspace");
     const initialSpec = await applicationOnlyInput(["routing", "navigation"]);
@@ -510,7 +507,7 @@ test("complex modification — changing a child attribute rewrites only affected
 });
 
 test("validation failure is atomic — invalid root leaves existing workspace untouched", async () => {
-  const tempRoot = await createTestOutputDirectory();
+  const tempRoot = await createTestOutputDirectory({ withCatalog: true });
   try {
     const outDir = path.join(tempRoot, "workspace");
     const validInput = await writeJsonFile(
@@ -605,7 +602,7 @@ test("workspace indexing ignores non-contract directories during incremental gen
 });
 
 test("comparator/reconciler coverage — plans full-output add match modify delete without applying", async () => {
-  const tempRoot = await createTestOutputDirectory();
+  const tempRoot = await createTestOutputDirectory({ withCatalog: true });
   try {
     const outDir = path.join(tempRoot, "workspace");
     const initialSpec = await applicationOnlyInput(["routing"]);

@@ -1,7 +1,6 @@
 # Angular specific
 dist/
 /out-tsc/
-/tmp/
 /coverage/
 /e2e/test-output/
 /.angular/

@@ -64,8 +64,8 @@ Test fixtures demonstrating both modes are committed under `tests/fixtures/`:
 
 ### Keeping generated test output
 
-Generator tests normally write temporary output under the repository-local `tmp/`
-directory and remove it in each test's cleanup step. To inspect generated files
+Generator tests write temporary output to per-run directories under the operating
+system's temporary directory and remove each one in the test's cleanup step. To inspect generated files
 after a run, set `OPENUI_KEEP_TEST_OUTPUT=1` before running `npm run test`. The
 test output logs each preserved directory path.
 
