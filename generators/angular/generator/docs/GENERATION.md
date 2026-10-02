@@ -719,9 +719,9 @@ Required concrete `input.json` acceptance coverage:
 | reconciles concrete generated output incrementally                   | Re-running generation against an already matching output workspace produces Match/no-op behavior without timestamp churn.                                    |
 | preserves evidence for unsupported paths until implementation exists | Fixture notes such as `output_generation.md` keep observed failure commands/messages until the corresponding generator support is implemented and validated. |
 
-Generator tests write output only to per-run directories created with `mkdtemp`
-under `os.tmpdir()`, and remove them when each test finishes; nothing is written
-to the repository root.
+Generator tests write output only to the repo-local, git-ignored `scratch/`
+directory (via `mkdtemp` under the repository root) — never to OS temp
+directories — and remove it when each test finishes.
 
 ### CI integration (`.github/workflows/build.yml`)
 
@@ -734,24 +734,24 @@ reflected in the workflow and will be caught by that contract test if it is not.
 
 ### Test conventions
 
-- **Temporary output outside the working tree.** Tests must write transient
-  output to a directory created under `os.tmpdir()` (never a hardcoded path) and
-  remove it in the test's cleanup step, so a validation run leaves the repository
-  clean.
+- **Repo-local temporary output only.** Tests must write transient output under
+  the git-ignored repository `scratch/`, never to `%TEMP%`, `/tmp`, or `os.tmpdir()`,
+  and remove it (and `scratch/` itself once empty) in the test's cleanup step, so a
+  validation run leaves the repository clean.
 - **Inspectable generated output.** Set `OPENUI_KEEP_TEST_OUTPUT=1` before
-  running generator tests to preserve temporary output; the test
+  running generator tests to preserve temporary output under `scratch/`; the test
   run logs each kept directory path.
 - **Golden source is authoritative.** Generator tests consume derived artifacts
   and must not redefine the prose spec, scopes, schema, or catalog contract.
 - **Committed fixtures are expectations.** Fixture trees may include both input
   workspaces/specifications and expected output workspaces. Tests copy or
-  compare those fixtures, but transient generator runs still write only to
-  temporary directories under `os.tmpdir()`.
+  compare those fixtures, but transient generator runs still write only under
+  the repo-local, git-ignored `scratch/` directory.
 
 ### Incremental generation test strategy
 
 [Incremental generation](#incremental-generation) is covered by both committed input/expected-output fixtures and runtime
-workspace mutations in temporary directories. The fixtures under
+workspace mutations under `scratch/`. The fixtures under
 `generators/angular/generator/tests/fixtures/` capture reusable baseline states.
 
 #### Fixture layout

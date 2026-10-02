@@ -55,7 +55,7 @@ cd generators/angular/generator
 npm run build
 node dist/src/cli/main.js generate \
   --input tests/fixtures/dialog/input_dialog/dialog.example.json \
-  --out <temporary-directory>/dialog-regenerated-step10
+  --out ../../../scratch/dialog-regenerated-step10
 ```
 
 **Result:** the command now succeeds. It emits the following generated files:
