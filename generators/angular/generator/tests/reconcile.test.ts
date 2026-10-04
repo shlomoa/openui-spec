@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { test } from "node:test";
 
@@ -8,19 +8,17 @@ import { reconcileGeneratedFiles } from "../src/generation/reconcile";
 import { readWorkspaceIndex } from "../src/generation/workspace-index";
 import type { GeneratedFile } from "../src/writers/file-writer";
 import type { OpenUiDocument, OpenUiElement } from "../src/spec/openui-spec.types";
-import { cleanupTestOutput } from "./test-output";
+import { cleanupTestOutput, createTestOutputDirectory } from "./test-output";
 
 const ANGULAR_GENERATOR_ROOT =
   path.basename(path.dirname(__dirname)) === "dist"
     ? path.resolve(__dirname, "..", "..")
     : path.resolve(__dirname, "..");
-const REPOSITORY_ROOT = path.resolve(ANGULAR_GENERATOR_ROOT, "..", "..", "..");
 const INCREMENTAL_FIXTURE = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "example_incremental");
 const INPUT_WORKSPACE = path.join(INCREMENTAL_FIXTURE, "input_app-file-select");
 const OUTPUT_WORKSPACE = path.join(INCREMENTAL_FIXTURE, "output_app-file-select");
 const SPEC_FILE = path.join(OUTPUT_WORKSPACE, "app-file-select.example.json");
-const TEST_OUTPUT_ROOT = path.join(REPOSITORY_ROOT, "tmp");
-const TEST_OUTPUT_PREFIX = path.join(TEST_OUTPUT_ROOT, "openui-reconcile-");
+const TEST_OUTPUT_PREFIX = "openui-reconcile-";
 
 const COMPONENT_FILES = [
   "src/components/app-file-select/app-file-select.component.ts",
@@ -37,8 +35,7 @@ async function loadIndex(): Promise<ReturnType<typeof buildSpecManifestationInde
 }
 
 async function createTestWorkspace(): Promise<string> {
-  await mkdir(TEST_OUTPUT_ROOT, { recursive: true });
-  return mkdtemp(TEST_OUTPUT_PREFIX);
+  return createTestOutputDirectory(TEST_OUTPUT_PREFIX);
 }
 
 /** The component files the generator would emit, sourced from the output fixture. */
