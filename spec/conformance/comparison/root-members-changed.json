@@ -2,7 +2,7 @@
   "description": "A different root `type` or `version` is a change at /type or /version.",
   "reference": {
     "id": "root",
-    "version": "0.11.0",
+    "version": "0.1.0",
     "type": "html",
     "children": [
       {
@@ -39,7 +39,7 @@
       },
       {
         "path": "/version",
-        "reference": "0.11.0",
+        "reference": "0.1.0",
         "new": "0.12.0"
       }
     ]

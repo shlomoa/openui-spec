@@ -95,7 +95,8 @@ contracts cannot be merged under an unchanged version:
   `python -m spec.bin.to_json --spec-dir spec --output spec/openui.json`, so that its
   root `version` matches `SCHEMA_VERSION`.
 - **Documents**: Set the new `version` in every worked example under
-  `spec/examples/`, every conformance document under `spec/conformance/`, every
+  `spec/examples/`, every conformance document under `spec/conformance/` (the comparison cases are
+  regenerated with `python -m spec.bin.generate_comparison_cases`), every
   generator fixture under `generators/angular/generator/tests/fixtures/` and every
   test document. Their content is generated, not edited by hand
   ([CONTRIBUTING § Examples and fixtures](CONTRIBUTING.md#examples-and-fixtures)).
