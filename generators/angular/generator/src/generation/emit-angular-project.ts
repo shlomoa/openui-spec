@@ -1,7 +1,7 @@
 import type { GeneratedFile } from "../writers/file-writer";
 import { getLogger } from "../logging/logger";
 import type { AngularProjectModel } from "./angular-model";
-import { escapeHtml, escapeTsString } from "./emit-utils";
+import { escapeHtml } from "./emit-utils";
 import { emitPageComponent } from "./emit-component";
 import { emitRoutes } from "./emit-routes";
 import { emitTheme } from "./emit-theme";

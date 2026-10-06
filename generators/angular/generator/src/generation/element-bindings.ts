@@ -107,7 +107,7 @@ function splitArguments(source: string): string[] {
     }
   }
 
-  return current.trim() === "" && parts.length === 0 ? [] : [...parts, current.trim()];
+  return [...parts, current.trim()].filter((part) => part !== "");
 }
 
 function escapeAttribute(value: string): string {

@@ -11,7 +11,7 @@
  * The output workspace is emptied first, so files the generator no longer emits are removed.
  * The tests in `fixture-output.test.ts` fail until the committed output matches.
  */
-import { mkdir, readdir, rm } from "node:fs/promises";
+import { mkdir, readdir, readFile, rm } from "node:fs/promises";
 import path from "node:path";
 
 import { fixtureOf, generateFixtureOutput, listFixtures } from "./fixture-output";
@@ -30,6 +30,9 @@ async function main(argv: string[]): Promise<void> {
     : await listFixtures(!argv.includes("--all"));
 
   for (const fixture of fixtures) {
+    if (!(await readFile(fixture.input).then(() => true, () => false))) {
+      throw new Error(`Fixture '${fixture.name}' has no input example at ${path.relative(process.cwd(), fixture.input)}.`);
+    }
     await emptyDirectory(fixture.outputDirectory);
     await generateFixtureOutput(fixture, fixture.outputDirectory);
     console.log(`Regenerated ${path.relative(process.cwd(), fixture.outputDirectory)}`);

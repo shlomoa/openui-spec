@@ -3,8 +3,10 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { test } from "node:test";
 
+import { buildDataModel } from "../src/data-model/build-data-model";
 import { buildElementTree } from "../src/data-model/element-model";
 import { buildElementBindings } from "../src/generation/element-bindings";
+import { mapToAngularProject } from "../src/generation/map-to-angular";
 import { implementedTypes, renderElementTree } from "../src/generation/render-elements";
 import { emptyRendering, RendererRegistry } from "../src/generation/renderer-registry";
 import { getLogger, LogLevel } from "../src/logging/logger";
@@ -137,6 +139,8 @@ test("emits one stub per handler and none for non-call expressions", () => {
       "produces.close": "onClose",
       "produces.focus": "form.reset()",
       "produces.blur": null,
+      "produces.empty": "reset()",
+      "produces.trailing": "track(a, )",
     },
   });
   const bindings = buildElementBindings(element);
@@ -144,6 +148,8 @@ test("emits one stub per handler and none for non-call expressions", () => {
   assert.deepEqual(bindings.stubs, [
     "protected save($event: unknown): void {}",
     "protected update(argument1: unknown, argument2: unknown, argument3: unknown): void {}",
+    "protected reset(): void {}",
+    "protected track(argument1: unknown): void {}",
   ]);
   assert.deepEqual(bindings.attributes, [
     '(activate)="save($event)"',
@@ -151,5 +157,36 @@ test("emits one stub per handler and none for non-call expressions", () => {
     `(change)="update('a, b', count, [1, 2])"`,
     '(close)="onClose"',
     '(focus)="form.reset()"',
+    '(empty)="reset()"',
+    '(trailing)="track(a, )"',
   ]);
+});
+
+test("merges a rendering into the page of a concrete document", async () => {
+  const fixture = JSON.parse(await readFile(path.join(FIXTURES, "table", "input_table", "table.example.json"), "utf8"));
+  const dataModel = buildDataModel(fixture);
+  const registry = new RendererRegistry().register("table", () => {
+    const rendering = emptyRendering();
+    rendering.template = "<table mat-table></table>\n";
+    rendering.styles = "table { width: 100%; }\n";
+    rendering.imports.add("MatTableModule");
+    rendering.typeImports.add("@angular/material/table", "MatTableModule");
+    rendering.members.push("protected sortOrders($event: unknown): void {}");
+    return rendering;
+  });
+  // The root `Table` has no renderer, so its child `table` is rendered.
+  const [page] = mapToAngularProject(dataModel, registry).pages;
+
+  assert.equal(page.template, "<table mat-table></table>\n");
+  assert.equal(page.styles, "table { width: 100%; }\n");
+  assert.ok(page.imports.includes("MatTableModule"));
+  assert.ok(page.componentImports.includes("import { MatTableModule } from '@angular/material/table';"));
+  assert.ok(page.members.includes("protected sortOrders($event: unknown): void {}"));
+});
+
+test("keeps the placeholder page when nothing renders a template", async () => {
+  const fixture = JSON.parse(await readFile(path.join(FIXTURES, "table", "input_table", "table.example.json"), "utf8"));
+  const [page] = mapToAngularProject(buildDataModel(fixture)).pages;
+
+  assert.match(page.template, /<section class="spec-page"/);
 });

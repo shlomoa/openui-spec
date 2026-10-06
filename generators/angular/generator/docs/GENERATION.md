@@ -455,7 +455,9 @@ emitted as (`generation/renderer-registry.ts`).
   `sortOrders($event)`, `element-bindings.ts` emits an empty typed handler stub,
   `protected sortOrders($event: unknown): void {}`, as a class member of the hosting component.
 - **Pages.** Phase 1 keeps the single page built from the root's first child; routed pages from
-  `Application`, `Routing` and `Pages` are slice 6 of the object-type work.
+  `Application`, `Routing` and `Pages` are slice 6 of the object-type work. The rendering of the
+  document is merged into that page: its imports and class members are added, and a non-empty
+  template replaces the placeholder page template (with its styles, when it has any).
 
 Implemented types: `Dialog` (a standalone dialog component). `implementedTypes()` exports the list,
 and a test asserts that every registered key is a catalog type, so the coverage of the
