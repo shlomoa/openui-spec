@@ -1,0 +1,29 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+:root {
+  --openui-theme-primary: #0a6ed1;
+  --openui-theme-surface: #ffffff;
+  --openui-theme-on-surface: #1f2937;
+  --openui-spacing-1: 0.25rem;
+  --openui-spacing-2: 0.5rem;
+  --openui-spacing-4: 1rem;
+  --openui-spacing-6: 1.5rem;
+  --openui-density-cozy-control-height: 3rem;
+  --openui-density-compact-control-height: 2rem;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, Arial, sans-serif;
+}

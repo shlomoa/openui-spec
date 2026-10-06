@@ -58,7 +58,7 @@ Before changing generator code, read the relevant parts of:
 - Keep generator modules small, importable, and testable. Avoid placing core behavior directly in the CLI entry point.
 - Prefer pure mapping functions for OpenUI-to-IR and IR-to-Angular transformations.
 - Keep file emission separate from model construction, validation, and path resolution.
-- Use TypeScript types that model the canonical native OpenUI JSON contract, IR types under `generators/angular/generator/src/ir/`, and Angular target types under `generators/angular/generator/src/targets/angular/` as the source of truth for implementation shape.
+- Use TypeScript types that model the canonical native OpenUI JSON contract, data model types under `generators/angular/generator/src/data-model/`, and Angular model types and emitters under `generators/angular/generator/src/generation/` as the source of truth for implementation shape.
 - Preserve standalone Angular application output unless the repository intentionally changes its Angular architecture.
 - Prefer Angular Material and Angular CDK primitives where they match the OpenUI concept, including toolbar, sidenav, list, card, chips, buttons, form fields, inputs, selects, snackbar, router lazy loading, and CDK virtual scroll or drag/drop when declared.
 - Preserve accessibility, internationalization, theming, security/privacy, performance, extension, compliance, and acceptance-test contracts when those sections are involved.

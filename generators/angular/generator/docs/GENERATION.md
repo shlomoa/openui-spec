@@ -255,23 +255,32 @@ generators/angular/
 │  │  │  ├─ openui-sections.ts
 │  │  │  └─ validate-spec.ts
 │  │  ├─ data-model/
+│  │  │  ├─ attribute-value.ts
 │  │  │  ├─ build-data-model.ts
 │  │  │  ├─ data-model.ts
+│  │  │  ├─ element-model.ts
 │  │  │  ├─ normalize-spec.ts
 │  │  ├─ generation/
 │  │  │  ├─ angular-model.ts
 │  │  │  ├─ angular-paths.ts
 │  │  │  ├─ apply.ts
 │  │  │  ├─ classifier.ts
+│  │  │  ├─ element-bindings.ts
 │  │  │  ├─ emit-angular-project.ts
 │  │  │  ├─ emit-component.ts
+│  │  │  ├─ emit-dialog.ts
 │  │  │  ├─ emit-routes.ts
 │  │  │  ├─ emit-theme.ts
 │  │  │  ├─ emit-utils.ts
 │  │  │  ├─ generate.ts
 │  │  │  ├─ import-collector.ts
 │  │  │  ├─ map-to-angular.ts
+│  │  │  ├─ names.ts
 │  │  │  ├─ reconcile.ts
+│  │  │  ├─ render-elements.ts
+│  │  │  ├─ renderer-registry.ts
+│  │  │  ├─ renderers/
+│  │  │  │  └─ dialog-renderer.ts
 │  │  │  ├─ typescript-literals.ts
 │  │  │  └─ workspace-index.ts
 │  │  ├─ logging/
@@ -283,11 +292,16 @@ generators/angular/
 │  │  ├─ catalog-validation.test.ts
 │  │  ├─ classifier.test.ts
 │  │  ├─ conformance.test.ts
+│  │  ├─ element-model.test.ts
+│  │  ├─ fixture-coverage.test.ts
+│  │  ├─ fixture-output.test.ts
 │  │  ├─ generator.test.ts
 │  │  ├─ incremental.test.ts
 │  │  ├─ logger.test.ts
 │  │  ├─ main-logging.test.ts
-│  │  └─ reconcile.test.ts
+│  │  ├─ reconcile.test.ts
+│  │  ├─ renderer-registry.test.ts
+│  │  └─ regenerate-fixtures.ts
 │  ├─ package.json
 │  └─ tsconfig.json
 ```
@@ -308,23 +322,32 @@ specification layer.
 | `spec/document-schema.ts`           | Validates a decoded document against `spec/openui.schema.json` and maps schema errors to grammar diagnostics; holds no grammar rule of its own.                                                                                                                                                 |
 | `spec/diagnostics.ts`               | Defines the validation diagnostic (`code`, JSON Pointer `path`, `message`) and error types.                                                                                                                                                                                                     |
 | `data-model/normalize-spec.ts`      | Converts native scope IDs into routes, summaries, and feature flags.                                                                                                                                                                                                                            |
-| `data-model/build-data-model.ts`    | Builds the implementation-independent `DataModelApplication` from catalog scope trees or concrete app documents; concrete dialog regions use stable ids with known semantic types.                                                                                                              |
-| `data-model/data-model.ts`          | Defines implementation-independent application, page, feature, theme-token, and dialog-component model types.                                                                                                                                                                                   |
-| `generation/angular-model.ts`       | Defines Angular-specific project, page, application-structure, internationalization, and extension model types.                                                                                                                                                                                 |
-| `generation/map-to-angular.ts`      | Maps `DataModelApplication` pages and features into an `AngularProjectModel`.                                                                                                                                                                                                                   |
-| `generation/emit-*.ts`              | Emits Angular project files, routes, global theme styles, optional project-level support files, and standalone page component triplets.                                                                                                                                                         |
+| `data-model/build-data-model.ts`    | Builds the implementation-independent `DataModelApplication` from catalog scope trees or concrete app documents; for a concrete document it also keeps the element tree of the whole document for the renderers.                                                                                |
+| `data-model/data-model.ts`          | Defines implementation-independent application, page, feature, and theme-token model types; a concrete application carries the element tree of its document.                                                                                                                                    |
+| `data-model/element-model.ts`       | Models a concrete document as `DataModelElement` trees: id, type, attributes by category (`uses`, `produces`, `behaves`, plain) in document order, and children.                                                                                                                                |
+| `data-model/attribute-value.ts`     | Parses an attribute value into null, quoted literal, expression or list, and, for a declared value type, boolean, integer, number or reference (spec § 4.5–4.7).                                                                                                                                |
+| `generation/renderer-registry.ts`   | The renderer registry keyed by exact catalog `type`, the `ElementRendering` a renderer returns (template, imports, class members, styles, standalone-component files), and the component footprint a renderer registers for the classifier.                                                     |
+| `generation/render-elements.ts`     | Holds the default registry and the implemented-type list, and renders an element tree; a type without renderer output falls back to the placeholder output and a warning names the type.                                                                                                        |
+| `generation/renderers/`             | One renderer per implemented OpenUI type. `dialog-renderer.ts` emits a `Dialog` element as a standalone Angular Material dialog component.                                                                                                                                                      |
+| `generation/element-bindings.ts`    | Maps an element's categorized attributes to Angular: `uses.x` to `[x]`, `produces.x` and `behaves.x` to `(x)`, with an empty typed handler stub per handler call.                                                                                                                               |
+| `generation/angular-model.ts`       | Defines Angular-specific project, page, application-structure, internationalization, and extension model types, and the files of the standalone components the renderers emit.                                                                                                                  |
+| `generation/map-to-angular.ts`      | Maps `DataModelApplication` pages and features into an `AngularProjectModel`, and renders the element tree of a concrete document through the registry.                                                                                                                                         |
+| `generation/emit-*.ts`              | Emits Angular project files, routes, global theme styles, optional project-level support files, standalone page component triplets, and the dialog component.                                                                                                                                   |
 | `generation/angular-paths.ts`       | Centralizes the generated page directory, file, and import-path naming conventions used by the emitters.                                                                                                                                                                                        |
 | `generation/import-collector.ts`    | Accumulates and de-duplicates Angular import symbols per module, emitting sorted `import` statements.                                                                                                                                                                                           |
 | `generation/typescript-literals.ts` | Renders data values as TypeScript object, indented, and string-array literals for embedding in emitted source.                                                                                                                                                                                  |
 | `generation/emit-utils.ts`          | Shared HTML and TypeScript string-escaping helpers for the emitters.                                                                                                                                                                                                                            |
 | `writers/file-writer.ts`            | Defines the `GeneratedFile` record shape shared by the emitters and the incremental apply layer.                                                                                                                                                                                                |
-| `generation/classifier.ts`          | Indexes generated component, page, and known application-level manifestations and classifies a workspace folder/file back to the input node or application artifact that owns it.                                                                                                               |
+| `generation/classifier.ts`          | Indexes generated component, page, and known application-level manifestations (the component footprints come from the renderer registry) and classifies a workspace folder/file back to the input node or application artifact that owns it.                                                    |
 | `generation/workspace-index.ts`     | Reads an existing workspace into a path→content index, ignoring `node_modules`/`dist`/`.git`/`.angular`; a missing directory is an empty workspace.                                                                                                                                             |
 | `generation/reconcile.ts`           | Classifies emitted files against the existing workspace and plans per-file Add / Match / Modify / Delete actions for the incremental generate flow.                                                                                                                                             |
 | `generation/apply.ts`               | Applies a reconciliation plan: writes Add/Modify files, removes Delete files, and leaves Match files untouched.                                                                                                                                                                                 |
 | `generation/generate.ts`            | Orchestrates the incremental pipeline: emit, index the workspace, reconcile, and apply, degrading to generation from scratch for an empty workspace.                                                                                                                                            |
 | `logging/`                          | Provides structured logger helpers and CLI logging behavior.                                                                                                                                                                                                                                    |
-| `tests/classifier.test.ts`          | Verifies the incremental classifier maps generated component fixtures, full-output routed page files, and application-level project files to the expected ownership classification.                                                                                                             |
+| `tests/classifier.test.ts`          | Verifies the incremental classifier maps generated component fixtures, full-output routed page files, and application-level project files to the expected ownership classification, and that every file generated for every spec example has an owner.                                          |
+| `tests/element-model.test.ts`       | Verifies attribute-value parsing by declared value type, attribute categories, and the element tree of a concrete document.                                                                                                                                                                     |
+| `tests/renderer-registry.test.ts`   | Verifies the implemented-type list (every key is a catalog type), the placeholder fallback and its warning, subtree ownership, and the Uses, Produces and Behaves bindings with handler stubs.                                                                                                  |
+| `tests/fixture-output.test.ts`      | Verifies that every committed `output_<name>/` fixture equals what the generator emits for its `input_<name>/` example; `tests/regenerate-fixtures.ts` (`npm run regenerate-fixtures`) rewrites them.                                                                                           |
 | `tests/reconcile.test.ts`           | Verifies the reconciler's Add / Match / Modify / Delete decisions against the incremental fixtures, including parent re-wiring and from-scratch.                                                                                                                                                |
 | `tests/incremental.test.ts`         | Verifies end-to-end incremental flow: from-scratch Add, no-op Match, Add/Delete/Modify changes, validation atomicity, ignored workspace dirs, full-output planning, and out-of-tree write/delete rejection.                                                                                     |
 | `tests/conformance.test.ts`         | Verifies that the input check accepts every valid conformance document and rejects, with the expected `code` and `path`, every invalid one that the grammar stage rejects, except the repeated-member case (see [Input check](#input-check)), and the document and catalog cases it implements. |
@@ -412,6 +435,32 @@ pages, but they currently carry no extra `DataModelFeature` until
 
 Future work should extend the native OpenUI extraction and data-model mapping
 directly; do not add adapter or compatibility shapes.
+
+### Concrete input: the renderer registry
+
+A concrete document is rendered per OpenUI object type. `generation/render-elements.ts` holds a
+registry keyed by the exact catalog `type`; `renderElementTree` visits the element tree of the
+document, and a registered renderer owns the subtree of its element. A renderer returns the
+template fragment, the entries of the hosting component's `imports`, the TypeScript imports,
+the class members and the styles, plus the files of any standalone component the element is
+emitted as (`generation/renderer-registry.ts`).
+
+- **Unregistered types.** An element whose type has no renderer, or whose renderer returns
+  nothing for it, falls back to the placeholder output (the component-contract page) and a
+  warning names its type once. The warning is a `WARNING` record of the `amcg.render` logger,
+  so it shows with `--log-level warning`; the CLI default level is `critical`. Generation does
+  not fail.
+- **Expressions.** A Uses, Produces or Behaves value that is an expression passes through as the
+  Angular binding. For each Produces or Behaves expression that calls a handler by name, such as
+  `sortOrders($event)`, `element-bindings.ts` emits an empty typed handler stub,
+  `protected sortOrders($event: unknown): void {}`, as a class member of the hosting component.
+- **Pages.** Phase 1 keeps the single page built from the root's first child; routed pages from
+  `Application`, `Routing` and `Pages` are slice 6 of the object-type work.
+
+Implemented types: `Dialog` (a standalone dialog component). `implementedTypes()` exports the list,
+and a test asserts that every registered key is a catalog type, so the coverage of the
+specification is measured by a test. Each slice adds its renderers to the registry, regenerates the
+output of its fixtures, and updates this section.
 
 ### Attribute categories in Angular
 
@@ -541,6 +590,9 @@ identity, it indexes each declared manifestation by its workspace footprint:
   `src/app/pages/<route>/<route>.page.{ts,html,scss}`,
 - explicit known-type `page` instances remain supported for
   page-manifestation fixtures,
+- an element of a concrete document whose renderer emits a standalone component owns that
+  component's folder; the renderer registers the footprint (selector and folder), so a new
+  renderer is classified without a change to the classifier,
   and
 - known generator-owned project files such as `package.json`, `angular.json`,
   `tsconfig.json`, `src/main.ts`, `src/index.html`, `src/styles.scss`,
@@ -612,6 +664,13 @@ generators/angular/generator/tests/fixtures/
 │  └─ output_app-file-select/  workspace after adding app-file-select
 └─ example_backup/             baseline workspace before any generation
 ```
+
+Every other fixture is a pair `<name>/input_<name>/` and `<name>/output_<name>/`. The input holds
+the example, identical to `spec/examples/`. The output is generated, never written by hand:
+`npm run regenerate-fixtures` runs the generator on the input and replaces the output workspace
+(`npm run regenerate-fixtures -- <name>` starts a fixture, `-- --all` regenerates every one), and
+`tests/fixture-output.test.ts` fails when a committed output differs from what the generator
+emits. An output holding only a `.gitkeep` is not yet generated and is not compared.
 
 ## CLI contract
 
