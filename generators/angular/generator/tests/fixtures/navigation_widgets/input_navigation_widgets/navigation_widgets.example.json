@@ -11,7 +11,19 @@
       "type": "NavigationWidgets",
       "attrs": {
         "uses.ariaLabel": "\"Sections\"",
-        "uses.selected": "\"overview\""
+        "uses.selected": "\"overview\"",
+        "uses.orientation": "\"vertical\"",
+        "produces.selectionChange": "onSectionChange($event)"
+      }
+    },
+    {
+      "id": "resultsPager",
+      "type": "NavigationWidgets",
+      "attrs": {
+        "uses.ariaLabel": "\"Result pages\"",
+        "uses.pageSize": "25",
+        "uses.total": "rowCount",
+        "produces.pageChange": "onPageChange($event)"
       }
     },
     {

@@ -12,7 +12,45 @@
       "attrs": {
         "uses.label": "\"Shipping speed\"",
         "uses.value": "shippingSpeed",
-        "produces.selectionChange": "onShippingSpeedChange($event)"
+        "produces.selectionChange": "onShippingSpeedChange($event)",
+        "uses.selection": "\"single\"",
+        "uses.required": "true"
+      },
+      "children": [
+        {
+          "id": "standardOption",
+          "type": "option",
+          "attrs": {
+            "uses.label": "\"Standard\"",
+            "uses.value": "\"standard\""
+          }
+        },
+        {
+          "id": "expressOption",
+          "type": "option",
+          "attrs": {
+            "uses.label": "\"Express\"",
+            "uses.value": "\"express\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "newsletterOptIn",
+      "type": "ChoiceControls",
+      "attrs": {
+        "uses.label": "\"Send me the newsletter\"",
+        "uses.checked": "optedIn",
+        "uses.disabled": "isSaving",
+        "produces.selectionChange": "onOptInChange($event)"
+      }
+    },
+    {
+      "id": "selectAllOptions",
+      "type": "ChoiceControls",
+      "attrs": {
+        "uses.label": "\"Select all\"",
+        "uses.indeterminate": "someSelected"
       }
     },
     {

@@ -13,8 +13,23 @@
         "uses.data": "orders",
         "uses.selection": "\"multiple\"",
         "behaves.sort": null,
-        "produces.selectionChange": "onOrderSelection($event)"
-      }
+        "produces.selectionChange": "onOrderSelection($event)",
+        "uses.editable": "true",
+        "uses.resizableColumns": "true",
+        "uses.reorderableColumns": "true",
+        "behaves.filter": "filterOrders($event)",
+        "behaves.paginate": "paginateOrders($event)"
+      },
+      "children": [
+        {
+          "id": "ordersGridHeader",
+          "type": "thead"
+        },
+        {
+          "id": "ordersGridRow",
+          "type": "tr"
+        }
+      ]
     },
     {
       "id": "treeGrid",

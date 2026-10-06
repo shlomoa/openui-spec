@@ -6,7 +6,11 @@
     "title": "\"Sales report\"",
     "uses.readOnly": "true",
     "uses.loading": "isLoading",
-    "uses.error": "loadError"
+    "uses.error": "loadError",
+    "behaves.filter": "applyFilter($event)",
+    "behaves.sort": "sortReport($event)",
+    "behaves.group": "groupReport($event)",
+    "behaves.paginate": "paginateReport($event)"
   },
   "children": [
     {

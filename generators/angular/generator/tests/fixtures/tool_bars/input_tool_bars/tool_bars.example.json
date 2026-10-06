@@ -51,6 +51,30 @@
           ]
         }
       ]
+    },
+    {
+      "id": "contextToolbar",
+      "type": "ToolBars",
+      "attrs": {
+        "uses.ariaLabel": "\"Selection commands\""
+      },
+      "children": [
+        {
+          "id": "contextRow",
+          "type": "ToolBarRow",
+          "children": [
+            {
+              "id": "duplicateAction",
+              "type": "ToolAction",
+              "attrs": {
+                "uses.label": "\"Duplicate\"",
+                "uses.icon": "\"content_copy\"",
+                "produces.activate": "duplicateSelected()"
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

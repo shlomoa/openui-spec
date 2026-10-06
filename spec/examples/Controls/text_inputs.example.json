@@ -17,6 +17,27 @@
       }
     },
     {
+      "id": "commentField",
+      "type": "TextInputs",
+      "attrs": {
+        "uses.label": "\"Comment\"",
+        "uses.multiline": "true",
+        "uses.maxLength": "500",
+        "uses.required": "true",
+        "uses.readOnly": "false",
+        "uses.disabled": "false",
+        "produces.valueChange": "onCommentChange($event)"
+      }
+    },
+    {
+      "id": "passwordField",
+      "type": "TextInputs",
+      "attrs": {
+        "uses.label": "\"Password\"",
+        "uses.type": "\"password\""
+      }
+    },
+    {
       "id": "richTextEditor",
       "type": "TextInputs"
     },

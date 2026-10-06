@@ -11,7 +11,8 @@
       "type": "SheetContainers",
       "attrs": {
         "uses.position": "\"bottom\"",
-        "uses.open": "showFilters"
+        "uses.open": "showFilters",
+        "produces.close": "onFilterSheetClose()"
       }
     }
   ]

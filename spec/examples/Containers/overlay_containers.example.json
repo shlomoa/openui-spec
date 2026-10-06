@@ -11,7 +11,9 @@
       "type": "OverlayContainers",
       "attrs": {
         "uses.anchor": "\"helpButton\"",
-        "uses.open": "showHelp"
+        "uses.open": "showHelp",
+        "uses.placement": "\"bottom\"",
+        "produces.close": "onHelpClose()"
       }
     },
     {

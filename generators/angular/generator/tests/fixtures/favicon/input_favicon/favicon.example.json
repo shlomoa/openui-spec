@@ -11,6 +11,17 @@
         "uses.href": "\"/favicon.ico\"",
         "uses.type": "\"image/x-icon\""
       }
+    },
+    {
+      "id": "darkFavicon",
+      "type": "Favicon",
+      "attrs": {
+        "uses.rel": "\"icon\"",
+        "uses.href": "\"/favicon-dark.svg\"",
+        "uses.type": "\"image/svg+xml\"",
+        "uses.sizes": "\"any\"",
+        "uses.media": "\"(prefers-color-scheme: dark)\""
+      }
     }
   ]
 }

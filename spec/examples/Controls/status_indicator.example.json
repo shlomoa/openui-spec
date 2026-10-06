@@ -15,6 +15,18 @@
       }
     },
     {
+      "id": "diskUsage",
+      "type": "StatusIndicator",
+      "attrs": {
+        "uses.label": "\"Disk usage\"",
+        "uses.mode": "\"determinate\"",
+        "uses.value": "diskUsed",
+        "uses.min": "0",
+        "uses.max": "100",
+        "uses.severity": "\"warning\""
+      }
+    },
+    {
       "id": "meter",
       "type": "StatusIndicator"
     },

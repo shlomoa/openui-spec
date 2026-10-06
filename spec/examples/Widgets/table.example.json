@@ -16,6 +16,17 @@
       },
       "children": [
         {
+          "id": "ordersTableCaption",
+          "type": "caption",
+          "attrs": {
+            "text": "\"Open orders\""
+          }
+        },
+        {
+          "id": "ordersTableHeader",
+          "type": "thead"
+        },
+        {
           "id": "ordersTableRow",
           "type": "tr"
         }

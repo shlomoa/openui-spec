@@ -15,6 +15,25 @@
     {
       "id": "documentBody",
       "type": "body"
+    },
+    {
+      "id": "hebrewIndexHtml",
+      "type": "IndexHtml",
+      "attrs": {
+        "uses.lang": "\"he\"",
+        "uses.dir": "\"rtl\"",
+        "uses.title": "\"OpenUI application (Hebrew)\""
+      },
+      "children": [
+        {
+          "id": "hebrewDocumentHead",
+          "type": "head"
+        },
+        {
+          "id": "hebrewDocumentBody",
+          "type": "body"
+        }
+      ]
     }
   ]
 }

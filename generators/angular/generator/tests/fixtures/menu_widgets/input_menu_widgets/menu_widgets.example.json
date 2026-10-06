@@ -12,7 +12,32 @@
       "attrs": {
         "uses.label": "\"Row actions\"",
         "uses.open": "isMenuOpen",
-        "produces.select": "onMenuSelect($event)"
+        "produces.select": "onMenuSelect($event)",
+        "uses.anchor": "\"rowActionsButton\"",
+        "uses.orientation": "\"vertical\""
+      },
+      "children": [
+        {
+          "id": "editItem",
+          "type": "menuitem",
+          "attrs": {
+            "uses.label": "\"Edit\""
+          }
+        },
+        {
+          "id": "deleteItem",
+          "type": "menuitem",
+          "attrs": {
+            "uses.label": "\"Delete\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "rowActionsButton",
+      "type": "ActionControls",
+      "attrs": {
+        "uses.label": "\"Row actions\""
       }
     },
     {

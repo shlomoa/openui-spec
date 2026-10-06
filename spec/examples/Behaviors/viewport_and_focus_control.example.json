@@ -33,6 +33,27 @@
       "attrs": {
         "uses.target": "\"messageLog\""
       }
+    },
+    {
+      "id": "messageLogViewport",
+      "type": "ViewportAndFocusControl",
+      "attrs": {
+        "uses.target": "\"messageLog\"",
+        "uses.axis": "\"vertical\"",
+        "uses.kinetic": "true",
+        "uses.scrollLock": "true",
+        "behaves.scrollTo": "scrollToLatest()",
+        "behaves.reveal": "revealMessage(messageId)",
+        "produces.scroll": "onMessageLogScroll($event)"
+      }
+    },
+    {
+      "id": "messageLogFocus",
+      "type": "ViewportAndFocusControl",
+      "attrs": {
+        "uses.target": "\"messageLog\"",
+        "behaves.focus": "focusLatestMessage()"
+      }
     }
   ]
 }

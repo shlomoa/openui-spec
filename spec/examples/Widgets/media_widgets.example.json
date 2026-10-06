@@ -13,7 +13,17 @@
         "uses.src": "\"/media/product.mp4\"",
         "uses.caption": "\"Product walkthrough\"",
         "uses.controls": "true"
-      }
+      },
+      "children": [
+        {
+          "id": "productCaptions",
+          "type": "track",
+          "attrs": {
+            "uses.src": "\"/media/product.en.vtt\"",
+            "uses.label": "\"English\""
+          }
+        }
+      ]
     },
     {
       "id": "customGraphicsSurface",

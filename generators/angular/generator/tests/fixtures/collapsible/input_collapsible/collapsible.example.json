@@ -14,10 +14,20 @@
       }
     },
     {
+      "id": "detailsTrigger",
+      "type": "ActionControls",
+      "attrs": {
+        "uses.label": "\"Show details\""
+      }
+    },
+    {
       "id": "detailsCollapsible",
       "type": "Collapsible",
       "attrs": {
-        "uses.target": "\"detailsSection\""
+        "uses.target": "\"detailsSection\"",
+        "uses.trigger": "\"detailsTrigger\"",
+        "uses.expanded": "false",
+        "produces.expandedChange": "onDetailsToggle($event)"
       }
     }
   ]

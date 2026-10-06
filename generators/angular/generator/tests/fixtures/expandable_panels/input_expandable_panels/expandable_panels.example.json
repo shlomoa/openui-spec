@@ -73,6 +73,29 @@
           "type": "summary"
         }
       ]
+    },
+    {
+      "id": "releaseNotesPanel",
+      "type": "details",
+      "attrs": {
+        "uses.expanded": "false",
+        "behaves.expand": "expandReleaseNotes()",
+        "behaves.collapse": "collapseReleaseNotes()",
+        "produces.expandedChange": "onReleaseNotesToggle($event)"
+      },
+      "children": [
+        {
+          "id": "releaseNotesSummary",
+          "type": "summary"
+        },
+        {
+          "id": "releaseNotesContent",
+          "type": "section",
+          "attrs": {
+            "text": "\"Release notes\""
+          }
+        }
+      ]
     }
   ]
 }

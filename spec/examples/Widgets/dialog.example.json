@@ -57,6 +57,25 @@
       ]
     },
     {
+      "id": "unsavedChangesDialog",
+      "type": "dialog",
+      "attrs": {
+        "uses.open": "isUnsavedOpen",
+        "uses.modal": "false",
+        "produces.close": "onUnsavedClose($event)",
+        "produces.cancel": "onUnsavedCancel($event)"
+      },
+      "children": [
+        {
+          "id": "unsavedChangesContent",
+          "type": "section",
+          "attrs": {
+            "text": "\"Discard unsaved changes?\""
+          }
+        }
+      ]
+    },
+    {
       "id": "progressDialog",
       "type": "Dialog",
       "children": [
