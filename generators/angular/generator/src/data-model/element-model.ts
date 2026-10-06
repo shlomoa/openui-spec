@@ -64,3 +64,19 @@ export function findAttribute(
 ): DataModelAttribute | undefined {
   return element.attributes.find((attribute) => attribute.category === category && attribute.name === name);
 }
+
+/** Returns the element with the given id in the tree rooted at {@link root}, depth first. */
+export function findElementById(root: DataModelElement, id: string): DataModelElement | undefined {
+  if (root.id === id) {
+    return root;
+  }
+
+  for (const child of root.children) {
+    const match = findElementById(child, id);
+    if (match) {
+      return match;
+    }
+  }
+
+  return undefined;
+}

@@ -25,7 +25,8 @@ export interface DataModelApplication {
   name: string;
   version: string;
   pages: DataModelPage[];
-  dialogComponents?: DataModelDialogComponent[];
+  /** The element tree of the whole document; present for concrete input only. */
+  element?: DataModelElement;
   themeTokens: DataModelThemeToken[];
 }
 
@@ -51,22 +52,4 @@ export interface DataModelFormalDefinition {
 export interface DataModelThemeToken {
   name: string;
   value: string;
-}
-
-export interface DataModelDialogComponent {
-  id: string;
-  selector: string;
-  className: string;
-  directoryName: string;
-  fileName: string;
-  title: string;
-  content: string;
-  actions: DataModelDialogAction[];
-}
-
-export interface DataModelDialogAction {
-  id: string;
-  text: string;
-  result: string;
-  emphasis: "default" | "warn";
 }

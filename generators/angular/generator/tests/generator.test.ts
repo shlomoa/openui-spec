@@ -5,6 +5,8 @@ import { test } from "node:test";
 
 import { buildDataModel } from "../src/data-model/build-data-model";
 import type { DataModelPage } from "../src/data-model/data-model";
+import { findElementById } from "../src/data-model/element-model";
+import { buildDialogComponentModel } from "../src/generation/renderers/dialog-renderer";
 import { run } from "../src/main";
 import { createCatalogIndex } from "../src/spec/catalog-index";
 import { extractOpenUiScopeNodes } from "../src/spec/openui-sections";
@@ -227,10 +229,12 @@ test("builds a concrete dialog data model from the dialog fixture", async () => 
   assert.equal(dialogPage.title, "Dialog example");
   assert.deepEqual(dialogPage.features, ["component"]);
 
-  const dialogComponent = dataModel.dialogComponents?.[0];
+  const dialogElement = dataModel.element && findElementById(dataModel.element, "confirmDialog");
+  assert.ok(dialogElement, "Expected the concrete dialog data model to include the dialog element.");
+  const dialogComponent = buildDialogComponentModel(dialogElement);
   assert.ok(
     dialogComponent,
-    "Expected concrete dialog data model to include a dialog component.",
+    "Expected the dialog element to render as a dialog component.",
   );
   assert.equal(dialogComponent.selector, "app-confirm-dialog");
   assert.equal(dialogComponent.className, "AppConfirmDialogComponent");

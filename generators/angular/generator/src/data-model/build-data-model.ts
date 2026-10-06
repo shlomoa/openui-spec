@@ -1,14 +1,8 @@
-import { extractOpenUiScopeNodes, findElementsByType, stringAttr } from "../spec/openui-sections";
+import { extractOpenUiScopeNodes, stringAttr } from "../spec/openui-sections";
 import type { OpenUiDocument, OpenUiElement } from "../spec/openui-spec.types";
 import { buildElementTree } from "./element-model";
 import { normalizeFeatures, normalizeRoute, normalizeSummary } from "./normalize-spec";
-import type {
-  DataModelApplication,
-  DataModelDialogAction,
-  DataModelDialogComponent,
-  DataModelFeature,
-  DataModelThemeToken,
-} from "./data-model";
+import type { DataModelApplication, DataModelFeature, DataModelThemeToken } from "./data-model";
 
 /**
  * Builds the implementation-independent {@link DataModelApplication} from an
@@ -42,15 +36,13 @@ export function buildDataModel(document: OpenUiDocument): DataModelApplication {
 
 /**
  * Models a document that carries concrete UI input rather than scope nodes,
- * deriving a single page from its first child and, when present, a dialog
- * component from a `Dialog` element.
+ * deriving a single page from its first child. The element tree of the whole
+ * document is kept for the renderers, which emit the components its elements need.
  */
 function buildConcreteInputModel(document: OpenUiDocument): DataModelApplication {
   const firstConcreteChild = document.children?.[0];
   const pageId = firstConcreteChild ? lowerFirst(firstConcreteChild.type) : document.id;
   const pageTitle = unquote(stringAttr(document, "title")) ?? titleFromName(pageId);
-  const dialog = findElementsByType(document, "Dialog").find(hasDialogParts);
-  const dialogComponents = dialog ? [buildDialogComponent(dialog)] : [];
   const pages = firstConcreteChild
     ? [
         {
@@ -71,60 +63,8 @@ function buildConcreteInputModel(document: OpenUiDocument): DataModelApplication
     name: unquote(stringAttr(document, "name")) ?? pageTitle ?? "OpenUI Application",
     version: document.version,
     pages,
-    dialogComponents,
+    element: buildElementTree(document),
     themeTokens: defaultThemeTokens(),
-  };
-}
-
-/**
- * Derives a {@link DataModelDialogComponent} from a `Dialog` element, resolving
- * its title, content, and action buttons and computing the selector, class, and
- * file names used when the dialog is emitted.
- */
-function buildDialogComponent(dialog: OpenUiElement): DataModelDialogComponent {
-  const title = unquote(stringAttr(findDirectChildById(dialog, "dialogTitle") ?? dialog, "text")) ?? "Dialog";
-  const content = unquote(stringAttr(findDirectChildById(dialog, "dialogContent") ?? dialog, "text")) ?? "";
-  const actionsNode = findDirectChildById(dialog, "dialogActions");
-  const actions = (actionsNode?.children ?? [])
-    .filter((child) => child.type === "ActionControls")
-    .map(buildDialogAction);
-  const directoryName = `app-${normalizeRoute(dialog.id)}`;
-
-  return {
-    id: dialog.id,
-    selector: directoryName,
-    className: `${toPascalCase(directoryName)}Component`,
-    directoryName,
-    fileName: `${directoryName}.component`,
-    title,
-    content,
-    actions,
-  };
-}
-
-/** Identifies the concrete dialog composition by its stable part ids rather than example-only pseudo-types. */
-function hasDialogParts(dialog: OpenUiElement): boolean {
-  return ["dialogTitle", "dialogContent", "dialogActions"].every((id) => findDirectChildById(dialog, id));
-}
-
-function findDirectChildById(parent: OpenUiElement, id: string): OpenUiElement | undefined {
-  return parent.children?.find((child) => child.id === id);
-}
-
-/**
- * Builds a single dialog action from an `ActionControls` element, resolving its label
- * and close result and flagging destructive actions (e.g. confirm/delete) with
- * `warn` emphasis.
- */
-function buildDialogAction(action: OpenUiElement): DataModelDialogAction {
-  const text = unquote(stringAttr(action, "uses.label")) ?? titleFromName(action.id);
-  const result = resultFromClick(stringAttr(action, "produces.activate")) ?? normalizeRoute(action.id);
-  const lowerText = text.toLowerCase();
-  return {
-    id: action.id,
-    text,
-    result,
-    emphasis: result === "confirm" || lowerText.includes("delete") ? "warn" : "default",
   };
 }
 
@@ -151,10 +91,6 @@ function defaultThemeTokens(): DataModelThemeToken[] {
   ];
 }
 
-function resultFromClick(value: string | undefined): string | undefined {
-  return value?.match(/^close\('([^']+)'\)$/)?.[1];
-}
-
 function unquote(value: string | undefined): string | undefined {
   if (!value) {
     return undefined;
@@ -165,14 +101,6 @@ function unquote(value: string | undefined): string | undefined {
 
 function lowerFirst(value: string): string {
   return value.charAt(0).toLowerCase() + value.slice(1);
-}
-
-function toPascalCase(value: string): string {
-  return value
-    .split(/[^A-Za-z0-9]+/)
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join("");
 }
 
 function titleFromName(value: string): string {

@@ -1,24 +1,28 @@
-import type { DataModelApplication, DataModelDialogComponent, DataModelPage } from "../data-model/data-model";
+import type { DataModelApplication, DataModelPage } from "../data-model/data-model";
 import type {
   AngularApplicationStructureModel,
-  AngularDialogComponentModel,
   AngularInternationalizationModel,
   AngularPageModel,
   AngularProjectModel,
 } from "./angular-model";
 import { routedPageImportPath } from "./angular-paths";
 import { escapeHtml } from "./emit-utils";
+import { renderElementTree } from "./render-elements";
+import { emptyRendering } from "./renderer-registry";
 import { AngularImportCollector } from "./import-collector";
 import { toIndentedTypeScriptLiteral as toTypeScriptLiteral, toTypeScriptStringArray } from "./typescript-literals";
 
 export function mapToAngularProject(dataModel: DataModelApplication): AngularProjectModel {
+  const rendering = dataModel.element
+    ? renderElementTree(dataModel.element).rendering
+    : emptyRendering();
   const pages = dataModel.pages.map(mapPage);
   return {
     appName: dataModel.name,
     packageName: toPackageName(dataModel.name),
     version: dataModel.version,
     pages,
-    dialogComponents: (dataModel.dialogComponents ?? []).map(mapDialogComponent),
+    elementFiles: rendering.files,
     themeTokens: dataModel.themeTokens,
     applicationStructure: dataModel.pages.some((page) => page.features.includes("application-structure"))
       ? buildApplicationStructure(pages)
@@ -26,22 +30,6 @@ export function mapToAngularProject(dataModel: DataModelApplication): AngularPro
     internationalization: dataModel.pages.some((page) => page.features.includes("internationalization"))
       ? buildInternationalizationModel()
       : undefined,
-  };
-}
-
-function mapDialogComponent(component: DataModelDialogComponent): AngularDialogComponentModel {
-  return {
-    selector: component.selector,
-    className: component.className,
-    directoryName: component.directoryName,
-    fileName: component.fileName,
-    title: component.title,
-    content: component.content,
-    actions: component.actions.map((action) => ({
-      text: action.text,
-      result: action.result,
-      emphasis: action.emphasis,
-    })),
   };
 }
 
