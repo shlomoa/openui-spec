@@ -28,6 +28,19 @@
           "attrs": {
             "text": "\"This cannot be undone.\""
           }
+        },
+        {
+          "id": "confirmDeleteActions",
+          "type": "footer",
+          "children": [
+            {
+              "id": "cancelDeleteButton",
+              "type": "ActionControls",
+              "attrs": {
+                "uses.label": "\"Cancel\""
+              }
+            }
+          ]
         }
       ]
     },
@@ -36,6 +49,17 @@
       "type": "ModalOverlay",
       "attrs": {
         "uses.target": "\"confirmDeleteDialog\""
+      }
+    },
+    {
+      "id": "confirmDeleteModal",
+      "type": "ModalOverlay",
+      "attrs": {
+        "uses.target": "\"confirmDeleteDialog\"",
+        "uses.initialFocus": "\"cancelDeleteButton\"",
+        "uses.restoreFocus": "true",
+        "uses.dismissOnEscape": "true",
+        "produces.dismissRequest": "onDismissRequest($event)"
       }
     }
   ]

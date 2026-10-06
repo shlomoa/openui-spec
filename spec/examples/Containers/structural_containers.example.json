@@ -21,6 +21,14 @@
     {
       "id": "scrollContainer",
       "type": "StructuralContainers"
+    },
+    {
+      "id": "sideRail",
+      "type": "StructuralContainers",
+      "attrs": {
+        "uses.ariaLabel": "\"Sections\"",
+        "uses.orientation": "\"vertical\""
+      }
     }
   ]
 }

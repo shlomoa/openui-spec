@@ -13,7 +13,9 @@
         "uses.linear": "true",
         "uses.selectedIndex": "0",
         "produces.selectionChange": "onStepChange($event)",
-        "produces.complete": "onComplete()"
+        "produces.complete": "onComplete()",
+        "uses.branching": "false",
+        "uses.orientation": "\"horizontal\""
       },
       "children": [
         {

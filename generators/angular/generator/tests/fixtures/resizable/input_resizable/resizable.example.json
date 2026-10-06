@@ -17,7 +17,9 @@
       "id": "panelResize",
       "type": "Resizable",
       "attrs": {
-        "uses.target": "\"resizablePanel\""
+        "uses.target": "\"resizablePanel\"",
+        "uses.axis": "\"both\"",
+        "produces.resize": "onPanelResize($event)"
       }
     }
   ]

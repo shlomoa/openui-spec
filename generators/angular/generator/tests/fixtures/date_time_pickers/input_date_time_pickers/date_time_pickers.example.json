@@ -12,7 +12,9 @@
       "attrs": {
         "uses.start": "appointmentStart",
         "uses.end": "appointmentEnd",
-        "produces.dateChange": "onDateChange($event)"
+        "produces.dateChange": "onDateChange($event)",
+        "uses.label": "\"Appointment\"",
+        "uses.disabled": "isLocked"
       }
     },
     {

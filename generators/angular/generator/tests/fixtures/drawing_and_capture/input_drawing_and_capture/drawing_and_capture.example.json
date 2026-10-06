@@ -12,7 +12,9 @@
       "attrs": {
         "uses.label": "\"Signature\"",
         "uses.mode": "\"draw\"",
-        "produces.capture": "saveSignature($event)"
+        "produces.capture": "saveSignature($event)",
+        "uses.width": "480",
+        "uses.height": "160"
       }
     }
   ]

@@ -14,6 +14,16 @@
         "uses.href": "\"#main\"",
         "produces.activate": "scrollToMain()"
       }
+    },
+    {
+      "id": "contentScrollbar",
+      "type": "LinkAndScrollControls",
+      "attrs": {
+        "uses.value": "scrollPosition",
+        "uses.min": "0",
+        "uses.max": "1000",
+        "uses.orientation": "\"vertical\""
+      }
     }
   ]
 }

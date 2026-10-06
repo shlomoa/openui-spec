@@ -160,7 +160,7 @@ class ApplicationScopeContractTest(unittest.TestCase):
         )
 
         self.assertEqual(
-            self._example_child("favicon.example.json"),
+            self._example_child("favicon.example.json", "appFavicon"),
             {
                 "id": "appFavicon",
                 "type": "link",

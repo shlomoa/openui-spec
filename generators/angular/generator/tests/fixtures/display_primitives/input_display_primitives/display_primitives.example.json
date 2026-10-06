@@ -15,6 +15,45 @@
       }
     },
     {
+      "id": "productImage",
+      "type": "DisplayPrimitives",
+      "attrs": {
+        "uses.src": "\"/img/product.png\"",
+        "uses.alt": "\"Product photo\""
+      }
+    },
+    {
+      "id": "flourishImage",
+      "type": "DisplayPrimitives",
+      "attrs": {
+        "uses.src": "\"/img/flourish.svg\"",
+        "uses.decorative": "true"
+      }
+    },
+    {
+      "id": "sectionSeparator",
+      "type": "DisplayPrimitives",
+      "attrs": {
+        "uses.orientation": "\"horizontal\""
+      }
+    },
+    {
+      "id": "queryField",
+      "type": "TextInputs",
+      "attrs": {
+        "uses.label": "\"Query\"",
+        "uses.value": "query"
+      }
+    },
+    {
+      "id": "queryLabel",
+      "type": "DisplayPrimitives",
+      "attrs": {
+        "uses.text": "\"Query\"",
+        "uses.for": "\"queryField\""
+      }
+    },
+    {
       "id": "calculatedOutput",
       "type": "DisplayPrimitives"
     },

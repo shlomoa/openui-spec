@@ -12,7 +12,8 @@
       "attrs": {
         "uses.selectedIndex": "0",
         "uses.keyboardNavigation": "true",
-        "produces.selectedTabChange": "onTabChange($event)"
+        "produces.selectedTabChange": "onTabChange($event)",
+        "uses.orientation": "\"horizontal\""
       },
       "children": [
         {

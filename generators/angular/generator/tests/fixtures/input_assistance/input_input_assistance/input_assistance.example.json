@@ -28,6 +28,24 @@
       "attrs": {
         "uses.target": "\"emailField\""
       }
+    },
+    {
+      "id": "emailSuggestionAssist",
+      "type": "InputAssistance",
+      "attrs": {
+        "uses.target": "\"emailField\"",
+        "uses.suggestions": ["\"ann@example.com\"", "\"ben@example.com\""],
+        "produces.suggestionSelect": "onSuggestionSelect($event)"
+      }
+    },
+    {
+      "id": "emailPatternCheck",
+      "type": "InputAssistance",
+      "attrs": {
+        "uses.target": "\"emailField\"",
+        "uses.pattern": "\"^.+@.+$\"",
+        "produces.invalid": "onEmailInvalid($event)"
+      }
     }
   ]
 }

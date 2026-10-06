@@ -22,6 +22,14 @@
       },
       "children": [
         {
+          "id": "revenueTarget",
+          "type": "annotation",
+          "attrs": {
+            "uses.label": "\"Target\"",
+            "uses.value": "revenueTarget"
+          }
+        },
+        {
           "id": "chartEmpty",
           "type": "FeedbackWidgets",
           "attrs": {

@@ -7,7 +7,9 @@
     "uses.dirty": "form.dirty",
     "uses.loading": "isSaving",
     "uses.error": "saveError",
-    "behaves.submit": "onSubmit(form.value)"
+    "behaves.submit": "onSubmit(form.value)",
+    "behaves.validate": "form.validate()",
+    "produces.dirtyChange": "onDirtyChange($event)"
   },
   "children": [
     {
@@ -30,6 +32,28 @@
         "uses.pattern": "\"^.+@.+$\"",
         "uses.error": "\"Enter a valid email\""
       }
+    },
+    {
+      "id": "addressFieldset",
+      "type": "fieldset",
+      "children": [
+        {
+          "id": "streetField",
+          "type": "TextInputs",
+          "attrs": {
+            "uses.label": "\"Street\"",
+            "uses.value": "form.street"
+          }
+        },
+        {
+          "id": "cityField",
+          "type": "TextInputs",
+          "attrs": {
+            "uses.label": "\"City\"",
+            "uses.value": "form.city"
+          }
+        }
+      ]
     },
     {
       "id": "submitButton",

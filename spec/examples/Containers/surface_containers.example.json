@@ -29,6 +29,38 @@
     {
       "id": "heroBanner",
       "type": "SurfaceContainers"
+    },
+    {
+      "id": "notificationsGroup",
+      "type": "SurfaceContainers",
+      "attrs": {
+        "uses.title": "\"Notifications\"",
+        "uses.checkable": "true",
+        "uses.checked": "notificationsEnabled"
+      },
+      "children": [
+        {
+          "id": "notificationsContent",
+          "type": "section",
+          "attrs": {
+            "text": "\"Choose what to be told.\""
+          }
+        },
+        {
+          "id": "notificationsActions",
+          "type": "footer",
+          "children": [
+            {
+              "id": "notificationsSave",
+              "type": "ActionControls",
+              "attrs": {
+                "uses.label": "\"Save\"",
+                "produces.activate": "saveNotifications()"
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

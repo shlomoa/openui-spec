@@ -18,6 +18,22 @@
       }
     },
     {
+      "id": "priceRange",
+      "type": "RangeControl",
+      "attrs": {
+        "uses.label": "\"Price\"",
+        "uses.min": "0",
+        "uses.max": "500",
+        "uses.step": "10",
+        "uses.start": "minPrice",
+        "uses.end": "maxPrice",
+        "uses.orientation": "\"vertical\"",
+        "uses.wrapping": "false",
+        "uses.disabled": "false",
+        "produces.valueChange": "onPriceChange($event)"
+      }
+    },
+    {
       "id": "rangeSlider",
       "type": "RangeControl"
     },

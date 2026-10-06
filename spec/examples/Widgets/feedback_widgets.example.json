@@ -11,7 +11,24 @@
       "type": "FeedbackWidgets",
       "attrs": {
         "uses.message": "\"Saved successfully.\"",
-        "uses.severity": "\"success\""
+        "uses.severity": "\"success\"",
+        "uses.duration": "4000",
+        "produces.close": "onSaveFeedbackClose()"
+      }
+    },
+    {
+      "id": "saveButton",
+      "type": "ActionControls",
+      "attrs": {
+        "uses.label": "\"Save\""
+      }
+    },
+    {
+      "id": "saveTooltip",
+      "type": "FeedbackWidgets",
+      "attrs": {
+        "uses.message": "\"Saves the draft.\"",
+        "uses.anchor": "\"saveButton\""
       }
     },
     {

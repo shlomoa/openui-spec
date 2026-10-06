@@ -11,12 +11,17 @@
       "type": "Splitters",
       "attrs": {
         "uses.orientation": "\"horizontal\"",
-        "uses.position": "320"
+        "uses.position": "320",
+        "produces.resize": "onWorkspaceResize($event)"
       },
       "children": [
         {
           "id": "workspaceSplitterPane",
           "type": "section"
+        },
+        {
+          "id": "workspaceSplitterHandle",
+          "type": "separator"
         }
       ]
     },

@@ -16,7 +16,8 @@
         "uses.selection": "\"single\"",
         "uses.loading": "isLoading",
         "uses.error": "loadError",
-        "produces.selectionChange": "onSelect($event)"
+        "produces.selectionChange": "onSelect($event)",
+        "behaves.paginate": "paginateTasks($event)"
       },
       "children": [
         {
@@ -40,6 +41,22 @@
           "type": "FeedbackWidgets",
           "attrs": {
             "uses.message": "\"No tasks.\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "groceryList",
+      "type": "ul",
+      "attrs": {
+        "uses.selection": "\"none\""
+      },
+      "children": [
+        {
+          "id": "groceryItem",
+          "type": "li",
+          "attrs": {
+            "uses.label": "\"Bread\""
           }
         }
       ]

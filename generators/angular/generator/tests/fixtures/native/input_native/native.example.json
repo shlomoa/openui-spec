@@ -37,6 +37,16 @@
         "uses.focusVisible": "true",
         "uses.tabIndex": "0"
       }
+    },
+    {
+      "id": "customerNameInput",
+      "type": "input",
+      "attrs": {
+        "uses.type": "\"text\"",
+        "uses.value": "customerName",
+        "uses.placeholder": "\"Customer name\"",
+        "uses.disabled": "isLocked"
+      }
     }
   ]
 }

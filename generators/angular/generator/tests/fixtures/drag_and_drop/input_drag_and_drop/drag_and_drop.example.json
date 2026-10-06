@@ -39,7 +39,10 @@
       "id": "taskBoardDragAndDrop",
       "type": "DragAndDrop",
       "attrs": {
-        "uses.target": "\"taskBoard\""
+        "uses.target": "\"taskBoard\"",
+        "uses.dropEffect": "\"move\"",
+        "uses.disabled": "isBoardLocked",
+        "produces.drop": "onTaskDrop($event)"
       }
     }
   ]

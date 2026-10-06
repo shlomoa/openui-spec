@@ -12,7 +12,26 @@
       "attrs": {
         "uses.label": "\"Save\"",
         "uses.disabled": "isSaving",
-        "produces.activate": "save()"
+        "produces.activate": "save()",
+        "uses.icon": "\"save\""
+      }
+    },
+    {
+      "id": "boldToggle",
+      "type": "ActionControls",
+      "attrs": {
+        "uses.label": "\"Bold\"",
+        "uses.pressed": "isBold",
+        "produces.activate": "toggleBold()"
+      }
+    },
+    {
+      "id": "incrementButton",
+      "type": "ActionControls",
+      "attrs": {
+        "uses.label": "\"+\"",
+        "uses.autoRepeat": "true",
+        "produces.activate": "increment()"
       }
     },
     {

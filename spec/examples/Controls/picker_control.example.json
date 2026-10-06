@@ -16,6 +16,18 @@
       }
     },
     {
+      "id": "attachmentPicker",
+      "type": "PickerControl",
+      "attrs": {
+        "uses.label": "\"Attachments\"",
+        "uses.kind": "\"file\"",
+        "uses.accept": "\"image/*,.pdf\"",
+        "uses.multiple": "true",
+        "uses.disabled": "isUploading",
+        "produces.valueChange": "onAttachmentsChange($event)"
+      }
+    },
+    {
       "id": "fontPicker",
       "type": "PickerControl"
     },
