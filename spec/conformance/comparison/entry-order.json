@@ -1,0 +1,89 @@
+{
+  "description": "Within each list, entries follow a depth-first walk: at each node the removals by key, then the additions by key, then the shared members by key; a node's own entries precede those of its members, so a list is not sorted by path.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "beta",
+        "type": "Tabs",
+        "children": [
+          {
+            "id": "gone",
+            "type": "tab"
+          }
+        ]
+      },
+      {
+        "id": "alpha",
+        "type": "Tabs",
+        "attrs": {
+          "uses.dense": "true"
+        }
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "alpha",
+        "type": "Tabs",
+        "attrs": {
+          "uses.dense": "false"
+        }
+      },
+      {
+        "id": "beta",
+        "type": "Tabs",
+        "children": [
+          {
+            "id": "two",
+            "type": "tab"
+          }
+        ]
+      },
+      {
+        "id": "zeta",
+        "type": "Tabs"
+      }
+    ]
+  },
+  "expected": {
+    "remove": [
+      {
+        "path": "/children/beta/children/gone",
+        "reference": {
+          "id": "gone",
+          "type": "tab"
+        }
+      }
+    ],
+    "add": [
+      {
+        "path": "/children/zeta",
+        "new": {
+          "id": "zeta",
+          "type": "Tabs"
+        }
+      },
+      {
+        "path": "/children/beta/children/two",
+        "new": {
+          "id": "two",
+          "type": "tab"
+        }
+      }
+    ],
+    "change": [
+      {
+        "path": "/children/alpha/attrs/uses.dense",
+        "reference": "true",
+        "new": "false"
+      }
+    ]
+  }
+}

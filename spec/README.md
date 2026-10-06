@@ -102,8 +102,9 @@ The packages and tools are not part of the specification. They implement it:
   TypeScript types and the `ng-openui-spec` CLI. See the
   [OpenUI JSON editing guide](tooling/editing.md).
 - **Python:** the [`openui-spec`](https://pypi.org/project/openui-spec/) package on PyPI
-  provides the `openui_spec` editing CLI and the `compare_openui_spec` comparison CLI. See
-  the [OpenUI JSON comparison guide](tooling/comparison.md).
+  provides the `openui_spec` editing CLI, the `compare_openui_spec` comparison CLI and the
+  importable `openui_spec.compare` API. See the
+  [OpenUI JSON comparison guide](tooling/comparison.md).
 - **Playground:** the [playground](playground.html) page validates a pasted document
   against the JSON Schema and the catalog and renders its element tree.
 

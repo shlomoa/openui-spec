@@ -1,0 +1,54 @@
+{
+  "description": "Paths nest one id segment per identified list.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "panel",
+        "type": "Tabs",
+        "children": [
+          {
+            "id": "one",
+            "type": "tab",
+            "attrs": {
+              "uses.label": "\"A\""
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "panel",
+        "type": "Tabs",
+        "children": [
+          {
+            "id": "one",
+            "type": "tab",
+            "attrs": {
+              "uses.label": "\"B\""
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "expected": {
+    "remove": [],
+    "add": [],
+    "change": [
+      {
+        "path": "/children/panel/children/one/attrs/uses.label",
+        "reference": "\"A\"",
+        "new": "\"B\""
+      }
+    ]
+  }
+}

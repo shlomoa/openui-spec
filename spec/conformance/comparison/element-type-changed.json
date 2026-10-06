@@ -1,0 +1,36 @@
+{
+  "description": "An element with the same id and another type is a change at /children/<id>/type, not a remove and an add.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "choice",
+        "type": "Checkbox"
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "choice",
+        "type": "Radio"
+      }
+    ]
+  },
+  "expected": {
+    "remove": [],
+    "add": [],
+    "change": [
+      {
+        "path": "/children/choice/type",
+        "reference": "Checkbox",
+        "new": "Radio"
+      }
+    ]
+  }
+}

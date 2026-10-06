@@ -1,0 +1,50 @@
+{
+  "description": "A whole-list comparison ignores order too, so reordering an unidentified list produces no entry.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "dup",
+        "type": "tab",
+        "attrs": {
+          "uses.label": "\"A\""
+        }
+      },
+      {
+        "id": "dup",
+        "type": "tab",
+        "attrs": {
+          "uses.label": "\"B\""
+        }
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "dup",
+        "type": "tab",
+        "attrs": {
+          "uses.label": "\"B\""
+        }
+      },
+      {
+        "id": "dup",
+        "type": "tab",
+        "attrs": {
+          "uses.label": "\"A\""
+        }
+      }
+    ]
+  },
+  "expected": {
+    "remove": [],
+    "add": [],
+    "change": []
+  }
+}

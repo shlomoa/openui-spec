@@ -1,0 +1,36 @@
+{
+  "description": "A list attribute is an unidentified list; reordering its items produces no entry.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "ordersTable",
+        "type": "Table",
+        "attrs": {
+          "uses.pageSizes": ["10", null, "25"]
+        }
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "ordersTable",
+        "type": "Table",
+        "attrs": {
+          "uses.pageSizes": ["25", "10", null]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "remove": [],
+    "add": [],
+    "change": []
+  }
+}

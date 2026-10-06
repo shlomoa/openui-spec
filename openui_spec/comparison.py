@@ -1,5 +1,8 @@
-#!/usr/bin/env python3
-"""Compare two OpenUI JSON specifications and emit a deterministic changelog."""
+"""Compare two OpenUI JSON documents and emit a deterministic changelog.
+
+The output contract (path grammar, identity rules, entry order) is specified in
+`spec/tooling/comparison.md`; the cases in `spec/conformance/comparison/` pin it.
+"""
 
 from __future__ import annotations
 
@@ -58,9 +61,17 @@ def _compare(
 
 
 def _is_identified_list(value: Any) -> bool:
+    """A list is identified when every item is an object with a unique string `id`.
+
+    An empty list is identified.
+    """
     if not isinstance(value, Sequence) or isinstance(value, (str, bytes, bytearray)):
         return False
-    identifiers = [item.get("id") for item in value if isinstance(item, Mapping)]
+    identifiers = [
+        item["id"]
+        for item in value
+        if isinstance(item, Mapping) and isinstance(item.get("id"), str)
+    ]
     return len(identifiers) == len(value) and len(set(identifiers)) == len(identifiers)
 
 

@@ -1,0 +1,54 @@
+{
+  "description": "An element present only in the reference identified list is removed at /children/<id>, with the whole element.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "deleteDialog",
+        "type": "dialog",
+        "attrs": {
+          "uses.open": "false"
+        }
+      },
+      {
+        "id": "ordersTable",
+        "type": "Table",
+        "attrs": {
+          "uses.pageSizes": ["10", "25"]
+        }
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "deleteDialog",
+        "type": "dialog",
+        "attrs": {
+          "uses.open": "false"
+        }
+      }
+    ]
+  },
+  "expected": {
+    "remove": [
+      {
+        "path": "/children/ordersTable",
+        "reference": {
+          "id": "ordersTable",
+          "type": "Table",
+          "attrs": {
+            "uses.pageSizes": ["10", "25"]
+          }
+        }
+      }
+    ],
+    "add": [],
+    "change": []
+  }
+}

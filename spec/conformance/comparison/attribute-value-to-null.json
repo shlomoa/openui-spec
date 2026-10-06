@@ -1,0 +1,42 @@
+{
+  "description": "A scalar that becomes `null` is a change; `null` is a value, not an absence.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "ordersTable",
+        "type": "Table",
+        "attrs": {
+          "uses.title": "\"Orders\""
+        }
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "ordersTable",
+        "type": "Table",
+        "attrs": {
+          "uses.title": null
+        }
+      }
+    ]
+  },
+  "expected": {
+    "remove": [],
+    "add": [],
+    "change": [
+      {
+        "path": "/children/ordersTable/attrs/uses.title",
+        "reference": "\"Orders\"",
+        "new": null
+      }
+    ]
+  }
+}

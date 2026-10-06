@@ -32,7 +32,7 @@
 | [`spec/playground.html`](spec/playground.html)                                              | The playground: paste a document, see its validation and element tree.                                                                                                |
 | [`spec/bin/`](#spec-tools), [`spec/tests/`](spec/tests/)                                    | The spec tools and the EBNF parser tests.                                                                                                                             |
 | [`spec/survey/`](spec/survey/)                                                              | The framework surveys, the v1 publish plan and the change records (`*.done.md` applied, `*.notdone.md` not applied). Excluded from pre-commit and the published site. |
-| [`bin/`](bin/), [`pyproject.toml`](pyproject.toml)                                          | The `openui-spec` Python package, including the parse, model and validate API `bin/openui_document.py`.                                                               |
+| [`bin/`](bin/), [`openui_spec/`](openui_spec/), [`pyproject.toml`](pyproject.toml)          | The `openui-spec` Python package: the parse, model and validate API `bin/openui_document.py` and the comparison API `openui_spec/comparison.py`.                      |
 | [`src/`](src/), [`package.json`](package.json)                                              | The `@shlomoa/openui-spec` npm package, including the same API in `src/document.ts`.                                                                                  |
 | [`tests/`](tests/TEST_PLAN.md)                                                              | The spec-contract Python tests and the npm package tests.                                                                                                             |
 | [`generators/angular/generator/`](generators/angular/generator/)                            | The Angular Material generator (TypeScript npm package) and its fixtures.                                                                                             |
@@ -56,8 +56,9 @@ before the change is merged.
 
 ### Examples and fixtures
 
-The worked examples under `spec/examples/` and the generator fixtures under
-`generators/angular/generator/tests/fixtures/` are generated, never written by hand:
+The worked examples under `spec/examples/`, the generator fixtures under
+`generators/angular/generator/tests/fixtures/` and the comparison cases under
+`spec/conformance/comparison/` are generated, never written by hand:
 
 - New or changed content is generated with the
   [Spec JSON File Generator](.github/agents/spec-json-file-generator.agent.md) agent,
@@ -65,6 +66,8 @@ The worked examples under `spec/examples/` and the generator fixtures under
 - A format change is applied with a tool, such as `python -m spec.bin.migrate`
   ([Spec tools](#spec-tools)).
 - The input fixtures stay synchronized with their examples.
+- The comparison cases come from `python -m spec.bin.generate_comparison_cases`, which holds
+  their documents and expected changelogs; edit that module, then regenerate.
 
 The tests check that every example and fixture is valid at the current spec version.
 
@@ -219,6 +222,7 @@ the repository root with the virtual-environment Python (`python -m <module>`):
 | `spec.bin.render_taxonomy_html`      | `generic-taxonomy-html`      | Renders `spec/taxonomy/generic-ui-taxonomy.md` as the self-contained `spec/taxonomy/generic-ui-taxonomy.html` (images embedded). `--check` fails when the HTML is out of date.                                                                                                                                                                                                                                         |
 | `spec.bin.render_taxonomy_tree`      | `taxonomy-tree-html`         | Renders `spec/scopes/taxonomy_mapping.md` as the interactive `spec/taxonomy/taxonomy-tree.html`: a collapsible tree of sections, subcategories and entries, with the four alias columns as a per-source name overlay. `--check` fails when the page is out of date.                                                                                                                                                    |
 | `spec.bin.migrate`                   | —                            | Migrates OpenUI documents across format changes: the 0.5 `[x]` / `(x)` attribute keys to the typed `uses.` / `produces.` / `behaves.` keys, and (0.12) a JSON Boolean or number to a string. In worked examples it also (`*.example.json`), renames the attributes a contract declares under another name and adds missing required children; a folder argument migrates every document in it. `--check` only reports. |
+| `spec.bin.generate_comparison_cases` | `comparison-cases`           | Generates the [comparison cases](spec/conformance/README.md#comparison-cases) of `spec/conformance/comparison/`, with the current `SCHEMA_VERSION` in their documents. `--check` fails when a case file is missing, stale or unexpected.                                                                                                                                                                               |
 | `spec.bin.check_links`               | `markdown-internal-links`    | Checks that relative Markdown links and `#anchors` (GitHub heading slugs) resolve. External links are not fetched. With no arguments it checks every tracked Markdown file.                                                                                                                                                                                                                                            |
 
 ---

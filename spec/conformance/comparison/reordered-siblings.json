@@ -1,0 +1,64 @@
+{
+  "description": "Reordering the children of an identified list, at any depth, produces no entry.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "panel",
+        "type": "Tabs",
+        "children": [
+          {
+            "id": "one",
+            "type": "tab"
+          },
+          {
+            "id": "two",
+            "type": "tab"
+          }
+        ]
+      },
+      {
+        "id": "deleteDialog",
+        "type": "dialog",
+        "attrs": {
+          "uses.open": "false"
+        }
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "deleteDialog",
+        "type": "dialog",
+        "attrs": {
+          "uses.open": "false"
+        }
+      },
+      {
+        "id": "panel",
+        "type": "Tabs",
+        "children": [
+          {
+            "id": "two",
+            "type": "tab"
+          },
+          {
+            "id": "one",
+            "type": "tab"
+          }
+        ]
+      }
+    ]
+  },
+  "expected": {
+    "remove": [],
+    "add": [],
+    "change": []
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "description": "Moving an element to another parent is a remove at the old path plus an add at the new path, with the whole element in both.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "left",
+        "type": "Tabs",
+        "children": [
+          {
+            "id": "one",
+            "type": "tab",
+            "attrs": {
+              "uses.label": "\"A\""
+            }
+          }
+        ]
+      },
+      {
+        "id": "right",
+        "type": "Tabs",
+        "children": []
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "left",
+        "type": "Tabs",
+        "children": []
+      },
+      {
+        "id": "right",
+        "type": "Tabs",
+        "children": [
+          {
+            "id": "one",
+            "type": "tab",
+            "attrs": {
+              "uses.label": "\"A\""
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "expected": {
+    "remove": [
+      {
+        "path": "/children/left/children/one",
+        "reference": {
+          "id": "one",
+          "type": "tab",
+          "attrs": {
+            "uses.label": "\"A\""
+          }
+        }
+      }
+    ],
+    "add": [
+      {
+        "path": "/children/right/children/one",
+        "new": {
+          "id": "one",
+          "type": "tab",
+          "attrs": {
+            "uses.label": "\"A\""
+          }
+        }
+      }
+    ],
+    "change": []
+  }
+}
