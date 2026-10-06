@@ -1,0 +1,56 @@
+{
+  "description": "Attributes are object members, so a removed, added or changed attribute is keyed by its attribute name.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "ordersTable",
+        "type": "Table",
+        "attrs": {
+          "uses.rows": "orders",
+          "uses.dense": "true",
+          "uses.title": "\"Old\""
+        }
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "ordersTable",
+        "type": "Table",
+        "attrs": {
+          "uses.rows": "orders",
+          "uses.title": "\"New\"",
+          "uses.pageSize": "10"
+        }
+      }
+    ]
+  },
+  "expected": {
+    "remove": [
+      {
+        "path": "/children/ordersTable/attrs/uses.dense",
+        "reference": "true"
+      }
+    ],
+    "add": [
+      {
+        "path": "/children/ordersTable/attrs/uses.pageSize",
+        "new": "10"
+      }
+    ],
+    "change": [
+      {
+        "path": "/children/ordersTable/attrs/uses.title",
+        "reference": "\"Old\"",
+        "new": "\"New\""
+      }
+    ]
+  }
+}

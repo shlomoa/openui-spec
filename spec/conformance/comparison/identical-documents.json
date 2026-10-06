@@ -1,0 +1,50 @@
+{
+  "description": "Equal documents produce no entries.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "ordersTable",
+        "type": "Table",
+        "attrs": {
+          "uses.pageSizes": ["10", "25"]
+        }
+      },
+      {
+        "id": "deleteDialog",
+        "type": "dialog",
+        "attrs": {
+          "uses.open": "false"
+        }
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "ordersTable",
+        "type": "Table",
+        "attrs": {
+          "uses.pageSizes": ["10", "25"]
+        }
+      },
+      {
+        "id": "deleteDialog",
+        "type": "dialog",
+        "attrs": {
+          "uses.open": "false"
+        }
+      }
+    ]
+  },
+  "expected": {
+    "remove": [],
+    "add": [],
+    "change": []
+  }
+}

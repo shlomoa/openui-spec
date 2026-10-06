@@ -1,0 +1,42 @@
+{
+  "description": "Item multiplicity counts: a repeated item makes the lists differ.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "ordersTable",
+        "type": "Table",
+        "attrs": {
+          "uses.pageSizes": ["10", "25"]
+        }
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "ordersTable",
+        "type": "Table",
+        "attrs": {
+          "uses.pageSizes": ["10", "10", "25"]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "remove": [],
+    "add": [],
+    "change": [
+      {
+        "path": "/children/ordersTable/attrs/uses.pageSizes",
+        "reference": ["10", "25"],
+        "new": ["10", "10", "25"]
+      }
+    ]
+  }
+}

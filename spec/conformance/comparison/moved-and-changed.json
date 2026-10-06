@@ -1,0 +1,80 @@
+{
+  "description": "A moved element that also changes is still only a remove plus an add; the change is inside the added value.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "left",
+        "type": "Tabs",
+        "children": [
+          {
+            "id": "one",
+            "type": "tab",
+            "attrs": {
+              "uses.label": "\"A\""
+            }
+          }
+        ]
+      },
+      {
+        "id": "right",
+        "type": "Tabs",
+        "children": []
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "left",
+        "type": "Tabs",
+        "children": []
+      },
+      {
+        "id": "right",
+        "type": "Tabs",
+        "children": [
+          {
+            "id": "one",
+            "type": "tab",
+            "attrs": {
+              "uses.label": "\"B\""
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "expected": {
+    "remove": [
+      {
+        "path": "/children/left/children/one",
+        "reference": {
+          "id": "one",
+          "type": "tab",
+          "attrs": {
+            "uses.label": "\"A\""
+          }
+        }
+      }
+    ],
+    "add": [
+      {
+        "path": "/children/right/children/one",
+        "new": {
+          "id": "one",
+          "type": "tab",
+          "attrs": {
+            "uses.label": "\"B\""
+          }
+        }
+      }
+    ],
+    "change": []
+  }
+}

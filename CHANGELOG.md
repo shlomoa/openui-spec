@@ -3,6 +3,31 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.12.1] - 2026-10-06
+
+### Comparison API and output contract
+
+- The comparison is importable as `openui_spec.compare(reference, new)` from the new
+  `openui_spec` package of the `openui-spec` wheel, with `openui_spec.__version__`; it does
+  not depend on a top-level package named `bin`. The `compare_openui_spec` command now runs
+  `openui_spec.comparison:main`. `bin.compare_openui_spec` remains a deprecated alias
+  of the new module and is removed in a later release; downstream tools switch to
+  `from openui_spec import compare`.
+- The [comparison guide](spec/tooling/comparison.md#output-contract) defines the changelog
+  exactly: its entries, the path grammar (member-name and element-id segments, JSON Pointer
+  escaping, root-level paths), the identity rules (sibling reorder gives no entry, a moved
+  element is a `remove` plus an `add`, a list that is not identified is compared as a whole
+  and gives one `change` at the list path) and the order of the entries.
+- The conformance suite gains `spec/conformance/comparison/`, 26 comparison cases run by
+  `tests/test_comparison_conformance.py`, each also checked against the opposite
+  comparison.
+- A list is identified only when every item is an object with a string `id` and the ids
+  are unique. Before, an item without an `id` (a single one, or `id: null`) was taken for
+  identified and reported at `/…/None`, and an unhashable `id` raised `TypeError`.
+  The change leaves the result for every grammar-valid document as it was.
+- No specification content changes, so `SCHEMA_VERSION`, the catalog and the documents
+  keep `0.12.0`; the package versions move to `0.12.1`.
+
 ## [0.12.0] - 2026-10-01
 
 ### Attribute value grammar
@@ -578,3 +603,4 @@ and enforced rather than adding or removing catalog types.
 [0.11.0]: https://github.com/shlomoa/openui-spec/compare/v0.10.0...v0.11.0
 [0.11.1]: https://github.com/shlomoa/openui-spec/compare/v0.11.0...v0.11.1
 [0.12.0]: https://github.com/shlomoa/openui-spec/compare/v0.11.1...v0.12.0
+[0.12.1]: https://github.com/shlomoa/openui-spec/compare/v0.12.0...v0.12.1

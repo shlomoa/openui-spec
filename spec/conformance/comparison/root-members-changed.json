@@ -1,0 +1,47 @@
+{
+  "description": "A different root `type` or `version` is a change at /type or /version.",
+  "reference": {
+    "id": "root",
+    "version": "0.11.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "deleteDialog",
+        "type": "dialog",
+        "attrs": {
+          "uses.open": "false"
+        }
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "Dialog",
+    "children": [
+      {
+        "id": "deleteDialog",
+        "type": "dialog",
+        "attrs": {
+          "uses.open": "false"
+        }
+      }
+    ]
+  },
+  "expected": {
+    "remove": [],
+    "add": [],
+    "change": [
+      {
+        "path": "/type",
+        "reference": "html",
+        "new": "Dialog"
+      },
+      {
+        "path": "/version",
+        "reference": "0.11.0",
+        "new": "0.12.0"
+      }
+    ]
+  }
+}

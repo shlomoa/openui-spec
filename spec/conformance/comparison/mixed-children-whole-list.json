@@ -1,0 +1,66 @@
+{
+  "description": "A list with an item that has no `id` is not identified, whatever the other items are: a difference is one change at the list path. (The document is invalid: `grammar/missing-property`.)",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "one",
+        "type": "tab"
+      },
+      {
+        "type": "tab"
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "one",
+        "type": "tab"
+      },
+      {
+        "type": "tab"
+      },
+      {
+        "id": "two",
+        "type": "tab"
+      }
+    ]
+  },
+  "expected": {
+    "remove": [],
+    "add": [],
+    "change": [
+      {
+        "path": "/children",
+        "reference": [
+          {
+            "id": "one",
+            "type": "tab"
+          },
+          {
+            "type": "tab"
+          }
+        ],
+        "new": [
+          {
+            "id": "one",
+            "type": "tab"
+          },
+          {
+            "type": "tab"
+          },
+          {
+            "id": "two",
+            "type": "tab"
+          }
+        ]
+      }
+    ]
+  }
+}

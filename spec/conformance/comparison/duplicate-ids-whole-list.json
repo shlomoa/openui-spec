@@ -1,0 +1,86 @@
+{
+  "description": "A list with a repeated id is not identified: it is compared as a whole, and a difference is one change at the list path. (The document is invalid: ids are unique, `document/duplicate-id`.)",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "dup",
+        "type": "tab",
+        "attrs": {
+          "uses.label": "\"A\""
+        }
+      },
+      {
+        "id": "dup",
+        "type": "tab",
+        "attrs": {
+          "uses.label": "\"B\""
+        }
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "dup",
+        "type": "tab",
+        "attrs": {
+          "uses.label": "\"A\""
+        }
+      },
+      {
+        "id": "dup",
+        "type": "tab",
+        "attrs": {
+          "uses.label": "\"C\""
+        }
+      }
+    ]
+  },
+  "expected": {
+    "remove": [],
+    "add": [],
+    "change": [
+      {
+        "path": "/children",
+        "reference": [
+          {
+            "id": "dup",
+            "type": "tab",
+            "attrs": {
+              "uses.label": "\"A\""
+            }
+          },
+          {
+            "id": "dup",
+            "type": "tab",
+            "attrs": {
+              "uses.label": "\"B\""
+            }
+          }
+        ],
+        "new": [
+          {
+            "id": "dup",
+            "type": "tab",
+            "attrs": {
+              "uses.label": "\"A\""
+            }
+          },
+          {
+            "id": "dup",
+            "type": "tab",
+            "attrs": {
+              "uses.label": "\"C\""
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

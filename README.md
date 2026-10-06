@@ -46,6 +46,12 @@ compare_openui_spec reference.json updated.json --output changelog.json
 The parse, model and validate API is the `bin.openui_document` module (`parse`,
 `validate`, `validate_text`, `Document`, `Element`, `Attribute`, `Diagnostic`).
 
+The comparison API is `openui_spec.compare(reference, new)`, which returns the same
+changelog as `compare_openui_spec`; its
+[output contract](https://openui-spec.readthedocs.io/en/latest/tooling/comparison/#output-contract)
+is pinned by the conformance suite's comparison cases. `bin.compare_openui_spec` is a
+deprecated alias.
+
 ### TypeScript and Node.js
 
 The [`@shlomoa/openui-spec`](https://www.npmjs.com/package/@shlomoa/openui-spec)

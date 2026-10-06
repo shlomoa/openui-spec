@@ -18,6 +18,7 @@ spec/conformance/
   valid/<case>.json              documents a tool must accept
   invalid/<case>.json            documents a tool must reject
   invalid/<case>.expected.json   the diagnostics a tool must report for <case>.json
+  comparison/<case>.json         two documents and the changelog a comparison reports
 ```
 
 - A case name is kebab-case and says what the document shows, for example
@@ -115,3 +116,27 @@ contract diagnostic.
   place, every invalid document has its expected diagnostics, every
   expected-diagnostics file validates against the schema, every code has an
   invalid case, and every document declares the current spec version.
+
+## Comparison cases
+
+`comparison/` holds the cases of a second, separate set: the changelog a tool reports
+when it compares two OpenUI documents, as `compare_openui_spec` and `openui_spec.compare`
+do. They are for comparison tools and place no requirement on a validator. The
+[comparison guide](../tooling/comparison.md#output-contract) defines the changelog; the cases
+pin it.
+
+A case is a JSON object with four members:
+
+- `description` is one sentence that says what the case shows;
+- `reference` and `new` are the two documents, compared in that order;
+- `expected` is the changelog, an object with the lists `remove`, `add` and `change`.
+
+A tool passes a case when its changelog for `reference` and `new` equals `expected`
+as JSON, including the order of each list. It then also reports, for `new` and
+`reference`, the same entries with the roles swapped: every `add` becomes a `remove`
+and the other way round, and every `change` swaps its `reference` and `new`. A case
+document need not be valid: the comparison does not validate, and some cases are
+invalid on purpose, for example a repeated id, so that the case can show the fallback
+for a list that is not identified. The documents are not checked against the current
+spec version. The case name is kebab-case and the case files are test data, so the
+tests check their layout and run them (`tests/test_comparison_conformance.py`).

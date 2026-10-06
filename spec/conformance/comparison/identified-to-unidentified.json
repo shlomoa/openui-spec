@@ -1,0 +1,60 @@
+{
+  "description": "When only one side is identified the comparison falls back to the whole list.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "one",
+        "type": "tab"
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "one",
+        "type": "tab"
+      },
+      {
+        "id": "one",
+        "type": "tab",
+        "attrs": {
+          "uses.label": "\"B\""
+        }
+      }
+    ]
+  },
+  "expected": {
+    "remove": [],
+    "add": [],
+    "change": [
+      {
+        "path": "/children",
+        "reference": [
+          {
+            "id": "one",
+            "type": "tab"
+          }
+        ],
+        "new": [
+          {
+            "id": "one",
+            "type": "tab"
+          },
+          {
+            "id": "one",
+            "type": "tab",
+            "attrs": {
+              "uses.label": "\"B\""
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

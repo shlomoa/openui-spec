@@ -1,0 +1,46 @@
+{
+  "description": "An object member present only in the new document is added as one entry at the member path, with the whole value.",
+  "reference": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "children": [
+      {
+        "id": "deleteDialog",
+        "type": "dialog",
+        "attrs": {
+          "uses.open": "false"
+        }
+      }
+    ]
+  },
+  "new": {
+    "id": "root",
+    "version": "0.12.0",
+    "type": "html",
+    "attrs": {
+      "uses.lang": "\"he\""
+    },
+    "children": [
+      {
+        "id": "deleteDialog",
+        "type": "dialog",
+        "attrs": {
+          "uses.open": "false"
+        }
+      }
+    ]
+  },
+  "expected": {
+    "remove": [],
+    "add": [
+      {
+        "path": "/attrs",
+        "new": {
+          "uses.lang": "\"he\""
+        }
+      }
+    ],
+    "change": []
+  }
+}

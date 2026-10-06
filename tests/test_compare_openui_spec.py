@@ -7,13 +7,17 @@ import tomllib
 import unittest
 from pathlib import Path
 
+import openui_spec
+import openui_spec.comparison
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = REPO_ROOT / "bin" / "compare_openui_spec.py"
 COMPARISON_DOCUMENTATION = REPO_ROOT / "spec" / "tooling" / "comparison.md"
-MODULE_SPEC = importlib.util.spec_from_file_location("compare_openui_spec", SCRIPT)
-assert MODULE_SPEC and MODULE_SPEC.loader
-compare_openui_spec = importlib.util.module_from_spec(MODULE_SPEC)
-MODULE_SPEC.loader.exec_module(compare_openui_spec)
+SHIM_SPEC = importlib.util.spec_from_file_location("compare_openui_spec", SCRIPT)
+assert SHIM_SPEC and SHIM_SPEC.loader
+shim = importlib.util.module_from_spec(SHIM_SPEC)
+SHIM_SPEC.loader.exec_module(shim)
+compare_openui_spec = openui_spec.comparison
 
 
 class CompareOpenUiSpecTest(unittest.TestCase):
@@ -154,7 +158,62 @@ class CompareOpenUiSpecTest(unittest.TestCase):
     def test_console_entry_point_is_registered(self) -> None:
         pyproject = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
         self.assertEqual(
-            pyproject["project"]["scripts"]["compare_openui_spec"], "bin.compare_openui_spec:main"
+            pyproject["project"]["scripts"]["compare_openui_spec"], "openui_spec.comparison:main"
+        )
+
+    def test_importable_entry_point_does_not_need_the_bin_package(self) -> None:
+        pyproject = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+        self.assertIn("openui_spec", pyproject["tool"]["setuptools"]["packages"])
+        self.assertIs(openui_spec.compare, openui_spec.comparison.compare)
+        source = (REPO_ROOT / "openui_spec" / "comparison.py").read_text(encoding="utf-8")
+        self.assertNotRegex(source, r"(?m)^\s*(from|import)\s+bin\b")
+        self.assertEqual(
+            openui_spec.compare({"id": "root"}, {"id": "root", "type": "html"}),
+            {"remove": [], "add": [{"path": "/type", "new": "html"}], "change": []},
+        )
+
+    def test_package_version_is_the_pyproject_version(self) -> None:
+        pyproject = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+        version = pyproject["project"]["version"]
+        schema_version = (REPO_ROOT / "SCHEMA_VERSION").read_text(encoding="utf-8").strip()
+        # A package-only patch keeps the spec's major.minor (RELEASING.md stage 2).
+        self.assertEqual(version.rsplit(".", 1)[0], schema_version.rsplit(".", 1)[0])
+        installed = openui_spec.__version__
+        self.assertTrue(installed == "0+unknown" or installed == version, installed)
+
+    def test_bin_module_is_a_deprecated_alias(self) -> None:
+        self.assertIs(shim.compare, openui_spec.compare)
+        self.assertIs(shim.main, openui_spec.comparison.main)
+
+    def test_path_segments_use_json_pointer_escaping(self) -> None:
+        reference = {"a/b": {"c~d": "x"}, "list": [{"id": "x/y~z", "v": "1"}]}
+        new = {"a/b": {"c~d": "y"}, "list": [{"id": "x/y~z", "v": "2"}]}
+
+        self.assertEqual(
+            compare_openui_spec.compare(reference, new)["change"],
+            [
+                {"path": "/a~1b/c~0d", "reference": "x", "new": "y"},
+                {"path": "/list/x~1y~0z/v", "reference": "1", "new": "2"},
+            ],
+        )
+
+    def test_only_string_ids_identify_a_list(self) -> None:
+        # An item without an `id`, or with a non-string `id`, makes the list unidentified.
+        for items in ([{"type": "a"}], [{"id": 1}], [{"id": None}], [{"id": ["a"]}]):
+            with self.subTest(items=items):
+                self.assertEqual(
+                    compare_openui_spec.compare({"children": items}, {"children": []}),
+                    {
+                        "remove": [],
+                        "add": [],
+                        "change": [{"path": "/children", "reference": items, "new": []}],
+                    },
+                )
+
+    def test_root_that_is_not_an_object_is_one_change(self) -> None:
+        self.assertEqual(
+            compare_openui_spec.compare("a", "b"),
+            {"remove": [], "add": [], "change": [{"path": "/", "reference": "a", "new": "b"}]},
         )
 
 
