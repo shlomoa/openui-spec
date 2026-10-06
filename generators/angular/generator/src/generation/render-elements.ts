@@ -1,6 +1,6 @@
 import type { DataModelElement } from "../data-model/element-model";
 import { getLogger } from "../logging/logger";
-import { renderDialog } from "./renderers/dialog-renderer";
+import { dialogFootprint, renderDialog } from "./renderers/dialog-renderer";
 import { emptyRendering, mergeRendering, RendererRegistry, type ElementRendering } from "./renderer-registry";
 
 const log = getLogger("amcg.render");
@@ -9,7 +9,11 @@ const log = getLogger("amcg.render");
  * The renderers of the implemented OpenUI types, keyed by exact catalog `type`. Each slice of
  * #203 adds the renderers of its object-type group here.
  */
-export const defaultRendererRegistry: RendererRegistry = new RendererRegistry().register("Dialog", renderDialog);
+export const defaultRendererRegistry: RendererRegistry = new RendererRegistry().register(
+  "Dialog",
+  renderDialog,
+  dialogFootprint,
+);
 
 /** The OpenUI types the generator renders, sorted. */
 export function implementedTypes(registry: RendererRegistry = defaultRendererRegistry): string[] {

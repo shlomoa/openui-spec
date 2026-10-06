@@ -33,6 +33,20 @@ export interface ElementRenderContext {
  */
 export type ElementRenderer = (element: DataModelElement, context: ElementRenderContext) => ElementRendering | undefined;
 
+/** The workspace folder and selector of the standalone component an element is emitted as. */
+export interface ComponentFootprint {
+  selector: string;
+  /** Workspace-relative folder that holds the component's files, for example `src/components/app-confirm-dialog`. */
+  directory: string;
+}
+
+/**
+ * Names the standalone component a renderer emits for an element, so the classifier can
+ * attribute the component's files back to the element without running the generator. It
+ * returns `undefined` for an element that is not emitted as a standalone component.
+ */
+export type ElementFootprint = (element: DataModelElement) => ComponentFootprint | undefined;
+
 /** Returns an {@link ElementRendering} that contributes nothing. */
 export function emptyRendering(): ElementRendering {
   return { template: "", imports: new Set(), typeImports: new AngularImportCollector(), members: [], styles: "", files: [] };
@@ -51,18 +65,30 @@ export function mergeRendering(target: ElementRendering, source: ElementRenderin
 /** A set of renderers keyed by the exact catalog `type` of the elements they render. */
 export class RendererRegistry {
   private readonly renderers = new Map<string, ElementRenderer>();
+  private readonly footprints = new Map<string, ElementFootprint>();
 
-  /** Registers the renderer of {@link type}; a type has exactly one renderer. */
-  register(type: string, renderer: ElementRenderer): this {
+  /**
+   * Registers the renderer of {@link type}; a type has exactly one renderer. A renderer that
+   * emits a standalone component also registers its {@link footprint}.
+   */
+  register(type: string, renderer: ElementRenderer, footprint?: ElementFootprint): this {
     if (this.renderers.has(type)) {
       throw new Error(`A renderer is already registered for OpenUI type '${type}'.`);
     }
     this.renderers.set(type, renderer);
+    if (footprint) {
+      this.footprints.set(type, footprint);
+    }
     return this;
   }
 
   get(type: string): ElementRenderer | undefined {
     return this.renderers.get(type);
+  }
+
+  /** The component footprint of {@link element}, when its type's renderer emits it as a standalone component. */
+  footprintOf(element: DataModelElement): ComponentFootprint | undefined {
+    return this.footprints.get(element.type)?.(element);
   }
 
   /** The registered types, sorted: the implemented-type list. */

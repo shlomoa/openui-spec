@@ -3,7 +3,7 @@ import { normalizeRoute } from "../../data-model/normalize-spec";
 import type { AngularDialogActionModel, AngularDialogComponentModel } from "../angular-model";
 import { emitDialogComponent } from "../emit-dialog";
 import { titleFromName, toPascalCase } from "../names";
-import { emptyRendering, type ElementRenderer } from "../renderer-registry";
+import { emptyRendering, type ComponentFootprint, type ElementRenderer } from "../renderer-registry";
 
 /**
  * Renders a `Dialog` element as a standalone Angular Material dialog component under
@@ -20,13 +20,19 @@ export const renderDialog: ElementRenderer = (element) => {
   return { ...emptyRendering(), files: emitDialogComponent(component) };
 };
 
+/** The folder and selector of the component a `Dialog` element is emitted as. */
+export function dialogFootprint(dialog: DataModelElement): ComponentFootprint {
+  const selector = `app-${normalizeRoute(dialog.id)}`;
+  return { selector, directory: `src/components/${selector}` };
+}
+
 /** Derives the Angular dialog component model from a `Dialog` element, or `undefined` when it lacks the dialog parts. */
 export function buildDialogComponentModel(dialog: DataModelElement): AngularDialogComponentModel | undefined {
   if (!["dialogTitle", "dialogContent", "dialogActions"].every((id) => findChildById(dialog, id))) {
     return undefined;
   }
 
-  const directoryName = `app-${normalizeRoute(dialog.id)}`;
+  const directoryName = dialogFootprint(dialog).selector;
   return {
     selector: directoryName,
     className: `${toPascalCase(directoryName)}Component`,

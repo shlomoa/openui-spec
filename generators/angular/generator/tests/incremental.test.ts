@@ -784,3 +784,98 @@ test("refuses to apply a plan that deletes outside the output directory", async 
     await cleanupTestOutput(outDir);
   }
 });
+
+const DIALOG_INPUT = path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "dialog", "input_dialog", "dialog.example.json");
+const DIALOG_COMPONENT_DIRECTORY = "src/components/app-confirm-dialog";
+const DIALOG_COMPONENT_FILES = ["ts", "html", "scss"].map(
+  (extension) => `${DIALOG_COMPONENT_DIRECTORY}/app-confirm-dialog.component.${extension}`,
+);
+
+/** The dialog example, with `confirmDialog` edited by {@link edit}. */
+async function dialogInput(edit: (dialog: OpenUiElement) => OpenUiElement): Promise<OpenUiDocument> {
+  const document = JSON.parse(await readFile(DIALOG_INPUT, "utf8")) as OpenUiDocument;
+  return { ...document, children: (document.children ?? []).map((child) => (child.id === "confirmDialog" ? edit(child) : child)) };
+}
+
+function expectDialogOwner(entry: { classification: { kind: string; nodeId?: string; nodeType?: string; selector?: string } }): void {
+  assert.equal(entry.classification.kind, "component");
+  assert.equal(entry.classification.nodeId, "confirmDialog");
+  assert.equal(entry.classification.nodeType, "Dialog");
+  assert.equal(entry.classification.selector, "app-confirm-dialog");
+}
+
+test("element-owned files — adding the dialog parts adds its component files, owned by the dialog element", async () => {
+  const tempRoot = await createTestOutputDirectory();
+  try {
+    const outDir = path.join(tempRoot, "workspace");
+    const withoutParts = await writeJsonFile(
+      path.join(tempRoot, "inputs", "without-parts.json"),
+      await dialogInput((dialog) => ({ ...dialog, children: [] })),
+    );
+    await generate(withoutParts, outDir);
+    await assert.rejects(stat(path.join(outDir, DIALOG_COMPONENT_DIRECTORY)));
+
+    const plan = await planAgainstWorkspace(DIALOG_INPUT, outDir);
+
+    for (const relativePath of DIALOG_COMPONENT_FILES) {
+      const entry = plan.reconciled.find((candidate) => candidate.file.path === relativePath);
+      assert.ok(entry, `Expected reconciled entry for ${relativePath}.`);
+      assert.equal(entry.action, "add");
+      expectDialogOwner(entry);
+    }
+  } finally {
+    await cleanupTestOutput(tempRoot);
+  }
+});
+
+test("element-owned files — editing the dialog title modifies only its template, owned by the dialog element", async () => {
+  const tempRoot = await createTestOutputDirectory();
+  try {
+    const outDir = path.join(tempRoot, "workspace");
+    await generate(DIALOG_INPUT, outDir);
+
+    const retitled = await writeJsonFile(
+      path.join(tempRoot, "inputs", "retitled.json"),
+      await dialogInput((dialog) => ({
+        ...dialog,
+        children: (dialog.children ?? []).map((child) =>
+          child.id === "dialogTitle" ? { ...child, attrs: { text: '"Remove item?"' } } : child,
+        ),
+      })),
+    );
+    const plan = await planAgainstWorkspace(retitled, outDir);
+    const actions = new Map(
+      plan.reconciled.filter((entry) => DIALOG_COMPONENT_FILES.includes(entry.file.path)).map((entry) => [entry.file.path, entry]),
+    );
+
+    assert.equal(actions.size, DIALOG_COMPONENT_FILES.length);
+    for (const [relativePath, entry] of actions) {
+      assert.equal(entry.action, relativePath.endsWith(".html") ? "modify" : "match", relativePath);
+      expectDialogOwner(entry);
+    }
+  } finally {
+    await cleanupTestOutput(tempRoot);
+  }
+});
+
+test("element-owned files — removing the dialog parts deletes its component files, attributed to the dialog element", async () => {
+  const tempRoot = await createTestOutputDirectory();
+  try {
+    const outDir = path.join(tempRoot, "workspace");
+    await generate(DIALOG_INPUT, outDir);
+
+    const withoutParts = await writeJsonFile(
+      path.join(tempRoot, "inputs", "without-parts.json"),
+      await dialogInput((dialog) => ({ ...dialog, children: [] })),
+    );
+    const plan = await planAgainstWorkspace(withoutParts, outDir);
+
+    assert.deepEqual(plan.toDelete.map((entry) => entry.path).sort(), [...DIALOG_COMPONENT_FILES].sort());
+    plan.toDelete.forEach(expectDialogOwner);
+
+    await applyIncrementalPlan(outDir, plan);
+    await assert.rejects(stat(path.join(outDir, DIALOG_COMPONENT_DIRECTORY)), "Emptied component folders are pruned.");
+  } finally {
+    await cleanupTestOutput(tempRoot);
+  }
+});

@@ -1,9 +1,12 @@
 import path from "node:path";
 
 import { normalizeRoute } from "../data-model/normalize-spec";
+import { buildElementTree, type DataModelElement } from "../data-model/element-model";
 import { childrenOfType, extractOpenUiScopeNodes, findElementsByType, stringAttr } from "../spec/openui-sections";
 import type { OpenUiDocument, OpenUiElement } from "../spec/openui-spec.types";
 import { pageDirectory } from "./angular-paths";
+import { defaultRendererRegistry } from "./render-elements";
+import type { RendererRegistry } from "./renderer-registry";
 
 /**
  * Kinds of workspace artifact the classifier recognizes.
@@ -97,12 +100,15 @@ export class SpecManifestationIndex {
  * `src/components/<selector>` footprints; page scopes contribute
  * `src/app/pages/<route>` footprints.
  */
-export function buildSpecManifestationIndex(document: OpenUiDocument): SpecManifestationIndex {
+export function buildSpecManifestationIndex(
+  document: OpenUiDocument,
+  registry: RendererRegistry = defaultRendererRegistry,
+): SpecManifestationIndex {
   const components = manifestedComponentNodes(document)
     .map(toComponentManifestation)
     .filter((manifestation): manifestation is SpecManifestation => manifestation !== undefined);
 
-  const pages = collectPageManifestations(document);
+  const pages = collectPageManifestations(document, registry);
 
   return new SpecManifestationIndex([...components, ...pages]);
 }
@@ -164,11 +170,11 @@ function toComponentManifestation(node: OpenUiElement): SpecManifestation | unde
   };
 }
 
-function collectPageManifestations(document: OpenUiDocument): SpecManifestation[] {
+function collectPageManifestations(document: OpenUiDocument, registry: RendererRegistry): SpecManifestation[] {
   return [
     ...collectScopedNodePageManifestations(document),
     ...collectExplicitPageManifestations(document),
-    ...collectConcreteInputPageManifestations(document),
+    ...collectConcreteInputPageManifestations(document, registry),
   ];
 }
 
@@ -202,7 +208,7 @@ function collectExplicitPageManifestations(document: OpenUiDocument): SpecManife
   });
 }
 
-function collectConcreteInputPageManifestations(document: OpenUiDocument): SpecManifestation[] {
+function collectConcreteInputPageManifestations(document: OpenUiDocument, registry: RendererRegistry): SpecManifestation[] {
   if (extractOpenUiScopeNodes(document).length > 0 || manifestedComponentNodes(document).length > 0) {
     return [];
   }
@@ -222,7 +228,7 @@ function collectConcreteInputPageManifestations(document: OpenUiDocument): SpecM
       route,
       directory: normalizeWorkspacePath(pageDirectory(route)),
     },
-    ...findElementsByType(document, "Dialog").map(toConcreteDialogComponentManifestation),
+    ...collectRenderedComponentManifestations(buildElementTree(document), registry),
   ];
 }
 
@@ -231,15 +237,17 @@ function manifestedComponentNodes(document: OpenUiDocument): OpenUiElement[] {
   return findElementsByType(document, "widget").filter((node) => stringAttr(node, "selector") !== undefined);
 }
 
-function toConcreteDialogComponentManifestation(node: OpenUiElement): SpecManifestation {
-  const selector = `app-${normalizeRoute(node.id)}`;
-  return {
-    kind: "component",
-    nodeId: node.id,
-    nodeType: node.type,
-    selector,
-    directory: `src/components/${selector}`,
-  };
+/**
+ * Returns the standalone components the renderers emit for the elements of a concrete
+ * document, each owned by the element it is emitted for. The footprints come from the renderer
+ * registry, so a renderer that emits a component is classified without a change here.
+ */
+function collectRenderedComponentManifestations(element: DataModelElement, registry: RendererRegistry): SpecManifestation[] {
+  const footprint = registry.footprintOf(element);
+  const own: SpecManifestation[] = footprint
+    ? [{ kind: "component", nodeId: element.id, nodeType: element.type, selector: footprint.selector, directory: normalizeWorkspacePath(footprint.directory) }]
+    : [];
+  return [...own, ...element.children.flatMap((child) => collectRenderedComponentManifestations(child, registry))];
 }
 
 function matchSelectorFromComponentFile(

@@ -4,6 +4,7 @@ import path from "node:path";
 import { test } from "node:test";
 
 import { buildSpecManifestationIndex, classifyWorkspacePath } from "../src/generation/classifier";
+import { emptyRendering, RendererRegistry } from "../src/generation/renderer-registry";
 import { normalizeRoute } from "../src/data-model/normalize-spec";
 import { extractOpenUiScopeNodes } from "../src/spec/openui-sections";
 import type { OpenUiDocument } from "../src/spec/openui-spec.types";
@@ -208,4 +209,65 @@ test("classifies concrete dialog page and component files without scopeDocument"
       "src/components/app-confirm-dialog/app-confirm-dialog.component.ts",
     ],
   );
+});
+
+async function findExampleFiles(directory: string): Promise<string[]> {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = await Promise.all(
+    entries.map((entry) => {
+      const fullPath = path.join(directory, entry.name);
+      if (entry.isDirectory()) {
+        return findExampleFiles(fullPath);
+      }
+      return entry.isFile() && entry.name.endsWith(".example.json") ? [fullPath] : [];
+    }),
+  );
+  return files.flat().sort();
+}
+
+test("classifies every generated file of every spec example to its owner", async () => {
+  const exampleFiles = await findExampleFiles(path.join(REPOSITORY_ROOT, "spec", "examples"));
+  assert.ok(exampleFiles.length > 0);
+
+  for (const examplePath of exampleFiles) {
+    const document = JSON.parse(await readFile(examplePath, "utf8")) as OpenUiDocument;
+    const index = buildSpecManifestationIndex(document);
+
+    for (const file of await emitAngularFilesFromInput(examplePath)) {
+      const classification = classifyWorkspacePath(file.path, index);
+      const label = `${path.basename(examplePath)}: ${file.path}`;
+      assert.notEqual(classification.kind, "unknown", `Expected ${label} to have an owner.`);
+      if (classification.kind !== "application") {
+        assert.ok(classification.nodeId, `Expected ${label} to name its owning element.`);
+      }
+    }
+  }
+});
+
+test("attributes the files of any registered renderer to the element it renders", async () => {
+  const registry = new RendererRegistry().register(
+    "Table",
+    (element) => ({
+      ...emptyRendering(),
+      files: ["ts", "html", "scss"].map((extension) => ({
+        path: `src/components/app-${element.id}/app-${element.id}.component.${extension}`,
+        content: "",
+      })),
+    }),
+    (element) => ({ selector: `app-${element.id}`, directory: `src/components/app-${element.id}` }),
+  );
+  const document = JSON.parse(
+    await readFile(
+      path.join(ANGULAR_GENERATOR_ROOT, "tests", "fixtures", "table", "input_table", "table.example.json"),
+      "utf8",
+    ),
+  ) as OpenUiDocument;
+  const index = buildSpecManifestationIndex(document, registry);
+
+  const classification = classifyWorkspacePath("src/components/app-root/app-root.component.html", index);
+  assert.equal(classification.kind, "component");
+  assert.equal(classification.nodeId, "root");
+  assert.equal(classification.nodeType, "Table");
+  assert.equal(classification.selector, "app-root");
+  assert.equal(classifyWorkspacePath("src/components/app-ordersTable", index).kind, "unknown");
 });
