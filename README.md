@@ -49,8 +49,7 @@ The parse, model and validate API is the `bin.openui_document` module (`parse`,
 The comparison API is `openui_spec.compare(reference, new)`, which returns the same
 changelog as `compare_openui_spec`; its
 [output contract](https://openui-spec.readthedocs.io/en/latest/tooling/comparison/#output-contract)
-is pinned by the conformance suite's comparison cases. `bin.compare_openui_spec` is a
-deprecated alias.
+is pinned by the conformance suite's comparison cases.
 
 ### TypeScript and Node.js
 

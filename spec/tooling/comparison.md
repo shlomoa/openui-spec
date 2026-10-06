@@ -32,9 +32,8 @@ from openui_spec import compare
 changes = compare(json.loads(reference_text), json.loads(new_text))
 ```
 
-`bin.compare_openui_spec`, the earlier import location, remains as a deprecated alias of
-`openui_spec.comparison` and is removed in a later release. Import `openui_spec.compare`
-instead.
+Import `openui_spec.compare`. The earlier import location, `bin.compare_openui_spec`, no
+longer exists.
 
 ## How it compares
 

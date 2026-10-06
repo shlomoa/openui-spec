@@ -10,9 +10,8 @@ published packages.
 - The comparison is importable as `openui_spec.compare(reference, new)` from the new
   `openui_spec` package of the `openui-spec` wheel, with `openui_spec.__version__`; it does
   not depend on a top-level package named `bin`. The `compare_openui_spec` command now runs
-  `openui_spec.comparison:main`. `bin.compare_openui_spec` remains a deprecated alias
-  of the new module and is removed in a later release; downstream tools switch to
-  `from openui_spec import compare`.
+  `openui_spec.comparison:main`. `bin.compare_openui_spec` is removed, with no
+  alias; downstream tools switch to `from openui_spec import compare`.
 - The [comparison guide](spec/tooling/comparison.md#output-contract) defines the changelog
   exactly: its entries, the path grammar (member-name and element-id segments, JSON Pointer
   escaping, root-level paths), the identity rules (sibling reorder gives no entry, a moved

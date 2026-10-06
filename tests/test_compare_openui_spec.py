@@ -11,12 +11,8 @@ import openui_spec
 import openui_spec.comparison
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = REPO_ROOT / "bin" / "compare_openui_spec.py"
+COMMAND = [sys.executable, "-m", "openui_spec.comparison"]
 COMPARISON_DOCUMENTATION = REPO_ROOT / "spec" / "tooling" / "comparison.md"
-SHIM_SPEC = importlib.util.spec_from_file_location("compare_openui_spec", SCRIPT)
-assert SHIM_SPEC and SHIM_SPEC.loader
-shim = importlib.util.module_from_spec(SHIM_SPEC)
-SHIM_SPEC.loader.exec_module(shim)
 compare_openui_spec = openui_spec.comparison
 
 
@@ -89,10 +85,11 @@ class CompareOpenUiSpecTest(unittest.TestCase):
             new_path.write_text('{"id": "root", "type": "html"}', encoding="utf-8")
 
             result = subprocess.run(
-                [sys.executable, str(SCRIPT), str(reference_path), str(new_path)],
+                [*COMMAND, str(reference_path), str(new_path)],
                 check=True,
                 capture_output=True,
                 text=True,
+                cwd=REPO_ROOT,
             )
 
         self.assertEqual(
@@ -115,8 +112,7 @@ class CompareOpenUiSpecTest(unittest.TestCase):
 
             result = subprocess.run(
                 [
-                    sys.executable,
-                    str(SCRIPT),
+                    *COMMAND,
                     str(reference_path),
                     str(new_path),
                     "--output",
@@ -125,6 +121,7 @@ class CompareOpenUiSpecTest(unittest.TestCase):
                 check=True,
                 capture_output=True,
                 text=True,
+                cwd=REPO_ROOT,
             )
 
             self.assertEqual(result.stdout, "")
@@ -146,10 +143,11 @@ class CompareOpenUiSpecTest(unittest.TestCase):
             new_path.write_text('{"id": "root"}', encoding="utf-8")
 
             result = subprocess.run(
-                [sys.executable, str(SCRIPT), str(reference_path), str(new_path)],
+                [*COMMAND, str(reference_path), str(new_path)],
                 check=False,
                 capture_output=True,
                 text=True,
+                cwd=REPO_ROOT,
             )
 
         self.assertEqual(result.returncode, 2)
@@ -181,9 +179,9 @@ class CompareOpenUiSpecTest(unittest.TestCase):
         installed = openui_spec.__version__
         self.assertTrue(installed == "0+unknown" or installed == version, installed)
 
-    def test_bin_module_is_a_deprecated_alias(self) -> None:
-        self.assertIs(shim.compare, openui_spec.compare)
-        self.assertIs(shim.main, openui_spec.comparison.main)
+    def test_the_bin_package_no_longer_provides_the_comparison(self) -> None:
+        self.assertFalse((REPO_ROOT / "bin" / "compare_openui_spec.py").exists())
+        self.assertIsNone(importlib.util.find_spec("bin.compare_openui_spec"))
 
     def test_path_segments_use_json_pointer_escaping(self) -> None:
         reference = {"a/b": {"c~d": "x"}, "list": [{"id": "x/y~z", "v": "1"}]}
