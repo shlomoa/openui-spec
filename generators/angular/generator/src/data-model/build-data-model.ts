@@ -1,5 +1,6 @@
 import { extractOpenUiScopeNodes, findElementsByType, stringAttr } from "../spec/openui-sections";
 import type { OpenUiDocument, OpenUiElement } from "../spec/openui-spec.types";
+import { buildElementTree } from "./element-model";
 import { normalizeFeatures, normalizeRoute, normalizeSummary } from "./normalize-spec";
 import type {
   DataModelApplication,
@@ -61,6 +62,7 @@ function buildConcreteInputModel(document: OpenUiDocument): DataModelApplication
           tags: [],
           formalDefinitions: [],
           features: ["component"] as DataModelFeature[],
+          element: buildElementTree(firstConcreteChild),
         },
       ]
     : [];

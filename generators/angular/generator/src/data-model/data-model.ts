@@ -1,3 +1,5 @@
+import type { DataModelElement } from "./element-model";
+
 export type DataModelFeature =
   | "accessibility"
   | "acceptance"
@@ -37,6 +39,8 @@ export interface DataModelPage {
   tags: string[];
   formalDefinitions: DataModelFormalDefinition[];
   features: DataModelFeature[];
+  /** The element tree of the page's root element; present for concrete input only. */
+  element?: DataModelElement;
 }
 
 export interface DataModelFormalDefinition {
