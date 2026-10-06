@@ -32,14 +32,13 @@ export async function prepareAngularGeneration(inputPath: string): Promise<Prepa
 
   const dataModel = buildDataModel(input);
   log.debug(
-    `Built data model '${dataModel.name}' with ${dataModel.pages.length} page(s) and ` +
-      `${(dataModel.dialogComponents ?? []).length} dialog component(s).`,
+    `Built data model '${dataModel.name}' with ${dataModel.pages.length} page(s).`,
   );
 
   const angularProject = mapToAngularProject(dataModel);
   log.debug(
     `Mapped to Angular project '${angularProject.packageName}' with ` +
-      `${angularProject.pages.length} page component(s) and ${angularProject.dialogComponents.length} dialog component(s).`,
+      `${angularProject.pages.length} page component(s) and ${angularProject.elementFiles.length} element file(s).`,
   );
 
   const generatedFiles = emitAngularProject(angularProject);

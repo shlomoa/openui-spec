@@ -104,6 +104,10 @@ The following table maps scenarios to test fixtures:
   - Add content as required to match the example JSON.
   - Wire everything correctly.
 
+> **Superseded for steps 5 to 7.** Output fixtures are not copied from the input or written by hand:
+> `npm run regenerate-fixtures` generates them by running the generator on the input example, and
+> `fixture-output.test.ts` checks them. See [`README.md`](README.md#regenerating-outputs).
+
 ### Step 5 - POC: Populate dialog output fixture workspaces
 
 5.1. **Create output fixture placeholders**

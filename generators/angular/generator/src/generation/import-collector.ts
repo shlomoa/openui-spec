@@ -17,6 +17,13 @@ export class AngularImportCollector {
     this.importsByModule.set(moduleSpecifier, imports);
   }
 
+  /** Merges every import collected by {@link other} into this collector. */
+  merge(other: AngularImportCollector): void {
+    for (const [moduleSpecifier, symbols] of other.importsByModule) {
+      this.add(moduleSpecifier, ...symbols);
+    }
+  }
+
   /** Renders the collected imports as import statements, sorted by module specifier with symbols sorted within each statement. */
   toImportStatements(): string[] {
     return Array.from(this.importsByModule.entries())

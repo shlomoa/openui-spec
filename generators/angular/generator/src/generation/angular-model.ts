@@ -1,3 +1,5 @@
+import type { GeneratedFile } from "../writers/file-writer";
+
 /**
  * The complete, emit-ready description of the Angular application produced from
  * the implementation-independent data model. Every field maps directly to files
@@ -9,7 +11,8 @@ export interface AngularProjectModel {
   packageName: string;
   version: string;
   pages: AngularPageModel[];
-  dialogComponents: AngularDialogComponentModel[];
+  /** Files of the standalone components the renderers emit for elements of the document. */
+  elementFiles: GeneratedFile[];
   themeTokens: Array<{ name: string; value: string }>;
   applicationStructure?: AngularApplicationStructureModel;
   extensionModel?: AngularExtensionModel;

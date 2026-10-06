@@ -1,24 +1,35 @@
-import type { DataModelApplication, DataModelDialogComponent, DataModelPage } from "../data-model/data-model";
+import type { DataModelApplication, DataModelPage } from "../data-model/data-model";
 import type {
   AngularApplicationStructureModel,
-  AngularDialogComponentModel,
   AngularInternationalizationModel,
   AngularPageModel,
   AngularProjectModel,
 } from "./angular-model";
 import { routedPageImportPath } from "./angular-paths";
 import { escapeHtml } from "./emit-utils";
+import { defaultRendererRegistry, renderElementTree } from "./render-elements";
+import { emptyRendering, type ElementRendering, type RendererRegistry } from "./renderer-registry";
 import { AngularImportCollector } from "./import-collector";
 import { toIndentedTypeScriptLiteral as toTypeScriptLiteral, toTypeScriptStringArray } from "./typescript-literals";
 
-export function mapToAngularProject(dataModel: DataModelApplication): AngularProjectModel {
-  const pages = dataModel.pages.map(mapPage);
+/**
+ * Maps the data model to the Angular project. For a concrete document, the element tree is
+ * rendered through the renderer registry: the files of standalone components become project
+ * files, and the rendering of the tree is merged into the document's page (Phase 1 has one
+ * page; routed pages are slice 6 of #203).
+ */
+export function mapToAngularProject(
+  dataModel: DataModelApplication,
+  registry: RendererRegistry = defaultRendererRegistry,
+): AngularProjectModel {
+  const rendering = dataModel.element ? renderElementTree(dataModel.element, registry).rendering : emptyRendering();
+  const pages = dataModel.pages.map((page) => mapPage(page, page.element ? rendering : undefined));
   return {
     appName: dataModel.name,
     packageName: toPackageName(dataModel.name),
     version: dataModel.version,
     pages,
-    dialogComponents: (dataModel.dialogComponents ?? []).map(mapDialogComponent),
+    elementFiles: rendering.files,
     themeTokens: dataModel.themeTokens,
     applicationStructure: dataModel.pages.some((page) => page.features.includes("application-structure"))
       ? buildApplicationStructure(pages)
@@ -29,23 +40,11 @@ export function mapToAngularProject(dataModel: DataModelApplication): AngularPro
   };
 }
 
-function mapDialogComponent(component: DataModelDialogComponent): AngularDialogComponentModel {
-  return {
-    selector: component.selector,
-    className: component.className,
-    directoryName: component.directoryName,
-    fileName: component.fileName,
-    title: component.title,
-    content: component.content,
-    actions: component.actions.map((action) => ({
-      text: action.text,
-      result: action.result,
-      emphasis: action.emphasis,
-    })),
-  };
-}
-
-function mapPage(page: DataModelPage): AngularPageModel {
+/**
+ * Maps one page. A non-empty {@link rendering} template replaces the placeholder page template
+ * (and its styles when it has any); the rendering's imports and class members are added either way.
+ */
+function mapPage(page: DataModelPage, rendering?: ElementRendering): AngularPageModel {
   const className = `${toPascalCase(page.route)}Page`;
   const imports = new Set(["CommonModule", "MatCardModule", "MatButtonModule", "MatListModule"]);
   const componentImports = new AngularImportCollector();
@@ -312,6 +311,13 @@ function mapPage(page: DataModelPage): AngularPageModel {
     members.push("protected readonly deliveryDate = new Date('2026-06-22T00:00:00.000Z');");
   }
 
+  if (rendering) {
+    rendering.imports.forEach((entry) => imports.add(entry));
+    componentImports.merge(rendering.typeImports);
+    rendering.members.filter((member) => !members.includes(member)).forEach((member) => members.push(member));
+  }
+  const renderedTemplate = rendering !== undefined && rendering.template.trim() !== "";
+
   return {
     id: page.id,
     route: page.route,
@@ -325,8 +331,8 @@ function mapPage(page: DataModelPage): AngularPageModel {
     componentImports: componentImports.toImportStatements(),
     constructorParameters,
     members,
-    template: buildTemplate(page),
-    styles: buildStyles(page),
+    template: renderedTemplate ? rendering.template : buildTemplate(page),
+    styles: renderedTemplate && rendering.styles !== "" ? rendering.styles : buildStyles(page),
   };
 }
 

@@ -24,6 +24,20 @@ known-type child composition, not aliases, selectors, or pseudo-types.
 The scenario fixtures `example_from_scratch/` and `example_incremental/` are not
 part of this generated inventory and are maintained separately.
 
+## Regenerating outputs
+
+`output_<object_name>/` holds the generator's output for `input_<object_name>/`, and is generated, never
+written by hand. From `generators/angular/generator`:
+
+```bash
+npm run regenerate-fixtures                # the fixtures that already have generated output
+npm run regenerate-fixtures -- dialog      # the named fixtures, also when they have none yet
+npm run regenerate-fixtures -- --all       # every fixture
+```
+
+`fixture-output.test.ts` compares every output that holds generated files with what the generator
+emits and fails on a difference. An output that holds only a `.gitkeep` is not generated yet.
+
 ## Inventory
 
 | Fixture                       | Source example                                                                                                                                      |
