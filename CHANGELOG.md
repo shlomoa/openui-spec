@@ -10,8 +10,11 @@ published packages.
 - The comparison is importable as `openui_spec.compare(reference, new)` from the new
   `openui_spec` package of the `openui-spec` wheel, with `openui_spec.__version__`; it does
   not depend on a top-level package named `bin`. The `compare_openui_spec` command now runs
-  `openui_spec.comparison:main`. `bin.compare_openui_spec` is removed, with no
-  alias; downstream tools switch to `from openui_spec import compare`.
+  `openui_spec.comparison:main`.
+- **Breaking:** the `bin.compare_openui_spec` module is removed, with no alias. Code that
+  runs `from bin.compare_openui_spec import compare` fails with `ModuleNotFoundError`
+  after upgrading; see the upgrade guidance below. The `compare_openui_spec` command and
+  the changelog it prints are unchanged.
 - The [comparison guide](spec/tooling/comparison.md#output-contract) defines the changelog
   exactly: its entries, the path grammar (member-name and element-id segments, JSON Pointer
   escaping, root-level paths), the identity rules (sibling reorder gives no entry, a moved
@@ -27,6 +30,16 @@ published packages.
   The change leaves the result for every grammar-valid document as it was.
 - No specification content changes, so `SCHEMA_VERSION`, the catalog and the documents
   keep `0.12.0`; the package versions move to `0.12.1`.
+
+### Upgrade guidance
+
+1. Upgrade the Python package to `0.12.1`.
+2. Replace `from bin.compare_openui_spec import compare` with
+   `from openui_spec import compare`, and `import bin.compare_openui_spec` with
+   `import openui_spec.comparison`. The `compare` function takes the same arguments and
+   returns the same changelog.
+3. Nothing changes for the `compare_openui_spec` command, the document version or the
+   catalog.
 
 ## [0.12.0] - 2026-10-01
 
