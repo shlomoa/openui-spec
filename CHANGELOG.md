@@ -13,7 +13,7 @@ published packages.
   `openui_spec.comparison:main`.
 - **Breaking:** the `bin.compare_openui_spec` module is removed, with no alias. Code that
   runs `from bin.compare_openui_spec import compare` fails with `ModuleNotFoundError`
-  after upgrading; see the upgrade guidance below. The `compare_openui_spec` command and
+  after upgrading; see [Upgrading from 0.12.0](#upgrading-from-0120) below. The `compare_openui_spec` command and
   the changelog it prints are unchanged.
 - The [comparison guide](spec/tooling/comparison.md#output-contract) defines the changelog
   exactly: its entries, the path grammar (member-name and element-id segments, JSON Pointer
@@ -31,7 +31,7 @@ published packages.
 - No specification content changes, so `SCHEMA_VERSION`, the catalog and the documents
   keep `0.12.0`; the package versions move to `0.12.1`.
 
-### Upgrade guidance
+### Upgrading from 0.12.0
 
 1. Upgrade the Python package to `0.12.1`.
 2. Replace `from bin.compare_openui_spec import compare` with
