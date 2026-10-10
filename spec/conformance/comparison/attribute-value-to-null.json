@@ -2,7 +2,7 @@
   "description": "A scalar that becomes `null` is a change; `null` is a value, not an absence.",
   "reference": {
     "id": "root",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "type": "html",
     "children": [
       {
@@ -16,7 +16,7 @@
   },
   "new": {
     "id": "root",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "type": "html",
     "children": [
       {

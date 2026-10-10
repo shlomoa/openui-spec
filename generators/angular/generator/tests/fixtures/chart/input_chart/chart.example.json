@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "type": "Chart",
   "attrs": {
     "title": "\"Chart example\""

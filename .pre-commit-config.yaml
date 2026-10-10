@@ -1,5 +1,4 @@
 minimum_pre_commit_version: 4.6.0
-exclude: ^spec/survey/
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -57,7 +56,7 @@ repos:
         name: OpenUI spec-content lint
         entry: python -m spec.bin.lint_spec
         language: python
-        files: ^spec/(scopes/|bin/lint_spec\.py$|(?!survey/).*\.md$)
+        files: ^spec/(scopes/|bin/lint_spec\.py$|.*\.md$)
         pass_filenames: false
       - id: generic-taxonomy-html
         name: Generic UI taxonomy HTML up to date

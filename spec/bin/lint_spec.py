@@ -24,8 +24,6 @@ GLOSSARY_DOC = "scopes/scope.md"
 GLOSSARY_HEADING = "## Glossary"
 ALIASES_PREFIX = "**Aliases:**"
 OPTIONAL_SECTION_MARK = "Omit the whole section"
-# Archived source evidence: surveys quote framework vocabulary and are not spec prose.
-GLOSSARY_EXCLUDED_DIRS = ("survey",)
 
 
 @dataclass(frozen=True)
@@ -199,8 +197,6 @@ def check_glossary_single_definition(spec_dir: Path) -> list[Finding]:
     ]
     for path in sorted(spec_dir.rglob("*.md"), key=lambda p: p.relative_to(spec_dir).as_posix()):
         relative = path.relative_to(spec_dir)
-        if relative.parts[0] in GLOSSARY_EXCLUDED_DIRS:
-            continue
         is_glossary_doc = relative.as_posix() == GLOSSARY_DOC
         findings += [
             Finding(

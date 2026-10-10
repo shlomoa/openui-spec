@@ -2,7 +2,7 @@
   "description": "Within each list, entries follow a depth-first walk: at each node the removals by key, then the additions by key, then the shared members by key; a node's own entries precede those of its members, so a list is not sorted by path.",
   "reference": {
     "id": "root",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "type": "html",
     "children": [
       {
@@ -26,7 +26,7 @@
   },
   "new": {
     "id": "root",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "type": "html",
     "children": [
       {

@@ -2,7 +2,7 @@
   "description": "A list attribute that differs, as a multiset, is one change at the attribute path with both whole lists in their original order.",
   "reference": {
     "id": "root",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "type": "html",
     "children": [
       {
@@ -16,7 +16,7 @@
   },
   "new": {
     "id": "root",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "type": "html",
     "children": [
       {

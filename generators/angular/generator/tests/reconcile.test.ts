@@ -81,7 +81,7 @@ function manifestedWidgetNode(id: string, selector: string): OpenUiElement {
 
 /** Wrap manifested widget nodes in a minimal valid OpenUI input document. */
 function inputDocument(children: OpenUiElement[]): OpenUiDocument {
-  return { id: "root", version: "0.12.0", type: "Application", children };
+  return { id: "root", version: "0.13.0", type: "Application", children };
 }
 
 function deletionFor(plan: Awaited<ReturnType<typeof reconcileGeneratedFiles>>, relativePath: string) {

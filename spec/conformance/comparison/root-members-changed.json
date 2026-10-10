@@ -16,7 +16,7 @@
   },
   "new": {
     "id": "root",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "type": "Dialog",
     "children": [
       {
@@ -40,7 +40,7 @@
       {
         "path": "/version",
         "reference": "0.1.0",
-        "new": "0.12.0"
+        "new": "0.13.0"
       }
     ]
   }

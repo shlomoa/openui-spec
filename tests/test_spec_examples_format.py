@@ -151,11 +151,10 @@ class SpecExamplesFormatTest(unittest.TestCase):
         self.assertEqual(app_data.count("    term: '"), checked)
 
 
-ADDITION_SOURCES = (
-    SCOPES_DIR / "terminology.md",
-    SPEC_DIR / "survey" / "taxonomy_mapping_change.done.md",
-    SPEC_DIR / "survey" / "ui_element_taxonomy_merge_proposal.done.md",
-)
+ADDITION_SOURCES = (SCOPES_DIR / "terminology.md",)
+# Add rows of the archived change records (`taxonomy_mapping_change.done.md` and
+# `ui_element_taxonomy_merge_proposal.done.md`, branch `archive/spec-survey`).
+ARCHIVED_ADDITIONS = ("Tree", "Tree grid", "Date and time field", "Menu item", "Captions")
 EXAMPLE_LEVELS = ("Alias", "Grouped leaf")
 GENERATED_EXAMPLES_ADDITIONS = (
     REPO_ROOT
@@ -203,7 +202,7 @@ def _addition_terms() -> list[str]:
                 term = _plain(row.get("Add") or row.get("Term", ""))
                 if _plain(row["Level"]).startswith(EXAMPLE_LEVELS):
                     terms.append(term)
-    return terms
+    return terms + list(ARCHIVED_ADDITIONS)
 
 
 def _mapping_scopes() -> dict[str, str]:

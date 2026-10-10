@@ -33,8 +33,9 @@ generator that applies the specification to an existing Angular workspace.
 - `spec/scopes/` - Human-authored scope contracts; `spec/taxonomy/` - the taxonomy documents.
 - `spec/openui.json` - Generated catalog built from `spec/scopes/`.
 - `spec/conformance/` - The conformance suite every validator passes.
-- `spec/survey/specui_v1_publish_plan.md` - The v1 publish plan, with the owner's directives; the
-  change records in `spec/survey/` (`*.done.md` applied, `*.notdone.md` not applied).
+- The [survey archive](https://github.com/shlomoa/openui-spec/tree/archive/spec-survey/spec/survey) on the `archive/spec-survey` branch - The framework surveys, the
+  v1 publish plan with the owner's directives, and the change records (`*.done.md` applied,
+  `*.notdone.md` not applied). It is read-only history, no longer part of `main`.
 - `generators/angular/generator/docs/GENERATION.md` - Angular generator architecture,
   implementation details, code-generation flow, and validation strategy.
 - [`tests/TEST_PLAN.md`](tests/TEST_PLAN.md#root-test-suite-plan) - Spec-contract test-suite

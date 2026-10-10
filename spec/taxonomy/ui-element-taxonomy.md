@@ -16,10 +16,10 @@ There is no universally standardized “complete” taxonomy. The following mode
 
 The **OpenUI term** column names the taxonomy entries each abstract type maps to; Status
 indicator is the name of a scope object. The column follows the merge of this taxonomy into
-the OpenUI taxonomy ([merge proposal, appendix A](../survey/ui_element_taxonomy_merge_proposal.done.md#appendix-a-where-each-abstract-type-went)).
+the OpenUI taxonomy ([merge proposal, appendix A](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/ui_element_taxonomy_merge_proposal.done.md#appendix-a-where-each-abstract-type-went)).
 Some types were added later to give a home to an OpenUI term that no other type reached.
 "Not added" marks a type that OpenUI does not add; the reasons are in the merge proposal's
-[Not added](../survey/ui_element_taxonomy_merge_proposal.done.md#not-added) and [Delete](../survey/ui_element_taxonomy_merge_proposal.done.md#3-delete) lists.
+[Not added](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/ui_element_taxonomy_merge_proposal.done.md#not-added) and [Delete](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/ui_element_taxonomy_merge_proposal.done.md#3-delete) lists.
 
 ```mermaid
 mindmap
@@ -230,7 +230,7 @@ Elements used to display or control time-based or immersive content.
 
 ## 7. Data-Visualization Elements
 
-Elements that encode values, relationships, or spatial information visually. In OpenUI these visualizations sit with the data they show, in the generic UI taxonomy's [Collections and data presentation](generic-ui-taxonomy.md#collections-and-data-presentation) subcategory, not in a category of their own ([merge decision 1](../survey/ui_element_taxonomy_merge_proposal.done.md#decisions)).
+Elements that encode values, relationships, or spatial information visually. In OpenUI these visualizations sit with the data they show, in the generic UI taxonomy's [Collections and data presentation](generic-ui-taxonomy.md#collections-and-data-presentation) subcategory, not in a category of their own ([merge decision 1](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/ui_element_taxonomy_merge_proposal.done.md#decisions)).
 
 | Abstract type            | Purpose                                        | Typical concrete elements       | OpenUI term       |
 | ------------------------ | ---------------------------------------------- | ------------------------------- | ----------------- |
@@ -383,7 +383,7 @@ Elements that explain the interface or help users complete tasks.
 
 ## 14. Identity, Account, and Permission Elements
 
-Elements representing users, roles, access, and authentication state. In OpenUI these are compound widgets built from existing elements, such as Avatar, Menu, Form and Badge; OpenUI adds no identity element ([merge decision 2](../survey/ui_element_taxonomy_merge_proposal.done.md#decisions)).
+Elements representing users, roles, access, and authentication state. In OpenUI these are compound widgets built from existing elements, such as Avatar, Menu, Form and Badge; OpenUI adds no identity element ([merge decision 2](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/ui_element_taxonomy_merge_proposal.done.md#decisions)).
 
 | Abstract type           | Purpose                                     | Typical concrete elements | OpenUI term                      |
 | ----------------------- | ------------------------------------------- | ------------------------- | -------------------------------- |
@@ -398,7 +398,7 @@ Elements representing users, roles, access, and authentication state. In OpenUI 
 
 ## 15. Accessibility and Alternative-Interaction Elements
 
-Accessibility and alternative interaction are properties of other elements, not elements. OpenUI adds none of these types as an element ([merge decision 3](../survey/ui_element_taxonomy_merge_proposal.done.md#decisions)).
+Accessibility and alternative interaction are properties of other elements, not elements. OpenUI adds none of these types as an element ([merge decision 3](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/ui_element_taxonomy_merge_proposal.done.md#decisions)).
 
 | Abstract type         | Purpose                                                | Typical concrete elements       | OpenUI term |
 | --------------------- | ------------------------------------------------------ | ------------------------------- | ----------- |
