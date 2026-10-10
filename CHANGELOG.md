@@ -3,6 +3,21 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.13.0] - 2026-10-10
+
+### Survey archive
+
+- `spec/survey/` (the framework surveys, the v1 publish plan and the change records) is
+  removed from `main` and kept on the
+  [`archive/spec-survey`](https://github.com/shlomoa/openui-spec/tree/archive/spec-survey/spec/survey)
+  branch, which is read-only history. The evidence register, the glossary, the taxonomy
+  mapping and the UI element taxonomy link to the archived files there. The specification
+  contracts and the catalog content do not change.
+- The pre-commit, markdownlint, link-check and glossary-lint exclusions of `spec/survey/`
+  are removed. So is the MkDocs hook that rewrote links to unpublished files, together with
+  its `exclude_docs` setting and test, and `tests/test_scope_statement.py`, which checked
+  the archived `scope_statement.md`.
+
 ## [0.12.1] - 2026-10-06
 
 ### Comparison API and output contract
@@ -617,3 +632,4 @@ and enforced rather than adding or removing catalog types.
 [0.11.1]: https://github.com/shlomoa/openui-spec/compare/v0.11.0...v0.11.1
 [0.12.0]: https://github.com/shlomoa/openui-spec/compare/v0.11.1...v0.12.0
 [0.12.1]: https://github.com/shlomoa/openui-spec/compare/v0.12.0...v0.12.1
+[0.13.0]: https://github.com/shlomoa/openui-spec/compare/v0.12.1...v0.13.0

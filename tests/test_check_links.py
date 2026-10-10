@@ -112,7 +112,6 @@ class CheckLinksTest(unittest.TestCase):
         files = tracked_markdown()
 
         self.assertTrue(files)
-        self.assertFalse(any("spec/survey/" in path.as_posix() for path in files))
         self.assertEqual([error for path in files for error in check_file(path)], [])
 
 

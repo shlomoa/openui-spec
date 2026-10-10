@@ -5,7 +5,7 @@ Anchors are validated against GitHub heading slugs and explicit HTML ``id``/``na
 attributes of Markdown targets. Anchors into non-Markdown files are not checked.
 
 Usage: ``python -m spec.bin.check_links [FILE.md ...]``. Without arguments every
-tracked Markdown file (``git ls-files``) outside ``spec/survey/`` is checked.
+tracked Markdown file (``git ls-files``) is checked.
 """
 
 from __future__ import annotations
@@ -18,7 +18,6 @@ from pathlib import Path
 from urllib.parse import unquote
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-EXCLUDED_PREFIXES = ("spec/survey/",)
 
 FENCE_RE = re.compile(r"^\s{0,3}(```|~~~)")
 CODE_SPAN_RE = re.compile(r"(`+)(?:(?!\1).)+?\1")
@@ -124,7 +123,7 @@ def check_file(path: Path, repo_root: Path = REPO_ROOT) -> list[str]:
 
 
 def tracked_markdown(repo_root: Path = REPO_ROOT) -> list[Path]:
-    """Return tracked Markdown files outside excluded paths."""
+    """Return every tracked Markdown file."""
     output = subprocess.run(
         ["git", "ls-files", "*.md"],
         cwd=repo_root,
@@ -132,11 +131,7 @@ def tracked_markdown(repo_root: Path = REPO_ROOT) -> list[Path]:
         capture_output=True,
         text=True,
     ).stdout
-    return [
-        repo_root / name
-        for name in output.splitlines()
-        if name and not name.startswith(EXCLUDED_PREFIXES)
-    ]
+    return [repo_root / name for name in output.splitlines() if name]
 
 
 def main(argv: list[str] | None = None) -> int:

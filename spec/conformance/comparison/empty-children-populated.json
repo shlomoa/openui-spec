@@ -2,7 +2,7 @@
   "description": "An empty list is an identified list, so an element added to `children: []` is id-keyed.",
   "reference": {
     "id": "root",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "type": "html",
     "children": [
       {
@@ -14,7 +14,7 @@
   },
   "new": {
     "id": "root",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "type": "html",
     "children": [
       {

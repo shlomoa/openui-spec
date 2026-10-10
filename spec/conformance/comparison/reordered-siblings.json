@@ -2,7 +2,7 @@
   "description": "Reordering the children of an identified list, at any depth, produces no entry.",
   "reference": {
     "id": "root",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "type": "html",
     "children": [
       {
@@ -30,7 +30,7 @@
   },
   "new": {
     "id": "root",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "type": "html",
     "children": [
       {

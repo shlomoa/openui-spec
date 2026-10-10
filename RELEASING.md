@@ -64,7 +64,7 @@ The spec version follows [Semantic Versioning](spec/README.md#48-versioning), wi
 pre-release suffix. Until the specification is validated in downstream tools and
 packages, every release is a `0.x.0` or `0.x.y` version, and there is no release
 candidate (directive Q3 of the
-[v1 publish plan](spec/survey/specui_v1_publish_plan.md#goal-and-definition-of-done)):
+[v1 publish plan](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/specui_v1_publish_plan.md#goal-and-definition-of-done)):
 
 The npm and PyPI packages take the spec's version (owner decision, 2026-09-29):
 

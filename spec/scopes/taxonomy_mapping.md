@@ -22,17 +22,17 @@ The alias columns give the names that the surveyed sources use for the same entr
 (plan task W1 9.9; "—" where a source has no name):
 
 - **HTML / WAI-ARIA:** the HTML elements and attributes from the
-  [HTML survey mapping](../survey/html5/taxonomy_mapping.md#entries-by-primary-openui-scope),
+  [HTML survey mapping](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/html5/taxonomy_mapping.md#entries-by-primary-openui-scope),
   and the WAI-ARIA 1.2 roles (`role=…`) and states from the
   [WAI-ARIA role list](https://www.w3.org/TR/wai-aria-1.2/#role_definitions).
 - **OpenUI5:** the classes of the
-  [OpenUI5 survey mapping](../survey/openui5/taxonomy_mapping.md#entries-by-primary-openui-scope),
+  [OpenUI5 survey mapping](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/openui5/taxonomy_mapping.md#entries-by-primary-openui-scope),
   each matched to one entry from its survey description.
 - **Qt:** the classes of the
-  [Qt survey mapping](../survey/qt/taxonomy_mapping.md#entries-by-primary-openui-scope),
+  [Qt survey mapping](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/qt/taxonomy_mapping.md#entries-by-primary-openui-scope),
   matched to the entry they mean.
 - **Angular Material:** the component families of the
-  [Angular Material survey mapping](../survey/angular-material/taxonomy_mapping.md#entries-by-primary-openui-scope).
+  [Angular Material survey mapping](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/angular-material/taxonomy_mapping.md#entries-by-primary-openui-scope).
 
 The [taxonomy tree](../taxonomy/taxonomy-tree.html) is an interactive view of this document,
 generated from it: the sections, subcategories and entries as a collapsible tree, with the
@@ -467,7 +467,7 @@ secondary roles. The primary place is chosen by these rules, in order:
 
 favicon.ico, index.html and Native have no taxonomy entry, so they are not placed: they
 are content or a marker for a standard platform capability, not UI elements
-([taxonomy mapping change: Not added](../survey/taxonomy_mapping_change.done.md#not-added)).
+([taxonomy mapping change: Not added](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/taxonomy_mapping_change.done.md#not-added)).
 Placing a leaf in a section does not move its scope file: the taxonomy and the scope tree
 are linked views of one vocabulary.
 

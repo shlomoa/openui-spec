@@ -2,7 +2,7 @@
   "description": "A leaf that gains a `children` member is added at /children with the whole list; the list is not id-keyed because the reference has none.",
   "reference": {
     "id": "root",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "type": "html",
     "children": [
       {
@@ -13,7 +13,7 @@
   },
   "new": {
     "id": "root",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "type": "html",
     "children": [
       {

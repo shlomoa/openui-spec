@@ -6,10 +6,6 @@ edit_uri: edit/main/spec/
 theme:
   name: readthedocs
 docs_dir: spec
-exclude_docs: |
-  survey/**
-hooks:
-  - mkdocs_hooks.py
 nav:
   - Specification (parts 1, 2, 4, 6 and annexes): README.md
   - 2 Conformance:

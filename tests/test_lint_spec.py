@@ -189,9 +189,6 @@ class LintSpecTest(unittest.TestCase):
     def test_glossary_defined_once_passes(self) -> None:
         # Linking to a term, or using it as a leaf title, is not a redefinition.
         self._write("Widgets/a.scope.md", "# Widget\n\nSee the [glossary](../scope.md#widget).\n")
-        survey = self.spec_dir / "survey"
-        survey.mkdir()
-        (survey / "notes.md").write_text("#### Widget\n\n**Aliases:** gadget.\n", encoding="utf-8")
 
         self.assertEqual(check_glossary_single_definition(self.spec_dir), [])
 

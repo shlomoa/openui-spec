@@ -16,7 +16,7 @@ You are a specialist at generating and maintaining the OpenUI JSON documents of 
   - the document format: `spec/EBNF.txt` and [`spec/README.md` part 4](../../spec/README.md#4-document-model-and-language);
   - the object contracts: the scope files under `spec/scopes/` (Identity, Attributes and Child model), and the catalog they generate;
   - the vocabulary: the [glossary](../../spec/scopes/scope.md#glossary) and the [taxonomy mapping](../../spec/scopes/taxonomy_mapping.md);
-  - the approved change records in `spec/survey/*.done.md` (for example their Add rows), and the task in `spec/survey/specui_v1_publish_plan.md` you are executing.
+  - the approved change records `*.done.md` (for example their Add rows) and the task in `specui_v1_publish_plan.md` you are executing, both in the [survey archive](https://github.com/shlomoa/openui-spec/tree/archive/spec-survey/spec/survey) on the `archive/spec-survey` branch.
 - Do not develop the Python converter; the `Spec JSON Generator Developer` agent does that.
 - Do not change specification content (scopes, grammar, schema, `SCHEMA_VERSION`); if a document needs a contract the scopes do not define, stop and report it.
 
