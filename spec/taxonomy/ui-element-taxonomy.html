@@ -1,0 +1,1937 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Taxonomy of Abstract UI Element Types</title>
+  <style>
+:root {
+  color-scheme: light;
+  --ink: #182230;
+  --muted: #526071;
+  --line: #cbd5e1;
+  --header: #eaf1f8;
+  --surface: #ffffff;
+  --background: #f4f7fb;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 28px;
+  background: var(--background);
+  color: var(--ink);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+h1 {
+  margin: 52px 0 8px;
+  padding-top: 28px;
+  border-top: 2px solid var(--line);
+  font-size: 28px;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+h2 {
+  margin: 34px 0 6px;
+  font-size: 22px;
+}
+
+p {
+  color: var(--muted);
+}
+
+table {
+  display: table;
+  width: 100%;
+  min-width: 1050px;
+  margin: 12px 0 26px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 8px 24px #0f172a12;
+}
+
+thead {
+  background: var(--header);
+}
+
+th,
+td {
+  padding: 12px;
+  border-right: 1px solid #dde4ec;
+  border-bottom: 1px solid #dde4ec;
+  text-align: left;
+  vertical-align: middle;
+}
+
+th:last-child,
+td:last-child {
+  border-right: 0;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+tbody tr:hover {
+  background: #f8fbff;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+  width: 210px;
+  font-weight: 650;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  min-width: 300px;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 13px;
+}
+
+em {
+  color: var(--muted);
+}
+
+@media (max-width: 1100px) {
+  body { overflow-x: auto; }
+}
+
+@media print {
+  body {
+    max-width: none;
+    padding: 8mm;
+    background: #fff;
+  }
+
+  table {
+    box-shadow: none;
+  }
+
+  tr {
+    break-inside: avoid;
+  }
+}
+
+  body { max-width: 1500px; margin: 0 auto; padding: 32px; line-height: 1.5; }
+  h1 { margin-top: 3.5rem; border-bottom: 3px solid #334155; padding-bottom: .45rem; }
+  h1:first-child { margin-top: 0; }
+  h2 { margin-top: 2.5rem; }
+  h3 { margin-top: 1.75rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0 2.5rem; }
+  th, td { border: 1px solid #cbd5e1; padding: .7rem; vertical-align: top; }
+  th { background: #e8edf5; text-align: start; }
+  code { direction: ltr; unicode-bidi: isolate; }
+  @media (max-width: 900px) {
+    body { padding: 16px; }
+    table { display: block; overflow-x: auto; }
+  }
+  </style>
+</head>
+<body>
+<h1 id="taxonomy-of-abstract-ui-element-types">Taxonomy of Abstract UI Element Types</h1>
+<p>An <strong>abstract UI element type</strong> describes an element by its purpose and behavior, independent of framework, platform, visual style, or implementation technology.</p>
+<p>This document is one of the three <a href="../scopes/scope/#taxonomy-documents">taxonomy documents</a>.
+It owns the abstract element types in 15 categories, with their purpose and typical
+concrete elements, the OpenUI term each type maps to, and the
+<a href="#classification-rules">classification rules</a> with their primary and secondary role
+examples. The <a href="generic-ui-taxonomy/">generic UI taxonomy</a> owns the sections,
+subcategories and entries that the OpenUI terms belong to, and the
+<a href="../scopes/taxonomy_mapping/">taxonomy mapping</a> owns their scope objects. Term
+definitions and aliases live in the <a href="../scopes/scope/#glossary">glossary</a>, and object
+contracts in the scope files; a type description MUST NOT contradict them.</p>
+<p>There is no universally standardized “complete” taxonomy. The following model aims to cover the element types used across web, desktop, mobile, touch, TV, embedded, voice-assisted, and mixed-interface applications.</p>
+<p>The <strong>OpenUI term</strong> column names the taxonomy entries each abstract type maps to; Status
+indicator is the name of a scope object. The column follows the merge of this taxonomy into
+the OpenUI taxonomy (<a href="https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/ui_element_taxonomy_merge_proposal.done.md#appendix-a-where-each-abstract-type-went">merge proposal, appendix A</a>).
+Some types were added later to give a home to an OpenUI term that no other type reached.
+"Not added" marks a type that OpenUI does not add; the reasons are in the merge proposal's
+<a href="https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/ui_element_taxonomy_merge_proposal.done.md#not-added">Not added</a> and <a href="https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/ui_element_taxonomy_merge_proposal.done.md#3-delete">Delete</a> lists.</p>
+<pre><code class="language-mermaid">mindmap
+  root((Abstract UI elements))
+    Input and editing
+      Data entry
+      Commands
+      Value adjustment
+      File and media input
+    Selection
+      Single selection
+      Multiple selection
+      Hierarchical selection
+      Date and time selection
+    Navigation
+      Global navigation
+      Local navigation
+      Sequential navigation
+      Contextual navigation
+    Content and data
+      Text
+      Structured data
+      Media
+      Visualization
+    Actions
+      Immediate actions
+      Menu actions
+      Stateful actions
+      Compound actions
+    Feedback and status
+      Progress
+      Notifications
+      Validation
+      System status
+    Containers and layout
+      Grouping
+      Regions
+      Collections
+      Disclosure
+    Overlays
+      Dialogs
+      Popovers
+      Menus
+      Transient messages
+    Utility and system
+      Search
+      Help
+      Accessibility
+      Drag and resize
+</code></pre>
+<h2 id="1-input-and-editing-elements">1. Input and Editing Elements</h2>
+<p>Elements that allow users to enter, modify, upload, or manipulate information.</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Text Input</td>
+<td>Enter short, unformatted text</td>
+<td>Text field, search field, URL field</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td>Structured Text Input</td>
+<td>Enter text constrained to a format</td>
+<td>Email, telephone, IP address, mask input</td>
+<td>Text field; Constraint validation</td>
+</tr>
+<tr>
+<td>Numeric Input</td>
+<td>Enter a number</td>
+<td>Number field, stepper, spin box</td>
+<td>Spin box</td>
+</tr>
+<tr>
+<td>Password Input</td>
+<td>Enter concealed sensitive text</td>
+<td>Password field, PIN field</td>
+<td>Password field</td>
+</tr>
+<tr>
+<td>Multiline Text Input</td>
+<td>Enter longer textual content</td>
+<td>Text area, expanding editor</td>
+<td>Text area</td>
+</tr>
+<tr>
+<td>Rich-Text Input</td>
+<td>Enter formatted content</td>
+<td>Rich-text editor, Markdown editor</td>
+<td>Rich text editor</td>
+</tr>
+<tr>
+<td>Code Input</td>
+<td>Enter or edit source code</td>
+<td>Code editor, query editor</td>
+<td>Text area</td>
+</tr>
+<tr>
+<td>Autocomplete Input</td>
+<td>Enter text with suggestions</td>
+<td>Combobox, typeahead</td>
+<td>Suggestion-backed combo box; Combo box; Input assistance</td>
+</tr>
+<tr>
+<td>Tokenized Input</td>
+<td>Enter multiple discrete values</td>
+<td>Chip input, recipient field, tag editor</td>
+<td>Token collection; Editable chip collection</td>
+</tr>
+<tr>
+<td>Boolean Input</td>
+<td>Set a binary value</td>
+<td>Checkbox, switch, toggle</td>
+<td>Checkbox; Switch; Toggle button</td>
+</tr>
+<tr>
+<td>Range Input</td>
+<td>Choose a value within a range</td>
+<td>Slider, range slider, dial</td>
+<td>Slider; Rotary value control</td>
+</tr>
+<tr>
+<td>Incremental Input</td>
+<td>Increase or decrease a value</td>
+<td>Stepper, spinner</td>
+<td>Step input</td>
+</tr>
+<tr>
+<td>Direct Manipulation Input</td>
+<td>Change a value by manipulating its representation</td>
+<td>Drag handle, resize handle, rotation control</td>
+<td>Drag handle; Resize handle; Drag and drop</td>
+</tr>
+<tr>
+<td>Drawing Input</td>
+<td>Provide freehand or geometric input</td>
+<td>Canvas, signature pad, sketch area</td>
+<td>Drawing area; Canvas</td>
+</tr>
+<tr>
+<td>Color Input</td>
+<td>Select or enter a color</td>
+<td>Color picker, palette, eyedropper</td>
+<td>Color picker</td>
+</tr>
+<tr>
+<td>File Input</td>
+<td>Select files from storage</td>
+<td>File picker, upload field, drop zone, folder picker</td>
+<td>File picker; File upload; Folder picker</td>
+</tr>
+<tr>
+<td>Capture Input</td>
+<td>Capture information from a device</td>
+<td>Camera capture, microphone recorder, scanner</td>
+<td>Microphone input; Camera preview</td>
+</tr>
+<tr>
+<td>Voice Input</td>
+<td>Enter content through speech</td>
+<td>Dictation button, voice prompt</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Form</td>
+<td>Group related inputs into a submission or editing unit</td>
+<td>Registration form, settings form</td>
+<td>Form</td>
+</tr>
+<tr>
+<td>Form Field</td>
+<td>Combine an input with its label, help, state, and validation</td>
+<td>Labeled field, field wrapper</td>
+<td>Form field</td>
+</tr>
+<tr>
+<td>Input Group</td>
+<td>Combine related inputs or input accessories</td>
+<td>Address group, field with unit selector</td>
+<td>Form group; Form field</td>
+</tr>
+<tr>
+<td>Shortcut Input</td>
+<td>Record a key combination</td>
+<td>Keyboard shortcut field, hotkey editor</td>
+<td>Keyboard shortcut field</td>
+</tr>
+<tr>
+<td>Metadata-Driven Input</td>
+<td>Pick the editor from the data type of the value</td>
+<td>Smart field, generic value editor</td>
+<td>Metadata-driven field</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-selection-elements">2. Selection Elements</h2>
+<p>Elements used to choose one or more options from a known or discoverable set.</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Binary Selection</td>
+<td>Choose between two states</td>
+<td>Checkbox, switch</td>
+<td>Checkbox; Switch</td>
+</tr>
+<tr>
+<td>Exclusive Selection</td>
+<td>Select exactly one option</td>
+<td>Radio group, segmented control</td>
+<td>Radio button; Exclusive selection coordination; Selection mode</td>
+</tr>
+<tr>
+<td>Optional Single Selection</td>
+<td>Select zero or one option</td>
+<td>Dropdown, select, listbox</td>
+<td>Dropdown; List box; Selection mode</td>
+</tr>
+<tr>
+<td>Multiple Selection</td>
+<td>Select zero or more options</td>
+<td>Checkbox group, multi-select</td>
+<td>Selection mode; Checkbox; Multi-select combo box</td>
+</tr>
+<tr>
+<td>Segmented Selection</td>
+<td>Select from a small visible set</td>
+<td>Segmented button, choice chips</td>
+<td>Toggle button; Exclusive selection coordination</td>
+</tr>
+<tr>
+<td>List Selection</td>
+<td>Select entries from a list</td>
+<td>Listbox, selectable list</td>
+<td>List box</td>
+</tr>
+<tr>
+<td>Grid Selection</td>
+<td>Select cells or items in two dimensions</td>
+<td>Data grid, image picker</td>
+<td>Data grid</td>
+</tr>
+<tr>
+<td>Hierarchical Selection</td>
+<td>Select from nested options</td>
+<td>Tree view, cascading selector</td>
+<td>Tree view</td>
+</tr>
+<tr>
+<td>Transfer Selection</td>
+<td>Move selected items between sets</td>
+<td>Transfer list, dual listbox</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Ordered Selection</td>
+<td>Select and arrange items</td>
+<td>Reorderable list, ranking control</td>
+<td>List; Drag and drop</td>
+</tr>
+<tr>
+<td>Date Selection</td>
+<td>Select a calendar date</td>
+<td>Date picker, calendar, date field</td>
+<td>Date picker; Date field</td>
+</tr>
+<tr>
+<td>Time Selection</td>
+<td>Select a time</td>
+<td>Time picker, clock picker, time field</td>
+<td>Time picker; Time field</td>
+</tr>
+<tr>
+<td>Date-Time Selection</td>
+<td>Select a combined date and time</td>
+<td>Date-time picker</td>
+<td>Date and time field</td>
+</tr>
+<tr>
+<td>Duration Selection</td>
+<td>Select a length of time</td>
+<td>Duration field, interval picker</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Range Selection</td>
+<td>Select start and end values</td>
+<td>Date-range picker, dual-thumb slider</td>
+<td>Range slider; Date picker</td>
+</tr>
+<tr>
+<td>Wheel Selection</td>
+<td>Select values by rotating columns</td>
+<td>Wheel picker, scroll picker</td>
+<td>Wheel picker</td>
+</tr>
+<tr>
+<td>Rating Selection</td>
+<td>Choose an ordinal evaluation</td>
+<td>Star rating, reaction scale</td>
+<td>Rating control</td>
+</tr>
+<tr>
+<td>Spatial Selection</td>
+<td>Select a location or region</td>
+<td>Map picker, crop region</td>
+<td>Geographic map; Graphics viewport</td>
+</tr>
+<tr>
+<td>Font Selection</td>
+<td>Select a font</td>
+<td>Font picker, font-family list</td>
+<td>Font picker; Font-family selector</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-action-and-command-elements">3. Action and Command Elements</h2>
+<p>Elements through which users request operations.</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Primary Action</td>
+<td>Invoke the main action in a context</td>
+<td>Primary button</td>
+<td>Button</td>
+</tr>
+<tr>
+<td>Secondary Action</td>
+<td>Invoke a supporting action</td>
+<td>Secondary button</td>
+<td>Button</td>
+</tr>
+<tr>
+<td>Tertiary Action</td>
+<td>Invoke a lower-emphasis action</td>
+<td>Text button, link button</td>
+<td>Button</td>
+</tr>
+<tr>
+<td>Icon Action</td>
+<td>Invoke an action using a compact symbol</td>
+<td>Icon button, tool button</td>
+<td>Icon button; Tool button</td>
+</tr>
+<tr>
+<td>Destructive Action</td>
+<td>Perform a potentially damaging operation</td>
+<td>Delete button</td>
+<td>Button</td>
+</tr>
+<tr>
+<td>Stateful Action</td>
+<td>Invoke and represent a persistent state</td>
+<td>Toggle button, favorite button</td>
+<td>Toggle button</td>
+</tr>
+<tr>
+<td>Repeating Action</td>
+<td>Repeat while activated</td>
+<td>Press-and-hold control</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Split Action</td>
+<td>Offer a default action and related alternatives</td>
+<td>Split button</td>
+<td>Menu button</td>
+</tr>
+<tr>
+<td>Compound Action</td>
+<td>Present several related actions as one unit</td>
+<td>Button group, toolbar</td>
+<td>Toolbar</td>
+</tr>
+<tr>
+<td>Floating Action</td>
+<td>Expose a prominent contextual action</td>
+<td>Floating action button</td>
+<td>Button</td>
+</tr>
+<tr>
+<td>Menu Action</td>
+<td>Invoke an action from a menu</td>
+<td>Menu item, dropdown-menu item</td>
+<td>Menu item</td>
+</tr>
+<tr>
+<td>Contextual Action</td>
+<td>Act on a selected or focused object</td>
+<td>Context menu command, row action</td>
+<td>Context menu; Menu item</td>
+</tr>
+<tr>
+<td>Submission Action</td>
+<td>Commit entered data</td>
+<td>Submit, save, apply</td>
+<td>Button</td>
+</tr>
+<tr>
+<td>Cancellation Action</td>
+<td>Abandon or reverse an operation</td>
+<td>Cancel, dismiss</td>
+<td>Button</td>
+</tr>
+<tr>
+<td>Undoable Action</td>
+<td>Reverse a recent operation</td>
+<td>Undo, redo</td>
+<td>Button; Menu item; List</td>
+</tr>
+<tr>
+<td>Shortcut Action</td>
+<td>Invoke a command through an alternate input</td>
+<td>Keyboard shortcut, gesture command</td>
+<td>Modifier-key combination; Swipe</td>
+</tr>
+<tr>
+<td>Menu Bar</td>
+<td>Offer menus of commands in a bar</td>
+<td>Application menu bar</td>
+<td>Menubar</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-navigation-elements">4. Navigation Elements</h2>
+<p>Elements that move users between locations, views, sections, records, or states.</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Navigation Link</td>
+<td>Move to another destination</td>
+<td>Hyperlink, navigation item</td>
+<td>Link; Navigation item</td>
+</tr>
+<tr>
+<td>Global Navigation</td>
+<td>Navigate among major application areas</td>
+<td>Navigation bar, app bar, navigation rail, shell bar</td>
+<td>Navigation bar; Navigation Rail; Shell bar</td>
+</tr>
+<tr>
+<td>Local Navigation</td>
+<td>Navigate within the current area</td>
+<td>Sidebar, local menu</td>
+<td>Navigation group</td>
+</tr>
+<tr>
+<td>Responsive Navigation</td>
+<td>Provide navigation adapted to limited space</td>
+<td>Hamburger button, navigation drawer</td>
+<td>Hamburger button; Navigation Drawer</td>
+</tr>
+<tr>
+<td>Tab Navigation</td>
+<td>Switch between peer views</td>
+<td>Tabs, tab bar</td>
+<td>Tab Bar</td>
+</tr>
+<tr>
+<td>Hierarchical Navigation</td>
+<td>Move through nested structures</td>
+<td>Tree navigation, nested menu, column browser</td>
+<td>Tree view; Column browser</td>
+</tr>
+<tr>
+<td>Path Navigation</td>
+<td>Show and navigate the current hierarchy</td>
+<td>Breadcrumbs</td>
+<td>Breadcrumb</td>
+</tr>
+<tr>
+<td>Sequential Navigation</td>
+<td>Move forward or backward through ordered content</td>
+<td>Previous/next controls</td>
+<td>Pagination control; Carousel</td>
+</tr>
+<tr>
+<td>Step Navigation</td>
+<td>Move through a multi-stage process</td>
+<td>Stepper, wizard navigation</td>
+<td>Workflow stepper; Wizard</td>
+</tr>
+<tr>
+<td>Pagination</td>
+<td>Navigate among discrete result pages</td>
+<td>Paginator</td>
+<td>Pagination control</td>
+</tr>
+<tr>
+<td>Continuous Navigation</td>
+<td>Move through an unbounded collection</td>
+<td>Infinite scroll, load-more control</td>
+<td>List</td>
+</tr>
+<tr>
+<td>Record Navigation</td>
+<td>Move between individual records</td>
+<td>First, previous, next, last</td>
+<td>Pagination control</td>
+</tr>
+<tr>
+<td>Index Navigation</td>
+<td>Jump to a named or alphabetic section</td>
+<td>Index, A–Z rail</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Anchor Navigation</td>
+<td>Jump within the current document or view</td>
+<td>Table of contents, anchor links</td>
+<td>Link</td>
+</tr>
+<tr>
+<td>History Navigation</td>
+<td>Move through previously visited states</td>
+<td>Back, forward</td>
+<td>Routing; Route</td>
+</tr>
+<tr>
+<td>Spatial Navigation</td>
+<td>Move focus based on direction</td>
+<td>D-pad navigation, focus grid</td>
+<td>Focus management; Special-key input</td>
+</tr>
+<tr>
+<td>View Switcher</td>
+<td>Change the presentation of the same content</td>
+<td>List/grid switcher</td>
+<td>Toggle button; Exclusive selection coordination</td>
+</tr>
+<tr>
+<td>Destination Launcher</td>
+<td>Open a destination, tool, or application</td>
+<td>App launcher, shortcut tile</td>
+<td>Tile</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-content-and-data-presentation-elements">5. Content and Data-Presentation Elements</h2>
+<p>Elements that communicate information without primarily accepting input.</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Text Content</td>
+<td>Present textual information</td>
+<td>Paragraph, heading, caption, highlighted text</td>
+<td>Text; Highlighted text</td>
+</tr>
+<tr>
+<td>Label</td>
+<td>Identify another element or value</td>
+<td>Field label, item label</td>
+<td>Label</td>
+</tr>
+<tr>
+<td>Value Display</td>
+<td>Present a discrete value</td>
+<td>Read-only field, metric</td>
+<td>Text; Calculated output</td>
+</tr>
+<tr>
+<td>Icon</td>
+<td>Communicate identity, state, or meaning symbolically</td>
+<td>Functional icon, status icon</td>
+<td>Icon</td>
+</tr>
+<tr>
+<td>Image</td>
+<td>Present raster or vector visual content</td>
+<td>Photo, illustration</td>
+<td>Image</td>
+</tr>
+<tr>
+<td>Avatar</td>
+<td>Represent a person, entity, or agent</td>
+<td>User avatar, organization mark</td>
+<td>Avatar</td>
+</tr>
+<tr>
+<td>Badge</td>
+<td>Display a compact status or count</td>
+<td>Notification badge, status badge</td>
+<td>Badge</td>
+</tr>
+<tr>
+<td>Tag</td>
+<td>Display classification or metadata</td>
+<td>Tag, chip, label</td>
+<td>Tag</td>
+</tr>
+<tr>
+<td>Key–Value Display</td>
+<td>Present named attributes</td>
+<td>Description list, property panel</td>
+<td>Description list</td>
+</tr>
+<tr>
+<td>List</td>
+<td>Present an ordered or unordered collection</td>
+<td>List, feed</td>
+<td>List</td>
+</tr>
+<tr>
+<td>Table</td>
+<td>Present aligned data records</td>
+<td>Table, matrix</td>
+<td>Table</td>
+</tr>
+<tr>
+<td>Data Grid</td>
+<td>Present structured interactive tabular data</td>
+<td>Sortable grid, spreadsheet, tree grid</td>
+<td>Data grid; Tree grid</td>
+</tr>
+<tr>
+<td>Card</td>
+<td>Present a bounded collection representing one subject</td>
+<td>Product card, summary card</td>
+<td>Card</td>
+</tr>
+<tr>
+<td>Tile</td>
+<td>Present a compact selectable destination or item</td>
+<td>Dashboard tile</td>
+<td>Tile</td>
+</tr>
+<tr>
+<td>Tree</td>
+<td>Present hierarchical data</td>
+<td>File tree, outline</td>
+<td>Tree</td>
+</tr>
+<tr>
+<td>Timeline</td>
+<td>Present events in chronological order</td>
+<td>Activity timeline</td>
+<td>List</td>
+</tr>
+<tr>
+<td>Calendar View</td>
+<td>Present information organized by date</td>
+<td>Month view, agenda</td>
+<td>Planning calendar</td>
+</tr>
+<tr>
+<td>Code Display</td>
+<td>Present source or machine-readable text</td>
+<td>Code block, diff viewer</td>
+<td>Text</td>
+</tr>
+<tr>
+<td>Quote Display</td>
+<td>Present attributed or emphasized text</td>
+<td>Blockquote, testimonial</td>
+<td>Text</td>
+</tr>
+<tr>
+<td>Divider</td>
+<td>Express separation between regions</td>
+<td>Separator, rule</td>
+<td>Divider; Separator</td>
+</tr>
+<tr>
+<td>Placeholder</td>
+<td>Reserve or describe absent content</td>
+<td>Skeleton, empty slot</td>
+<td>Loader; Illustrated message</td>
+</tr>
+<tr>
+<td>Empty State</td>
+<td>Explain that content is unavailable or nonexistent</td>
+<td>No-results state</td>
+<td>Illustrated message</td>
+</tr>
+<tr>
+<td>Thumbnail</td>
+<td>Provide a small preview</td>
+<td>Image thumbnail, document preview</td>
+<td>Image</td>
+</tr>
+<tr>
+<td>Preview</td>
+<td>Present a representation before opening or committing</td>
+<td>File preview, print preview</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Shape</td>
+<td>Draw a geometric shape</td>
+<td>Ellipse, rectangle, line, path</td>
+<td>Geometric shape</td>
+</tr>
+<tr>
+<td>Custom Graphics</td>
+<td>Show content that the application draws itself</td>
+<td>Graphics API surface</td>
+<td>Custom graphics surface</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-media-elements">6. Media Elements</h2>
+<p>Elements used to display or control time-based or immersive content.</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Image Viewer</td>
+<td>Display and inspect images</td>
+<td>Lightbox, zoomable viewer</td>
+<td>Image; Popover</td>
+</tr>
+<tr>
+<td>Gallery</td>
+<td>Present a navigable media collection</td>
+<td>Image gallery, carousel</td>
+<td>Carousel; Icon collection</td>
+</tr>
+<tr>
+<td>Audio Player</td>
+<td>Play and control audio</td>
+<td>Podcast player</td>
+<td>Media player</td>
+</tr>
+<tr>
+<td>Video Player</td>
+<td>Play and control video</td>
+<td>Embedded video player</td>
+<td>Media player</td>
+</tr>
+<tr>
+<td>Media Controller</td>
+<td>Control playback independently of the media surface</td>
+<td>Playbar, transport controls</td>
+<td>Media player</td>
+</tr>
+<tr>
+<td>Timeline Scrubber</td>
+<td>Navigate through time-based content</td>
+<td>Seek bar</td>
+<td>Media player</td>
+</tr>
+<tr>
+<td>Volume Controller</td>
+<td>Adjust sound level</td>
+<td>Volume slider, mute control</td>
+<td>Media player</td>
+</tr>
+<tr>
+<td>Caption Display</td>
+<td>Present synchronized text</td>
+<td>Subtitles, closed captions</td>
+<td>Captions</td>
+</tr>
+<tr>
+<td>Transcript</td>
+<td>Present a textual media representation</td>
+<td>Audio transcript</td>
+<td>Text</td>
+</tr>
+<tr>
+<td>Live Media View</td>
+<td>Present real-time media</td>
+<td>Live stream, camera monitor</td>
+<td>Media player; Camera preview</td>
+</tr>
+<tr>
+<td>Immersive View</td>
+<td>Present panoramic or spatial content</td>
+<td>360° viewer, AR view, VR viewport</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Audio Description</td>
+<td>Describe the visual content of a video in speech</td>
+<td>Described-video track</td>
+<td>Audio description</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-data-visualization-elements">7. Data-Visualization Elements</h2>
+<p>Elements that encode values, relationships, or spatial information visually. In OpenUI these visualizations sit with the data they show, in the generic UI taxonomy's <a href="generic-ui-taxonomy/#collections-and-data-presentation">Collections and data presentation</a> subcategory, not in a category of their own (<a href="https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/ui_element_taxonomy_merge_proposal.done.md#decisions">merge decision 1</a>).</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Indicator</td>
+<td>Show a value using a compact visual encoding</td>
+<td>Sparkline, signal meter</td>
+<td>Chart; Meter</td>
+</tr>
+<tr>
+<td>Gauge</td>
+<td>Show a value relative to a range</td>
+<td>Dial, meter</td>
+<td>Meter</td>
+</tr>
+<tr>
+<td>Progress Visualization</td>
+<td>Show completion quantitatively</td>
+<td>Progress bar, progress ring</td>
+<td>Progress bar</td>
+</tr>
+<tr>
+<td>Comparison Chart</td>
+<td>Compare categorical values</td>
+<td>Bar chart, dot plot</td>
+<td>Chart</td>
+</tr>
+<tr>
+<td>Trend Chart</td>
+<td>Show change over an ordered dimension</td>
+<td>Line chart, area chart</td>
+<td>Chart</td>
+</tr>
+<tr>
+<td>Composition Chart</td>
+<td>Show parts of a whole</td>
+<td>Pie chart, stacked chart</td>
+<td>Chart</td>
+</tr>
+<tr>
+<td>Distribution Chart</td>
+<td>Show frequency or spread</td>
+<td>Histogram, box plot</td>
+<td>Chart</td>
+</tr>
+<tr>
+<td>Relationship Chart</td>
+<td>Show correlation or association</td>
+<td>Scatter plot, bubble chart</td>
+<td>Chart</td>
+</tr>
+<tr>
+<td>Hierarchy Visualization</td>
+<td>Show nested quantitative relationships</td>
+<td>Treemap, sunburst</td>
+<td>Chart</td>
+</tr>
+<tr>
+<td>Network Visualization</td>
+<td>Show nodes and relationships</td>
+<td>Graph, dependency diagram</td>
+<td>Chart</td>
+</tr>
+<tr>
+<td>Flow Visualization</td>
+<td>Show movement between stages</td>
+<td>Sankey diagram</td>
+<td>Chart</td>
+</tr>
+<tr>
+<td>Temporal Visualization</td>
+<td>Show events or intervals over time</td>
+<td>Timeline, Gantt chart</td>
+<td>Planning calendar</td>
+</tr>
+<tr>
+<td>Geographic Visualization</td>
+<td>Show spatially located data</td>
+<td>Map, choropleth</td>
+<td>Geographic map</td>
+</tr>
+<tr>
+<td>Diagram</td>
+<td>Explain structure, process, or relationships</td>
+<td>Flowchart, architecture diagram</td>
+<td>Image</td>
+</tr>
+<tr>
+<td>Legend</td>
+<td>Explain visual encodings</td>
+<td>Chart legend</td>
+<td>Chart</td>
+</tr>
+<tr>
+<td>Annotation</td>
+<td>Add explanatory information to a visualization</td>
+<td>Marker, callout, reference line</td>
+<td>Chart</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-feedback-status-and-messaging-elements">8. Feedback, Status, and Messaging Elements</h2>
+<p>Elements that communicate system state, results, validation, or changes.</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Status Indicator</td>
+<td>Communicate a persistent state</td>
+<td>Online dot, health indicator</td>
+<td>Status indicator</td>
+</tr>
+<tr>
+<td>Loading Indicator</td>
+<td>Indicate activity with unknown duration</td>
+<td>Spinner, loader</td>
+<td>Loader; Spinner</td>
+</tr>
+<tr>
+<td>Determinate Progress</td>
+<td>Show measurable completion</td>
+<td>Progress bar</td>
+<td>Progress mode</td>
+</tr>
+<tr>
+<td>Indeterminate Progress</td>
+<td>Show ongoing activity without a known endpoint</td>
+<td>Indeterminate bar</td>
+<td>Progress mode</td>
+</tr>
+<tr>
+<td>Skeleton</td>
+<td>Represent the structure of loading content</td>
+<td>Skeleton screen</td>
+<td>Loader</td>
+</tr>
+<tr>
+<td>Inline Message</td>
+<td>Communicate information near relevant content</td>
+<td>Hint, inline alert</td>
+<td>Alert</td>
+</tr>
+<tr>
+<td>Validation Message</td>
+<td>Explain valid or invalid input</td>
+<td>Field error, success indicator</td>
+<td>Form field; Constraint validation</td>
+</tr>
+<tr>
+<td>Global Alert</td>
+<td>Communicate significant application-wide information</td>
+<td>Alert banner</td>
+<td>Alert</td>
+</tr>
+<tr>
+<td>Notification</td>
+<td>Communicate an event asynchronously</td>
+<td>Notification item</td>
+<td>Notification</td>
+</tr>
+<tr>
+<td>Toast</td>
+<td>Present brief, non-blocking feedback</td>
+<td>Snackbar, toast</td>
+<td>Toast; Snackbar</td>
+</tr>
+<tr>
+<td>Confirmation</td>
+<td>Confirm that an action succeeded</td>
+<td>Success message</td>
+<td>Alert</td>
+</tr>
+<tr>
+<td>Warning</td>
+<td>Communicate risk or a potentially undesirable state</td>
+<td>Warning banner</td>
+<td>Alert</td>
+</tr>
+<tr>
+<td>Error</td>
+<td>Communicate failure</td>
+<td>Error panel</td>
+<td>Alert</td>
+</tr>
+<tr>
+<td>Blocking Message</td>
+<td>Require acknowledgment or action</td>
+<td>Blocking error dialog</td>
+<td>Dialog</td>
+</tr>
+<tr>
+<td>Status Summary</td>
+<td>Aggregate several statuses</td>
+<td>Validation summary, system-health panel, status bar</td>
+<td>List; Alert; Status bar</td>
+</tr>
+<tr>
+<td>Counter</td>
+<td>Communicate a changing quantity</td>
+<td>Unread count, character count</td>
+<td>Badge</td>
+</tr>
+<tr>
+<td>Connectivity Indicator</td>
+<td>Communicate connection state</td>
+<td>Offline indicator, sync status</td>
+<td>Badge</td>
+</tr>
+<tr>
+<td>Spoken Message</td>
+<td>Present text or interface state as speech</td>
+<td>Read-aloud, screen narration</td>
+<td>Narration</td>
+</tr>
+<tr>
+<td>Launch Screen</td>
+<td>Show branding while the application starts</td>
+<td>Splash screen</td>
+<td>Startup screen</td>
+</tr>
+</tbody>
+</table>
+<h2 id="9-container-grouping-and-layout-elements">9. Container, Grouping, and Layout Elements</h2>
+<p>Elements that organize other elements or establish visual and semantic regions.</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Generic Container</td>
+<td>Group related content without specialized behavior</td>
+<td>Panel, box</td>
+<td>Container; Panel</td>
+</tr>
+<tr>
+<td>Semantic Region</td>
+<td>Define a meaningful application area</td>
+<td>Header, main, footer, scaffold</td>
+<td>Region; Scaffold</td>
+</tr>
+<tr>
+<td>Section</td>
+<td>Group related content under a common subject</td>
+<td>Content section</td>
+<td>Region</td>
+</tr>
+<tr>
+<td>Field Group</td>
+<td>Group related form controls</td>
+<td>Fieldset, checkable group box</td>
+<td>Form group; Labelled group; Checkable group</td>
+</tr>
+<tr>
+<td>Action Group</td>
+<td>Group related commands</td>
+<td>Toolbar, button group, tool bar row</td>
+<td>Toolbar; Tool bar row; Tool action</td>
+</tr>
+<tr>
+<td>List Container</td>
+<td>Organize repeated items</td>
+<td>List, collection</td>
+<td>List</td>
+</tr>
+<tr>
+<td>Grid Container</td>
+<td>Arrange content in rows and columns</td>
+<td>Layout grid</td>
+<td>Grid</td>
+</tr>
+<tr>
+<td>Stack</td>
+<td>Arrange elements along one axis</td>
+<td>Vertical stack, horizontal stack</td>
+<td>Stack</td>
+</tr>
+<tr>
+<td>Split Layout</td>
+<td>Divide space into resizable or fixed regions</td>
+<td>Split pane, splitter handle</td>
+<td>Splitter; Pane; Splitter handle</td>
+</tr>
+<tr>
+<td>Sidebar Region</td>
+<td>Present supplementary or navigational content</td>
+<td>Sidebar, rail</td>
+<td>Sidebar; Rail</td>
+</tr>
+<tr>
+<td>Drawer</td>
+<td>Hold content that enters from an edge</td>
+<td>Navigation drawer</td>
+<td>Navigation Drawer</td>
+</tr>
+<tr>
+<td>Scroll Container</td>
+<td>Provide a constrained scrollable region</td>
+<td>Scroll panel, scrollbar</td>
+<td>Scroll container; Scrollbar</td>
+</tr>
+<tr>
+<td>Viewport</td>
+<td>Define the visible portion of larger content</td>
+<td>Canvas viewport</td>
+<td>Scroll container; Graphics viewport; Viewport and focus control; Viewport scrolling; Scroll lock</td>
+</tr>
+<tr>
+<td>Responsive Container</td>
+<td>Adapt contents to available space</td>
+<td>Adaptive panel</td>
+<td>Responsive Reflow; Breakpoint</td>
+</tr>
+<tr>
+<td>Aspect-Ratio Container</td>
+<td>Preserve a media or content proportion</td>
+<td>Video wrapper</td>
+<td>Sizing</td>
+</tr>
+<tr>
+<td>Safe-Area Container</td>
+<td>Avoid platform-reserved display regions</td>
+<td>Mobile safe-area wrapper</td>
+<td>Spacing</td>
+</tr>
+<tr>
+<td>Portal Region</td>
+<td>Render content outside its logical hierarchy</td>
+<td>Overlay host, portal outlet</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Banner Region</td>
+<td>Greet the user at the top of a page</td>
+<td>Hero banner, welcome banner</td>
+<td>Hero banner</td>
+</tr>
+<tr>
+<td>Window</td>
+<td>Frame content with a title and window controls</td>
+<td>Application window, tool window</td>
+<td>Window</td>
+</tr>
+<tr>
+<td>Page</td>
+<td>Present one addressable screen of an application</td>
+<td>Object page, dashboard, shell page</td>
+<td>Object page; Dashboard; Shell page; Empty page</td>
+</tr>
+<tr>
+<td>View</td>
+<td>Present business objects or a workflow</td>
+<td>Detail view, report</td>
+<td>View; Report</td>
+</tr>
+<tr>
+<td>Bar</td>
+<td>Arrange items along an edge-attached strip</td>
+<td>App bar, tab bar, status bar</td>
+<td>Bar</td>
+</tr>
+</tbody>
+</table>
+<h2 id="10-disclosure-and-collection-presentation-elements">10. Disclosure and Collection-Presentation Elements</h2>
+<p>Elements that control whether grouped content is visible or how a collection is traversed.</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Disclosure Control</td>
+<td>Show or hide associated content</td>
+<td>Expander, details control</td>
+<td>Disclosure</td>
+</tr>
+<tr>
+<td>Accordion</td>
+<td>Manage several expandable sections</td>
+<td>Accordion</td>
+<td>Accordion</td>
+</tr>
+<tr>
+<td>Collapsible Panel</td>
+<td>Reveal or conceal a content region</td>
+<td>Expansion panel</td>
+<td>Collapsible</td>
+</tr>
+<tr>
+<td>Tabbed Container</td>
+<td>Show one peer content panel at a time</td>
+<td>Tab panel, page stack</td>
+<td>Tab; Page stack</td>
+</tr>
+<tr>
+<td>Carousel</td>
+<td>Traverse a sequence within a bounded viewport</td>
+<td>Image carousel</td>
+<td>Carousel</td>
+</tr>
+<tr>
+<td>Tree Disclosure</td>
+<td>Expand or collapse hierarchical branches</td>
+<td>Tree node</td>
+<td>Tree view</td>
+</tr>
+<tr>
+<td>Truncation Control</td>
+<td>Reveal content omitted for compactness</td>
+<td>“Show more”</td>
+<td>Text</td>
+</tr>
+<tr>
+<td>Virtualized Collection</td>
+<td>Present part of a large collection efficiently</td>
+<td>Virtual list, virtual grid</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Filtered Collection</td>
+<td>Present items matching criteria</td>
+<td>Filterable list</td>
+<td>List; Filter bar</td>
+</tr>
+<tr>
+<td>Grouped Collection</td>
+<td>Divide items into named groups</td>
+<td>Sectioned list</td>
+<td>List</td>
+</tr>
+<tr>
+<td>Master–Detail View</td>
+<td>Coordinate collection selection with detail content</td>
+<td>Inbox layout</td>
+<td>Flexible column layout</td>
+</tr>
+</tbody>
+</table>
+<h2 id="11-overlay-and-transient-elements">11. Overlay and Transient Elements</h2>
+<p>Elements displayed above the normal content layer.</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Modal Dialog</td>
+<td>Require interaction before returning to the underlying interface</td>
+<td>Confirmation dialog, progress dialog</td>
+<td>Dialog; Progress dialog; Modal overlay; Modal interaction</td>
+</tr>
+<tr>
+<td>Non-Modal Dialog</td>
+<td>Present a movable or persistent auxiliary window</td>
+<td>Tool dialog</td>
+<td>Dialog</td>
+</tr>
+<tr>
+<td>Alert Dialog</td>
+<td>Require acknowledgment of an urgent message</td>
+<td>Critical warning</td>
+<td>Dialog</td>
+</tr>
+<tr>
+<td>Sheet</td>
+<td>Present a task or choices from an edge</td>
+<td>Bottom sheet, side sheet</td>
+<td>Sheet; Bottom Sheet</td>
+</tr>
+<tr>
+<td>Popover</td>
+<td>Present contextual interactive content</td>
+<td>Settings popover</td>
+<td>Popover</td>
+</tr>
+<tr>
+<td>Tooltip</td>
+<td>Provide brief explanatory text</td>
+<td>Hover tooltip</td>
+<td>Tooltip</td>
+</tr>
+<tr>
+<td>Menu</td>
+<td>Present a temporary list of commands or choices</td>
+<td>Dropdown menu</td>
+<td>Menu</td>
+</tr>
+<tr>
+<td>Context Menu</td>
+<td>Present actions relevant to a target</td>
+<td>Right-click menu</td>
+<td>Context menu</td>
+</tr>
+<tr>
+<td>Dropdown Panel</td>
+<td>Present selectable or interactive content below an anchor</td>
+<td>Select panel</td>
+<td>Popover</td>
+</tr>
+<tr>
+<td>Lightbox</td>
+<td>Focus attention on media</td>
+<td>Image lightbox</td>
+<td>Popover</td>
+</tr>
+<tr>
+<td>Inspector</td>
+<td>Present contextual properties or details</td>
+<td>Object inspector</td>
+<td>Side Sheet; Description list</td>
+</tr>
+<tr>
+<td>Coach Mark</td>
+<td>Explain an interface element in context</td>
+<td>Product-tour callout</td>
+<td>Popover</td>
+</tr>
+<tr>
+<td>Scrim</td>
+<td>Visually separate an overlay from underlying content</td>
+<td>Modal backdrop</td>
+<td>Backdrop</td>
+</tr>
+</tbody>
+</table>
+<h2 id="12-search-filtering-sorting-and-query-elements">12. Search, Filtering, Sorting, and Query Elements</h2>
+<p>Elements used to locate, narrow, arrange, or formulate information.</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Search Input</td>
+<td>Enter a free-text query</td>
+<td>Search box</td>
+<td>Search field</td>
+</tr>
+<tr>
+<td>Search Suggestions</td>
+<td>Propose queries or destinations</td>
+<td>Autocomplete suggestions</td>
+<td>Text completion</td>
+</tr>
+<tr>
+<td>Search Scope</td>
+<td>Constrain where a search applies</td>
+<td>Scope selector</td>
+<td>Search field</td>
+</tr>
+<tr>
+<td>Filter Control</td>
+<td>Include or exclude content by criteria</td>
+<td>Filter dropdown, filter chip</td>
+<td>Filter bar</td>
+</tr>
+<tr>
+<td>Faceted Filter</td>
+<td>Filter by multiple data dimensions</td>
+<td>Facet panel</td>
+<td>Filter bar</td>
+</tr>
+<tr>
+<td>Active Filter</td>
+<td>Represent an applied constraint</td>
+<td>Filter tag</td>
+<td>Filter bar</td>
+</tr>
+<tr>
+<td>Sort Control</td>
+<td>Set ordering criteria</td>
+<td>Sort dropdown</td>
+<td>Personalization panel</td>
+</tr>
+<tr>
+<td>Group Control</td>
+<td>Set collection grouping</td>
+<td>Group-by selector</td>
+<td>Personalization panel</td>
+</tr>
+<tr>
+<td>Query Builder</td>
+<td>Construct compound logical criteria</td>
+<td>Rule builder</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Saved Query</td>
+<td>Store and reapply query criteria</td>
+<td>Saved search</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Results Summary</td>
+<td>Explain result quantity and applied criteria</td>
+<td>Result count</td>
+<td>Text</td>
+</tr>
+<tr>
+<td>Search Result</td>
+<td>Represent one matching item</td>
+<td>Result card, result row</td>
+<td>List</td>
+</tr>
+<tr>
+<td>Value Lookup</td>
+<td>Find and choose a valid value for a field</td>
+<td>Value help dialog, lookup list</td>
+<td>Value help</td>
+</tr>
+</tbody>
+</table>
+<h2 id="13-help-guidance-and-onboarding-elements">13. Help, Guidance, and Onboarding Elements</h2>
+<p>Elements that explain the interface or help users complete tasks.</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Helper Text</td>
+<td>Explain expected input or behavior</td>
+<td>Field hint</td>
+<td>Form field</td>
+</tr>
+<tr>
+<td>Tooltip Help</td>
+<td>Provide brief contextual assistance</td>
+<td>Informational tooltip</td>
+<td>Tooltip</td>
+</tr>
+<tr>
+<td>Contextual Help</td>
+<td>Provide assistance relevant to the current location</td>
+<td>Help panel</td>
+<td>Contextual help</td>
+</tr>
+<tr>
+<td>Example</td>
+<td>Demonstrate an acceptable value or action</td>
+<td>Input example</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td>Instruction</td>
+<td>Explain how to perform a task</td>
+<td>Instruction block</td>
+<td>Text</td>
+</tr>
+<tr>
+<td>Walkthrough</td>
+<td>Guide users through a sequence</td>
+<td>Product tour</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Coach Mark</td>
+<td>Draw attention to a particular control</td>
+<td>Feature callout</td>
+<td>Popover</td>
+</tr>
+<tr>
+<td>Onboarding Checklist</td>
+<td>Track introductory tasks</td>
+<td>Getting-started checklist</td>
+<td>List; Checkbox</td>
+</tr>
+<tr>
+<td>Documentation Link</td>
+<td>Lead to extended help</td>
+<td>“Learn more” link</td>
+<td>Link</td>
+</tr>
+<tr>
+<td>Glossary Definition</td>
+<td>Explain terminology</td>
+<td>Definition popover</td>
+<td>Popover</td>
+</tr>
+</tbody>
+</table>
+<h2 id="14-identity-account-and-permission-elements">14. Identity, Account, and Permission Elements</h2>
+<p>Elements representing users, roles, access, and authentication state. In OpenUI these are compound widgets built from existing elements, such as Avatar, Menu, Form and Badge; OpenUI adds no identity element (<a href="https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/ui_element_taxonomy_merge_proposal.done.md#decisions">merge decision 2</a>).</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identity Representation</td>
+<td>Represent a person or account</td>
+<td>Avatar, profile chip</td>
+<td>Avatar</td>
+</tr>
+<tr>
+<td>Account Selector</td>
+<td>Switch among identities or tenants</td>
+<td>Account switcher</td>
+<td>Avatar; Menu</td>
+</tr>
+<tr>
+<td>Authentication Input</td>
+<td>Collect authentication credentials</td>
+<td>Login form, OTP input</td>
+<td>Form; Text field; Password field</td>
+</tr>
+<tr>
+<td>Permission Request</td>
+<td>Ask for access to protected capabilities</td>
+<td>Permission prompt</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Role Indicator</td>
+<td>Communicate an assigned role</td>
+<td>Administrator badge</td>
+<td>Tag</td>
+</tr>
+<tr>
+<td>Presence Indicator</td>
+<td>Show availability or activity</td>
+<td>Online status</td>
+<td>Badge</td>
+</tr>
+<tr>
+<td>Participant List</td>
+<td>Present users involved in a context</td>
+<td>Member list</td>
+<td>List</td>
+</tr>
+<tr>
+<td>Attribution</td>
+<td>Identify the creator or modifier of content</td>
+<td>Byline, audit identity</td>
+<td>Text</td>
+</tr>
+</tbody>
+</table>
+<h2 id="15-accessibility-and-alternative-interaction-elements">15. Accessibility and Alternative-Interaction Elements</h2>
+<p>Accessibility and alternative interaction are properties of other elements, not elements. OpenUI adds none of these types as an element (<a href="https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/ui_element_taxonomy_merge_proposal.done.md#decisions">merge decision 3</a>).</p>
+<table>
+<thead>
+<tr>
+<th>Abstract type</th>
+<th>Purpose</th>
+<th>Typical concrete elements</th>
+<th>OpenUI term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Focus Indicator</td>
+<td>Show the current keyboard or spatial-navigation target</td>
+<td>Focus ring</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Skip Control</td>
+<td>Bypass repetitive interface regions</td>
+<td>Skip-to-content link</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Accessibility Label</td>
+<td>Provide a nonvisual accessible name</td>
+<td>ARIA label, semantic label</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Provide additional assistive context</td>
+<td>Accessible description</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Live Region</td>
+<td>Announce dynamic changes</td>
+<td>Status announcement</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Landmark</td>
+<td>Expose page regions to assistive technology</td>
+<td>Navigation, main, complementary</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Keyboard Alternative</td>
+<td>Provide keyboard access to an operation</td>
+<td>Shortcut, access key</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Gesture Alternative</td>
+<td>Provide a non-gesture method for the same operation</td>
+<td>Visible previous/next buttons</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Caption or Transcript</td>
+<td>Provide a text alternative to media</td>
+<td>Closed captions, transcript</td>
+<td>Not added</td>
+</tr>
+<tr>
+<td>Error Association</td>
+<td>Connect an invalid input with its explanation</td>
+<td>Described field error</td>
+<td>Not added</td>
+</tr>
+</tbody>
+</table>
+<h2 id="classification-rules">Classification Rules</h2>
+<p>Many concrete components belong to more than one abstract category. Classification SHOULD therefore be based on the element’s <strong>primary purpose in its current context</strong>.</p>
+<p>Examples:</p>
+<table>
+<thead>
+<tr>
+<th>Concrete element</th>
+<th>Primary type</th>
+<th>Possible secondary roles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dropdown</td>
+<td>Single selection</td>
+<td>Disclosure, overlay</td>
+</tr>
+<tr>
+<td>Menu button</td>
+<td>Menu action container</td>
+<td>Overlay, navigation</td>
+</tr>
+<tr>
+<td>Tab Bar</td>
+<td>Tab navigation</td>
+<td>Selection, container</td>
+</tr>
+<tr>
+<td>Sidebar</td>
+<td>Layout region</td>
+<td>Navigation, supplementary content</td>
+</tr>
+<tr>
+<td>Tag</td>
+<td>Metadata display</td>
+<td>Filter, selection</td>
+</tr>
+<tr>
+<td>Badge</td>
+<td>Compact status display</td>
+<td>Counter, notification</td>
+</tr>
+<tr>
+<td>Icon</td>
+<td>Symbolic content</td>
+<td>Action when placed inside a button</td>
+</tr>
+<tr>
+<td>Loader</td>
+<td>Indeterminate progress</td>
+<td>System status</td>
+</tr>
+<tr>
+<td>Hamburger button</td>
+<td>Responsive navigation trigger</td>
+<td>Action, disclosure</td>
+</tr>
+<tr>
+<td>Wheel Picker</td>
+<td>Single or compound selection</td>
+<td>Date/time or value input</td>
+</tr>
+<tr>
+<td>Carousel</td>
+<td>Collection presentation</td>
+<td>Sequential navigation</td>
+</tr>
+<tr>
+<td>Data Grid</td>
+<td>Structured data display</td>
+<td>Editing, selection, navigation</td>
+</tr>
+<tr>
+<td>Form</td>
+<td>Input grouping and submission</td>
+<td>Validation, workflow</td>
+</tr>
+</tbody>
+</table>
+<p>Hover states, touch targets, gestures, mouse events, and keyboard events are <strong>not abstract UI element types</strong>. The generic UI taxonomy places them in its <a href="generic-ui-taxonomy/#interaction-definitions">Interaction definitions</a> section, in four subcategories:</p>
+<ol>
+<li><a href="generic-ui-taxonomy/#interaction-states">Interaction states</a></li>
+<li><a href="generic-ui-taxonomy/#interaction-areas-and-constraints">Interaction areas and constraints</a></li>
+<li><a href="generic-ui-taxonomy/#gestures">Gestures</a></li>
+<li><a href="generic-ui-taxonomy/#input-events">Input events</a></li>
+</ol>
+<p>Reusable behaviors that act on an element without being visible themselves are not abstract UI element types either; they are entries of the generic UI taxonomy's <a href="generic-ui-taxonomy/#behaviors">Behaviors</a> section.</p>
+</body>
+</html>
