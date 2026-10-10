@@ -15,6 +15,7 @@ nav:
       - 5.1 Generic UI taxonomy: taxonomy/generic-ui-taxonomy.md
       - 5.1 Generic UI taxonomy (HTML view): taxonomy/generic-ui-taxonomy.html
       - 5.2 UI element taxonomy: taxonomy/ui-element-taxonomy.md
+      - 5.2 UI element taxonomy (HTML view): taxonomy/ui-element-taxonomy.html
       - 5.3 Taxonomy mapping: scopes/taxonomy_mapping.md
       - 5.3 Taxonomy tree: taxonomy/taxonomy-tree.html
       - Application:
