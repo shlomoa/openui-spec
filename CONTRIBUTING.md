@@ -40,6 +40,9 @@
 | [`docs/`](docs/)                                                                              | Repository requirements.                                                                                                                         |
 | `AGENTS.md` / `CLAUDE.md` / `GEMINI.md`                                                       | AI coding-assistant guides.                                                                                                                      |
 
+The `archive/spec-survey` branch is locked (read-only). Do not delete it, push to it or
+force-push it: the evidence register, the glossary and the taxonomy documents link to its files.
+
 ---
 
 ## Specification changes
