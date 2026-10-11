@@ -3,6 +3,16 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.13.1] - 2026-10-11
+
+### UI element taxonomy rendering
+
+- The UI element taxonomy now has a generated, self-contained HTML page in the
+  documentation site. Its 15 category tables include an Example image for each visual
+  type; non-visual types are explicitly marked Not applicable.
+- The taxonomy renderer and its pre-commit check now cover both generic and UI element
+  taxonomy documents. The grammar, catalog and scope contracts remain at version `0.13.0`.
+
 ## [0.13.0] - 2026-10-10
 
 ### Survey archive
@@ -633,3 +643,4 @@ and enforced rather than adding or removing catalog types.
 [0.12.0]: https://github.com/shlomoa/openui-spec/compare/v0.11.1...v0.12.0
 [0.12.1]: https://github.com/shlomoa/openui-spec/compare/v0.12.0...v0.12.1
 [0.13.0]: https://github.com/shlomoa/openui-spec/compare/v0.12.1...v0.13.0
+[0.13.1]: https://github.com/shlomoa/openui-spec/compare/v0.13.0...v0.13.1
