@@ -1,0 +1,288 @@
+{
+  "_comment": "Hand-authored mapping of each M3 glossary term to the OpenUI vocabulary. {{Name}} is resolved to a link by tools/build_reports.py. match is one of: Exact, Alias, Narrower, Broader, Related, Homonym, Gap, Out of scope.",
+  "terms": {
+    "Adaptive design": {
+      "match": "Related",
+      "alias": "{{Responsive Reflow}}, {{Breakpoint}} (Layout, folder abstraction). M3's term is broader: it also covers component adaptations driven by user, device or environment conditions. OpenUI has no 'adaptive' term."
+    },
+    "App bar": {
+      "match": "Alias",
+      "alias": "{{Toolbar}} (Tool bars): a bar of commands. {{Bar}} (A50) is the shared shape. OpenUI names a bar by purpose and not by position, so the top placement is not part of the term. {{Shell bar}} (A67) is the application-shell analogue."
+    },
+    "Banner": {
+      "match": "Related",
+      "alias": "{{Alert}} (Feedback widgets, `role=alert`): a prominent message with optional actions. Not {{Hero banner}} (A74), which is a greeting surface, and not the ARIA `banner` landmark (a page header; see {{Scaffold}})."
+    },
+    "Button": {
+      "match": "Exact",
+      "alias": "{{Button}} (glossary; Action controls).",
+      "image": "button/hero.webp"
+    },
+    "Bottom sheet": {
+      "match": "Exact",
+      "alias": "{{Bottom Sheet}} (Sheet containers, `uses.position=bottom`)."
+    },
+    "Card": {
+      "match": "Exact",
+      "alias": "{{Card}} (Surface containers); {{Tile}} is its alias (A33)."
+    },
+    "Checkbox": {
+      "match": "Exact",
+      "alias": "{{Checkbox}} (Choice controls).",
+      "image": "checkbox/hero.webp"
+    },
+    "Chip": {
+      "match": "Related",
+      "alias": "No single term. A set of chips is a {{Token collection}} or {{Editable chip collection}} (List, A20 and A21). One filter chip is a {{Toggle button}}, an assist chip a {{Button}}, a status chip a {{Tag}}. Candidate new alias: Chip.",
+      "image": "chips/hero.webp"
+    },
+    "Color: Baseline scheme": {
+      "match": "Gap",
+      "alias": "{{Color}} and {{Theme}} (Presentation, folder abstraction). No term for a named default scheme."
+    },
+    "Color: Dynamic color": {
+      "match": "Gap",
+      "alias": "{{Color}} and {{Theme}} (Presentation). No term for a scheme derived at run time from user input."
+    },
+    "Color: Extended color": {
+      "match": "Gap",
+      "alias": "{{Color}} (Presentation). No term for brand or semantic colors added beyond the key colors."
+    },
+    "Color: Key color": {
+      "match": "Gap",
+      "alias": "{{Color}} (Presentation). M3 itself says key colors are a concept for understanding, not used in code."
+    },
+    "Color: Scheme": {
+      "match": "Related",
+      "alias": "{{Color}}; {{Theme}} (Presentation). M3 separates a scheme (a mapping of color roles to tones) from a theme (several styles together). OpenUI has only Theme."
+    },
+    "Color: Source color": {
+      "match": "Gap",
+      "alias": "{{Color}} (Presentation). No term for the one color a scheme is derived from."
+    },
+    "Color: Tonal palette": {
+      "match": "Gap",
+      "alias": "{{Color}} (Presentation). No term for a ramp of tones of one hue."
+    },
+    "Color: Tone": {
+      "match": "Gap",
+      "alias": "{{Color}} (Presentation). No term for lightness as a color axis."
+    },
+    "Color: User-generated schemes": {
+      "match": "Gap",
+      "alias": "{{Color}} and {{Theme}} (Presentation). Host-supplied (wallpaper or preset) color input is not in the tree."
+    },
+    "Condition": {
+      "match": "Related",
+      "alias": "{{Breakpoint}} and {{Responsive Reflow}} (Layout) are the closest. Not {{Trigger}} (glossary), which starts a behavior and does not select a layout."
+    },
+    "Contrast": {
+      "match": "Gap",
+      "alias": "{{Color}} (Presentation). Contrast is an accessibility measure that no OpenUI term names."
+    },
+    "Customization": {
+      "match": "Related",
+      "alias": "{{Theme}} for global customization; {{Attribute}} (glossary) for per-element configuration."
+    },
+    "Dark theme": {
+      "match": "Narrower",
+      "alias": "{{Theme}} (Presentation). A dark theme is one theme; OpenUI does not name theme variants."
+    },
+    "Data table": {
+      "match": "Alias",
+      "alias": "{{Table}} (glossary: 'data table' is an alias). When the table is interactive, {{Data grid}}."
+    },
+    "Date picker": {
+      "match": "Exact",
+      "alias": "{{Date picker}} (Date/Time pickers)."
+    },
+    "Design attribute": {
+      "match": "Related",
+      "alias": "The Presentation notions ({{Color}}, {{Typography}}, {{Shape}}) are the design attributes a style sets. Not {{Attribute}} (glossary), which is a key under an element's `attrs`."
+    },
+    "Design guidelines": {
+      "match": "Out of scope",
+      "alias": "Documentation, not UI vocabulary."
+    },
+    "Design specs": {
+      "match": "Out of scope",
+      "alias": "Documentation, not UI vocabulary. The nearest OpenUI artifact is a scope file, which is an object contract."
+    },
+    "Design System Package (DSP)": {
+      "match": "Out of scope",
+      "alias": "An Adobe file format for sharing design systems between tools; not UI vocabulary."
+    },
+    "Design tokens": {
+      "match": "Related",
+      "alias": "{{Spacing tokens}} (Presentation) is the only token term. The Presentation scope speaks of technology-independent visual tokens but leaves the token format out. Candidate new term: Design token."
+    },
+    "Design tokens: Context": {
+      "match": "Gap",
+      "alias": "{{Theme}} and {{Visual states}} (Presentation) cover some contexts, such as dark theme. No term for the set of conditions as such."
+    },
+    "Design tokens: Role": {
+      "match": "Homonym",
+      "alias": "No OpenUI term. Not the ARIA `role` (the HTML / WAI-ARIA column of the taxonomy mapping)."
+    },
+    "Design tokens: Types": {
+      "match": "Gap",
+      "alias": "No OpenUI term for the reference, system and component token tiers."
+    },
+    "Design tokens: Value": {
+      "match": "Related",
+      "alias": "The typed value of an {{Attribute}} (glossary)."
+    },
+    "Dialog": {
+      "match": "Exact",
+      "alias": "{{Dialog}} (glossary; Widgets/dialog). Its modal behavior is {{Modal overlay}}.",
+      "image": "dialog/hero.webp"
+    },
+    "Divider": {
+      "match": "Exact",
+      "alias": "{{Divider}}, alias of {{Separator}} (Display primitives, R7).",
+      "image": "divider/hero.webp"
+    },
+    "Element": {
+      "match": "Homonym",
+      "alias": "Same name, different meaning. M3: a part of a component that a token applies to (container, label text). OpenUI {{Element}} (glossary): one node of a document tree. OpenUI has no term for a part of a component."
+    },
+    "Extended FAB": {
+      "match": "Alias",
+      "alias": "{{Button}} (glossary lists 'floating action button' and 'FAB' as aliases; a variant, not a separate primitive).",
+      "image": "fab/extended-fabs.webp"
+    },
+    "Floating action button (FAB)": {
+      "match": "Alias",
+      "alias": "{{Button}} (glossary aliases 'floating action button', 'FAB'; Action controls).",
+      "image": "fab/fabs.webp"
+    },
+    "HCT": {
+      "match": "Gap",
+      "alias": "{{Color}} (Presentation). A color-space name; no OpenUI term."
+    },
+    "Image list": {
+      "match": "Related",
+      "alias": "{{List}} of {{Image}} items, or a {{Grid}}. {{Icon collection}} (A30) is the closest list alias."
+    },
+    "Libraries": {
+      "match": "Out of scope",
+      "alias": "Implementation and platform support, not UI vocabulary."
+    },
+    "List": {
+      "match": "Exact",
+      "alias": "{{List}} (Widgets/list).",
+      "image": "list/hero.webp"
+    },
+    "Material Components": {
+      "match": "Out of scope",
+      "alias": "A framework product. Framework names are not OpenUI terms ({{Naming rule}})."
+    },
+    "Material Design": {
+      "match": "Out of scope",
+      "alias": "The design system itself; OpenUI treats it as an external framework example."
+    },
+    "Material Theming": {
+      "match": "Related",
+      "alias": "{{Theme}} (Presentation): the ability to customize styles systematically."
+    },
+    "Menu": {
+      "match": "Exact",
+      "alias": "{{Menu}} (Menu widgets).",
+      "image": "menu/hero.webp"
+    },
+    "Mode": {
+      "match": "Homonym",
+      "alias": "A system or host setting (focus mode, airplane mode). OpenUI uses 'mode' only in {{Selection mode}} and {{Progress mode}}. Host integration is out of v1 (plan question Q9)."
+    },
+    "Navigation bar": {
+      "match": "Exact",
+      "alias": "{{Navigation bar}} (Application/navigation)."
+    },
+    "Navigation drawer": {
+      "match": "Exact",
+      "alias": "{{Navigation Drawer}} (Navigation widgets)."
+    },
+    "Navigation rail": {
+      "match": "Exact",
+      "alias": "{{Navigation Rail}} (Navigation widgets); {{Rail}} is the structural container."
+    },
+    "Progress indicator": {
+      "match": "Broader",
+      "alias": "{{Progress bar}} (linear) and {{Spinner}} or {{Loader}} (circular), with {{Progress mode}} for determinate or indeterminate (Status indicator).",
+      "image": "progress/hero.webp"
+    },
+    "Orbiter": {
+      "match": "Gap",
+      "alias": "No XR vocabulary in OpenUI. {{Toolbar}} and {{Popover}} are the nearest floating controls."
+    },
+    "Pane": {
+      "match": "Exact",
+      "alias": "{{Pane}} (Structural containers, Grouped leaf)."
+    },
+    "Radio button": {
+      "match": "Exact",
+      "alias": "{{Radio button}} (Choice controls); a group is {{Exclusive selection coordination}}.",
+      "image": "radio/hero.webp"
+    },
+    "Role": {
+      "match": "Homonym",
+      "alias": "A design-token slot. No OpenUI term; not the ARIA `role`."
+    },
+    "Side sheet": {
+      "match": "Exact",
+      "alias": "{{Side Sheet}} (Sheet containers)."
+    },
+    "Slider": {
+      "match": "Exact",
+      "alias": "{{Slider}} (Range control); two handles are the {{Range slider}}.",
+      "image": "slider/hero.webp"
+    },
+    "Snackbar": {
+      "match": "Exact",
+      "alias": "{{Snackbar}}, alias of {{Toast}} (Feedback widgets, R6)."
+    },
+    "Spatial": {
+      "match": "Gap",
+      "alias": "No XR vocabulary in OpenUI."
+    },
+    "Style": {
+      "match": "Related",
+      "alias": "{{Presentation}} (scope): visual styling notions such as color, typography and shape."
+    },
+    "Switch": {
+      "match": "Exact",
+      "alias": "{{Switch}} (Choice controls).",
+      "image": "switch/hero.webp"
+    },
+    "Tab": {
+      "match": "Exact",
+      "alias": "{{Tab}} (Tabs); the strip is the {{Tab Bar}}.",
+      "image": "tabs/hero.webp"
+    },
+    "Text field": {
+      "match": "Exact",
+      "alias": "{{Text field}} (Text inputs).",
+      "image": "textfield/hero.webp"
+    },
+    "Theme": {
+      "match": "Exact",
+      "alias": "{{Theme}} (Presentation, folder abstraction)."
+    },
+    "Time picker": {
+      "match": "Exact",
+      "alias": "{{Time picker}} (Date/Time pickers)."
+    },
+    "Toolbar": {
+      "match": "Alias",
+      "alias": "{{Toolbar}} (Tool bars), a bar of commands, with {{Bar}} (A50). M3 places its Toolbar at the bottom of mobile screens; OpenUI's term does not depend on placement."
+    },
+    "Tooltip": {
+      "match": "Exact",
+      "alias": "{{Tooltip}} (Feedback widgets)."
+    },
+    "XR": {
+      "match": "Out of scope",
+      "alias": "No XR vocabulary in OpenUI."
+    }
+  }
+}
