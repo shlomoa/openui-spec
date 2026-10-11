@@ -125,6 +125,27 @@ class TaxonomyMappingTest(unittest.TestCase):
                         (DOCS_TAXONOMY.parent / match.group(1)).is_file(), match.group(1)
                     )
 
+    def test_every_abstract_type_has_an_image_or_needs_none(self) -> None:
+        image_re = re.compile(r"!\[[^\]]+\]\((images/[^)]+\.svg)\)")
+        column = None
+        checked = 0
+        for line in UI_ELEMENT_TAXONOMY.read_text(encoding="utf-8").splitlines():
+            cells = _table_cells(line)
+            if not cells:
+                column = None
+            elif "Abstract type" in cells:
+                column = cells.index("Example image")
+            elif column is not None and not _is_separator_row(cells):
+                checked += 1
+                with self.subTest(abstract_type=cells[0]):
+                    if cells[column] != "Not applicable":
+                        match = image_re.fullmatch(cells[column])
+                        self.assertIsNotNone(match, cells[column])
+                        self.assertTrue(
+                            (UI_ELEMENT_TAXONOMY.parent / match.group(1)).is_file(), match.group(1)
+                        )
+        self.assertGreater(checked, 0)
+
     def test_each_entry_has_one_section_and_at_most_one_subcategory(self) -> None:
         """Each entry is listed once, under a section and at most one subcategory of it."""
         for path in (DOCS_TAXONOMY, TAXONOMY_MAPPING):

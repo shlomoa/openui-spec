@@ -58,13 +58,13 @@ repos:
         language: python
         files: ^spec/(scopes/|bin/lint_spec\.py$|.*\.md$)
         pass_filenames: false
-      - id: generic-taxonomy-html
-        name: Generic UI taxonomy HTML up to date
+      - id: taxonomy-html
+        name: Taxonomy HTML pages up to date
         entry: python -m spec.bin.render_taxonomy_html --check
         language: python
         additional_dependencies:
           - Markdown==3.11
-        files: ^(spec/taxonomy/generic-ui-taxonomy\.(md|html)|spec/taxonomy/images/.*\.svg|spec/bin/render_taxonomy_html\.py)$
+        files: ^(spec/taxonomy/(generic-ui|ui-element)-taxonomy\.(md|html)|spec/taxonomy/images/.*\.svg|spec/bin/render_taxonomy_html\.py)$
         pass_filenames: false
       - id: taxonomy-tree-html
         name: Taxonomy tree HTML up to date
