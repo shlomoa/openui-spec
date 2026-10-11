@@ -1,0 +1,764 @@
+{
+  "url": "https://m3.material.io/foundations/glossary",
+  "title": "Glossary – Material Design 3",
+  "scrapedAt": "2026-10-11T06:51:11.220Z",
+  "terms": [
+    {
+      "term": "Adaptive design",
+      "anchor": "277d89f3-f11e-431b-b2da-ca2eaefc5cbf",
+      "description": [
+        "A design approach in which the interface changes based on known user, device, or environmental conditions. Adaptive design in Material includes layout and component adaptations."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "App bar",
+      "anchor": "55bc602a-0e19-464e-8d5f-7499b784add0",
+      "description": [
+        "A component that displays information and actions at the top of a screen. Learn more about app bars"
+      ],
+      "links": [
+        {
+          "text": "Learn more about app bars",
+          "href": "https://m3.material.io/m3/pages/app-bars/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Banner",
+      "anchor": "6b3b061d-49da-4d8e-a869-91f802b9c57c",
+      "description": [
+        "A component displaying a prominent message and related optional actions."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Button",
+      "anchor": "4965dbd8-dbbc-494d-9b4a-6eac24b53fc7",
+      "description": [
+        "A component helping people initiate actions such as sending an email, sharing a document, or liking a post. Learn more about buttons"
+      ],
+      "links": [
+        {
+          "text": "Learn more about buttons",
+          "href": "https://m3.material.io/components/all-buttons"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Bottom sheet",
+      "anchor": "cba6a0d1-97b5-48aa-a3c7-d5c0fc3dbddf",
+      "description": [
+        "A component containing supplementary content that’s anchored to the bottom of the screen. Learn more about bottom sheets"
+      ],
+      "links": [
+        {
+          "text": "Learn more about bottom sheets",
+          "href": "https://m3.material.io/m3/pages/bottom-sheets/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Card",
+      "anchor": "6c0d9137-98d2-43d7-8da7-99897685a4d1",
+      "description": [
+        "A component containing content and actions that relate information about a subject. Learn more about cards"
+      ],
+      "links": [
+        {
+          "text": "Learn more about cards",
+          "href": "https://m3.material.io/m3/pages/cards/overview/"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Checkbox",
+      "anchor": "e1c36a36-8041-4801-8c2f-0e6e80fb8c29",
+      "description": [
+        "A component allowing users to select one or more items from a set. Checkboxes can turn an option on or off. Learn more about checkboxes"
+      ],
+      "links": [
+        {
+          "text": "Learn more about checkboxes",
+          "href": "https://m3.material.io/m3/pages/checkbox/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Chip",
+      "anchor": "c512f903-03b8-42c3-87b6-4d9d4e2fc204",
+      "description": [
+        "A component for helping people enter information, make selections, filter content, or trigger actions. Chips can show multiple interactive elements together in the same area, such as a list of selectable movie times, or a series of email contacts. Learn more about chips"
+      ],
+      "links": [
+        {
+          "text": "Learn more about chips",
+          "href": "https://m3.material.io/m3/pages/chips/overview/"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Color: Baseline scheme",
+      "anchor": "f458d1ce-83e6-42c5-b355-2d684e2cbe41",
+      "description": [
+        "The baseline scheme refers to the group of selected tones that make up the default colors values used for light and dark themes."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Color: Dynamic color",
+      "anchor": "056f4cc0-8abb-4ca0-b27b-131fe5ed63fc",
+      "description": [
+        "A customization feature in which a user-generated color scheme is mapped to an app’s color scheme.",
+        "Dynamic color is reflected in apps that accept user-generated schemes as inputs for color roles in an app. Dynamic color isn’t simply the output of the Material Theme Builder, or an algorithmic color scheme, but is the presence of a changeable color role that renders an app’s appearance dynamic in response to user input."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Color: Extended color",
+      "anchor": "501638f4-47c9-4fe0-9deb-7887e39b823f",
+      "description": [
+        "A color specified (in addition to key colors) in order to fill color roles for custom schemes. Extended color is a category for idiosyncratic color roles and applications, such as brand expression or conventional (semantic) meanings."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Color: Key color",
+      "anchor": "46e55b98-057a-4a50-bebd-263efe734137",
+      "description": [
+        "A key color is not an extracted color–it’s a derivation of the source color. Key colors are a concept useful to understanding dynamic color, but are not used in code. The term describes any color that undergoes hue and chroma transformation of a source color. A key color is the basis for a tonal palette."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Color: Scheme",
+      "anchor": "49df66f9-3301-4fb5-8481-aecc4513e611",
+      "description": [
+        "Any mapping of color roles to specific tones from a tonal palette. Schemes consist of multiple color roles. A dark scheme informally describes a group of colors using the tones from a group of palettes that are mapped for a dark theme.",
+        "Note: A light scheme is not the same as a light theme. See theme."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Color: Source color",
+      "anchor": "17043a03-80be-4cf4-8291-f2812aaaaaf8",
+      "description": [
+        "The single color that’s extracted to define all five key colors is called a source color. While it may not be needed in code, it’s a useful distinction for understanding that a dynamic color scheme has its root in one initiating color, AKA hue, chroma, and tone. Key colors are defined in relationship to the source color’s hue."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Color: Tonal palette",
+      "anchor": "66a6d37f-b69c-4ca2-80c6-385db855c3ce",
+      "description": [
+        "A tonal palette comprises a 13-tone range that serves as the basis for mapping tones to specific roles. A tonal palette offers variations in tonality so that a color scheme automatically provides contrast and visual differentiation within any color group, such as primary."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Color: Tone",
+      "anchor": "acdf5f05-34f3-4664-beaf-13086e7b5e11",
+      "description": [
+        "A grouping of tones are colors with the same hue and chroma. Informally, tone means degrees of lightness.",
+        "In code: Tone.of(hex code).get(tone) or Tone.of(hue, chroma).get(tone)",
+        "In design guidance: “A change in a color’s tone can be used to distinguish interaction states or visual interest to component elements.”"
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Color: User-generated schemes",
+      "anchor": "fe6c9e0b-c6fb-48c4-9a0f-b758e27d5728",
+      "description": [
+        "An aspect of dynamic color that describes the colors derived and applied from an individual user’s wallpaper selection or Android preset colors."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Condition",
+      "anchor": "1531195c-efe3-4c41-adba-909032f24935",
+      "description": [
+        "A signal that determines when and how an adaptive layout or component should adapt."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Contrast",
+      "anchor": "8ef34537-74da-4c50-af56-4126287b7227",
+      "description": [
+        "Difference between colors. For accessibility, contrast refers strictly to the difference in tone. A difference of 40 in tone guarantees a WCAG contrast ratio ≥ 3.0; a difference of 50 in tone guarantees a contrast ratio ≥ 4.5."
+      ],
+      "links": [
+        {
+          "text": "WCAG",
+          "href": "https://www.w3.org/WAI/standards-guidelines/wcag/"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Customization",
+      "anchor": "43c15edb-298b-449a-9552-3369ff3c67a3",
+      "description": [
+        "A modification made to a UI reflecting an app, OEM, or individual user's visual preferences and brand. Customization can focus on individual UI elements (for example, styling the color of a component or adding optional actions to a template), or it can be implemented globally (for example, applying a set of styles as a theme across the UI)."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Dark theme",
+      "anchor": "48d5cab3-a106-4a1f-b8a6-d8f33478ca48",
+      "description": [
+        "A dark theme is a low-light UI that displays mostly dark surfaces."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Data table",
+      "anchor": "f9b7de4f-5694-4da5-93e8-40482093d110",
+      "description": [
+        "A component displaying sets of data across rows and columns."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Date picker",
+      "anchor": "b421e50d-768c-4b6f-814d-e4e05131bbba",
+      "description": [
+        "A component that lets users select a date, or a range of dates. Learn more about date pickers"
+      ],
+      "links": [
+        {
+          "text": "Learn more about date pickers",
+          "href": "https://m3.material.io/m3/pages/date-pickers/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Design attribute",
+      "anchor": "c775040c-1dbf-4824-bba8-600ffce00827",
+      "description": [
+        "The style aspect that a design token or hard-coded value applies to, such as color or font."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Design guidelines",
+      "anchor": "ba9a0b15-782a-4a0a-85fc-4e32605534e3",
+      "description": [
+        "Guidelines are descriptive written and illustrated docs that demonstrate usage and behavior mainly through examples. They're the long-form discussion of specs that help designers and developers with problem-solving and decision-making."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Design specs",
+      "anchor": "eeb680dd-23d8-4233-82c0-6733f8a2adfd",
+      "description": [
+        "Specs are annotated designs and docs that specify the values and parameters that define a component or a feature’s coded capabilities."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Design System Package (DSP)",
+      "anchor": "5f9cfdd4-028d-4530-8ac8-ae2a1f5ede66",
+      "description": [
+        "An open-format folder structure created by Adobe to help teams share design system information across tools. Learn more about the DSP format"
+      ],
+      "links": [
+        {
+          "text": "Learn more about the DSP format",
+          "href": "https://github.com/AdobeXD/design-system-package-dsp"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Design tokens",
+      "anchor": "bea414bf-cdbf-41ee-8438-c038ed85510c",
+      "description": [
+        "A design token represents a small, reusable design decision that’s part of a design system's visual style. Tokens replace static values with self-explanatory names. Learn more on the design tokens page"
+      ],
+      "links": [
+        {
+          "text": "Learn more on the design tokens page",
+          "href": "https://m3.material.io/m3/pages/design-tokens/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Design tokens: Context",
+      "anchor": "1b50420b-edae-40b0-b12c-bd8a0ca0cbb3",
+      "description": [
+        "The set of conditions in which tokens can point to non-default values (for example, dark theme, dense layout)."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Design tokens: Role",
+      "anchor": "9c8e7015-e922-40a8-9024-c4697ac60cdc",
+      "description": [
+        "A shortened version of the system token name (for example, Secondary container color; Headline 1)."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Design tokens: Types",
+      "anchor": "df45669e-cd31-4349-a1cf-fc6eb03adc91",
+      "description": [
+        "Reference tokens: All available tokenized values. (for example, md.ref.palette.secondary200)\nComponent tokens: Component tokens define the design attributes of elements in a component, such as the color of a button container\nSystem tokens: The choices or roles that make the system, from color to typography, elevation, and shape. (for example, md.sys.color.secondary-container)"
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Design tokens: Value",
+      "anchor": "002102ca-3acf-4e57-a8c4-a43a47dd8807",
+      "description": [
+        "The information defining a design attribute, either stored in a token or hard-coded."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Dialog",
+      "anchor": "61ea8fa6-bddd-4bc1-9fae-c585078a1103",
+      "description": [
+        "A component providing important prompts in a user flow. They can require an action, communicate information, or help users accomplish a task. Learn more about dialogs"
+      ],
+      "links": [
+        {
+          "text": "Learn more about dialogs",
+          "href": "https://m3.material.io/m3/pages/dialogs/overview/"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Divider",
+      "anchor": "8eefb525-3d6a-4a09-ac47-3c94452ebeaa",
+      "description": [
+        "A thin line that groups content in lists and layouts. Learn more about dividers"
+      ],
+      "links": [
+        {
+          "text": "Learn more about dividers",
+          "href": "https://m3.material.io/m3/pages/divider/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Element",
+      "anchor": "d437ddcb-4328-448d-9877-3bc93a5642a9",
+      "description": [
+        "The part of the component that a token or value applies to, such as the container or label text."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Extended FAB",
+      "anchor": "7d6d8a70-5948-488c-a617-0d4c318f636d",
+      "description": [
+        "A component for helping people take primary actions. They're wider than FABs to accommodate a text label and larger target area. Learn more about extended FABs"
+      ],
+      "links": [
+        {
+          "text": "Learn more about extended FABs",
+          "href": "https://m3.material.io/m3/pages/extended-fab/overview/"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Floating action button (FAB)",
+      "anchor": "973f85c5-552a-4cfe-8e99-958eb0bd75b4",
+      "description": [
+        "A component representing the most important action on a screen. They put key actions within reach. Learn more about FABs"
+      ],
+      "links": [
+        {
+          "text": "Learn more about FABs",
+          "href": "https://m3.material.io/m3/pages/fab/overview/"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "HCT",
+      "anchor": "0d0f4b17-d22b-4907-b158-19e3df127ad8",
+      "description": [
+        "HCT is an abbreviation of hue, chroma, tone. It’s the name of the color space that enables dynamic color. HCT is based on CAM16 hue and chroma; the L* construct for luminance from L*a*b* (CIELAB, 1976) is denoted as T for tone."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Image list",
+      "anchor": "dc64d933-304e-4913-a863-b9e3b08951ac",
+      "description": [
+        "A component displaying a collection of images in an organized grid."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Libraries",
+      "anchor": "58845955-3907-4e16-82c1-ef38cb7ea929",
+      "description": [
+        "Developer libraries supported by Material 3 include Android and Jetpack Compose, with in-progress support being developed for Flutter and Web."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "List",
+      "anchor": "e8884762-6c68-4ba2-adf8-352f509a7ca4",
+      "description": [
+        "A component comprised of continuous, vertical indexes of text or images. Learn more about lists"
+      ],
+      "links": [
+        {
+          "text": "Learn more about lists",
+          "href": "https://m3.material.io/m3/pages/lists/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Material Components",
+      "anchor": "baf53292-7b0c-4a03-902d-ff062c40a16a",
+      "description": [
+        "Open-source UI elements created to help developers implement Material Design across Android, Flutter, and the web."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Material Design",
+      "anchor": "49d47276-0230-4b2c-83bd-88fc349ff808",
+      "description": [
+        "Material is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material streamlines collaboration between designers and developers, and helps teams quickly build beautiful products.",
+        "Material was launched in 2014 and has evolved over the years.",
+        "Material Design 1 (M1): The first generation of Material Design, launched in 2014, is archived and accessible at: material.io/archive/guidelines.",
+        "Material Design 2 (M2): The second generation of Material Design, launched in 2018, introduced Material Theming and code for Material Components.",
+        "Material Design 3 (M3): The third generation of Material, launched in 2021, includes the Material You features like dynamic color.",
+        "Material You: The new Material visual style and set of features embracing the personal and expressive needs of individual users, part of Material Design 3"
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Material Theming",
+      "anchor": "dafe1bac-ffaf-402e-a70d-198392f40acc",
+      "description": [
+        "The ability to systematically customize Material Design to better reflect your product’s brand.",
+        "While a scheme represents selections or a subset of a single style group, theme describes a set of multiple styles and attributes in combination. Themes adjust global styles to adjust for a given user context or preference, such as low light or high contrast. For example, dark theme describes design decisions beyond color since adjustments to elevation and state are also integral to expressing a dark UI effectively."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Menu",
+      "anchor": "4478ae15-d43e-4e1e-b427-77423c4ca894",
+      "description": [
+        "A component that displays a list of choices on a temporary surface. Learn more about menus"
+      ],
+      "links": [
+        {
+          "text": "Learn more about menus",
+          "href": "https://m3.material.io/m3/pages/menus/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Mode",
+      "anchor": "21cc4a93-3328-43e0-86ef-4cae1b0a51a5",
+      "description": [
+        "Binary setting provided by a system to help people use the device better. Examples: Focus mode, airplane mode, and battery saver mode."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Navigation bar",
+      "anchor": "3877de70-4765-496d-a392-6a8ed9c87fdd",
+      "description": [
+        "A component offering a persistent and convenient way to switch between primary destinations in an app. Learn more about navigation bars"
+      ],
+      "links": [
+        {
+          "text": "Learn more about navigation bars",
+          "href": "https://m3.material.io/m3/pages/navigation-bar/overview/"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Navigation drawer",
+      "anchor": "0c0cccb1-88c8-4a4d-8bb2-bc046db8f141",
+      "description": [
+        "A component providing ergonomic access to destinations in an app. Learn more about navigation drawers"
+      ],
+      "links": [
+        {
+          "text": "Learn more about navigation drawers",
+          "href": "https://m3.material.io/m3/pages/navigation-drawer/"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Navigation rail",
+      "anchor": "b5ccc775-7f26-4870-8e03-27f5300a795a",
+      "description": [
+        "A component providing access to primary destinations in apps when using tablet and desktop screens. Learn more about navigation rails"
+      ],
+      "links": [
+        {
+          "text": "Learn more about navigation rails",
+          "href": "https://m3.material.io/m3/pages/navigation-rail/overview/"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Progress indicator",
+      "anchor": "ea34aebe-f017-4fb5-bd04-2126d738066d",
+      "description": [
+        "A component displaying an unspecified wait time or the length of a process. Learn more about progress indicators"
+      ],
+      "links": [
+        {
+          "text": "Learn more about progress indicators",
+          "href": "https://m3.material.io/m3/pages/progress-indicators/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Orbiter",
+      "anchor": "88a76ec1-b3b2-4373-9c04-07c198328729",
+      "description": [
+        "Floating UI elements that control the content within spatial panels."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Pane",
+      "anchor": "38cac2f5-8a0a-4e98-82a0-365737c578a8",
+      "description": [
+        "The building blocks of a layout. Content and actions are grouped into panes, which adapt the content to best fit the screen."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Radio button",
+      "anchor": "6a1b4296-e1b0-465b-b7ac-56cb8c3720ce",
+      "description": [
+        "A component allowing users to select one option from a set. Learn more about radio buttons"
+      ],
+      "links": [
+        {
+          "text": "Learn more about radio buttons",
+          "href": "https://m3.material.io/m3/pages/radio-button/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Role",
+      "anchor": "bcba3347-5cb3-4160-9d33-b24243481dcf",
+      "description": [
+        "Short nickname describing the purpose of a design token within a design system. Also known as slots. Examples: On surface; Body 1."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Side sheet",
+      "anchor": "65978720-6d8c-4747-a956-2ca9ce7e968f",
+      "description": [
+        "A component containing supplementary content that’s anchored to the left or right edge of the screen."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Slider",
+      "anchor": "f7a3e724-4f8a-43a6-beab-8e6338f14b3a",
+      "description": [
+        "A component that allows users to make selections from a range of values."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Snackbar",
+      "anchor": "d2165c3c-b699-4015-b101-127835803270",
+      "description": [
+        "A component that provides brief messages about app processes at the bottom of the screen. Learn more about snackbars"
+      ],
+      "links": [
+        {
+          "text": "Learn more about snackbars",
+          "href": "https://m3.material.io/m3/pages/snackbar/overview/"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Spatial",
+      "anchor": "3da13c1f-4ebb-47c7-9d7b-b12a7d87bcb3",
+      "description": [
+        "Relates to the placement of UI in space through extended reality (XR)."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Style",
+      "anchor": "09d3f023-3d77-42c9-b309-ae70deab1623",
+      "description": [
+        "One or more properties, typically customizable, that define an aspect of a UI's appearance, such as color, typography, or shape."
+      ],
+      "links": [
+        {
+          "text": "color",
+          "href": "https://m3.material.io/m3/pages/color"
+        },
+        {
+          "text": "typography",
+          "href": "https://m3.material.io/m3/pages/typography/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Switch",
+      "anchor": "5edfd309-f599-450f-b93f-4b62d8a90e77",
+      "description": [
+        "A component that toggles the state of a single item on or off. Learn more about switches"
+      ],
+      "links": [
+        {
+          "text": "Learn more about switches",
+          "href": "https://m3.material.io/m3/pages/switch/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Tab",
+      "anchor": "5c2af810-5a3e-4b95-9a66-7810f74984ec",
+      "description": [
+        "A component used to organize content across different screens, data sets, and other interactions. Learn more about tabs"
+      ],
+      "links": [
+        {
+          "text": "Learn more about tabs",
+          "href": "https://m3.material.io/m3/pages/tabs/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Text field",
+      "anchor": "3d35c83c-81a5-4195-b454-b5efbd14a8dd",
+      "description": [
+        "A component that lets users enter and edit text. Learn more about text fields"
+      ],
+      "links": [
+        {
+          "text": "Learn more about text fields",
+          "href": "https://m3.material.io/m3/pages/text-fields/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Theme",
+      "anchor": "8b4bc4e5-a7c9-4b4a-94fd-fbb78de7f262",
+      "description": [
+        "A set of styles, such as color, elevation, and type, that can be applied globally to an app's UI components as a way to consistently adjust aspects of appearance in an app."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "Time picker",
+      "anchor": "f516ba0e-d5ce-4bb2-9d3f-e9630d1239ce",
+      "description": [
+        "A component that helps users select and set a specific time. Learn more about time pickers"
+      ],
+      "links": [
+        {
+          "text": "Learn more about time pickers",
+          "href": "https://m3.material.io/m3/pages/time-pickers/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Toolbar",
+      "anchor": "e79c2858-a74f-4bdc-94da-d4006a2c024b",
+      "description": [
+        "A component displaying navigation and key actions at the bottom of mobile screens. Learn more about toolbar"
+      ],
+      "links": [
+        {
+          "text": "Learn more about toolbar",
+          "href": "https://m3.material.io/m3/pages/toolbars/overview"
+        }
+      ],
+      "media": 0
+    },
+    {
+      "term": "Tooltip",
+      "anchor": "cf61f8c2-aafa-4d58-9c8b-90c0acbce3df",
+      "description": [
+        "A component that displays informative text when users hover over, focus on, or tap an element."
+      ],
+      "links": [],
+      "media": 0
+    },
+    {
+      "term": "XR",
+      "anchor": "9fdd5f82-f940-4661-8deb-f0e8517f9bf4",
+      "description": [
+        "Extended reality includes UI viewed in virtual reality or in passthrough blended with the physical environment."
+      ],
+      "links": [],
+      "media": 0
+    }
+  ]
+}
