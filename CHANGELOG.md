@@ -3,6 +3,17 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.14.0] - 2026-10-12
+
+### Canonical-term rule in the glossary
+
+- The canonical-term rule (keep an existing OpenUI term, else the HTML or WAI-ARIA name,
+  else the name most surveyed frameworks share, else a neutral name) moves from Appendix A
+  of `spec/scopes/terminology.md` into the
+  [glossary](spec/scopes/scope.md#canonical-term-rule). `terminology.md` and the spec
+  README link to it there. The grammar, the catalog content and the object contracts do not
+  change; the spec and packages move to `0.14.0` because the glossary prose changed.
+
 ## [0.13.1] - 2026-10-11
 
 ### UI element taxonomy rendering
@@ -644,3 +655,4 @@ and enforced rather than adding or removing catalog types.
 [0.12.1]: https://github.com/shlomoa/openui-spec/compare/v0.12.0...v0.12.1
 [0.13.0]: https://github.com/shlomoa/openui-spec/compare/v0.12.1...v0.13.0
 [0.13.1]: https://github.com/shlomoa/openui-spec/compare/v0.13.0...v0.13.1
+[0.14.0]: https://github.com/shlomoa/openui-spec/compare/v0.13.1...v0.14.0

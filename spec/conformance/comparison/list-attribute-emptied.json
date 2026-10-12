@@ -2,21 +2,23 @@
   "description": "A list attribute that becomes empty is one change at the attribute path, never an id-keyed removal.",
   "reference": {
     "id": "root",
-    "version": "0.13.0",
+    "version": "0.14.0",
     "type": "html",
     "children": [
       {
         "id": "ordersTable",
         "type": "Table",
         "attrs": {
-          "uses.pageSizes": ["10"]
+          "uses.pageSizes": [
+            "10"
+          ]
         }
       }
     ]
   },
   "new": {
     "id": "root",
-    "version": "0.13.0",
+    "version": "0.14.0",
     "type": "html",
     "children": [
       {
@@ -34,7 +36,9 @@
     "change": [
       {
         "path": "/children/ordersTable/attrs/uses.pageSizes",
-        "reference": ["10"],
+        "reference": [
+          "10"
+        ],
         "new": []
       }
     ]

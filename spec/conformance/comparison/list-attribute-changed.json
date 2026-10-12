@@ -2,28 +2,35 @@
   "description": "A list attribute that differs, as a multiset, is one change at the attribute path with both whole lists in their original order.",
   "reference": {
     "id": "root",
-    "version": "0.13.0",
+    "version": "0.14.0",
     "type": "html",
     "children": [
       {
         "id": "ordersTable",
         "type": "Table",
         "attrs": {
-          "uses.pageSizes": ["10", "25"]
+          "uses.pageSizes": [
+            "10",
+            "25"
+          ]
         }
       }
     ]
   },
   "new": {
     "id": "root",
-    "version": "0.13.0",
+    "version": "0.14.0",
     "type": "html",
     "children": [
       {
         "id": "ordersTable",
         "type": "Table",
         "attrs": {
-          "uses.pageSizes": ["50", "25", "10"]
+          "uses.pageSizes": [
+            "50",
+            "25",
+            "10"
+          ]
         }
       }
     ]
@@ -34,8 +41,15 @@
     "change": [
       {
         "path": "/children/ordersTable/attrs/uses.pageSizes",
-        "reference": ["10", "25"],
-        "new": ["50", "25", "10"]
+        "reference": [
+          "10",
+          "25"
+        ],
+        "new": [
+          "50",
+          "25",
+          "10"
+        ]
       }
     ]
   }

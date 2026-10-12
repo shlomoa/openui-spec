@@ -162,7 +162,8 @@ validation stages and the format of the expected diagnostics.
 ## 3. Terminology
 
 The [glossary](scopes/scope.md#glossary) defines every OpenUI term once, with its generic
-aliases. The framework names of each taxonomy entry are in the
+aliases, and the [canonical-term rule](scopes/scope.md#canonical-term-rule) states how a
+canonical name is chosen. The framework names of each taxonomy entry are in the
 [taxonomy mapping](scopes/taxonomy_mapping.md).
 
 ## 4. Document model and language
@@ -547,7 +548,8 @@ production allows hyphenated names.
 
 The [evidence register](scopes/evidence.md) links each leaf scope to the surveyed sources
 that justify it. The [terminology decisions](scopes/terminology.md) record the approved
-term changes, with their evidence and the canonical-term rule.
+term changes, with their evidence. The
+[canonical-term rule](scopes/scope.md#canonical-term-rule) is in the glossary.
 
 ## Annex C. Examples
 

@@ -99,7 +99,7 @@ LINK_GROUPS = {
         "Dialog scope": "Widgets/dialog.scope.md",
         "Tabs": "Containers/tabs.scope.md",
         "Presentation": "Presentation/scope.md",
-        "Naming rule": "terminology.md#appendix-a-canonical-term-rule",
+        "Naming rule": "scope.md#canonical-term-rule",
     },
 }
 

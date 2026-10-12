@@ -2,7 +2,7 @@
   "description": "A value that changes shape, scalar to list, is one change at the attribute path.",
   "reference": {
     "id": "root",
-    "version": "0.13.0",
+    "version": "0.14.0",
     "type": "html",
     "children": [
       {
@@ -16,14 +16,16 @@
   },
   "new": {
     "id": "root",
-    "version": "0.13.0",
+    "version": "0.14.0",
     "type": "html",
     "children": [
       {
         "id": "ordersTable",
         "type": "Table",
         "attrs": {
-          "uses.pageSizes": ["10"]
+          "uses.pageSizes": [
+            "10"
+          ]
         }
       }
     ]
@@ -35,7 +37,9 @@
       {
         "path": "/children/ordersTable/attrs/uses.pageSizes",
         "reference": "10",
-        "new": ["10"]
+        "new": [
+          "10"
+        ]
       }
     ]
   }

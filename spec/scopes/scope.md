@@ -90,6 +90,21 @@ canonical term below is the preferred OpenUI wording.
 - Scope files under [`scopes/`](#scopes) define object contracts. This
   glossary defines shared vocabulary used by those contracts.
 
+### Canonical-term rule
+
+The canonical name of a term is chosen by applying these steps in order:
+
+1. Keep an existing OpenUI term (glossary or taxonomy mapping).
+2. Otherwise use the HTML or WAI-ARIA name. HTML is the only surveyed source that is a
+   standard.
+3. Otherwise use the term most surveyed frameworks share.
+4. Otherwise use a neutral name for the purpose or outcome, as the Qt behavior labels do.
+
+Framework class names, selectors and brands never become canonical terms; they stay as
+aliases. Where a framework uses a canonical name with another meaning, the term keeps
+its name and its entry states the difference, as the entries for
+[Control](#control), [Element](#element), [Page](#page) and [Grid](#grid) do.
+
 ### Core specification terms
 
 #### Application

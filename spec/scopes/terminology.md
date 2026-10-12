@@ -20,17 +20,16 @@ specific term.
   `taxonomy_mapping.md` lists the names that framework uses for every OpenUI scope.
 - **Status:** approved (2026-09-27) and applied (2026-09-28) to the glossary, the taxonomy
   mapping, the generic UI taxonomy and the scope files: every Change, Replace, Delete and
-  Add row except A41–A43 (out of v1, plan question Q9), the kept terms, the terms not added and the canonical-term rule. Rows A71 and A72
+  Add row except A41–A43 (out of v1, plan question Q9), the kept terms and the terms not added.
+  The canonical-term rule, applied to the glossary, now lives there. Rows A71 and A72
   name two new scopes: [Input assistance](Behaviors/input_assistance.scope.md#purpose) and [Viewport and focus control](Behaviors/viewport_and_focus_control.scope.md#purpose). Modal overlay (C4) also has its own scope: [Modal overlay](Behaviors/modal_overlay.scope.md#purpose).
   It answers terminology workstream W1, tasks 8 and 9, and plan questions Q5 and Q10 in the
   [v1 publish plan](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/specui_v1_publish_plan.md#tasks).
 - **HTML citations:** Source URLs cite the living HTML Standard. The HTML survey's commit
   snapshot is only its pinned research baseline ([BASELINE.md](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/html5/inventory/BASELINE.md#survey-baseline-and-scope));
   the snapshot page itself says it must not be cited as authoritative.
-- **Naming rule used:** keep an existing OpenUI term; otherwise use the HTML or ARIA name;
-  otherwise the name most surveyed frameworks use; otherwise a neutral descriptive
-  name. Never use a framework class or brand. See
-  [appendix A](#appendix-a-canonical-term-rule).
+- **Naming rule used:** the glossary's
+  [canonical-term rule](scope.md#canonical-term-rule).
 
 ## Summary
 
@@ -263,19 +262,3 @@ Approved (2026-09-27): none of these terms is added.
   only wraps the raw element, `sap.html.Ruby`, under Native).
 - **Cards** (OpenUI5) is already covered by the existing Card alias; its placement is a
   structure decision, not a new term.
-
-## Appendix A: Canonical-term rule
-
-Approved (plan question Q5). Applied in order:
-
-1. Keep an existing OpenUI term (glossary or taxonomy mapping).
-2. Otherwise use the HTML or WAI-ARIA name. HTML is the only surveyed source that is a
-   standard.
-3. Otherwise use the term most surveyed frameworks share.
-4. Otherwise use a neutral name for the purpose or outcome, as the Qt behavior labels do.
-
-Framework class names, selectors and brands never become canonical terms; they stay as
-aliases. The glossary should also note these conflicting framework meanings, which need
-no term change: **Page** (OpenUI5 `sap.m.Page` is a container), **Control** (OpenUI5
-`sap.ui.core.Control` is a generic base class), **Element** (HTML element) and **Grid**
-(layout grid versus data grid).

@@ -2,7 +2,7 @@
   "description": "An element present only in the reference identified list is removed at /children/<id>, with the whole element.",
   "reference": {
     "id": "root",
-    "version": "0.13.0",
+    "version": "0.14.0",
     "type": "html",
     "children": [
       {
@@ -16,14 +16,17 @@
         "id": "ordersTable",
         "type": "Table",
         "attrs": {
-          "uses.pageSizes": ["10", "25"]
+          "uses.pageSizes": [
+            "10",
+            "25"
+          ]
         }
       }
     ]
   },
   "new": {
     "id": "root",
-    "version": "0.13.0",
+    "version": "0.14.0",
     "type": "html",
     "children": [
       {
@@ -43,7 +46,10 @@
           "id": "ordersTable",
           "type": "Table",
           "attrs": {
-            "uses.pageSizes": ["10", "25"]
+            "uses.pageSizes": [
+              "10",
+              "25"
+            ]
           }
         }
       }
