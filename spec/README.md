@@ -25,7 +25,7 @@ The specification has six parts and three annexes. Part 2 marks each one
 - [Annex A, Grammar](#annex-a-grammar): [`EBNF.txt`](EBNF.txt) and
   [`openui.schema.json`](openui.schema.json)
 - [Annex B, Survey mapping](#annex-b-survey-mapping): the
-  [evidence register](scopes/evidence.md) and the [terminology decisions](scopes/terminology.md)
+  [evidence register](scopes/evidence.md) and the [terminology decisions](archive/terminology.done.md)
 - [Annex C, Examples](#annex-c-examples): the [worked examples](examples/README.md)
 
 ## 1. Introduction and scope
@@ -149,7 +149,7 @@ in all capitals, as shown here.
 | 5 Categories and objects      | The three taxonomy documents, the [scope tree](#54-scope-tree-and-folder-rules) and the [scope files](#55-object-contracts) | Normative   |
 | 6 Catalog                     | [Part 6](#6-catalog), the [leaf scope template](scopes/template.scope.md) and the generated `openui.json`                   | Normative   |
 | Annex A Grammar               | [`EBNF.txt`](EBNF.txt), which is authoritative, and its JSON Schema projection                                              | Normative   |
-| Annex B Survey mapping        | The [evidence register](scopes/evidence.md) and the [terminology decisions](scopes/terminology.md)                          | Informative |
+| Annex B Survey mapping        | The [evidence register](scopes/evidence.md) and the [terminology decisions](archive/terminology.done.md)                    | Informative |
 | Annex C Examples              | The [worked examples](examples/README.md)                                                                                   | Informative |
 | Not a part                    | [Packages and tooling](#14-packages-and-tooling)                                                                            | Informative |
 
@@ -547,8 +547,8 @@ production allows hyphenated names.
 ## Annex B. Survey mapping
 
 The [evidence register](scopes/evidence.md) links each leaf scope to the surveyed sources
-that justify it. The [terminology decisions](scopes/terminology.md) record the approved
-term changes, with their evidence. The
+that justify it. The archived [terminology decisions](archive/terminology.done.md) record
+the approved term changes, with their evidence. The
 [canonical-term rule](scopes/scope.md#canonical-term-rule) is in the glossary.
 
 ## Annex C. Examples

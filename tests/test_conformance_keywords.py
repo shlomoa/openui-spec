@@ -12,7 +12,7 @@ KEYWORD_RE = re.compile(
 )
 INFORMATIVE_DOCUMENTS = (
     SPEC_DIR / "scopes" / "evidence.md",
-    SPEC_DIR / "scopes" / "terminology.md",
+    SPEC_DIR / "archive" / "terminology.done.md",
     SPEC_DIR / "examples" / "README.md",
     SPEC_DIR / "tooling" / "editing.md",
     SPEC_DIR / "tooling" / "comparison.md",

@@ -13,6 +13,10 @@ published packages.
   [glossary](spec/scopes/scope.md#canonical-term-rule). `terminology.md` and the spec
   README link to it there. The grammar, the catalog content and the object contracts do not
   change; the spec and packages move to `0.14.0` because the glossary prose changed.
+- `spec/scopes/terminology.md`, the record of the applied terminology changes, moves to
+  `spec/archive/terminology.done.md`, as the `archive/spec-survey` branch is locked. It
+  stays in Annex B and in the documentation site; its examples-coverage test reads it at
+  the new path.
 
 ## [0.13.1] - 2026-10-11
 

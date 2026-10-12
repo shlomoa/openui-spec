@@ -29,6 +29,7 @@ README_OUTLINE_HEADINGS = (
 )
 EXPECTED_SPEC_MARKDOWN = [
     "README.md",
+    "archive/terminology.done.md",
     "conformance/README.md",
     "examples/README.md",
     "scopes/Application/favicon.scope.md",
@@ -96,7 +97,6 @@ EXPECTED_SPEC_MARKDOWN = [
     "scopes/scope.md",
     "scopes/taxonomy_mapping.md",
     "scopes/template.scope.md",
-    "scopes/terminology.md",
     "taxonomy/generic-ui-taxonomy.md",
     "taxonomy/ui-element-taxonomy.md",
     "tooling/comparison.md",

@@ -219,7 +219,7 @@ scraped {glossary["scrapedAt"][:10]} (`{glossary["title"]}`), each with a candid
 This is a proposal for the owner: the OpenUI terms come from the
 [glossary](../../spec/scopes/scope.md#glossary), the
 [taxonomy mapping](../../spec/scopes/taxonomy_mapping.md) and the
-[terminology changes](../../spec/scopes/terminology.md). No term is added or renamed here.
+[terminology changes](../../spec/archive/terminology.done.md). No term is added or renamed here.
 
 - **Name** is the heading as it appears in the M3 glossary.
 - **Detailed description** is the M3 text, unchanged.
