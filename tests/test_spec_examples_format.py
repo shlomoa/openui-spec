@@ -151,7 +151,7 @@ class SpecExamplesFormatTest(unittest.TestCase):
         self.assertEqual(app_data.count("    term: '"), checked)
 
 
-ADDITION_SOURCES = (SCOPES_DIR / "terminology.md",)
+ADDITION_SOURCES = (SPEC_DIR / "archive" / "terminology.done.md",)
 # Add rows of the archived change records (`taxonomy_mapping_change.done.md` and
 # `ui_element_taxonomy_merge_proposal.done.md`, branch `archive/spec-survey`).
 ARCHIVED_ADDITIONS = ("Tree", "Tree grid", "Date and time field", "Menu item", "Captions")

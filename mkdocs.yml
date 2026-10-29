@@ -94,7 +94,7 @@ nav:
       - 6.2 Leaf scope template: scopes/template.scope.md
   - Annex B Survey mapping:
       - Evidence: scopes/evidence.md
-      - Terminology: scopes/terminology.md
+      - Terminology: archive/terminology.done.md
   - Annex C Examples: examples/README.md
   - Tooling:
       - Playground: playground.html
