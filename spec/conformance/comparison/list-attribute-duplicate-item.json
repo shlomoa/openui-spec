@@ -9,10 +9,7 @@
         "id": "ordersTable",
         "type": "Table",
         "attrs": {
-          "uses.pageSizes": [
-            "10",
-            "25"
-          ]
+          "uses.pageSizes": ["10", "25"]
         }
       }
     ]
@@ -26,11 +23,7 @@
         "id": "ordersTable",
         "type": "Table",
         "attrs": {
-          "uses.pageSizes": [
-            "10",
-            "10",
-            "25"
-          ]
+          "uses.pageSizes": ["10", "10", "25"]
         }
       }
     ]
@@ -41,15 +34,8 @@
     "change": [
       {
         "path": "/children/ordersTable/attrs/uses.pageSizes",
-        "reference": [
-          "10",
-          "25"
-        ],
-        "new": [
-          "10",
-          "10",
-          "25"
-        ]
+        "reference": ["10", "25"],
+        "new": ["10", "10", "25"]
       }
     ]
   }

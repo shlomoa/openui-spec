@@ -9,11 +9,7 @@
         "id": "ordersTable",
         "type": "Table",
         "attrs": {
-          "uses.pageSizes": [
-            "10",
-            null,
-            "25"
-          ]
+          "uses.pageSizes": ["10", null, "25"]
         }
       }
     ]
@@ -27,11 +23,7 @@
         "id": "ordersTable",
         "type": "Table",
         "attrs": {
-          "uses.pageSizes": [
-            "25",
-            "10",
-            null
-          ]
+          "uses.pageSizes": ["25", "10", null]
         }
       }
     ]

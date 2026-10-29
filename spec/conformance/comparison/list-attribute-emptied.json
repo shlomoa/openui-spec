@@ -9,9 +9,7 @@
         "id": "ordersTable",
         "type": "Table",
         "attrs": {
-          "uses.pageSizes": [
-            "10"
-          ]
+          "uses.pageSizes": ["10"]
         }
       }
     ]
@@ -36,9 +34,7 @@
     "change": [
       {
         "path": "/children/ordersTable/attrs/uses.pageSizes",
-        "reference": [
-          "10"
-        ],
+        "reference": ["10"],
         "new": []
       }
     ]
