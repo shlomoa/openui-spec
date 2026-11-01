@@ -11,7 +11,7 @@
     "regenerate-fixtures": "npm run build && node dist/tests/regenerate-fixtures.js"
   },
   "devDependencies": {
-    "@types/node": "26.4.0",
+    "@types/node": "26.6.6",
     "typescript": "~7.0.2"
   },
   "dependencies": {
