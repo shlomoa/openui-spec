@@ -1,1 +1,4 @@
-{ "id": "root", "version": "0.14.0", "type": "bad--type" }
+{
+  "id": "root",
+  "type": "bad--type"
+}

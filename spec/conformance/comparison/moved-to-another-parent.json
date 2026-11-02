@@ -2,7 +2,6 @@
   "description": "Moving an element to another parent is a remove at the old path plus an add at the new path, with the whole element in both.",
   "reference": {
     "id": "root",
-    "version": "0.14.0",
     "type": "html",
     "children": [
       {
@@ -27,7 +26,6 @@
   },
   "new": {
     "id": "root",
-    "version": "0.14.0",
     "type": "html",
     "children": [
       {

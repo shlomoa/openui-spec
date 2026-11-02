@@ -27,7 +27,6 @@ export function mapToAngularProject(
   return {
     appName: dataModel.name,
     packageName: toPackageName(dataModel.name),
-    version: dataModel.version,
     pages,
     elementFiles: rendering.files,
     themeTokens: dataModel.themeTokens,

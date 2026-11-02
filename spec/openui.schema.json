@@ -4,9 +4,8 @@
   "title": "OpenUI Specification Document",
   "type": "object",
   "additionalProperties": false,
-  "required": ["version", "id", "type"],
+  "required": ["id", "type"],
   "properties": {
-    "version": { "$ref": "#/$defs/version" },
     "id": {
       "type": "string",
       "const": "root"
@@ -16,10 +15,6 @@
     "children": { "$ref": "#/$defs/children" }
   },
   "$defs": {
-    "version": {
-      "type": "string",
-      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
-    },
     "typeName": {
       "type": "string",
       "pattern": "^(?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*(?:-[a-z][a-z0-9]*)?)$"

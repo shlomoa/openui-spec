@@ -1,1 +1,7 @@
-{ "id": "root", "version": "0.14.0", "type": "html", "attrs": { "[open]": "true" } }
+{
+  "id": "root",
+  "type": "html",
+  "attrs": {
+    "[open]": "true"
+  }
+}

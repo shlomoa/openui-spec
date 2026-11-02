@@ -11,12 +11,10 @@ from bin.openui_spec import OpenUiJson, OpenUiJsonError, OpenUiValidationError
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = REPO_ROOT / "spec" / "openui.json"
 CLI_PATH = REPO_ROOT / "bin" / "openui_spec_cli.py"
-SCHEMA_VERSION_FILE = REPO_ROOT / "SCHEMA_VERSION"
 
 
 def document_with(child_type: str = "Table") -> dict[str, object]:
     return {
-        "version": SCHEMA_VERSION_FILE.read_text(encoding="utf-8").strip(),
         "id": "root",
         "type": "html",
         "children": [{"id": "target", "type": child_type}],
@@ -37,8 +35,8 @@ class OpenUiJsonTest(unittest.TestCase):
             self.assertEqual(json.loads(output.read_text(encoding="utf-8")), document_with())
 
     def test_rejects_invalid_schema_and_unknown_content(self) -> None:
-        with self.assertRaisesRegex(OpenUiValidationError, "required property"):
-            OpenUiJson({"id": "root", "type": "html"}).validate()
+        with self.assertRaisesRegex(OpenUiValidationError, "unknown member version"):
+            OpenUiJson({"id": "root", "version": "0.14.0", "type": "html"}).validate()
         with self.assertRaisesRegex(OpenUiValidationError, "unknown OpenUI object type"):
             OpenUiJson(document_with("Unsupported")).validate()
 
@@ -65,7 +63,6 @@ class OpenUiJsonTest(unittest.TestCase):
     def test_accepts_flexible_instances_of_the_same_known_type(self) -> None:
         document = OpenUiJson(
             {
-                "version": SCHEMA_VERSION_FILE.read_text(encoding="utf-8").strip(),
                 "id": "root",
                 "type": "html",
                 "children": [

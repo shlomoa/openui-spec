@@ -4,8 +4,7 @@ Each case is two OpenUI documents and the changelog a comparison of them reports
 cases are generated, never edited by hand: this module is their source. The expected
 changelogs below are written out from the output contract of
 ``spec/tooling/comparison.md``; they are not derived from the comparator, so a case
-fails when the comparator and the contract disagree. The documents declare the current
-spec version (``SCHEMA_VERSION``), so a version bump only needs a regeneration.
+fails when the comparator and the contract disagree.
 
 Usage: ``python -m spec.bin.generate_comparison_cases [--check]``. With ``--check`` no
 file is written; the command fails when a case file is missing, stale or unexpected.
@@ -21,19 +20,15 @@ from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 TARGET = REPO_ROOT / "spec" / "conformance" / "comparison"
-VERSION_FILE = REPO_ROOT / "SCHEMA_VERSION"
-OLD_VERSION = "0.1.0"  # a version other than the current one, for the root `version` case
-
 Json = dict[str, Any]
 
 
 def _doc(
     children: list[Json] | None = None,
     attrs: Json | None = None,
-    version: str | None = None,
     type: str = "html",
 ) -> Json:
-    document: Json = {"id": "root", "version": version, "type": type}
+    document: Json = {"id": "root", "type": type}
     if attrs is not None:
         document["attrs"] = attrs
     if children is not None:
@@ -58,8 +53,8 @@ def _changelog(
     return {"remove": remove or [], "add": add or [], "change": change or []}
 
 
-def build_cases(version: str) -> dict[str, Json]:
-    """Return the cases by name, for documents of spec version ``version``."""
+def build_cases() -> dict[str, Json]:
+    """Return the comparison cases by name."""
     cases: dict[str, Json] = {}
 
     def case(name: str, description: str, reference: Json, new: Json, expected: Json) -> None:
@@ -70,8 +65,8 @@ def build_cases(version: str) -> dict[str, Json]:
             "expected": expected,
         }
 
-    def doc(children=None, attrs=None, version=version, type="html"):
-        return _doc(children, attrs, version, type)
+    def doc(children=None, attrs=None, type="html"):
+        return _doc(children, attrs, type)
 
     el, E = _el, _changelog
 
@@ -93,15 +88,10 @@ def build_cases(version: str) -> dict[str, Json]:
     )
     case(
         "root-members-changed",
-        "A different root `type` or `version` is a change at /type or /version.",
-        doc([dlg], version=OLD_VERSION, type="html"),
-        doc([dlg], version=version, type="Dialog"),
-        E(
-            change=[
-                {"path": "/type", "reference": "html", "new": "Dialog"},
-                {"path": "/version", "reference": OLD_VERSION, "new": version},
-            ]
-        ),
+        "A different root `type` is a change at /type.",
+        doc([dlg], type="html"),
+        doc([dlg], type="Dialog"),
+        E(change=[{"path": "/type", "reference": "html", "new": "Dialog"}]),
     )
     case(
         "root-attrs-added",
@@ -531,7 +521,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--check", action="store_true", help="Fail if a case file is stale.")
     args = parser.parse_args(argv)
 
-    files = render(build_cases(VERSION_FILE.read_text(encoding="utf-8").strip()))
+    files = render(build_cases())
     if args.check:
         problems = stale(files)
         for problem in problems:

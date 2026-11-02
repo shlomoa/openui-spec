@@ -23,7 +23,6 @@ export type DataModelFeature =
 
 export interface DataModelApplication {
   name: string;
-  version: string;
   pages: DataModelPage[];
   /** The element tree of the whole document; present for concrete input only. */
   element?: DataModelElement;

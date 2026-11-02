@@ -7,8 +7,6 @@ import { loadOpenUiDocument } from "./load-spec";
 export class OpenUiCatalogIndex {
   private readonly types = new Set<string>();
 
-  constructor(readonly version: string) {}
-
   add(type: string): void {
     this.types.add(type);
   }
@@ -19,7 +17,7 @@ export class OpenUiCatalogIndex {
 }
 
 export function createCatalogIndex(catalog: OpenUiDocument): OpenUiCatalogIndex {
-  const index = new OpenUiCatalogIndex(catalog.version);
+  const index = new OpenUiCatalogIndex();
   visitCatalogNode(catalog, index);
   return index;
 }

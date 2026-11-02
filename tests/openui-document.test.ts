@@ -58,7 +58,6 @@ test("parse builds the typed tree", () => {
   const document = parse(
     JSON.stringify({
       id: "root",
-      version: defaultCatalog().version,
       type: "html",
       children: [
         {
@@ -86,9 +85,9 @@ test("parse builds the typed tree", () => {
 
 test("parse throws with grammar diagnostics", () => {
   assert.throws(
-    () => parse('{"id": "root", "type": "html"}'),
+    () => parse('{"id": "root", "version": "0.14.0", "type": "html"}'),
     (error: unknown) =>
-      error instanceof OpenUiParseError && pairs(error.diagnostics).join() === "grammar/missing-property /version",
+      error instanceof OpenUiParseError && pairs(error.diagnostics).join() === "grammar/unknown-property /version",
   );
 });
 
@@ -105,15 +104,14 @@ test("the catalog and every worked example validate", () => {
   }
 });
 
-test("a custom catalog sets the supported version", () => {
-  const catalog = Catalog.fromValue({ id: "root", version: "9.9.9", type: "html" });
-  assert.deepEqual(validate(parse('{"id": "root", "version": "9.9.9", "type": "html"}'), catalog), []);
+test("a custom catalog validates a matching type", () => {
+  const catalog = Catalog.fromValue({ id: "root", type: "html" });
+  assert.deepEqual(validate(parse('{"id": "root", "type": "html"}'), catalog), []);
 });
 
 function chart(series: unknown): Record<string, unknown> {
   return {
     id: "root",
-    version: defaultCatalog().version,
     type: "html",
     children: [{ id: "sales", type: "Chart", attrs: { "uses.series": series } }],
   };
@@ -141,7 +139,6 @@ test("a list reference keeps its own diagnostic once", () => {
 function behaves(elementType: string, key: string, value: unknown): string {
   return JSON.stringify({
     id: "root",
-    version: defaultCatalog().version,
     type: "html",
     children: [{ id: "target", type: elementType, attrs: { [key]: value } }],
   });

@@ -18,7 +18,6 @@ export function buildDataModel(document: OpenUiDocument): DataModelApplication {
 
   return {
     name: typeof document.attrs?.name === "string" ? document.attrs.name : "OpenUI Specification",
-    version: document.version,
     pages: scopes.map((scope) => ({
       id: scope.id,
       route: normalizeRoute(scope.id),
@@ -61,7 +60,6 @@ function buildConcreteInputModel(document: OpenUiDocument): DataModelApplication
 
   return {
     name: unquote(stringAttr(document, "name")) ?? pageTitle ?? "OpenUI Application",
-    version: document.version,
     pages,
     element: buildElementTree(document),
     themeTokens: defaultThemeTokens(),

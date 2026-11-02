@@ -112,8 +112,10 @@ def _stringify(value: Any) -> Any:
     return value
 
 
-def migrate_element(element: dict[str, Any], catalog: Catalog) -> None:
+def migrate_element(element: Any, catalog: Catalog) -> None:
     """Migrate the attribute keys and values of *element* and its children in place."""
+    if not isinstance(element, dict):
+        return
     attrs = element.get("attrs")
     if isinstance(attrs, dict):
         declared = catalog.contracts.get(element.get("type", ""), {})
@@ -132,8 +134,10 @@ def migrate_element(element: dict[str, Any], catalog: Catalog) -> None:
                 prefix = "behaves" if category == "behaves" else "produces"
                 migrated[f"{prefix}.{name}"] = value
         element["attrs"] = {key: _stringify(value) for key, value in migrated.items()}
-    for child in element.get("children", []):
-        migrate_element(child, catalog)
+    children = element.get("children")
+    if isinstance(children, list):
+        for child in children:
+            migrate_element(child, catalog)
 
 
 def fit_document(document: dict[str, Any], contracts: Contracts) -> list[str]:
@@ -230,6 +234,7 @@ def _ids(element: dict[str, Any]) -> list[str]:
 def migrate_text(text: str, catalog: Catalog, contracts: Contracts | None = None) -> str:
     """Return the migrated JSON text of one document; with *contracts*, also fit it."""
     document = json.loads(text)
+    document.pop("version", None)
     migrate_element(document, catalog)
     if contracts is not None and not grammar_diagnostics(document):
         fit_document(document, contracts)

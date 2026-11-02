@@ -23,7 +23,9 @@ You are a specialist at generating and maintaining the OpenUI JSON documents of 
 ## Document rules
 
 - A document is one element tree. Every element has `id`, `type`, optional `attrs` and optional `children`; the root also has `version` and the id `root`. No other field.
-- `version` is the current `SCHEMA_VERSION` in every document. A version bump follows [`RELEASING.md` § Schema and catalog version changes](../../RELEASING.md#schema-and-catalog-version-changes).
+- `version` is the current `SCHEMA_VERSION` in every document. Only Shlomo, the
+  repository owner, may change `SCHEMA_VERSION`; a version bump follows
+  [`RELEASING.md` § Schema and catalog version changes](../../RELEASING.md#schema-and-catalog-version-changes).
 - Ids are camelCase alphanumeric and globally unique in the document. A node for a glossary term takes an id derived from the term (for example `highlightedText`).
 - Every `type` is an exact [known object type](../../spec/scopes/scope.md#known-object-type); never an alias, framework selector, implementation identifier or pseudo-type.
 - Attribute keys name their category: `uses.<name>`, `produces.<name>` or `behaves.<name>` ([part 4.5](../../spec/README.md#45-attributes-and-their-categories)); a plain key has no category. Use only the attributes and children the element's contract declares.

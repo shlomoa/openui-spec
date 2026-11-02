@@ -22,7 +22,6 @@ export function validateOpenUiSpec(document: OpenUiDocument, options: ValidateOp
 
   if (diagnostics.length === 0 && options.catalog) {
     const catalog = toCatalogIndex(options.catalog);
-    validateCatalogVersion(document, catalog, diagnostics);
     validateCatalogReferences(document, catalog, diagnostics);
   }
 
@@ -95,20 +94,6 @@ function validateCatalogReferences(
   diagnostics: Diagnostic[],
 ): void {
   validateCatalogReference(node, "", catalog, diagnostics);
-}
-
-function validateCatalogVersion(
-  document: OpenUiDocument,
-  catalog: OpenUiCatalogIndex,
-  diagnostics: Diagnostic[],
-): void {
-  if (document.version !== catalog.version) {
-    diagnostics.push({
-      code: "document/unsupported-version",
-      path: "/version",
-      message: `Root version '${document.version}' does not match catalog version '${catalog.version}'.`,
-    });
-  }
 }
 
 function validateCatalogReference(

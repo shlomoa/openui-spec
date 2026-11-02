@@ -132,21 +132,15 @@ def parse_child_model(
 def build_openui_document(
     *,
     spec_dir: Path | str | None = None,
-    version: str | None = None,
     grammar: SectionGrammar = GRAMMAR,
 ) -> dict[str, Any]:
     """Build the full OpenUI JSON document from the prose scope tree."""
     resolved_spec_dir = (
         Path(spec_dir) if spec_dir is not None else Path(__file__).resolve().parents[2]
     ).resolve()
-    resolved_version = (
-        version or (resolved_spec_dir.parent / "SCHEMA_VERSION").read_text(encoding="utf-8").strip()
-    )
-
     document = {
         "id": "root",
         "type": "html",
-        "version": resolved_version,
         "attrs": {
             "name": "OpenUI",
             "description": "Technology-independent Web UI framework specification",
@@ -206,13 +200,9 @@ def main(argv: list[str] | None = None) -> int:
         type=Path,
         help="Output JSON file. Defaults to stdout when omitted.",
     )
-    parser.add_argument(
-        "--version",
-        help="Override the generated top-level version.",
-    )
     args = parser.parse_args(argv)
 
-    document = build_openui_document(spec_dir=args.spec_dir, version=args.version)
+    document = build_openui_document(spec_dir=args.spec_dir)
     output = json.dumps(document, ensure_ascii=False, indent=2) + "\n"
     if args.output is None:
         print(output, end="")

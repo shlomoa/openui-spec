@@ -5,11 +5,8 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-const SPEC_VERSION = readFileSync(path.resolve(__dirname, "..", "..", "SCHEMA_VERSION"), "utf8").trim();
-
 function documentWith(): Record<string, any> {
   return {
-    version: SPEC_VERSION,
     id: "root",
     type: "html",
     children: [{ id: "target", type: "Table" }],

@@ -2,7 +2,6 @@
   "description": "Attributes are object members, so a removed, added or changed attribute is keyed by its attribute name.",
   "reference": {
     "id": "root",
-    "version": "0.14.0",
     "type": "html",
     "children": [
       {
@@ -18,7 +17,6 @@
   },
   "new": {
     "id": "root",
-    "version": "0.14.0",
     "type": "html",
     "children": [
       {

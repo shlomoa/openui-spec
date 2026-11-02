@@ -92,7 +92,7 @@ test("the input check rejects every conformance document the grammar stage rejec
 
 test("the input check rejects the document-stage and catalog-stage conformance cases it implements", () => {
   const catalog = createCatalogIndex(JSON.parse(readFileSync(path.join(SPEC_ROOT, "openui.json"), "utf8")) as OpenUiDocument);
-  const implemented = new Set(["document/duplicate-id", "document/unsupported-version", "catalog/unknown-type"]);
+  const implemented = new Set(["document/duplicate-id", "catalog/unknown-type"]);
 
   const cases = conformanceFiles("invalid")
     .map((file) => ({ file, expected: expectedDiagnostics(file) }))

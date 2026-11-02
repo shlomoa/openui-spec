@@ -2,7 +2,6 @@
   "description": "A value that changes shape, scalar to list, is one change at the attribute path.",
   "reference": {
     "id": "root",
-    "version": "0.14.0",
     "type": "html",
     "children": [
       {
@@ -16,7 +15,6 @@
   },
   "new": {
     "id": "root",
-    "version": "0.14.0",
     "type": "html",
     "children": [
       {

@@ -37,8 +37,7 @@ class ExampleContractsTest(unittest.TestCase):
         return diagnostics + missing_required_children(document, self.contracts)
 
     def _document(self, *children: dict[str, Any]) -> dict[str, Any]:
-        version = self.catalog.version
-        return {"id": "root", "version": version, "type": "Widgets", "children": list(children)}
+        return {"id": "root", "type": "Widgets", "children": list(children)}
 
     def test_every_example_and_input_fixture_follows_its_contracts(self) -> None:
         paths = [

@@ -85,12 +85,17 @@ workflows do not publish the Angular generator as a separate package.
 
 ### Schema and catalog version changes
 
-**Every spec change forces a version bump.** A change to the
-specification prose under `spec/scopes/`, the grammar, the schema, or the catalog
-contracts cannot be merged under an unchanged version:
+[`SCHEMA_VERSION`](SCHEMA_VERSION) is the sole schema-version declaration.
+Only Shlomo, the repository owner, authorizes and changes it. A specification
+change does not by itself authorize a schema-version bump; contributors and
+agents must leave `SCHEMA_VERSION` unchanged unless Shlomo explicitly directs
+the bump.
 
-- **Mandatory version bump**: Update [`SCHEMA_VERSION`](SCHEMA_VERSION) to the
-  version of stage 2, the same as the packages.
+When Shlomo authorizes a schema-version change:
+
+- **Single declaration**: Update [`SCHEMA_VERSION`](SCHEMA_VERSION) to the
+  authorized version. Do not independently declare a schema version anywhere
+  else.
 - **Catalog alignment**: Regenerate [`spec/openui.json`](spec/openui.json) with
   `python -m spec.bin.to_json --spec-dir spec --output spec/openui.json`, so that its
   root `version` matches `SCHEMA_VERSION`.
@@ -102,7 +107,7 @@ contracts cannot be merged under an unchanged version:
   ([CONTRIBUTING § Examples and fixtures](CONTRIBUTING.md#examples-and-fixtures)).
 
 The repository tests check the catalog's version against `SCHEMA_VERSION` and
-that every example, conformance document and fixture declares it.
+that every example, conformance document and fixture derives its version from it.
 
 ---
 
@@ -157,8 +162,9 @@ npm pack --dry-run
 
 Inspect the output in `dist/`. It must contain an sdist and a wheel for version
 `X.Y.Z`. Inspect the dry-run output of `npm pack` to confirm only the expected
-files are bundled. The publish workflow builds these artifacts again in GitHub
-Actions; local artifacts are for verification and must not be committed.
+files are bundled, including [`SCHEMA_VERSION`](SCHEMA_VERSION). The publish
+workflow builds these artifacts again in GitHub Actions; local artifacts are
+for verification and must not be committed.
 
 ---
 

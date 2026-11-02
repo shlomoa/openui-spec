@@ -62,10 +62,6 @@
           "description": "A type is not an HTML tag, kebab-case or PascalCase name."
         },
         {
-          "const": "grammar/invalid-version",
-          "description": "The root version is not a MAJOR.MINOR.PATCH string."
-        },
-        {
           "const": "grammar/invalid-key",
           "description": "An attribute key is not uses.<name>, produces.<name>, behaves.<name> or a plain camelCase <name>."
         },
@@ -76,10 +72,6 @@
         {
           "const": "document/duplicate-id",
           "description": "An id is used by more than one element of the document; the path points to each use after the first, in document order."
-        },
-        {
-          "const": "document/unsupported-version",
-          "description": "The root version is not the spec version the tool implements."
         },
         {
           "const": "catalog/unknown-type",

@@ -1,6 +1,5 @@
 {
   "id": "root",
-  "version": "0.14.0",
   "type": "Presentation",
   "attrs": {
     "title": "\"Presentation abstraction example\""
