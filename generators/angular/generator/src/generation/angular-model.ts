@@ -9,7 +9,6 @@ import type { GeneratedFile } from "../writers/file-writer";
 export interface AngularProjectModel {
   appName: string;
   packageName: string;
-  version: string;
   pages: AngularPageModel[];
   /** Files of the standalone components the renderers emit for elements of the document. */
   elementFiles: GeneratedFile[];

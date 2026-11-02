@@ -2,9 +2,9 @@
   JSON object member order is insignificant, and trailing commas are invalid. *)
 
 openui_document = "{" document_field { "," document_field } "}" ;
-document_field = root_id_field | version_field | type_field | attrs_field | children_field ;
+document_field = root_id_field | type_field | attrs_field | children_field ;
 
-(* A document has exactly one root_id_field, version_field, and type_field.
+(* A document has exactly one root_id_field and type_field.
   It has at most one attrs_field and at most one children_field. *)
 
 ui_element = "{" element_field { "," element_field } "}" ;
@@ -12,9 +12,6 @@ element_field = id_field | type_field | attrs_field | children_field ;
 
 (* An element has exactly one id_field and type_field.
   It has at most one attrs_field and at most one children_field. *)
-
-version_field = '"version"' ":" version_value ;
-version_value = /"[0-9]+\.[0-9]+\.[0-9]+"/ ;
 
 root_id_field = '"id"' ":" '"root"' ;
 id_field = '"id"' ":" id_value ;

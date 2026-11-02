@@ -7,7 +7,7 @@
  *
  * 1. grammar: `spec/openui.schema.json`, the JSON Schema projection of the document
  *    format in `spec/EBNF.txt`;
- * 2. document: globally unique ids and the spec version;
+ * 2. document: globally unique ids;
  * 3. catalog: every type is a known object type of `spec/openui.json`;
  * 4. contract: every declared attribute fits its declared value type, and every
  *    literal element reference resolves to an element of an allowed type.
@@ -20,7 +20,7 @@ import Ajv2020 from "ajv/dist/2020";
 import type { ErrorObject, ValidateFunction } from "ajv";
 
 
-/** The bundled catalog of the spec version this package implements. */
+/** The bundled OpenUI catalog this package implements. */
 export const DEFAULT_CATALOG_PATH = path.resolve(__dirname, "..", "..", "spec", "openui.json");
 export const DEFAULT_SCHEMA_PATH = path.resolve(__dirname, "..", "..", "spec", "openui.schema.json");
 
@@ -92,12 +92,9 @@ export class Element {
   }
 }
 
-/** A grammar-valid OpenUI document: its spec version and its root element. */
+/** A grammar-valid OpenUI document and its root element. */
 export class Document {
-  constructor(
-    readonly version: string,
-    readonly root: Element,
-  ) {}
+  constructor(readonly root: Element) {}
 
   /** Every element in document order, root first. */
   elements(): Element[] {
@@ -111,10 +108,9 @@ export interface Declaration {
   valueType: string | null;
 }
 
-/** The spec version, the known object types and their declared attributes. */
+/** The known object types and their declared attributes. */
 export class Catalog {
   constructor(
-    readonly version: string,
     readonly knownTypes: ReadonlySet<string>,
     readonly contracts: ReadonlyMap<string, ReadonlyMap<string, Declaration>>,
   ) {}
@@ -152,7 +148,7 @@ export class Catalog {
       }
     };
     visit(catalog, undefined);
-    return new Catalog(catalog.version, knownTypes, contracts);
+    return new Catalog(knownTypes, contracts);
   }
 
   /** Loads a catalog from `filePath` (default: the bundled `spec/openui.json`). */
@@ -169,7 +165,7 @@ export function valueTypeParts(valueType: string): [string, string | undefined] 
 
 let bundledCatalog: Catalog | undefined;
 
-/** The catalog of the spec version this package implements. */
+/** The OpenUI catalog this package implements. */
 export function defaultCatalog(): Catalog {
   bundledCatalog ??= Catalog.load();
   return bundledCatalog;
@@ -187,21 +183,12 @@ export function parse(text: string): Document {
 
 /** Builds a Document from a decoded, grammar-valid JSON value. */
 export function fromValue(value: Record<string, any>): Document {
-  return new Document(value.version, buildElement(value, ""));
+  return new Document(buildElement(value, ""));
 }
 
 /** Runs the document, catalog and contract stages on a parsed document. */
 export function validate(document: Document, catalog: Catalog = defaultCatalog()): Diagnostic[] {
   const diagnostics: Diagnostic[] = [];
-  if (document.version !== catalog.version) {
-    diagnostics.push(
-      new Diagnostic(
-        "document/unsupported-version",
-        "/version",
-        `spec version ${document.version} is not ${catalog.version}, the version this tool implements`,
-      ),
-    );
-  }
   const elements = document.elements();
   const byId = new Map<string, Element>();
   for (const element of elements) {
@@ -332,12 +319,7 @@ function schemaErrorDiagnostics(error: ErrorObject): Diagnostic[] {
       return [new Diagnostic("grammar/invalid-key", `${path}/${escapePointer(key)}`, `invalid attribute key ${key}`)];
     }
     const member = path.split("/").at(-1);
-    const code =
-      member === "id"
-        ? "grammar/invalid-id"
-        : member === "type"
-          ? "grammar/invalid-type"
-          : "grammar/invalid-version";
+    const code = member === "id" ? "grammar/invalid-id" : "grammar/invalid-type";
     return [new Diagnostic(code, path, error.message ?? "invalid value")];
   }
   if (error.keyword === "anyOf") {

@@ -52,7 +52,6 @@ class ModelTest(unittest.TestCase):
             json.dumps(
                 {
                     "id": "root",
-                    "version": default_catalog().version,
                     "type": "html",
                     "children": [
                         {
@@ -84,9 +83,9 @@ class ModelTest(unittest.TestCase):
 
     def test_parse_raises_with_grammar_diagnostics(self) -> None:
         with self.assertRaises(OpenUiParseError) as raised:
-            parse('{"id": "root", "type": "html"}')
+            parse('{"id": "root", "version": "0.14.0", "type": "html"}')
         self.assertEqual(
-            _pairs(raised.exception.diagnostics), [("grammar/missing-property", "/version")]
+            _pairs(raised.exception.diagnostics), [("grammar/unknown-property", "/version")]
         )
 
     def test_catalog_contracts_cover_scope_and_instance_types(self) -> None:
@@ -103,15 +102,14 @@ class ModelTest(unittest.TestCase):
                     [str(d) for d in validate_text(path.read_text(encoding="utf-8"))], []
                 )
 
-    def test_a_custom_catalog_sets_the_supported_version(self) -> None:
-        catalog = Catalog.from_value({"id": "root", "version": "9.9.9", "type": "html"})
-        document = parse('{"id": "root", "version": "9.9.9", "type": "html"}')
+    def test_a_custom_catalog_validates_a_matching_type(self) -> None:
+        catalog = Catalog.from_value({"id": "root", "type": "html"})
+        document = parse('{"id": "root", "type": "html"}')
         self.assertEqual(validate(document, catalog), [])
 
     def _chart(self, series: object) -> dict[str, object]:
         return {
             "id": "root",
-            "version": default_catalog().version,
             "type": "html",
             "children": [{"id": "sales", "type": "Chart", "attrs": {"uses.series": series}}],
         }
@@ -139,7 +137,6 @@ class ModelTest(unittest.TestCase):
     def _behaves(self, element_type: str, key: str, value: object) -> dict[str, object]:
         return {
             "id": "root",
-            "version": default_catalog().version,
             "type": "html",
             "children": [{"id": "target", "type": element_type, "attrs": {key: value}}],
         }
@@ -165,10 +162,10 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(value_type_parts("list(enum(a|b))"), ("list", "enum(a|b)"))
 
     def test_validate_value_runs_every_stage(self) -> None:
-        diagnostics = validate_value({"id": "root", "version": "0.0.0", "type": "Nope"})
+        diagnostics = validate_value({"id": "root", "type": "Nope"})
         self.assertEqual(
             _pairs(diagnostics),
-            [("catalog/unknown-type", "/type"), ("document/unsupported-version", "/version")],
+            [("catalog/unknown-type", "/type")],
         )
 
 

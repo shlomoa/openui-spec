@@ -89,7 +89,7 @@ function errorDiagnostics(error: ErrorObject): Diagnostic[] {
         return [{ code: "grammar/invalid-key", path: `${pointer}/${escapePointer(key)}`, message: `Invalid attribute key '${key}'.` }];
       }
       const member = pointer.split("/").at(-1);
-      const code = member === "id" ? "grammar/invalid-id" : member === "type" ? "grammar/invalid-type" : "grammar/invalid-version";
+      const code = member === "id" ? "grammar/invalid-id" : "grammar/invalid-type";
       return [{ code, path: pointer, message: error.message ?? "Invalid value." }];
     }
     case "anyOf":

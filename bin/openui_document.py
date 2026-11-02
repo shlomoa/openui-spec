@@ -5,7 +5,7 @@ The pipeline has four stages, in the order the conformance suite defines
 
 1. grammar: `spec/openui.schema.json`, the JSON Schema projection of the
    document format in `spec/EBNF.txt`;
-2. document: globally unique ids and the spec version;
+2. document: globally unique ids;
 3. catalog: every type is a known object type of `spec/openui.json`;
 4. contract: every declared attribute fits its declared value type, and every
    literal element reference resolves to an element of an allowed type.
@@ -100,9 +100,8 @@ class Element:
 
 @dataclass(frozen=True)
 class Document:
-    """A grammar-valid OpenUI document: its spec version and its root element."""
+    """A grammar-valid OpenUI document and its root element."""
 
-    version: str
     root: Element
 
     def elements(self) -> Iterator[Element]:
@@ -120,9 +119,8 @@ class Declaration:
 
 @dataclass(frozen=True)
 class Catalog:
-    """The spec version, the known object types and their declared attributes."""
+    """The known object types and their declared attributes."""
 
-    version: str
     known_types: frozenset[str]
     contracts: dict[str, dict[str, Declaration]] = field(default_factory=dict)
 
@@ -151,7 +149,7 @@ class Catalog:
                 visit(child, node)
 
         visit(catalog, None)
-        return cls(catalog["version"], frozenset(known_types), contracts)
+        return cls(frozenset(known_types), contracts)
 
     @classmethod
     def load(cls, path: str | Path = CATALOG_PATH) -> Catalog:
@@ -167,7 +165,7 @@ def value_type_parts(value_type: str) -> tuple[str, str | None]:
 
 @cache
 def default_catalog() -> Catalog:
-    """The catalog of the spec version this package implements."""
+    """The OpenUI catalog this package implements."""
     return Catalog.load()
 
 
@@ -183,22 +181,13 @@ def parse(text: str) -> Document:
 
 def from_value(value: dict[str, Any]) -> Document:
     """Build a Document from a decoded, grammar-valid JSON value."""
-    return Document(value["version"], _element(value, ""))
+    return Document(_element(value, ""))
 
 
 def validate(document: Document, catalog: Catalog | None = None) -> list[Diagnostic]:
     """Run the document, catalog and contract stages on a parsed document."""
     catalog = catalog or default_catalog()
     diagnostics: list[Diagnostic] = []
-    if document.version != catalog.version:
-        diagnostics.append(
-            Diagnostic(
-                "document/unsupported-version",
-                "/version",
-                f"spec version {document.version} is not {catalog.version}, "
-                "the version this tool implements",
-            )
-        )
     elements = list(document.elements())
     by_id: dict[str, Element] = {}
     for element in elements:
@@ -356,11 +345,7 @@ def _schema_diagnostics(error: Any) -> list[Diagnostic]:
                 )
             ]
         name = list(error.absolute_path)[-1]
-        code = {
-            "id": "grammar/invalid-id",
-            "type": "grammar/invalid-type",
-            "version": "grammar/invalid-version",
-        }[name]
+        code = {"id": "grammar/invalid-id", "type": "grammar/invalid-type"}[name]
         return [Diagnostic(code, path, error.message)]
     if error.validator == "anyOf":
         return [Diagnostic("grammar/invalid-attribute-value", path, error.message)]

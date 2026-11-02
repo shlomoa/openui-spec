@@ -74,7 +74,7 @@ class OpenUiJson:
         """Validate the document with every stage of `bin.openui_document`.
 
         The grammar stage uses `openui.schema.json`; the later stages check the
-        document rules (unique ids and the spec version), catalog membership and
+        document rules (unique ids), catalog membership and
         declared attribute value types.
         """
         if self.document is None:

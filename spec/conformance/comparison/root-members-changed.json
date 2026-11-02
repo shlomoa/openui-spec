@@ -1,8 +1,7 @@
 {
-  "description": "A different root `type` or `version` is a change at /type or /version.",
+  "description": "A different root `type` is a change at /type.",
   "reference": {
     "id": "root",
-    "version": "0.1.0",
     "type": "html",
     "children": [
       {
@@ -16,7 +15,6 @@
   },
   "new": {
     "id": "root",
-    "version": "0.14.0",
     "type": "Dialog",
     "children": [
       {
@@ -36,11 +34,6 @@
         "path": "/type",
         "reference": "html",
         "new": "Dialog"
-      },
-      {
-        "path": "/version",
-        "reference": "0.1.0",
-        "new": "0.14.0"
       }
     ]
   }

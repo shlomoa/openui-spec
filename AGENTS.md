@@ -47,8 +47,10 @@ generator that applies the specification to an existing Angular workspace.
   [glossary](spec/scopes/scope.md#glossary). Do not define new terms; ask the owner when none fits.
 - Treat `spec/` as the specification source of truth. Keep generated artifacts such as
   `spec/openui.json` aligned with the documented generation flow when the spec changes.
-- Every specification change bumps the spec version before merge; follow
-  [`RELEASING.md` § Schema and catalog version changes](RELEASING.md#schema-and-catalog-version-changes).
+- [`SCHEMA_VERSION`](SCHEMA_VERSION) is the sole schema-version declaration.
+  Only Shlomo, the repository owner, authorizes and makes schema-version changes.
+  Do not change it for a specification change unless Shlomo explicitly directs the
+  bump; follow [`RELEASING.md` § Schema and catalog version changes](RELEASING.md#schema-and-catalog-version-changes).
 - Generate examples and fixtures; never write them by hand
   ([`CONTRIBUTING.md` § Examples and fixtures](CONTRIBUTING.md#examples-and-fixtures)).
 - Keep common AI-agent guidance in `AGENTS.md`; keep agent-specific files thin and referential.

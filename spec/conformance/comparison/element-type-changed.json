@@ -2,7 +2,6 @@
   "description": "An element with the same id and another type is a change at /children/<id>/type, not a remove and an add.",
   "reference": {
     "id": "root",
-    "version": "0.14.0",
     "type": "html",
     "children": [
       {
@@ -13,7 +12,6 @@
   },
   "new": {
     "id": "root",
-    "version": "0.14.0",
     "type": "html",
     "children": [
       {

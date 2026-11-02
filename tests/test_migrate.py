@@ -24,7 +24,7 @@ class MigrateTest(unittest.TestCase):
         cls.contracts = Contracts.load(cls.catalog)
 
     def _migrate(self, element: dict[str, object]) -> dict[str, object]:
-        document = {"id": "root", "version": "0.5.0", "type": "html", "children": [element]}
+        document = {"id": "root", "type": "html", "children": [element]}
         return json.loads(migrate_text(json.dumps(document), self.catalog))["children"][0]
 
     def test_keys_take_their_category_prefix(self) -> None:
@@ -106,7 +106,6 @@ class MigrateTest(unittest.TestCase):
         document = json.dumps(
             {
                 "id": "root",
-                "version": "0.5.0",
                 "type": "html",
                 "attrs": {"[open]": "true", "uses.size": 25, "uses.modal": True},
             }
@@ -117,7 +116,7 @@ class MigrateTest(unittest.TestCase):
     def test_check_mode_reports_and_keeps_old_documents(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "old.json"
-            text = '{"id": "root", "version": "0.5.0", "type": "html", "attrs": {"[a]": "1"}}'
+            text = '{"id": "root", "type": "html", "attrs": {"[a]": "1"}}'
             path.write_text(text, encoding="utf-8")
             self.assertEqual(main(["--check", str(path)]), 1)
             self.assertEqual(path.read_text(encoding="utf-8"), text)
@@ -127,7 +126,6 @@ class MigrateTest(unittest.TestCase):
     def _fit(self, *children: dict[str, object]) -> dict[str, object]:
         document = {
             "id": "root",
-            "version": self.catalog.version,
             "type": "Widgets",
             "children": children,
         }

@@ -13,13 +13,11 @@ SPEC_DIR = REPO_ROOT / "spec"
 SCOPES_DIR = SPEC_DIR / "scopes"
 EXAMPLES_DIR = SPEC_DIR / "examples"
 EBNF_VALIDATOR = SPEC_DIR / "tests" / "test_example_json_ebnf.py"
-SCHEMA_VERSION_FILE = REPO_ROOT / "SCHEMA_VERSION"
 CATALOG_PATH = SPEC_DIR / "openui.json"
 
 
 class SpecExamplesFormatTest(unittest.TestCase):
     def setUp(self) -> None:
-        self.expected_version = SCHEMA_VERSION_FILE.read_text(encoding="utf-8").strip()
         catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
         self.catalog_types = _document_types(catalog)
 
@@ -44,7 +42,6 @@ class SpecExamplesFormatTest(unittest.TestCase):
 
                 document = json.loads(path.read_text(encoding="utf-8"))
                 self.assertEqual(document["id"], "root")
-                self.assertEqual(document["version"], self.expected_version)
                 self.assertIsInstance(document.get("children"), list)
                 self.assertGreater(len(document["children"]), 0)
 

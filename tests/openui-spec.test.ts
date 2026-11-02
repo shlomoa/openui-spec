@@ -6,11 +6,8 @@ import test from "node:test";
 
 import { OpenUiJson, OpenUiJsonError, OpenUiValidationError } from "../src/index";
 
-const SPEC_VERSION = readFileSync(path.resolve(__dirname, "..", "..", "SCHEMA_VERSION"), "utf8").trim();
-
 function documentWith(childType = "Table"): Record<string, any> {
   return {
-    version: SPEC_VERSION,
     id: "root",
     type: "html",
     children: [{ id: "target", type: childType }],
@@ -37,7 +34,7 @@ test("parses, serializes, saves, and validates with bundled assets", () => {
 
 test("rejects invalid documents, unknown types, and duplicate IDs", () => {
   assert.throws(
-    () => new OpenUiJson({ id: "root", type: "html" }).validate(),
+    () => new OpenUiJson({ id: "root", version: "0.14.0", type: "html" }).validate(),
     OpenUiValidationError,
   );
   assert.throws(

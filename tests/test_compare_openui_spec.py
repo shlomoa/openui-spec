@@ -170,15 +170,6 @@ class CompareOpenUiSpecTest(unittest.TestCase):
             {"remove": [], "add": [{"path": "/type", "new": "html"}], "change": []},
         )
 
-    def test_package_version_is_the_pyproject_version(self) -> None:
-        pyproject = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-        version = pyproject["project"]["version"]
-        schema_version = (REPO_ROOT / "SCHEMA_VERSION").read_text(encoding="utf-8").strip()
-        # A package-only patch keeps the spec's major.minor (RELEASING.md stage 2).
-        self.assertEqual(version.rsplit(".", 1)[0], schema_version.rsplit(".", 1)[0])
-        installed = openui_spec.__version__
-        self.assertTrue(installed == "0+unknown" or installed == version, installed)
-
     def test_the_bin_package_no_longer_provides_the_comparison(self) -> None:
         self.assertFalse((REPO_ROOT / "bin" / "compare_openui_spec.py").exists())
         self.assertIsNone(importlib.util.find_spec("bin.compare_openui_spec"))

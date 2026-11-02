@@ -2,7 +2,6 @@
   "description": "A moved element that also changes is still only a remove plus an add; the change is inside the added value.",
   "reference": {
     "id": "root",
-    "version": "0.14.0",
     "type": "html",
     "children": [
       {
@@ -27,7 +26,6 @@
   },
   "new": {
     "id": "root",
-    "version": "0.14.0",
     "type": "html",
     "children": [
       {

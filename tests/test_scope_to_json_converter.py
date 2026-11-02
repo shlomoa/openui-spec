@@ -190,15 +190,11 @@ class ScopeToJsonConverterTest(unittest.TestCase):
             ["shellPageRouting", "shellPageNavigation"],
         )
 
-    def test_build_openui_document_uses_schema_version_and_scopes_tree(self) -> None:
+    def test_build_openui_document_uses_scopes_tree(self) -> None:
         document = build_openui_document(spec_dir=SPEC_DIR)
 
         self.assertEqual(document["id"], "root")
         self.assertEqual(document["type"], "html")
-        self.assertEqual(
-            document["version"],
-            (REPO_ROOT / "SCHEMA_VERSION").read_text(encoding="utf-8").strip(),
-        )
         self.assertEqual(document["children"][0]["id"], "scopes")
 
     def test_main_writes_generated_json_to_requested_path(self) -> None:
@@ -211,14 +207,11 @@ class ScopeToJsonConverterTest(unittest.TestCase):
                     str(SPEC_DIR),
                     "--output",
                     str(output_path),
-                    "--version",
-                    "9.8.7",
                 ]
             )
 
             self.assertEqual(exit_code, 0)
             document = json.loads(output_path.read_text(encoding="utf-8"))
-            self.assertEqual(document["version"], "9.8.7")
             self.assertEqual(document["children"][0]["id"], "scopes")
 
     def test_missing_object_link_raises_value_error(self) -> None:
@@ -383,7 +376,7 @@ class ScopeToJsonConverterTest(unittest.TestCase):
                 encoding="utf-8",
             )
             with self.assertRaisesRegex(ValueError, "unknown types"):
-                build_openui_document(spec_dir=spec_dir, version="0.0.0")
+                build_openui_document(spec_dir=spec_dir)
 
     def test_malformed_identity_section_raises_value_error(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
