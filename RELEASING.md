@@ -58,21 +58,20 @@ The last command must produce no output.
 
 ---
 
-## 2. Select and set the package version
+## 2. Select and set the package release version
 
-The spec version follows [Semantic Versioning](spec/README.md#48-versioning), with no
-pre-release suffix. Until the specification is validated in downstream tools and
-packages, every release is a `0.x.0` or `0.x.y` version, and there is no release
-candidate (directive Q3 of the
+The Python and npm package release version follows [Semantic Versioning](spec/README.md#48-versioning),
+with no pre-release suffix. It is independent of [`SCHEMA_VERSION`](SCHEMA_VERSION),
+which identifies the schema only. Until the specification is validated in downstream
+tools and packages, every release is a `0.x.0` or `0.x.y` version, and there is no
+release candidate (directive Q3 of the
 [v1 publish plan](https://github.com/shlomoa/openui-spec/blob/archive/spec-survey/spec/survey/specui_v1_publish_plan.md#goal-and-definition-of-done)):
 
-The npm and PyPI packages take the spec's version (owner decision, 2026-09-29):
-
-| Change                                                 | Version                                                 |
-| ------------------------------------------------------ | ------------------------------------------------------- |
-| Any specification change                               | the next free minor, `0.x.0`, for the spec and packages |
-| A package change that changes no specification content | the next patch, `0.x.y`, for the packages only          |
-| `1.0.0-rc.1` and `1.0.0`                               | only after downstream validation                        |
+| Change                                                 | Version                                           |
+| ------------------------------------------------------ | ------------------------------------------------- |
+| Any release                                            | the next free package version, `0.x.0` or `0.x.y` |
+| A package change that changes no specification content | the next patch, `0.x.y`, for the packages only    |
+| `1.0.0-rc.1` and `1.0.0`                               | only after downstream validation                  |
 
 "Next free" is counted against `main` at merge time. If `main` releases the version
 your branch took, merge `main` into the branch and take the next one.
@@ -97,17 +96,11 @@ When Shlomo authorizes a schema-version change:
   authorized version. Do not independently declare a schema version anywhere
   else.
 - **Catalog alignment**: Regenerate [`spec/openui.json`](spec/openui.json) with
-  `python -m spec.bin.to_json --spec-dir spec --output spec/openui.json`, so that its
-  root `version` matches `SCHEMA_VERSION`.
-- **Documents**: Set the new `version` in every worked example under
-  `spec/examples/`, every conformance document under `spec/conformance/` (the comparison cases are
-  regenerated with `python -m spec.bin.generate_comparison_cases`), every
-  generator fixture under `generators/angular/generator/tests/fixtures/` and every
-  test document. Their content is generated, not edited by hand
+  `python -m spec.bin.to_json --spec-dir spec --output spec/openui.json`.
+- **Documents**: A schema-version change does not add or change a `version`
+  member in OpenUI documents. Regenerate examples, fixtures, and comparison
+  cases only when their source contracts change
   ([CONTRIBUTING § Examples and fixtures](CONTRIBUTING.md#examples-and-fixtures)).
-
-The repository tests check the catalog's version against `SCHEMA_VERSION` and
-that every example, conformance document and fixture derives its version from it.
 
 ---
 

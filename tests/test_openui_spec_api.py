@@ -35,8 +35,8 @@ class OpenUiJsonTest(unittest.TestCase):
             self.assertEqual(json.loads(output.read_text(encoding="utf-8")), document_with())
 
     def test_rejects_invalid_schema_and_unknown_content(self) -> None:
-        with self.assertRaisesRegex(OpenUiValidationError, "unknown member version"):
-            OpenUiJson({"id": "root", "version": "0.14.0", "type": "html"}).validate()
+        with self.assertRaisesRegex(OpenUiValidationError, "unknown member unknown"):
+            OpenUiJson({"id": "root", "unknown": "value", "type": "html"}).validate()
         with self.assertRaisesRegex(OpenUiValidationError, "unknown OpenUI object type"):
             OpenUiJson(document_with("Unsupported")).validate()
 

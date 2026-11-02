@@ -50,10 +50,10 @@ test("keeps grammar validation separate from catalog membership", () => {
   }
 });
 
-test("rejects a root version member", () => {
+test("rejects an unknown root member", () => {
   assert.throws(
-    () => validateOpenUiSpec(JSON.parse(JSON.stringify({ ...documentWith("Table"), version: "9.8.7" }))),
-    /\/version: grammar\/unknown-property: Unknown member 'version'; put non-structural data under attrs\./,
+    () => validateOpenUiSpec(JSON.parse(JSON.stringify({ ...documentWith("Table"), unknown: "value" }))),
+    /\/unknown: grammar\/unknown-property: Unknown member 'unknown'; put non-structural data under attrs\./,
   );
 });
 

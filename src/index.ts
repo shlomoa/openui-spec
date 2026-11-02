@@ -27,7 +27,6 @@ export type OpenUiAttributeScalar = string | null;
 export type OpenUiAttributeValue = OpenUiAttributeScalar | OpenUiAttributeScalar[];
 
 export interface OpenUiDocument {
-  version: string;
   id: "root";
   type: string;
   attrs?: Record<string, OpenUiAttributeValue>;

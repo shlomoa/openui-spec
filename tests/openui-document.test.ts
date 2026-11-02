@@ -85,9 +85,9 @@ test("parse builds the typed tree", () => {
 
 test("parse throws with grammar diagnostics", () => {
   assert.throws(
-    () => parse('{"id": "root", "version": "0.14.0", "type": "html"}'),
+    () => parse('{"id": "root", "unknown": "value", "type": "html"}'),
     (error: unknown) =>
-      error instanceof OpenUiParseError && pairs(error.diagnostics).join() === "grammar/unknown-property /version",
+      error instanceof OpenUiParseError && pairs(error.diagnostics).join() === "grammar/unknown-property /unknown",
   );
 });
 

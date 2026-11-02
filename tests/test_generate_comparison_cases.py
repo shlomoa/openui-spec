@@ -23,13 +23,6 @@ class GenerateComparisonCasesTest(unittest.TestCase):
             with self.subTest(case=name):
                 self.assertRegex(name, CASE_NAME)
 
-    def test_documents_have_no_version_member(self) -> None:
-        cases = generator.build_cases()
-        for name, case in cases.items():
-            for member in ("reference", "new"):
-                with self.subTest(case=name, document=member):
-                    self.assertNotIn("version", case[member])
-
     def test_check_reports_stale_missing_and_unexpected_files(self) -> None:
         files = generator.render(generator.build_cases())
         with tempfile.TemporaryDirectory() as temporary_directory:

@@ -3,6 +3,17 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.15.0] - 2026-11-02
+
+### Versionless OpenUI documents
+
+- **Breaking:** OpenUI documents no longer declare a root `version` member. The
+  grammar, schema, Python tooling, TypeScript package, Angular generator,
+  examples, fixtures, and conformance suite now use the root `id` and `type`
+  members only.
+- [`SCHEMA_VERSION`](SCHEMA_VERSION) remains the sole schema-version declaration.
+  It is independent of the Python and npm package release versions.
+
 ## [0.14.0] - 2026-10-12
 
 ### Canonical-term rule in the glossary

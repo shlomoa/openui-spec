@@ -83,9 +83,9 @@ class ModelTest(unittest.TestCase):
 
     def test_parse_raises_with_grammar_diagnostics(self) -> None:
         with self.assertRaises(OpenUiParseError) as raised:
-            parse('{"id": "root", "version": "0.14.0", "type": "html"}')
+            parse('{"id": "root", "unknown": "value", "type": "html"}')
         self.assertEqual(
-            _pairs(raised.exception.diagnostics), [("grammar/unknown-property", "/version")]
+            _pairs(raised.exception.diagnostics), [("grammar/unknown-property", "/unknown")]
         )
 
     def test_catalog_contracts_cover_scope_and_instance_types(self) -> None:
