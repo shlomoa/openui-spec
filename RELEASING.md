@@ -139,6 +139,7 @@ Windows (PowerShell):
 
 ```powershell
 .\.venv\Scripts\python -m build
+.\.venv\Scripts\python -m bin.check_distribution_contents
 npm run build
 npm test
 npm pack --dry-run
@@ -148,16 +149,20 @@ Linux or macOS (Bash):
 
 ```bash
 ./.venv/bin/python -m build
+./.venv/bin/python -m bin.check_distribution_contents
 npm run build
 npm test
 npm pack --dry-run
 ```
 
 Inspect the output in `dist/`. It must contain an sdist and a wheel for version
-`X.Y.Z`. Inspect the dry-run output of `npm pack` to confirm only the expected
-files are bundled, including [`SCHEMA_VERSION`](SCHEMA_VERSION). The publish
-workflow builds these artifacts again in GitHub Actions; local artifacts are
-for verification and must not be committed.
+`X.Y.Z`; `bin.check_distribution_contents` verifies that both include
+[`SCHEMA_VERSION`](SCHEMA_VERSION). It is installed from the Python package as
+`share/openui-spec/SCHEMA_VERSION`. Inspect the dry-run output of `npm pack` to
+confirm only the expected files are bundled, including
+[`SCHEMA_VERSION`](SCHEMA_VERSION). The publish workflows build and verify these
+artifacts again in GitHub Actions; local artifacts are for verification and must
+not be committed.
 
 ---
 

@@ -54,6 +54,7 @@ class GitHubActionsPublishWorkflowTest(unittest.TestCase):
     def test_publish_pypi_workflow_builds_distribution(self):
         self.assertIn("python -m pip install build", self.pypi_workflow)
         self.assertIn("python -m build", self.pypi_workflow)
+        self.assertIn("python -m bin.check_distribution_contents", self.pypi_workflow)
 
     def test_publish_pypi_workflow_publishes_with_trusted_publishing(self):
         self.assertIn("uses: pypa/gh-action-pypi-publish@release/v1", self.pypi_workflow)

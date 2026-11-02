@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openui-spec"
-version = "0.15.0"
+version = "0.15.1"
 description = "Technology-independent OpenUI specification, canonical catalog, and OpenUI JSON tooling."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -26,6 +26,9 @@ Documentation = "https://openui-spec.readthedocs.io/"
 
 [tool.setuptools]
 packages = ["bin", "openui_spec", "spec"]
+
+[tool.setuptools.data-files]
+"share/openui-spec" = ["SCHEMA_VERSION"]
 
 [tool.setuptools.package-data]
 spec = [

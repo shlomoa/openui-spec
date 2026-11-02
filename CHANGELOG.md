@@ -3,6 +3,14 @@
 This file records user-visible changes to the OpenUI specification and its
 published packages.
 
+## [0.15.1] - 2026-11-02
+
+### Python package contents
+
+- Fix the Python source and wheel distributions to include the repository-root
+  [`SCHEMA_VERSION`](SCHEMA_VERSION) file. The file remains the single schema-version
+  declaration and is installed as package data at `share/openui-spec/SCHEMA_VERSION`.
+
 ## [0.15.0] - 2026-11-02
 
 ### Versionless OpenUI documents
